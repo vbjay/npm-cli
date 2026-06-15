@@ -19,14 +19,14 @@ Add a first-class review-report mode to `npm approve-scripts --allow-scripts-pen
 
 ## New Command Surface
 
-### Option 1 (preferred): `--format` flag
+### Option 1 (preferred): `--allow-scripts-report-format` flag
 
 ```bash
-npm approve-scripts --allow-scripts-pending --format=review-markdown
-npm approve-scripts --allow-scripts-pending --format=review-json
+npm approve-scripts --allow-scripts-pending --allow-scripts-report-format=markdown
+npm approve-scripts --allow-scripts-pending --allow-scripts-report-format=json
 ```
 
-Extends the existing `--format` / `--json` output option. The existing `--json` flag remains unchanged. `review-markdown` and `review-json` are new format values only valid when `--allow-scripts-pending` is also set.
+Dedicated scoped flag. The existing `--json` flag remains unchanged and maps to `format=json`. `markdown` and `json` are the two format values; only valid when `--allow-scripts-pending` is also set.
 
 ### Option 2: dedicated output flags
 
@@ -113,7 +113,7 @@ Formats the raw report data into either Markdown or JSON output.
           }
         ],
         "changeClassification": {
-          "status": "new|script-changed-since-last-approved-version|script-unchanged",
+          "status": "new|version-changed",
           "previousApprovedVersion": "string|null"
         },
         "riskSummary": ["string"],
@@ -138,24 +138,28 @@ Determines `dependencyType` as `direct` if the node's parent is the project root
 
 ### 4. New utility: `lib/utils/script-change-classifier.js`
 
-Compares a package's current lifecycle scripts against the last-approved version recorded in `allowScripts` to classify the change.
+Compares a pending package node against the project's existing `allowScripts`
+policy to classify whether the pending entry is entirely new or is a version
+update of a previously-approved package.
 
-**Classification statuses:**
-- `new` – package has no prior entry in `allowScripts`
-- `script-changed-since-last-approved-version` – package has a pinned entry but the lifecycle scripts differ from what that version had (requires reading the previously-installed package's `scripts` from the lockfile or disk)
-- `script-unchanged` – lifecycle scripts are identical to the previously-approved version
-- `version-changed-scripts-unchanged` – package version bumped but scripts didn't change (low risk indicator)
+**Classification statuses (current implementation):**
+- `new` – package has no prior approved (`true`) entry in `allowScripts`; denied (`false`) entries do not count as prior approvals
+- `version-changed` – an approved entry exists for the same name but the installed version differs
 
-**Note:** Change classification is best-effort; if the previous version is not available on disk, the status falls back to `new` or `unknown`.
+**Note:** Detecting a re-review of a version whose scripts changed since the last
+approval (same name, same version, different script content) requires comparing
+stored script hashes against the current scripts, which is not yet implemented.
+If the previously-installed package is not available on disk or the required
+hash information is absent, the classifier falls back to `new`.
 
 ---
 
 ### 5. Update `lib/utils/allow-scripts-cmd.js`
 
-Add a `--format` config parameter and wire up the new review-report path in `runPending()`:
+Add a `--allow-scripts-report-format` config parameter and wire up the new review-report path in `runPending()`:
 
 ```
-if (format === 'review-markdown' || format === 'review-json') {
+if (format === 'markdown' || format === 'json') {
   return this.runReviewReport(unreviewed, format)
 }
 ```
@@ -171,13 +175,13 @@ The new `runReviewReport()` method:
 
 ### 6. Update `lib/commands/approve-scripts.js`
 
-Add `'format'` to `static params`.
+Add `'allow-scripts-report-format'` to `static params`.
 
 ---
 
 ### 7. Update docs: `docs/lib/content/commands/npm-approve-scripts.md`
 
-Add new `--format` flag to Synopsis and Description. Document the two new format values. Add examples showing piping to a file. Add a "Review Report" subsection explaining the output format, non-goals, and AI-assisted review workflow.
+Add new `--allow-scripts-report-format` flag to Synopsis and Description. Document the two format values (`markdown`, `json`). Add examples showing piping to a file. Add a "Review Report" subsection explaining the output format, non-goals, and AI-assisted review workflow.
 
 ---
 
@@ -189,7 +193,7 @@ New test files under `test/lib/`:
 - `test/lib/utils/review-report-formatter.js` – unit tests for both Markdown and JSON output shape
 - `test/lib/utils/dep-path-walker.js` – unit tests for direct vs. transitive, multi-path packages
 - `test/lib/utils/script-change-classifier.js` – unit tests for all classification statuses
-- `test/lib/commands/approve-scripts.js` – integration tests for `--allow-scripts-pending --format=review-markdown` and `--format=review-json`
+- `test/lib/commands/approve-scripts.js` – integration tests for `--allow-scripts-pending --allow-scripts-report-format=markdown` and `--allow-scripts-report-format=json`
 
 Existing `approve-scripts.js` tests should continue to pass without modification.
 
@@ -197,7 +201,7 @@ Existing `approve-scripts.js` tests should continue to pass without modification
 
 ## Config Changes
 
-Add a new config definition for `format` on this command (values: `text`, `json`, `review-markdown`, `review-json`). `text` is the existing default; `json` preserves the existing `--json` / `--format=json` behavior. The new values are only meaningful when combined with `--allow-scripts-pending`; using them without that flag throws a usage error.
+Add a new config definition for `allow-scripts-report-format` (values: `null`, `markdown`, `json`). `markdown` is the default; `json` maps to `--json`. Only meaningful when combined with `--allow-scripts-pending`; using it without that flag throws a usage error.
 
 ---
 
