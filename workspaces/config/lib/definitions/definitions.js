@@ -1920,6 +1920,22 @@ const definitions = {
     `,
     flatten,
   }),
+  'allow-scripts-report-format': new Definition('allow-scripts-report-format', {
+    default: 'markdown',
+    type: [null, 'markdown', 'json'],
+    description: `
+      When combined with \`--allow-scripts-pending\`, controls the output format
+      for the pending lifecycle-script review report.
+      \`markdown\` (default) produces a human-readable Markdown document
+      suitable for PR comments or file artifacts.
+      \`json\` produces a machine-readable JSON document suitable for CI
+      pipelines, dependency bots, or AI-assisted security review.
+      Set to \`null\` to opt out of the review report and show the legacy plain
+      text listing instead.
+      Only meaningful for \`npm approve-scripts\`.
+    `,
+    flatten,
+  }),
   'prefer-dedupe': new Definition('prefer-dedupe', {
     default: false,
     type: Boolean,
