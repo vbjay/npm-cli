@@ -345,3 +345,56 @@ t.test('skipProjectConfig: returns null when only package.json is set', async t 
   const result = await resolveAllowScripts(npm, { skipProjectConfig: true })
   t.strictSame(result, { policy: null, source: null })
 })
+
+// --- git committish minimum length validation ---------------------------
+
+t.test('drops git committish shorter than 7 hex chars and warns', async t => {
+  const mock = await mockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'p',
+        allowScripts: {
+          'github:owner/repo#abc': true,    // 3 chars — too short, dropped
+          'github:owner/repo#abcdef': true, // 6 chars — too short, dropped
+          'github:owner/repo#abcdefg': true, // exactly 7 — kept
+          'github:owner/repo#deadbeef': true, // 8 chars — kept
+          'github:owner/repo': true,          // no committish — kept (name-only)
+        },
+      }),
+    },
+  })
+  const resolveAllowScripts = loadResolver(t)
+  const result = await resolveAllowScripts(mock.npm)
+  t.equal(result.source, 'package.json')
+  t.strictSame(result.policy, {
+    'github:owner/repo#abcdefg': true,
+    'github:owner/repo#deadbeef': true,
+    'github:owner/repo': true,
+  })
+  const warnings = mock.logs.warn.byTitle('allow-scripts')
+  t.equal(
+    warnings.filter(m => /too short/.test(m)).length, 2,
+    'two warnings for the two too-short committishes'
+  )
+})
+
+t.test('non-hex committish (branch name) is not subject to length check', async t => {
+  // Branch names like `main` or `feature/x` contain non-hex characters and
+  // are not comparable to SHA prefixes, so the minimum-length rule must not
+  // apply to them.
+  const { npm } = await mockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'p',
+        allowScripts: {
+          'github:owner/repo#main': true,
+        },
+      }),
+    },
+  })
+  const resolveAllowScripts = loadResolver(t)
+  const result = await resolveAllowScripts(npm)
+  t.equal(result.source, 'package.json')
+  t.strictSame(result.policy, { 'github:owner/repo#main': true },
+    'branch-name committish is kept without a length warning')
+})
