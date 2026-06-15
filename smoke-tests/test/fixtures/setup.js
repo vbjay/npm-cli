@@ -7,7 +7,7 @@ const MockRegistry = require('@npmcli/mock-registry')
 const http = require('node:http')
 const { createProxy } = require('proxy')
 
-const { SMOKE_PUBLISH_TARBALL, CI, PATH, Path } = process.env
+const { SMOKE_PUBLISH_TARBALL, CI, PATH, Path, NODE_EXTRA_CA_CERTS } = process.env
 
 const DEFAULT_REGISTRY = new URL('https://registry.npmjs.org/')
 const MOCK_REGISTRY = new URL('http://smoke-test-registry.club/')
@@ -152,6 +152,8 @@ module.exports = async (t, {
 
   const getPath = () => `${paths.globalBin}${delimiter}${Path || PATH}`
   const getEnvPath = () => ({ [Path ? 'Path' : 'PATH']: getPath() })
+  const getNodeExtraCaEnv = () =>
+    NODE_EXTRA_CA_CERTS === undefined ? {} : { NODE_EXTRA_CA_CERTS }
 
   const baseSpawn = async (spawnCmd, spawnArgs, {
     cwd = paths.project,
@@ -168,6 +170,7 @@ module.exports = async (t, {
         ...getEnvPath(),
         HOME: paths.root,
         ComSpec: process.env.ComSpec,
+        ...getNodeExtraCaEnv(),
         ...env,
       },
       ...opts,
