@@ -1,0 +1,141 @@
+name: allow-scripts demo report
+
+on:
+  pull_request:
+    paths:
+      - smoke-tests/test/fixtures/approve-scripts-report/**
+      - smoke-tests/test/approve-scripts-report.js
+      - scripts/generate-allow-scripts-report.js
+      - lib/utils/script-risk-scanner.js
+      - lib/utils/review-report-formatter.js
+      - lib/utils/dep-path-walker.js
+      - workspaces/arborist/lib/unreviewed-scripts.js
+      - workspaces/arborist/lib/install-scripts.js
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  report:
+    name: Generate allow-scripts pending report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Reset workspace deps
+        run: node scripts/resetdeps.js
+
+      - name: Install demo dependencies (no lifecycle scripts)
+        run: npm ci --ignore-scripts --prefix smoke-tests/test/fixtures/approve-scripts-report
+
+      - name: Generate report
+        id: report
+        run: |
+          node scripts/generate-allow-scripts-report.js > /tmp/report-stdout.md 2>/tmp/report-stderr.txt
+          cat /tmp/report-stderr.txt
+          echo "md_report<<REPORT_EOF" >> "$GITHUB_OUTPUT"
+          cat /tmp/report-stdout.md >> "$GITHUB_OUTPUT"
+          echo "" >> "$GITHUB_OUTPUT"
+          echo "REPORT_EOF" >> "$GITHUB_OUTPUT"
+          echo "json_report<<JSON_EOF" >> "$GITHUB_OUTPUT"
+          cat smoke-tests/test/fixtures/approve-scripts-report/report.json >> "$GITHUB_OUTPUT"
+          echo "" >> "$GITHUB_OUTPUT"
+          echo "JSON_EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Post report as PR comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          MD_REPORT: ${{ steps.report.outputs.md_report }}
+          JSON_REPORT: ${{ steps.report.outputs.json_report }}
+        with:
+          script: |
+            const md = process.env.MD_REPORT
+            const jsonText = process.env.JSON_REPORT
+
+            // Parse the JSON report and derive a pass/fail result.
+            let pass = false
+            let reason = ''
+            let packageRows = ''
+            let report = null
+            try {
+              report = JSON.parse(jsonText)
+              const pkgs = report.packages || []
+
+              if (report.status === 'all-approved') {
+                pass = true
+                reason = ''
+              } else if (pkgs.length === 0) {
+                reason = 'No packages with lifecycle scripts were found. Make sure `npm ci --ignore-scripts` ran successfully.'
+              } else {
+                const notPending = pkgs.filter(p => p.approvalStatus !== 'pending')
+                if (notPending.length > 0) {
+                  reason = `${notPending.length} package(s) did not have \`pending\` approval status: ` +
+                    notPending.map(p => `\`${p.name}@${p.version}\``).join(', ')
+                } else {
+                  pass = true
+                }
+              }
+
+              packageRows = pkgs.map(p => {
+                const status = p.approvalStatus === 'pending' ? '⏳ pending' : `❌ ${p.approvalStatus}`
+                const risks = (p.riskSummary || []).slice(0, 3).join(', ') || '—'
+                return `| \`${p.name}@${p.version}\` | ${p.dependencyType} | ${status} | ${risks} |`
+              }).join('\n')
+            } catch (e) {
+              reason = `Failed to parse JSON report: ${e.message}`
+            }
+
+            const badge = pass ? '✅ PASS' : '❌ FAIL'
+            const summary = pass
+              ? (report.status === 'all-approved'
+                  ? '✅ All packages with lifecycle scripts have been approved — nothing pending.'
+                  : 'All packages with lifecycle scripts are correctly identified as **pending** approval.')
+              : `**Reason:** ${reason}`
+
+            const table = packageRows
+              ? [
+                  '| Package | Type | Status | Top risks |',
+                  '|---------|------|--------|-----------|',
+                  packageRows,
+                ].join('\n')
+              : ''
+
+            const body = [
+              `## ${badge} — approve-scripts smoke report`,
+              '',
+              summary,
+              '',
+              table,
+              '',
+              '<details>',
+              '<summary>Full Markdown report</summary>',
+              '',
+              md,
+              '',
+              '</details>',
+              '',
+              '<details>',
+              '<summary>JSON report</summary>',
+              '',
+              '```json',
+              jsonText,
+              '```',
+              '',
+              '</details>',
+            ].join('\n')
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            })
