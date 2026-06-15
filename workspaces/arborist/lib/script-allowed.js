@@ -24,14 +24,18 @@ const versionFromTgz = require('./version-from-tgz.js')
 //     resolved committish
 
 const isScriptAllowed = (node, policy) => {
-  // Bundled dependencies never run their install scripts and cannot be
-  // allowlisted. Matching by name@version from the bundled tarball would
-  // reintroduce manifest confusion (a bundled tarball can claim any name
-  // and version). Returning null marks them as not-allowed regardless of
-  // any policy entry, so their install scripts are blocked by the
-  // install-time gate. A package that needs a bundled dep's script must
-  // forward it as one of its own lifecycle scripts.
-  if (node.inBundle) {
+  // Dependencies bundled inside a *published* package's tarball (inDepBundle)
+  // never run their install scripts and cannot be allowlisted. Matching by
+  // name@version from the bundled tarball would reintroduce manifest confusion
+  // (a bundled tarball can claim any name and version). Returning null marks
+  // them as not-allowed regardless of any policy entry.
+  //
+  // NOTE: we intentionally check `inDepBundle` (bundler !== root) rather than
+  // the broader `inBundle`. A root project may list a dependency in
+  // `bundleDependencies` for publishing purposes, but that dep is still
+  // fetched from the registry and installed normally — its install scripts
+  // WILL run and the user should be able to review/approve them.
+  if (node.inDepBundle) {
     return null
   }
 

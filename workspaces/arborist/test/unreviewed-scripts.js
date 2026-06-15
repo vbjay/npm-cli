@@ -27,7 +27,7 @@ const node = ({
   isProjectRoot = false,
   isWorkspace = false,
   isLink = false,
-  inBundle = false,
+  inDepBundle = false,
   resolved,
 } = {}) => ({
   name,
@@ -38,7 +38,7 @@ const node = ({
   isProjectRoot,
   isWorkspace,
   isLink,
-  inBundle,
+  inDepBundle,
   isRegistryDependency: true,
   package: { name, version, scripts },
 })
@@ -75,11 +75,25 @@ t.test('collectUnreviewedScripts', async t => {
         node({ name: 'root', scripts: { install: 'x' }, isProjectRoot: true }),
         node({ name: 'ws', scripts: { install: 'x' }, isWorkspace: true }),
         node({ name: 'linked', scripts: { install: 'x' }, isLink: true }),
-        node({ name: 'bundled', scripts: { install: 'x' }, inBundle: true }),
+        node({ name: 'bundled', scripts: { install: 'x' }, inDepBundle: true }),
       ]),
       policy: null,
     })
     t.strictSame(result, [])
+  })
+
+  t.test('reports root-bundled dep as unreviewed (inBundle=true, inDepBundle=false)', async t => {
+    const result = await collectUnreviewedScripts({
+      tree: tree([
+        Object.assign(
+          node({ name: 'root-bundled', scripts: { install: 'x' }, inDepBundle: false }),
+          { inBundle: true }
+        ),
+      ]),
+      policy: null,
+    })
+    t.equal(result.length, 1, 'root-bundled dep is reported as unreviewed')
+    t.equal(result[0].node.name, 'root-bundled')
   })
 
   t.test('skips nodes with no install-relevant scripts', async t => {
