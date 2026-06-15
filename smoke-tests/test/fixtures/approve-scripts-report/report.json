@@ -1,0 +1,261 @@
+{
+  "packages": [
+    {
+      "name": "@sentry/cli",
+      "version": "1.77.3",
+      "location": "node_modules/@sentry/cli",
+      "approvalStatus": "pending",
+      "dependencyType": "transitive",
+      "introducedBy": [
+        [
+          "allow-scripts-demo",
+          "@sentry/webpack-plugin@1.21.0",
+          "@sentry/cli@1.77.3"
+        ],
+        [
+          "allow-scripts-demo",
+          "ember-cli-deploy-sentry-cli@3.1.0",
+          "@sentry/cli@1.77.3"
+        ]
+      ],
+      "lifecycleScripts": {
+        "install": "node ./scripts/install.js"
+      },
+      "referencedFiles": [
+        {
+          "path": "scripts/install.js",
+          "reason": "referenced by lifecycle script: `install`",
+          "sha256": "f693c46a257952dd4f4c76cc7f7c3ab4536599e2ad0548a27d7a8183536f6c93",
+          "sizeBytes": 839,
+          "signals": [
+            "reads-process-env",
+            "network-access",
+            "writes-outside-package",
+            "requires-local-file"
+          ],
+          "references": [
+            "js/install.js"
+          ]
+        },
+        {
+          "path": "js/install.js",
+          "reason": "required by ./scripts/install.js",
+          "sha256": "a15ee1c659fe9f3368eb99cde08f424f4b44cf963fa8b9c6427458a970a95e2c",
+          "sizeBytes": 8907,
+          "signals": [
+            "reads-process-env",
+            "network-access",
+            "writes-file",
+            "writes-outside-package",
+            "external-url",
+            "requires-local-file"
+          ],
+          "references": [
+            "js/helper.js",
+            "package.json",
+            "js/logger.js"
+          ]
+        },
+        {
+          "path": "js/helper.js",
+          "reason": "required by ./js/install.js",
+          "sha256": "76f511fd75cf4cb2afc251a9ba62ecbbc8aeb571233d13e4958a4d82f2a1359c",
+          "sizeBytes": 6128,
+          "signals": [
+            "uses-child-process",
+            "reads-process-env"
+          ],
+          "references": []
+        },
+        {
+          "path": "package.json",
+          "reason": "required by ./js/install.js",
+          "sha256": "8ab62ccee75956b622201e5d16bccec41c6883b0771146310bc6ded8e26f5a9d",
+          "sizeBytes": 1903,
+          "signals": [
+            "external-url"
+          ],
+          "references": []
+        },
+        {
+          "path": "js/logger.js",
+          "reason": "required by ./js/install.js",
+          "sha256": "d7d63601d3347efc93425f4f93049cfb9ed2b9ead1dce662c9c1bed3cba302e0",
+          "sizeBytes": 253,
+          "signals": [],
+          "references": []
+        }
+      ],
+      "nativeBuildInfo": null,
+      "changeClassification": {
+        "status": "new",
+        "previousApprovedVersion": null
+      },
+      "riskSummary": [
+        "makes network requests",
+        "may write outside the package directory",
+        "uses child_process (can spawn external commands)"
+      ],
+      "suggestedReviewFocus": [
+        "confirm what remote endpoints are contacted and whether responses are verified",
+        "confirm whether file writes are scoped to the package directory",
+        "confirm what external commands are executed and whether they are constrained"
+      ]
+    },
+    {
+      "name": "canvas",
+      "version": "2.11.2",
+      "location": "node_modules/canvas",
+      "approvalStatus": "pending",
+      "dependencyType": "direct",
+      "introducedBy": [
+        [
+          "allow-scripts-demo",
+          "canvas@2.11.2"
+        ]
+      ],
+      "lifecycleScripts": {
+        "install": "node-gyp rebuild"
+      },
+      "referencedFiles": [
+        {
+          "path": null,
+          "reason": "inline lifecycle script: `install`",
+          "sha256": null,
+          "sizeBytes": null,
+          "signals": [
+            "native-build"
+          ],
+          "references": []
+        }
+      ],
+      "nativeBuildInfo": {
+        "sha256": "684e491f30b36151ebc98bef3eef17a1078b1227003ceaea6fec355441813666",
+        "targets": [
+          {
+            "name": "canvas-postbuild",
+            "sources": [],
+            "libraries": [],
+            "includeDirs": [],
+            "hasConditions": true
+          },
+          {
+            "name": "canvas",
+            "sources": [
+              "src/backend/Backend.cc",
+              "src/backend/ImageBackend.cc",
+              "src/backend/PdfBackend.cc",
+              "src/backend/SvgBackend.cc",
+              "src/bmp/BMPParser.cc",
+              "src/Backends.cc",
+              "src/Canvas.cc",
+              "src/CanvasGradient.cc",
+              "src/CanvasPattern.cc",
+              "src/CanvasRenderingContext2d.cc",
+              "src/closure.cc",
+              "src/color.cc",
+              "src/Image.cc",
+              "src/ImageData.cc",
+              "src/init.cc",
+              "src/register_font.cc"
+            ],
+            "libraries": [
+              "-l<(GTK_Root)/lib/cairo.lib",
+              "-l<(GTK_Root)/lib/libpng.lib",
+              "-l<(GTK_Root)/lib/pangocairo-1.0.lib",
+              "-l<(GTK_Root)/lib/pango-1.0.lib",
+              "-l<(GTK_Root)/lib/freetype.lib",
+              "-l<(GTK_Root)/lib/glib-2.0.lib",
+              "-l<(GTK_Root)/lib/gobject-2.0.lib",
+              "<!@(pkg-config pixman-1 --libs)",
+              "<!@(pkg-config cairo --libs)",
+              "<!@(pkg-config libpng --libs)",
+              "<!@(pkg-config pangocairo --libs)",
+              "<!@(pkg-config freetype2 --libs)",
+              "-l<(jpeg_root)/lib/jpeg.lib",
+              "<!@(pkg-config libjpeg --libs)",
+              "-l<(GTK_Root)/lib/gif.lib",
+              "-L/opt/homebrew/lib",
+              "-lgif",
+              "-l<(GTK_Root)/lib/librsvg-2-2.lib",
+              "<!@(pkg-config librsvg-2.0 --libs)"
+            ],
+            "includeDirs": [
+              "<!(node -e \"require('nan')\")",
+              "<(GTK_Root)/include",
+              "<(GTK_Root)/include/cairo",
+              "<(GTK_Root)/include/pango-1.0",
+              "<(GTK_Root)/include/glib-2.0",
+              "<(GTK_Root)/include/freetype2",
+              "<(GTK_Root)/lib/glib-2.0/include",
+              "<!@(pkg-config cairo --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config libpng --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config pangocairo --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config freetype2 --cflags-only-I | sed s/-I//g)",
+              "<(jpeg_root)/include",
+              "<!@(pkg-config libjpeg --cflags-only-I | sed s/-I//g)",
+              "/opt/homebrew/include",
+              "<!@(pkg-config librsvg-2.0 --cflags-only-I | sed s/-I//g)"
+            ],
+            "hasConditions": true
+          }
+        ],
+        "parseError": null
+      },
+      "changeClassification": {
+        "status": "new",
+        "previousApprovedVersion": null
+      },
+      "riskSummary": [
+        "builds native code (node-gyp / binding.gyp)"
+      ],
+      "suggestedReviewFocus": [
+        "review the binding.gyp targets — inspect native source files for unsafe C/C++ operations, verify external library dependencies are expected, and check platform-specific conditions"
+      ]
+    },
+    {
+      "name": "esbuild",
+      "version": "0.20.0",
+      "location": "node_modules/esbuild",
+      "approvalStatus": "pending",
+      "dependencyType": "direct",
+      "introducedBy": [
+        [
+          "allow-scripts-demo",
+          "esbuild@0.20.0"
+        ]
+      ],
+      "lifecycleScripts": {
+        "postinstall": "node install.js"
+      },
+      "referencedFiles": [
+        {
+          "path": "install.js",
+          "reason": "referenced by lifecycle script: `postinstall`",
+          "sha256": "a061231445c23fe8ed9f1f102a639adc796982541b3cc5976beb7544dca24a77",
+          "sizeBytes": 10963,
+          "signals": [
+            "uses-child-process",
+            "reads-process-env",
+            "network-access",
+            "external-url"
+          ],
+          "references": []
+        }
+      ],
+      "nativeBuildInfo": null,
+      "changeClassification": {
+        "status": "new",
+        "previousApprovedVersion": null
+      },
+      "riskSummary": [
+        "uses child_process (can spawn external commands)",
+        "makes network requests"
+      ],
+      "suggestedReviewFocus": [
+        "confirm what external commands are executed and whether they are constrained",
+        "confirm what remote endpoints are contacted and whether responses are verified"
+      ]
+    }
+  ]
+}
