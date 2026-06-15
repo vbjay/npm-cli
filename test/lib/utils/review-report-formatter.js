@@ -1,0 +1,730 @@
+'use strict'
+const t = require('tap')
+const { formatMarkdown, formatJson } = require('../../../lib/utils/review-report-formatter.js')
+
+// Minimal package fixture for tests
+const makePkg = (overrides = {}) => ({
+  name: 'canvas',
+  version: '1.0.0',
+  location: 'node_modules/canvas',
+  approvalStatus: 'pending',
+  dependencyType: 'direct',
+  introducedBy: [],
+  lifecycleScripts: { install: 'node-gyp rebuild' },
+  referencedFiles: [],
+  nativeBuildInfo: null,
+  changeClassification: { status: 'new', previousApprovedVersion: null },
+  ...overrides,
+})
+
+// --- formatMarkdown ---
+
+t.test('formatMarkdown returns header for empty list', (t) => {
+  const out = formatMarkdown([])
+  t.match(out, /# npm Lifecycle Script Approval Review/)
+  t.match(out, /No packages with unreviewed install scripts/)
+  t.end()
+})
+
+t.test('formatMarkdown includes package header', (t) => {
+  const out = formatMarkdown([makePkg()])
+  t.match(out, /## Package: canvas@1\.0\.0/)
+  t.end()
+})
+
+t.test('formatMarkdown includes location, dependency type and approval status', (t) => {
+  const out = formatMarkdown([makePkg()])
+  t.match(out, /\*\*Location:\*\*.*node_modules\/canvas/)
+  t.match(out, /\*\*Dependency type:\*\* direct/)
+  t.match(out, /\*\*Approval status:\*\* pending/)
+  t.end()
+})
+
+t.test('formatMarkdown shows lifecycle scripts as JSON', (t) => {
+  const out = formatMarkdown([makePkg()])
+  t.match(out, /node-gyp rebuild/)
+  t.end()
+})
+
+t.test('formatMarkdown shows version-changed classification', (t) => {
+  const out = formatMarkdown([makePkg({
+    changeClassification: { status: 'version-changed', previousApprovedVersion: '0.9.0' },
+  })])
+  t.match(out, /previously approved version was/)
+  t.match(out, /0\.9\.0/)
+  t.end()
+})
+
+t.test('formatMarkdown shows new classification', (t) => {
+  const out = formatMarkdown([makePkg({
+    changeClassification: { status: 'new', previousApprovedVersion: null },
+  })])
+  t.match(out, /no previous approval found/)
+  t.notMatch(out, /🔔/)
+  t.end()
+})
+
+t.test('formatMarkdown shows introducedBy chain', (t) => {
+  const out = formatMarkdown([makePkg({
+    introducedBy: [['host', 'dep-a', 'canvas']],
+  })])
+  t.match(out, /\*\*Introduced by:\*\*/)
+  t.match(out, /host.*dep-a.*canvas/)
+  t.end()
+})
+
+t.test('formatMarkdown shows multiple introducedBy chains as separate list items', (t) => {
+  const out = formatMarkdown([makePkg({
+    introducedBy: [
+      ['my-app', 'plugin-a@1.0.0', 'canvas@2.0.0'],
+      ['my-app', 'plugin-b@2.0.0', 'canvas@2.0.0'],
+    ],
+  })])
+  t.match(out, /\*\*Introduced by:\*\*/)
+  t.match(out, /- my-app → plugin-a@1\.0\.0 → canvas@2\.0\.0/)
+  t.match(out, /- my-app → plugin-b@2\.0\.0 → canvas@2\.0\.0/)
+  // Both paths must appear as separate bullet lines
+  const bulletLines = out.split('\n').filter((l) => l.startsWith('- my-app'))
+  t.equal(bulletLines.length, 2, 'renders one bullet per introducedBy chain')
+  t.end()
+})
+
+t.test('formatMarkdown lists referenced files with signals', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct reference in lifecycle script',
+      sha256: 'abc123',
+      signals: ['uses-child-process', 'network-access'],
+      references: ['./helper.js'],
+    }],
+  })])
+  t.match(out, /install\.js/)
+  t.match(out, /abc123/)
+  t.match(out, /uses child_process/)
+  t.match(out, /makes network requests/)
+  t.match(out, /helper\.js/)
+  t.end()
+})
+
+t.test('formatMarkdown shows risk summary for high-risk signals', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['uses-eval', 'writes-outside-package'],
+      references: [],
+    }],
+  })])
+  t.match(out, /### Risk summary/)
+  t.match(out, /eval/)
+  t.match(out, /outside the package directory/)
+  t.end()
+})
+
+t.test('formatMarkdown shows suggested review focus', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['network-access'],
+      references: [],
+    }],
+  })])
+  t.match(out, /### Suggested review focus/)
+  t.match(out, /remote endpoints/)
+  t.end()
+})
+
+t.test('formatMarkdown omits risk/focus sections when no high-risk signals', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'helper.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['requires-local-file'],
+      references: [],
+    }],
+  })])
+  t.notMatch(out, /### Risk summary/)
+  t.notMatch(out, /### Suggested review focus/)
+  t.end()
+})
+
+t.test('formatMarkdown handles package with no version', (t) => {
+  const out = formatMarkdown([makePkg({ version: null })])
+  t.match(out, /## Package: canvas/)
+  t.notMatch(out, /canvas@null/)
+  t.end()
+})
+
+t.test('formatMarkdown separates packages with horizontal rules', (t) => {
+  const out = formatMarkdown([makePkg(), makePkg({ name: 'sharp' })])
+  t.match(out, /---/)
+  t.match(out, /canvas@1\.0\.0/)
+  t.match(out, /sharp@1\.0\.0/)
+  t.end()
+})
+
+// --- formatJson ---
+
+t.test('formatJson returns valid JSON', (t) => {
+  const out = formatJson([])
+  const parsed = JSON.parse(out)
+  t.strictSame(parsed, { packages: [] })
+  t.end()
+})
+
+t.test('formatJson includes package fields', (t) => {
+  const parsed = JSON.parse(formatJson([makePkg()]))
+  t.equal(parsed.packages.length, 1)
+  const pkg = parsed.packages[0]
+  t.equal(pkg.name, 'canvas')
+  t.equal(pkg.version, '1.0.0')
+  t.equal(pkg.approvalStatus, 'pending')
+  t.equal(pkg.dependencyType, 'direct')
+  t.end()
+})
+
+t.test('formatJson adds riskSummary and suggestedReviewFocus', (t) => {
+  const pkg = makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['uses-eval', 'network-access'],
+      references: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  const out = parsed.packages[0]
+  t.ok(Array.isArray(out.riskSummary))
+  t.ok(out.riskSummary.some(s => /eval/.test(s)))
+  t.ok(Array.isArray(out.suggestedReviewFocus))
+  t.ok(out.suggestedReviewFocus.some(s => /remote endpoints/.test(s)))
+  t.end()
+})
+
+t.test('formatJson riskSummary is empty for low-risk signals', (t) => {
+  const pkg = makePkg({
+    referencedFiles: [{
+      path: 'helper.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['requires-local-file'],
+      references: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  t.strictSame(parsed.packages[0].riskSummary, [])
+  t.end()
+})
+
+t.test('formatJson handles multiple packages', (t) => {
+  const parsed = JSON.parse(formatJson([makePkg(), makePkg({ name: 'sharp' })]))
+  t.equal(parsed.packages.length, 2)
+  const names = parsed.packages.map(p => p.name).sort()
+  t.strictSame(names, ['canvas', 'sharp'])
+  t.end()
+})
+
+// --- JSFuck signal -------------------------------------------------------
+
+t.test('formatMarkdown includes jsfuck-obfuscation in risk summary and focus', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'referenced by lifecycle script: `install`',
+      sha256: null,
+      signals: ['jsfuck-obfuscation'],
+      references: [],
+    }],
+  })])
+  t.match(out, /JSFuck/, 'jsfuck signal label appears in output')
+  t.match(out, /### Risk summary/, 'risk summary section present')
+  t.match(out, /### Suggested review focus/, 'review focus section present')
+  t.match(out, /decode and audit/, 'review focus guidance for jsfuck included')
+  t.end()
+})
+
+t.test('formatMarkdown includes jsfuck-obfuscation for inline entry (path: null)', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: null,
+      reason: 'inline lifecycle script: `postinstall`',
+      sha256: null,
+      signals: ['jsfuck-obfuscation'],
+      references: [],
+    }],
+  })])
+  t.match(out, /inline lifecycle script/, 'inline reason shown')
+  t.match(out, /JSFuck/, 'jsfuck signal label present')
+  t.end()
+})
+
+t.test('formatJson riskSummary includes jsfuck-obfuscation as high-risk', (t) => {
+  const pkg = makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['jsfuck-obfuscation'],
+      references: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
+  t.ok(riskSummary.some(s => /JSFuck/.test(s)), 'jsfuck-obfuscation in riskSummary')
+  t.ok(suggestedReviewFocus.some(s => /decode and audit/.test(s)),
+    'jsfuck-obfuscation in suggestedReviewFocus')
+  t.end()
+})
+
+// --- New signal label and high-risk tests --------------------------------
+
+t.test('SIGNAL_LABELS: uses-vm has a label and is high-risk', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['uses-vm'],
+      references: [],
+    }],
+  })])
+  t.match(out, /vm module/, 'uses-vm label present')
+  t.match(out, /### Risk summary/, 'risk summary section present')
+  t.match(out, /### Suggested review focus/, 'review focus section present')
+  t.end()
+})
+
+t.test('SIGNAL_LABELS: uses-worker-threads has a label and is high-risk', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['uses-worker-threads'],
+      references: [],
+    }],
+  })])
+  t.match(out, /worker_threads/, 'uses-worker-threads label present')
+  t.match(out, /### Risk summary/, 'risk summary section present')
+  t.match(out, /worker threads/, 'review focus mentions worker threads')
+  t.end()
+})
+
+t.test('SIGNAL_LABELS: uses-net-socket has a label and is high-risk', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['uses-net-socket'],
+      references: [],
+    }],
+  })])
+  t.match(out, /TCP/, 'uses-net-socket label present')
+  t.match(out, /### Risk summary/, 'risk summary present')
+  t.match(out, /raw TCP/, 'review focus mentions raw TCP')
+  t.end()
+})
+
+t.test('SIGNAL_LABELS: uses-dns has a label and is high-risk', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['uses-dns'],
+      references: [],
+    }],
+  })])
+  t.match(out, /DNS/, 'uses-dns label present')
+  t.match(out, /### Risk summary/, 'risk summary present')
+  t.match(out, /exfiltrate/, 'review focus mentions exfiltration')
+  t.end()
+})
+
+t.test('SIGNAL_LABELS: shell-network-fetch has a label and is high-risk', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'fetch.sh',
+      reason: 'direct',
+      sha256: null,
+      signals: ['shell-network-fetch'],
+      references: [],
+    }],
+  })])
+  t.match(out, /curl/, 'shell-network-fetch label present')
+  t.match(out, /### Risk summary/, 'risk summary present')
+  t.match(out, /remote URLs/, 'review focus mentions remote URLs')
+  t.end()
+})
+
+t.test('SIGNAL_LABELS: process-binding has a label and is high-risk', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['process-binding'],
+      references: [],
+    }],
+  })])
+  t.match(out, /process\.binding/, 'process-binding label present')
+  t.match(out, /### Risk summary/, 'risk summary present')
+  t.match(out, /dlopen/, 'review focus mentions dlopen')
+  t.end()
+})
+
+t.test('formatJson: new signals are included in riskSummary', (t) => {
+  const pkg = makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['uses-worker-threads', 'uses-net-socket', 'uses-dns',
+        'shell-network-fetch', 'process-binding'],
+      references: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
+  t.ok(riskSummary.some(s => /worker_threads/.test(s)), 'uses-worker-threads in riskSummary')
+  t.ok(riskSummary.some(s => /TCP/.test(s)), 'uses-net-socket in riskSummary')
+  t.ok(riskSummary.some(s => /DNS/.test(s)), 'uses-dns in riskSummary')
+  t.ok(riskSummary.some(s => /curl/.test(s)), 'shell-network-fetch in riskSummary')
+  t.ok(riskSummary.some(s => /process\.binding/.test(s)), 'process-binding in riskSummary')
+  t.ok(suggestedReviewFocus.some(s => /worker threads/.test(s)),
+    'uses-worker-threads in suggestedReviewFocus')
+  t.ok(suggestedReviewFocus.some(s => /raw TCP/.test(s)),
+    'uses-net-socket in suggestedReviewFocus')
+  t.ok(suggestedReviewFocus.some(s => /exfiltrate/.test(s)),
+    'uses-dns in suggestedReviewFocus')
+  t.ok(suggestedReviewFocus.some(s => /remote URLs/.test(s)),
+    'shell-network-fetch in suggestedReviewFocus')
+  t.ok(suggestedReviewFocus.some(s => /dlopen/.test(s)),
+    'process-binding in suggestedReviewFocus')
+  t.end()
+})
+
+// --- file size in markdown output (uses existing formatBytes utility) ---
+
+t.test('formatMarkdown shows human-readable size for scanned files', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'referenced by lifecycle script: `install`',
+      sha256: 'abc123',
+      sizeBytes: 2000000,  // 2 MB (1000-based, matches formatBytes)
+      signals: [],
+      references: [],
+    }],
+  })])
+  t.match(out, /\*\*Size:\*\* 2\.0 MB/, 'file size displayed as 2.0 MB via formatBytes')
+  t.end()
+})
+
+t.test('formatMarkdown shows kB for small files', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'helper.js',
+      reason: 'direct',
+      sha256: 'def456',
+      sizeBytes: 4000,  // 4 kB (1000-based, matches formatBytes)
+      signals: [],
+      references: [],
+    }],
+  })])
+  t.match(out, /\*\*Size:\*\* 4\.0 kB/, 'file size displayed as 4.0 kB via formatBytes')
+  t.end()
+})
+
+t.test('formatMarkdown shows bytes for sub-kilobyte files', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'tiny.js',
+      reason: 'direct',
+      sha256: 'aaa',
+      sizeBytes: 512,
+      signals: [],
+      references: [],
+    }],
+  })])
+  t.match(out, /\*\*Size:\*\* 512 B/, 'file size displayed in bytes')
+  t.end()
+})
+
+t.test('formatMarkdown omits size line when sizeBytes is null', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      sizeBytes: null,
+      signals: ['file-unreadable'],
+      references: [],
+    }],
+  })])
+  t.notMatch(out, /\*\*Size:\*\*/, 'no size line when sizeBytes is null')
+  t.end()
+})
+
+// --- file size in JSON output ---
+
+t.test('formatJson preserves sizeBytes in referenced file entries', (t) => {
+  const pkg = makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: 'abc',
+      sizeBytes: 8192,
+      signals: [],
+      references: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  t.equal(parsed.packages[0].referencedFiles[0].sizeBytes, 8192,
+    'sizeBytes is preserved in JSON output')
+  t.end()
+})
+
+t.test('formatJson preserves sizeBytes: null for inline/unreadable entries', (t) => {
+  const pkg = makePkg({
+    referencedFiles: [{
+      path: null,
+      reason: 'inline lifecycle script: `install`',
+      sha256: null,
+      sizeBytes: null,
+      signals: ['uses-eval'],
+      references: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  t.equal(parsed.packages[0].referencedFiles[0].sizeBytes, null,
+    'sizeBytes is null for inline entries in JSON output')
+  t.end()
+})
+
+// --- formatReviewReport public API (covers lines 229-232) ---
+
+t.test('formatReviewReport outputs markdown by default', (t) => {
+  let captured = null
+  const mod = t.mock('../../../lib/utils/review-report-formatter.js', {
+    'proc-log': { output: { standard: (s) => { captured = s } } },
+  })
+  mod([makePkg()], 'markdown')
+  t.ok(captured, 'output.standard was called')
+  t.match(captured, /# npm Lifecycle Script Approval Review/, 'markdown output produced')
+  t.match(captured, /### Actions/, 'Actions section present')
+  t.match(captured, /`npm approve-scripts canvas`/, 'approve command present')
+  t.match(captured, /`npm approve-scripts --no-allow-scripts-pin canvas`/, 'approve name-only command present')
+  t.match(captured, /`npm deny-scripts canvas`/, 'deny command present (name-only)')
+  t.end()
+})
+
+t.test('formatReviewReport outputs JSON for json format', (t) => {
+  let captured = null
+  const mod = t.mock('../../../lib/utils/review-report-formatter.js', {
+    'proc-log': { output: { standard: (s) => { captured = s } } },
+  })
+  mod([makePkg()], 'json')
+  t.ok(captured, 'output.standard was called')
+  const parsed = JSON.parse(captured)
+  t.ok(Array.isArray(parsed.packages), 'JSON output has packages array')
+  t.equal(parsed.packages[0].approveCommand, 'npm approve-scripts canvas', 'approveCommand is name-only')
+  t.equal(parsed.packages[0].approveCommandNameOnly, 'npm approve-scripts --no-allow-scripts-pin canvas', 'approveCommandNameOnly present')
+  t.equal(parsed.packages[0].denyCommand, 'npm deny-scripts canvas', 'denyCommand is name-only')
+  t.end()
+})
+
+// --- Uncovered formatter branches -----------------------------------------
+
+t.test('formatMarkdown renders unknown signal name as-is (line 157 fallback)', (t) => {
+  // An unknown signal (not in SIGNAL_LABELS) is rendered as-is via `|| sig`.
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['completely-unknown-future-signal'],
+      references: [],
+    }],
+  })])
+  t.match(out, /completely-unknown-future-signal/, 'unknown signal rendered as raw key')
+  t.end()
+})
+
+t.test('formatMarkdown with changeClassification null (line 118 false branch)', (t) => {
+  // changeClassification is null — the `if (pkg.changeClassification)` block is skipped.
+  const out = formatMarkdown([makePkg({ changeClassification: null })])
+  t.notMatch(out, /\*\*Change:\*\*/, 'no Change line when changeClassification is null')
+  t.end()
+})
+
+t.test('formatMarkdown with version-changed and no previous version (line 120 sub-branch)', (t) => {
+  // status === 'version-changed' but previousApprovedVersion is null.
+  const out = formatMarkdown([makePkg({
+    changeClassification: { status: 'version-changed', previousApprovedVersion: null },
+  })])
+  t.notMatch(out, /previously approved version was/, 'no previousApprovedVersion line')
+  t.end()
+})
+
+t.test('formatMarkdown shows GB for very large files (format-bytes line 26)', (t) => {
+  // sizeBytes >= 999_950_000 triggers the GB branch in format-bytes.js.
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'huge.js',
+      reason: 'direct',
+      sha256: 'abc',
+      sizeBytes: 1_000_000_000,  // 1.0 GB
+      signals: [],
+      references: [],
+    }],
+  })])
+  t.match(out, /\*\*Size:\*\* 1\.0 GB/, 'file size displayed in GB via formatBytes')
+  t.end()
+})
+
+// --- native-build signal and nativeBuildInfo section ---------------------
+
+const makeNativePkg = (nativeBuildInfo, overrides = {}) =>
+  makePkg({ nativeBuildInfo, ...overrides })
+
+t.test('native-build signal appears in risk summary and review focus', (t) => {
+  const out = formatMarkdown([makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['native-build'],
+      references: [],
+    }],
+  })])
+  t.match(out, /### Risk summary/, 'risk summary present')
+  t.match(out, /node-gyp/, 'native-build label mentions node-gyp')
+  t.match(out, /### Suggested review focus/, 'review focus present')
+  t.match(out, /binding\.gyp/, 'review focus mentions binding.gyp')
+  t.end()
+})
+
+t.test('formatMarkdown renders native build section with targets', (t) => {
+  const out = formatMarkdown([makeNativePkg({
+    sha256: 'abc123',
+    targets: [{
+      name: 'canvas',
+      sources: ['src/canvas.cc', 'src/Image.cc'],
+      libraries: ['-lpng'],
+      includeDirs: ['include'],
+      hasConditions: false,
+    }],
+    parseError: null,
+  })])
+  t.match(out, /### Native build \(node-gyp\)/)
+  t.match(out, /binding\.gyp.*SHA-256.*abc123/)
+  t.match(out, /1 native target declared/)
+  t.match(out, /canvas/)
+  t.match(out, /src\/canvas\.cc/)
+  t.match(out, /src\/Image\.cc/)
+  t.match(out, /-lpng/)
+  t.match(out, /include/)
+  t.end()
+})
+
+t.test('formatMarkdown native build section shows conditions warning', (t) => {
+  const out = formatMarkdown([makeNativePkg({
+    sha256: 'def456',
+    targets: [{
+      name: 'native',
+      sources: ['src/native.cc'],
+      libraries: [],
+      includeDirs: [],
+      hasConditions: true,
+    }],
+    parseError: null,
+  })])
+  t.match(out, /Conditions: yes/)
+  t.match(out, /platform-specific/)
+  t.end()
+})
+
+t.test('formatMarkdown native build section shows parse error', (t) => {
+  const out = formatMarkdown([makeNativePkg({
+    sha256: 'fff000',
+    targets: [],
+    parseError: 'Unexpected token',
+  })])
+  t.match(out, /### Native build \(node-gyp\)/)
+  t.match(out, /Warning/)
+  t.match(out, /could not be parsed/)
+  t.match(out, /Unexpected token/)
+  t.end()
+})
+
+t.test('formatMarkdown native build section shows no-targets message', (t) => {
+  const out = formatMarkdown([makeNativePkg({
+    sha256: 'aaa111',
+    targets: [],
+    parseError: null,
+  })])
+  t.match(out, /### Native build \(node-gyp\)/)
+  t.match(out, /No targets declared/)
+  t.end()
+})
+
+t.test('formatMarkdown omits native build section when nativeBuildInfo is null', (t) => {
+  const out = formatMarkdown([makeNativePkg(null)])
+  t.notMatch(out, /### Native build/)
+  t.end()
+})
+
+t.test('formatMarkdown native build section uses plural "targets" for multiple', (t) => {
+  const out = formatMarkdown([makeNativePkg({
+    sha256: 'bbb222',
+    targets: [
+      { name: 'a', sources: [], libraries: [], includeDirs: [], hasConditions: false },
+      { name: 'b', sources: [], libraries: [], includeDirs: [], hasConditions: false },
+    ],
+    parseError: null,
+  })])
+  t.match(out, /2 native targets declared/)
+  t.end()
+})
+
+t.test('formatJson includes nativeBuildInfo as-is', (t) => {
+  const nativeBuildInfo = {
+    sha256: 'aabbcc',
+    targets: [{ name: 'mod', sources: ['src/mod.cc'], libraries: [], includeDirs: [], hasConditions: false }],
+    parseError: null,
+  }
+  const parsed = JSON.parse(formatJson([makeNativePkg(nativeBuildInfo)]))
+  t.strictSame(parsed.packages[0].nativeBuildInfo, nativeBuildInfo)
+  t.end()
+})
+
+t.test('formatJson preserves nativeBuildInfo: null', (t) => {
+  const parsed = JSON.parse(formatJson([makeNativePkg(null)]))
+  t.equal(parsed.packages[0].nativeBuildInfo, null)
+  t.end()
+})
+
+t.test('formatJson includes native-build in riskSummary', (t) => {
+  const pkg = makePkg({
+    referencedFiles: [{
+      path: 'install.js',
+      reason: 'direct',
+      sha256: null,
+      signals: ['native-build'],
+      references: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
+  t.ok(riskSummary.some(s => /node-gyp/.test(s)), 'native-build in riskSummary')
+  t.ok(suggestedReviewFocus.some(s => /binding\.gyp/.test(s)), 'native-build in suggestedReviewFocus')
+  t.end()
+})
