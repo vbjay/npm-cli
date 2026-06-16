@@ -125,8 +125,19 @@ t.test('detectSignals: obfuscation-pattern', (t) => {
 
 t.test('detectSignals: native-build', (t) => {
   const { detectSignals } = scanner(t)
-  t.ok(detectSignals('node-gyp rebuild').includes('native-build'))
-  t.ok(detectSignals('binding.gyp').includes('native-build'))
+  // Original patterns
+  t.ok(detectSignals('node-gyp rebuild').includes('native-build'), 'node-gyp')
+  t.ok(detectSignals('binding.gyp').includes('native-build'), 'binding.gyp')
+  // Extended patterns
+  t.ok(detectSignals('node-pre-gyp install --fallback-to-build').includes('native-build'), 'node-pre-gyp')
+  t.ok(detectSignals('prebuild-install --runtime napi').includes('native-build'), 'prebuild-install')
+  t.ok(detectSignals('prebuildify --napi').includes('native-build'), 'prebuildify')
+  t.ok(detectSignals('cmake-js compile').includes('native-build'), 'cmake-js')
+  t.ok(detectSignals('napi build --release --platform').includes('native-build'), 'napi build (napi-rs CLI)')
+  t.ok(detectSignals('neon build --release').includes('native-build'), 'neon build (Rust/Neon)')
+  // Negative: should not false-positive on unrelated commands
+  t.notOk(detectSignals('node build.js').includes('native-build'), 'node build.js is not native')
+  t.notOk(detectSignals('tsc --build').includes('native-build'), 'tsc --build is not native')
   t.end()
 })
 
