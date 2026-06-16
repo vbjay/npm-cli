@@ -184,6 +184,60 @@ t.test('findLocalRefs: detects dynamic import() with literal local path', (t) =>
   t.end()
 })
 
+t.test('findLocalRefs: paths with spaces are matched inside quoted strings', (t) => {
+  const { findLocalRefs } = scanner(t)
+  // require() — single quotes around a path that has an internal space
+  t.ok(findLocalRefs("require('./my lib/helper.js')").includes('./my lib/helper.js'),
+    'require: single-quoted path with space')
+  t.ok(findLocalRefs('require("./my lib/helper.js")').includes('./my lib/helper.js'),
+    'require: double-quoted path with space')
+  // ESM static import
+  t.ok(findLocalRefs("import x from './my utils.js'").includes('./my utils.js'),
+    'import from: path with space')
+  // Dynamic import
+  t.ok(findLocalRefs("import('./my module.js')").includes('./my module.js'),
+    'dynamic import: path with space')
+  // The enclosing quote still acts as the path terminator — a path that
+  // spans two quoted strings must NOT be merged by the regex.
+  t.notOk(findLocalRefs("require('./a') + require('./b')").includes('./a') === false,
+    'two separate requires are not merged')
+  t.end()
+})
+
+t.test('findLocalRefs: opposite quote type inside path is captured', (t) => {
+  const { findLocalRefs } = scanner(t)
+  // Double-quoted path containing a single quote
+  t.ok(findLocalRefs("require(\"./o'clock.js\")").includes("./o'clock.js"),
+    "require: double-quoted path containing single quote")
+  // Single-quoted path containing a double quote
+  t.ok(findLocalRefs("require('./say \"hi\".js')").includes('./say "hi".js'),
+    'require: single-quoted path containing double quote')
+  // ESM static import — double-quoted path with single quote
+  t.ok(findLocalRefs("import x from \"./o'clock.js\"").includes("./o'clock.js"),
+    "import from: double-quoted path with single quote")
+  // Dynamic import — single-quoted path with double quote
+  t.ok(findLocalRefs("import('./say \"hi\".js')").includes('./say "hi".js'),
+    'dynamic import: single-quoted path with double quote')
+  // The terminating quote still ends the path — opposite quote does NOT terminate
+  t.notOk(findLocalRefs("require('./a') + require('./b')").includes("./a') + require('./b"),
+    'closing quote terminates path correctly even with opposite quote present')
+  t.end()
+})
+
+t.test('findLocalRefs: shell source quoted path with opposite quote type is captured', (t) => {
+  const { findLocalRefs } = scanner(t)
+  // Unquoted path — existing behaviour preserved
+  t.ok(findLocalRefs('. ./setup.sh').includes('./setup.sh'),
+    'unquoted source path captured')
+  // Double-quoted path containing a single quote
+  t.ok(findLocalRefs(". \"./o'clock.sh\"").includes("./o'clock.sh"),
+    "source: double-quoted path with single quote captured")
+  // Single-quoted path containing a double quote
+  t.ok(findLocalRefs(". './say \"hi\".sh'").includes('./say "hi".sh'),
+    'source: single-quoted path with double quote captured')
+  t.end()
+})
+
 // --- Full scanPackageScripts integration tests ---------------------------
 
 t.test('returns empty array for empty scripts', async (t) => {
@@ -758,10 +812,33 @@ t.test('scanPackageScripts: jsfuck embedded inline via node -e is detected', asy
   })
 })
 
+t.test('scanPackageScripts: node -e extracts and scans local require refs', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'helper.js': "require('child_process')",
+  }, async (dir) => {
+    const result = await scan(dir, { postinstall: `node -e "require('./helper.js')"` })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('helper.js'), 'node -e: local require ref is extracted and scanned')
+    const entry = result.find((f) => f.path === 'helper.js')
+    t.ok(entry.signals.includes('uses-child-process'), 'signals from the referenced file are detected')
+  })
+})
+
+t.test('scanPackageScripts: node --eval extracts and scans local require refs', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'setup.js': "require('https')",
+  }, async (dir) => {
+    const result = await scan(dir, { postinstall: `node --eval "require('./setup.js')"` })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('setup.js'), 'node --eval: local require ref is extracted and scanned')
+  })
+})
+
 t.test('scanPackageScripts: clean inline command produces no inline entry', async (t) => {
   const scan = scanner(t)
   await withPackage(t, {
-    'build.js': 'module.exports = 1',
   }, async (dir) => {
     const result = await scan(dir, { install: 'node build.js' })
     // build.js has no signals, and the command string itself is clean
@@ -984,6 +1061,125 @@ t.test('cross-env wrapper with multiple env vars: script is scanned', async (t) 
     const result = await scan(dir, { install: 'cross-env NODE_ENV=production DEBUG=1 node ./build.js' })
     const paths = result.map((f) => f.path)
     t.ok(paths.includes('build.js'), 'cross-env with multiple vars: script is scanned')
+  })
+})
+
+// --- Quoted filenames with spaces ----------------------------------------
+// shellTokenize() must preserve spaces inside quotes and strip the quote
+// chars so every code path receives the bare filename.
+
+t.test('node: double-quoted filename with spaces is scanned', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my install.js': "require('child_process')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'node "my install.js"' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my install.js'), 'double-quoted spaced filename found')
+    t.ok(result.find((f) => f.path === 'my install.js')
+      .signals.includes('uses-child-process'), 'signals detected')
+  })
+})
+
+t.test('node: single-quoted filename with spaces is scanned', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my install.js': "require('https')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: "node 'my install.js'" })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my install.js'), 'single-quoted spaced filename found')
+  })
+})
+
+t.test('node --require: quoted specifier with spaces is resolved', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my preload.js': "require('child_process')",
+    'install.js': 'module.exports = 1',
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'node --require "./my preload.js" install.js' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my preload.js'), '--require spaced filename found')
+  })
+})
+
+t.test('node -r: quoted specifier with spaces is resolved', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my preload.js': "require('net')",
+    'install.js': 'module.exports = 1',
+  }, async (dir) => {
+    const result = await scan(dir, { install: "node -r './my preload.js' install.js" })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my preload.js'), '-r spaced filename found')
+  })
+})
+
+t.test('node --loader: quoted specifier with spaces is resolved', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my loader.mjs': "export async function resolve(s,c,n){return n(s,c)}",
+    'install.js': 'module.exports = 1',
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'node --loader "./my loader.mjs" install.js' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my loader.mjs'), '--loader spaced filename found')
+  })
+})
+
+t.test('node -e: local ref inside inline code with spaces in path is found', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my lib.js': "require('child_process')",
+  }, async (dir) => {
+    const result = await scan(dir, { postinstall: `node -e "require('./my lib.js')"` })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my lib.js'), 'node -e: spaced local ref resolved')
+  })
+})
+
+t.test('bash -c: quoted inner command with spaced filename is scanned', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my install.js': "require('child_process')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: `bash -c "node './my install.js'"` })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my install.js'), 'bash -c: spaced filename inside inner command found')
+  })
+})
+
+t.test('env wrapper: spaced filename is preserved after env vars', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my install.js': "require('https')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'env NODE_ENV=prod node "my install.js"' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my install.js'), 'env: spaced filename found after env vars')
+  })
+})
+
+t.test('cross-env wrapper: spaced filename is preserved after env vars', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my install.js': "require('https')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'cross-env NODE_ENV=prod node "my install.js"' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my install.js'), 'cross-env: spaced filename found')
+  })
+})
+
+t.test('bare env assignment: spaced filename is preserved', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'my install.js': "require('https')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'NODE_ENV=prod node "my install.js"' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('my install.js'), 'bare env: spaced filename found')
   })
 })
 
@@ -1234,13 +1430,25 @@ t.test('node with unrecognised flag skips flag and still finds main script', asy
 })
 
 t.test('node with bare module name (no extension) attempts to scan it', async (t) => {
-  // Covers the bare-name branch in parseSingleCommand (e.g. `node install`).
-  // The bare name is tried as-is (no .js extension appended); since no file
-  // named exactly `install` exists the scanner reports it as file-unreadable.
+  // The extensionless probing logic in scanFile tries appending .js/.mjs/.cjs.
+  // When install.js exists, the scan should succeed and surface signals.
   const scan = scanner(t)
   await withPackage(t, {
     'install.js': "require('https')",
   }, async (dir) => {
+    const result = await scan(dir, { install: 'node install' })
+    t.ok(result.some((f) => f.path === 'install.js'),
+      'bare name resolved to install.js via extensionless probing')
+    t.ok(result.some((f) => f.path === 'install.js' && f.signals.includes('network-access')),
+      'signals from the probed file are detected')
+  })
+})
+
+t.test('node with bare module name that does not exist is reported unreadable', async (t) => {
+  // When no .js/.mjs/.cjs variant exists either, the file is reported as
+  // file-unreadable under the bare name.
+  const scan = scanner(t)
+  await withPackage(t, {}, async (dir) => {
     const result = await scan(dir, { install: 'node install' })
     t.ok(result.some((f) => f.path === 'install' && f.signals.includes('file-unreadable')),
       'bare name attempted at exact path, reported unreadable when not found')
