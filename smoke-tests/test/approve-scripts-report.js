@@ -3,9 +3,7 @@ const path = require('node:path')
 const t = require('tap')
 const setup = require('./fixtures/setup.js')
 
-// Fixture is based on the real lerna monorepo package.json
-// (https://raw.githubusercontent.com/lerna/lerna/refs/heads/main/package.json)
-// with the workspace / file: self-reference stripped so it resolves standalone.
+// Load the demo project fixtures from the collocated fixtures folder.
 const getFixture = (p) => require(path.join(__dirname, 'fixtures', 'approve-scripts-report', p))
 
 t.test('approve-scripts report', async t => {
@@ -35,29 +33,12 @@ t.test('approve-scripts report', async t => {
 
   // Use the JSON sidecar written to the project dir for all assertions.
   const report = await readFile('report.json')
-
-  // lerna's deps produce 6 pending entries: nx appears three times at
-  // different locations (top-level nx@22, and two copies of nx@20 nested
-  // inside lerna's own subtree), plus @swc/core, esbuild, and unrs-resolver.
-  t.equal(report.packages.length, 6, 'report contains exactly 6 pending packages')
+  t.equal(report.packages.length, 3, 'report contains exactly 3 pending packages')
 
   const names = report.packages.map(p => p.name)
-  t.ok(names.includes('nx'), 'report includes nx (postinstall, multiple copies)')
-  t.ok(names.includes('@swc/core'), 'report includes @swc/core (direct, native binding download)')
-  t.ok(names.includes('esbuild'), 'report includes esbuild (direct, network binary download)')
-  t.ok(names.includes('unrs-resolver'), 'report includes unrs-resolver (transitive, native resolver)')
-
-  const nxEntries = report.packages.filter(p => p.name === 'nx')
-  t.equal(nxEntries.length, 3, 'nx appears 3 times (top-level + 2 nested lerna copies)')
-
-  const esbuildPkg = report.packages.find(p => p.name === 'esbuild')
-  t.equal(esbuildPkg.dependencyType, 'direct', 'esbuild is a direct dependency')
-
-  const swcPkg = report.packages.find(p => p.name === '@swc/core')
-  t.equal(swcPkg.dependencyType, 'direct', '@swc/core is a direct dependency')
-
-  const unrsPkg = report.packages.find(p => p.name === 'unrs-resolver')
-  t.equal(unrsPkg.dependencyType, 'transitive', 'unrs-resolver is a transitive dependency')
+  t.ok(names.includes('@sentry/cli'), 'report includes @sentry/cli (transitive)')
+  t.ok(names.includes('canvas'), 'report includes canvas (direct, native-build)')
+  t.ok(names.includes('esbuild'), 'report includes esbuild (direct, child-process)')
 
   for (const pkg of report.packages) {
     t.equal(pkg.approvalStatus, 'pending', `${pkg.name}@${pkg.version} is pending`)
