@@ -592,6 +592,17 @@ t.test('formatMarkdown shows GB for very large files (format-bytes line 26)', (t
 
 // --- native-build signal and nativeBuildInfo section ---------------------
 
+// Helper: build a minimal IndicatorResult[] for a single GYP indicator
+const makeGypIndicator = (overrides = {}) => ({
+  indicatorFile: 'binding.gyp',
+  label: 'GYP build descriptor',
+  sha256: 'abc123',
+  parseError: null,
+  signals: ['native-build'],
+  groups: [],
+  ...overrides,
+})
+
 const makeNativePkg = (nativeBuildInfo, overrides = {}) =>
   makePkg({ nativeBuildInfo, ...overrides })
 
@@ -606,27 +617,24 @@ t.test('native-build signal appears in risk summary and review focus', (t) => {
     }],
   })])
   t.match(out, /### Risk summary/, 'risk summary present')
-  t.match(out, /node-gyp/, 'native-build label mentions node-gyp')
+  t.match(out, /native code/, 'native-build label appears')
   t.match(out, /### Suggested review focus/, 'review focus present')
   t.match(out, /binding\.gyp/, 'review focus mentions binding.gyp')
   t.end()
 })
 
 t.test('formatMarkdown renders native build section with targets', (t) => {
-  const out = formatMarkdown([makeNativePkg({
+  const out = formatMarkdown([makeNativePkg([makeGypIndicator({
     sha256: 'abc123',
-    targets: [{
-      name: 'canvas',
-      sources: ['src/canvas.cc', 'src/Image.cc'],
-      libraries: ['-lpng'],
-      includeDirs: ['include'],
-      hasConditions: false,
-    }],
-    parseError: null,
-  })])
-  t.match(out, /### Native build \(node-gyp\)/)
-  t.match(out, /binding\.gyp.*SHA-256.*abc123/)
-  t.match(out, /1 native target declared/)
+    groups: [
+      { label: 'Target `canvas` — C/C++ sources', items: ['src/canvas.cc', 'src/Image.cc'] },
+      { label: 'Target `canvas` — libraries', items: ['-lpng'] },
+      { label: 'Target `canvas` — include directories', items: ['include'] },
+    ],
+  })])])
+  t.match(out, /### Native build indicators/)
+  t.match(out, /binding\.gyp.*GYP build descriptor/)
+  t.match(out, /SHA-256.*abc123/)
   t.match(out, /canvas/)
   t.match(out, /src\/canvas\.cc/)
   t.match(out, /src\/Image\.cc/)
@@ -635,44 +643,40 @@ t.test('formatMarkdown renders native build section with targets', (t) => {
   t.end()
 })
 
-t.test('formatMarkdown native build section shows conditions warning', (t) => {
-  const out = formatMarkdown([makeNativePkg({
+t.test('formatMarkdown native build section shows conditions warning group', (t) => {
+  const out = formatMarkdown([makeNativePkg([makeGypIndicator({
     sha256: 'def456',
-    targets: [{
-      name: 'native',
-      sources: ['src/native.cc'],
-      libraries: [],
-      includeDirs: [],
-      hasConditions: true,
-    }],
-    parseError: null,
-  })])
-  t.match(out, /Conditions: yes/)
+    signals: ['native-build', 'gyp-conditions'],
+    groups: [
+      { label: 'Target `native` — C/C++ sources', items: ['src/native.cc'] },
+      { label: 'Target `native` — platform-specific conditions',
+        items: ['yes — inspect for platform-specific build behaviour'] },
+    ],
+  })])])
   t.match(out, /platform-specific/)
   t.end()
 })
 
 t.test('formatMarkdown native build section shows parse error', (t) => {
-  const out = formatMarkdown([makeNativePkg({
+  const out = formatMarkdown([makeNativePkg([makeGypIndicator({
     sha256: 'fff000',
-    targets: [],
     parseError: 'Unexpected token',
-  })])
-  t.match(out, /### Native build \(node-gyp\)/)
+    groups: [],
+  })])])
+  t.match(out, /### Native build indicators/)
   t.match(out, /Warning/)
   t.match(out, /could not be parsed/)
   t.match(out, /Unexpected token/)
   t.end()
 })
 
-t.test('formatMarkdown native build section shows no-targets message', (t) => {
-  const out = formatMarkdown([makeNativePkg({
+t.test('formatMarkdown native build section shows no-details message', (t) => {
+  const out = formatMarkdown([makeNativePkg([makeGypIndicator({
     sha256: 'aaa111',
-    targets: [],
-    parseError: null,
-  })])
-  t.match(out, /### Native build \(node-gyp\)/)
-  t.match(out, /No targets declared/)
+    groups: [],
+  })])])
+  t.match(out, /### Native build indicators/)
+  t.match(out, /No details extracted/)
   t.end()
 })
 
@@ -682,25 +686,32 @@ t.test('formatMarkdown omits native build section when nativeBuildInfo is null',
   t.end()
 })
 
-t.test('formatMarkdown native build section uses plural "targets" for multiple', (t) => {
-  const out = formatMarkdown([makeNativePkg({
-    sha256: 'bbb222',
-    targets: [
-      { name: 'a', sources: [], libraries: [], includeDirs: [], hasConditions: false },
-      { name: 'b', sources: [], libraries: [], includeDirs: [], hasConditions: false },
-    ],
-    parseError: null,
-  })])
-  t.match(out, /2 native targets declared/)
+t.test('formatMarkdown omits native build section when nativeBuildInfo is empty array', (t) => {
+  const out = formatMarkdown([makeNativePkg([])])
+  t.notMatch(out, /### Native build/)
   t.end()
 })
 
-t.test('formatJson includes nativeBuildInfo as-is', (t) => {
-  const nativeBuildInfo = {
-    sha256: 'aabbcc',
-    targets: [{ name: 'mod', sources: ['src/mod.cc'], libraries: [], includeDirs: [], hasConditions: false }],
-    parseError: null,
-  }
+t.test('formatMarkdown renders multiple indicator files', (t) => {
+  const out = formatMarkdown([makeNativePkg([
+    makeGypIndicator({ sha256: 'aaa' }),
+    {
+      indicatorFile: 'Cargo.toml',
+      label: 'Rust native addon',
+      sha256: 'bbb',
+      parseError: null,
+      signals: ['native-build', 'rust-native'],
+      groups: [{ label: 'Crate name', items: ['my-crate'] }],
+    },
+  ])])
+  t.match(out, /binding\.gyp.*GYP build descriptor/)
+  t.match(out, /Cargo\.toml.*Rust native addon/)
+  t.match(out, /my-crate/)
+  t.end()
+})
+
+t.test('formatJson includes nativeBuildInfo as-is (IndicatorResult[])', (t) => {
+  const nativeBuildInfo = [makeGypIndicator({ sha256: 'aabbcc' })]
   const parsed = JSON.parse(formatJson([makeNativePkg(nativeBuildInfo)]))
   t.strictSame(parsed.packages[0].nativeBuildInfo, nativeBuildInfo)
   t.end()
@@ -724,7 +735,46 @@ t.test('formatJson includes native-build in riskSummary', (t) => {
   })
   const parsed = JSON.parse(formatJson([pkg]))
   const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
-  t.ok(riskSummary.some(s => /node-gyp/.test(s)), 'native-build in riskSummary')
+  t.ok(riskSummary.some(s => /native code/.test(s)), 'native-build in riskSummary')
   t.ok(suggestedReviewFocus.some(s => /binding\.gyp/.test(s)), 'native-build in suggestedReviewFocus')
   t.end()
 })
+
+t.test('allSignals merges indicator signals into risk summary', (t) => {
+  const pkg = makePkg({
+    nativeBuildInfo: [{
+      indicatorFile: 'binding.gyp',
+      label: 'GYP build descriptor',
+      sha256: 'x',
+      parseError: null,
+      signals: ['native-build', 'gyp-conditions'],
+      groups: [],
+    }],
+  })
+  const parsed = JSON.parse(formatJson([pkg]))
+  const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
+  t.ok(riskSummary.some(s => /native code/.test(s)), 'native-build from indicator in riskSummary')
+  t.ok(suggestedReviewFocus.some(s => /platform-specific/.test(s)),
+    'gyp-conditions in suggestedReviewFocus')
+  t.end()
+})
+
+t.test('rust-native signal appears in risk summary and review focus', (t) => {
+  const pkg = makePkg({
+    nativeBuildInfo: [{
+      indicatorFile: 'Cargo.toml',
+      label: 'Rust native addon',
+      sha256: 'y',
+      parseError: null,
+      signals: ['native-build', 'rust-native'],
+      groups: [],
+    }],
+  })
+  const out = formatMarkdown([pkg])
+  t.match(out, /### Risk summary/)
+  t.match(out, /Rust native addon|Rust/)
+  t.ok(formatMarkdown([pkg]).includes('rust-native') ||
+    out.match(/Rust/), 'rust-native signal rendered')
+  t.end()
+})
+

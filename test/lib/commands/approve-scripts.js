@@ -950,7 +950,7 @@ t.test('approve-scripts --all with only bundled deps has nothing to review', asy
 
 t.test('review report: nativeBuildInfo is null for packages with no gyp reference', async t => {
   // A package whose install script has no node-gyp / binding.gyp reference
-  // should NOT have scanGypFile run against it — nativeBuildInfo stays null.
+  // should NOT have scanNativeBuildIndicators run against it — nativeBuildInfo stays null.
   const { npm, joinedOutput } = await _mockNpm(t, {
     prefixDir: setupProject({ withScripts: ['canvas'] }),
     config: { 'allow-scripts-pending': true, json: true },
@@ -997,11 +997,14 @@ t.test('review report: nativeBuildInfo is populated when install script referenc
   const parsed = JSON.parse(joinedOutput())
   const entry = parsed.packages.find((p) => p.name === 'native-pkg')
   t.ok(entry, 'native-pkg appears in pending list')
-  // The synthetic `node-gyp rebuild` script triggers the gyp hint, so
-  // nativeBuildInfo must be present.
-  t.ok(entry.nativeBuildInfo, 'nativeBuildInfo is populated for a gyp package')
-  t.ok(Array.isArray(entry.nativeBuildInfo.targets), 'targets array is present')
-  t.match(entry.nativeBuildInfo.targets[0], { name: 'mymod', sources: ['src/mymod.cc'] })
+  // The synthetic `node-gyp rebuild` script triggers the native-build hint, so
+  // nativeBuildInfo must be present as a non-empty IndicatorResult[].
+  t.ok(Array.isArray(entry.nativeBuildInfo) && entry.nativeBuildInfo.length > 0,
+    'nativeBuildInfo is a non-empty array for a gyp package')
+  const ind = entry.nativeBuildInfo.find(i => i.indicatorFile === 'binding.gyp')
+  t.ok(ind, 'binding.gyp indicator is present')
+  t.ok(ind.groups.some(g => g.items.includes('src/mymod.cc')),
+    'source file from binding.gyp appears in groups')
 })
 
 t.test('review report: nativeBuildInfo is populated when a referenced file carries native-build signal', async t => {
@@ -1052,8 +1055,11 @@ gyp.commands.build([], () => {})
   const parsed = JSON.parse(joinedOutput())
   const entry = parsed.packages.find((p) => p.name === 'lazy-gyp')
   t.ok(entry, 'lazy-gyp appears in pending list')
-  // install.js carries the native-build signal, which should trigger scanGypFile.
-  t.ok(entry.nativeBuildInfo, 'nativeBuildInfo is populated via native-build signal in referenced file')
-  t.ok(Array.isArray(entry.nativeBuildInfo.targets), 'targets array is present')
-  t.match(entry.nativeBuildInfo.targets[0], { name: 'lazymod' })
+  // install.js carries the native-build signal, which triggers scanNativeBuildIndicators.
+  t.ok(Array.isArray(entry.nativeBuildInfo) && entry.nativeBuildInfo.length > 0,
+    'nativeBuildInfo is a non-empty array via native-build signal in referenced file')
+  const ind = entry.nativeBuildInfo.find(i => i.indicatorFile === 'binding.gyp')
+  t.ok(ind, 'binding.gyp indicator is present')
+  t.ok(ind.groups.some(g => g.items.includes('src/lazy.cc')),
+    'source file from binding.gyp appears in groups')
 })
