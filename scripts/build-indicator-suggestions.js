@@ -405,18 +405,24 @@ async function main () {
   const delayMs = +flag('--delay', 60)
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
+
+  // Default cache path: same directory as --out, same basename with -packages suffix.
+  // e.g. indicator-suggestions.json → indicator-packages.json
+  // Pass --no-cache to disable.  Pass --packages <file> to use a specific path.
+  const noCache = args.includes('--no-cache')
+  const defaultPkgFile = outPath.replace(/(-packages)?\.json$/, '-packages.json')
   const pkgFile = flag('--packages', null)
-  const pkgPath = pkgFile
-    ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
-    : null
+  const pkgPath = noCache ? null
+    : pkgFile ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
+    : defaultPkgFile
 
   process.stderr.write(`\n📦 npm indicator-suggestions builder\n`)
   process.stderr.write(`   Top N: ${topN}  |  delay: ${delayMs}ms  |  out: ${outPath}\n`)
-  if (pkgPath) process.stderr.write(`   packages: ${pkgPath}\n`)
-  process.stderr.write('\n')
+  process.stderr.write(`   cache: ${pkgPath ?? '(disabled via --no-cache)'}\n\n`)
 
   // ---------------------------------------------------------------------------
-  // Load existing package cache (if --packages file provided)
+  // Load existing package cache (always on unless --no-cache; silently skips
+  // if the file doesn't exist yet on a fresh first run)
   // ---------------------------------------------------------------------------
   const manifests = []
   const seen = new Set()
