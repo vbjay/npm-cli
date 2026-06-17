@@ -101,16 +101,33 @@ const LIFECYCLE_HOOKS = ['preinstall', 'install', 'postinstall', 'prepare', 'pre
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
-async function fetchJson (url, retries = 3) {
+// Resolve the 'Retry-After' header value to milliseconds.
+// Value is either an integer (seconds) or an HTTP-date.
+function retryAfterMs (header) {
+  if (!header) return null
+  const secs = parseInt(header, 10)
+  if (!isNaN(secs)) return secs * 1000
+  const date = Date.parse(header)
+  if (!isNaN(date)) return Math.max(0, date - Date.now())
+  return null
+}
+
+async function fetchJson (url, retries = 5) {
   for (let attempt = 1; attempt <= retries; attempt++) {
+    let statusCode
     try {
       return await new Promise((resolve, reject) => {
         const req = https.get(url, { headers: { 'User-Agent': 'npm-indicator-builder/1.0' } }, res => {
+          statusCode = res.statusCode
           let buf = ''
           res.on('data', d => (buf += d))
           res.on('end', () => {
             if (res.statusCode === 404) {
               resolve(null)
+            } else if (res.statusCode === 429) {
+              // Reject so the retry loop can apply the right backoff
+              const ra = retryAfterMs(res.headers['retry-after'])
+              reject(Object.assign(new Error(`HTTP 429 for ${url}`), { isRateLimit: true, retryAfterMs: ra }))
             } else if (res.statusCode >= 200 && res.statusCode < 300) {
               try { resolve(JSON.parse(buf)) } catch (e) {
                 reject(new Error(`JSON parse error for ${url}: ${e.message}`))
@@ -125,8 +142,11 @@ async function fetchJson (url, retries = 3) {
       })
     } catch (err) {
       if (attempt === retries) throw err
-      process.stderr.write(`  retry ${attempt}/${retries}: ${err.message}\n`)
-      await sleep(500 * attempt)
+      const wait = err.isRateLimit
+        ? (err.retryAfterMs ?? 10_000) + 1_000 * attempt  // honour Retry-After + jitter
+        : 500 * attempt
+      process.stderr.write(`  retry ${attempt}/${retries} (${Math.round(wait / 1000)}s): ${err.message}\n`)
+      await sleep(wait)
     }
   }
 }
@@ -294,6 +314,53 @@ function suggestSignal (tokens, inferredFiles) {
 }
 
 // ---------------------------------------------------------------------------
+// Package cache — load / save collected manifests so a run can be resumed
+// after a crash without re-fetching everything from scratch.
+//
+// Two formats are accepted on load:
+//   Rich (written by this script):  { packages: [...manifest objects...] }
+//   Simple name list (user-provided):  ["lodash", "@babel/core", ...]
+// ---------------------------------------------------------------------------
+
+async function loadPackageCache (filePath) {
+  try {
+    const raw = JSON.parse(await fs.readFile(filePath, 'utf-8'))
+    if (Array.isArray(raw)) {
+      // Simple name list — caller must fetch manifests for these
+      return { names: raw, manifests: null }
+    }
+    if (raw.packages && Array.isArray(raw.packages)) {
+      return { names: null, manifests: raw.packages }
+    }
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      process.stderr.write(`  Warning: could not read cache ${filePath}: ${err.message}\n`)
+    }
+  }
+  return { names: null, manifests: null }
+}
+
+async function savePackageCache (filePath, manifests) {
+  const data = {
+    generatedAt: new Date().toISOString(),
+    count: manifests.length,
+    // Store only the fields needed to resume: scripts + dependencies for analysis,
+    // plus weeklyDownloads if already fetched (0 means not yet fetched).
+    packages: manifests.map(m => ({
+      name: m.name,
+      version: m.version,
+      scripts: m.scripts,
+      dependencies: m.dependencies,
+      devDependencies: m.devDependencies,
+      optionalDependencies: m.optionalDependencies,
+      peerDependencies: m.peerDependencies,
+      weeklyDownloads: m.weeklyDownloads || 0,
+    })),
+  }
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2) + '\n', 'utf-8')
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -308,20 +375,54 @@ async function main () {
   const delayMs = +flag('--delay', 60)
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
+  const pkgFile = flag('--packages', null)
+  const pkgPath = pkgFile
+    ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
+    : null
 
   process.stderr.write(`\n📦 npm indicator-suggestions builder\n`)
-  process.stderr.write(`   Top N: ${topN}  |  delay: ${delayMs}ms  |  out: ${outPath}\n\n`)
+  process.stderr.write(`   Top N: ${topN}  |  delay: ${delayMs}ms  |  out: ${outPath}\n`)
+  if (pkgPath) process.stderr.write(`   packages: ${pkgPath}\n`)
+  process.stderr.write('\n')
 
-  // Steps 1–3 combined: fan out across multiple popularity-sorted search queries,
-  // deduplicate names, fetch each manifest, and keep only those that have at
-  // least one lifecycle hook — stop once topN such packages are collected.
-  //
-  // The npm search API requires text ≥ 2 chars and does NOT have a "return
-  // everything sorted by downloads" mode.  Using several broad keyword queries
-  // in popularity-boosted order gives us a high-quality, broad sample — the
-  // first pages of each query contain genuinely highly-downloaded packages.
-  // Build-specific queries (keywords:native, keywords:addon, etc.) ensure we
-  // don't miss niche-but-important categories even if they score lower overall.
+  // ---------------------------------------------------------------------------
+  // Load existing package cache (if --packages file provided)
+  // ---------------------------------------------------------------------------
+  const manifests = []
+  const seen = new Set()
+
+  if (pkgPath) {
+    process.stderr.write('Loading package cache...\n')
+    const { names, manifests: cached } = await loadPackageCache(pkgPath)
+
+    if (cached) {
+      // Rich cache — use manifests directly, no re-fetching needed
+      for (const m of cached) {
+        manifests.push(m)
+        seen.add(m.name)
+      }
+      process.stderr.write(`  ✓ loaded ${manifests.length} packages from cache\n\n`)
+    } else if (names) {
+      // Simple name list — fetch manifests now
+      process.stderr.write(`  fetching manifests for ${names.length} seed packages...\n`)
+      for (const name of names) {
+        seen.add(name)
+        const manifest = await getPackageManifest(name)
+        if (manifest) {
+          const lc = extractLifecycleScripts(manifest.scripts)
+          if (Object.keys(lc).length > 0) manifests.push(manifest)
+        }
+        if (delayMs > 0) await sleep(delayMs)
+      }
+      process.stderr.write(`  ✓ ${manifests.length} seed packages with lifecycle scripts\n\n`)
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Steps 1–3: fan out across popularity-sorted search queries, deduplicate,
+  // fetch manifests, keep only those with lifecycle scripts.
+  // Packages already loaded from cache are pre-seeded in manifests/seen above.
+  // ---------------------------------------------------------------------------
   const DISCOVERY_QUERIES = [
     'keywords:javascript',  // ~58K — broad; tslib, @babel/parser, typescript, …
     'keywords:node',        // ~36K — Node.js ecosystem; resolve, axios, …
@@ -338,12 +439,10 @@ async function main () {
 
   process.stderr.write('Steps 1–3: Scanning popular packages for lifecycle scripts...\n')
   process.stderr.write(`  (will stop once ${topN} packages with lifecycle scripts are found)\n`)
-  process.stderr.write(`  (queries: ${DISCOVERY_QUERIES.length} keyword categories)\n\n`)
+  process.stderr.write(`  (starting from ${manifests.length} cached; need ${Math.max(0, topN - manifests.length)} more)\n\n`)
 
-  const manifests = []
-  const seen = new Set()       // deduplicate across queries
   let scanned = 0
-  let done = false
+  let done = manifests.length >= topN
 
   for (const query of DISCOVERY_QUERIES) {
     if (done) break
@@ -379,6 +478,10 @@ async function main () {
               )
             }
             if (manifests.length >= topN) done = true
+            // Checkpoint save every 100 new packages so a crash loses minimal work
+            if (pkgPath && manifests.length % 100 === 0) {
+              await savePackageCache(pkgPath, manifests)
+            }
           }
         }
         if (delayMs > 0) await sleep(delayMs)
@@ -395,11 +498,23 @@ async function main () {
     ` (scanned ${scanned} total across ${seen.size} unique names)\n\n`
   )
 
-  // Fetch weekly download counts only for the packages we kept
+  // Fetch weekly download counts only for the packages we kept.
+  // Skip packages that already have download counts from a previous run
+  // (weeklyDownloads > 0 means they were fetched before).
   process.stderr.write('Step 4/5: Fetching weekly download counts...\n')
-  const downloads = await getBatchDownloads(manifests.map(m => m.name))
-  for (const m of manifests) m.weeklyDownloads = downloads[m.name] || 0
+  const needDownloads = manifests.filter(m => !m.weeklyDownloads)
+  if (needDownloads.length < manifests.length) {
+    process.stderr.write(`  (${manifests.length - needDownloads.length} already cached, fetching ${needDownloads.length} new)\n`)
+  }
+  const downloads = await getBatchDownloads(needDownloads.map(m => m.name))
+  for (const m of needDownloads) m.weeklyDownloads = downloads[m.name] || 0
   process.stderr.write(`  ✓ download counts fetched\n\n`)
+
+  // Save final package cache (with download counts) so the next run is fast
+  if (pkgPath) {
+    await savePackageCache(pkgPath, manifests)
+    process.stderr.write(`  ✓ package cache saved to ${pkgPath}\n\n`)
+  }
 
   // Step 5/5: Analyze
   process.stderr.write('Step 5/5: Analyzing...\n')
@@ -410,12 +525,8 @@ async function main () {
   // token → { packages: string[], totalDownloads: number }
   const gapTokens = {}
 
-  let withScripts = 0
-
   for (const manifest of manifests) {
     const lc = extractLifecycleScripts(manifest.scripts)
-    if (Object.keys(lc).length === 0) continue
-    withScripts++
 
     const matches = matchExistingDefinitions(lc)
     if (matches.length > 0) {
