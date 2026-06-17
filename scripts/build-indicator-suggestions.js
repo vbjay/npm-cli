@@ -406,19 +406,17 @@ async function main () {
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
 
-  // Default cache path: same directory as --out, same basename with -packages suffix.
-  // e.g. indicator-suggestions.json → indicator-packages.json
-  // Pass --no-cache to disable.  Pass --packages <file> to use a specific path.
-  const noCache = args.includes('--no-cache')
+  // Cache path derived from --out (swap suffix).  Override with --packages <file>.
+  // The cache is a crash-recovery temp file — written throughout the run and
+  // deleted automatically on successful completion.
   const defaultPkgFile = outPath.replace(/(-packages)?\.json$/, '-packages.json')
   const pkgFile = flag('--packages', null)
-  const pkgPath = noCache ? null
-    : pkgFile ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
+  const pkgPath = pkgFile
+    ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
     : defaultPkgFile
 
   process.stderr.write(`\n📦 npm indicator-suggestions builder\n`)
-  process.stderr.write(`   Top N: ${topN}  |  delay: ${delayMs}ms  |  out: ${outPath}\n`)
-  process.stderr.write(`   cache: ${pkgPath ?? '(disabled via --no-cache)'}\n\n`)
+  process.stderr.write(`   Top N: ${topN}  |  delay: ${delayMs}ms  |  out: ${outPath}\n\n`)
 
   // ---------------------------------------------------------------------------
   // Load existing package cache (always on unless --no-cache; silently skips
@@ -661,6 +659,12 @@ async function main () {
   }
 
   await fs.writeFile(outPath, JSON.stringify(output, null, 2) + '\n', 'utf-8')
+
+  // Remove the cache — it was only needed to survive a crash mid-run.
+  // Leaving it around would cause the next run to reuse stale data.
+  if (pkgPath) {
+    await fs.unlink(pkgPath).catch(() => {})
+  }
 
   process.stderr.write(`\n✅ Done!\n`)
   process.stderr.write(`   Total scanned:        ${scanned}\n`)
