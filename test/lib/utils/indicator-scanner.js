@@ -131,6 +131,47 @@ t.test('scanNativeBuildIndicators: returns empty when no indicator file on disk'
 // GYP scanner (instantiated only when binding.gyp detected)
 // ---------------------------------------------------------------------------
 
+t.test('GYP scanner: expands <(varname) reference in target_name from variables block', async (t) => {
+  await withPackage(t, {
+    'binding.gyp': JSON.stringify({
+      variables: { module_name: 'node_sqlite3' },
+      targets: [{
+        target_name: '<(module_name)',
+        sources: ['src/database.cc'],
+      }],
+    }),
+  }, async (dir) => {
+    const results = await scanNativeBuildIndicators(dir, GYP)
+    const sources = results[0].groups.find(g => g.label.includes('sources'))
+    t.match(sources?.label, /node_sqlite3/, 'target name resolved from variables block')
+    t.ok(sources?.items.includes('src/database.cc'))
+  })
+})
+
+t.test('GYP scanner: leaves unresolvable <(varname) as literal when variable not in block', async (t) => {
+  await withPackage(t, {
+    'binding.gyp': JSON.stringify({
+      targets: [{ target_name: '<(unknown_var)', sources: ['x.cc'] }],
+    }),
+  }, async (dir) => {
+    const results = await scanNativeBuildIndicators(dir, GYP)
+    const sources = results[0].groups.find(g => g.label.includes('sources'))
+    t.match(sources?.label, /<\(unknown_var\)/, 'unresolvable var kept as literal')
+  })
+})
+
+t.test('GYP scanner: resolves variable declared with trailing % in variables block', async (t) => {
+  await withPackage(t, {
+    'binding.gyp': JSON.stringify({
+      variables: { 'module_name%': 'my_module' },
+      targets: [{ target_name: '<(module_name)', sources: ['src/x.cc'] }],
+    }),
+  }, async (dir) => {
+    const results = await scanNativeBuildIndicators(dir, GYP)
+    const sources = results[0].groups.find(g => g.label.includes('sources'))
+    t.match(sources?.label, /my_module/, 'variable with % suffix resolved correctly')
+  })
+})
 t.test('GYP scanner: extracts sources, libraries, include dirs from binding.gyp', async (t) => {
   await withPackage(t, {
     'binding.gyp': JSON.stringify({
