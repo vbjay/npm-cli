@@ -101,8 +101,24 @@ const LIFECYCLE_HOOKS = ['preinstall', 'install', 'postinstall', 'prepare', 'pre
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
+// Global rate-limit state.  When ANY request receives a 429, ALL subsequent
+// requests (new ones AND retries) wait here until the cooldown expires.
+// This prevents the pipeline from hammering the API while one request backs off.
+let _cooldownUntil = 0
+let _consecutiveRateLimits = 0
+
+async function waitForCooldown (label) {
+  const remaining = _cooldownUntil - Date.now()
+  if (remaining > 0) {
+    process.stderr.write(
+      `  ⏳ rate-limit cooldown: waiting ${Math.ceil(remaining / 1000)}s` +
+      (label ? ` (${label})` : '') + '\n'
+    )
+    await sleep(remaining + 100) // +100ms buffer past the deadline
+  }
+}
+
 // Resolve the 'Retry-After' header value to milliseconds.
-// Value is either an integer (seconds) or an HTTP-date.
 function retryAfterMs (header) {
   if (!header) return null
   const secs = parseInt(header, 10)
@@ -114,20 +130,30 @@ function retryAfterMs (header) {
 
 async function fetchJson (url, retries = 5) {
   for (let attempt = 1; attempt <= retries; attempt++) {
-    let statusCode
+    // Always honour the global cooldown before firing any request
+    await waitForCooldown()
+
     try {
-      return await new Promise((resolve, reject) => {
+      const result = await new Promise((resolve, reject) => {
         const req = https.get(url, { headers: { 'User-Agent': 'npm-indicator-builder/1.0' } }, res => {
-          statusCode = res.statusCode
           let buf = ''
           res.on('data', d => (buf += d))
           res.on('end', () => {
             if (res.statusCode === 404) {
               resolve(null)
             } else if (res.statusCode === 429) {
-              // Reject so the retry loop can apply the right backoff
-              const ra = retryAfterMs(res.headers['retry-after'])
-              reject(Object.assign(new Error(`HTTP 429 for ${url}`), { isRateLimit: true, retryAfterMs: ra }))
+              // Apply exponential global cooldown — ALL requests will wait,
+              // not just retries of this one.
+              _consecutiveRateLimits++
+              const serverWait = retryAfterMs(res.headers['retry-after']) ?? 0
+              // Base: 30s minimum, doubling with each consecutive 429, cap 5min
+              const base = Math.max(30_000, serverWait)
+              const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
+              _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
+              reject(Object.assign(
+                new Error(`HTTP 429 — cooldown ${Math.ceil(backoff / 1000)}s`),
+                { isRateLimit: true }
+              ))
             } else if (res.statusCode >= 200 && res.statusCode < 300) {
               try { resolve(JSON.parse(buf)) } catch (e) {
                 reject(new Error(`JSON parse error for ${url}: ${e.message}`))
@@ -140,13 +166,17 @@ async function fetchJson (url, retries = 5) {
         })
         req.on('error', reject)
       })
+      // Successful response — reset consecutive rate-limit counter
+      _consecutiveRateLimits = 0
+      return result
     } catch (err) {
       if (attempt === retries) throw err
-      const wait = err.isRateLimit
-        ? (err.retryAfterMs ?? 10_000) + 1_000 * attempt  // honour Retry-After + jitter
-        : 500 * attempt
-      process.stderr.write(`  retry ${attempt}/${retries} (${Math.round(wait / 1000)}s): ${err.message}\n`)
-      await sleep(wait)
+      if (!err.isRateLimit) {
+        // Non-429 error: short fixed backoff
+        await sleep(500 * attempt)
+      }
+      // 429: no extra sleep here — waitForCooldown() at the top of the next
+      // attempt already enforces the global cooldown set above.
     }
   }
 }
