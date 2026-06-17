@@ -406,17 +406,18 @@ async function main () {
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
 
-  // Cache path derived from --out (swap suffix).  Override with --packages <file>.
-  // The cache is a crash-recovery temp file — written throughout the run and
-  // deleted automatically on successful completion.
-  const defaultPkgFile = outPath.replace(/(-packages)?\.json$/, '-packages.json')
+  // Temp cache: same directory as --out but clearly named as a temp file.
+  // Kept only until the run completes successfully, then deleted.
+  // Override with --packages <file> (e.g. to seed with a hand-crafted name list).
+  const defaultCacheFile = outPath.replace(/\.json$/, '.tmp.json')
   const pkgFile = flag('--packages', null)
   const pkgPath = pkgFile
     ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
-    : defaultPkgFile
+    : defaultCacheFile
 
   process.stderr.write(`\n📦 npm indicator-suggestions builder\n`)
-  process.stderr.write(`   Top N: ${topN}  |  delay: ${delayMs}ms  |  out: ${outPath}\n\n`)
+  process.stderr.write(`   out:   ${outPath}\n`)
+  process.stderr.write(`   cache: ${pkgPath}  (deleted on success)\n\n`)
 
   // ---------------------------------------------------------------------------
   // Load existing package cache (always on unless --no-cache; silently skips
