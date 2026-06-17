@@ -135,21 +135,37 @@ async function fetchJson (url, retries = 3) {
 // npm registry helpers
 // ---------------------------------------------------------------------------
 
-// Fetch weekly downloads for batches of up to 128 packages at once.
+// Fetch weekly downloads for a list of packages.
+// The npm downloads API does NOT support scoped packages (@scope/name) in
+// bulk — they must be fetched one at a time.  Unscoped packages are batched
+// in groups of 40 to keep URLs short.
 async function getBatchDownloads (names) {
   const result = {}
-  for (let i = 0; i < names.length; i += 128) {
-    const batch = names.slice(i, i + 128)
-    const encoded = batch.map(n => encodeURIComponent(n)).join(',')
-    const url = `https://api.npmjs.org/downloads/point/last-week/${encoded}`
+  const scoped = names.filter(n => n.startsWith('@'))
+  const plain = names.filter(n => !n.startsWith('@'))
+
+  // Batch unscoped packages (40 at a time to stay well under URL limits)
+  for (let i = 0; i < plain.length; i += 40) {
+    const batch = plain.slice(i, i + 40).join(',')
+    const url = `https://api.npmjs.org/downloads/point/last-week/${batch}`
     const data = await fetchJson(url)
     if (data) {
       for (const [name, info] of Object.entries(data)) {
         result[name] = info?.downloads || 0
       }
     }
-    await sleep(200)
+    await sleep(150)
   }
+
+  // Scoped packages one at a time
+  for (const name of scoped) {
+    const encoded = name.replace(/\//g, '%2F')
+    const url = `https://api.npmjs.org/downloads/point/last-week/${encoded}`
+    const data = await fetchJson(url)
+    if (data) result[name] = data.downloads || 0
+    await sleep(100)
+  }
+
   return result
 }
 
