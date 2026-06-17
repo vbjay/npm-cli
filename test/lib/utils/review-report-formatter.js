@@ -736,9 +736,115 @@ t.test('formatJson includes native-build in riskSummary', (t) => {
   const parsed = JSON.parse(formatJson([pkg]))
   const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
   t.ok(riskSummary.some(s => /native code/.test(s)), 'native-build in riskSummary')
-  t.ok(suggestedReviewFocus.some(s => /binding\.gyp/.test(s)), 'native-build in suggestedReviewFocus')
+  // nativeBuildInfo is null → fallback message listing possible descriptor filenames
+  t.ok(suggestedReviewFocus.some(s => /binding\.gyp/.test(s)), 'native-build fallback in suggestedReviewFocus')
   t.end()
 })
+
+t.test('buildIndicatorReviewFocus: names specific target from binding.gyp groups', (t) => {
+  const pkg = makeNativePkg([makeGypIndicator({
+    signals: ['native-build'],
+    groups: [
+      { label: 'Target `node_sqlite3` — C/C++ sources', items: ['src/database.cc'] },
+      { label: 'Target `node_sqlite3` — libraries', items: ['-lsqlite3'] },
+    ],
+  })])
+  const out = formatMarkdown([pkg])
+  t.match(out, /### Suggested review focus/, 'focus section present')
+  t.match(out, /target.*`node_sqlite3`/, 'target name in focus item')
+  t.match(out, /inspect source files/, 'source inspection mentioned')
+  t.match(out, /verify all dependencies/, 'dependency check mentioned')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: mentions platform conditions when gyp-conditions signal in groups', (t) => {
+  const pkg = makeNativePkg([makeGypIndicator({
+    signals: ['native-build', 'gyp-conditions'],
+    groups: [
+      { label: 'Target `mod` — C/C++ sources', items: ['src/mod.cc'] },
+      { label: 'Target `mod` — platform-specific conditions', items: ['yes — inspect...'] },
+    ],
+  })])
+  const out = formatMarkdown([pkg])
+  t.match(out, /platform-specific condition/, 'condition review mentioned in focus')
+  t.notMatch(out, /binding\.gyp has platform-specific conditions/, 'old static gyp-conditions message not present')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: uses crate name from Cargo.toml groups', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'Cargo.toml',
+    label: 'Rust native addon (napi-rs / neon)',
+    sha256: 'c0ffee',
+    parseError: null,
+    signals: ['native-build', 'rust-native'],
+    groups: [
+      { label: 'Crate name', items: ['zstd-sys'] },
+      { label: 'Has build dependencies', items: ['yes'] },
+      { label: 'Rust source files', items: ['src/lib.rs', 'src/encoder.rs'] },
+    ],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /`zstd-sys`/, 'crate name appears in focus')
+  t.match(out, /verify all dependencies/, 'dependency check present')
+  t.match(out, /inspect source files/, 'source file check present')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: parse error gives manual review prompt', (t) => {
+  const pkg = makeNativePkg([makeGypIndicator({
+    parseError: 'Unexpected token at line 5',
+    groups: [],
+  })])
+  const out = formatMarkdown([pkg])
+  t.match(out, /inspect.*binding\.gyp.*could not be parsed/, 'parse error message in focus')
+  t.match(out, /manually/, 'manual review instruction present')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: target with no recognised aspect groups → review build configuration', (t) => {
+  // A target whose only group is include_dirs — not 'source', 'librar', or 'condition'.
+  const pkg = makeNativePkg([makeGypIndicator({
+    signals: ['native-build'],
+    groups: [{ label: 'Target `mymod` — include directories', items: ['deps/include'] }],
+  })])
+  const out = formatMarkdown([pkg])
+  t.match(out, /target.*`mymod`/, 'target name present')
+  t.match(out, /review build configuration/, 'fallback aspect phrase used')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: no targets, no aspects, no conditions → review before approving', (t) => {
+  // An indicator with empty groups and no gyp-conditions — e.g. a bare Cargo.toml
+  // with no parseable sections, treated generically.
+  const pkg = makeNativePkg([{
+    indicatorFile: 'Cargo.toml',
+    label: 'Rust native addon (napi-rs / neon)',
+    sha256: 'deadbeef',
+    parseError: null,
+    signals: ['native-build', 'rust-native'],
+    groups: [],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /inspect.*`Cargo\.toml`/, 'file name in focus')
+  t.match(out, /review before approving/, 'generic prompt when no details available')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: multi-target message pluralises target label', (t) => {
+  const pkg = makeNativePkg([makeGypIndicator({
+    signals: ['native-build'],
+    groups: [
+      { label: 'Target `alpha` — C/C++ sources', items: ['a.cc'] },
+      { label: 'Target `beta` — C/C++ sources', items: ['b.cc'] },
+    ],
+  })])
+  const out = formatMarkdown([pkg])
+  t.match(out, /targets `alpha`, `beta`/, 'both targets listed in focus')
+  t.end()
+})
+
+
 
 t.test('allSignals merges indicator signals into risk summary', (t) => {
   const pkg = makePkg({
