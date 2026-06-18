@@ -27,9 +27,93 @@ const ROOT = path.resolve(__dirname, '..')
 const { INDICATOR_REGISTRY } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-definitions.js')
 )
-const { hasBuildHint } = require(
+const { hasBuildHint, scanBuildIndicatorsForPackage } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-scanner.js')
 )
+
+// ---------------------------------------------------------------------------
+// Concurrency limiter — run at most `max` async tasks simultaneously
+// ---------------------------------------------------------------------------
+
+function makeLimiter (max) {
+  let running = 0
+  const queue = []
+  return async function limit (fn) {
+    if (running >= max) await new Promise(r => queue.push(r))
+    running++
+    try {
+      return await fn()
+    } finally {
+      running--
+      if (queue.length) queue.shift()()
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Raw HTTP fetch — returns Buffer on 200, null on 404 / error
+// ---------------------------------------------------------------------------
+
+async function fetchRaw (url) {
+  return new Promise(resolve => {
+    const req = https.get(url, { headers: { 'User-Agent': 'npm-indicator-suggestions/1.0' } }, res => {
+      const chunks = []
+      res.on('data', d => chunks.push(d))
+      res.on('end', () => resolve(res.statusCode === 200 ? Buffer.concat(chunks) : null))
+      res.on('error', () => resolve(null))
+    })
+    req.on('error', () => resolve(null))
+    req.setTimeout(15_000, () => { req.destroy(); resolve(null) })
+  })
+}
+
+// ---------------------------------------------------------------------------
+// Deep-scan one package via unpkg: fetch known indicator files, run the
+// production scanner, cache results keyed by name@version.
+// ---------------------------------------------------------------------------
+
+async function deepScanPackage (manifest, deepDir, limit) {
+  const safeName = manifest.name.replace(/\//g, '__')
+  const pkgCacheDir = path.join(deepDir, safeName)
+  const metaPath = path.join(pkgCacheDir, '.meta.json')
+
+  // Return cached results only when the version matches
+  try {
+    const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+    if (meta.version === manifest.version) return meta.results
+  } catch { /* not cached or stale */ }
+
+  await fs.mkdir(pkgCacheDir, { recursive: true })
+
+  // Fetch every indicator file concurrently (shared limiter keeps total
+  // in-flight requests bounded across all packages)
+  const indicatorFiles = Object.keys(INDICATOR_REGISTRY)
+  await Promise.all(indicatorFiles.map(file =>
+    limit(async () => {
+      const encoded = manifest.name.replace(/\//g, '%2F')
+      const url = `https://unpkg.com/${encoded}@${manifest.version}/${file}`
+      const buf = await fetchRaw(url)
+      if (buf) {
+        const dest = path.join(pkgCacheDir, file)
+        await fs.mkdir(path.dirname(dest), { recursive: true })
+        await fs.writeFile(dest, buf)
+      }
+    })
+  ))
+
+  // Run the production scanner on the fetched files
+  const results = await scanBuildIndicatorsForPackage(
+    pkgCacheDir, manifest.scripts || {}, []
+  )
+
+  // Cache: version-stamp so a version bump forces a re-scan
+  await fs.writeFile(
+    metaPath,
+    JSON.stringify({ version: manifest.version, scannedAt: new Date().toISOString(), results }, null, 2) + '\n'
+  )
+
+  return results
+}
 
 // Pre-build a flat [{ pattern, file }] table from the registry so we can
 // match any lifecycle script command against all known commandPatterns in
@@ -456,22 +540,30 @@ Options:
   --delay <ms>       Delay between npm registry requests in ms  (default: 60)
   --out <file>       Output JSON path                           (default: indicator-suggestions.json)
   --packages <file>  Seed package-name list instead of permanent store
-  --reset            Delete both cache files and start from scratch
+  --reset            Delete both cache files and the deep cache dir; start fresh
+  --deep             Fetch indicator files from unpkg and run the production scanner
+                     (cached by name@version in *.deep/ next to --out)
   -h, --help         Show this help message
 
 Cache files (written next to --out, gitignored):
   *.packages.json    Permanent manifest store — survives successful runs
   *.tmp.json         Resume cache — deleted on successful completion
+  *.deep/            Deep-scan file cache (name@version-keyed; only with --deep)
 
 `)
     process.exit(0)
   }
 
-  const topN = +flag('--top', 1000)
+  // topN defaults to 0 when not explicit — means "finish any in-progress run,
+  // then re-analyze; don't collect new packages". A mid-step resume (tmp.json)
+  // is still processed through step 4 and step 5 using whatever was collected.
+  const topN = args.includes('--top') ? +flag('--top', 0) : 0
+  const topExplicit = args.includes('--top')
   const delayMs = +flag('--delay', 60)
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
   const doReset = args.includes('--reset')
+  const deepMode = args.includes('--deep')
 
   // Two cache files serve different purposes:
   //   .packages.json  — permanent manifest store; saved on every successful run;
@@ -482,9 +574,12 @@ Cache files (written next to --out, gitignored):
   // --packages <file> overrides the permanent store path (e.g. to seed with a
   //                     hand-crafted name list).
   // --reset           — delete both cache files and start from scratch.
+  // --deep            — fetch indicator files from unpkg and run the production
+  //                     scanner; results cached in .deep/ next to --out.
   const pkgFile          = flag('--packages', null)
   const manifestStorePath = outPath.replace(/\.json$/, '.packages.json')
   const resumeCachePath   = outPath.replace(/\.json$/, '.tmp.json')
+  const deepDir           = outPath.replace(/\.json$/, '.deep')
   const pkgPath = pkgFile
     ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
     : manifestStorePath
@@ -492,13 +587,19 @@ Cache files (written next to --out, gitignored):
   if (doReset) {
     await fs.unlink(manifestStorePath).catch(() => {})
     await fs.unlink(resumeCachePath).catch(() => {})
-    process.stderr.write(`  ⚠️  --reset: deleted ${manifestStorePath} and ${resumeCachePath}\n\n`)
+    await fs.rm(deepDir, { recursive: true, force: true })
+    process.stderr.write(`  ⚠️  --reset: deleted ${manifestStorePath}, ${resumeCachePath}, and ${deepDir}\n\n`)
+    if (!topExplicit) process.exit(0)
   }
 
   process.stderr.write(`\n📦 npm indicator-suggestions builder\n`)
   process.stderr.write(`   out:      ${outPath}\n`)
   process.stderr.write(`   packages: ${pkgPath}${pkgFile ? ' (user-provided)' : ' (permanent store)'}\n`)
-  process.stderr.write(`   resume:   ${resumeCachePath}  (deleted on success)\n\n`)
+  process.stderr.write(`   resume:   ${resumeCachePath}  (deleted on success)\n`)
+  if (deepMode) {
+    process.stderr.write(`   deep:     ${deepDir}  (indicator files cached by name@version)\n`)
+  }
+  process.stderr.write('\n')
 
   // ---------------------------------------------------------------------------
   // Load manifests: permanent store first, fall back to resume cache.
@@ -638,9 +739,8 @@ Cache files (written next to --out, gitignored):
 
   let scanned = 0
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
-  // Skip collection only when resuming a step-4 interrupt (tmp.json saved with discoveryState: null).
-  // Otherwise --top N is always additive — collect N more packages beyond what the store has.
-  let done = isStep4Resume
+  // Skip collection if resuming step 4, or if no --top was given (topN === 0).
+  let done = isStep4Resume || topN === 0
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom }
 
   for (let qi = resumeQueryIndex; qi < DISCOVERY_QUERIES.length; qi++) {
@@ -705,6 +805,37 @@ Cache files (written next to --out, gitignored):
     `\n  ✓ collected ${newThisRun} new packages (${manifests.length} total)` +
     ` (scanned ${scanned} new across ${seen.size} unique names)\n\n`
   )
+
+  // ---------------------------------------------------------------------------
+  // Step 4.5 (--deep only): Fetch indicator files from unpkg and run the
+  // production scanner on each package that has build hints.
+  // Results are cached by name@version in deepDir so re-runs are instant.
+  // ---------------------------------------------------------------------------
+  const deepResults = new Map() // name → IndicatorResult[]
+
+  if (deepMode) {
+    process.stderr.write('Step 4.5/5: Deep-scanning indicator files via unpkg...\n')
+    await fs.mkdir(deepDir, { recursive: true })
+    const limit = makeLimiter(20)
+
+    // Only scan packages where command patterns or hasBuildHint suggest build activity
+    const candidates = manifests.filter(m =>
+      hasBuildHint(m.scripts || {}, []) ||
+      matchExistingDefinitions(extractLifecycleScripts(m.scripts), m).length > 0
+    )
+    process.stderr.write(`  (${candidates.length} packages with build hints, ${manifests.length - candidates.length} skipped)\n`)
+
+    let deepDone = 0
+    await Promise.all(candidates.map(async manifest => {
+      const results = await deepScanPackage(manifest, deepDir, limit)
+      deepResults.set(manifest.name, results)
+      deepDone++
+      if (deepDone % 100 === 0 || deepDone === candidates.length) {
+        process.stderr.write(`  [${deepDone}/${candidates.length}] packages deep-scanned\n`)
+      }
+    }))
+    process.stderr.write(`  ✓ deep scan complete\n\n`)
+  }
 
   // Fetch weekly download counts only for the packages we kept.
   // Skip packages that already have download counts from a previous run
@@ -773,7 +904,13 @@ Cache files (written next to --out, gitignored):
   for (const manifest of manifests) {
     const lc = extractLifecycleScripts(manifest.scripts)
 
-    const matches = matchExistingDefinitions(lc, manifest)
+    // --deep: use production scanner results (keyed by name@version in cache)
+    // Fall back to command-pattern matching when deep results aren't available.
+    const deepScan = deepResults.get(manifest.name)
+    const matches = deepScan
+      ? deepScan.map(r => r.indicatorFile)
+      : matchExistingDefinitions(lc, manifest)
+
     if (matches.length > 0) {
       for (const m of matches) {
         if (!categorized[m]) categorized[m] = []
