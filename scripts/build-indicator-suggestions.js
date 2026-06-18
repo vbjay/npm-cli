@@ -49,14 +49,15 @@ const BUILD_DEP_PATTERNS = [
   // GYP family
   /\bnode-gyp\b/,
   /\bnode-pre-gyp\b/,
-  /\b@mapbox\/node-pre-gyp\b/,
+  /@mapbox\/node-pre-gyp\b/,
+  /@xprofiler\/node-pre-gyp\b/,
   /\bprebuild-install\b/,
   /\bprebuildify\b/,
   /\bpkg-prebuilds-verify\b/,
   /\btodesktop-node-gyp-build\b/,
   /\bnode-gyp-build\b/,
   // Rust / WASM
-  /\b@napi-rs\/cli\b/,
+  /@napi-rs\/cli\b/,
   /\bneon-cli\b/,
   /\bwasm-pack\b/,
   /\bcargo\b/,
@@ -70,6 +71,43 @@ const BUILD_DEP_PATTERNS = [
   /\bzig\b/,
   /\bffi-napi\b/,
   /\bref-napi\b/,
+  // Binary downloader helpers — packages that fetch prebuilt binaries at install time
+  /\binstall-binary\b/,
+  /\bdownload-binary\b/,
+  /\bbin-wrapper\b/,
+  /\bnode-bin-setup\b/,
+]
+
+// Maps dependency name patterns to the indicator-definition file they imply.
+// Used by matchExistingDefinitions to classify packages whose lifecycle scripts
+// don't mention a native build tool directly (e.g. install: "node ./install.js").
+// Uses ecosystem-level framework deps, not specific package names.
+const DEP_TO_DEFINITION = [
+  {
+    pattern: /\bnode-gyp\b|\bnode-pre-gyp\b|@mapbox\/node-pre-gyp\b|@xprofiler\/node-pre-gyp\b|\bprebuildify\b|\bprebuild-install\b|\bnode-gyp-build\b|\bpkg-prebuilds-verify\b|\btodesktop-node-gyp-build\b/,
+    file: 'binding.gyp',
+  },
+  {
+    pattern: /\bcmake-js\b/,
+    file: 'CMakeLists.txt',
+  },
+  {
+    pattern: /@napi-rs\/cli\b|\bneon-cli\b|\bwasm-pack\b/,
+    file: 'Cargo.toml',
+  },
+  {
+    // Capacitor native plugin — any plugin with @capacitor/core has platform-native code.
+    // react-native-gradle-plugin is the RN Gradle plugin dep for React Native modules.
+    // react-native (exact name, not react-native-*) means it's an RN native module.
+    pattern: /@capacitor\/core\b|\bexpo-modules-core\b|\bexpo-module-scripts\b|\breact-native-gradle-plugin\b/,
+    file: 'android/build.gradle',
+  },
+  {
+    // Exact package name 'react-native' as a dependency means this is an RN native module.
+    // Using multiline ^ $ so react-native-xxx doesn't match.
+    pattern: /^react-native$/m,
+    file: 'android/build.gradle',
+  },
 ]
 
 // Script tokens that strongly indicate compiled-code builds (not JS bundling)
@@ -83,6 +121,9 @@ const BUILD_SCRIPT_TOKENS = new Set([
 // Words too common in shell to be informative build tool signals
 const SHELL_NOISE = new Set([
   'node', 'nodejs', 'npm', 'npx', 'sh', 'bash', 'zsh', 'cmd', 'pwsh',
+  'yarn', 'pnpm', 'bun', 'lerna', 'turbo', 'nx', 'rush',  // package managers / monorepo tools
+  'husky',   // git hook installer — not a build tool
+  'gitignore', 'eslintrc', 'prettierrc', 'editorconfig',  // dotfile names from rm/cleanup cmds
   'if', 'else', 'then', 'fi', 'do', 'done', 'for', 'while', 'in',
   'echo', 'exit', 'true', 'false', 'test', 'eval', 'export', 'set',
   'unset', 'cd', 'ls', 'cp', 'mv', 'rm', 'mkdir', 'chmod', 'chown',
@@ -248,14 +289,33 @@ function extractLifecycleScripts (scripts) {
 }
 
 // Returns the list of indicator-definition files whose commandPatterns match
-// anything in the combined lifecycle script text.
-function matchExistingDefinitions (lifecycleScripts) {
-  const combined = Object.values(lifecycleScripts).join(' ')
+// anything in the package's scripts, or whose associated build deps appear in
+// the manifest.  Scans ALL scripts (not just lifecycle hooks) so that packages
+// like lru-native2 ("build":"node-gyp rebuild") or @azure/msal-node-extensions
+// ("compile":"node-gyp rebuild") are classified correctly even though their
+// lifecycle script is just "install":"npm run build".
+function matchExistingDefinitions (lifecycleScripts, manifest) {
+  // Union of lifecycle script values + all other script values from the manifest
+  const allScriptValues = [
+    ...Object.values(lifecycleScripts),
+    ...Object.values((manifest && manifest.scripts) || {}),
+  ]
+  const combined = allScriptValues.join(' ')
   const matches = new Set()
   for (const { pattern, file } of REGISTRY_PATTERNS) {
     // Reset lastIndex to avoid stateful global-flag issues
     if (pattern.global) pattern.lastIndex = 0
     if (pattern.test(combined)) matches.add(file)
+  }
+  if (manifest) {
+    const depStr = Object.keys({
+      ...manifest.dependencies,
+      ...manifest.devDependencies,
+      ...manifest.optionalDependencies,
+    }).join('\n')
+    for (const { pattern, file } of DEP_TO_DEFINITION) {
+      if (pattern.test(depStr)) matches.add(file)
+    }
   }
   return [...matches]
 }
@@ -266,17 +326,22 @@ function extractCommandTokens (lifecycleScripts) {
   for (const src of Object.values(lifecycleScripts)) {
     for (const m of src.matchAll(/\b([a-z][\w.-]{1,})\b/gi)) {
       const tok = m[1].toLowerCase()
-      // Skip pure numbers, short words, shell noise
+      // Skip pure numbers, short words, shell noise, and dotfile names
       if (/^\d/.test(tok) || tok.length < 3 || SHELL_NOISE.has(tok)) continue
       // Skip path-like tokens (contain slashes or look like file extensions)
       if (tok.includes('/') || /\.\w{2,4}$/.test(tok)) continue
+      // Skip tokens that are dotfile names (.gitignore, .eslintrc, etc.)
+      if (tok.startsWith('.')) continue
       tokens.add(tok)
     }
   }
   return [...tokens]
 }
 
-// Returns true when the package has non-JS compilation signals.
+// Returns true when the package has non-JS compilation or binary-download signals.
+// Requires at least one concrete signal — a matching dep name OR a build/download
+// token in the lifecycle scripts.  Packages with only generic scripts like
+// `prepare: "husky"` or `postinstall: "node scripts/postinstall.js"` return false.
 function isBuildPackage (manifest) {
   const allDeps = Object.keys({
     ...manifest.dependencies,
@@ -287,11 +352,15 @@ function isBuildPackage (manifest) {
   if (BUILD_DEP_PATTERNS.some(p => p.test(depStr))) return true
 
   const scriptStr = Object.values(manifest.scripts).join(' ')
-  if (BUILD_SCRIPT_TOKENS.size > 0) {
-    for (const tok of extractCommandTokens({ s: scriptStr })) {
-      if (BUILD_SCRIPT_TOKENS.has(tok)) return true
-    }
+  for (const tok of extractCommandTokens({ s: scriptStr })) {
+    if (BUILD_SCRIPT_TOKENS.has(tok)) return true
   }
+
+  // Binary downloader patterns in script content (fetch/download prebuilt binaries)
+  if (/\binstall.?binary\b|\bdownload.?binary\b|\bbin.?wrapper\b|\bffmpeg.install\b/i.test(scriptStr)) {
+    return true
+  }
+
   return false
 }
 
@@ -307,16 +376,18 @@ function inferIndicatorFiles (manifest) {
   const combined = `${allDeps}\n${scriptStr}`
   const inferred = []
 
-  if (/\bnode-gyp\b|\bnode-pre-gyp\b|\bnode-gyp-build\b|\bprebuild/.test(combined)) {
+  if (/\bnode-gyp\b|\bnode-pre-gyp\b|@mapbox\/node-pre-gyp\b|@xprofiler\/node-pre-gyp\b|\bnode-gyp-build\b|\bprebuild/.test(combined)) {
     inferred.push('binding.gyp')
   }
-  if (/\b@napi-rs\b|\bneon-cli\b|\bwasm-pack\b|\bcargo\b/.test(combined)) {
+  if (/\bneon-cli\b|\bwasm-pack\b|\bcargo\s+(?:build|install|test|run)\b/.test(combined) ||
+      /@napi-rs\/cli/.test(allDeps)) {
     inferred.push('Cargo.toml')
   }
   if (/\bcmake-js\b|\bcmake\b/.test(combined)) {
     inferred.push('CMakeLists.txt')
   }
-  if (/\bexpo-module\b|\bgradlew\b|\breact-native\b/.test(combined)) {
+  if (/\bexpo-module\b|\bgradlew\b|\breact-native\b|@capacitor\/core\b/.test(combined) ||
+      /^react-native$/m.test(allDeps)) {
     inferred.push('android/build.gradle')
   }
   if (/\bmake\b/.test(scriptStr)) {
@@ -356,26 +427,31 @@ async function loadPackageCache (filePath) {
   try {
     const raw = JSON.parse(await fs.readFile(filePath, 'utf-8'))
     if (Array.isArray(raw)) {
-      // Simple name list — caller must fetch manifests for these
-      return { names: raw, manifests: null }
+      // Simple name list provided by user — seed packages to always include
+      return { names: raw, manifests: null, seen: null, discoveryState: null }
     }
     if (raw.packages && Array.isArray(raw.packages)) {
-      return { names: null, manifests: raw.packages }
+      return {
+        names: null,
+        manifests: raw.packages,
+        seen: new Set(raw.seenNames || raw.packages.map(p => p.name)),
+        discoveryState: raw.discoveryState || null,
+      }
     }
   } catch (err) {
     if (err.code !== 'ENOENT') {
       process.stderr.write(`  Warning: could not read cache ${filePath}: ${err.message}\n`)
     }
   }
-  return { names: null, manifests: null }
+  return { names: null, manifests: null, seen: null, discoveryState: null }
 }
 
-async function savePackageCache (filePath, manifests) {
+async function savePackageCache (filePath, manifests, seen, discoveryState) {
   const data = {
     generatedAt: new Date().toISOString(),
     count: manifests.length,
-    // Store only the fields needed to resume: scripts + dependencies for analysis,
-    // plus weeklyDownloads if already fetched (0 means not yet fetched).
+    discoveryState,   // { queryIndex, queryFrom } — where to resume scanning
+    seenNames: [...seen], // all names already fetched (kept + rejected), avoids re-scanning
     packages: manifests.map(m => ({
       name: m.name,
       version: m.version,
@@ -401,56 +477,153 @@ async function main () {
     return i !== -1 ? args[i + 1] : def
   }
 
+  if (args.includes('--help') || args.includes('-h')) {
+    process.stdout.write(`
+Usage: node scripts/build-indicator-suggestions.js [options]
+
+Scans popular npm packages for native-build lifecycle scripts and suggests
+missing entries for indicator-definitions.js.
+
+Options:
+  --top <n>          Number of new packages to collect per run  (default: 1000)
+  --delay <ms>       Delay between npm registry requests in ms  (default: 60)
+  --out <file>       Output JSON path                           (default: indicator-suggestions.json)
+  --packages <file>  Seed package-name list instead of permanent store
+  --reset            Delete both cache files and start from scratch
+  -h, --help         Show this help message
+
+Cache files (written next to --out, gitignored):
+  *.packages.json    Permanent manifest store — survives successful runs
+  *.tmp.json         Resume cache — deleted on successful completion
+
+`)
+    process.exit(0)
+  }
+
   const topN = +flag('--top', 1000)
   const delayMs = +flag('--delay', 60)
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
+  const doReset = args.includes('--reset')
 
-  // Temp cache: same directory as --out but clearly named as a temp file.
-  // Kept only until the run completes successfully, then deleted.
-  // Override with --packages <file> (e.g. to seed with a hand-crafted name list).
-  const defaultCacheFile = outPath.replace(/\.json$/, '.tmp.json')
-  const pkgFile = flag('--packages', null)
+  // Two cache files serve different purposes:
+  //   .packages.json  — permanent manifest store; saved on every successful run;
+  //                     never auto-deleted; loaded first on startup so re-analysis
+  //                     with updated definitions is instant (no network needed).
+  //   .tmp.json       — resume cache for interrupted runs; checkpointed every 100
+  //                     packages; deleted on successful completion.
+  // --packages <file> overrides the permanent store path (e.g. to seed with a
+  //                     hand-crafted name list).
+  // --reset           — delete both cache files and start from scratch.
+  const pkgFile          = flag('--packages', null)
+  const manifestStorePath = outPath.replace(/\.json$/, '.packages.json')
+  const resumeCachePath   = outPath.replace(/\.json$/, '.tmp.json')
   const pkgPath = pkgFile
     ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
-    : defaultCacheFile
+    : manifestStorePath
+
+  if (doReset) {
+    await fs.unlink(manifestStorePath).catch(() => {})
+    await fs.unlink(resumeCachePath).catch(() => {})
+    process.stderr.write(`  ⚠️  --reset: deleted ${manifestStorePath} and ${resumeCachePath}\n\n`)
+  }
 
   process.stderr.write(`\n📦 npm indicator-suggestions builder\n`)
-  process.stderr.write(`   out:   ${outPath}\n`)
-  process.stderr.write(`   cache: ${pkgPath}  (deleted on success)\n\n`)
+  process.stderr.write(`   out:      ${outPath}\n`)
+  process.stderr.write(`   packages: ${pkgPath}${pkgFile ? ' (user-provided)' : ' (permanent store)'}\n`)
+  process.stderr.write(`   resume:   ${resumeCachePath}  (deleted on success)\n\n`)
 
   // ---------------------------------------------------------------------------
-  // Load existing package cache (always on unless --no-cache; silently skips
-  // if the file doesn't exist yet on a fresh first run)
+  // Load manifests: permanent store first, fall back to resume cache.
   // ---------------------------------------------------------------------------
   const manifests = []
   const seen = new Set()
+  let resumeQueryIndex = 0
+  let resumeQueryFrom = 0
 
-  if (pkgPath) {
-    process.stderr.write('Loading package cache...\n')
-    const { names, manifests: cached } = await loadPackageCache(pkgPath)
+  process.stderr.write('Loading package data...\n')
 
-    if (cached) {
-      // Rich cache — use manifests directly, no re-fetching needed
-      for (const m of cached) {
-        manifests.push(m)
-        seen.add(m.name)
-      }
-      process.stderr.write(`  ✓ loaded ${manifests.length} packages from cache\n\n`)
-    } else if (names) {
-      // Simple name list — fetch manifests now
-      process.stderr.write(`  fetching manifests for ${names.length} seed packages...\n`)
-      for (const name of names) {
-        seen.add(name)
-        const manifest = await getPackageManifest(name)
-        if (manifest) {
-          const lc = extractLifecycleScripts(manifest.scripts)
-          if (Object.keys(lc).length > 0) manifests.push(manifest)
-        }
-        if (delayMs > 0) await sleep(delayMs)
-      }
-      process.stderr.write(`  ✓ ${manifests.length} seed packages with lifecycle scripts\n\n`)
+  // Try permanent store first (from a previous successful run)
+  let loaded = await loadPackageCache(pkgPath)
+  let resumeMergeCount = 0
+
+  // If permanent store empty or missing, try the resume cache
+  if (!loaded.manifests && !loaded.names) {
+    loaded = await loadPackageCache(resumeCachePath)
+    if (loaded.manifests || loaded.names) {
+      process.stderr.write(`  (permanent store empty, loaded from resume cache)\n`)
     }
+  } else {
+    // Permanent store has data — also check if there's a newer resume cache
+    // (from an interrupted run) to merge its additional packages and discovery state.
+    const resume = await loadPackageCache(resumeCachePath)
+    if (resume.manifests && resume.manifests.length > (loaded.manifests?.length ?? 0)) {
+      resumeMergeCount = resume.manifests.length - (loaded.manifests?.length ?? 0)
+      process.stderr.write(`  (merging resume cache: ${resumeMergeCount} additional packages)\n`)
+      // Prefer the resume cache's discovery state (it's more recent)
+      loaded = {
+        ...loaded,
+        manifests: resume.manifests,
+        seen: resume.seen,
+        discoveryState: resume.discoveryState ?? loaded.discoveryState,
+      }
+    }
+  }
+
+  const { names, manifests: cached, seen: cachedSeen, discoveryState } = loaded
+
+  if (cached) {
+    for (const m of cached) manifests.push(m)
+    for (const n of (cachedSeen || [])) seen.add(n)
+    if (discoveryState) {
+      resumeQueryIndex = discoveryState.queryIndex || 0
+      resumeQueryFrom  = discoveryState.queryFrom  || 0
+    }
+
+    // Startup summary — show what's loaded and what we're doing
+    const withDl = manifests.filter(m => m.weeklyDownloads > 0)
+    const sorted = [...withDl].sort((a, b) => b.weeklyDownloads - a.weeklyDownloads)
+    const dlMax  = sorted[0]?.weeklyDownloads ?? 0
+    const dlMin  = sorted[sorted.length - 1]?.weeklyDownloads ?? 0
+
+    process.stderr.write(`  ✓ loaded ${manifests.length} packages (${seen.size} names scanned)\n`)
+    if (withDl.length > 0) {
+      process.stderr.write(
+        `     download range: ${dlMin.toLocaleString()}–${dlMax.toLocaleString()}/wk` +
+        ` (${withDl.length} with counts)\n`
+      )
+      if (sorted.length >= 3) {
+        const top3 = sorted.slice(0, 3).map(m => `${m.name} (${m.weeklyDownloads.toLocaleString()})`).join(', ')
+        process.stderr.write(`     top by downloads: ${top3}\n`)
+      }
+    }
+    const remaining = topN - resumeMergeCount
+    let resumeHint = ''
+    if (discoveryState) {
+      const qOrder = discoveryState.queryOrder || []
+      const qName = (qOrder[resumeQueryIndex] || '').replace('keywords:', '')
+      const pos = resumeQueryFrom > 0 ? `, position ${resumeQueryFrom}` : ''
+      resumeHint = ` (resuming at "${qName}"${pos})`
+    }
+    process.stderr.write(
+      `     collecting ${remaining} more → will have ${manifests.length + remaining} total` +
+      resumeHint +
+      '\n\n'
+    )
+  } else if (names) {
+    process.stderr.write(`  fetching manifests for ${names.length} seed packages...\n`)
+    for (const name of names) {
+      seen.add(name)
+      const manifest = await getPackageManifest(name)
+      if (manifest) {
+        const lc = extractLifecycleScripts(manifest.scripts)
+        if (Object.keys(lc).length > 0) manifests.push(manifest)
+      }
+      if (delayMs > 0) await sleep(delayMs)
+    }
+    process.stderr.write(`  ✓ ${manifests.length} seed packages with lifecycle scripts\n\n`)
+  } else {
+    process.stderr.write(`  (no existing data — fresh run, targeting ${topN} packages)\n\n`)
   }
 
   // ---------------------------------------------------------------------------
@@ -458,7 +631,7 @@ async function main () {
   // fetch manifests, keep only those with lifecycle scripts.
   // Packages already loaded from cache are pre-seeded in manifests/seen above.
   // ---------------------------------------------------------------------------
-  const DISCOVERY_QUERIES = [
+  const DISCOVERY_QUERIES_BASE = [
     'keywords:javascript',  // ~58K — broad; tslib, @babel/parser, typescript, …
     'keywords:node',        // ~36K — Node.js ecosystem; resolve, axios, …
     'keywords:npm',         // ~36K — npm tooling; execa, npm-run-path, …
@@ -472,18 +645,32 @@ async function main () {
     'keywords:react-native', // React Native packages (often have install scripts)
   ]
 
+  // Shuffle on a fresh run so different executions surface different packages.
+  // The order is saved in the cache and restored on resume so qi indices stay stable.
+  const savedOrder = discoveryState?.queryOrder || null
+  const DISCOVERY_QUERIES = savedOrder
+    ? savedOrder  // resuming — use the same order checkpointed earlier
+    : [...DISCOVERY_QUERIES_BASE].sort(() => Math.random() - 0.5)
+
+  if (!savedOrder) {
+    process.stderr.write(`  query order: ${DISCOVERY_QUERIES.map(q => q.replace('keywords:', '')).join(', ')}\n`)
+  }
+
   process.stderr.write('Steps 1–3: Scanning popular packages for lifecycle scripts...\n')
-  process.stderr.write(`  (will stop once ${topN} packages with lifecycle scripts are found)\n`)
-  process.stderr.write(`  (starting from ${manifests.length} cached; need ${Math.max(0, topN - manifests.length)} more)\n\n`)
+  process.stderr.write(`  (collecting ${topN - resumeMergeCount} new packages with lifecycle scripts)\n`)
+  process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n\n`)
 
   let scanned = 0
-  let done = manifests.length >= topN
+  let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
+  let done = false
+  let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom }
 
-  for (const query of DISCOVERY_QUERIES) {
+  for (let qi = resumeQueryIndex; qi < DISCOVERY_QUERIES.length; qi++) {
     if (done) break
-    let from = 0
+    const query = DISCOVERY_QUERIES[qi]
+    let from = (qi === resumeQueryIndex) ? resumeQueryFrom : 0
     const size = 250
-    process.stderr.write(`  query: ${query}\n`)
+    process.stderr.write(`  query: ${query}${from > 0 ? ` (resuming from=${from})` : ''}\n`)
 
     while (!done) {
       const enc = encodeURIComponent(query)
@@ -506,31 +693,37 @@ async function main () {
           const lc = extractLifecycleScripts(manifest.scripts)
           if (Object.keys(lc).length > 0) {
             manifests.push(manifest)
-            if (manifests.length % 50 === 0 || manifests.length <= 3) {
+            newThisRun++
+            if (newThisRun % 50 === 0 || newThisRun <= 3) {
               process.stderr.write(
-                `    found ${manifests.length}/${topN} with scripts` +
+                `    found ${newThisRun}/${topN} new (${manifests.length} total)` +
                 ` (scanned ${scanned}, last: ${name})\n`
               )
             }
-            if (manifests.length >= topN) done = true
-            // Checkpoint save every 100 new packages so a crash loses minimal work
-            if (pkgPath && manifests.length % 100 === 0) {
-              await savePackageCache(pkgPath, manifests)
+            if (newThisRun >= topN) done = true
+            // Checkpoint save every 100 new packages (resume cache)
+            if (newThisRun % 100 === 0) {
+              await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from })
             }
           }
         }
+        finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from }
         if (delayMs > 0) await sleep(delayMs)
       }
 
-      // Stop paging this query once results thin out (popularity score drops
-      // significantly) or we've gone deep enough to find diminishing returns.
       if (from >= 2000) break
     }
+
+    // Save resume cache at query boundary so switching keywords is a clean resume point
+    const nextQi = qi + 1
+    const nextFrom = 0
+    process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
+    await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom })
   }
 
   process.stderr.write(
-    `\n  ✓ collected ${manifests.length} packages with lifecycle scripts` +
-    ` (scanned ${scanned} total across ${seen.size} unique names)\n\n`
+    `\n  ✓ collected ${newThisRun} new packages (${manifests.length} total)` +
+    ` (scanned ${scanned} new across ${seen.size} unique names)\n\n`
   )
 
   // Fetch weekly download counts only for the packages we kept.
@@ -541,15 +734,46 @@ async function main () {
   if (needDownloads.length < manifests.length) {
     process.stderr.write(`  (${manifests.length - needDownloads.length} already cached, fetching ${needDownloads.length} new)\n`)
   }
-  const downloads = await getBatchDownloads(needDownloads.map(m => m.name))
-  for (const m of needDownloads) m.weeklyDownloads = downloads[m.name] || 0
-  process.stderr.write(`  ✓ download counts fetched\n\n`)
 
-  // Save final package cache (with download counts) so the next run is fast
-  if (pkgPath) {
-    await savePackageCache(pkgPath, manifests)
-    process.stderr.write(`  ✓ package cache saved to ${pkgPath}\n\n`)
+  const dlScoped = needDownloads.filter(m => m.name.startsWith('@'))
+  const dlPlain  = needDownloads.filter(m => !m.name.startsWith('@'))
+  let dlFetched  = manifests.length - needDownloads.length  // already had counts
+
+  // Unscoped — batches of 40, save cache after each batch
+  for (let i = 0; i < dlPlain.length; i += 40) {
+    const batch = dlPlain.slice(i, i + 40)
+    const url = `https://api.npmjs.org/downloads/point/last-week/${batch.map(m => m.name).join(',')}`
+    const data = await fetchJson(url)
+    if (data) {
+      for (const m of batch) m.weeklyDownloads = data[m.name]?.downloads || 0
+    }
+    dlFetched += batch.length
+    process.stderr.write(`  [${dlFetched}/${manifests.length}] download counts fetched\n`)
+    await savePackageCache(resumeCachePath, manifests, seen, null)
+    await sleep(150)
   }
+
+  // Scoped — one at a time, save resume cache every 20
+  for (let i = 0; i < dlScoped.length; i++) {
+    const m = dlScoped[i]
+    const encoded = m.name.replace(/\//g, '%2F')
+    const data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${encoded}`)
+    if (data) m.weeklyDownloads = data.downloads || 0
+    dlFetched++
+    if (i % 20 === 19 || i === dlScoped.length - 1) {
+      process.stderr.write(`  [${dlFetched}/${manifests.length}] download counts fetched\n`)
+      await savePackageCache(resumeCachePath, manifests, seen, null)
+    }
+    await sleep(500)  // 500ms between scoped fetches — avoids 429s at 100ms
+  }
+
+  process.stderr.write(`  ✓ all download counts fetched\n\n`)
+
+  // Save final manifests to permanent store with the last known discovery position,
+  // so --top <larger N> can continue from where this run stopped without re-paging.
+  await savePackageCache(pkgPath, manifests, seen, finalDiscoveryState)
+  process.stderr.write(`  ✓ manifests saved to ${pkgPath}\n\n`)
+  await fs.unlink(resumeCachePath).catch(() => {})
 
   // Step 5/5: Analyze
   process.stderr.write('Step 5/5: Analyzing...\n')
@@ -563,7 +787,7 @@ async function main () {
   for (const manifest of manifests) {
     const lc = extractLifecycleScripts(manifest.scripts)
 
-    const matches = matchExistingDefinitions(lc)
+    const matches = matchExistingDefinitions(lc, manifest)
     if (matches.length > 0) {
       for (const m of matches) {
         if (!categorized[m]) categorized[m] = []
@@ -661,15 +885,9 @@ async function main () {
 
   await fs.writeFile(outPath, JSON.stringify(output, null, 2) + '\n', 'utf-8')
 
-  // Remove the cache — it was only needed to survive a crash mid-run.
-  // Leaving it around would cause the next run to reuse stale data.
-  if (pkgPath) {
-    await fs.unlink(pkgPath).catch(() => {})
-  }
-
   process.stderr.write(`\n✅ Done!\n`)
-  process.stderr.write(`   Total scanned:        ${scanned}\n`)
-  process.stderr.write(`   With lifecycle hooks: ${manifests.length}\n`)
+  process.stderr.write(`   New this run:         ${newThisRun}\n`)
+  process.stderr.write(`   Total in store:       ${manifests.length}\n`)
   process.stderr.write(`   Matched (existing):   ${output.coverage.matchedByExistingDefinitions}\n`)
   process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages}\n`)
   process.stderr.write(`   Pattern gaps found:   ${commandPatternGaps.length}\n`)
