@@ -27,12 +27,13 @@ const ROOT = path.resolve(__dirname, '..')
 const { INDICATOR_REGISTRY } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-definitions.js')
 )
+const { hasBuildHint } = require(
+  path.join(ROOT, 'lib', 'utils', 'indicator-scanner.js')
+)
 
-// ---------------------------------------------------------------------------
 // Pre-build a flat [{ pattern, file }] table from the registry so we can
 // match any lifecycle script command against all known commandPatterns in
 // a single O(n) pass.
-// ---------------------------------------------------------------------------
 const REGISTRY_PATTERNS = []
 for (const [file, def] of Object.entries(INDICATOR_REGISTRY)) {
   for (const pat of (def.detect.commandPatterns || [])) {
@@ -109,14 +110,6 @@ const DEP_TO_DEFINITION = [
     file: 'android/build.gradle',
   },
 ]
-
-// Script tokens that strongly indicate compiled-code builds (not JS bundling)
-const BUILD_SCRIPT_TOKENS = new Set([
-  'cmake', 'ninja', 'cargo', 'rustc', 'gcc', 'g++', 'clang', 'clang++',
-  'javac', 'kotlinc', 'gradle', 'gradlew', 'zig', 'ndk-build',
-  'wasm-pack', 'emcc', 'emcmake', 'emmake', 'xcrun', 'xcodebuild',
-  'node-gyp', 'cmake-js', 'node-pre-gyp', 'ndk', 'gyp',
-])
 
 // Words too common in shell to be informative build tool signals
 const SHELL_NOISE = new Set([
@@ -338,32 +331,6 @@ function extractCommandTokens (lifecycleScripts) {
   return [...tokens]
 }
 
-// Returns true when the package has non-JS compilation or binary-download signals.
-// Requires at least one concrete signal — a matching dep name OR a build/download
-// token in the lifecycle scripts.  Packages with only generic scripts like
-// `prepare: "husky"` or `postinstall: "node scripts/postinstall.js"` return false.
-function isBuildPackage (manifest) {
-  const allDeps = Object.keys({
-    ...manifest.dependencies,
-    ...manifest.devDependencies,
-    ...manifest.optionalDependencies,
-  })
-  const depStr = allDeps.join('\n')
-  if (BUILD_DEP_PATTERNS.some(p => p.test(depStr))) return true
-
-  const scriptStr = Object.values(manifest.scripts).join(' ')
-  for (const tok of extractCommandTokens({ s: scriptStr })) {
-    if (BUILD_SCRIPT_TOKENS.has(tok)) return true
-  }
-
-  // Binary downloader patterns in script content (fetch/download prebuilt binaries)
-  if (/\binstall.?binary\b|\bdownload.?binary\b|\bbin.?wrapper\b|\bffmpeg.install\b/i.test(scriptStr)) {
-    return true
-  }
-
-  return false
-}
-
 // Infer which indicator files a package likely has, based on deps and scripts.
 // These are heuristic — they help the AI propose a realistic indicatorFile key.
 function inferIndicatorFiles (manifest) {
@@ -546,12 +513,15 @@ Cache files (written next to --out, gitignored):
   // Try permanent store first (from a previous successful run)
   let loaded = await loadPackageCache(pkgPath)
   let resumeMergeCount = 0
+  let isStep4Resume = false  // true when tmp.json was written mid-step-4 (collection already done)
 
   // If permanent store empty or missing, try the resume cache
   if (!loaded.manifests && !loaded.names) {
     loaded = await loadPackageCache(resumeCachePath)
     if (loaded.manifests || loaded.names) {
       process.stderr.write(`  (permanent store empty, loaded from resume cache)\n`)
+      // discoveryState: null in tmp.json means collection was already complete
+      if (loaded.manifests && loaded.discoveryState === null) isStep4Resume = true
     }
   } else {
     // Permanent store has data — also check if there's a newer resume cache
@@ -567,6 +537,11 @@ Cache files (written next to --out, gitignored):
         seen: resume.seen,
         discoveryState: resume.discoveryState ?? loaded.discoveryState,
       }
+      // discoveryState: null means collection was complete when tmp.json was written
+      if (resume.discoveryState === null) isStep4Resume = true
+    } else if (resume.manifests && resume.discoveryState === null) {
+      // tmp.json exists with same package count but null discoveryState — step-4 resume
+      isStep4Resume = true
     }
   }
 
@@ -597,13 +572,13 @@ Cache files (written next to --out, gitignored):
         process.stderr.write(`     top by downloads: ${top3}\n`)
       }
     }
-    const remaining = Math.max(0, topN - manifests.length)
+    const remaining = isStep4Resume ? 0 : topN - resumeMergeCount
     let resumeHint = ''
-    if (discoveryState) {
+    if (!isStep4Resume && discoveryState) {
       const qOrder = discoveryState.queryOrder || []
       const qName = (qOrder[resumeQueryIndex] || '').replace('keywords:', '')
       const pos = resumeQueryFrom > 0 ? `, position ${resumeQueryFrom}` : ''
-      resumeHint = remaining === 0 ? '' : ` (resuming at "${qName}"${pos})`
+      resumeHint = resumeMergeCount > 0 ? ` (resuming at "${qName}"${pos})` : ''
     }
     process.stderr.write(
       `     collecting ${remaining} more → will have ${manifests.length + remaining} total` +
@@ -657,14 +632,15 @@ Cache files (written next to --out, gitignored):
   }
 
   process.stderr.write('Steps 1–3: Scanning popular packages for lifecycle scripts...\n')
-  const needToCollect = Math.max(0, topN - manifests.length)
+  const needToCollect = isStep4Resume ? 0 : topN - resumeMergeCount
   process.stderr.write(`  (collecting ${needToCollect} new packages with lifecycle scripts)\n`)
   process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n\n`)
 
   let scanned = 0
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
-  // If we already have enough packages from a previous run, skip collection entirely.
-  let done = manifests.length >= topN
+  // Skip collection only when resuming a step-4 interrupt (tmp.json saved with discoveryState: null).
+  // Otherwise --top N is always additive — collect N more packages beyond what the store has.
+  let done = isStep4Resume
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom }
 
   for (let qi = resumeQueryIndex; qi < DISCOVERY_QUERIES.length; qi++) {
@@ -807,7 +783,9 @@ Cache files (written next to --out, gitignored):
     }
 
     // Not matched — is it a build package at all?
-    if (!isBuildPackage(manifest)) continue
+    // Use the same hasBuildHint gate as the production approve-scripts scanner,
+    // passing an empty referencedFiles array (no installed package on disk here).
+    if (!hasBuildHint(manifest.scripts || {}, [])) continue
 
     const tokens = extractCommandTokens(lc)
     const inferred = inferIndicatorFiles(manifest)
