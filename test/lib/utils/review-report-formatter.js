@@ -12,7 +12,7 @@ const makePkg = (overrides = {}) => ({
   introducedBy: [],
   lifecycleScripts: { install: 'node-gyp rebuild' },
   referencedFiles: [],
-  nativeBuildInfo: null,
+  buildInfo: null,
   changeClassification: { status: 'new', previousApprovedVersion: null },
   ...overrides,
 })
@@ -590,7 +590,7 @@ t.test('formatMarkdown shows GB for very large files (format-bytes line 26)', (t
   t.end()
 })
 
-// --- native-build signal and nativeBuildInfo section ---------------------
+// --- native-build signal and buildInfo section ---------------------
 
 // Helper: build a minimal IndicatorResult[] for a single GYP indicator
 const makeGypIndicator = (overrides = {}) => ({
@@ -603,8 +603,8 @@ const makeGypIndicator = (overrides = {}) => ({
   ...overrides,
 })
 
-const makeNativePkg = (nativeBuildInfo, overrides = {}) =>
-  makePkg({ nativeBuildInfo, ...overrides })
+const makeNativePkg = (buildInfo, overrides = {}) =>
+  makePkg({ buildInfo, ...overrides })
 
 t.test('native-build signal appears in risk summary and review focus', (t) => {
   const out = formatMarkdown([makePkg({
@@ -617,7 +617,7 @@ t.test('native-build signal appears in risk summary and review focus', (t) => {
     }],
   })])
   t.match(out, /### Risk summary/, 'risk summary present')
-  t.match(out, /native code/, 'native-build label appears')
+  t.match(out, /native binary/, 'native-build label appears')
   t.match(out, /### Suggested review focus/, 'review focus present')
   t.match(out, /binding\.gyp/, 'review focus mentions binding.gyp')
   t.end()
@@ -632,7 +632,7 @@ t.test('formatMarkdown renders native build section with targets', (t) => {
       { label: 'Target `canvas` — include directories', items: ['include'] },
     ],
   })])])
-  t.match(out, /### Native build indicators/)
+  t.match(out, /### Build indicators/)
   t.match(out, /binding\.gyp.*GYP build descriptor/)
   t.match(out, /SHA-256.*abc123/)
   t.match(out, /canvas/)
@@ -663,7 +663,7 @@ t.test('formatMarkdown native build section shows parse error', (t) => {
     parseError: 'Unexpected token',
     groups: [],
   })])])
-  t.match(out, /### Native build indicators/)
+  t.match(out, /### Build indicators/)
   t.match(out, /Warning/)
   t.match(out, /could not be parsed/)
   t.match(out, /Unexpected token/)
@@ -675,20 +675,20 @@ t.test('formatMarkdown native build section shows no-details message', (t) => {
     sha256: 'aaa111',
     groups: [],
   })])])
-  t.match(out, /### Native build indicators/)
+  t.match(out, /### Build indicators/)
   t.match(out, /No details extracted/)
   t.end()
 })
 
-t.test('formatMarkdown omits native build section when nativeBuildInfo is null', (t) => {
+t.test('formatMarkdown omits native build section when buildInfo is null', (t) => {
   const out = formatMarkdown([makeNativePkg(null)])
-  t.notMatch(out, /### Native build/)
+  t.notMatch(out, /### Build indicators/)
   t.end()
 })
 
-t.test('formatMarkdown omits native build section when nativeBuildInfo is empty array', (t) => {
+t.test('formatMarkdown omits native build section when buildInfo is empty array', (t) => {
   const out = formatMarkdown([makeNativePkg([])])
-  t.notMatch(out, /### Native build/)
+  t.notMatch(out, /### Build indicators/)
   t.end()
 })
 
@@ -710,16 +710,16 @@ t.test('formatMarkdown renders multiple indicator files', (t) => {
   t.end()
 })
 
-t.test('formatJson includes nativeBuildInfo as-is (IndicatorResult[])', (t) => {
-  const nativeBuildInfo = [makeGypIndicator({ sha256: 'aabbcc' })]
-  const parsed = JSON.parse(formatJson([makeNativePkg(nativeBuildInfo)]))
-  t.strictSame(parsed.packages[0].nativeBuildInfo, nativeBuildInfo)
+t.test('formatJson includes buildInfo as-is (IndicatorResult[])', (t) => {
+  const buildInfo = [makeGypIndicator({ sha256: 'aabbcc' })]
+  const parsed = JSON.parse(formatJson([makeNativePkg(buildInfo)]))
+  t.strictSame(parsed.packages[0].buildInfo, buildInfo)
   t.end()
 })
 
-t.test('formatJson preserves nativeBuildInfo: null', (t) => {
+t.test('formatJson preserves buildInfo: null', (t) => {
   const parsed = JSON.parse(formatJson([makeNativePkg(null)]))
-  t.equal(parsed.packages[0].nativeBuildInfo, null)
+  t.equal(parsed.packages[0].buildInfo, null)
   t.end()
 })
 
@@ -735,8 +735,8 @@ t.test('formatJson includes native-build in riskSummary', (t) => {
   })
   const parsed = JSON.parse(formatJson([pkg]))
   const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
-  t.ok(riskSummary.some(s => /native code/.test(s)), 'native-build in riskSummary')
-  // nativeBuildInfo is null → fallback message listing possible descriptor filenames
+  t.ok(riskSummary.some(s => /native binary/.test(s)), 'native-build in riskSummary')
+  // buildInfo is null → fallback message listing possible descriptor filenames
   t.ok(suggestedReviewFocus.some(s => /binding\.gyp/.test(s)), 'native-build fallback in suggestedReviewFocus')
   t.end()
 })
@@ -848,7 +848,7 @@ t.test('buildIndicatorReviewFocus: multi-target message pluralises target label'
 
 t.test('allSignals merges indicator signals into risk summary', (t) => {
   const pkg = makePkg({
-    nativeBuildInfo: [{
+    buildInfo: [{
       indicatorFile: 'binding.gyp',
       label: 'GYP build descriptor',
       sha256: 'x',
@@ -859,7 +859,7 @@ t.test('allSignals merges indicator signals into risk summary', (t) => {
   })
   const parsed = JSON.parse(formatJson([pkg]))
   const { riskSummary, suggestedReviewFocus } = parsed.packages[0]
-  t.ok(riskSummary.some(s => /native code/.test(s)), 'native-build from indicator in riskSummary')
+  t.ok(riskSummary.some(s => /native binary/.test(s)), 'native-build from indicator in riskSummary')
   t.ok(suggestedReviewFocus.some(s => /platform-specific/.test(s)),
     'gyp-conditions in suggestedReviewFocus')
   t.end()
@@ -867,7 +867,7 @@ t.test('allSignals merges indicator signals into risk summary', (t) => {
 
 t.test('rust-native signal appears in risk summary and review focus', (t) => {
   const pkg = makePkg({
-    nativeBuildInfo: [{
+    buildInfo: [{
       indicatorFile: 'Cargo.toml',
       label: 'Rust native addon',
       sha256: 'y',
@@ -881,6 +881,208 @@ t.test('rust-native signal appears in risk summary and review focus', (t) => {
   t.match(out, /Rust native addon|Rust/)
   t.ok(formatMarkdown([pkg]).includes('rust-native') ||
     out.match(/Rust/), 'rust-native signal rendered')
+  t.end()
+})
+
+// ---------------------------------------------------------------------------
+// New classifier signals: wasm-build, android-native, make-build
+// ---------------------------------------------------------------------------
+
+t.test('wasm-build signal appears in SIGNAL_LABELS, HIGH_RISK_SIGNALS, and risk summary', (t) => {
+  const pkg = makePkg({
+    buildInfo: null,
+    referencedFiles: [{
+      path: 'install.js', reason: 'direct', sha256: null,
+      signals: ['wasm-build'], references: [],
+    }],
+  })
+  const out = formatMarkdown([pkg])
+  t.match(out, /wasm|WebAssembly|\.wasm/, 'wasm-build label present in risk summary')
+  t.end()
+})
+
+t.test('android-native signal appears in SIGNAL_LABELS and risk summary', (t) => {
+  const pkg = makePkg({
+    buildInfo: [{
+      indicatorFile: 'android/build.gradle',
+      label: 'Android native module',
+      sha256: 'a1',
+      parseError: null,
+      signals: ['android-native'],
+      groups: [],
+    }],
+  })
+  const out = formatMarkdown([pkg])
+  t.match(out, /Android/, 'android-native label present in risk summary')
+  t.end()
+})
+
+t.test('make-build signal appears in SIGNAL_LABELS and risk summary', (t) => {
+  const pkg = makePkg({
+    buildInfo: [{
+      indicatorFile: 'Makefile',
+      label: 'Makefile build script',
+      sha256: 'b2',
+      parseError: null,
+      signals: ['make-build'],
+      groups: [],
+    }],
+  })
+  const out = formatMarkdown([pkg])
+  t.match(out, /Makefile|make/, 'make-build label present in risk summary')
+  t.end()
+})
+
+// --- buildIndicatorFocusItem: wasm-build case ---
+
+t.test('buildIndicatorReviewFocus: wasm-build names specific imported APIs', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'Cargo.toml',
+    label: 'Rust build descriptor',
+    sha256: 'wasm1',
+    parseError: null,
+    signals: ['native-build', 'rust-native', 'wasm-build'],
+    groups: [
+      { label: 'Crate name', items: ['my-wasm-pkg'] },
+      { label: 'web-sys browser/Node.js APIs imported', items: ['"fetch", "Window", "XmlHttpRequest"'] },
+      { label: 'js-sys imported (direct JavaScript built-in access — includes eval, Function, Reflect)', items: ['yes'] },
+    ],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /WebAssembly module.*`my-wasm-pkg`/, 'WASM module name in focus')
+  t.match(out, /fetch.*Window.*XmlHttpRequest/, 'imported APIs listed in focus')
+  t.match(out, /js-sys.*review direct JavaScript interop/, 'js-sys warning in focus')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: wasm-build without web-sys group uses generic API message', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'Cargo.toml',
+    label: 'Rust build descriptor',
+    sha256: 'wasm2',
+    parseError: null,
+    signals: ['native-build', 'rust-native', 'wasm-build'],
+    groups: [
+      { label: 'wasm-bindgen-futures (async WASM ↔ JS bridge — spawns JS promises from Rust)', items: ['yes'] },
+    ],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /verify what browser\/Node\.js APIs/, 'generic API guidance when no web-sys group')
+  t.match(out, /wasm-bindgen-futures/, 'async bridge warning present')
+  t.end()
+})
+
+// --- buildIndicatorFocusItem: android-native case ---
+
+t.test('buildIndicatorReviewFocus: android-native names dependencies and JNI code', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'android/build.gradle',
+    label: 'Android native module',
+    sha256: 'and1',
+    parseError: null,
+    signals: ['android-native'],
+    groups: [
+      { label: 'Android dependencies', items: ['com.facebook.react:react-android:+', 'org.webkit:android-jsc:+'] },
+      { label: 'Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)', items: ['yes'] },
+    ],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /Android native module/, 'indicator label in focus')
+  t.match(out, /react-android/, 'Android dependency in focus')
+  t.match(out, /JNI\/NDK/, 'JNI/NDK check in focus')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: android-native with iOS companion mentions iOS', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'android/build.gradle',
+    label: 'Android native module',
+    sha256: 'and2',
+    parseError: null,
+    signals: ['android-native'],
+    groups: [
+      { label: 'iOS pod specification', items: ['MyModule.podspec'] },
+    ],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /iOS native code/, 'iOS review mentioned in focus')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: android-native with no groups → generic fallback', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'android/build.gradle',
+    label: 'Android native module',
+    sha256: 'and3',
+    parseError: null,
+    signals: ['android-native'],
+    groups: [],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /Android native module/, 'indicator label in focus')
+  t.match(out, /review build configuration/, 'generic fallback when no groups')
+  t.end()
+})
+
+// --- buildIndicatorFocusItem: make-build case ---
+
+t.test('buildIndicatorReviewFocus: make-build names external tools and linked libs', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'Makefile',
+    label: 'Makefile build script',
+    sha256: 'make1',
+    parseError: null,
+    signals: ['make-build'],
+    groups: [
+      { label: 'External tools invoked', items: ['curl', 'wget'] },
+      { label: 'Libraries linked', items: ['ssl', 'crypto'] },
+      { label: 'C/C++ source files', items: ['src/main.c'] },
+    ],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /Makefile build/, 'Makefile label in focus')
+  t.match(out, /curl.*wget/, 'external tools in focus')
+  t.match(out, /ssl.*crypto/, 'linked libs in focus')
+  t.match(out, /C\/C\+\+ source files/, 'source file review in focus')
+  t.end()
+})
+
+t.test('buildIndicatorReviewFocus: make-build with no groups → generic fallback', (t) => {
+  const pkg = makeNativePkg([{
+    indicatorFile: 'Makefile',
+    label: 'Makefile build script',
+    sha256: 'make2',
+    parseError: null,
+    signals: ['make-build'],
+    groups: [],
+  }])
+  const out = formatMarkdown([pkg])
+  t.match(out, /review all build steps/, 'generic fallback for empty Makefile groups')
+  t.end()
+})
+
+// --- buildAllReviewFocus: wasm-build fallback ---
+
+t.test('buildAllReviewFocus: wasm-build fallback fires when signal present but no buildInfo', (t) => {
+  const pkg = makePkg({
+    buildInfo: null,
+    referencedFiles: [{
+      path: 'install.js', reason: 'direct', sha256: null,
+      signals: ['wasm-build'], references: [],
+    }],
+  })
+  const out = formatMarkdown([pkg])
+  t.match(out, /WebAssembly build/, 'WASM fallback message in review focus')
+  t.end()
+})
+
+// --- Build indicators section heading ---
+
+t.test('formatMarkdown uses "Build indicators" heading (not "Native build indicators")', (t) => {
+  const pkg = makeNativePkg([makeGypIndicator({ sha256: 'x' })])
+  const out = formatMarkdown([pkg])
+  t.match(out, /### Build indicators/, 'new heading present')
+  t.notMatch(out, /### Native build indicators/, 'old heading absent')
   t.end()
 })
 

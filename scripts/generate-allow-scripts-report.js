@@ -85,7 +85,7 @@ async function main () {
       ? await scanPackageScripts(node.path, scripts)
       : []
 
-    const nativeBuildInfo = node.path && hasGypHint(scripts, referencedFiles)
+    const buildInfo = node.path && hasGypHint(scripts, referencedFiles)
       ? await scanGypFile(node.path)
       : null
 
@@ -98,7 +98,7 @@ async function main () {
       introducedBy,
       lifecycleScripts: scripts,
       referencedFiles,
-      nativeBuildInfo,
+      buildInfo,
       changeClassification,
     })
   }
