@@ -235,9 +235,9 @@ async function getBatchDownloads (names) {
   const scoped = names.filter(n => n.startsWith('@'))
   const plain = names.filter(n => !n.startsWith('@'))
 
-  // Batch unscoped packages (40 at a time to stay well under URL limits)
-  for (let i = 0; i < plain.length; i += 40) {
-    const batch = plain.slice(i, i + 40).join(',')
+  // Batch unscoped packages (128 at a time — bulk endpoint max per npm API docs)
+  for (let i = 0; i < plain.length; i += 128) {
+    const batch = plain.slice(i, i + 128).join(',')
     const url = `https://api.npmjs.org/downloads/point/last-week/${batch}`
     const data = await fetchJson(url)
     if (data) {
@@ -597,13 +597,13 @@ Cache files (written next to --out, gitignored):
         process.stderr.write(`     top by downloads: ${top3}\n`)
       }
     }
-    const remaining = topN - resumeMergeCount
+    const remaining = Math.max(0, topN - manifests.length)
     let resumeHint = ''
     if (discoveryState) {
       const qOrder = discoveryState.queryOrder || []
       const qName = (qOrder[resumeQueryIndex] || '').replace('keywords:', '')
       const pos = resumeQueryFrom > 0 ? `, position ${resumeQueryFrom}` : ''
-      resumeHint = ` (resuming at "${qName}"${pos})`
+      resumeHint = remaining === 0 ? '' : ` (resuming at "${qName}"${pos})`
     }
     process.stderr.write(
       `     collecting ${remaining} more → will have ${manifests.length + remaining} total` +
@@ -657,12 +657,14 @@ Cache files (written next to --out, gitignored):
   }
 
   process.stderr.write('Steps 1–3: Scanning popular packages for lifecycle scripts...\n')
-  process.stderr.write(`  (collecting ${topN - resumeMergeCount} new packages with lifecycle scripts)\n`)
+  const needToCollect = Math.max(0, topN - manifests.length)
+  process.stderr.write(`  (collecting ${needToCollect} new packages with lifecycle scripts)\n`)
   process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n\n`)
 
   let scanned = 0
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
-  let done = false
+  // If we already have enough packages from a previous run, skip collection entirely.
+  let done = manifests.length >= topN
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom }
 
   for (let qi = resumeQueryIndex; qi < DISCOVERY_QUERIES.length; qi++) {
@@ -701,24 +703,26 @@ Cache files (written next to --out, gitignored):
               )
             }
             if (newThisRun >= topN) done = true
-            // Checkpoint save every 100 new packages (resume cache)
-            if (newThisRun % 100 === 0) {
-              await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from })
-            }
           }
         }
         finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from }
         if (delayMs > 0) await sleep(delayMs)
       }
+      // Save resume cache after every page so interrupts resume from the right position
+      await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from })
 
       if (from >= 2000) break
     }
 
-    // Save resume cache at query boundary so switching keywords is a clean resume point
+    // Advance to the next query: flush both caches so future merges start from a current base.
     const nextQi = qi + 1
     const nextFrom = 0
+    const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom }
     process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
-    await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom })
+    await Promise.all([
+      savePackageCache(resumeCachePath, manifests, seen, nextState),
+      savePackageCache(pkgPath, manifests, seen, nextState),
+    ])
   }
 
   process.stderr.write(
@@ -739,9 +743,9 @@ Cache files (written next to --out, gitignored):
   const dlPlain  = needDownloads.filter(m => !m.name.startsWith('@'))
   let dlFetched  = manifests.length - needDownloads.length  // already had counts
 
-  // Unscoped — batches of 40, save cache after each batch
-  for (let i = 0; i < dlPlain.length; i += 40) {
-    const batch = dlPlain.slice(i, i + 40)
+  // Unscoped — batches of 128 (bulk endpoint max per docs; stays well under URL limits)
+  for (let i = 0; i < dlPlain.length; i += 128) {
+    const batch = dlPlain.slice(i, i + 128)
     const url = `https://api.npmjs.org/downloads/point/last-week/${batch.map(m => m.name).join(',')}`
     const data = await fetchJson(url)
     if (data) {
@@ -753,7 +757,13 @@ Cache files (written next to --out, gitignored):
     await sleep(150)
   }
 
-  // Scoped — one at a time, save resume cache every 20
+  // Brief pause after unscoped batches before starting per-package scoped requests,
+  // so the API rate-limit window has time to reset.
+  if (dlScoped.length > 0 && dlPlain.length > 0) await sleep(2000)
+
+  // Scoped — one at a time (bulk endpoint does not support @scope/pkg names).
+  // 1500ms spacing (~40 req/min) stays at the observed rate-limit threshold,
+  // avoiding 30s penalty cooldowns without adding overall time.
   for (let i = 0; i < dlScoped.length; i++) {
     const m = dlScoped[i]
     const encoded = m.name.replace(/\//g, '%2F')
@@ -764,7 +774,7 @@ Cache files (written next to --out, gitignored):
       process.stderr.write(`  [${dlFetched}/${manifests.length}] download counts fetched\n`)
       await savePackageCache(resumeCachePath, manifests, seen, null)
     }
-    await sleep(500)  // 500ms between scoped fetches — avoids 429s at 100ms
+    await sleep(1500)
   }
 
   process.stderr.write(`  ✓ all download counts fetched\n\n`)
