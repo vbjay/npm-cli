@@ -80,7 +80,7 @@ async function deepScanPackage (manifest, deepDir, limit) {
   // Return cached results only when the version matches
   try {
     const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
-    if (meta.version === manifest.version) return meta.results
+    if (meta.version === manifest.version) return { results: meta.results, fetchedFiles: meta.fetchedFiles || [], fromCache: true }
   } catch { /* not cached or stale */ }
 
   await fs.mkdir(pkgCacheDir, { recursive: true })
@@ -88,6 +88,7 @@ async function deepScanPackage (manifest, deepDir, limit) {
   // Fetch every indicator file concurrently (shared limiter keeps total
   // in-flight requests bounded across all packages)
   const indicatorFiles = Object.keys(INDICATOR_REGISTRY)
+  const fetchedFiles = []
   await Promise.all(indicatorFiles.map(file =>
     limit(async () => {
       const encoded = manifest.name.replace(/\//g, '%2F')
@@ -97,6 +98,7 @@ async function deepScanPackage (manifest, deepDir, limit) {
         const dest = path.join(pkgCacheDir, file)
         await fs.mkdir(path.dirname(dest), { recursive: true })
         await fs.writeFile(dest, buf)
+        fetchedFiles.push(file)
       }
     })
   ))
@@ -109,10 +111,10 @@ async function deepScanPackage (manifest, deepDir, limit) {
   // Cache: version-stamp so a version bump forces a re-scan
   await fs.writeFile(
     metaPath,
-    JSON.stringify({ version: manifest.version, scannedAt: new Date().toISOString(), results }, null, 2) + '\n'
+    JSON.stringify({ version: manifest.version, scannedAt: new Date().toISOString(), fetchedFiles, results }, null, 2) + '\n'
   )
 
-  return results
+  return { results, fetchedFiles, fromCache: false }
 }
 
 // Pre-build a flat [{ pattern, file }] table from the registry so we can
@@ -597,7 +599,9 @@ Cache files (written next to --out, gitignored):
   process.stderr.write(`   packages: ${pkgPath}${pkgFile ? ' (user-provided)' : ' (permanent store)'}\n`)
   process.stderr.write(`   resume:   ${resumeCachePath}  (deleted on success)\n`)
   if (deepMode) {
+    const scannerPath = path.join(ROOT, 'lib', 'utils', 'indicator-scanner.js')
     process.stderr.write(`   deep:     ${deepDir}  (indicator files cached by name@version)\n`)
+    process.stderr.write(`             with: ${scannerPath}\n`)
   }
   process.stderr.write('\n')
 
@@ -742,65 +746,80 @@ Cache files (written next to --out, gitignored):
   // Skip collection if resuming step 4, or if no --top was given (topN === 0).
   let done = isStep4Resume || topN === 0
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom }
+  let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
 
-  for (let qi = resumeQueryIndex; qi < DISCOVERY_QUERIES.length; qi++) {
-    if (done) break
-    const query = DISCOVERY_QUERIES[qi]
-    let from = (qi === resumeQueryIndex) ? resumeQueryFrom : 0
-    const size = 250
-    process.stderr.write(`  query: ${query}${from > 0 ? ` (resuming from=${from})` : ''}\n`)
+  while (!done) {
+    const newAtPassStart = newThisRun  // detect a pass with zero new packages → stop
 
-    while (!done) {
-      const enc = encodeURIComponent(query)
-      const url =
-        `https://registry.npmjs.org/-/v1/search` +
-        `?text=${enc}&popularity=1.0&quality=0.0&maintenance=0.0` +
-        `&size=${size}&from=${from}`
-      const page = await fetchJson(url)
-      if (!page || !page.objects || page.objects.length === 0) break
+    for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
+      const query = DISCOVERY_QUERIES[qi]
+      let from = (qi === resumeQueryIndex) ? resumeQueryFrom : 0
+      const size = 250
+      process.stderr.write(`  query: ${query}${from > 0 ? ` (resuming from=${from})` : ''}\n`)
 
-      const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
-      for (const n of pageNames) seen.add(n)
-      from += page.objects.length
+      while (!done) {
+        const enc = encodeURIComponent(query)
+        const url =
+          `https://registry.npmjs.org/-/v1/search` +
+          `?text=${enc}&popularity=1.0&quality=0.0&maintenance=0.0` +
+          `&size=${size}&from=${from}`
+        const page = await fetchJson(url)
+        if (!page || !page.objects || page.objects.length === 0) break
 
-      for (const name of pageNames) {
-        if (done) break
-        const manifest = await getPackageManifest(name)
-        scanned++
-        if (manifest) {
-          const lc = extractLifecycleScripts(manifest.scripts)
-          if (Object.keys(lc).length > 0) {
-            manifests.push(manifest)
-            newThisRun++
-            if (newThisRun % 50 === 0 || newThisRun <= 3) {
-              process.stderr.write(
-                `    found ${newThisRun}/${topN} new (${manifests.length} total)` +
-                ` (scanned ${scanned}, last: ${name})\n`
-              )
+        const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
+        for (const n of pageNames) seen.add(n)
+        from += page.objects.length
+
+        for (const name of pageNames) {
+          if (done) break
+          const manifest = await getPackageManifest(name)
+          scanned++
+          if (manifest) {
+            const lc = extractLifecycleScripts(manifest.scripts)
+            if (Object.keys(lc).length > 0) {
+              manifests.push(manifest)
+              newThisRun++
+              if (newThisRun % 50 === 0 || newThisRun <= 3) {
+                process.stderr.write(
+                  `    found ${newThisRun}/${topN} new (${manifests.length} total)` +
+                  ` (scanned ${scanned}, last: ${name})\n`
+                )
+              }
+              if (newThisRun >= topN) done = true
             }
-            if (newThisRun >= topN) done = true
           }
+          finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from }
+          if (delayMs > 0) await sleep(delayMs)
         }
-        finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from }
-        if (delayMs > 0) await sleep(delayMs)
-      }
-      // Save resume cache after every page so interrupts resume from the right position
-      await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from })
+        // Save resume cache after every page so interrupts resume from the right position
+        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from })
 
-      if (from >= 2000) break
+        if (from >= 2000) break
+      }
+
+      // Advance to the next query: flush both caches so future merges start from a current base.
+      const nextQi = qi + 1
+      const nextFrom = 0
+      const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom }
+      process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, nextState),
+        savePackageCache(pkgPath, manifests, seen, nextState),
+      ])
     }
 
-    // Advance to the next query: flush both caches so future merges start from a current base.
-    const nextQi = qi + 1
-    const nextFrom = 0
-    const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom }
-    process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
-    await Promise.all([
-      savePackageCache(resumeCachePath, manifests, seen, nextState),
-      savePackageCache(pkgPath, manifests, seen, nextState),
-    ])
+    if (!done) {
+      if (newThisRun === newAtPassStart) {
+        // Full pass with no new packages — all keywords are truly exhausted
+        process.stderr.write(`  all keywords exhausted with no new packages — stopping\n`)
+        break
+      }
+      // Found some new packages; wrap around and try all keywords again
+      process.stderr.write(`  wrapping around keyword list (${newThisRun}/${topN} collected so far)...\n`)
+      passStartIndex = 0
+      resumeQueryFrom = 0  // reset so next pass starts each keyword from the top
+    }
   }
-
   process.stderr.write(
     `\n  ✓ collected ${newThisRun} new packages (${manifests.length} total)` +
     ` (scanned ${scanned} new across ${seen.size} unique names)\n\n`
@@ -818,23 +837,17 @@ Cache files (written next to --out, gitignored):
     await fs.mkdir(deepDir, { recursive: true })
     const limit = makeLimiter(20)
 
-    // Only scan packages where command patterns or hasBuildHint suggest build activity
-    const candidates = manifests.filter(m =>
-      hasBuildHint(m.scripts || {}, []) ||
-      matchExistingDefinitions(extractLifecycleScripts(m.scripts), m).length > 0
-    )
-    process.stderr.write(`  (${candidates.length} packages with build hints, ${manifests.length - candidates.length} skipped)\n`)
-
+    // Scan all packages; deepScanPackage returns from cache if already scanned at this version.
     let deepDone = 0
-    await Promise.all(candidates.map(async manifest => {
-      const results = await deepScanPackage(manifest, deepDir, limit)
+    await Promise.all(manifests.map(async manifest => {
+      const { results, fetchedFiles, fromCache } = await deepScanPackage(manifest, deepDir, limit)
       deepResults.set(manifest.name, results)
       deepDone++
-      if (deepDone % 100 === 0 || deepDone === candidates.length) {
-        process.stderr.write(`  [${deepDone}/${candidates.length}] packages deep-scanned\n`)
-      }
+      const fileList = fetchedFiles.length > 0 ? fetchedFiles.join(', ') : '(none)'
+      const cacheTag = fromCache ? ' [cached]' : ''
+      process.stderr.write(`  scanning ${manifest.name}@${manifest.version}${cacheTag}: ${fileList}\n`)
     }))
-    process.stderr.write(`  ✓ deep scan complete\n\n`)
+    process.stderr.write(`\n  ✓ deep scan complete (${deepDone} scanned)\n\n`)
   }
 
   // Fetch weekly download counts only for the packages we kept.
