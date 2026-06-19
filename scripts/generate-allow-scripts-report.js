@@ -36,8 +36,8 @@ const getDepPaths = require(path.join(ROOT, 'lib', 'utils', 'dep-path-walker.js'
 const classifyScriptChange =
   require(path.join(ROOT, 'lib', 'utils', 'script-change-classifier.js'))
 const scanPackageScripts = require(path.join(ROOT, 'lib', 'utils', 'script-risk-scanner.js'))
-const scanGypFile = require(path.join(ROOT, 'lib', 'utils', 'gyp-scanner.js'))
-const hasGypHint = require(path.join(ROOT, 'lib', 'utils', 'gyp-hint.js'))
+const { hasBuildHint, scanBuildIndicatorsForPackage } =
+  require(path.join(ROOT, 'lib', 'utils', 'indicator-scanner.js'))
 const { formatMarkdown, formatJson } =
   require(path.join(ROOT, 'lib', 'utils', 'review-report-formatter.js'))
 
@@ -85,8 +85,8 @@ async function main () {
       ? await scanPackageScripts(node.path, scripts)
       : []
 
-    const buildInfo = node.path && hasGypHint(scripts, referencedFiles)
-      ? await scanGypFile(node.path)
+    const buildInfo = node.path && hasBuildHint(scripts, referencedFiles)
+      ? await scanBuildIndicatorsForPackage(node.path, scripts, referencedFiles)
       : null
 
     packages.push({
