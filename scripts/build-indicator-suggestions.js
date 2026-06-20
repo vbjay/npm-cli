@@ -1005,7 +1005,18 @@ When to use --reset:
           `https://registry.npmjs.org/-/v1/search` +
           `?text=${enc}&popularity=1.0&quality=0.0&maintenance=0.0` +
           `&size=${size}&from=${from}`
-        const page = await fetchJson(url)
+
+        let page
+        try {
+          page = await fetchJson(url)
+        } catch (err) {
+          if (err.isRateLimit) {
+            process.stderr.write(`  ⏳ rate limited fetching ${query} from=${from} — retrying after cooldown\n`)
+            continue  // waitForCooldown() fires at top of next fetchJson call
+          }
+          process.stderr.write(`  ⚠️  error fetching ${query}: ${err.message} — skipping to next keyword\n`)
+          break
+        }
         if (!page || !page.objects || page.objects.length === 0) break
 
         const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
@@ -1014,7 +1025,16 @@ When to use --reset:
 
         for (const name of pageNames) {
           if (done) break
-          const manifest = await getPackageManifest(name)
+          let manifest = null
+          try {
+            manifest = await getPackageManifest(name)
+          } catch (err) {
+            if (err.isRateLimit) {
+              // Cooldown set — skip this name and continue; it was already
+              // added to seen so it won't be re-fetched on a future run.
+            }
+            // else: non-429 fetch error — treat as no manifest
+          }
           scanned++
           if (manifest) {
             const lc = extractLifecycleScripts(manifest.scripts)
