@@ -30,6 +30,13 @@ const { INDICATOR_REGISTRY } = require(
 const { hasBuildHint, scanBuildIndicatorsForPackage } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-scanner.js')
 )
+const scanPackageScripts = require(
+  path.join(ROOT, 'lib', 'utils', 'script-risk-scanner.js')
+)
+const { parseCommandFile, findLocalRefs } = scanPackageScripts
+const { classifyUrl } = require(
+  path.join(ROOT, 'lib', 'utils', 'url-classifier.js')
+)
 
 // ---------------------------------------------------------------------------
 // Concurrency limiter — run at most `max` async tasks simultaneously
@@ -80,41 +87,121 @@ async function deepScanPackage (manifest, deepDir, limit) {
   // Return cached results only when the version matches
   try {
     const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
-    if (meta.version === manifest.version) return { results: meta.results, fetchedFiles: meta.fetchedFiles || [], fromCache: true }
+    if (meta.version === manifest.version) return { results: meta.results, referencedFiles: meta.referencedFiles || [], fetchedFiles: meta.fetchedFiles || [], fromCache: true }
   } catch { /* not cached or stale */ }
 
   await fs.mkdir(pkgCacheDir, { recursive: true })
 
-  // Fetch every indicator file concurrently (shared limiter keeps total
-  // in-flight requests bounded across all packages)
-  const indicatorFiles = Object.keys(INDICATOR_REGISTRY)
+  const encoded = manifest.name.replace(/\//g, '%2F')
   const fetchedFiles = []
-  await Promise.all(indicatorFiles.map(file =>
-    limit(async () => {
-      const encoded = manifest.name.replace(/\//g, '%2F')
-      const url = `https://unpkg.com/${encoded}@${manifest.version}/${file}`
-      const buf = await fetchRaw(url)
-      if (buf) {
-        const dest = path.join(pkgCacheDir, file)
-        await fs.mkdir(path.dirname(dest), { recursive: true })
-        await fs.writeFile(dest, buf)
-        fetchedFiles.push(file)
-      }
-    })
+
+  // Helper: fetch one file from unpkg and save to pkgCacheDir.
+  // Returns true if the file was found and saved.
+  const fetchOne = async (relPosix) => {
+    const url = `https://unpkg.com/${encoded}@${manifest.version}/${relPosix}`
+    const buf = await fetchRaw(url)
+    if (!buf) return false
+    const dest = path.join(pkgCacheDir, ...relPosix.split('/'))
+    await fs.mkdir(path.dirname(dest), { recursive: true })
+    await fs.writeFile(dest, buf)
+    fetchedFiles.push(relPosix)
+    return true
+  }
+
+  // ---------------------------------------------------------------------------
+  // Step 1: Fetch the known indicator files (binding.gyp, Cargo.toml, …)
+  // ---------------------------------------------------------------------------
+  await Promise.all(Object.keys(INDICATOR_REGISTRY).map(file =>
+    limit(() => fetchOne(file))
   ))
 
-  // Run the production scanner on the fetched files
+  // ---------------------------------------------------------------------------
+  // Step 2: BFS fetch of lifecycle JS files and their require() deps.
+  //
+  // Parse each lifecycle command to find the top-level JS file it runs
+  // (e.g. "node install.js" → "install.js"), fetch that from unpkg, then
+  // scan the downloaded source for require() calls and queue those too.
+  // This gives scanPackageScripts a complete local copy to walk.
+  //
+  // We try the raw ref first, then common JS extensions for bare names.
+  // Depth is bounded by MAX_FETCH_DEPTH to avoid runaway recursion.
+  // ---------------------------------------------------------------------------
+  const MAX_FETCH_DEPTH = 10
+  const fetched = new Set()
+
+  // Resolve a raw local ref to a POSIX path relative to pkgCacheDir,
+  // trying common JS extensions when the bare name has no extension.
+  const resolveRelPosix = async (absPath) => {
+    const exts = ['', '.js', '.mjs', '.cjs']
+    for (const ext of exts) {
+      const candidate = absPath + ext
+      const rel = path.relative(pkgCacheDir, candidate)
+      if (rel.startsWith('..')) continue
+      const relPosix = rel.split(path.sep).join('/')
+      if (fetched.has(relPosix)) return relPosix // already fetched
+      try { await fs.lstat(candidate); return relPosix } catch { /* not on disk yet */ }
+    }
+    return null
+  }
+
+  const fetchWithRefs = async (relPosix, depth) => {
+    if (depth > MAX_FETCH_DEPTH || fetched.has(relPosix)) return
+    fetched.add(relPosix)
+
+    const ok = await limit(() => fetchOne(relPosix))
+    if (!ok) return
+
+    // Read the downloaded file and follow require() refs one level deeper
+    try {
+      const content = await fs.readFile(path.join(pkgCacheDir, ...relPosix.split('/')), 'utf8')
+      const refs = findLocalRefs(content)
+      const fileDir = path.dirname(path.join(pkgCacheDir, ...relPosix.split('/')))
+      await Promise.all(refs.map(async (ref) => {
+        const abs = path.resolve(fileDir, ref)
+        const resolved = await resolveRelPosix(abs)
+        if (resolved) {
+          await fetchWithRefs(resolved, depth + 1)
+        } else {
+          // Bare name with no extension on disk yet — try fetching .js
+          const rel = path.relative(pkgCacheDir, abs).split(path.sep).join('/')
+          if (!rel.startsWith('..') && !fetched.has(rel + '.js')) {
+            await fetchWithRefs(rel + '.js', depth + 1)
+          }
+        }
+      }))
+    } catch { /* file unreadable or ref resolution failed — skip */ }
+  }
+
+  // Seed the BFS queue from the lifecycle commands
+  const lifecycleScripts = extractLifecycleScripts(manifest.scripts)
+  for (const cmd of Object.values(lifecycleScripts)) {
+    for (const { filePath } of parseCommandFile(cmd, pkgCacheDir)) {
+      const rel = path.relative(pkgCacheDir, filePath)
+      if (!rel.startsWith('..')) {
+        await fetchWithRefs(rel.split(path.sep).join('/'), 0)
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Step 3: Run scanPackageScripts to get referencedFiles with signals + URLs
+  // ---------------------------------------------------------------------------
+  const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts)
+
+  // ---------------------------------------------------------------------------
+  // Step 4: Run the indicator scanner with the full referencedFiles context
+  // ---------------------------------------------------------------------------
   const results = await scanBuildIndicatorsForPackage(
-    pkgCacheDir, manifest.scripts || {}, []
+    pkgCacheDir, manifest.scripts || {}, referencedFiles
   )
 
-  // Cache: version-stamp so a version bump forces a re-scan
+  // Cache everything version-stamped
   await fs.writeFile(
     metaPath,
-    JSON.stringify({ version: manifest.version, scannedAt: new Date().toISOString(), fetchedFiles, results }, null, 2) + '\n'
+    JSON.stringify({ version: manifest.version, scannedAt: new Date().toISOString(), fetchedFiles, results, referencedFiles }, null, 2) + '\n'
   )
 
-  return { results, fetchedFiles, fromCache: false }
+  return { results, referencedFiles, fetchedFiles, fromCache: false }
 }
 
 // Pre-build a flat [{ pattern, file }] table from the registry so we can
@@ -826,22 +913,24 @@ Cache files (written next to --out, gitignored):
   )
 
   // ---------------------------------------------------------------------------
-  // Step 4.5 (--deep only): Fetch indicator files from unpkg and run the
-  // production scanner on each package that has build hints.
+  // Step 4.5 (--deep only): Fetch indicator files + lifecycle JS files via unpkg,
+  // follow require() refs recursively, then run the full scanner stack.
   // Results are cached by name@version in deepDir so re-runs are instant.
   // ---------------------------------------------------------------------------
-  const deepResults = new Map() // name → IndicatorResult[]
+  const deepResults = new Map()      // name → IndicatorResult[]
+  const deepRefFiles = new Map()     // name → referencedFiles[]
 
   if (deepMode) {
-    process.stderr.write('Step 4.5/5: Deep-scanning indicator files via unpkg...\n')
+    process.stderr.write('Step 4.5/5: Deep-scanning packages via unpkg (indicator files + lifecycle scripts)...\n')
     await fs.mkdir(deepDir, { recursive: true })
     const limit = makeLimiter(20)
 
     // Scan all packages; deepScanPackage returns from cache if already scanned at this version.
     let deepDone = 0
     await Promise.all(manifests.map(async manifest => {
-      const { results, fetchedFiles, fromCache } = await deepScanPackage(manifest, deepDir, limit)
+      const { results, referencedFiles, fetchedFiles, fromCache } = await deepScanPackage(manifest, deepDir, limit)
       deepResults.set(manifest.name, results)
+      deepRefFiles.set(manifest.name, referencedFiles || [])
       deepDone++
       const fileList = fetchedFiles.length > 0 ? fetchedFiles.join(', ') : '(none)'
       const cacheTag = fromCache ? ' [cached]' : ''
@@ -920,9 +1009,16 @@ Cache files (written next to --out, gitignored):
     // --deep: use production scanner results (keyed by name@version in cache)
     // Fall back to command-pattern matching when deep results aren't available.
     const deepScan = deepResults.get(manifest.name)
+    const deepRefs = deepRefFiles.get(manifest.name) || []
     const matches = deepScan
       ? deepScan.map(r => r.indicatorFile)
       : matchExistingDefinitions(lc, manifest)
+
+    // Collect classified URLs from the deep scan (all files' url lists).
+    // entry.urls is [{url, classification}]; older cached entries may be strings.
+    const scannedUrls = deepRefs.flatMap(f => (f.urls || []).map(u =>
+      typeof u === 'string' ? { url: u, classification: classifyUrl(u) } : u
+    ))
 
     if (matches.length > 0) {
       for (const m of matches) {
@@ -934,8 +1030,8 @@ Cache files (written next to --out, gitignored):
 
     // Not matched — is it a build package at all?
     // Use the same hasBuildHint gate as the production approve-scripts scanner,
-    // passing an empty referencedFiles array (no installed package on disk here).
-    if (!hasBuildHint(manifest.scripts || {}, [])) continue
+    // passing deep referencedFiles when available so binary-download signals count.
+    if (!hasBuildHint(manifest.scripts || {}, deepRefs)) continue
 
     const tokens = extractCommandTokens(lc)
     const inferred = inferIndicatorFiles(manifest)
@@ -956,6 +1052,10 @@ Cache files (written next to --out, gitignored):
       commandTokens: tokens,
       inferredIndicatorFiles: inferred,
       suggestedSignal: signal,
+      // Classified URLs found in scanned lifecycle files — 'reference' URLs are
+      // marked so the AI can distinguish "downloads a binary from registry.npmjs.org"
+      // (download) from "links to a license page" (reference, likely ok).
+      scannedUrls: scannedUrls.length > 0 ? scannedUrls : undefined,
     })
 
     // Accumulate tokens for gap analysis (skip noise + very short)
