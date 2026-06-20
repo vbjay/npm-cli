@@ -162,6 +162,7 @@ npm approve-scripts --allow-scripts-pending \
 ### See Also
 
 * [approve-scripts report](/using-npm/approve-scripts-report)
+* [approve-scripts indicator suggestions](/using-npm/approve-scripts-indicator-suggestions)
 * [npm deny-scripts](/commands/npm-deny-scripts)
 * [npm install](/commands/npm-install)
 * [npm rebuild](/commands/npm-rebuild)

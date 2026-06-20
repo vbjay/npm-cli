@@ -293,6 +293,6 @@ scripts to generate it. This means:
 ### See Also
 
 * [npm approve-scripts](/commands/npm-approve-scripts)
-* [npm deny-scripts](/commands/npm-deny-scripts)
+* [approve-scripts indicator suggestions](/using-npm/approve-scripts-indicator-suggestions)
 * [using-npm scripts](/using-npm/scripts)
 * [package.json](/configuring-npm/package-json)
