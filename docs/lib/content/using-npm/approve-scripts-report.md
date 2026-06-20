@@ -211,6 +211,22 @@ The key things to look for in the JSON:
 - **`approveCommand`** / **`denyCommand`** — copy-pasteable commands for acting
   on the review
 
+#### Analyzing with GitHub Copilot
+
+> **Tip:** You can attach `review.json` directly to a GitHub Copilot Chat
+> conversation and ask it to help evaluate the findings. Try a prompt like:
+>
+> *"I've attached a JSON report from `npm approve-scripts`. Each entry lists
+> the lifecycle scripts a package will run at install time and the risk signals
+> detected in those scripts. Please summarise the risk for each package and
+> flag anything that looks especially suspicious. Don't approve or deny
+> anything — I'll make that call after reading your analysis."*
+>
+> Copilot can explain what signals like `runtime-installer` or
+> `obfuscation-pattern` mean in context, compare the `introducedBy` chains to
+> understand blast radius, and highlight packages that warrant a closer manual
+> read. The final approval decision always stays with you.
+
 ---
 
 ### Workflow examples
