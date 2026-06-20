@@ -498,17 +498,31 @@ async function fetchRaw (url, retries = 3) {
           const base = Math.max(30_000, serverWait)
           const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
           _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
+          process.stderr.write(`  🚦 HTTP 429 (raw) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${res.headers['retry-after'] ?? 'none'}\n`)
           res.resume()
           resolve('rate-limited')
           return
         }
+        if (res.statusCode !== 200 && res.statusCode !== 404) {
+          process.stderr.write(`  ⚠️  HTTP ${res.statusCode} (raw) attempt ${attempt}/${retries} ${url}\n`)
+        }
         const chunks = []
         res.on('data', d => chunks.push(d))
         res.on('end', () => resolve(res.statusCode === 200 ? Buffer.concat(chunks) : null))
-        res.on('error', () => resolve(null))
+        res.on('error', (err) => {
+          process.stderr.write(`  ⚠️  socket error (raw) ${url}: ${err.message}\n`)
+          resolve(null)
+        })
       })
-      req.on('error', () => resolve(null))
-      req.setTimeout(15_000, () => { req.destroy(); resolve(null) })
+      req.on('error', (err) => {
+        process.stderr.write(`  ⚠️  request error (raw) ${url}: ${err.message}\n`)
+        resolve(null)
+      })
+      req.setTimeout(15_000, () => {
+        process.stderr.write(`  ⏱️  timeout (raw) ${url}\n`)
+        req.destroy()
+        resolve(null)
+      })
     })
     if (buf === 'rate-limited') continue  // waitForCooldown on next iteration
     _consecutiveRateLimits = 0
@@ -539,6 +553,7 @@ async function fetchJson (url, retries = 5) {
               const base = Math.max(30_000, serverWait)
               const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
               _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
+              process.stderr.write(`  🚦 HTTP 429 (json) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${res.headers['retry-after'] ?? 'none'}\n`)
               reject(Object.assign(
                 new Error(`HTTP 429 — cooldown ${Math.ceil(backoff / 1000)}s`),
                 { isRateLimit: true }
@@ -548,6 +563,7 @@ async function fetchJson (url, retries = 5) {
                 reject(new Error(`JSON parse error for ${url}: ${e.message}`))
               }
             } else {
+              process.stderr.write(`  ⚠️  HTTP ${res.statusCode} (json) attempt ${attempt}/${retries} ${url}\n`)
               reject(new Error(`HTTP ${res.statusCode} for ${url}`))
             }
           })
