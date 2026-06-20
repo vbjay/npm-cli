@@ -21,6 +21,9 @@ npm approve-scripts --allow-scripts-pending > review.md
 npm approve-scripts --allow-scripts-pending \
   --allow-scripts-report-format=json > review.json
 
+# --json is equivalent shorthand for the above
+npm approve-scripts --allow-scripts-pending --json > review.json
+
 # Plain text listing — original behaviour, no report
 npm approve-scripts --allow-scripts-pending \
   --allow-scripts-report-format=null
@@ -248,9 +251,8 @@ npm approve-scripts canvas sharp esbuild
 #### AI-assisted review
 
 ```bash
-# 1. Generate the JSON report
-npm approve-scripts --allow-scripts-pending \
-  --allow-scripts-report-format=json > review.json
+# 1. Generate the JSON report (--json is shorthand for --allow-scripts-report-format=json)
+npm approve-scripts --allow-scripts-pending --json > review.json
 
 # 2. Pass review.json to your AI tool of choice with a prompt like:
 #    "Review these npm lifecycle scripts for security concerns.
@@ -264,8 +266,7 @@ npm approve-scripts --allow-scripts-pending \
 #### CI gate (block merge if unapproved scripts exist)
 
 ```bash
-npm approve-scripts --allow-scripts-pending \
-  --allow-scripts-report-format=json > review.json
+npm approve-scripts --allow-scripts-pending --json > review.json
 
 STATUS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('review.json','utf8')).status)")
 if [ "$STATUS" != "all-approved" ]; then
