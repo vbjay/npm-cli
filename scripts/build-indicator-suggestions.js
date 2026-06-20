@@ -38,11 +38,30 @@ const { classifyUrl } = require(
   path.join(ROOT, 'lib', 'utils', 'url-classifier.js')
 )
 
-// Cache schema version — derived from the set of signal names so any addition
-// or removal automatically invalidates old deep-scan cache entries.
-const DEEP_CACHE_VERSION = SIGNAL_PATTERNS.map(([name]) => name).join(',')
-  .split('').reduce((h, c) => (Math.imul(31, h) + c.charCodeAt(0)) | 0, 0)
-  .toString(36)
+// Cache schema version — hash of every signal name+regex and every indicator
+// registry key+commandPattern so that ANY change to signals or indicators
+// automatically invalidates all deep-scan cache entries and forces a rescan.
+function computeDeepCacheVersion () {
+  const parts = []
+  // Signal patterns: name + full regex source (flags included)
+  for (const [name, pat] of SIGNAL_PATTERNS) {
+    const src = pat instanceof RegExp ? pat.source + pat.flags : String(pat)
+    parts.push(name + '=' + src)
+  }
+  // Indicator registry: file key + each command-pattern source
+  for (const [key, entry] of Object.entries(INDICATOR_REGISTRY)) {
+    const pats = (entry.detect?.commandPatterns || [])
+      .map(p => p instanceof RegExp ? p.source : String(p))
+    parts.push(key + ':' + pats.join('|'))
+  }
+  let h = 0
+  const str = parts.join('\n')
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0
+  }
+  return (h >>> 0).toString(36)
+}
+const DEEP_CACHE_VERSION = computeDeepCacheVersion()
 
 // ---------------------------------------------------------------------------
 // Concurrency limiter — run at most `max` async tasks simultaneously
@@ -419,6 +438,11 @@ const SHELL_NOISE = new Set([
   'env', 'which', 'find', 'touch', 'read', 'printf', 'source', 'exec',
   'run', 'build', 'install', 'start', 'test', 'check', 'clean', 'all',
   'scripts', 'prebuild', 'postbuild',
+  // Common path-segment directory names that appear in script paths like
+  // "node hooks/postinstall.js" or "node src/install/postinstall.mjs".
+  // These are not meaningful command tokens — just directory components.
+  'hooks', 'src', 'lib', 'dist', 'bin', 'cli', 'utils', 'core',
+  'init', 'setup', 'tools', 'helpers', 'common', 'shared',
 ])
 
 // Lifecycle script names that run during `npm install`
