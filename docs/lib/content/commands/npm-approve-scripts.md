@@ -115,6 +115,10 @@ The report is evidence for human review. After reviewing it, a human
 can submit a separate commit updating `allowScripts` or `denyScripts`
 using `npm approve-scripts` or `npm deny-scripts`.
 
+For a detailed description of every field in the Markdown and JSON report
+formats — including the full signal reference, alarm callouts, and JSON
+schema — see [approve-scripts report](/using-npm/approve-scripts-report).
+
 **AI-assisted review workflow:**
 
 ```bash
@@ -157,6 +161,7 @@ npm approve-scripts --allow-scripts-pending \
 
 ### See Also
 
+* [approve-scripts report](/using-npm/approve-scripts-report)
 * [npm deny-scripts](/commands/npm-deny-scripts)
 * [npm install](/commands/npm-install)
 * [npm rebuild](/commands/npm-rebuild)
