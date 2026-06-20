@@ -1142,6 +1142,7 @@ When to use --reset:
   // ---------------------------------------------------------------------------
   const deepResults = new Map()      // name → IndicatorResult[]
   const deepRefFiles = new Map()     // name → referencedFiles[]
+  const deepFetchedFiles = new Map() // name → fetchedFiles[]
   let deepNewPkgs = 0               // packages discovered via cross-package imports
 
   if (deepMode) {
@@ -1155,6 +1156,7 @@ When to use --reset:
       const { results, referencedFiles, fetchedFiles, fromCache, discoveredManifests } = await deepScanPackage(manifest, deepDir, limit)
       deepResults.set(manifest.name, results)
       deepRefFiles.set(manifest.name, referencedFiles || [])
+        deepFetchedFiles.set(manifest.name, fetchedFiles || [])
       deepDone++
       const fileList = fetchedFiles.length > 0 ? fetchedFiles.join(', ') : '(none)'
       const cacheTag = fromCache ? ' [cached]' : ''
@@ -1255,6 +1257,7 @@ When to use --reset:
     // Fall back to command-pattern matching when deep results aren't available.
     const deepScan = deepResults.get(manifest.name)
     const deepRefs = deepRefFiles.get(manifest.name) || []
+    const deepFetched = deepFetchedFiles.get(manifest.name) || []
     const matches = deepScan
       ? deepScan.map(r => r.indicatorFile)
       : matchExistingDefinitions(lc, manifest)
@@ -1288,6 +1291,9 @@ When to use --reset:
       ...Object.keys(manifest.optionalDependencies),
     ].filter(d => BUILD_DEP_PATTERNS.some(p => p.test(d)))
 
+    // Collect unique signals detected across all scanned files (including cross-package refs)
+    const detectedSignals = [...new Set(deepRefs.flatMap(f => f.signals || []))]
+
     uncategorized.push({
       name: manifest.name,
       version: manifest.version,
@@ -1296,7 +1302,9 @@ When to use --reset:
       buildDependencies: buildDeps,
       commandTokens: tokens,
       inferredIndicatorFiles: inferred,
-      suggestedSignal: signal,
+      detectedSignals: detectedSignals.length > 0 ? detectedSignals : undefined,
+      suggestedSignal: signal || detectedSignals[0] || null,
+      scannedFiles: deepFetched.length > 0 ? deepFetched : undefined,
       // Classified URLs found in scanned lifecycle files — 'reference' URLs are
       // marked so the AI can distinguish "downloads a binary from registry.npmjs.org"
       // (download) from "links to a license page" (reference, likely ok).
