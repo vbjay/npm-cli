@@ -33,7 +33,7 @@ const { hasBuildHint, scanBuildIndicatorsForPackage } = require(
 const scanPackageScripts = require(
   path.join(ROOT, 'lib', 'utils', 'script-risk-scanner.js')
 )
-const { parseCommandFile, findLocalRefs } = scanPackageScripts
+const { parseCommandFile, findLocalRefs, findBareRefs } = scanPackageScripts
 const { classifyUrl } = require(
   path.join(ROOT, 'lib', 'utils', 'url-classifier.js')
 )
@@ -106,11 +106,18 @@ async function deepScanPackage (manifest, deepDir, limit) {
   // scan the downloaded source for require() calls and queue those too.
   // This gives scanPackageScripts a complete local copy to walk.
   //
+  // Local (relative) refs are fetched within the same package directory.
+  // Bare (package) refs are fetched from unpkg into a sibling directory
+  // under deepDir (node_modules/<pkgname>/), so their entry points can
+  // also be scanned for signals.
+  //
   // We try the raw ref first, then common JS extensions for bare names.
   // Depth is bounded by MAX_FETCH_DEPTH to avoid runaway recursion.
   // ---------------------------------------------------------------------------
   const MAX_FETCH_DEPTH = 10
-  const fetched = new Set()
+  const fetched = new Set()           // relative paths within pkgCacheDir
+  const fetchedPkgs = new Set()       // bare package names already followed
+  const discoveredManifests = []      // manifests found via cross-pkg BFS
 
   // Resolve a raw local ref to a POSIX path relative to pkgCacheDir,
   // trying common JS extensions when the bare name has no extension.
@@ -127,6 +134,109 @@ async function deepScanPackage (manifest, deepDir, limit) {
     return null
   }
 
+  // Fetch a bare package name's entry point from unpkg into a separate
+  // cache dir (deepDir/<safePkg>/) and scan it for signals.
+  // Also records the package manifest in discoveredManifests so the caller
+  // can add it to the permanent store if not already seen.
+  const fetchBarePackage = async (pkgName, depth) => {
+    if (depth > MAX_FETCH_DEPTH || fetchedPkgs.has(pkgName)) return
+    fetchedPkgs.add(pkgName)
+    fetchedFiles.push(`→ ${pkgName}`)  // boundary-crossing marker shown in scan output
+
+    const safePkg = pkgName.replace(/\//g, '__')
+    const pkgDir = path.join(deepDir, safePkg)
+    await fs.mkdir(pkgDir, { recursive: true })
+
+    // Fetch package.json to find the entry point
+    const encoded = pkgName.replace(/\//g, '%2F')
+    const pkgJsonBuf = await limit(() => fetchRaw(`https://unpkg.com/${encoded}/package.json`))
+    if (!pkgJsonBuf) return
+
+    let pkgJson
+    try { pkgJson = JSON.parse(pkgJsonBuf.toString('utf8')) } catch { return }
+
+    await fs.writeFile(path.join(pkgDir, 'package.json'), JSON.stringify(pkgJson, null, 2) + '\n')
+
+    // Record this package's manifest so the caller can add it to the permanent store.
+    discoveredManifests.push({
+      name: pkgJson.name || pkgName,
+      version: pkgJson.version || '0.0.0',
+      scripts: pkgJson.scripts || {},
+      dependencies: pkgJson.dependencies || {},
+      devDependencies: pkgJson.devDependencies || {},
+      optionalDependencies: pkgJson.optionalDependencies || {},
+      peerDependencies: pkgJson.peerDependencies || {},
+    })
+
+    // Resolve entry point — priority order:
+    //   1. exports['.'] (modern ESM/CJS conditional exports)
+    //   2. module field (bundler ESM entry, common in older packages)
+    //   3. main field (CJS entry)
+    //   4. index.js fallback
+    // For exports, we pick the first string value from the condition map,
+    // preferring 'require' > 'import' > 'default' for our scanning purposes
+    // (we want the CJS path when available since we can follow require() refs).
+    const resolveExportsEntry = (exp) => {
+      if (!exp) return null
+      const dot = exp['.'] ?? exp
+      if (typeof dot === 'string') return dot
+      if (typeof dot === 'object') {
+        for (const cond of ['require', 'node', 'import', 'default']) {
+          if (typeof dot[cond] === 'string') return dot[cond]
+          if (typeof dot[cond] === 'object') {
+            const nested = resolveExportsEntry(dot[cond])
+            if (nested) return nested
+          }
+        }
+      }
+      return null
+    }
+
+    const exportsEntry = resolveExportsEntry(pkgJson.exports)
+    const rawEntry = exportsEntry
+      || (typeof pkgJson.module === 'string' && pkgJson.module)
+      || (typeof pkgJson.main === 'string' && pkgJson.main)
+      || 'index.js'
+    const entryRel = rawEntry.replace(/^\.\//, '')
+    // Try the resolved path, then .js and .mjs variants if it has no extension.
+    const hasExt = /\.[cm]?js$/.test(entryRel)
+    const extsToTry = hasExt
+      ? [entryRel]
+      : [entryRel, entryRel + '.js', entryRel + '.mjs', entryRel + '.cjs']
+
+    for (const candidate of extsToTry) {
+      const buf = await limit(() => fetchRaw(`https://unpkg.com/${encoded}/${candidate}`))
+      if (!buf) continue
+      const dest = path.join(pkgDir, ...candidate.split('/'))
+      await fs.mkdir(path.dirname(dest), { recursive: true })
+      await fs.writeFile(dest, buf)
+
+
+      // Follow local refs within this package (but no further cross-pkg hops here)
+      try {
+        const content = buf.toString('utf8')
+        const localRefs = findLocalRefs(content)
+        const fileDir = path.dirname(dest)
+        await Promise.all(localRefs.map(async (ref) => {
+          const abs = path.resolve(fileDir, ref)
+          const rel = path.relative(pkgDir, abs)
+          if (rel.startsWith('..')) return
+          const relPosix = rel.split(path.sep).join('/')
+          const exts2 = ['', '.js', '.mjs', '.cjs']
+          for (const ext of exts2) {
+            const buf2 = await limit(() => fetchRaw(`https://unpkg.com/${encoded}/${relPosix + ext}`))
+            if (!buf2) continue
+            const dest2 = path.join(pkgDir, ...(`${relPosix}${ext}`).split('/'))
+            await fs.mkdir(path.dirname(dest2), { recursive: true })
+            await fs.writeFile(dest2, buf2)
+            break
+          }
+        }))
+      } catch { /* skip */ }
+      break  // found and fetched the entry point — stop trying extensions
+    }
+  }
+
   const fetchWithRefs = async (relPosix, depth) => {
     if (depth > MAX_FETCH_DEPTH || fetched.has(relPosix)) return
     fetched.add(relPosix)
@@ -138,20 +248,24 @@ async function deepScanPackage (manifest, deepDir, limit) {
     try {
       const content = await fs.readFile(path.join(pkgCacheDir, ...relPosix.split('/')), 'utf8')
       const refs = findLocalRefs(content)
+      const bareRefs = findBareRefs(content)
       const fileDir = path.dirname(path.join(pkgCacheDir, ...relPosix.split('/')))
-      await Promise.all(refs.map(async (ref) => {
-        const abs = path.resolve(fileDir, ref)
-        const resolved = await resolveRelPosix(abs)
-        if (resolved) {
-          await fetchWithRefs(resolved, depth + 1)
-        } else {
-          // Bare name with no extension on disk yet — try fetching .js
-          const rel = path.relative(pkgCacheDir, abs).split(path.sep).join('/')
-          if (!rel.startsWith('..') && !fetched.has(rel + '.js')) {
-            await fetchWithRefs(rel + '.js', depth + 1)
+      await Promise.all([
+        ...refs.map(async (ref) => {
+          const abs = path.resolve(fileDir, ref)
+          const resolved = await resolveRelPosix(abs)
+          if (resolved) {
+            await fetchWithRefs(resolved, depth + 1)
+          } else {
+            // Bare name with no extension on disk yet — try fetching .js
+            const rel = path.relative(pkgCacheDir, abs).split(path.sep).join('/')
+            if (!rel.startsWith('..') && !fetched.has(rel + '.js')) {
+              await fetchWithRefs(rel + '.js', depth + 1)
+            }
           }
-        }
-      }))
+        }),
+        ...bareRefs.map(pkg => fetchBarePackage(pkg, depth + 1)),
+      ])
     } catch { /* file unreadable or ref resolution failed — skip */ }
   }
 
@@ -167,9 +281,28 @@ async function deepScanPackage (manifest, deepDir, limit) {
   }
 
   // ---------------------------------------------------------------------------
-  // Step 3: Run scanPackageScripts to get referencedFiles with signals + URLs
+  // Step 3: Run scanPackageScripts to get referencedFiles with signals + URLs.
+  // Also scan fetched bare-package dirs and merge their referencedFiles so
+  // signals from dependencies (e.g. napi-postinstall, bin-wrapper) propagate.
   // ---------------------------------------------------------------------------
   const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts)
+
+  // For each bare package we fetched, scan its files and merge results.
+  // Use a synthetic "postinstall" script pointing to its entry point so the
+  // scanner walks the files we actually fetched.
+  await Promise.all([...fetchedPkgs].map(async (pkgName) => {
+    const safePkg = pkgName.replace(/\//g, '__')
+    const pkgDir = path.join(deepDir, safePkg)
+    try {
+      const pkgJsonBuf = await fs.readFile(path.join(pkgDir, 'package.json'), 'utf8')
+      const pkgJson = JSON.parse(pkgJsonBuf)
+      const main = (typeof pkgJson.main === 'string' && pkgJson.main) || 'index.js'
+      const mainRel = main.startsWith('./') ? main.slice(2) : main
+      const syntheticScripts = { postinstall: `node ${mainRel}` }
+      const depRefs = await scanPackageScripts(pkgDir, syntheticScripts)
+      referencedFiles.push(...depRefs)
+    } catch { /* package not fully fetched — skip */ }
+  }))
 
   // ---------------------------------------------------------------------------
   // Step 4: Run the indicator scanner with the full referencedFiles context
@@ -184,7 +317,7 @@ async function deepScanPackage (manifest, deepDir, limit) {
     JSON.stringify({ version: manifest.version, scannedAt: new Date().toISOString(), fetchedFiles, results, referencedFiles }, null, 2) + '\n'
   )
 
-  return { results, referencedFiles, fetchedFiles, fromCache: false }
+  return { results, referencedFiles, fetchedFiles, fromCache: false, discoveredManifests }
 }
 
 // Pre-build a flat [{ pattern, file }] table from the registry so we can
@@ -983,6 +1116,7 @@ When to use --reset:
   // ---------------------------------------------------------------------------
   const deepResults = new Map()      // name → IndicatorResult[]
   const deepRefFiles = new Map()     // name → referencedFiles[]
+  let deepNewPkgs = 0               // packages discovered via cross-package imports
 
   if (deepMode) {
     process.stderr.write('Step 4.5/5: Deep-scanning packages via unpkg (indicator files + lifecycle scripts)...\n')
@@ -992,14 +1126,35 @@ When to use --reset:
     // Scan all packages; deepScanPackage returns from cache if already scanned at this version.
     let deepDone = 0
     await Promise.all(manifests.map(async manifest => {
-      const { results, referencedFiles, fetchedFiles, fromCache } = await deepScanPackage(manifest, deepDir, limit)
+      const { results, referencedFiles, fetchedFiles, fromCache, discoveredManifests } = await deepScanPackage(manifest, deepDir, limit)
       deepResults.set(manifest.name, results)
       deepRefFiles.set(manifest.name, referencedFiles || [])
       deepDone++
       const fileList = fetchedFiles.length > 0 ? fetchedFiles.join(', ') : '(none)'
       const cacheTag = fromCache ? ' [cached]' : ''
       process.stderr.write(`  scanning ${manifest.name}@${manifest.version}${cacheTag}: ${fileList}\n`)
+
+      // Add any newly discovered cross-package deps to the manifest store.
+      for (const m of (discoveredManifests || [])) {
+        if (!seen.has(m.name)) {
+          seen.add(m.name)
+          const lc = extractLifecycleScripts(m.scripts)
+          if (Object.keys(lc).length > 0) {
+            manifests.push(m)
+            newThisRun++
+            deepNewPkgs++
+          }
+        }
+      }
     }))
+
+    if (deepNewPkgs > 0) {
+      process.stderr.write(`  + ${deepNewPkgs} new packages discovered via cross-package imports\n`)
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
+      ])
+    }
     process.stderr.write(`\n  ✓ deep scan complete (${deepDone} scanned)\n\n`)
   }
 
@@ -1189,6 +1344,9 @@ When to use --reset:
 
   process.stderr.write(`\n✅ Done!\n`)
   process.stderr.write(`   New this run:         ${newThisRun}\n`)
+  if (deepNewPkgs > 0) {
+    process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} (cross-package imports)\n`)
+  }
   process.stderr.write(`   Total in store:       ${manifests.length}\n`)
   process.stderr.write(`   Matched (existing):   ${output.coverage.matchedByExistingDefinitions}\n`)
   process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages}\n`)
