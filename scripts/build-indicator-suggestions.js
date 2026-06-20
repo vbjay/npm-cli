@@ -624,6 +624,11 @@ Usage: node scripts/build-indicator-suggestions.js [options]
 Scans popular npm packages for native-build lifecycle scripts and suggests
 missing entries for indicator-definitions.js.
 
+After each collection run a scoped peer expansion step (Step 3.5) probes the
+unscoped counterpart of every scoped package in the store. This catches pairs
+like @fortawesome/react-native-fontawesome → react-native-fontawesome where
+only the scoped version appears in npm search results.
+
 Options:
   --top <n>          Number of new packages to collect per run  (default: 1000)
   --delay <ms>       Delay between npm registry requests in ms  (default: 60)
@@ -928,6 +933,48 @@ When to use --reset:
     `\n  ✓ collected ${newThisRun} new packages (${manifests.length} total)` +
     ` (scanned ${scanned} new across ${seen.size} unique names)\n\n`
   )
+
+  // ---------------------------------------------------------------------------
+  // Step 3.5: Scoped → unscoped peer expansion.
+  // For every scoped package @scope/pkgname already in the store, also try the
+  // unscoped name `pkgname` in case a separate unscoped package exists.
+  // Example: @fortawesome/react-native-fontawesome → also try react-native-fontawesome.
+  // ---------------------------------------------------------------------------
+  {
+    process.stderr.write('Step 3.5/5: Expanding scoped packages with unscoped peers...\n')
+
+    const peersToTry = new Set()
+
+    for (const m of manifests) {
+      if (m.name.startsWith('@')) {
+        const bare = m.name.replace(/^@[^/]+\//, '')
+        if (!seen.has(bare)) peersToTry.add(bare)
+      }
+    }
+
+    process.stderr.write(`  ${peersToTry.size} unscoped peer names to probe\n`)
+    let peerAdded = 0
+    for (const name of peersToTry) {
+      seen.add(name)
+      const manifest = await getPackageManifest(name)
+      if (manifest) {
+        const lc = extractLifecycleScripts(manifest.scripts)
+        if (Object.keys(lc).length > 0) {
+          manifests.push(manifest)
+          peerAdded++
+          newThisRun++
+        }
+      }
+      if (delayMs > 0) await sleep(delayMs)
+    }
+    if (peerAdded > 0) {
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
+      ])
+    }
+    process.stderr.write(`  ✓ peer expansion: ${peerAdded} new packages added (${manifests.length} total)\n\n`)
+  }
 
   // ---------------------------------------------------------------------------
   // Step 4.5 (--deep only): Fetch indicator files + lifecycle JS files via unpkg,
