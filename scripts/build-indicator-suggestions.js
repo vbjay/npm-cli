@@ -639,7 +639,24 @@ Cache files (written next to --out, gitignored):
   *.tmp.json         Resume cache — deleted on successful completion
   *.deep/            Deep-scan file cache (name@version-keyed; only with --deep)
 
+Typical workflow:
+  1. Collect packages:    node scripts/build-indicator-suggestions.js --top 2000
+  2. Deep-scan them:      node scripts/build-indicator-suggestions.js --deep
+  3. Re-analyze anytime:  node scripts/build-indicator-suggestions.js
+     (no network needed; re-runs analysis against the existing store)
+
+When to use --reset:
+  The permanent store pins each package at the version seen when it was first
+  collected. Over time packages release new versions that may change their build
+  approach (e.g. switching from node-gyp to a prebuilt binary). Use --reset
+  occasionally (e.g. every few months) to discard stale manifests and re-collect
+  current versions, so the analysis reflects what users are actually installing.
+
+  --reset clears the manifest store AND the deep-scan cache, so follow it with
+  --top <n> --deep to re-collect and re-scan from scratch.
+
 `)
+
     process.exit(0)
   }
 
