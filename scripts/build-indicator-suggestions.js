@@ -836,12 +836,27 @@ When to use --reset:
 
   // Shuffle on a fresh run so different executions surface different packages.
   // The order is saved in the cache and restored on resume so qi indices stay stable.
+  // If the keyword list has changed since the interrupted run, reconcile:
+  //   - append new keywords (not in saved order) so they run after the current position
+  //   - drop removed keywords (not in base list) so stale entries don't linger
   const savedOrder = discoveryState?.queryOrder || null
-  const DISCOVERY_QUERIES = savedOrder
-    ? savedOrder  // resuming — use the same order checkpointed earlier
-    : [...DISCOVERY_QUERIES_BASE].sort(() => Math.random() - 0.5)
-
-  if (!savedOrder) {
+  let DISCOVERY_QUERIES
+  if (savedOrder) {
+    const baseSet = new Set(DISCOVERY_QUERIES_BASE)
+    const savedSet = new Set(savedOrder)
+    // Keep only keywords still in the base list (drop removed ones)
+    const reconciled = savedOrder.filter(q => baseSet.has(q))
+    // Append any new keywords from the base list not in the saved order
+    const added = DISCOVERY_QUERIES_BASE.filter(q => !savedSet.has(q))
+    DISCOVERY_QUERIES = [...reconciled, ...added]
+    if (reconciled.length !== savedOrder.length || added.length > 0) {
+      const dropped = savedOrder.filter(q => !baseSet.has(q))
+      process.stderr.write(`  ⚠️  keyword list changed since last run\n`)
+      if (dropped.length > 0) process.stderr.write(`     dropped: ${dropped.map(q => q.replace('keywords:', '')).join(', ')}\n`)
+      if (added.length > 0) process.stderr.write(`     added:   ${added.map(q => q.replace('keywords:', '')).join(', ')}\n`)
+    }
+  } else {
+    DISCOVERY_QUERIES = [...DISCOVERY_QUERIES_BASE].sort(() => Math.random() - 0.5)
     process.stderr.write(`  query order: ${DISCOVERY_QUERIES.map(q => q.replace('keywords:', '')).join(', ')}\n`)
   }
 
