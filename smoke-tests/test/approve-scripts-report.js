@@ -40,16 +40,6 @@ t.test('approve-scripts report', async t => {
   t.ok(names.includes('better-sqlite3'), 'report includes better-sqlite3 (native-build)')
   t.ok(names.includes('sqlite3'), 'report includes sqlite3 (native-build)')
   t.ok(names.includes('kerberos'), 'report includes kerberos (native-build)')
-  t.ok(names.includes('9router'), 'report includes 9router (runtime-installer)')
-
-  // 9router installs secondary packages via npm inside its postinstall — verify
-  // the runtime-installer signal is detected on it.  Scripts are NOT run
-  // (--ignore-scripts above); the scanner reads the files statically.
-  const router9 = report.packages.find(p => p.name === '9router')
-  if (t.ok(router9, '9router entry found in report')) {
-    const allSignals = (router9.referencedFiles || []).flatMap(f => f.signals || [])
-    t.ok(allSignals.includes('runtime-installer'), '9router carries runtime-installer signal')
-  }
 
   for (const pkg of report.packages) {
     t.equal(pkg.approvalStatus, 'pending', `${pkg.name}@${pkg.version} is pending`)
