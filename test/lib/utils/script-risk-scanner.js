@@ -107,6 +107,23 @@ t.test('detectSignals: external-url', (t) => {
   t.end()
 })
 
+t.test('detectSignals: makes-executable', (t) => {
+  const { detectSignals } = scanner(t)
+  // chmod with an execute bit set (octal, string, or `+x`) is the discriminator
+  // that a fetched file is meant to be RUN — corroborating a binary download.
+  t.ok(detectSignals('fs.chmodSync(target, 0o755)').includes('makes-executable'), 'octal 0o755')
+  t.ok(detectSignals('fs.chmod(p, 0o744, cb)').includes('makes-executable'), 'octal 0o744 (owner exec)')
+  t.ok(detectSignals('chmodSync(bin, "755")').includes('makes-executable'), 'string mode "755"')
+  t.ok(detectSignals('execSync(`chmod +x ${bin}`)').includes('makes-executable'), 'chmod +x')
+  t.ok(detectSignals('chmod 755 ./bin').includes('makes-executable'), 'shell chmod 755')
+  // Non-executable modes and unrelated writes must not trigger.
+  t.notOk(detectSignals('chmod(file, 0o644)').includes('makes-executable'), 'octal 0o644 not executable')
+  t.notOk(detectSignals('chmodSync(bin, "644")').includes('makes-executable'), 'string mode "644"')
+  t.notOk(detectSignals('chmod 644 ./x').includes('makes-executable'), 'shell chmod 644')
+  t.notOk(detectSignals('fs.writeFileSync(p, data)').includes('makes-executable'), 'plain write')
+  t.end()
+})
+
 t.test('detectSignals: base64-decode-exec', (t) => {
   const { detectSignals } = scanner(t)
   t.ok(detectSignals("Buffer.from(x, 'base64')").includes('base64-decode-exec'))
