@@ -104,29 +104,43 @@ jobs:
                 ].join('\n')
               : ''
 
-            const body = [
+            // GitHub comment body limit is 65,536 characters.
+            // Drop the raw JSON block (machine-readable, not useful inline) and
+            // truncate the markdown section if it alone would push us over.
+            const LIMIT = 65000
+            const header = [
               `## ${badge} — approve-scripts smoke report`,
               '',
               summary,
               '',
               table,
               '',
+            ].join('\n')
+
+            const mdSection = [
               '<details>',
               '<summary>Full Markdown report</summary>',
               '',
               md,
               '',
               '</details>',
-              '',
-              '<details>',
-              '<summary>JSON report</summary>',
-              '',
-              '```json',
-              jsonText,
-              '```',
-              '',
-              '</details>',
             ].join('\n')
+
+            let body
+            if (header.length + mdSection.length <= LIMIT) {
+              body = header + mdSection
+            } else {
+              const available = LIMIT - header.length - 100
+              const truncated = available > 0 ? md.slice(0, available) + '\n\n*(report truncated — see CI logs for full output)*' : ''
+              body = header + [
+                '<details>',
+                '<summary>Full Markdown report (truncated)</summary>',
+                '',
+                truncated,
+                '',
+                '</details>',
+              ].join('\n')
+            }
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
