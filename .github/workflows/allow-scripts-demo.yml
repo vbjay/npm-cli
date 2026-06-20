@@ -115,14 +115,11 @@ jobs:
 
             // GitHub comment body limit is 65,536 characters.
             // Priority:
-            //   1. Best: markdown as main body + JSON in <details> section
-            //   2. JSON tips it over: markdown only inline, JSON available via artifact zip
-            //   3. Even markdown alone is too big: everything via artifact zip
+            //   1. Both <details> sections inline (markdown + JSON)
+            //   2. JSON too big → markdown <details> inline + zipped JSON link
+            //   3. Both too big → scrap inline sections, everything in zip
             const LIMIT = 65000
             const artifactUrl = process.env.ARTIFACT_URL || ''
-            const artifactLink = artifactUrl
-              ? `\n📦 [Download full reports (zip)](${artifactUrl})`
-              : ''
 
             const header = [
               `## ${badge} — approve-scripts smoke report`,
@@ -131,6 +128,15 @@ jobs:
               '',
               table,
               '',
+            ].join('\n')
+
+            const mdSection = [
+              '<details>',
+              '<summary>Full Markdown report</summary>',
+              '',
+              md,
+              '',
+              '</details>',
             ].join('\n')
 
             const jsonSection = [
@@ -144,14 +150,19 @@ jobs:
               '</details>',
             ].join('\n')
 
-            const withBoth = [header, md, '', jsonSection].join('\n')
-            const withMdOnly = [header, md].join('\n')
+            const withBoth = [header, mdSection, '', jsonSection].join('\n')
+            const withMdAndLink = [
+              header,
+              mdSection,
+              '',
+              artifactUrl ? `📦 [JSON report (zip)](${artifactUrl})` : '',
+            ].join('\n')
 
             let body
             if (withBoth.length <= LIMIT) {
               body = withBoth
-            } else if (withMdOnly.length <= LIMIT) {
-              body = withMdOnly + artifactLink
+            } else if (withMdAndLink.length <= LIMIT) {
+              body = withMdAndLink
             } else {
               body = header + (artifactUrl
                 ? `📦 [Download full reports (zip)](${artifactUrl})\n`
