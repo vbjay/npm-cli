@@ -42,8 +42,21 @@ jobs:
           node scripts/generate-allow-scripts-report.js > /tmp/report-stdout.md 2>/tmp/report-stderr.txt
           cat /tmp/report-stderr.txt
 
-      - name: Upload report artifacts
+      - name: Check if reports fit in a GitHub comment
+        id: check
+        run: |
+          MD_SIZE=$(wc -c < /tmp/report-stdout.md)
+          JSON_SIZE=$(wc -c < smoke-tests/test/fixtures/approve-scripts-report/report.json)
+          TOTAL=$((MD_SIZE + JSON_SIZE + 2000))
+          if [ $TOTAL -gt 65000 ]; then
+            echo "needs_zip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_zip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload report artifacts (only when too large for inline comment)
         id: artifacts
+        if: steps.check.outputs.needs_zip == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: approve-scripts-reports
