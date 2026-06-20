@@ -33,10 +33,16 @@ const { hasBuildHint, scanBuildIndicatorsForPackage } = require(
 const scanPackageScripts = require(
   path.join(ROOT, 'lib', 'utils', 'script-risk-scanner.js')
 )
-const { parseCommandFile, findLocalRefs, findBareRefs } = scanPackageScripts
+const { parseCommandFile, findLocalRefs, findBareRefs, SIGNAL_PATTERNS } = scanPackageScripts
 const { classifyUrl } = require(
   path.join(ROOT, 'lib', 'utils', 'url-classifier.js')
 )
+
+// Cache schema version — derived from the set of signal names so any addition
+// or removal automatically invalidates old deep-scan cache entries.
+const DEEP_CACHE_VERSION = SIGNAL_PATTERNS.map(([name]) => name).join(',')
+  .split('').reduce((h, c) => (Math.imul(31, h) + c.charCodeAt(0)) | 0, 0)
+  .toString(36)
 
 // ---------------------------------------------------------------------------
 // Concurrency limiter — run at most `max` async tasks simultaneously
@@ -67,10 +73,10 @@ async function deepScanPackage (manifest, deepDir, limit) {
   const pkgCacheDir = path.join(deepDir, safeName)
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
-  // Return cached results only when the version matches
+  // Return cached results only when the version AND signal schema both match
   try {
     const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
-    if (meta.version === manifest.version) return { results: meta.results, referencedFiles: meta.referencedFiles || [], fetchedFiles: meta.fetchedFiles || [], fromCache: true }
+    if (meta.version === manifest.version && meta.schemaVersion === DEEP_CACHE_VERSION) return { results: meta.results, referencedFiles: meta.referencedFiles || [], fetchedFiles: meta.fetchedFiles || [], fromCache: true }
   } catch { /* not cached or stale */ }
 
   await fs.mkdir(pkgCacheDir, { recursive: true })
@@ -311,10 +317,10 @@ async function deepScanPackage (manifest, deepDir, limit) {
     pkgCacheDir, manifest.scripts || {}, referencedFiles
   )
 
-  // Cache everything version-stamped
+  // Cache everything version-stamped and schema-stamped
   await fs.writeFile(
     metaPath,
-    JSON.stringify({ version: manifest.version, scannedAt: new Date().toISOString(), fetchedFiles, results, referencedFiles }, null, 2) + '\n'
+    JSON.stringify({ version: manifest.version, schemaVersion: DEEP_CACHE_VERSION, scannedAt: new Date().toISOString(), fetchedFiles, results, referencedFiles }, null, 2) + '\n'
   )
 
   return { results, referencedFiles, fetchedFiles, fromCache: false, discoveredManifests }
