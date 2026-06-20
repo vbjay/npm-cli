@@ -1326,6 +1326,7 @@ When to use --reset:
     meta: {
       generatedAt: new Date().toISOString(),
       topN,
+      deepScan: deepMode,
       registryDefinitions: Object.keys(INDICATOR_REGISTRY),
       purpose: [
         'Feed this file to an AI with the prompt:',
