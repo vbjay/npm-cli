@@ -114,14 +114,10 @@ jobs:
               : ''
 
             // GitHub comment body limit is 65,536 characters.
-            // Always show a download link for the zipped artifacts.
-            // Inline the markdown/JSON sections only if they fit within the limit;
-            // otherwise just show the download link.
+            // If everything fits: show full inline <details> sections (no artifact link needed).
+            // If too big: show just the artifact download link instead.
             const LIMIT = 65000
             const artifactUrl = process.env.ARTIFACT_URL || ''
-            const artifactLine = artifactUrl
-              ? `📦 [Download full reports (zip)](${artifactUrl})`
-              : ''
 
             const header = [
               `## ${badge} — approve-scripts smoke report`,
@@ -129,8 +125,6 @@ jobs:
               summary,
               '',
               table,
-              '',
-              artifactLine,
               '',
             ].join('\n')
 
@@ -141,14 +135,13 @@ jobs:
 
             const mdSection = inlineSection('Full Markdown report', md, '')
             const jsonSection = inlineSection('JSON report', jsonText, 'json')
+            const fullBody = [header, mdSection, '', jsonSection].join('\n')
 
-            let body = header
-            if (body.length + mdSection.length <= LIMIT) {
-              body += mdSection + '\n'
-              if (body.length + jsonSection.length <= LIMIT) {
-                body += '\n' + jsonSection
-              }
-            }
+            const body = fullBody.length <= LIMIT
+              ? fullBody
+              : header + (artifactUrl
+                  ? `📦 [Download full reports (zip)](${artifactUrl})\n`
+                  : '*(report too large to display inline — check CI logs)*\n')
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
