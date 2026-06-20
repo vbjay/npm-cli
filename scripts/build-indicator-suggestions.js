@@ -24,6 +24,8 @@ const path = require('path')
 const fs = require('fs/promises')
 
 const ROOT = path.resolve(__dirname, '..')
+const { version: PKG_VERSION } = require(path.join(ROOT, 'package.json'))
+const USER_AGENT = `npm/${PKG_VERSION} npm-indicator-suggestions (https://github.com/npm/cli)`
 const { INDICATOR_REGISTRY } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-definitions.js')
 )
@@ -491,7 +493,7 @@ async function fetchRaw (url, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     await waitForCooldown(url)
     const buf = await new Promise(resolve => {
-      const req = https.get(url, { headers: { 'User-Agent': 'npm-indicator-suggestions/1.0' } }, res => {
+      const req = https.get(url, { headers: { 'User-Agent': USER_AGENT } }, res => {
         if (res.statusCode === 429) {
           _consecutiveRateLimits++
           const serverWait = retryAfterMs(res.headers['retry-after']) ?? 0
@@ -538,7 +540,7 @@ async function fetchJson (url, retries = 5) {
 
     try {
       const result = await new Promise((resolve, reject) => {
-        const req = https.get(url, { headers: { 'User-Agent': 'npm-indicator-builder/1.0' } }, res => {
+        const req = https.get(url, { headers: { 'User-Agent': USER_AGENT } }, res => {
           let buf = ''
           res.on('data', d => (buf += d))
           res.on('end', () => {
