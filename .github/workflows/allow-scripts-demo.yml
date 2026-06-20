@@ -38,21 +38,27 @@ jobs:
 
       - name: Generate report
         id: report
-        run: |
-          node scripts/generate-allow-scripts-report.js > /tmp/report-stdout.md 2>/tmp/report-stderr.txt
-          cat /tmp/report-stderr.txt
+        run: node scripts/generate-allow-scripts-report.js > report.md
 
       - name: Check if reports fit in a GitHub comment
         id: check
         run: |
-          MD_SIZE=$(wc -c < /tmp/report-stdout.md)
+          MD_SIZE=$(wc -c < report.md)
           JSON_SIZE=$(wc -c < smoke-tests/test/fixtures/approve-scripts-report/report.json)
           TOTAL=$((MD_SIZE + JSON_SIZE + 2000))
+          echo "md_size=$MD_SIZE json_size=$JSON_SIZE total=$TOTAL"
           if [ $TOTAL -gt 65000 ]; then
             echo "needs_zip=true" >> "$GITHUB_OUTPUT"
           else
             echo "needs_zip=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Collect artifact files (flat reports/ directory)
+        if: steps.check.outputs.needs_zip == 'true'
+        run: |
+          mkdir -p reports
+          cp report.md reports/report.md
+          cp smoke-tests/test/fixtures/approve-scripts-report/report.json reports/report.json
 
       - name: Upload report artifacts (only when too large for inline comment)
         id: artifacts
@@ -60,9 +66,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: approve-scripts-reports
-          path: |
-            /tmp/report-stdout.md
-            smoke-tests/test/fixtures/approve-scripts-report/report.json
+          path: reports/
 
       - name: Post report as PR comment
         if: github.event_name == 'pull_request'
@@ -72,7 +76,7 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const md = fs.readFileSync('/tmp/report-stdout.md', 'utf8')
+            const md = fs.readFileSync('report.md', 'utf8')
             const jsonText = fs.readFileSync(
               'smoke-tests/test/fixtures/approve-scripts-report/report.json',
               'utf8'
