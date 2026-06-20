@@ -114,12 +114,15 @@ jobs:
               : ''
 
             // GitHub comment body limit is 65,536 characters.
-            // Degrade gracefully:
-            //   1. All fits → show markdown + JSON inline (no artifact link needed)
-            //   2. JSON tips it over → show markdown only inline
-            //   3. Even markdown alone is too big → show artifact download link only
+            // Priority:
+            //   1. Best: markdown as main body + JSON in <details> section
+            //   2. JSON tips it over: markdown only inline, JSON available via artifact zip
+            //   3. Even markdown alone is too big: everything via artifact zip
             const LIMIT = 65000
             const artifactUrl = process.env.ARTIFACT_URL || ''
+            const artifactLink = artifactUrl
+              ? `\n📦 [Download full reports (zip)](${artifactUrl})`
+              : ''
 
             const header = [
               `## ${badge} — approve-scripts smoke report`,
@@ -130,19 +133,25 @@ jobs:
               '',
             ].join('\n')
 
-            function inlineSection (title, content, fence) {
-              const inner = fence ? `\`\`\`${fence}\n${content}\n\`\`\`` : content
-              return ['<details>', `<summary>${title}</summary>`, '', inner, '', '</details>'].join('\n')
-            }
+            const jsonSection = [
+              '<details>',
+              '<summary>JSON report</summary>',
+              '',
+              '```json',
+              jsonText,
+              '```',
+              '',
+              '</details>',
+            ].join('\n')
 
-            const mdSection = inlineSection('Full Markdown report', md, '')
-            const jsonSection = inlineSection('JSON report', jsonText, 'json')
+            const withBoth = [header, md, '', jsonSection].join('\n')
+            const withMdOnly = [header, md].join('\n')
 
             let body
-            if (header.length + mdSection.length + jsonSection.length + 2 <= LIMIT) {
-              body = [header, mdSection, '', jsonSection].join('\n')
-            } else if (header.length + mdSection.length <= LIMIT) {
-              body = header + mdSection
+            if (withBoth.length <= LIMIT) {
+              body = withBoth
+            } else if (withMdOnly.length <= LIMIT) {
+              body = withMdOnly + artifactLink
             } else {
               body = header + (artifactUrl
                 ? `📦 [Download full reports (zip)](${artifactUrl})\n`
