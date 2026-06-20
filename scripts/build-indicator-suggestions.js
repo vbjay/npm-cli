@@ -1052,9 +1052,9 @@ When to use --reset:
 
   process.stderr.write(`  ✓ all download counts fetched\n\n`)
 
-  // Save final manifests to permanent store with the last known discovery position,
-  // so --top <larger N> can continue from where this run stopped without re-paging.
-  await savePackageCache(pkgPath, manifests, seen, finalDiscoveryState)
+  // Save final manifests to permanent store with no discovery state — the run
+  // completed successfully, so the next run starts fresh from position 0.
+  await savePackageCache(pkgPath, manifests, seen, null)
   process.stderr.write(`  ✓ manifests saved to ${pkgPath}\n\n`)
   await fs.unlink(resumeCachePath).catch(() => {})
 
