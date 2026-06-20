@@ -117,95 +117,99 @@ It is suitable for:
 - **AI-assisted security review** — pass the JSON to a model with a prompt
   asking it to evaluate risk. The model must not modify `allowScripts`; it
   produces a report for a human to act on.
-- **CI policy enforcement** — parse `status` and `packages[].approvalStatus`
-  to gate a deployment pipeline.
+- **CI policy enforcement** — check top-level `status` to gate a deployment
+  pipeline.
 - **Custom tooling** — build your own renderer, dashboard, or audit trail.
 
-#### Top-level schema
+> **Note:** The exact JSON structure may evolve between npm versions. The
+> example below shows the current shape and the kinds of information available,
+> but treat field names and nesting as illustrative rather than a stable API
+> contract.
+
+#### Example
+
+Here is a real output entry for `esbuild`, a package that downloads a
+platform-specific binary at install time and then installs additional packages
+via `npm install` at runtime:
 
 ```json
 {
-  "status": "pending | all-approved",
-  "generatedAt": "<ISO-8601 timestamp>",
-  "prefix": "/path/to/project",
-  "packages": [ /* array of PackageEntry */ ]
-}
-```
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `status` | `string` | `"all-approved"` when nothing is pending; `"pending"` otherwise |
-| `generatedAt` | `string` | ISO-8601 timestamp of report generation |
-| `prefix` | `string` | Absolute path of the project root |
-| `packages` | `PackageEntry[]` | One entry per pending package |
-
-#### PackageEntry schema
-
-```json
-{
-  "name": "canvas",
-  "version": "2.11.2",
-  "location": "node_modules/canvas",
-  "approvalStatus": "pending",
-  "dependencyType": "direct | transitive",
-  "introducedBy": [
-    ["my-app", "canvas@2.11.2"]
-  ],
-  "lifecycleScripts": {
-    "install": "node-pre-gyp install --fallback-to-build"
-  },
-  "referencedFiles": [
+  "packages": [
     {
-      "path": "scripts/install.js",
-      "reason": "referenced by lifecycle script: `install`",
-      "sha256": "abc123…",
-      "sizeBytes": 4096,
-      "signals": ["uses-child-process", "native-build"],
-      "references": ["scripts/utils.js"],
-      "urls": [
-        { "url": "https://github.com/…", "classification": "download" }
-      ]
+      "name": "esbuild",
+      "version": "0.28.1",
+      "location": "node_modules/esbuild",
+      "approvalStatus": "pending",
+      "dependencyType": "transitive",
+      "introducedBy": [
+        ["my-app", "tsx@4.22.4", "esbuild@0.28.1"]
+      ],
+      "lifecycleScripts": {
+        "postinstall": "node install.js"
+      },
+      "referencedFiles": [
+        {
+          "path": "install.js",
+          "reason": "referenced by lifecycle script: `postinstall`",
+          "sha256": "612294e278914443bdcf81cb17f54afec34dbdd2ebd999a6ee187912320cc315",
+          "sizeBytes": 11773,
+          "signals": [
+            "uses-child-process",
+            "reads-process-env",
+            "network-access",
+            "obfuscation-pattern",
+            "binary-download",
+            "runtime-installer",
+            "external-url"
+          ],
+          "references": [],
+          "urls": [
+            { "url": "https://registry.npmjs.org/", "classification": "download" }
+          ]
+        }
+      ],
+      "buildInfo": [
+        {
+          "indicatorFile": "binary-downloader",
+          "label": "Prebuilt binary downloader",
+          "signals": ["binary-download"],
+          "downloadUrls": ["https://registry.npmjs.org/"]
+        },
+        {
+          "indicatorFile": "runtime-installer",
+          "label": "Runtime package installer",
+          "signals": ["runtime-installer"]
+        }
+      ],
+      "changeClassification": {
+        "status": "new",
+        "previousApprovedVersion": null
+      },
+      "riskSummary": [
+        "downloads a prebuilt platform binary at install time",
+        "installs additional npm packages at runtime"
+      ],
+      "suggestedReviewFocus": [
+        "inspect `install.js` — binary download and child npm install detected"
+      ],
+      "approveCommand": "npm approve-scripts esbuild",
+      "denyCommand": "npm deny-scripts esbuild"
     }
-  ],
-  "riskSummary": ["uses-child-process", "native-build"],
-  "indicatorScanResults": [ /* native-build indicator details */ ]
+  ]
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `name` | `string` | Package name |
-| `version` | `string` | Installed version |
-| `location` | `string` | Path under `node_modules` |
-| `approvalStatus` | `string` | Always `"pending"` in this report |
-| `dependencyType` | `string` | `"direct"` or `"transitive"` |
-| `introducedBy` | `string[][]` | Dependency path(s) from project root |
-| `lifecycleScripts` | `object` | Hook name → command string |
-| `referencedFiles` | `FileEntry[]` | Every file scanned (see below) |
-| `riskSummary` | `string[]` | Unique signals across all scanned files |
-| `indicatorScanResults` | `object[]` | Native-build / binary-downloader scanner output |
+The key things to look for in the JSON:
 
-#### FileEntry schema
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `path` | `string` | POSIX-relative path within the package |
-| `reason` | `string` | Why this file was scanned |
-| `sha256` | `string` | SHA-256 of bytes scanned (partial if file > 50 MB) |
-| `sizeBytes` | `number` | Bytes actually scanned |
-| `signals` | `string[]` | Risk signals detected in this file |
-| `references` | `string[]` | Local files this file `require()`s or `import`s |
-| `urls` | `UrlEntry[]` | External URLs found in this file |
-
-#### UrlEntry classification
-
-| Classification | Meaning |
-|----------------|---------|
-| `download` | Points to a file download (release archive, binary, tarball) |
-| `registry` | npm or other package registry endpoint |
-| `cdn` | CDN-hosted asset |
-| `reference` | Documentation, homepage, license page (low risk) |
-| `unknown` | Could not be classified |
+- **`signals`** on each `referencedFiles` entry — what behaviours were detected
+  in that file
+- **`riskSummary`** — human-readable summary across all files for the package
+- **`buildInfo`** — indicator-specific detail (native build targets, download
+  URLs, etc.)
+- **`changeClassification.status`** — `"new"` (never approved before) vs
+  `"version-change"` (previously approved at a different version)
+- **`approveCommand`** / **`denyCommand`** — copy-pasteable commands for acting
+  on the review
 
 ---
 
