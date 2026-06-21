@@ -832,27 +832,44 @@ async function savePackageCache (filePath, manifests, seen, discoveryState) {
 // Process lock — prevents concurrent runs against the same output path
 // ---------------------------------------------------------------------------
 
+// Lock file uses a heartbeat timestamp rather than a PID check.
+// PIDs are recycled by the OS, so `kill(pid, 0)` can return "alive" for an
+// unrelated process.  Instead, the lock owner refreshes `ts` every 30 seconds;
+// a checker that sees `ts` older than LOCK_STALE_MS considers the lock stale.
+const LOCK_HEARTBEAT_MS = 30_000
+const LOCK_STALE_MS     = 90_000  // 3 missed heartbeats → stale
+
 function makeLockHelpers (lockPath) {
+  let heartbeatTimer = null
+
+  function writeHeartbeat () {
+    try {
+      require('fs').writeFileSync(lockPath, JSON.stringify({ pid: process.pid, ts: Date.now() }), 'utf8')
+    } catch {}
+  }
+
   function acquire () {
-    const existing = (() => { try { return require('fs').readFileSync(lockPath, 'utf8').trim() } catch { return null } })()
-    if (existing) {
-      const pid = parseInt(existing, 10)
-      if (!isNaN(pid)) {
-        let alive = false
-        try { process.kill(pid, 0); alive = true } catch {}
-        if (alive) {
-          process.stderr.write(`\n⛔  Already running (PID ${pid}) with the same output path.\n`)
-          process.stderr.write(`   Lock file: ${lockPath}\n`)
-          process.stderr.write(`   If that process is gone, delete the lock file and retry.\n\n`)
-          process.exit(1)
-        }
-        process.stderr.write(`⚠️  Stale lock from PID ${pid} — removing and continuing\n`)
+    const raw = (() => { try { return require('fs').readFileSync(lockPath, 'utf8') } catch { return null } })()
+    if (raw) {
+      let lock = {}
+      try { lock = JSON.parse(raw) } catch {}
+      const age = Date.now() - (lock.ts || 0)
+      if (age < LOCK_STALE_MS) {
+        process.stderr.write(`\n⛔  Already running (PID ${lock.pid}) with the same output path.\n`)
+        process.stderr.write(`   Lock file: ${lockPath}\n`)
+        process.stderr.write(`   Heartbeat is ${Math.round(age / 1000)}s old (stale after ${LOCK_STALE_MS / 1000}s).\n`)
+        process.stderr.write(`   If that process is gone, delete the lock file and retry.\n\n`)
+        process.exit(1)
       }
+      process.stderr.write(`⚠️  Stale lock (PID ${lock.pid}, heartbeat ${Math.round(age / 1000)}s ago) — removing and continuing\n`)
     }
-    require('fs').writeFileSync(lockPath, String(process.pid), 'utf8')
+    writeHeartbeat()
+    heartbeatTimer = setInterval(writeHeartbeat, LOCK_HEARTBEAT_MS)
+    heartbeatTimer.unref()  // don't prevent the process from exiting when work is done
   }
 
   function release () {
+    if (heartbeatTimer) { clearInterval(heartbeatTimer); heartbeatTimer = null }
     try { unlinkSync(lockPath) } catch {}
   }
 
