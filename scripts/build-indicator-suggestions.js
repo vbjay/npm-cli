@@ -509,13 +509,56 @@ const LIFECYCLE_HOOKS = ['preinstall', 'install', 'postinstall', 'prepare', 'pre
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
-// Global rate-limit state.  When ANY request receives a 429, ALL subsequent
-// requests (new ones AND retries) wait here until the cooldown expires.
-// This prevents the pipeline from hammering the API while one request backs off.
+// ---------------------------------------------------------------------------
+// Circuit-breaker rate-limit state.
+//
+// Problem: 10 concurrent requests all hit 429 → each increments
+// _consecutiveRateLimits → exponential backoff stacks to 5+ minutes.
+//
+// Fix: only escalate the backoff multiplier once per WAVE (a wave = a fresh
+// 429 received when NOT already in a cooldown window). Concurrent requests
+// that hit 429 inside an existing cooldown window share that window's level
+// and don't push the multiplier further.
+//
+// After CIRCUIT_OPEN_THRESHOLD consecutive waves the circuit opens so the
+// drain saves a clean checkpoint and exits rather than accumulating more wait.
+// ---------------------------------------------------------------------------
+
+const CIRCUIT_OPEN_THRESHOLD = 4  // waves before circuit opens (~30+60+120+240 = 7.5 min max)
+const MAX_BACKOFF_MS = 120_000    // cap individual backoff at 2 min (not 5)
+
 let _cooldownUntil = 0
 let _consecutiveRateLimits = 0
+let _circuitOpen = false
+
+class CircuitOpenError extends Error {
+  constructor () { super('Circuit breaker open — rate limit waves exceeded'); this.isCircuitOpen = true }
+}
+
+// Centralized 429 handler — call once per response that returns 429.
+// Returns the backoff duration applied.
+function handle429 (headers, url) {
+  const serverWait = retryAfterMs(headers['retry-after']) ?? 0
+  const base = Math.max(30_000, serverWait)
+
+  // Only escalate the backoff multiplier for a NEW wave — concurrent requests
+  // that all hit 429 within an existing cooldown share that level.
+  if (Date.now() >= _cooldownUntil) _consecutiveRateLimits++
+
+  const backoff = Math.min(MAX_BACKOFF_MS, base * Math.pow(2, _consecutiveRateLimits - 1))
+  _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
+
+  if (_consecutiveRateLimits >= CIRCUIT_OPEN_THRESHOLD) _circuitOpen = true
+
+  process.stderr.write(
+    `  🚦 HTTP 429 ${url} — backoff ${Math.ceil(backoff / 1000)}s` +
+    ` (wave ${_consecutiveRateLimits}${_circuitOpen ? ', circuit OPEN' : ''})\n`
+  )
+  return backoff
+}
 
 async function waitForCooldown (label) {
+  if (_circuitOpen) throw new CircuitOpenError()
   const remaining = _cooldownUntil - Date.now()
   if (remaining > 0) {
     process.stderr.write(
@@ -524,6 +567,7 @@ async function waitForCooldown (label) {
     )
     await sleep(remaining + 100) // +100ms buffer past the deadline
   }
+  if (_circuitOpen) throw new CircuitOpenError()
 }
 
 // Resolve the 'Retry-After' header value to milliseconds.
@@ -587,18 +631,14 @@ async function fetchRaw (url, retries = 3) {
     }
     const { statusCode, headers, body } = res
     if (statusCode === 429) {
-      _consecutiveRateLimits++
-      const serverWait = retryAfterMs(headers['retry-after']) ?? 0
-      const base = Math.max(30_000, serverWait)
-      const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
-      _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
-      process.stderr.write(`  🚦 HTTP 429 (raw) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${headers['retry-after'] ?? 'none'}\n`)
+      handle429(headers, url)
       continue
     }
     if (statusCode !== 200 && statusCode !== 404) {
       process.stderr.write(`  ⚠️  HTTP ${statusCode} (raw) attempt ${attempt}/${retries} ${url}\n`)
     }
     _consecutiveRateLimits = 0
+    _circuitOpen = false
     return statusCode === 200 ? body : null
   }
   return null
@@ -619,19 +659,16 @@ async function fetchJson (url, retries = 5) {
     const { statusCode, headers, body } = res
     if (statusCode === 404) {
       _consecutiveRateLimits = 0
+      _circuitOpen = false
       return null
     }
     if (statusCode === 429) {
-      _consecutiveRateLimits++
-      const serverWait = retryAfterMs(headers['retry-after']) ?? 0
-      const base = Math.max(30_000, serverWait)
-      const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
-      _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
-      process.stderr.write(`  🚦 HTTP 429 (json) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${headers['retry-after'] ?? 'none'}\n`)
+      handle429(headers, url)
       continue
     }
     if (statusCode >= 200 && statusCode < 300) {
       _consecutiveRateLimits = 0
+      _circuitOpen = false
       const text = body.toString('utf8')
       try { return JSON.parse(text) } catch (e) {
         throw new Error(`JSON parse error for ${url}: ${e.message}`)
@@ -785,20 +822,66 @@ function suggestSignal (tokens, inferredFiles) {
 //   Simple name list (user-provided):  ["lodash", "@babel/core", ...]
 // ---------------------------------------------------------------------------
 
+// Package state machine:
+//   candidate  → name found in search, manifest not yet fetched
+//   seen       → manifest fetched, no lifecycle scripts (or fetch failed)
+//   lifecycle  → has lifecycle scripts, download count not yet fetched
+//   ready      → has lifecycle scripts + download count fetched (complete)
+//
+// Save format:
+//   seenOnlyNames: string[]     — compact list of 'seen' names (no lifecycle data)
+//   packages: PackageEntry[]    — candidate | lifecycle | ready entries with state field
+//
+// The snapshot in savePackageCache is built synchronously before any await so
+// concurrent closures inside Promise.all cannot produce a torn state.
+
 async function loadPackageCache (filePath) {
   try {
     const raw = JSON.parse(await fs.readFile(filePath, 'utf-8'))
     if (Array.isArray(raw)) {
-      // Simple name list provided by user — seed packages to always include
       return { names: raw, manifests: null, seen: null, discoveryState: null, pendingCandidates: [] }
     }
     if (raw.packages && Array.isArray(raw.packages)) {
+      const manifests = []
+      const seenSet = new Set()
+      const pendingCandidates = []
+
+      // Detect format: new entries have a 'state' field; old entries don't.
+      const hasStateField = raw.packages.length === 0 || raw.packages[0].state != null
+
+      if (hasStateField) {
+        for (const entry of raw.packages) {
+          seenSet.add(entry.name)
+          if (entry.state === 'candidate') {
+            pendingCandidates.push(entry.name)
+          } else if (entry.state === 'lifecycle' || entry.state === 'ready') {
+            manifests.push(entry)
+          }
+          // state === 'seen' entries only need their name in seenSet
+        }
+        for (const name of (raw.seenOnlyNames || [])) seenSet.add(name)
+      } else {
+        // Old format: packages[] = lifecycle only (no state), seenNames[] = all examined
+        for (const entry of raw.packages) {
+          manifests.push({ ...entry, state: entry.weeklyDownloads > 0 ? 'ready' : 'lifecycle' })
+          seenSet.add(entry.name)
+        }
+        for (const name of (raw.seenNames || [])) seenSet.add(name)
+        // Old pendingCandidates field (pre-state-machine format)
+        for (const name of (raw.pendingCandidates || [])) {
+          if (!seenSet.has(name)) {
+            pendingCandidates.push(name)
+            seenSet.add(name)
+          }
+        }
+      }
+
       return {
         names: null,
-        manifests: raw.packages,
-        seen: new Set(raw.seenNames || raw.packages.map(p => p.name)),
+        manifests,
+        seen: seenSet,
         discoveryState: raw.discoveryState || null,
-        pendingCandidates: raw.pendingCandidates || [],
+        pendingCandidates,
       }
     }
   } catch (err) {
@@ -809,15 +892,26 @@ async function loadPackageCache (filePath) {
   return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [] }
 }
 
-async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = null) {
-  const data = {
-    generatedAt: new Date().toISOString(),
-    count: manifests.length,
-    discoveryState,   // { queryIndex, queryFrom } — where to resume scanning
-    seenNames: [...seen], // all names already fetched (kept + rejected), avoids re-scanning
-    ...(candidates !== null && { pendingCandidates: [...candidates] }),
-    packages: manifests.map(m => ({
+// Build snapshot synchronously before any await so concurrent Promise.all closures
+// cannot produce a torn checkpoint.  State for each package is derived from which
+// array it lives in (manifests = lifecycle|ready, candidates = candidate, rest = seen).
+async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = []) {
+  const candidateSet = new Set(candidates)
+  const lifecycleSet = new Set(manifests.map(m => m.name))
+
+  // Non-lifecycle, non-candidate names are "seen" — store compactly as strings.
+  const seenOnlyNames = []
+  for (const name of seen) {
+    if (!lifecycleSet.has(name) && !candidateSet.has(name)) seenOnlyNames.push(name)
+  }
+
+  // Packages with explicit state: candidates (name only) + lifecycle/ready (full manifest).
+  const packages = []
+  for (const name of candidates) packages.push({ name, state: 'candidate' })
+  for (const m of manifests) {
+    packages.push({
       name: m.name,
+      state: m.state || (m.weeklyDownloads > 0 ? 'ready' : 'lifecycle'),
       version: m.version,
       scripts: m.scripts,
       dependencies: m.dependencies,
@@ -825,7 +919,16 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
       optionalDependencies: m.optionalDependencies,
       peerDependencies: m.peerDependencies,
       weeklyDownloads: m.weeklyDownloads || 0,
-    })),
+    })
+  }
+
+  // Snapshot is fully built — now safe to yield for the file write.
+  const data = {
+    generatedAt: new Date().toISOString(),
+    count: manifests.length,
+    discoveryState,
+    seenOnlyNames,
+    packages,
   }
   await fs.writeFile(filePath, JSON.stringify(data, null, 2) + '\n', 'utf-8')
 }
@@ -1214,30 +1317,76 @@ When to use --reset:
   const candidates = [...loadedCandidates]
 
   // Drain candidates via concurrent manifest fetch (pool of 10).
-  // Saves a checkpoint to BOTH stores after drain so resume starts clean.
+  // Circuit-breaker aware: if the registry opens the circuit during drain we
+  // checkpoint and bail cleanly rather than accumulating runaway backoffs.
+  // Candidates are removed from the array ONE AT A TIME as they're resolved so
+  // a crash mid-drain still has the unprocessed ones persisted in the next
+  // checkpoint (state = 'candidate').
   const drainCandidates = async () => {
     if (candidates.length === 0) return
-    const todo = [...candidates]
-    candidates.length = 0  // clear so in-flight saves record empty list
+    const todo = [...candidates]  // snapshot — do NOT clear upfront
     process.stderr.write(`\n  manifests: fetching ${todo.length} candidates...\n`)
     const mLimit = makeLimiter(10)
     let mFetched = 0
     let mFound = 0
+    let circuitTripped = false
+
     await Promise.all(todo.map(name => mLimit(async () => {
+      if (circuitTripped || done) return
       if (topN > 0 && newThisRun >= topN) { done = true; return }
+
       let manifest = null
-      try { manifest = await getPackageManifest(name) } catch (_) {}
+      let transientError = false
+      try {
+        manifest = await getPackageManifest(name)
+      } catch (err) {
+        if (err.isCircuitOpen) { circuitTripped = true; return }
+        transientError = true  // network/timeout — keep as candidate, retry next run
+      }
+
       mFetched++
+
+      if (transientError) {
+        // Don't remove from candidates — persisted state keeps it for retry
+        process.stderr.write(`  ⚠️  transient error fetching ${name} — will retry next run\n`)
+        return
+      }
+
+      // Permanent result (manifest or 404) — remove from candidates regardless
+      const idx = candidates.indexOf(name)
+      if (idx >= 0) candidates.splice(idx, 1)
+
       if (manifest) {
         const lc = extractLifecycleScripts(manifest.scripts)
-        if (Object.keys(lc).length > 0) { manifests.push(manifest); mFound++; newThisRun++ }
+        if (Object.keys(lc).length > 0) {
+          manifests.push({ ...manifest, state: 'lifecycle' })
+          mFound++
+          newThisRun++
+        }
       }
+
       if (mFetched % 100 === 0 || mFetched === todo.length) {
         process.stderr.write(`    [${mFetched}/${todo.length}] checked, ${mFound} with lifecycle scripts\n`)
+        // Snapshot built synchronously in savePackageCache before any await
         await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
       }
     })))
+
     const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
+
+    if (circuitTripped) {
+      process.stderr.write(
+        `  ⚡ circuit breaker tripped during manifest fetch — checkpointing and stopping\n` +
+        `     ${candidates.length} candidates remain for next run\n`
+      )
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
+      ])
+      process.stderr.write(`  checkpoint saved — re-run to continue\n`)
+      process.exit(0)
+    }
+
     process.stderr.write(`    ✓ +${mFound} new (${manifests.length} in store, ${hitRate}% hit rate)\n`)
     // Checkpoint to both stores before next search refill
     await Promise.all([
@@ -1312,9 +1461,13 @@ When to use --reset:
         try {
           page = await fetchJson(url)
         } catch (err) {
-          if (err.isRateLimit) {
-            process.stderr.write(`  ⏳ rate limited fetching ${query} from=${from} — retrying after cooldown\n`)
-            continue  // waitForCooldown() fires at top of next fetchJson call
+          if (err.isCircuitOpen) {
+            process.stderr.write(`  ⚡ circuit open during search — checkpointing\n`)
+            await Promise.all([
+              savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }, candidates),
+              savePackageCache(pkgPath, manifests, seen, { keywordCursors }),
+            ])
+            process.exit(0)
           }
           process.stderr.write(`  ⚠️  error fetching ${query}: ${err.message} — skipping to next keyword\n`)
           break
