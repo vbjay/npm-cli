@@ -2184,6 +2184,9 @@ When to use --reset:
       suggestedCommandPattern: `\\b${token}\\b`,
     }))
 
+  const matchedCount = Object.values(categorized).flat().length
+  const noBuildHint = manifests.length - matchedCount - uncategorized.length
+
   const output = {
     // ── AI INSTRUCTIONS ─────────────────────────────────────────────────────
     // This block is intentionally first so any AI that opens this file sees it
@@ -2196,26 +2199,22 @@ When to use --reset:
         'the INDICATOR_REGISTRY in lib/utils/indicator-definitions.js.',
         'Your job is to review the data below and propose concrete improvements to that file.',
       ].join(' '),
+      howToReadThisFile: 'Every top-level section (meta, coverage, existingDefinitionCoverage, uncategorizedPackages, commandPatternGaps) has a "description" field that explains what the section contains and how to interpret it, and a "data" field with the actual content.  Read the description first, then inspect data.',
       sourceFile: 'lib/utils/indicator-definitions.js',
-      dataSchema: {
-        existingDefinitionCoverage: 'How many real packages each existing indicator definition matched.  Low-count indicators may need more commandPatterns.',
-        commandPatternGaps: 'Command tokens found in multiple build packages not covered by any indicator.  Each entry has: token, frequency, weeklyDownloadTotal, packages[], suggestedCommandPattern.  High frequency + high downloads = highest priority.',
-        uncategorizedPackages: 'Packages with a build signal (native, binary download, etc.) that no indicator definition covers.  Each entry has: name, version, weeklyDownloads, lifecycleScripts{}, buildDependencies[], commandTokens[], inferredIndicatorFiles[], detectedSignals[], suggestedSignal.',
-      },
       tasks: [
         {
           priority: 1,
-          task: 'Review commandPatternGaps where frequency >= 3 OR weeklyDownloadTotal >= 50000.',
+          task: 'Review commandPatternGaps.data where frequency >= 3 OR weeklyDownloadTotal >= 50000.',
           action: 'For each: decide whether the token warrants a NEW indicator entry (new build tool not yet covered) or just an additional commandPattern on an EXISTING entry.  Ignore tokens that are generic JS keywords (const, require, stdio, inherit) or non-build tools (tsc, oclif, lint, rimraf).',
         },
         {
           priority: 2,
-          task: 'Review uncategorizedPackages sorted by weeklyDownloads descending.',
+          task: 'Review uncategorizedPackages.data sorted by weeklyDownloads descending.',
           action: 'For each: examine lifecycleScripts, commandTokens, detectedSignals, and inferredIndicatorFiles.  Propose a new INDICATOR_REGISTRY entry OR explain why it should not be added.  Focus on packages with weeklyDownloads > 10000.',
         },
         {
           priority: 3,
-          task: 'Review existingDefinitionCoverage for indicators with low matchedCount.',
+          task: 'Review existingDefinitionCoverage.data entries with low matchedCount.',
           action: 'Propose additional commandPatterns that would match real packages listed in the uncategorized or gap sections.',
         },
       ],
@@ -2243,40 +2242,51 @@ When to use --reset:
       availableSignals: Object.entries(SIGNAL_DESCRIPTIONS)
         .map(([name, desc]) => `${name.padEnd(22)} — ${desc}`),
     },
-    // ── METADATA ─────────────────────────────────────────────────────────────
+
     meta: {
-      generatedAt: new Date().toISOString(),
-      topN,
-      deepScan: deepMode,
-      registryDefinitions: Object.keys(INDICATOR_REGISTRY),
+      description: 'Run metadata: when generated, registry size limit (topN), whether cross-package import following was enabled (deepScan), and which indicator filenames are currently registered.',
+      data: {
+        generatedAt: new Date().toISOString(),
+        topN,
+        deepScan: deepMode,
+        registryDefinitions: Object.keys(INDICATOR_REGISTRY),
+      },
     },
+
     coverage: {
-      totalScanned: scanned,
-      uniqueNamesConsidered: seen.size,
-      withLifecycleScripts: manifests.length,
-      matchedByExistingDefinitions: Object.values(categorized).flat().length,
-      uncategorizedBuildPackages: uncategorized.length,
-      lifecycleOnlyNoBuildHint: manifests.length - Object.values(categorized).flat().length - uncategorized.length,
+      description: 'Aggregate counts for this run. totalScanned = registry pages fetched. uniqueNamesConsidered = distinct package names seen. withLifecycleScripts = had install/postinstall/etc. matchedByExistingDefinitions = covered by at least one indicator. uncategorizedBuildPackages = build signal present but no indicator matched. lifecycleOnlyNoBuildHint = lifecycle scripts with no build tool detected.',
+      data: {
+        totalScanned: scanned,
+        uniqueNamesConsidered: seen.size,
+        withLifecycleScripts: manifests.length,
+        matchedByExistingDefinitions: matchedCount,
+        uncategorizedBuildPackages: uncategorized.length,
+        lifecycleOnlyNoBuildHint: noBuildHint,
+      },
     },
-    // How well each existing definition matches real packages
-    existingDefinitionCoverage: Object.fromEntries(
-      Object.entries(categorized)
-        .sort((a, b) => b[1].length - a[1].length)
-        .map(([file, pkgs]) => [
-          file,
-          { matchedCount: pkgs.length, packages: pkgs.sort() },
-        ])
-    ),
-    // Packages with build signals that no definition covers — highest-value gaps
-    uncategorizedPackages: uncategorized,
-    // Tokens appearing in multiple uncategorized build packages — candidates
-    // for new commandPatterns entries; sorted by total weekly downloads
-    commandPatternGaps,
+
+    existingDefinitionCoverage: {
+      description: 'Per-indicator match counts against real packages. Each entry in data is keyed by indicator filename (e.g. "binding.gyp") with matchedCount = how many scanned packages matched that indicator\'s commandPatterns, and packages = the matched names. Low matchedCount relative to expected prevalence suggests commandPatterns need broadening.',
+      data: Object.fromEntries(
+        Object.entries(categorized)
+          .sort((a, b) => b[1].length - a[1].length)
+          .map(([file, pkgs]) => [file, { matchedCount: pkgs.length, packages: pkgs.sort() }])
+      ),
+    },
+
+    uncategorizedPackages: {
+      description: 'Packages that have a build signal (native compile, binary download, runtime-installer, etc.) but no existing indicator definition matched them. Each item has: name, version, weeklyDownloads, lifecycleScripts, buildDependencies, commandTokens, inferredIndicatorFiles, detectedSignals, suggestedSignal. Sorted by weeklyDownloads descending — highest-value gaps first.',
+      data: uncategorized,
+    },
+
+    commandPatternGaps: {
+      description: 'Command tokens that appear in multiple uncategorized build packages but are not covered by any existing commandPatterns entry. Each item has: token, frequency (package count), weeklyDownloadTotal, packages, suggestedCommandPattern. Sorted by frequency × downloads — entries with frequency >= 3 or weeklyDownloadTotal >= 50000 are highest priority.',
+      data: commandPatternGaps,
+    },
   }
 
   await fs.writeFile(outPath, JSON.stringify(output, null, 2) + '\n', 'utf-8')
 
-  const noBuildHint = manifests.length - Object.values(categorized).flat().length - uncategorized.length
   process.stderr.write(`\n✅ Done!\n`)
   process.stderr.write(`   New this run:         ${newThisRun}\n`)
   if (alreadySeenSkips > 0) {
@@ -2287,15 +2297,15 @@ When to use --reset:
     process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} new packages added — discovered by following require() imports across package boundaries during file fetch\n`)
   }
   process.stderr.write(`   With lifecycle scripts: ${manifests.length} (of ${seen.size.toLocaleString()} total examined)\n`)
-  process.stderr.write(`   Covered by existing indicator defs: ${output.coverage.matchedByExistingDefinitions} (of ${manifests.length} with lifecycle scripts)\n`)
-  process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages} (have build hint, no matching indicator)\n`)
+  process.stderr.write(`   Covered by existing indicator defs: ${matchedCount} (of ${manifests.length} with lifecycle scripts)\n`)
+  process.stderr.write(`   Uncategorized builds: ${uncategorized.length} (have build hint, no matching indicator)\n`)
   process.stderr.write(`   Lifecycle-only (no build hint): ${noBuildHint} (postinstall/setup scripts, not native builders)\n`)
   process.stderr.write(`   Pattern gaps found:   ${commandPatternGaps.length}\n`)
 
   // Warn when indicator coverage of lifecycle-script packages is low.
   // Threshold: fewer than 30% of lifecycle-script packages matched an indicator.
   const coveragePct = manifests.length > 0
-    ? Math.round((output.coverage.matchedByExistingDefinitions / manifests.length) * 100)
+    ? Math.round((matchedCount / manifests.length) * 100)
     : 100
   if (coveragePct < 30) {
     process.stderr.write(
