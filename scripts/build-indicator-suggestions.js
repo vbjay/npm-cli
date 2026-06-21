@@ -1315,6 +1315,9 @@ When to use --reset:
         }
 
         if (from >= sweepStartOffset + 2000) break  // scanned 2000 results this run for this keyword
+        // Note: the npm registry has no hard from-offset cap, but result quality degrades
+        // significantly past offset ~2000 (spam/placeholder packages appear). The 2000-result
+        // window keeps scans in the higher-quality range while still making progress.
       }
       // Save rolling cursor — covers exhaustion, 2000-cap, topN-reached, and error exits.
       // Preserve startedAt (sweep origin) so TTL is measured from the first page-0 scan,
