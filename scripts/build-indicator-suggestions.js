@@ -68,9 +68,9 @@ function computeDeepCacheVersion () {
 }
 const DEEP_CACHE_VERSION = computeDeepCacheVersion()
 
-// Default TTL for the per-keyword page cursor.  Within this window a new run
-// continues FROM the last page reached rather than re-walking pages 0–2000.
-// Once the cursor expires the keyword restarts at page 0 so newly-popular
+// Default TTL for the per-keyword result cursor.  Within this window a new run
+// continues FROM the last result offset rather than re-walking results 0–2000.
+// Once the cursor expires the keyword restarts at offset 0 so newly-popular
 // packages (which appear near the top) are not missed.
 // Override with --search-ttl <hours>; set to 0 to force page-0 restart for all
 // keywords without --reset (which also wipes the package store).
@@ -911,8 +911,8 @@ Options:
   --deep             Fetch indicator files from unpkg and run the production scanner
                      (cached by name@version in *.deep/ next to --out)
   --notify-pages <n> Pages between checkpoint saves and stats output     (default: 2 = every 500 results)
-  --search-ttl <h>   Hours before the per-keyword page cursor resets to page 0 (default: 168 = 7 days)
-                     Within the TTL window each keyword continues from the last page reached.
+  --search-ttl <h>   Hours before the per-keyword result cursor resets to offset 0 (default: 168 = 7 days)
+                     Within the TTL window each keyword continues from the last result offset reached.
                      Set to 0 to force page-0 restart for all keywords without wiping the store.
   -h, --help         Show this help message
 
@@ -1067,8 +1067,8 @@ When to use --reset:
 
   const { names, manifests: cached, seen: cachedSeen, discoveryState } = loaded
 
-  // Per-keyword rolling page cursor — persisted in discoveryState so subsequent
-  // runs continue FROM the last page reached rather than re-walking pages 0–N.
+  // Per-keyword rolling result cursor — persisted in discoveryState so subsequent
+  // runs continue FROM the last result offset rather than re-walking results 0–N.
   // Each entry: { from: number, scannedAt: isoString }
   const keywordCursors = discoveryState?.keywordCursors || {}
 
@@ -1203,6 +1203,7 @@ When to use --reset:
   let done = isStep4Resume || topN === 0
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordCursors }
   let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
+  let pagesFetchedTotal = 0  // global across all keywords — drives --notify-pages notifications
 
   while (!done) {
     const newAtPassStart = newThisRun  // detect a pass with zero new packages → stop
@@ -1211,16 +1212,16 @@ When to use --reset:
       const query = DISCOVERY_QUERIES[qi]
 
       // Determine starting page for this keyword:
-      //  1. Interrupted-run resume (tmp cursor): exact position from last page fetch
-      //  2. Rolling cursor within TTL: continue from last page reached — sweep start
+      //  1. Interrupted-run resume (tmp cursor): exact result offset from last fetch
+      //  2. Rolling cursor within TTL: continue from last result offset — sweep start
       //     age (cursor.startedAt) determines TTL, not the last scan time.
-      //  3. Expired/missing cursor: start at page 0 and begin a new sweep.
+      //  3. Expired/missing cursor: start at offset 0 and begin a new sweep.
       let from
       let fromLabel = ''
       let sweepStartedAt  // preserved across runs so TTL is measured from sweep origin
       if (qi === resumeQueryIndex && resumeQueryFrom > 0) {
         from = resumeQueryFrom  // mid-run interrupt — exact resume position
-        fromLabel = ` (resuming from page ${from})`
+        fromLabel = ` (resuming from offset ${from})`
         sweepStartedAt = keywordCursors[query]?.startedAt || new Date().toISOString()
       } else {
         const cursor = keywordCursors[query]
@@ -1230,7 +1231,8 @@ When to use --reset:
             from = cursor.from  // continue forward within this sweep
             sweepStartedAt = cursor.startedAt  // keep the original sweep origin
             const ageH = (sweepAgeMs / 3_600_000).toFixed(1)
-            fromLabel = ` (cursor: page ${from}, sweep age ${ageH}h/${searchTtlHours}h)`
+            const approxPage = Math.floor(from / size) + 1
+            fromLabel = ` (cursor: offset ${from} ~page ${approxPage}, sweep age ${ageH}h/${searchTtlHours}h)`
           } else {
             from = 0  // sweep expired: restart from top to catch newly-popular packages
             sweepStartedAt = new Date().toISOString()
@@ -1242,7 +1244,6 @@ When to use --reset:
       }
 
       const size = 250
-      let pagesFetched = 0
       process.stderr.write(`  query: ${query}${fromLabel}\n`)
 
       while (!done) {
@@ -1268,7 +1269,7 @@ When to use --reset:
         const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
         for (const n of pageNames) seen.add(n)
         from += page.objects.length
-        pagesFetched++
+        pagesFetchedTotal++
 
         for (const name of pageNames) {
           if (done) break
@@ -1295,17 +1296,17 @@ When to use --reset:
           if (delayMs > 0) await sleep(delayMs)
         }
 
-        // Every notifyPages pages: checkpoint resume cache and print stats
-        if (pagesFetched % notifyPages === 0) {
+        // Every notifyPages pages (global across all keywords): checkpoint + stats
+        if (pagesFetchedTotal % notifyPages === 0) {
           await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
           process.stderr.write(
-            `    page ${pagesFetched} (from=${from}) | ` +
+            `    [${query}] page ${pagesFetchedTotal} total (offset=${from}) | ` +
             `${scanned} scanned | ${newThisRun}/${topN} new with scripts | ` +
             `${manifests.length} total\n`
           )
         }
 
-        if (from >= 2000) break  // hit page cap
+        if (from >= 2000) break  // hit result cap (2000 results = 8 pages at size 250)
       }
       // Save rolling cursor — covers exhaustion, 2000-cap, topN-reached, and error exits.
       // Preserve startedAt (sweep origin) so TTL is measured from the first page-0 scan,
