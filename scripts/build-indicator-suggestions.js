@@ -1327,6 +1327,9 @@ When to use --reset:
   const drainCandidates = async () => {
     if (candidates.length === 0) return
     const todo = [...candidates]  // snapshot — do NOT clear upfront
+    // Pre-drain checkpoint: record all pending candidates + current search position
+    // so a crash mid-drain resumes from this exact snapshot.
+    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
     process.stderr.write(`\n  manifests: fetching ${todo.length} candidates...\n`)
     const mLimit = makeLimiter(10)
     let mFetched = 0
@@ -1403,7 +1406,6 @@ When to use --reset:
   // Drain any candidates left pending from a previous interrupted run before searching more.
   if (candidates.length > 0 && !done) {
     process.stderr.write(`Step 3.25/5: Resuming ${candidates.length} pending candidates from previous run...\n`)
-    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
     await drainCandidates()
     process.stderr.write('\n')
   }
@@ -1518,9 +1520,8 @@ When to use --reset:
         // Drain every 2 search pages so manifests are fetched incrementally.
         pagesSinceLastDrain++
         if (pagesSinceLastDrain >= 2 && candidates.length > 0 && !done) {
-          // Pre-drain checkpoint: record current candidates + search offsets before drain starts.
+          // Pre-drain checkpoint is inside drainCandidates() — update finalDiscoveryState first.
           finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
-          await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
           await drainCandidates()
         }
 
@@ -1562,7 +1563,6 @@ When to use --reset:
     ` (${seen.size.toLocaleString()} unique in seen-set)\n`
   )
   if (candidates.length > 0) {
-    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
     await drainCandidates()
   } else process.stderr.write('\n')
 
