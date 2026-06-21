@@ -44,10 +44,14 @@ const { classifyUrl } = require(
 )
 
 // Cache schema version — hash of every signal name+regex and every indicator
+// Increment when the on-disk file format changes (e.g. defang scheme, meta fields).
+// Mixed into DEEP_CACHE_VERSION so old caches are automatically invalidated.
+const DEEP_CACHE_SCHEMA = 'defang-v1'
+
 // registry key+commandPattern so that ANY change to signals or indicators
 // automatically invalidates all deep-scan cache entries and forces a rescan.
 function computeDeepCacheVersion () {
-  const parts = []
+  const parts = [DEEP_CACHE_SCHEMA]
   // Signal patterns: name + full regex source (flags included)
   for (const [name, pat] of SIGNAL_PATTERNS) {
     const src = pat instanceof RegExp ? pat.source + pat.flags : String(pat)
