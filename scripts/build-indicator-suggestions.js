@@ -1251,6 +1251,7 @@ When to use --reset:
 
       process.stderr.write(`  query: ${query}${fromLabel}\n`)
 
+      const sweepStartOffset = from  // capture where this keyword started this run
       while (!done) {
         const enc = encodeURIComponent(query)
         const url =
@@ -1313,7 +1314,7 @@ When to use --reset:
           )
         }
 
-        if (from >= 2000) break  // npm registry caps results at offset 2000
+        if (from >= sweepStartOffset + 2000) break  // scanned 2000 results this run for this keyword
       }
       // Save rolling cursor — covers exhaustion, 2000-cap, topN-reached, and error exits.
       // Preserve startedAt (sweep origin) so TTL is measured from the first page-0 scan,
