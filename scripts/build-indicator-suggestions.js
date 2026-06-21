@@ -1653,7 +1653,7 @@ When to use --reset:
   const addFlag = flag('--add', null)
   let addedCount = 0
   if (addFlag) {
-    const addNames = addFlag.split(',').map(s => s.trim()).filter(Boolean)
+    const addNames = addFlag.split(',').map(s => s.trim().replace(/\\/g, '/')).filter(Boolean)
     const inStore = new Set(manifests.map(m => m.name))
 
     const tryAdd = (name, label) => {
