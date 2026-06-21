@@ -1184,14 +1184,15 @@ When to use --reset:
             if (Object.keys(lc).length > 0) {
               manifests.push(manifest)
               newThisRun++
-              if (newThisRun % 50 === 0 || newThisRun <= 3) {
-                process.stderr.write(
-                  `    found ${newThisRun}/${topN} new (${manifests.length} total)` +
-                  ` (scanned ${scanned}, last: ${name})\n`
-                )
-              }
               if (newThisRun >= topN) done = true
             }
+          }
+          // Progress: every 100 packages scanned (seen), regardless of how many have scripts
+          if (scanned % 100 === 0 || newThisRun <= 3) {
+            process.stderr.write(
+              `    scanned ${scanned} (${newThisRun}/${topN} with scripts, ${manifests.length} total)` +
+              ` — last: ${name}\n`
+            )
           }
           finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
           if (delayMs > 0) await sleep(delayMs)
