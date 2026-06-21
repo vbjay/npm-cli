@@ -124,7 +124,7 @@ const { unlinkSync } = require('fs')
 const ROOT = path.resolve(__dirname, '..')
 const { version: PKG_VERSION } = require(path.join(ROOT, 'package.json'))
 const USER_AGENT = `npm/${PKG_VERSION} npm-indicator-suggestions (https://github.com/npm/cli)`
-const { INDICATOR_REGISTRY } = require(
+const { INDICATOR_REGISTRY, SIGNAL_DESCRIPTIONS } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-definitions.js')
 )
 const { hasBuildHint, scanBuildIndicatorsForPackage } = require(
@@ -2240,15 +2240,8 @@ When to use --reset:
           rationale: '<which packages would now be matched>',
         },
       },
-      availableSignals: [
-        'native-build      — compiles a native binary (.node addon, .so, .dylib)',
-        'wasm-build        — compiles a WebAssembly (.wasm) module',
-        'android-native    — Android JNI/NDK native module',
-        'make-build        — Makefile or task-runner driven build (arbitrary commands)',
-        'binary-downloader — downloads a pre-built binary at install time',
-        'runtime-installer — invokes npm/pnpm/yarn install as a child process',
-        'source-downloader — fetches source code (curl/wget/git clone) at install time',
-      ],
+      availableSignals: Object.entries(SIGNAL_DESCRIPTIONS)
+        .map(([name, desc]) => `${name.padEnd(22)} — ${desc}`),
     },
     // ── METADATA ─────────────────────────────────────────────────────────────
     meta: {
