@@ -46,7 +46,7 @@ const { classifyUrl } = require(
 // Cache schema version — hash of every signal name+regex and every indicator
 // Increment when the on-disk file format changes (e.g. defang scheme, meta fields).
 // Mixed into DEEP_CACHE_VERSION so old caches are automatically invalidated.
-const DEEP_CACHE_SCHEMA = 'defang-v1'
+const DEEP_CACHE_SCHEMA = 'defang-v2'
 
 // registry key+commandPattern so that ANY change to signals or indicators
 // automatically invalidates all deep-scan cache entries and forces a rescan.
@@ -96,10 +96,60 @@ const DrainMode = Object.freeze({
 // Null byte at position 0 causes SyntaxError in all Node.js versions, preventing
 // accidental execution of cached JS files while leaving text content intact for
 // static analysis (regex matching is unaffected).
-const DEFANG_HEADER = Buffer.from('\x00/* DEFANGED: static-analysis cache — do not execute */\n')
-const JS_RE = /\.(m?js|cjs)$/i
+const DEFANG_MSG = 'DEFANGED: static-analysis cache — do not execute'
+
+// Binary executable magic bytes — these files are skipped entirely (defangBuf returns null).
+const BINARY_MAGIC = [
+  Buffer.from([0x4d, 0x5a]),             // MZ   — Windows PE (.exe .dll .node)
+  Buffer.from([0x7f, 0x45, 0x4c, 0x46]), // ELF  — Linux/Android native
+  Buffer.from([0xca, 0xfe, 0xba, 0xbe]), // Mach-O fat binary
+  Buffer.from([0xcf, 0xfa, 0xed, 0xfe]), // Mach-O 64-bit LE
+  Buffer.from([0xce, 0xfa, 0xed, 0xfe]), // Mach-O 32-bit LE
+]
+
+/**
+ * Defang a downloaded file so it cannot be accidentally executed.
+ * Returns null for binary executables (caller should skip writing).
+ * Returns a modified Buffer with an inert header prepended for script types.
+ * Returns the original buf unchanged for non-executable types (JSON, TOML, …).
+ */
 function defangBuf (relPath, buf) {
-  return JS_RE.test(relPath) ? Buffer.concat([DEFANG_HEADER, buf]) : buf
+  if (BINARY_MAGIC.some(m => buf.length >= m.length && buf.slice(0, m.length).equals(m))) {
+    return null  // binary executable — skip
+  }
+  const ext = path.extname(relPath).toLowerCase()
+  if (['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'].includes(ext)) {
+    // Null byte → SyntaxError before any code runs
+    return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n`), buf])
+  }
+  if (['.sh', '.bash', '.zsh', '.ksh', '.fish'].includes(ext)) {
+    // Preserve shebang on line 1 if present, inject exit 1 immediately after
+    const str = buf.toString('utf8')
+    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
+    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\nexit 1\n${str.slice(nl)}`)
+  }
+  if (['.bat', '.cmd'].includes(ext)) {
+    return Buffer.from(`@rem ${DEFANG_MSG}\r\n@exit /b 1\r\n${buf.toString('utf8')}`)
+  }
+  if (['.ps1', '.psm1', '.psd1'].includes(ext)) {
+    return Buffer.from(`# ${DEFANG_MSG}\nthrow '${DEFANG_MSG}'\n${buf.toString('utf8')}`)
+  }
+  if (['.py', '.pyw'].includes(ext)) {
+    const str = buf.toString('utf8')
+    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
+    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\nimport sys; sys.exit('${DEFANG_MSG}')\n${str.slice(nl)}`)
+  }
+  if (['.rb'].includes(ext)) {
+    const str = buf.toString('utf8')
+    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
+    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\nabort '${DEFANG_MSG}'\n${str.slice(nl)}`)
+  }
+  if (['.pl', '.pm'].includes(ext)) {
+    const str = buf.toString('utf8')
+    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
+    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\ndie '${DEFANG_MSG}';\n${str.slice(nl)}`)
+  }
+  return buf  // non-executable (JSON, TOML, .gyp, Makefile, …) — pass through unchanged
 }
 
 function makeLimiter (max, delayMs = 0) {
@@ -180,9 +230,14 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     const url = `https://unpkg.com/${encoded}@${manifest.version}/${relPosix}`
     const buf = await fetchRaw(url)
     if (!buf) return false
+    const safe = defangBuf(relPosix, buf)
+    if (!safe) {
+      process.stderr.write(`  ⚠️  skipped binary: ${manifest.name}/${relPosix}\n`)
+      return false
+    }
     const dest = path.join(pkgCacheDir, ...relPosix.split('/'))
     await fs.mkdir(path.dirname(dest), { recursive: true })
-    await fs.writeFile(dest, defangBuf(relPosix, buf))
+    await fs.writeFile(dest, safe)
     fetchedFiles.push(relPosix)
     return true
   }
@@ -270,7 +325,9 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       if (!buf) continue
       const dest = path.join(pkgDir, ...candidate.split('/'))
       await fs.mkdir(path.dirname(dest), { recursive: true })
-      await fs.writeFile(dest, defangBuf(candidate, buf))
+      const safe = defangBuf(candidate, buf)
+      if (!safe) break  // binary entry — skip this candidate
+      await fs.writeFile(dest, safe)
       try {
         const content = buf.toString('utf8')  // parse original for refs before defanging
         const localRefs = findLocalRefs(content)
@@ -286,7 +343,9 @@ async function deepFetchPackage (manifest, deepDir, limit) {
             if (!buf2) continue
             const dest2 = path.join(pkgDir, ...(`${relPosix}${ext}`).split('/'))
             await fs.mkdir(path.dirname(dest2), { recursive: true })
-            await fs.writeFile(dest2, defangBuf(relPosix + ext, buf2))
+            const safe2 = defangBuf(relPosix + ext, buf2)
+            if (!safe2) break  // binary ref — skip
+            await fs.writeFile(dest2, safe2)
             break
           }
         }))
