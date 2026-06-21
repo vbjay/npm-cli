@@ -534,7 +534,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       await fs.mkdir(path.dirname(dest), { recursive: true })
       if (!await writeDefanged(dest, candidate, buf)) break  // binary entry — skip
       try {
-        const content = buf.toString('utf8')  // parse original for refs before defanging
+        const content = buf.toString('utf8')  // use original buf for ref-parsing — disk file is already defanged
         const localRefs = findLocalRefs(content)
         const fileDir = path.dirname(dest)
         await Promise.all(localRefs.map(async (ref) => {
@@ -597,7 +597,8 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     }
   }
 
-  // Write fetch-phase meta (no results yet)
+  // Hash is computed AFTER all writeDefanged() calls above complete, so it
+  // reflects defanged file sizes on disk — not the original fetched content.
   const filesHash = await hashDirTree(pkgCacheDir)
   await fs.writeFile(metaPath, JSON.stringify({
     version: manifest.version,
