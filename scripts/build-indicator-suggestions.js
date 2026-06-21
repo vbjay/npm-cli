@@ -46,7 +46,7 @@ const { classifyUrl } = require(
 // Cache schema version — hash of every signal name+regex and every indicator
 // Increment when the on-disk file format changes (e.g. defang scheme, meta fields).
 // Mixed into DEEP_CACHE_VERSION so old caches are automatically invalidated.
-const DEEP_CACHE_SCHEMA = 'defang-v2'
+const DEEP_CACHE_SCHEMA = 'defang-v3'
 
 // registry key+commandPattern so that ANY change to signals or indicators
 // automatically invalidates all deep-scan cache entries and forces a rescan.
@@ -149,7 +149,59 @@ function defangBuf (relPath, buf) {
     const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
     return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\ndie '${DEFANG_MSG}';\n${str.slice(nl)}`)
   }
-  return buf  // non-executable (JSON, TOML, .gyp, Makefile, …) — pass through unchanged
+  // Makefile: override all common targets + .DEFAULT so `make` exits 1 immediately.
+  // Preserves content for static analysis (pattern matching still works).
+  const base = path.basename(relPath).toLowerCase()
+  if (['makefile', 'gnumakefile', 'bsdmakefile'].includes(base) || ['.mk', '.make'].includes(ext)) {
+    const str = buf.toString('utf8')
+    return Buffer.from(
+      `# ${DEFANG_MSG}\n` +
+      `.PHONY: all install build clean test configure\n` +
+      `all install build clean test configure: ; @exit 1\n` +
+      `.DEFAULT: ; @exit 1\n\n` +
+      str
+    )
+  }
+  // GYP/GYPI: Python-style comment marker (node-gyp still parses, but file is clearly marked).
+  if (['.gyp', '.gypi'].includes(ext)) {
+    return Buffer.from(`# ${DEFANG_MSG}\n${buf.toString('utf8')}`)
+  }
+  return buf  // non-executable (JSON, TOML, CMakeLists.txt, …) — pass through unchanged
+}
+
+/**
+ * Write a defanged buffer to disk and strip execute permissions on non-Windows.
+ * Returns false if the file should be skipped (binary executable).
+ */
+async function writeDefanged (dest, relPath, buf) {
+  const safe = defangBuf(relPath, buf)
+  if (!safe) return false
+  await fs.writeFile(dest, safe)
+  if (process.platform !== 'win32') {
+    await fs.chmod(dest, 0o444).catch(() => { /* best-effort */ })
+  }
+  return true
+}
+
+/**
+ * Remove a directory tree, clearing read-only flags first on non-Windows so
+ * that files chmod'd to 0o444 by writeDefanged can be deleted.
+ */
+async function rmReadOnly (dir) {
+  if (process.platform !== 'win32') {
+    // Walk and restore write permission before removal
+    const restoreWrite = async (p) => {
+      try {
+        const entries = await fs.readdir(p, { withFileTypes: true })
+        await Promise.all(entries.map(e => {
+          const full = path.join(p, e.name)
+          return e.isDirectory() ? restoreWrite(full) : fs.chmod(full, 0o644).catch(() => {})
+        }))
+      } catch { /* ignore */ }
+    }
+    await restoreWrite(dir)
+  }
+  await fs.rm(dir, { recursive: true, force: true })
 }
 
 function makeLimiter (max, delayMs = 0) {
@@ -218,7 +270,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
         process.stderr.write(`  🗑️  file tree changed for ${manifest.name} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
       }
     } catch { /* .meta.json missing or corrupt — treat as stale */ }
-    await fs.rm(pkgCacheDir, { recursive: true, force: true })
+    await rmReadOnly(pkgCacheDir)
   }
 
   await fs.mkdir(pkgCacheDir, { recursive: true })
@@ -230,14 +282,12 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     const url = `https://unpkg.com/${encoded}@${manifest.version}/${relPosix}`
     const buf = await fetchRaw(url)
     if (!buf) return false
-    const safe = defangBuf(relPosix, buf)
-    if (!safe) {
+    const dest = path.join(pkgCacheDir, ...relPosix.split('/'))
+    await fs.mkdir(path.dirname(dest), { recursive: true })
+    if (!await writeDefanged(dest, relPosix, buf)) {
       process.stderr.write(`  ⚠️  skipped binary: ${manifest.name}/${relPosix}\n`)
       return false
     }
-    const dest = path.join(pkgCacheDir, ...relPosix.split('/'))
-    await fs.mkdir(path.dirname(dest), { recursive: true })
-    await fs.writeFile(dest, safe)
     fetchedFiles.push(relPosix)
     return true
   }
@@ -325,9 +375,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       if (!buf) continue
       const dest = path.join(pkgDir, ...candidate.split('/'))
       await fs.mkdir(path.dirname(dest), { recursive: true })
-      const safe = defangBuf(candidate, buf)
-      if (!safe) break  // binary entry — skip this candidate
-      await fs.writeFile(dest, safe)
+      if (!await writeDefanged(dest, candidate, buf)) break  // binary entry — skip
       try {
         const content = buf.toString('utf8')  // parse original for refs before defanging
         const localRefs = findLocalRefs(content)
@@ -343,9 +391,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
             if (!buf2) continue
             const dest2 = path.join(pkgDir, ...(`${relPosix}${ext}`).split('/'))
             await fs.mkdir(path.dirname(dest2), { recursive: true })
-            const safe2 = defangBuf(relPosix + ext, buf2)
-            if (!safe2) break  // binary ref — skip
-            await fs.writeFile(dest2, safe2)
+            if (!await writeDefanged(dest2, relPosix + ext, buf2)) break  // binary ref — skip
             break
           }
         }))
@@ -1199,7 +1245,7 @@ When to use --reset:
   if (doReset) {
     await fs.unlink(manifestStorePath).catch(() => {})
     await fs.unlink(resumeCachePath).catch(() => {})
-    await fs.rm(deepDir, { recursive: true, force: true })
+    await rmReadOnly(deepDir)
     process.stderr.write(`  ⚠️  --reset: deleted ${manifestStorePath}, ${resumeCachePath}, and ${deepDir}\n\n`)
     if (!topExplicit) process.exit(0)
   }
