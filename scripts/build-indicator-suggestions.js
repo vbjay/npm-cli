@@ -21,10 +21,24 @@
 // DEEP-SCAN CACHE SECURITY / FILE DEFANGING
 // ─────────────────────────────────────────────────────────────────────────────
 //
-// When --deep is passed, the script downloads source files from arbitrary npm
-// packages via unpkg.com and writes them to a local cache directory (*.deep/).
-// These files are NEVER executed — they are only read as plain text for static
-// analysis (regex pattern matching).
+// When --deep is passed, the script fetches specific files from each package
+// via unpkg.com — it does NOT download the whole package.  Only two categories
+// of files are pulled:
+//
+//   1. Known indicator files (binding.gyp, Cargo.toml, CMakeLists.txt, etc.)
+//      — the exact filenames registered in INDICATOR_REGISTRY, fetched by
+//      name from the package root.
+//
+//   2. JS/MJS/CJS files explicitly named in lifecycle scripts (install,
+//      postinstall, preinstall, prepare, prepack, …) plus their transitive
+//      local require() / import dependencies, up to a depth limit.
+//      e.g. "postinstall": "node scripts/install.js" → fetches
+//      scripts/install.js, then any require('./util') inside that file, etc.
+//
+// Nothing else is fetched — no node_modules, no test files, no assets.
+// Cross-package bare requires (require('some-dep')) are followed one level
+// to discover new candidate packages, but only their entry file is fetched.
+//
 //
 // However, having unmodified third-party scripts on disk creates a risk surface:
 // an editor, shell auto-completion, accidental double-click, or a future tool
@@ -378,8 +392,14 @@ function makeLimiter (max, delayMs = 0) {
 }
 
 // ---------------------------------------------------------------------------
-// Deep-scan one package via unpkg: fetch known indicator files, run the
-// production scanner, cache results keyed by name@version.
+// Deep-scan one package via unpkg — selective file fetch, NOT a whole-package
+// download.  Only two categories of files are pulled per package:
+//   1. Indicator files (binding.gyp, Cargo.toml, …) — fetched by exact name.
+//   2. JS/MJS/CJS files referenced in lifecycle scripts (e.g. "node install.js")
+//      and their transitive local require() dependencies (up to MAX_FETCH_DEPTH).
+// Cross-package bare requires (require('lodash')) are followed to discover
+// new candidate packages, but only their package entry file is fetched.
+// Results are cached by name@version in deepDir; re-runs read from cache.
 // ---------------------------------------------------------------------------
 
 // Compute a short hash of all files (path relative to dir + size in bytes)
@@ -1307,8 +1327,16 @@ Options:
                      Resume: appends to existing list.  Fresh run: replaces defaults entirely.
                      Example: --keywords "ruby,python,go"
   --reset            Delete both cache files and the deep cache dir; start fresh
-  --deep             Fetch indicator files from unpkg and run the production scanner
-                     (cached by name@version in *.deep/ next to --out)
+  --deep             For each package with lifecycle scripts, fetch only the
+                     specific files needed for analysis — NOT the whole package:
+                       • Known indicator files (binding.gyp, Cargo.toml, etc.)
+                         fetched by name from the package root via unpkg.
+                       • JS/MJS/CJS files explicitly named in lifecycle scripts
+                         (e.g. "node scripts/install.js") plus their transitive
+                         local require() dependencies, up to a depth limit.
+                     Results are cached by name@version in *.deep/ so re-runs
+                     are instant.  Cross-package bare requires discover new
+                     candidate packages but only pull their entry file.
   --page-size <n>    Results per search page, 1–250 (default: 250 = npm registry max)
   --search-ttl <h>   Hours before the per-keyword result cursor resets to offset 0 (default: 168 = 7 days)
                      Within the TTL window each keyword continues from the last result offset reached.
@@ -2055,8 +2083,12 @@ When to use --reset:
   }
 
   // ---------------------------------------------------------------------------
-  // Step 4/5 (--deep only): Fetch indicator files + lifecycle JS files via unpkg,
-  // follow require() refs recursively, then run the full scanner stack.
+  // Step 4/5 (--deep only): Selective file fetch per package (NOT whole-package
+  // download), then run the full production scanner stack.
+  //
+  // Fetched per package:
+  //   • Indicator files (binding.gyp, Cargo.toml, …) by exact name.
+  //   • JS files named in lifecycle scripts + their require() deps (BFS, depth-limited).
   // Results are cached by name@version in deepDir so re-runs are instant.
   // ---------------------------------------------------------------------------
   if (deepMode) {
