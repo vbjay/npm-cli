@@ -67,10 +67,13 @@ function computeDeepCacheVersion () {
 }
 const DEEP_CACHE_VERSION = computeDeepCacheVersion()
 
-// Default TTL for re-scanning an already-completed keyword search query.
-// Prevents redundant full-page traversals when re-running shortly after a
-// previous collection pass.  Override with --search-ttl <hours>.
-const DEFAULT_SEARCH_TTL_HOURS = 24
+// Default TTL for the per-keyword page cursor.  Within this window a new run
+// continues FROM the last page reached rather than re-walking pages 0–2000.
+// Once the cursor expires the keyword restarts at page 0 so newly-popular
+// packages (which appear near the top) are not missed.
+// Override with --search-ttl <hours>; set to 0 to force page-0 restart for all
+// keywords without --reset (which also wipes the package store).
+const DEFAULT_CURSOR_TTL_HOURS = 168  // 7 days
 
 // ---------------------------------------------------------------------------
 // Concurrency limiter — run at most `max` async tasks simultaneously
@@ -855,8 +858,10 @@ Options:
   --reset            Delete both cache files and the deep cache dir; start fresh
   --deep             Fetch indicator files from unpkg and run the production scanner
                      (cached by name@version in *.deep/ next to --out)
-  --search-ttl <h>   Hours before a completed keyword search is re-run  (default: 24)
-                     Set to 0 to force a fresh search pass without --reset
+  --search-ttl <h>   Hours before the per-keyword page cursor resets to page 0  (default: 168 = 7 days)
+                     Within the TTL window each keyword continues from the last page reached,
+                     skipping already-walked pages.  Set to 0 to force page-0 restart for all
+                     keywords without wiping the package store (weaker than --reset).
   -h, --help         Show this help message
 
 Cache files (written next to --out, gitignored):
@@ -895,7 +900,7 @@ When to use --reset:
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
   const doReset = args.includes('--reset')
   const deepMode = args.includes('--deep')
-  const searchTtlHours = args.includes('--search-ttl') ? parseFloat(flag('--search-ttl', DEFAULT_SEARCH_TTL_HOURS)) : DEFAULT_SEARCH_TTL_HOURS
+  const searchTtlHours = args.includes('--search-ttl') ? parseFloat(flag('--search-ttl', DEFAULT_CURSOR_TTL_HOURS)) : DEFAULT_CURSOR_TTL_HOURS
   const searchTtlMs = searchTtlHours * 60 * 60 * 1000
 
   // Two cache files serve different purposes:
@@ -983,9 +988,10 @@ When to use --reset:
 
   const { names, manifests: cached, seen: cachedSeen, discoveryState } = loaded
 
-  // Per-keyword timestamp of last full scan — persisted in discoveryState so TTL
-  // checks work across runs without --reset.
-  const keywordLastScanned = discoveryState?.keywordLastScanned || {}
+  // Per-keyword rolling page cursor — persisted in discoveryState so subsequent
+  // runs continue FROM the last page reached rather than re-walking pages 0–N.
+  // Each entry: { from: number, scannedAt: isoString }
+  const keywordCursors = discoveryState?.keywordCursors || {}
 
   if (cached) {
     for (const m of cached) manifests.push(m)
@@ -1093,7 +1099,7 @@ When to use --reset:
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
   // Skip collection if resuming step 4, or if no --top was given (topN === 0).
   let done = isStep4Resume || topN === 0
-  let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordLastScanned }
+  let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordCursors }
   let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
 
   while (!done) {
@@ -1101,22 +1107,40 @@ When to use --reset:
 
     for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
       const query = DISCOVERY_QUERIES[qi]
-      let from = (qi === resumeQueryIndex) ? resumeQueryFrom : 0
 
-      // TTL check: skip keywords that were fully scanned recently.
-      // Exception: if this is the exact keyword being resumed (from > 0), let it finish.
-      const isResumingThisKeyword = qi === resumeQueryIndex && from > 0
-      if (!isResumingThisKeyword && searchTtlMs > 0 && keywordLastScanned[query]) {
-        const ageMs = Date.now() - new Date(keywordLastScanned[query]).getTime()
-        if (ageMs < searchTtlMs) {
-          const ageH = (ageMs / 3_600_000).toFixed(1)
-          process.stderr.write(`  ⏭️  ${query.replace('keywords:', '')} — searched ${ageH}h ago, skipping (TTL ${searchTtlHours}h)\n`)
-          continue
+      // Determine starting page for this keyword:
+      //  1. Interrupted-run resume (tmp cursor): exact position from last page fetch
+      //  2. Rolling cursor within TTL: continue from last page reached — sweep start
+      //     age (cursor.startedAt) determines TTL, not the last scan time.
+      //  3. Expired/missing cursor: start at page 0 and begin a new sweep.
+      let from
+      let fromLabel = ''
+      let sweepStartedAt  // preserved across runs so TTL is measured from sweep origin
+      if (qi === resumeQueryIndex && resumeQueryFrom > 0) {
+        from = resumeQueryFrom  // mid-run interrupt — exact resume position
+        fromLabel = ` (resuming from page ${from})`
+        sweepStartedAt = keywordCursors[query]?.startedAt || new Date().toISOString()
+      } else {
+        const cursor = keywordCursors[query]
+        if (cursor?.startedAt && searchTtlMs > 0) {
+          const sweepAgeMs = Date.now() - new Date(cursor.startedAt).getTime()
+          if (sweepAgeMs < searchTtlMs) {
+            from = cursor.from  // continue forward within this sweep
+            sweepStartedAt = cursor.startedAt  // keep the original sweep origin
+            const ageH = (sweepAgeMs / 3_600_000).toFixed(1)
+            fromLabel = ` (cursor: page ${from}, sweep age ${ageH}h/${searchTtlHours}h)`
+          } else {
+            from = 0  // sweep expired: restart from top to catch newly-popular packages
+            sweepStartedAt = new Date().toISOString()
+          }
+        } else {
+          from = 0  // no cursor or TTL disabled
+          sweepStartedAt = new Date().toISOString()
         }
       }
 
       const size = 250
-      process.stderr.write(`  query: ${query}${from > 0 ? ` (resuming from=${from})` : ''}\n`)
+      process.stderr.write(`  query: ${query}${fromLabel}\n`)
 
       while (!done) {
         const enc = encodeURIComponent(query)
@@ -1136,10 +1160,7 @@ When to use --reset:
           process.stderr.write(`  ⚠️  error fetching ${query}: ${err.message} — skipping to next keyword\n`)
           break
         }
-        if (!page || !page.objects || page.objects.length === 0) {
-          keywordLastScanned[query] = new Date().toISOString()  // exhausted — record completion
-          break
-        }
+        if (!page || !page.objects || page.objects.length === 0) break  // exhausted
 
         const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
         for (const n of pageNames) seen.add(n)
@@ -1172,22 +1193,23 @@ When to use --reset:
               if (newThisRun >= topN) done = true
             }
           }
-          finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordLastScanned }
+          finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
           if (delayMs > 0) await sleep(delayMs)
         }
         // Save resume cache after every page so interrupts resume from the right position
-        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordLastScanned })
+        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
 
-        if (from >= 2000) {
-          keywordLastScanned[query] = new Date().toISOString()  // hit page cap — record completion
-          break
-        }
+        if (from >= 2000) break  // hit page cap
       }
+      // Save rolling cursor — covers exhaustion, 2000-cap, topN-reached, and error exits.
+      // Preserve startedAt (sweep origin) so TTL is measured from the first page-0 scan,
+      // not from the most-recent run.
+      keywordCursors[query] = { from, startedAt: sweepStartedAt, scannedAt: new Date().toISOString() }
 
       // Advance to the next query: flush both caches so future merges start from a current base.
       const nextQi = qi + 1
       const nextFrom = 0
-      const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom, keywordLastScanned }
+      const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom, keywordCursors }
       process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, nextState),
@@ -1355,9 +1377,9 @@ When to use --reset:
   process.stderr.write(`  ✓ all download counts fetched\n\n`)
 
   // Save final manifests to permanent store.  discoveryState carries only
-  // keywordLastScanned (no resume position) so the next run starts collection
-  // at page 0 but can skip keywords scanned recently within the TTL window.
-  await savePackageCache(pkgPath, manifests, seen, { keywordLastScanned })
+  // keywordCursors (no resume position) so the next run continues forward
+  // from the last page reached for each keyword, skipping already-walked pages.
+  await savePackageCache(pkgPath, manifests, seen, { keywordCursors })
   process.stderr.write(`  ✓ manifests saved to ${pkgPath}\n\n`)
   await fs.unlink(resumeCachePath).catch(() => {})
 
