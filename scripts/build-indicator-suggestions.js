@@ -1364,6 +1364,10 @@ When to use --reset:
   // (Network errors / circuit-open keep the name in candidates for retry instead.)
   const failedFetches = new Set()
 
+  // Weekly download counts captured from search results — avoids a separate
+  // api.npmjs.org call for every package that appeared in a search page.
+  const searchDownloads = new Map()  // name → weeklyDownloads
+
   // Deep-scan state (used by drain(DrainMode.DeepScan) and the output step).
   const deepResults = new Map()      // name → IndicatorResult[]
   const deepRefFiles = new Map()     // name → referencedFiles[]
@@ -1413,7 +1417,9 @@ When to use --reset:
           } else if (manifest) {
             const lc = extractLifecycleScripts(manifest.scripts)
             if (Object.keys(lc).length > 0) {
-              manifests.push({ ...manifest, state: 'lifecycle' })
+              const weekly = searchDownloads.get(manifest.name)
+              const state = weekly != null ? 'ready' : 'lifecycle'
+              manifests.push({ ...manifest, state, weeklyDownloads: weekly ?? 0 })
               mFound++
               newThisRun++
               if (topN > 0 && newThisRun >= topN) done = true  // stop search pages, not drain
@@ -1647,6 +1653,11 @@ When to use --reset:
         const newNames = allNames.filter(n => !seen.has(n))
         const skippedThisPage = allNames.length - newNames.length
         alreadySeenSkips += skippedThisPage
+        for (const o of page.objects) {
+          if (!seen.has(o.package.name) && o.downloads?.weekly) {
+            searchDownloads.set(o.package.name, o.downloads.weekly)
+          }
+        }
         for (const n of newNames) seen.add(n)
         const pageFrom = from   // offset this page started at (for display)
         from += allNames.length
