@@ -790,7 +790,7 @@ async function loadPackageCache (filePath) {
     const raw = JSON.parse(await fs.readFile(filePath, 'utf-8'))
     if (Array.isArray(raw)) {
       // Simple name list provided by user — seed packages to always include
-      return { names: raw, manifests: null, seen: null, discoveryState: null }
+      return { names: raw, manifests: null, seen: null, discoveryState: null, pendingCandidates: [] }
     }
     if (raw.packages && Array.isArray(raw.packages)) {
       return {
@@ -798,6 +798,7 @@ async function loadPackageCache (filePath) {
         manifests: raw.packages,
         seen: new Set(raw.seenNames || raw.packages.map(p => p.name)),
         discoveryState: raw.discoveryState || null,
+        pendingCandidates: raw.pendingCandidates || [],
       }
     }
   } catch (err) {
@@ -805,15 +806,16 @@ async function loadPackageCache (filePath) {
       process.stderr.write(`  Warning: could not read cache ${filePath}: ${err.message}\n`)
     }
   }
-  return { names: null, manifests: null, seen: null, discoveryState: null }
+  return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [] }
 }
 
-async function savePackageCache (filePath, manifests, seen, discoveryState) {
+async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = null) {
   const data = {
     generatedAt: new Date().toISOString(),
     count: manifests.length,
     discoveryState,   // { queryIndex, queryFrom } — where to resume scanning
     seenNames: [...seen], // all names already fetched (kept + rejected), avoids re-scanning
+    ...(candidates !== null && { pendingCandidates: [...candidates] }),
     packages: manifests.map(m => ({
       name: m.name,
       version: m.version,
@@ -1056,6 +1058,7 @@ When to use --reset:
         manifests: resume.manifests,
         seen: resume.seen,
         discoveryState: resume.discoveryState ?? loaded.discoveryState,
+        pendingCandidates: resume.pendingCandidates || [],
       }
       // discoveryState: null means collection was complete when tmp.json was written
       if (resume.discoveryState === null) isStep4Resume = true
@@ -1065,7 +1068,7 @@ When to use --reset:
     }
   }
 
-  const { names, manifests: cached, seen: cachedSeen, discoveryState } = loaded
+  const { names, manifests: cached, seen: cachedSeen, discoveryState, pendingCandidates: loadedCandidates = [] } = loaded
 
   // Per-keyword rolling result cursor — persisted in discoveryState so subsequent
   // runs continue FROM the last result offset rather than re-walking results 0–N.
@@ -1206,10 +1209,54 @@ When to use --reset:
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordCursors }
   let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
   let pagesFetchedTotal = 0  // global across all keywords
-  const candidates = []  // new names from search pages; manifests fetched in step 3.25
+  let pagesSinceLastDrain = 0
+  // Restore any candidates pending manifest fetch from a previous interrupted run.
+  const candidates = [...loadedCandidates]
+
+  // Drain candidates via concurrent manifest fetch (pool of 10).
+  // Saves a checkpoint to BOTH stores after drain so resume starts clean.
+  const drainCandidates = async () => {
+    if (candidates.length === 0) return
+    const todo = [...candidates]
+    candidates.length = 0  // clear so in-flight saves record empty list
+    process.stderr.write(`\n  manifests: fetching ${todo.length} candidates...\n`)
+    const mLimit = makeLimiter(10)
+    let mFetched = 0
+    let mFound = 0
+    await Promise.all(todo.map(name => mLimit(async () => {
+      if (topN > 0 && newThisRun >= topN) { done = true; return }
+      let manifest = null
+      try { manifest = await getPackageManifest(name) } catch (_) {}
+      mFetched++
+      if (manifest) {
+        const lc = extractLifecycleScripts(manifest.scripts)
+        if (Object.keys(lc).length > 0) { manifests.push(manifest); mFound++; newThisRun++ }
+      }
+      if (mFetched % 100 === 0 || mFetched === todo.length) {
+        process.stderr.write(`    [${mFetched}/${todo.length}] checked, ${mFound} with lifecycle scripts\n`)
+        await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
+      }
+    })))
+    const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
+    process.stderr.write(`    ✓ +${mFound} new (${manifests.length} in store, ${hitRate}% hit rate)\n`)
+    // Checkpoint to both stores before next search refill
+    await Promise.all([
+      savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates),
+      savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
+    ])
+    process.stderr.write(`    checkpoint saved — ready to refill\n`)
+    pagesSinceLastDrain = 0
+  }
+
+  // Drain any candidates left pending from a previous interrupted run before searching more.
+  if (candidates.length > 0 && !done) {
+    process.stderr.write(`Step 3.25/5: Resuming ${candidates.length} pending candidates from previous run...\n`)
+    await drainCandidates()
+    process.stderr.write('\n')
+  }
 
   while (!done) {
-    const newAtPassStart = candidates.length  // detect a pass with zero new candidates → stop
+    const newAtPassStart = manifests.length  // detect a pass with no new lifecycle packages
 
     for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
       const query = DISCOVERY_QUERIES[qi]
@@ -1292,7 +1339,7 @@ When to use --reset:
           ` | ${candidates.length} candidates, ${manifests.length} in store\n`
         )
         process.stderr.write(`    saving checkpoint...\r`)
-        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
+        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }, candidates)
         process.stderr.write(`                       \r`)  // clear the saving line
 
         // Dry page: all results were already in seen-set — no new names to fetch.
@@ -1308,6 +1355,12 @@ When to use --reset:
             )
             break
           }
+        }
+
+        // Drain every 2 search pages so manifests are fetched incrementally.
+        pagesSinceLastDrain++
+        if (pagesSinceLastDrain >= 2 && candidates.length > 0 && !done) {
+          await drainCandidates()
         }
 
         if (from >= sweepStartOffset + 2000) break  // scanned 2000 results this run for this keyword
@@ -1326,67 +1379,29 @@ When to use --reset:
       const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom, keywordCursors }
       process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
       await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, nextState),
+        savePackageCache(resumeCachePath, manifests, seen, nextState, candidates),
         savePackageCache(pkgPath, manifests, seen, nextState),
       ])
     }
 
     if (!done) {
-      if (candidates.length === newAtPassStart) {
-        // Full pass with no new candidates — all keywords are truly exhausted
+      if (manifests.length === newAtPassStart && candidates.length === 0) {
+        // Full pass with no new lifecycle packages and no pending candidates — exhausted
         process.stderr.write(`  all keywords exhausted with no new candidates — stopping\n`)
         break
       }
-      // Found new candidates; wrap around and try all keywords again
-      process.stderr.write(`  wrapping around keyword list (${candidates.length} candidates so far)...\n`)
+      // Found new packages; wrap around and try all keywords again
+      process.stderr.write(`  wrapping around keyword list (${manifests.length} in store so far)...\n`)
       passStartIndex = 0
       resumeQueryFrom = 0  // reset so next pass starts each keyword from the top
     }
   }
   process.stderr.write(
-    `\n  ✓ search phase complete: ${scanned.toLocaleString()} names examined this run` +
-    ` → ${candidates.length} new candidates queued for manifest fetch\n` +
-    `     ${seen.size.toLocaleString()} unique names in seen-set total\n\n`
+    `\n  ✓ search complete: ${scanned.toLocaleString()} names examined this run` +
+    ` (${seen.size.toLocaleString()} unique in seen-set)\n`
   )
-
-  // ---------------------------------------------------------------------------
-  // Step 3.25: Fetch manifests for all search candidates and filter to those
-  // with lifecycle scripts. Runs concurrently (pool of 10) after the search
-  // phase so per-page search isn't serialized against per-package manifest fetches.
-  // ---------------------------------------------------------------------------
-  if (candidates.length > 0) {
-    process.stderr.write(`Step 3.25/5: Fetching manifests for ${candidates.length} candidates...\n`)
-    const mLimit = makeLimiter(10)
-    let mFetched = 0
-    let mFound = 0
-
-    await Promise.all(candidates.map(name => mLimit(async () => {
-      if (topN > 0 && newThisRun >= topN) return  // already hit target
-      let manifest = null
-      try {
-        manifest = await getPackageManifest(name)
-      } catch (_) {}
-      mFetched++
-      if (manifest) {
-        const lc = extractLifecycleScripts(manifest.scripts)
-        if (Object.keys(lc).length > 0) {
-          manifests.push(manifest)
-          mFound++
-          newThisRun++
-        }
-      }
-      if (mFetched % 100 === 0 || mFetched === candidates.length) {
-        process.stderr.write(`  [${mFetched}/${candidates.length}] fetched, ${mFound} with lifecycle scripts\n`)
-        await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState)
-      }
-    })))
-
-    const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
-    process.stderr.write(
-      `  ✓ ${mFound} new packages with lifecycle scripts` +
-      ` (${manifests.length} total in store, ${hitRate}% hit rate)\n\n`
-    )
-  }
+  if (candidates.length > 0) await drainCandidates()
+  else process.stderr.write('\n')
 
   // ---------------------------------------------------------------------------
   // Step 3.5: Scoped → unscoped peer expansion.
