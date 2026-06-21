@@ -1453,7 +1453,14 @@ When to use --reset:
     // Collects ALL discovered package names from require() BFS — no filtering.
     // Caller dedupes and adds new names to candidates after the drain.
     } else if (mode === DrainMode.DeepFetch) {
-      const fetchQueue = [...manifests]
+      // Sort: packages without a cache dir (need network fetch) come first so
+      // workers spend time on real work while cached packages fill the tail.
+      const safeDirs = manifests.map(m => path.join(deepDir, m.name.replace(/\//g, '__')))
+      const cached = await Promise.all(safeDirs.map(d => fs.access(d).then(() => true, () => false)))
+      const fetchQueue = [
+        ...manifests.filter((_, i) => !cached[i]),
+        ...manifests.filter((_, i) =>  cached[i]),
+      ]
       const startCount = fetchQueue.length
       if (startCount === 0) return
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
