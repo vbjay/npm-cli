@@ -910,7 +910,6 @@ Options:
   --reset            Delete both cache files and the deep cache dir; start fresh
   --deep             Fetch indicator files from unpkg and run the production scanner
                      (cached by name@version in *.deep/ next to --out)
-  --notify-pages <n> Pages between checkpoint saves and stats output     (default: 2 = every 500 results)
   --page-size <n>    Results per search page, 1–250 (default: 250 = npm registry max)
   --search-ttl <h>   Hours before the per-keyword result cursor resets to offset 0 (default: 168 = 7 days)
                      Within the TTL window each keyword continues from the last result offset reached.
@@ -974,7 +973,6 @@ When to use --reset:
 
   const doReset = args.includes('--reset')
   const deepMode = args.includes('--deep')
-  const notifyPages = +flag('--notify-pages', 2)  // checkpoint + stats every N pages (default 2 = 500 seen)
   const pageSize = Math.min(250, Math.max(1, +flag('--page-size', 250)))  // results per npm search request (max 250)
   const searchTtlHours = args.includes('--search-ttl') ? parseFloat(flag('--search-ttl', DEFAULT_CURSOR_TTL_HOURS)) : DEFAULT_CURSOR_TTL_HOURS
   const searchTtlMs = searchTtlHours * 60 * 60 * 1000
@@ -1261,6 +1259,7 @@ When to use --reset:
           `&size=${pageSize}&from=${from}`
 
         let page
+        const fetchStart = Date.now()
         try {
           page = await fetchJson(url)
         } catch (err) {
@@ -1271,16 +1270,19 @@ When to use --reset:
           process.stderr.write(`  ⚠️  error fetching ${query}: ${err.message} — skipping to next keyword\n`)
           break
         }
+        const fetchMs = Date.now() - fetchStart
         if (!page || !page.objects || page.objects.length === 0) break  // exhausted
 
         const allNames = page.objects.map(o => o.package.name)
         const newNames = allNames.filter(n => !seen.has(n))
-        alreadySeenSkips += allNames.length - newNames.length
+        const skippedThisPage = allNames.length - newNames.length
+        alreadySeenSkips += skippedThisPage
         for (const n of newNames) seen.add(n)
         from += allNames.length
         pagesFetchedTotal++
 
         const newBeforePage = newThisRun
+        const scanStart = Date.now()
         for (const name of newNames) {
           if (done) break
           let manifest = null
@@ -1305,10 +1307,19 @@ When to use --reset:
           finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
           if (delayMs > 0) await sleep(delayMs)
         }
+        const scanMs = Date.now() - scanStart
+
+        const newThisPage = newThisRun - newBeforePage
+        process.stderr.write(
+          `    p${pagesFetchedTotal} offset=${from} fetch=${fetchMs}ms scan=${scanMs}ms` +
+          ` | +${newThisPage} scripts, ${skippedThisPage} seen-skips` +
+          ` | ${newThisRun}/${topN} total scripts, ${manifests.length} in store\n`
+        )
+        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
 
         // Track consecutive dry pages (no new lifecycle-script packages found).
         // High-offset spam zones return many packages with no scripts — bail early.
-        if (newThisRun > newBeforePage) {
+        if (newThisPage > 0) {
           dryPageStreak = 0
         } else {
           dryPageStreak++
@@ -1319,16 +1330,6 @@ When to use --reset:
             )
             break
           }
-        }
-
-        // Every notifyPages pages (global across all keywords): checkpoint + stats
-        if (pagesFetchedTotal % notifyPages === 0) {
-          await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
-          process.stderr.write(
-            `    [${query}] page ${pagesFetchedTotal} total (offset=${from}) | ` +
-            `${scanned} fetched | ${newThisRun}/${topN} with scripts | ` +
-            `${alreadySeenSkips} already-seen skips | ${manifests.length} in store\n`
-          )
         }
 
         if (from >= sweepStartOffset + 2000) break  // scanned 2000 results this run for this keyword
