@@ -89,6 +89,15 @@ const DrainMode = Object.freeze({
   DeepScan:   'DeepScan',
 })
 
+// Null byte at position 0 causes SyntaxError in all Node.js versions, preventing
+// accidental execution of cached JS files while leaving text content intact for
+// static analysis (regex matching is unaffected).
+const DEFANG_HEADER = Buffer.from('\x00/* DEFANGED: static-analysis cache — do not execute */\n')
+const JS_RE = /\.(m?js|cjs)$/i
+function defangBuf (relPath, buf) {
+  return JS_RE.test(relPath) ? Buffer.concat([DEFANG_HEADER, buf]) : buf
+}
+
 function makeLimiter (max, delayMs = 0) {
   let running = 0
   const queue = []
@@ -169,7 +178,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     if (!buf) return false
     const dest = path.join(pkgCacheDir, ...relPosix.split('/'))
     await fs.mkdir(path.dirname(dest), { recursive: true })
-    await fs.writeFile(dest, buf)
+    await fs.writeFile(dest, defangBuf(relPosix, buf))
     fetchedFiles.push(relPosix)
     return true
   }
@@ -257,9 +266,9 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       if (!buf) continue
       const dest = path.join(pkgDir, ...candidate.split('/'))
       await fs.mkdir(path.dirname(dest), { recursive: true })
-      await fs.writeFile(dest, buf)
+      await fs.writeFile(dest, defangBuf(candidate, buf))
       try {
-        const content = buf.toString('utf8')
+        const content = buf.toString('utf8')  // parse original for refs before defanging
         const localRefs = findLocalRefs(content)
         const fileDir = path.dirname(dest)
         await Promise.all(localRefs.map(async (ref) => {
@@ -273,7 +282,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
             if (!buf2) continue
             const dest2 = path.join(pkgDir, ...(`${relPosix}${ext}`).split('/'))
             await fs.mkdir(path.dirname(dest2), { recursive: true })
-            await fs.writeFile(dest2, buf2)
+            await fs.writeFile(dest2, defangBuf(relPosix + ext, buf2))
             break
           }
         }))
