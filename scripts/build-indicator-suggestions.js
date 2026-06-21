@@ -1625,41 +1625,52 @@ When to use --reset:
   // For every scoped package @scope/pkgname already in the store, also try the
   // unscoped name `pkgname` in case a separate unscoped package exists.
   // Example: @fortawesome/react-native-fontawesome → also try react-native-fontawesome.
+  // Uses the same worker-pool pattern as the manifest drain.
   // ---------------------------------------------------------------------------
   {
     process.stderr.write('Step 3.5/5: Expanding scoped packages with unscoped peers...\n')
 
-    const peersToTry = new Set()
-
+    const peerQueue = []
     for (const m of manifests) {
       if (m.name.startsWith('@')) {
         const bare = m.name.replace(/^@[^/]+\//, '')
-        if (!seen.has(bare)) peersToTry.add(bare)
+        if (!seen.has(bare)) { seen.add(bare); peerQueue.push(bare) }
       }
     }
 
-    process.stderr.write(`  ${peersToTry.size} unscoped peer names to probe\n`)
-    let peerAdded = 0
-    for (const name of peersToTry) {
-      seen.add(name)
-      const manifest = await getPackageManifest(name)
-      if (manifest) {
-        const lc = extractLifecycleScripts(manifest.scripts)
-        if (Object.keys(lc).length > 0) {
-          manifests.push(manifest)
-          peerAdded++
-          newThisRun++
+    const startCount = peerQueue.length
+    process.stderr.write(`\n  peers: fetching ${startCount} unscoped candidates...\n`)
+    let pFetched = 0
+    let pAdded = 0
+
+    const peerWorker = async (workerIndex) => {
+      await sleep(workerIndex * MANIFEST_DELAY_MS)
+      while (true) {
+        const name = peerQueue.shift()
+        if (name === undefined) break
+        await sleep(MANIFEST_DELAY_MS)
+        const manifest = await getPackageManifest(name).catch(() => null)
+        if (manifest) {
+          const lc = extractLifecycleScripts(manifest.scripts)
+          if (Object.keys(lc).length > 0) {
+            manifests.push({ ...manifest, state: 'lifecycle' })
+            pAdded++
+            newThisRun++
+          }
+        }
+        pFetched++
+        if (pFetched % DRAIN_CHECKPOINT_EVERY === 0 || pFetched === startCount) {
+          process.stderr.write(`    [${pFetched}/${startCount}] checked, ${pAdded} new\n`)
+          await Promise.all([
+            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+          ])
         }
       }
-      if (delayMs > 0) await sleep(delayMs)
     }
-    if (peerAdded > 0) {
-      await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState),
-        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
-      ])
-    }
-    process.stderr.write(`  ✓ peer expansion: ${peerAdded} new packages added (${manifests.length} total)\n\n`)
+
+    await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => peerWorker(i)))
+    process.stderr.write(`  ✓ peer expansion: +${pAdded} of ${pFetched} peers (${manifests.length} total)\n\n`)
   }
 
   // ---------------------------------------------------------------------------
