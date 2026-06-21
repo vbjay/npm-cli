@@ -1608,6 +1608,7 @@ When to use --reset:
       withLifecycleScripts: manifests.length,
       matchedByExistingDefinitions: Object.values(categorized).flat().length,
       uncategorizedBuildPackages: uncategorized.length,
+      lifecycleOnlyNoBuildHint: manifests.length - Object.values(categorized).flat().length - uncategorized.length,
     },
     // How well each existing definition matches real packages
     existingDefinitionCoverage: Object.fromEntries(
@@ -1627,6 +1628,7 @@ When to use --reset:
 
   await fs.writeFile(outPath, JSON.stringify(output, null, 2) + '\n', 'utf-8')
 
+  const noBuildHint = manifests.length - Object.values(categorized).flat().length - uncategorized.length
   process.stderr.write(`\n✅ Done!\n`)
   process.stderr.write(`   New this run:         ${newThisRun}\n`)
   if (deepNewPkgs > 0) {
@@ -1634,7 +1636,8 @@ When to use --reset:
   }
   process.stderr.write(`   With lifecycle scripts: ${manifests.length} (of ${seen.size.toLocaleString()} total examined)\n`)
   process.stderr.write(`   Covered by existing indicator defs: ${output.coverage.matchedByExistingDefinitions} (of ${manifests.length} with lifecycle scripts)\n`)
-  process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages}\n`)
+  process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages} (have build hint, no matching indicator)\n`)
+  process.stderr.write(`   Lifecycle-only (no build hint): ${noBuildHint} (postinstall/setup scripts, not native builders)\n`)
   process.stderr.write(`   Pattern gaps found:   ${commandPatternGaps.length}\n`)
   process.stderr.write(`\n   Written to: ${outPath}\n\n`)
 }
