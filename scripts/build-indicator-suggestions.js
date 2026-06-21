@@ -1403,6 +1403,7 @@ When to use --reset:
   // Drain any candidates left pending from a previous interrupted run before searching more.
   if (candidates.length > 0 && !done) {
     process.stderr.write(`Step 3.25/5: Resuming ${candidates.length} pending candidates from previous run...\n`)
+    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
     await drainCandidates()
     process.stderr.write('\n')
   }
@@ -1517,6 +1518,9 @@ When to use --reset:
         // Drain every 2 search pages so manifests are fetched incrementally.
         pagesSinceLastDrain++
         if (pagesSinceLastDrain >= 2 && candidates.length > 0 && !done) {
+          // Pre-drain checkpoint: record current candidates + search offsets before drain starts.
+          finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
+          await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
           await drainCandidates()
         }
 
@@ -1557,8 +1561,10 @@ When to use --reset:
     `\n  ✓ search complete: ${scanned.toLocaleString()} names examined this run` +
     ` (${seen.size.toLocaleString()} unique in seen-set)\n`
   )
-  if (candidates.length > 0) await drainCandidates()
-  else process.stderr.write('\n')
+  if (candidates.length > 0) {
+    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
+    await drainCandidates()
+  } else process.stderr.write('\n')
 
   // ---------------------------------------------------------------------------
   // Step 3.5: Scoped → unscoped peer expansion.
