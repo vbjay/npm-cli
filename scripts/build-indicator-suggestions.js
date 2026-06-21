@@ -16,6 +16,97 @@
 //
 // The script uses only public npm registry APIs — no authentication needed.
 // Expect ~5–10 minutes for 1 000 packages at the default delay.
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// DEEP-SCAN CACHE SECURITY / FILE DEFANGING
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// When --deep is passed, the script downloads source files from arbitrary npm
+// packages via unpkg.com and writes them to a local cache directory (*.deep/).
+// These files are NEVER executed — they are only read as plain text for static
+// analysis (regex pattern matching).
+//
+// However, having unmodified third-party scripts on disk creates a risk surface:
+// an editor, shell auto-completion, accidental double-click, or a future tool
+// could inadvertently execute one of them.  To mitigate this, every downloaded
+// file is "defanged" before being written — its content is modified so that any
+// attempt to run it fails immediately, while leaving the text intact for analysis.
+//
+// Defanging strategy by file type:
+//
+//   JavaScript / TypeScript  (.js .mjs .cjs .ts .mts .cts)
+//     A null byte (0x00) is prepended as the very first byte.  Node.js throws
+//     SyntaxError: Invalid or unexpected token on any null-byte source file,
+//     regardless of version, before a single line of application code runs.
+//     Any existing shebang line is replaced with #!/usr/bin/env false so that
+//     direct invocation (./script.js) also fails at the OS level.
+//
+//   Shell scripts  (.sh .bash .zsh .ksh .fish; extensionless with #! shebang)
+//     The shebang on line 1 is overwritten with:
+//       #!/usr/bin/env false  # DEFANGED: static-analysis cache — do not execute
+//     'false' is a POSIX standard utility that exits 1 immediately.  The kernel
+//     calls it as the interpreter before any shell code is parsed.  An explicit
+//     'exit 1' is also injected on the next line to handle 'sh file.sh' invocation
+//     (which bypasses the shebang).
+//
+//   Windows batch  (.bat .cmd)
+//     '@exit /b 1' is prepended (prefixed by a @rem comment), causing CMD/COMMAND
+//     to exit before executing any commands in the file.
+//
+//   PowerShell  (.ps1 .psm1 .psd1)
+//     A 'throw' statement is injected at the top.  The shebang-overwrite prefix is
+//     also prepended (# is a comment in PS, so it is harmless but visible).
+//
+//   Python  (.py .pyw; extensionless with python shebang)
+//     Shebang overwritten to #!/usr/bin/env false; 'import sys; sys.exit()' is
+//     injected on the next executable line.
+//
+//   Ruby  (.rb; extensionless with ruby shebang)
+//     Shebang overwritten; 'abort' injected.
+//
+//   Perl  (.pl .pm; extensionless with perl shebang)
+//     Shebang overwritten; 'die' injected.
+//
+//   Makefile  (Makefile GNUmakefile BSDmakefile .mk .make)
+//     Common targets (all install build clean test configure) are overridden at
+//     the top of the file with a '.PHONY' declaration + single-line recipe that
+//     exits 1.  '.DEFAULT' is also set to exit 1.  Running 'make' in the cache
+//     directory therefore immediately exits without building anything.
+//
+//   Gradle  (.gradle .gradle.kts)
+//     A Groovy 'throw new Exception(...)' is injected at the top so the Gradle
+//     daemon bails before evaluating any project configuration.
+//
+//   GYP / GYPI  (.gyp .gypi)
+//     A Python-style '#' comment is prepended marking the file as defanged.
+//     GYP files are pure data (parsed by node-gyp), not directly executable;
+//     the comment makes intent clear without affecting static analysis.
+//
+//   Extensionless files  (any file with no extension)
+//     Content-sniffed: if a shebang is present, the interpreter is identified
+//     (node → JS defang, python/ruby/perl → language defang, other → exit 1).
+//     If no shebang but JS patterns are detected ("use strict", module.exports,
+//     var/const/let at the start, etc.), the null-byte JS defang is applied.
+//
+//   Unknown extensions with JS content
+//     Same content-sniff as extensionless files.  Catches packages like
+//     underscore-contrib that publish modules as .arity, .builders, .selectors, etc.
+//
+//   Binary executables  (MZ/ELF/Mach-O magic bytes — .exe .dll .node .so etc.)
+//     Skipped entirely — not written to disk.  A warning is printed.
+//
+// Execute-permission stripping (non-Windows):
+//   After every write, fs.chmod(dest, 0o444) removes all execute bits from the
+//   file.  This means './script.sh' fails even if the content defang were somehow
+//   bypassed.  On Windows the chmod is skipped (no Unix execute-bit concept);
+//   content defanging is the primary protection there.
+//
+// Cache invalidation:
+//   DEEP_CACHE_SCHEMA encodes the active defanging scheme.  When it is bumped,
+//   the schemaVersion field in every .meta.json no longer matches, causing all
+//   existing cached files to be re-downloaded with the new defanging applied.
+//   Current value: 'defang-v4'.
+//
 
 'use strict'
 
