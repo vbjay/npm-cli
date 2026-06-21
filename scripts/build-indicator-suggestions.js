@@ -1356,53 +1356,53 @@ When to use --reset:
   // (Network errors / circuit-open keep the name in candidates for retry instead.)
   const failedFetches = new Set()
 
-  // Drain candidates via a worker-pool: MANIFEST_CONCURRENCY workers each pull
-  // the next name from the shared candidates array via shift() — JavaScript's
-  // single-threaded event loop makes shift() atomic so two workers can never
-  // claim the same package. Workers are staggered by MANIFEST_DELAY_MS on
-  // startup to spread requests across time rather than hitting in synchronized bursts.
-  const drainCandidates = async () => {
-    if (candidates.length === 0) return
-    const startCount = candidates.length
-    // Pre-drain checkpoint: snapshot candidates + search position before any fetches.
-    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
-    process.stderr.write(`\n  manifests: fetching ${startCount} candidates...\n`)
-    let mFetched = 0
-    let mFound = 0
-    let circuitTripped = false
-    const networkRetry = []  // names that hit transient network errors — pushed back after drain
+  // Deep-scan state (used by drain('DeepScan') and the output step).
+  const deepResults = new Map()      // name → IndicatorResult[]
+  const deepRefFiles = new Map()     // name → referencedFiles[]
+  const deepFetchedFiles = new Map() // name → fetchedFiles[]
+  let deepNewPkgs = 0
 
-    const worker = async (workerIndex) => {
-      // Initial stagger so workers spread across time rather than bursting together.
-      await sleep(workerIndex * MANIFEST_DELAY_MS)
+  // Worker-pool drain — mode selects what to fetch:
+  //   drain('Candidates') — fetch manifests for candidate names, populate manifests[]
+  //   drain('Counts')     — fetch weekly download counts for lifecycle-state manifests
+  //   drain('DeepScan')   — deep-scan manifests via unpkg, populate deepResults maps
+  // All modes use MANIFEST_CONCURRENCY workers staggered by MANIFEST_DELAY_MS.
+  const drain = async (mode) => {
+    // ── Candidates mode ────────────────────────────────────────────────────
+    if (mode === 'Candidates') {
+      if (candidates.length === 0) return
+      const startCount = candidates.length
+      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
+      process.stderr.write(`\n  Candidates: fetching ${startCount}...\n`)
+      let mFetched = 0
+      let mFound = 0
+      let circuitTripped = false
+      const networkRetry = []
 
-      while (!circuitTripped) {
-        const name = candidates.shift()  // atomic pop — no other worker can claim this name
-        if (name === undefined) break
+      const worker = async (workerIndex) => {
+        await sleep(workerIndex * MANIFEST_DELAY_MS)
+        while (!circuitTripped) {
+          const name = candidates.shift()
+          if (name === undefined) break
+          await sleep(MANIFEST_DELAY_MS)
 
-        await sleep(MANIFEST_DELAY_MS)  // per-fetch delay to maintain stagger as workers converge
-
-        let manifest = null
-        let fetchErr = null
-        try {
-          manifest = await getPackageManifest(name)
-        } catch (err) {
-          if (err.isCircuitOpen) { circuitTripped = true; candidates.unshift(name); break }
-          fetchErr = err
-        }
-
-        if (fetchErr) {
-          if (fetchErr.statusCode) {
-            // Real HTTP error (4xx/5xx after all retries) — mark as failed, retry next run
-            failedFetches.add(name)
-            process.stderr.write(`  ✗ HTTP ${fetchErr.statusCode} ${name} — marked failed\n`)
-          } else {
-            // Network/timeout error — push back to retry after drain
-            networkRetry.push(name)
+          let manifest = null
+          let fetchErr = null
+          try {
+            manifest = await getPackageManifest(name)
+          } catch (err) {
+            if (err.isCircuitOpen) { circuitTripped = true; candidates.unshift(name); break }
+            fetchErr = err
           }
-        } else {
-          // Successful fetch (200 or 404) — only add to manifests if topN not yet hit
-          if (!done && manifest) {
+
+          if (fetchErr) {
+            if (fetchErr.statusCode) {
+              failedFetches.add(name)
+              process.stderr.write(`  ✗ HTTP ${fetchErr.statusCode} ${name} — marked failed\n`)
+            } else {
+              networkRetry.push(name)
+            }
+          } else if (!done && manifest) {
             const lc = extractLifecycleScripts(manifest.scripts)
             if (Object.keys(lc).length > 0) {
               manifests.push({ ...manifest, state: 'lifecycle' })
@@ -1411,56 +1411,156 @@ When to use --reset:
               if (topN > 0 && newThisRun >= topN) done = true
             }
           }
-        }
 
-        mFetched++
-        if (mFetched % DRAIN_CHECKPOINT_EVERY === 0) {
-          process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
-          await Promise.all([
-            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-          ])
+          mFetched++
+          if (mFetched % DRAIN_CHECKPOINT_EVERY === 0) {
+            process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
+            await Promise.all([
+              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+            ])
+          }
         }
       }
-    }
 
-    await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
+      await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
+      for (const name of networkRetry) candidates.push(name)
+      process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
 
-    // Restore network-error names to candidates so they're retried next run.
-    for (const name of networkRetry) candidates.push(name)
+      const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
+      const failLine = failedFetches.size > 0 ? `, ${failedFetches.size} failed — retry next run` : ''
+      const retryLine = networkRetry.length > 0 ? `, ${networkRetry.length} network errors — kept for retry` : ''
 
-    process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
+      if (circuitTripped) {
+        process.stderr.write(
+          `  ⚡ circuit breaker tripped during Candidates drain — checkpointing\n` +
+          `     ${candidates.length} candidates remain for next run\n`
+        )
+        await Promise.all([
+          savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+          savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+        ])
+        process.stderr.write(`  checkpoint saved — re-run to continue\n`)
+        process.exit(0)
+      }
 
-    const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
-    const failLine = failedFetches.size > 0 ? `, ${failedFetches.size} failed — retry next run` : ''
-    const retryLine = networkRetry.length > 0 ? `, ${networkRetry.length} network errors — kept for retry` : ''
-
-    if (circuitTripped) {
-      process.stderr.write(
-        `  ⚡ circuit breaker tripped during manifest fetch — checkpointing and stopping\n` +
-        `     ${candidates.length} candidates remain for next run\n`
-      )
+      process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate${failLine}${retryLine})\n`)
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
         savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
       ])
-      process.stderr.write(`  checkpoint saved — re-run to continue\n`)
-      process.exit(0)
-    }
+      process.stderr.write(`    checkpoint saved — ready to refill\n`)
+      pagesSinceLastDrain = 0
 
-    process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate${failLine}${retryLine})\n`)
-    await Promise.all([
-      savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-      savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-    ])
-    process.stderr.write(`    checkpoint saved — ready to refill\n`)
-    pagesSinceLastDrain = 0
+    // ── Counts mode ────────────────────────────────────────────────────────
+    } else if (mode === 'Counts') {
+      const countQueue = downloadCountsStale
+        ? [...manifests]
+        : manifests.filter(m => m.state === 'lifecycle')
+      if (countQueue.length === 0) return
+      const startCount = countQueue.length
+
+      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
+      process.stderr.write(`\n  Counts: fetching ${startCount}...\n`)
+      let cFetched = 0
+      let cReady = 0
+
+      const worker = async (workerIndex) => {
+        await sleep(workerIndex * MANIFEST_DELAY_MS)
+        while (true) {
+          const m = countQueue.shift()
+          if (!m) break
+          await sleep(MANIFEST_DELAY_MS)
+
+          const encoded = m.name.replace(/\//g, '%2F')
+          let data = null
+          try {
+            data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${encoded}`)
+          } catch (_) {}
+
+          if (data) {
+            m.weeklyDownloads = data.downloads || 0
+            m.state = 'ready'
+            cReady++
+          }
+
+          cFetched++
+          if (cFetched % DRAIN_CHECKPOINT_EVERY === 0) {
+            process.stderr.write(`    [${cFetched}/${startCount}] fetched, ${cReady} ready\n`)
+            await Promise.all([
+              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+            ])
+          }
+        }
+      }
+
+      await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
+      process.stderr.write(`    [${cFetched}/${startCount}] fetched, ${cReady} ready\n`)
+      process.stderr.write(`    ✓ +${cReady} of ${cFetched} download counts (${manifests.filter(m => m.state === 'ready').length} ready total)\n`)
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+      ])
+      process.stderr.write(`    checkpoint saved\n`)
+
+    // ── DeepScan mode ─────────────────────────────────────────────────────
+    } else if (mode === 'DeepScan') {
+      const dsQueue = [...manifests]
+      const startCount = dsQueue.length
+      if (startCount === 0) return
+      await fs.mkdir(deepDir, { recursive: true })
+      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
+      process.stderr.write(`\n  DeepScan: scanning ${startCount}...\n`)
+      let dsFetched = 0
+      const fileLimit = makeLimiter(5)  // internal unpkg file-fetch concurrency per package
+
+      const worker = async (workerIndex) => {
+        await sleep(workerIndex * MANIFEST_DELAY_MS)
+        while (true) {
+          const manifest = dsQueue.shift()
+          if (!manifest) break
+          await sleep(MANIFEST_DELAY_MS)
+          const { results, referencedFiles, fetchedFiles, fromCache, discoveredManifests } =
+            await deepScanPackage(manifest, deepDir, fileLimit)
+          deepResults.set(manifest.name, results)
+          deepRefFiles.set(manifest.name, referencedFiles || [])
+          deepFetchedFiles.set(manifest.name, fetchedFiles || [])
+          const fileList = fetchedFiles.length > 0 ? fetchedFiles.join(', ') : '(none)'
+          process.stderr.write(`  ${manifest.name}@${manifest.version}${fromCache ? ' [cached]' : ''}: ${fileList}\n`)
+          for (const m of (discoveredManifests || [])) {
+            if (!seen.has(m.name)) {
+              seen.add(m.name)
+              const lc = extractLifecycleScripts(m.scripts)
+              if (Object.keys(lc).length > 0) { manifests.push(m); newThisRun++; deepNewPkgs++ }
+            }
+          }
+          dsFetched++
+          if (dsFetched % DRAIN_CHECKPOINT_EVERY === 0 || dsFetched === startCount) {
+            process.stderr.write(`    [${dsFetched}/${startCount}] scanned\n`)
+            await Promise.all([
+              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+            ])
+          }
+        }
+      }
+
+      await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
+      if (deepNewPkgs > 0) process.stderr.write(`  + ${deepNewPkgs} new packages via cross-package imports\n`)
+      process.stderr.write(`    ✓ ${dsFetched} deep scans complete\n`)
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+      ])
+      process.stderr.write(`    checkpoint saved\n\n`)
+    }
   }
 
   // Drain any candidates left pending from a previous interrupted run before searching more.
   if (candidates.length > 0 && !done) {
     process.stderr.write(`Step 3.25/5: Resuming ${candidates.length} pending candidates from previous run...\n`)
-    await drainCandidates()
+    await drain('Candidates')
     process.stderr.write('\n')
   }
 
@@ -1574,9 +1674,9 @@ When to use --reset:
         // Drain every 2 search pages so manifests are fetched incrementally.
         pagesSinceLastDrain++
         if (pagesSinceLastDrain >= 2 && candidates.length > 0 && !done) {
-          // Pre-drain checkpoint is inside drainCandidates() — update finalDiscoveryState first.
+          // Pre-drain checkpoint is inside drain() — update finalDiscoveryState first.
           finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
-          await drainCandidates()
+          await drain('Candidates')
         }
 
         if (from >= sweepStartOffset + 2000) break  // scanned 2000 results this run for this keyword
@@ -1617,60 +1717,55 @@ When to use --reset:
     ` (${seen.size.toLocaleString()} unique in seen-set)\n`
   )
   if (candidates.length > 0) {
-    await drainCandidates()
+    await drain('Candidates')
   } else process.stderr.write('\n')
 
   // ---------------------------------------------------------------------------
   // Step 3.5: Scoped → unscoped peer expansion.
-  // For every scoped package @scope/pkgname already in the store, also try the
-  // unscoped name `pkgname` in case a separate unscoped package exists.
-  // Example: @fortawesome/react-native-fontawesome → also try react-native-fontawesome.
-  // Uses the same worker-pool pattern as the manifest drain.
+  // For every @scope/pkg in the store, check if bare `pkg` exists on the registry.
+  // Only confirmed-existing bare names are added to candidates — avoids flooding
+  // drain with 404s for bare names that were never published.
   // ---------------------------------------------------------------------------
   {
     process.stderr.write('Step 3.5/5: Expanding scoped packages with unscoped peers...\n')
-
-    const peerQueue = []
+    const peerNames = []
     for (const m of manifests) {
       if (m.name.startsWith('@')) {
         const bare = m.name.replace(/^@[^/]+\//, '')
-        if (!seen.has(bare)) { seen.add(bare); peerQueue.push(bare) }
+        if (!seen.has(bare)) peerNames.push(bare)
       }
     }
 
-    const startCount = peerQueue.length
-    process.stderr.write(`\n  peers: fetching ${startCount} unscoped candidates...\n`)
-    let pFetched = 0
-    let pAdded = 0
+    if (peerNames.length === 0) {
+      process.stderr.write('  (no new unscoped peers to check)\n\n')
+    } else {
+      process.stderr.write(`  checking ${peerNames.length} bare names...\n`)
+      let checked = 0, found = 0
+      const checkQueue = [...peerNames]
 
-    const peerWorker = async (workerIndex) => {
-      await sleep(workerIndex * MANIFEST_DELAY_MS)
-      while (true) {
-        const name = peerQueue.shift()
-        if (name === undefined) break
-        await sleep(MANIFEST_DELAY_MS)
-        const manifest = await getPackageManifest(name).catch(() => null)
-        if (manifest) {
-          const lc = extractLifecycleScripts(manifest.scripts)
-          if (Object.keys(lc).length > 0) {
-            manifests.push({ ...manifest, state: 'lifecycle' })
-            pAdded++
-            newThisRun++
-          }
-        }
-        pFetched++
-        if (pFetched % DRAIN_CHECKPOINT_EVERY === 0 || pFetched === startCount) {
-          process.stderr.write(`    [${pFetched}/${startCount}] checked, ${pAdded} new\n`)
-          await Promise.all([
-            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-          ])
+      const worker = async (workerIndex) => {
+        await sleep(workerIndex * MANIFEST_DELAY_MS)
+        while (true) {
+          const name = checkQueue.shift()
+          if (!name) break
+          await sleep(MANIFEST_DELAY_MS)
+          const exists = await fetchJson(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`)
+            .then(() => true, () => false)
+          if (exists) { seen.add(name); candidates.push(name); found++ }
+          checked++
         }
       }
-    }
 
-    await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => peerWorker(i)))
-    process.stderr.write(`  ✓ peer expansion: +${pAdded} of ${pFetched} peers (${manifests.length} total)\n\n`)
+      await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
+      process.stderr.write(`  +${found} of ${checked} peers exist — added to candidates\n`)
+
+      if (found > 0) {
+        finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: -1, queryFrom: 0, keywordCursors }
+        await drain('Candidates')
+      } else {
+        process.stderr.write('\n')
+      }
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -1678,104 +1773,24 @@ When to use --reset:
   // follow require() refs recursively, then run the full scanner stack.
   // Results are cached by name@version in deepDir so re-runs are instant.
   // ---------------------------------------------------------------------------
-  const deepResults = new Map()      // name → IndicatorResult[]
-  const deepRefFiles = new Map()     // name → referencedFiles[]
-  const deepFetchedFiles = new Map() // name → fetchedFiles[]
-  let deepNewPkgs = 0               // packages discovered via cross-package imports
-
   if (deepMode) {
     process.stderr.write('Step 4.5/5: Deep-scanning packages via unpkg (indicator files + lifecycle scripts)...\n')
-    await fs.mkdir(deepDir, { recursive: true })
-    const limit = makeLimiter(20)
-
-    // Scan all packages; deepScanPackage returns from cache if already scanned at this version.
-    let deepDone = 0
-    await Promise.all(manifests.map(async manifest => {
-      const { results, referencedFiles, fetchedFiles, fromCache, discoveredManifests } = await deepScanPackage(manifest, deepDir, limit)
-      deepResults.set(manifest.name, results)
-      deepRefFiles.set(manifest.name, referencedFiles || [])
-        deepFetchedFiles.set(manifest.name, fetchedFiles || [])
-      deepDone++
-      const fileList = fetchedFiles.length > 0 ? fetchedFiles.join(', ') : '(none)'
-      const cacheTag = fromCache ? ' [cached]' : ''
-      process.stderr.write(`  scanning ${manifest.name}@${manifest.version}${cacheTag}: ${fileList}\n`)
-
-      // Add any newly discovered cross-package deps to the manifest store.
-      for (const m of (discoveredManifests || [])) {
-        if (!seen.has(m.name)) {
-          seen.add(m.name)
-          const lc = extractLifecycleScripts(m.scripts)
-          if (Object.keys(lc).length > 0) {
-            manifests.push(m)
-            newThisRun++
-            deepNewPkgs++
-          }
-        }
-      }
-    }))
-
-    if (deepNewPkgs > 0) {
-      process.stderr.write(`  + ${deepNewPkgs} new packages discovered via cross-package imports\n`)
-      await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState),
-        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
-      ])
-    }
-    process.stderr.write(`\n  ✓ deep scan complete (${deepDone} scanned)\n\n`)
+    await drain('DeepScan')
   }
 
-  // Fetch weekly download counts only for the packages we kept.
-  // Skip packages that already have download counts from a previous run
-  // (weeklyDownloads > 0 means they were fetched before) — unless the
-  // search TTL expired or was disabled, in which case popularity rankings
-  // may have shifted and all counts need a refresh.
+  // ---------------------------------------------------------------------------
+  // Step 4/5: Fetch weekly download counts.
+  // Skip packages already marked 'ready' unless TTL expired (downloadCountsStale).
+  // ---------------------------------------------------------------------------
   process.stderr.write('Step 4/5: Fetching weekly download counts...\n')
-  const needDownloads = downloadCountsStale ? manifests : manifests.filter(m => !m.weeklyDownloads)
   if (downloadCountsStale && manifests.length > 0) {
     process.stderr.write(`  (TTL expired — refreshing all ${manifests.length} download counts)\n`)
-  } else if (needDownloads.length < manifests.length) {
-    process.stderr.write(`  (${manifests.length - needDownloads.length} already cached, fetching ${needDownloads.length} new)\n`)
+    for (const m of manifests) if (m.state === 'ready') m.state = 'lifecycle'
+  } else {
+    const cached = manifests.filter(m => m.state === 'ready').length
+    if (cached > 0) process.stderr.write(`  (${cached} already cached)\n`)
   }
-
-  const dlScoped = needDownloads.filter(m => m.name.startsWith('@'))
-  const dlPlain  = needDownloads.filter(m => !m.name.startsWith('@'))
-  let dlFetched  = manifests.length - needDownloads.length  // already had counts
-
-  // Unscoped — batches of 128 (bulk endpoint max per docs; stays well under URL limits)
-  for (let i = 0; i < dlPlain.length; i += 128) {
-    const batch = dlPlain.slice(i, i + 128)
-    const url = `https://api.npmjs.org/downloads/point/last-week/${batch.map(m => m.name).join(',')}`
-    const data = await fetchJson(url)
-    if (data) {
-      for (const m of batch) m.weeklyDownloads = data[m.name]?.downloads || 0
-    }
-    dlFetched += batch.length
-    process.stderr.write(`  [${dlFetched}/${manifests.length}] download counts fetched\n`)
-    await savePackageCache(resumeCachePath, manifests, seen, null)
-    await sleep(150)
-  }
-
-  // Brief pause after unscoped batches before starting per-package scoped requests,
-  // so the API rate-limit window has time to reset.
-  if (dlScoped.length > 0 && dlPlain.length > 0) await sleep(2000)
-
-  // Scoped — one at a time (bulk endpoint does not support @scope/pkg names).
-  // 1500ms spacing (~40 req/min) stays at the observed rate-limit threshold,
-  // avoiding 30s penalty cooldowns without adding overall time.
-  for (let i = 0; i < dlScoped.length; i++) {
-    const m = dlScoped[i]
-    const encoded = m.name.replace(/\//g, '%2F')
-    const data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${encoded}`)
-    if (data) m.weeklyDownloads = data.downloads || 0
-    dlFetched++
-    if (i % 20 === 19 || i === dlScoped.length - 1) {
-      process.stderr.write(`  [${dlFetched}/${manifests.length}] download counts fetched\n`)
-      await savePackageCache(resumeCachePath, manifests, seen, null)
-    }
-    await sleep(1500)
-  }
-
-  process.stderr.write(`  ✓ all download counts fetched\n\n`)
+  await drain('Counts')
 
   // Save final manifests to permanent store.  discoveryState carries only
   // keywordCursors (no resume position) so the next run continues forward
