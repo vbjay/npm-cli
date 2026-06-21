@@ -1478,17 +1478,18 @@ When to use --reset:
 
       // Dedupe discovered names against seen + current store, add new ones to candidates
       const inStore = new Set(manifests.map(m => m.name))
-      let newFromDeep = 0
+      const newNames = []
       for (const name of new Set(allDiscovered)) {
         if (!seen.has(name) && !inStore.has(name)) {
           seen.add(name)
           candidates.push(name)
           deepNewPkgs++
-          newFromDeep++
+          newNames.push(name)
         }
       }
-      process.stderr.write(`    ✓ ${dfFetched} files fetched` +
-        (newFromDeep > 0 ? `, +${newFromDeep} new packages discovered` : '') + '\n')
+      process.stderr.write(`    ✓ ${dfFetched} fetched` +
+        (newNames.length > 0 ? `, +${newNames.length} discovered:` : ', no new packages') + '\n')
+      for (const name of newNames) process.stderr.write(`      + ${name}\n`)
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
         savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
@@ -1516,9 +1517,12 @@ When to use --reset:
             await deepAnalyzePackage(manifest, deepDir)
           deepResults.set(manifest.name, results)
           deepRefFiles.set(manifest.name, referencedFiles || [])
+          const hitCount = results?.length ?? 0
+          const tag = fromCache ? ' [cached]' : hitCount > 0 ? ` — ${hitCount} indicator(s)` : ''
+          process.stderr.write(`    ${manifest.name}@${manifest.version}${tag}\n`)
           dsFetched++
           if (dsFetched % DRAIN_CHECKPOINT_EVERY === 0 || dsFetched === startCount) {
-            process.stderr.write(`    [${dsFetched}/${startCount}] analyzed${fromCache ? ' (cached)' : ''}\n`)
+            process.stderr.write(`    [${dsFetched}/${startCount}] analyzed\n`)
           }
         }
       }
