@@ -1194,7 +1194,7 @@ When to use --reset:
 
   process.stderr.write('Steps 1–3: Scanning popular packages for lifecycle scripts...\n')
   const needToCollect = isStep4Resume ? 0 : topN - resumeMergeCount
-  process.stderr.write(`  (collecting ${needToCollect} new packages with lifecycle scripts)\n`)
+  process.stderr.write(`  (target: ${needToCollect} more packages with lifecycle scripts)\n`)
   process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n\n`)
 
   let scanned = 0
@@ -1205,10 +1205,11 @@ When to use --reset:
   let done = isStep4Resume || topN === 0
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordCursors }
   let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
-  let pagesFetchedTotal = 0  // global across all keywords — drives --notify-pages notifications
+  let pagesFetchedTotal = 0  // global across all keywords
+  const candidates = []  // new names from search pages; manifests fetched in step 3.25
 
   while (!done) {
-    const newAtPassStart = newThisRun  // detect a pass with zero new packages → stop
+    const newAtPassStart = candidates.length  // detect a pass with zero new candidates → stop
 
     for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
       const query = DISCOVERY_QUERIES[qi]
@@ -1282,55 +1283,28 @@ When to use --reset:
         from += allNames.length
         pagesFetchedTotal++
 
-        process.stderr.write(`    scanning ${newNames.length} packages (${skippedThisPage} already seen)...\r`)
-        const newBeforePage = newThisRun
-        const scanStart = Date.now()
-        for (const name of newNames) {
-          if (done) break
-          let manifest = null
-          try {
-            manifest = await getPackageManifest(name)
-          } catch (err) {
-            if (err.isRateLimit) {
-              // Cooldown set — skip this name and continue; it was already
-              // added to seen so it won't be re-fetched on a future run.
-            }
-            // else: non-429 fetch error — treat as no manifest
-          }
-          scanned++
-          if (manifest) {
-            const lc = extractLifecycleScripts(manifest.scripts)
-            if (Object.keys(lc).length > 0) {
-              manifests.push(manifest)
-              newThisRun++
-              if (newThisRun >= topN) done = true
-            }
-          }
-          finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
-          if (delayMs > 0) await sleep(delayMs)
-        }
-        const scanMs = Date.now() - scanStart
-
-        const newThisPage = newThisRun - newBeforePage
+        candidates.push(...newNames)
+        scanned += allNames.length
+        finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
         process.stderr.write(
-          `    p${pagesFetchedTotal} offset=${from} fetch=${fetchMs}ms scan=${scanMs}ms` +
-          ` | +${newThisPage} scripts, ${skippedThisPage} seen-skips` +
-          ` | ${newThisRun}/${topN} total scripts, ${manifests.length} in store\n`
+          `    p${pagesFetchedTotal} offset=${from} fetch=${fetchMs}ms` +
+          ` | +${newNames.length} new names, ${skippedThisPage} seen-skips` +
+          ` | ${candidates.length} candidates, ${manifests.length} in store\n`
         )
         process.stderr.write(`    saving checkpoint...\r`)
         await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
         process.stderr.write(`                       \r`)  // clear the saving line
 
-        // Track consecutive dry pages (no new lifecycle-script packages found).
-        // High-offset spam zones return many packages with no scripts — bail early.
-        if (newThisPage > 0) {
+        // Dry page: all results were already in seen-set — no new names to fetch.
+        // Three consecutive all-seen pages signals we're in an overlapping or spam zone.
+        if (newNames.length > 0) {
           dryPageStreak = 0
         } else {
           dryPageStreak++
           if (dryPageStreak >= 3) {
             process.stderr.write(
-              `  ⏭️  skipping ${query} after ${dryPageStreak} pages with no lifecycle scripts ` +
-              `(offset=${from}, likely low-quality results) — moving to next keyword\n`
+              `  ⏭️  skipping ${query} after ${dryPageStreak} pages with all-seen results ` +
+              `(offset=${from}, overlapping zone) — moving to next keyword\n`
             )
             break
           }
@@ -1358,23 +1332,61 @@ When to use --reset:
     }
 
     if (!done) {
-      if (newThisRun === newAtPassStart) {
-        // Full pass with no new packages — all keywords are truly exhausted
-        process.stderr.write(`  all keywords exhausted with no new packages — stopping\n`)
+      if (candidates.length === newAtPassStart) {
+        // Full pass with no new candidates — all keywords are truly exhausted
+        process.stderr.write(`  all keywords exhausted with no new candidates — stopping\n`)
         break
       }
-      // Found some new packages; wrap around and try all keywords again
-      process.stderr.write(`  wrapping around keyword list (${newThisRun}/${topN} collected so far)...\n`)
+      // Found new candidates; wrap around and try all keywords again
+      process.stderr.write(`  wrapping around keyword list (${candidates.length} candidates so far)...\n`)
       passStartIndex = 0
       resumeQueryFrom = 0  // reset so next pass starts each keyword from the top
     }
   }
-  const hitRate = scanned > 0 ? (newThisRun / scanned * 100).toFixed(1) : '0.0'
   process.stderr.write(
-    `\n  ✓ scanned ${scanned} new packages this run` +
-    ` → ${newThisRun} with lifecycle scripts (${manifests.length} with lifecycle scripts in store, ${hitRate}% hit rate)\n` +
-    `     ${seen.size.toLocaleString()} unique package names examined total (${(seen.size - manifests.length).toLocaleString()} had no lifecycle scripts)\n\n`
+    `\n  ✓ search phase complete: ${scanned.toLocaleString()} names examined this run` +
+    ` → ${candidates.length} new candidates queued for manifest fetch\n` +
+    `     ${seen.size.toLocaleString()} unique names in seen-set total\n\n`
   )
+
+  // ---------------------------------------------------------------------------
+  // Step 3.25: Fetch manifests for all search candidates and filter to those
+  // with lifecycle scripts. Runs concurrently (pool of 10) after the search
+  // phase so per-page search isn't serialized against per-package manifest fetches.
+  // ---------------------------------------------------------------------------
+  if (candidates.length > 0) {
+    process.stderr.write(`Step 3.25/5: Fetching manifests for ${candidates.length} candidates...\n`)
+    const mLimit = makeLimiter(10)
+    let mFetched = 0
+    let mFound = 0
+
+    await Promise.all(candidates.map(name => mLimit(async () => {
+      if (topN > 0 && newThisRun >= topN) return  // already hit target
+      let manifest = null
+      try {
+        manifest = await getPackageManifest(name)
+      } catch (_) {}
+      mFetched++
+      if (manifest) {
+        const lc = extractLifecycleScripts(manifest.scripts)
+        if (Object.keys(lc).length > 0) {
+          manifests.push(manifest)
+          mFound++
+          newThisRun++
+        }
+      }
+      if (mFetched % 100 === 0 || mFetched === candidates.length) {
+        process.stderr.write(`  [${mFetched}/${candidates.length}] fetched, ${mFound} with lifecycle scripts\n`)
+        await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState)
+      }
+    })))
+
+    const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
+    process.stderr.write(
+      `  ✓ ${mFound} new packages with lifecycle scripts` +
+      ` (${manifests.length} total in store, ${hitRate}% hit rate)\n\n`
+    )
+  }
 
   // ---------------------------------------------------------------------------
   // Step 3.5: Scoped → unscoped peer expansion.
