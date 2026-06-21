@@ -82,12 +82,9 @@ const DEFAULT_CURSOR_TTL_HOURS = 168  // 7 days
 
 const MANIFEST_CONCURRENCY = 5   // npm's own tooling (make-fetch-happen) uses 5 sockets
 const MANIFEST_DELAY_MS    = 150  // small inter-request stagger to avoid burst detection
-const COUNTS_CONCURRENCY   = 1    // api.npmjs.org/downloads rate-limits to ~50 req/min
-const COUNTS_DELAY_MS      = 1500  // 40 req/min — safely under the limit
 
 const DrainMode = Object.freeze({
   Candidates: 'Candidates',
-  Counts:     'Counts',
   DeepScan:   'DeepScan',
 })
 
@@ -1349,7 +1346,6 @@ When to use --reset:
 
   let scanned = 0
   let alreadySeenSkips = 0  // names already in `seen` across all pages this run — measures search redundancy
-  let downloadCountsStale = false  // true when TTL=0 or any keyword cursor expired — download counts need refresh
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
   // Skip collection if resuming step 4, or if no --top was given (topN === 0).
   let done = isStep4Resume || topN === 0
@@ -1466,73 +1462,6 @@ When to use --reset:
       process.stderr.write(`    checkpoint saved — ready to refill\n`)
       pagesSinceLastDrain = 0
 
-    // ── Counts mode ────────────────────────────────────────────────────────
-    // Bulk endpoint: up to 128 unscoped packages per request.
-    // Scoped packages (@scope/pkg) are not supported in bulk — fetched individually.
-    } else if (mode === DrainMode.Counts) {
-      const need = downloadCountsStale
-        ? [...manifests]
-        : manifests.filter(m => m.state === 'lifecycle')
-      if (need.length === 0) return
-
-      const unscoped = need.filter(m => !m.name.startsWith('@'))
-      const scoped   = need.filter(m =>  m.name.startsWith('@'))
-      const startCount = need.length
-
-      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
-      process.stderr.write(`\n  Counts: fetching ${startCount} (${unscoped.length} bulk, ${scoped.length} scoped)...\n`)
-      let cFetched = 0
-      let cReady = 0
-
-      const checkpoint = async () => {
-        process.stderr.write(`    [${cFetched}/${startCount}] fetched, ${cReady} ready\n`)
-        await Promise.all([
-          savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-          savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-        ])
-      }
-
-      // Unscoped — batches of 128
-      for (let i = 0; i < unscoped.length; i += 128) {
-        const batch = unscoped.slice(i, i + 128)
-        let data = null
-        try {
-          data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${batch.map(m => m.name).join(',')}`)
-        } catch (_) {}
-        if (data) {
-          for (const m of batch) {
-            m.weeklyDownloads = data[m.name]?.downloads || 0
-            m.state = 'ready'
-            cReady++
-          }
-        }
-        cFetched += batch.length
-        if (Math.floor(cFetched / DRAIN_CHECKPOINT_EVERY) > Math.floor((cFetched - batch.length) / DRAIN_CHECKPOINT_EVERY)) {
-          await checkpoint()
-        }
-        await sleep(COUNTS_DELAY_MS)
-      }
-
-      // Scoped — one at a time (bulk endpoint doesn't support @scope/pkg)
-      for (const m of scoped) {
-        const encoded = m.name.replace(/\//g, '%2F')
-        let data = null
-        try {
-          data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${encoded}`)
-        } catch (_) {}
-        if (data) { m.weeklyDownloads = data.downloads || 0; m.state = 'ready'; cReady++ }
-        cFetched++
-        if (cFetched % DRAIN_CHECKPOINT_EVERY === 0) await checkpoint()
-        await sleep(COUNTS_DELAY_MS)
-      }
-
-      process.stderr.write(`    ✓ +${cReady} of ${cFetched} download counts (${manifests.filter(m => m.state === 'ready').length} ready total)\n`)
-      await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-      ])
-      process.stderr.write(`    checkpoint saved\n`)
-
     // ── DeepScan mode ─────────────────────────────────────────────────────
     } else if (mode === DrainMode.DeepScan) {
       const dsQueue = [...manifests]
@@ -1623,13 +1552,11 @@ When to use --reset:
             fromLabel = ` (cursor: offset ${from} ~page ${approxPage}, sweep age ${ageH}h/${searchTtlHours}h)`
           } else {
             from = 0  // sweep expired: restart from top to catch newly-popular packages
-            sweepStartedAt = new Date().toISOString()
-            downloadCountsStale = true  // popularity rankings may have shifted
+              sweepStartedAt = new Date().toISOString()
           }
         } else {
           from = 0  // no cursor or TTL disabled (searchTtlMs === 0 forces restart)
           sweepStartedAt = new Date().toISOString()
-          if (searchTtlMs === 0) downloadCountsStale = true
         }
       }
 
@@ -1812,18 +1739,9 @@ When to use --reset:
   }
 
   // ---------------------------------------------------------------------------
-  // Step 4/5: Fetch weekly download counts.
-  // Skip packages already marked 'ready' unless TTL expired (downloadCountsStale).
+  // Step 4/5: (skipped) Weekly download counts are captured inline from
+  // search results (searchDownloads map) — no separate API call needed.
   // ---------------------------------------------------------------------------
-  process.stderr.write('Step 4/5: Fetching weekly download counts...\n')
-  if (downloadCountsStale && manifests.length > 0) {
-    process.stderr.write(`  (TTL expired — refreshing all ${manifests.length} download counts)\n`)
-    for (const m of manifests) if (m.state === 'ready') m.state = 'lifecycle'
-  } else {
-    const cached = manifests.filter(m => m.state === 'ready').length
-    if (cached > 0) process.stderr.write(`  (${cached} already cached)\n`)
-  }
-  await drain(DrainMode.Counts)
 
   // Save final manifests to permanent store.  discoveryState carries only
   // keywordCursors (no resume position) so the next run continues forward
