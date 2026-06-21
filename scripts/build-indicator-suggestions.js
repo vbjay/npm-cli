@@ -19,6 +19,7 @@
 
 'use strict'
 
+const crypto = require('crypto')
 const http = require('http')
 const https = require('https')
 const path = require('path')
@@ -90,23 +91,57 @@ function makeLimiter (max) {
 // production scanner, cache results keyed by name@version.
 // ---------------------------------------------------------------------------
 
+// Compute a short hash of all files (path relative to dir + size in bytes)
+// present inside dir, excluding .meta.json.  Sorted for determinism.
+// Used as a file-tree integrity check: if any file is added, removed, or
+// resized since the cache was written, the hash changes and the cache is
+// considered invalid.
+async function hashDirTree (dir) {
+  const entries = []
+  async function walk (current) {
+    let items
+    try { items = await fs.readdir(current, { withFileTypes: true }) } catch { return }
+    for (const item of items) {
+      const full = path.join(current, item.name)
+      if (item.isDirectory()) {
+        await walk(full)
+      } else if (item.name !== '.meta.json') {
+        const rel = path.relative(dir, full).split(path.sep).join('/')
+        const { size } = await fs.stat(full).catch(() => ({ size: 0 }))
+        entries.push(`${rel}:${size}`)
+      }
+    }
+  }
+  await walk(dir)
+  entries.sort()
+  return crypto.createHash('sha256').update(entries.join('\n')).digest('hex').slice(0, 16)
+}
+
 async function deepScanPackage (manifest, deepDir, limit) {
   const safeName = manifest.name.replace(/\//g, '__')
   const pkgCacheDir = path.join(deepDir, safeName)
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
   // Cache hit only when the package directory exists, the version matches,
-  // AND the signal schema hash matches.  A missing directory (deleted cache,
-  // partial reset, or first-time run) is treated exactly like a stale key —
-  // no error is thrown, we just fall through and re-fetch from scratch.
+  // the signal schema hash matches, AND the file tree in pkgCacheDir is
+  // unchanged (same set of files at the same sizes).
+  // A missing directory, stale key, or file-tree change all result in the
+  // same outcome: erase pkgCacheDir entirely and re-fetch from scratch.
   const dirExists = await fs.access(pkgCacheDir).then(() => true, () => false)
   if (dirExists) {
     try {
       const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
       if (meta.version === manifest.version && meta.schemaVersion === DEEP_CACHE_VERSION) {
-        return { results: meta.results, referencedFiles: meta.referencedFiles || [], fetchedFiles: meta.fetchedFiles || [], fromCache: true }
+        const currentTreeHash = await hashDirTree(pkgCacheDir)
+        if (currentTreeHash === meta.filesHash) {
+          return { results: meta.results, referencedFiles: meta.referencedFiles || [], fetchedFiles: meta.fetchedFiles || [], fromCache: true }
+        }
+        // File tree changed — fall through to full re-fetch below
+        process.stderr.write(`  🗑️  file tree changed for ${manifest.name} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
       }
     } catch { /* .meta.json missing or corrupt — treat as stale */ }
+    // Erase stale or corrupted cache dir entirely before re-fetching
+    await fs.rm(pkgCacheDir, { recursive: true, force: true })
   }
 
   await fs.mkdir(pkgCacheDir, { recursive: true })
@@ -350,7 +385,7 @@ async function deepScanPackage (manifest, deepDir, limit) {
   // Cache everything version-stamped and schema-stamped
   await fs.writeFile(
     metaPath,
-    JSON.stringify({ version: manifest.version, schemaVersion: DEEP_CACHE_VERSION, scannedAt: new Date().toISOString(), fetchedFiles, results, referencedFiles }, null, 2) + '\n'
+    JSON.stringify({ version: manifest.version, schemaVersion: DEEP_CACHE_VERSION, scannedAt: new Date().toISOString(), filesHash: await hashDirTree(pkgCacheDir), fetchedFiles, results, referencedFiles }, null, 2) + '\n'
   )
 
   return { results, referencedFiles, fetchedFiles, fromCache: false, discoveredManifests }
