@@ -1356,76 +1356,84 @@ When to use --reset:
   // (Network errors / circuit-open keep the name in candidates for retry instead.)
   const failedFetches = new Set()
 
-  // Drain candidates via concurrent manifest fetch (pool of 10).
-  // Circuit-breaker aware: if the registry opens the circuit during drain we
-  // checkpoint and bail cleanly rather than accumulating runaway backoffs.
-  // Candidates are removed from the array ONE AT A TIME as they're resolved so
-  // a crash mid-drain still has the unprocessed ones persisted in the next
-  // checkpoint (state = 'candidate').
+  // Drain candidates via a worker-pool: MANIFEST_CONCURRENCY workers each pull
+  // the next name from the shared candidates array via shift() — JavaScript's
+  // single-threaded event loop makes shift() atomic so two workers can never
+  // claim the same package. Workers are staggered by MANIFEST_DELAY_MS on
+  // startup to spread requests across time rather than hitting in synchronized bursts.
   const drainCandidates = async () => {
     if (candidates.length === 0) return
-    const todo = [...candidates]  // snapshot — do NOT clear upfront
-    // Pre-drain checkpoint: record all pending candidates + current search position
-    // so a crash mid-drain resumes from this exact snapshot.
-    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
-    process.stderr.write(`\n  manifests: fetching ${todo.length} candidates...\n`)
-    const mLimit = makeLimiter(MANIFEST_CONCURRENCY, MANIFEST_DELAY_MS)
+    const startCount = candidates.length
+    // Pre-drain checkpoint: snapshot candidates + search position before any fetches.
+    await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
+    process.stderr.write(`\n  manifests: fetching ${startCount} candidates...\n`)
     let mFetched = 0
     let mFound = 0
     let circuitTripped = false
+    const networkRetry = []  // names that hit transient network errors — pushed back after drain
 
-    await Promise.all(todo.map(name => mLimit(async () => {
-      if (circuitTripped) return
+    const worker = async (workerIndex) => {
+      // Initial stagger so workers spread across time rather than bursting together.
+      await sleep(workerIndex * MANIFEST_DELAY_MS)
 
-      let manifest = null
-      let fetchErr = null
-      try {
-        manifest = await getPackageManifest(name)
-      } catch (err) {
-        if (err.isCircuitOpen) { circuitTripped = true; return }
-        fetchErr = err
-      }
+      while (!circuitTripped) {
+        const name = candidates.shift()  // atomic pop — no other worker can claim this name
+        if (name === undefined) break
 
-      mFetched++
+        await sleep(MANIFEST_DELAY_MS)  // per-fetch delay to maintain stagger as workers converge
 
-      if (fetchErr) {
-        if (fetchErr.statusCode) {
-          // Real HTTP error (4xx/5xx after all retries) — mark as failed, retry next run
-          failedFetches.add(name)
-          const idx = candidates.indexOf(name)
-          if (idx >= 0) candidates.splice(idx, 1)
-          process.stderr.write(`  ✗ HTTP ${fetchErr.statusCode} ${name} — marked failed\n`)
+        let manifest = null
+        let fetchErr = null
+        try {
+          manifest = await getPackageManifest(name)
+        } catch (err) {
+          if (err.isCircuitOpen) { circuitTripped = true; candidates.unshift(name); break }
+          fetchErr = err
         }
-        // else: network/timeout — keep in candidates for retry this run or next
-        return
-      }
 
-      // Permanent result (manifest or 404) — remove from candidates
-      const idx = candidates.indexOf(name)
-      if (idx >= 0) candidates.splice(idx, 1)
+        if (fetchErr) {
+          if (fetchErr.statusCode) {
+            // Real HTTP error (4xx/5xx after all retries) — mark as failed, retry next run
+            failedFetches.add(name)
+            process.stderr.write(`  ✗ HTTP ${fetchErr.statusCode} ${name} — marked failed\n`)
+          } else {
+            // Network/timeout error — push back to retry after drain
+            networkRetry.push(name)
+          }
+        } else {
+          // Successful fetch (200 or 404) — only add to manifests if topN not yet hit
+          if (!done && manifest) {
+            const lc = extractLifecycleScripts(manifest.scripts)
+            if (Object.keys(lc).length > 0) {
+              manifests.push({ ...manifest, state: 'lifecycle' })
+              mFound++
+              newThisRun++
+              if (topN > 0 && newThisRun >= topN) done = true
+            }
+          }
+        }
 
-      // Only add to manifests if topN not yet hit
-      if (!done && manifest) {
-        const lc = extractLifecycleScripts(manifest.scripts)
-        if (Object.keys(lc).length > 0) {
-          manifests.push({ ...manifest, state: 'lifecycle' })
-          mFound++
-          newThisRun++
-          if (topN > 0 && newThisRun >= topN) done = true  // signal: stop fetching new pages
+        mFetched++
+        if (mFetched % DRAIN_CHECKPOINT_EVERY === 0) {
+          process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
+          await Promise.all([
+            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+          ])
         }
       }
+    }
 
-      if (mFetched % DRAIN_CHECKPOINT_EVERY === 0 || mFetched === todo.length) {
-        process.stderr.write(`    [${mFetched}/${todo.length}] checked, ${mFound} with lifecycle scripts\n`)
-        await Promise.all([
-          savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-          savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-        ])
-      }
-    })))
+    await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
+
+    // Restore network-error names to candidates so they're retried next run.
+    for (const name of networkRetry) candidates.push(name)
+
+    process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
 
     const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
     const failLine = failedFetches.size > 0 ? `, ${failedFetches.size} failed — retry next run` : ''
+    const retryLine = networkRetry.length > 0 ? `, ${networkRetry.length} network errors — kept for retry` : ''
 
     if (circuitTripped) {
       process.stderr.write(
@@ -1440,8 +1448,7 @@ When to use --reset:
       process.exit(0)
     }
 
-    process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate${failLine})\n`)
-    // Checkpoint to both stores before next search refill
+    process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate${failLine}${retryLine})\n`)
     await Promise.all([
       savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
       savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
