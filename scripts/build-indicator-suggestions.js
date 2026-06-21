@@ -1722,9 +1722,9 @@ When to use --reset:
 
   // ---------------------------------------------------------------------------
   // Step 3.5: Scoped → unscoped peer expansion.
-  // For every @scope/pkg in the store, check if bare `pkg` exists on the registry.
-  // Only confirmed-existing bare names are added to candidates — avoids flooding
-  // drain with 404s for bare names that were never published.
+  // For every @scope/pkg in the store, fetch the bare `pkg` manifest. If it
+  // exists and has lifecycle scripts, add directly to manifests[]. No double-fetch
+  // via drain — we already have the manifest from the existence check.
   // ---------------------------------------------------------------------------
   {
     process.stderr.write('Step 3.5/5: Expanding scoped packages with unscoped peers...\n')
@@ -1740,7 +1740,7 @@ When to use --reset:
       process.stderr.write('  (no new unscoped peers to check)\n\n')
     } else {
       process.stderr.write(`  checking ${peerNames.length} bare names...\n`)
-      let checked = 0, found = 0
+      let checked = 0, found = 0, lifecycle = 0
       const checkQueue = [...peerNames]
 
       const worker = async (workerIndex) => {
@@ -1749,22 +1749,28 @@ When to use --reset:
           const name = checkQueue.shift()
           if (!name) break
           await sleep(MANIFEST_DELAY_MS)
-          const exists = await fetchJson(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`)
-            .then(() => true, () => false)
-          if (exists) { seen.add(name); candidates.push(name); found++ }
+          const manifest = await fetchJson(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`)
+            .catch(() => null)
+          if (manifest) {
+            seen.add(name)
+            found++
+            const lc = extractLifecycleScripts(manifest.scripts)
+            if (Object.keys(lc).length > 0) {
+              manifests.push({ ...manifest, state: 'lifecycle' })
+              newThisRun++
+              lifecycle++
+            }
+          }
           checked++
         }
       }
 
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
-      process.stderr.write(`  +${found} of ${checked} peers exist — added to candidates\n`)
-
-      if (found > 0) {
-        finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: -1, queryFrom: 0, keywordCursors }
-        await drain('Candidates')
-      } else {
-        process.stderr.write('\n')
-      }
+      process.stderr.write(`  ✓ ${found} of ${checked} peers exist, ${lifecycle} have lifecycle scripts (+${lifecycle} in store)\n\n`)
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+      ])
     }
   }
 
