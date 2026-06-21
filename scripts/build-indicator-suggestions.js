@@ -1199,6 +1199,7 @@ When to use --reset:
 
   let scanned = 0
   let alreadySeenSkips = 0  // names already in `seen` across all pages this run — measures search redundancy
+  let downloadCountsStale = false  // true when TTL=0 or any keyword cursor expired — download counts need refresh
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
   // Skip collection if resuming step 4, or if no --top was given (topN === 0).
   let done = isStep4Resume || topN === 0
@@ -1237,10 +1238,12 @@ When to use --reset:
           } else {
             from = 0  // sweep expired: restart from top to catch newly-popular packages
             sweepStartedAt = new Date().toISOString()
+            downloadCountsStale = true  // popularity rankings may have shifted
           }
         } else {
-          from = 0  // no cursor or TTL disabled
+          from = 0  // no cursor or TTL disabled (searchTtlMs === 0 forces restart)
           sweepStartedAt = new Date().toISOString()
+          if (searchTtlMs === 0) downloadCountsStale = true
         }
       }
 
@@ -1441,8 +1444,15 @@ When to use --reset:
 
   // Fetch weekly download counts only for the packages we kept.
   // Skip packages that already have download counts from a previous run
-  // (weeklyDownloads > 0 means they were fetched before).
+  // (weeklyDownloads > 0 means they were fetched before) — unless the
+  // search TTL expired or was disabled, in which case popularity rankings
+  // may have shifted and all counts need a refresh.
   process.stderr.write('Step 4/5: Fetching weekly download counts...\n')
+  if (downloadCountsStale) {
+    const hadCounts = manifests.filter(m => m.weeklyDownloads > 0).length
+    for (const m of manifests) m.weeklyDownloads = 0
+    if (hadCounts > 0) process.stderr.write(`  (TTL expired — refreshing all ${hadCounts} cached download counts)\n`)
+  }
   const needDownloads = manifests.filter(m => !m.weeklyDownloads)
   if (needDownloads.length < manifests.length) {
     process.stderr.write(`  (${manifests.length - needDownloads.length} already cached, fetching ${needDownloads.length} new)\n`)
