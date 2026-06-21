@@ -526,6 +526,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 const CIRCUIT_OPEN_THRESHOLD = 4  // waves before circuit opens (~30+60+120+240 = 7.5 min max)
 const MAX_BACKOFF_MS = 120_000    // cap individual backoff at 2 min (not 5)
+const DRAIN_CHECKPOINT_EVERY = 50 // checkpoint to both stores every N manifest resolutions
 
 let _cooldownUntil = 0
 let _consecutiveRateLimits = 0
@@ -698,9 +699,13 @@ async function fetchJson (url, retries = 5) {
         throw new Error(`JSON parse error for ${url}: ${e.message}`)
       }
     }
-    // Other error status
+    // Other error status — attach statusCode so callers can distinguish HTTP failures from network errors
     process.stderr.write(`  ⚠️  HTTP ${statusCode} (json) attempt ${attempt}/${retries} ${url}\n`)
-    if (attempt === retries) throw new Error(`HTTP ${statusCode} for ${url}`)
+    if (attempt === retries) {
+      const err = new Error(`HTTP ${statusCode} for ${url}`)
+      err.statusCode = statusCode
+      throw err
+    }
     await sleep(500 * attempt)
   }
 }
@@ -848,14 +853,16 @@ function suggestSignal (tokens, inferredFiles) {
 
 // Package state machine:
 //   candidate  → name found in search, manifest not yet fetched
-//   seen       → manifest fetched, no lifecycle scripts (or fetch failed)
+//   failed     → manifest fetch returned 4xx/5xx after all retries; retry next run
+//   seen       → manifest fetched, no lifecycle scripts (confirmed)
 //   lifecycle  → has lifecycle scripts, download count not yet fetched
 //   ready      → has lifecycle scripts + download count fetched (complete)
 //
 // Save format:
 //   seenOnlyNames: string[]     — compact list of 'seen' names (no lifecycle data)
-//   packages: PackageEntry[]    — candidate | lifecycle | ready entries with state field
+//   packages: PackageEntry[]    — candidate | failed | lifecycle | ready entries with state field
 //
+// 'failed' entries are reloaded as candidates on the next run for retry.
 // The snapshot in savePackageCache is built synchronously before any await so
 // concurrent closures inside Promise.all cannot produce a torn state.
 
@@ -876,8 +883,8 @@ async function loadPackageCache (filePath) {
       if (hasStateField) {
         for (const entry of raw.packages) {
           seenSet.add(entry.name)
-          if (entry.state === 'candidate') {
-            pendingCandidates.push(entry.name)
+        if (entry.state === 'candidate' || entry.state === 'failed') {
+          pendingCandidates.push(entry.name)  // failed = retry as candidate next run
           } else if (entry.state === 'lifecycle' || entry.state === 'ready') {
             manifests.push(entry)
           }
@@ -919,19 +926,20 @@ async function loadPackageCache (filePath) {
 // Build snapshot synchronously before any await so concurrent Promise.all closures
 // cannot produce a torn checkpoint.  State for each package is derived from which
 // array it lives in (manifests = lifecycle|ready, candidates = candidate, rest = seen).
-async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = []) {
+async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = [], failedFetches = new Set()) {
   const candidateSet = new Set(candidates)
   const lifecycleSet = new Set(manifests.map(m => m.name))
 
-  // Non-lifecycle, non-candidate names are "seen" — store compactly as strings.
+  // Non-lifecycle, non-candidate, non-failed names are "seen" — store compactly as strings.
   const seenOnlyNames = []
   for (const name of seen) {
-    if (!lifecycleSet.has(name) && !candidateSet.has(name)) seenOnlyNames.push(name)
+    if (!lifecycleSet.has(name) && !candidateSet.has(name) && !failedFetches.has(name)) seenOnlyNames.push(name)
   }
 
-  // Packages with explicit state: candidates (name only) + lifecycle/ready (full manifest).
+  // Packages with explicit state: candidates, failed, and lifecycle/ready (full manifest).
   const packages = []
   for (const name of candidates) packages.push({ name, state: 'candidate' })
+  for (const name of failedFetches) packages.push({ name, state: 'failed' })
   for (const m of manifests) {
     packages.push({
       name: m.name,
@@ -1339,6 +1347,10 @@ When to use --reset:
   let pagesSinceLastDrain = 0
   // Restore any candidates pending manifest fetch from a previous interrupted run.
   const candidates = [...loadedCandidates]
+  // Track HTTP 4xx/5xx failures across all drains this run.
+  // Persisted as state:'failed' so the next run retries them as candidates.
+  // (Network errors / circuit-open keep the name in candidates for retry instead.)
+  const failedFetches = new Set()
 
   // Drain candidates via concurrent manifest fetch (pool of 10).
   // Circuit-breaker aware: if the registry opens the circuit during drain we
@@ -1362,23 +1374,29 @@ When to use --reset:
       if (circuitTripped) return
 
       let manifest = null
-      let transientError = false
+      let fetchErr = null
       try {
         manifest = await getPackageManifest(name)
       } catch (err) {
         if (err.isCircuitOpen) { circuitTripped = true; return }
-        transientError = true  // network/timeout — keep as candidate, retry next run
+        fetchErr = err
       }
 
       mFetched++
 
-      if (transientError) {
-        // Don't remove from candidates — persisted state keeps it for retry
-        process.stderr.write(`  ⚠️  transient error fetching ${name} — will retry next run\n`)
+      if (fetchErr) {
+        if (fetchErr.statusCode) {
+          // Real HTTP error (4xx/5xx after all retries) — mark as failed, retry next run
+          failedFetches.add(name)
+          const idx = candidates.indexOf(name)
+          if (idx >= 0) candidates.splice(idx, 1)
+          process.stderr.write(`  ✗ HTTP ${fetchErr.statusCode} ${name} — marked failed\n`)
+        }
+        // else: network/timeout — keep in candidates for retry this run or next
         return
       }
 
-      // Permanent result (manifest or 404) — remove from candidates regardless
+      // Permanent result (manifest or 404) — remove from candidates
       const idx = candidates.indexOf(name)
       if (idx >= 0) candidates.splice(idx, 1)
 
@@ -1393,14 +1411,17 @@ When to use --reset:
         }
       }
 
-      if (mFetched % 100 === 0 || mFetched === todo.length) {
+      if (mFetched % DRAIN_CHECKPOINT_EVERY === 0 || mFetched === todo.length) {
         process.stderr.write(`    [${mFetched}/${todo.length}] checked, ${mFound} with lifecycle scripts\n`)
-        // Snapshot built synchronously in savePackageCache before any await
-        await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
+        await Promise.all([
+          savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+          savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+        ])
       }
     })))
 
     const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
+    const failLine = failedFetches.size > 0 ? `, ${failedFetches.size} failed — retry next run` : ''
 
     if (circuitTripped) {
       process.stderr.write(
@@ -1408,18 +1429,18 @@ When to use --reset:
         `     ${candidates.length} candidates remain for next run\n`
       )
       await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates),
-        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
       ])
       process.stderr.write(`  checkpoint saved — re-run to continue\n`)
       process.exit(0)
     }
 
-    process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate)\n`)
+    process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate${failLine})\n`)
     // Checkpoint to both stores before next search refill
     await Promise.all([
-      savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates),
-      savePackageCache(pkgPath, manifests, seen, finalDiscoveryState),
+      savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+      savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
     ])
     process.stderr.write(`    checkpoint saved — ready to refill\n`)
     pagesSinceLastDrain = 0
