@@ -1448,13 +1448,10 @@ When to use --reset:
   // search TTL expired or was disabled, in which case popularity rankings
   // may have shifted and all counts need a refresh.
   process.stderr.write('Step 4/5: Fetching weekly download counts...\n')
-  if (downloadCountsStale) {
-    const hadCounts = manifests.filter(m => m.weeklyDownloads > 0).length
-    for (const m of manifests) m.weeklyDownloads = 0
-    if (hadCounts > 0) process.stderr.write(`  (TTL expired — refreshing all ${hadCounts} cached download counts)\n`)
-  }
-  const needDownloads = manifests.filter(m => !m.weeklyDownloads)
-  if (needDownloads.length < manifests.length) {
+  const needDownloads = downloadCountsStale ? manifests : manifests.filter(m => !m.weeklyDownloads)
+  if (downloadCountsStale && manifests.length > 0) {
+    process.stderr.write(`  (TTL expired — refreshing all ${manifests.length} download counts)\n`)
+  } else if (needDownloads.length < manifests.length) {
     process.stderr.write(`  (${manifests.length - needDownloads.length} already cached, fetching ${needDownloads.length} new)\n`)
   }
 
