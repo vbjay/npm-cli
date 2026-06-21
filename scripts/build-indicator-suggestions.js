@@ -1090,7 +1090,7 @@ When to use --reset:
 
   // topN defaults to 0 when not explicit — means "finish any in-progress run,
   // then re-analyze; don't collect new packages". A mid-step resume (tmp.json)
-  // is still processed through step 4 and step 5 using whatever was collected.
+  // is still processed through steps 3.5, 4/5 using whatever was collected.
   const topN = args.includes('--top') ? +flag('--top', 0) : 0
   const topExplicit = args.includes('--top')
   const delayMs = +flag('--delay', 60)
@@ -1179,7 +1179,7 @@ When to use --reset:
   // Try permanent store first (from a previous successful run)
   let loaded = await loadPackageCache(pkgPath)
   let resumeMergeCount = 0
-  let isStep4Resume = false  // true when tmp.json was written mid-step-4 (collection already done)
+  let isPostCollectionResume = false  // true when tmp.json was written post-collection (collection already done)
 
   // If permanent store empty or missing, try the resume cache
   if (!loaded.manifests && !loaded.names) {
@@ -1187,7 +1187,7 @@ When to use --reset:
     if (loaded.manifests || loaded.names) {
       process.stderr.write(`  (permanent store empty, loaded from resume cache)\n`)
       // discoveryState: null in tmp.json means collection was already complete
-      if (loaded.manifests && loaded.discoveryState === null) isStep4Resume = true
+      if (loaded.manifests && loaded.discoveryState === null) isPostCollectionResume = true
     }
   } else {
     // Permanent store has data — also check if there's a newer resume cache
@@ -1205,10 +1205,10 @@ When to use --reset:
         pendingCandidates: resume.pendingCandidates || [],
       }
       // discoveryState: null means collection was complete when tmp.json was written
-      if (resume.discoveryState === null) isStep4Resume = true
+      if (resume.discoveryState === null) isPostCollectionResume = true
     } else if (resume.manifests && resume.discoveryState === null) {
       // tmp.json exists with same package count but null discoveryState — step-4 resume
-      isStep4Resume = true
+      isPostCollectionResume = true
     }
   }
 
@@ -1242,9 +1242,9 @@ When to use --reset:
         process.stderr.write(`     top by downloads: ${top3}\n`)
       }
     }
-    const remaining = isStep4Resume ? 0 : topN - resumeMergeCount
+    const remaining = isPostCollectionResume ? 0 : topN - resumeMergeCount
     let resumeHint = ''
-    if (!isStep4Resume && discoveryState) {
+    if (!isPostCollectionResume && discoveryState) {
       const qOrder = discoveryState.queryOrder || []
       const qName = (qOrder[resumeQueryIndex] || '').replace('keywords:', '')
       const pos = resumeQueryFrom > 0 ? `, position ${resumeQueryFrom}` : ''
@@ -1339,16 +1339,16 @@ When to use --reset:
     process.stderr.write(`  query order: ${DISCOVERY_QUERIES.map(q => q.replace('keywords:', '')).join(', ')}\n`)
   }
 
-  process.stderr.write('Steps 1–3: Scanning popular packages for lifecycle scripts...\n')
-  const needToCollect = isStep4Resume ? 0 : topN - resumeMergeCount
+  process.stderr.write(`Steps 1–3/${deepMode ? 5 : 4}: Scanning popular packages for lifecycle scripts...\n`)
+  const needToCollect = isPostCollectionResume ? 0 : topN - resumeMergeCount
   process.stderr.write(`  (target: ${needToCollect} more packages with lifecycle scripts)\n`)
   process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n\n`)
 
   let scanned = 0
   let alreadySeenSkips = 0  // names already in `seen` across all pages this run — measures search redundancy
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
-  // Skip collection if resuming step 4, or if no --top was given (topN === 0).
-  let done = isStep4Resume || topN === 0
+  // Skip collection if resuming post-collection, or if no --top was given (topN === 0).
+  let done = isPostCollectionResume || topN === 0
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordCursors }
   let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
   let pagesFetchedTotal = 0  // global across all keywords
@@ -1517,7 +1517,7 @@ When to use --reset:
 
   // Drain any candidates left pending from a previous interrupted run before searching more.
   if (candidates.length > 0 && !done) {
-    process.stderr.write(`Step 3.25/5: Resuming ${candidates.length} pending candidates from previous run...\n`)
+    process.stderr.write(`Step 3.25/4: Resuming ${candidates.length} pending candidates from previous run...\n`)
     await drain(DrainMode.Candidates)
     process.stderr.write('\n')
   }
@@ -1687,7 +1687,7 @@ When to use --reset:
   // and let drain(DrainMode.Candidates) do the full manifest fetch + lifecycle classification.
   // ---------------------------------------------------------------------------
   {
-    process.stderr.write('Step 3.5/5: Expanding scoped packages with unscoped peers...\n')
+    process.stderr.write('Step 3.5/4: Expanding scoped packages with unscoped peers...\n')
     const peerNames = []
     for (const m of manifests) {
       if (m.name.startsWith('@')) {
@@ -1729,19 +1729,14 @@ When to use --reset:
   }
 
   // ---------------------------------------------------------------------------
-  // Step 4.5 (--deep only): Fetch indicator files + lifecycle JS files via unpkg,
+  // Step 4/5 (--deep only): Fetch indicator files + lifecycle JS files via unpkg,
   // follow require() refs recursively, then run the full scanner stack.
   // Results are cached by name@version in deepDir so re-runs are instant.
   // ---------------------------------------------------------------------------
   if (deepMode) {
-    process.stderr.write('Step 4.5/5: Deep-scanning packages via unpkg (indicator files + lifecycle scripts)...\n')
+    process.stderr.write('Step 4/5: Deep-scanning packages via unpkg (indicator files + lifecycle scripts)...\n')
     await drain(DrainMode.DeepScan)
   }
-
-  // ---------------------------------------------------------------------------
-  // Step 4/5: (skipped) Weekly download counts are captured inline from
-  // search results (searchDownloads map) — no separate API call needed.
-  // ---------------------------------------------------------------------------
 
   // Save final manifests to permanent store.  discoveryState carries only
   // keywordCursors (no resume position) so the next run continues forward
@@ -1750,8 +1745,8 @@ When to use --reset:
   process.stderr.write(`  ✓ manifests saved to ${pkgPath}\n\n`)
   await fs.unlink(resumeCachePath).catch(() => {})
 
-  // Step 5/5: Analyze
-  process.stderr.write('Step 5/5: Analyzing...\n')
+  const analyzeStep = deepMode ? '5/5' : '4/4'
+  process.stderr.write(`Step ${analyzeStep}: Analyzing...\n`)
 
   const categorized = {} // indicatorFile → packageName[]
   const uncategorized = [] // packages with build signals but no definition match
