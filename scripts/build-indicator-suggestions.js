@@ -83,6 +83,12 @@ const DEFAULT_CURSOR_TTL_HOURS = 168  // 7 days
 const MANIFEST_CONCURRENCY = 5   // npm's own tooling (make-fetch-happen) uses 5 sockets
 const MANIFEST_DELAY_MS    = 150  // small inter-request stagger to avoid burst detection
 
+const DrainMode = Object.freeze({
+  Candidates: 'Candidates',
+  Counts:     'Counts',
+  DeepScan:   'DeepScan',
+})
+
 function makeLimiter (max, delayMs = 0) {
   let running = 0
   const queue = []
@@ -1356,20 +1362,20 @@ When to use --reset:
   // (Network errors / circuit-open keep the name in candidates for retry instead.)
   const failedFetches = new Set()
 
-  // Deep-scan state (used by drain('DeepScan') and the output step).
+  // Deep-scan state (used by drain(DrainMode.DeepScan) and the output step).
   const deepResults = new Map()      // name → IndicatorResult[]
   const deepRefFiles = new Map()     // name → referencedFiles[]
   const deepFetchedFiles = new Map() // name → fetchedFiles[]
   let deepNewPkgs = 0
 
   // Worker-pool drain — mode selects what to fetch:
-  //   drain('Candidates') — fetch manifests for candidate names, populate manifests[]
-  //   drain('Counts')     — fetch weekly download counts for lifecycle-state manifests
-  //   drain('DeepScan')   — deep-scan manifests via unpkg, populate deepResults maps
+  //   drain(DrainMode.Candidates) — fetch manifests for candidate names, populate manifests[]
+  //   drain(DrainMode.Counts)     — fetch weekly download counts for lifecycle-state manifests
+  //   drain(DrainMode.DeepScan)   — deep-scan manifests via unpkg, populate deepResults maps
   // All modes use MANIFEST_CONCURRENCY workers staggered by MANIFEST_DELAY_MS.
   const drain = async (mode) => {
     // ── Candidates mode ────────────────────────────────────────────────────
-    if (mode === 'Candidates') {
+    if (mode === DrainMode.Candidates) {
       if (candidates.length === 0) return
       const startCount = candidates.length
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
@@ -1453,7 +1459,7 @@ When to use --reset:
       pagesSinceLastDrain = 0
 
     // ── Counts mode ────────────────────────────────────────────────────────
-    } else if (mode === 'Counts') {
+    } else if (mode === DrainMode.Counts) {
       const countQueue = downloadCountsStale
         ? [...manifests]
         : manifests.filter(m => m.state === 'lifecycle')
@@ -1505,7 +1511,7 @@ When to use --reset:
       process.stderr.write(`    checkpoint saved\n`)
 
     // ── DeepScan mode ─────────────────────────────────────────────────────
-    } else if (mode === 'DeepScan') {
+    } else if (mode === DrainMode.DeepScan) {
       const dsQueue = [...manifests]
       const startCount = dsQueue.length
       if (startCount === 0) return
@@ -1560,7 +1566,7 @@ When to use --reset:
   // Drain any candidates left pending from a previous interrupted run before searching more.
   if (candidates.length > 0 && !done) {
     process.stderr.write(`Step 3.25/5: Resuming ${candidates.length} pending candidates from previous run...\n`)
-    await drain('Candidates')
+    await drain(DrainMode.Candidates)
     process.stderr.write('\n')
   }
 
@@ -1676,7 +1682,7 @@ When to use --reset:
         if (pagesSinceLastDrain >= 2 && candidates.length > 0 && !done) {
           // Pre-drain checkpoint is inside drain() — update finalDiscoveryState first.
           finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
-          await drain('Candidates')
+          await drain(DrainMode.Candidates)
         }
 
         if (from >= sweepStartOffset + 2000) break  // scanned 2000 results this run for this keyword
@@ -1717,13 +1723,13 @@ When to use --reset:
     ` (${seen.size.toLocaleString()} unique in seen-set)\n`
   )
   if (candidates.length > 0) {
-    await drain('Candidates')
+    await drain(DrainMode.Candidates)
   } else process.stderr.write('\n')
 
   // ---------------------------------------------------------------------------
   // Step 3.5: Scoped → unscoped peer expansion.
   // Probe each bare name for existence, then push confirmed names into candidates
-  // and let drain('Candidates') do the full manifest fetch + lifecycle classification.
+  // and let drain(DrainMode.Candidates) do the full manifest fetch + lifecycle classification.
   // ---------------------------------------------------------------------------
   {
     process.stderr.write('Step 3.5/5: Expanding scoped packages with unscoped peers...\n')
@@ -1760,7 +1766,7 @@ When to use --reset:
 
       if (found > 0) {
         finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: -1, queryFrom: 0, keywordCursors }
-        await drain('Candidates')
+        await drain(DrainMode.Candidates)
       } else {
         process.stderr.write('\n')
       }
@@ -1774,7 +1780,7 @@ When to use --reset:
   // ---------------------------------------------------------------------------
   if (deepMode) {
     process.stderr.write('Step 4.5/5: Deep-scanning packages via unpkg (indicator files + lifecycle scripts)...\n')
-    await drain('DeepScan')
+    await drain(DrainMode.DeepScan)
   }
 
   // ---------------------------------------------------------------------------
@@ -1789,7 +1795,7 @@ When to use --reset:
     const cached = manifests.filter(m => m.state === 'ready').length
     if (cached > 0) process.stderr.write(`  (${cached} already cached)\n`)
   }
-  await drain('Counts')
+  await drain(DrainMode.Counts)
 
   // Save final manifests to permanent store.  discoveryState carries only
   // keywordCursors (no resume position) so the next run continues forward
