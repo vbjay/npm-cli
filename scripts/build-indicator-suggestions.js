@@ -1644,18 +1644,57 @@ When to use --reset:
 
   // --add <pkg1,pkg2,...>: inject package names as candidates regardless of seen/store.
   // Useful for one-off additions or testing specific packages.
+  //
+  // Scope-aware alternate probing: users often forget or misremember whether a
+  // package is scoped.  For each name given, we also queue its alternate form:
+  //   'angular/cli'   (has / but no @) → also try '@angular/cli'
+  //   '@angular/cli'  (scoped)         → also try 'cli' (bare pkg name, no scope)
+  // Alternates are probed against the registry; only confirmed packages are added.
   const addFlag = flag('--add', null)
   let addedCount = 0
   if (addFlag) {
     const addNames = addFlag.split(',').map(s => s.trim()).filter(Boolean)
     const inStore = new Set(manifests.map(m => m.name))
-    for (const name of addNames) {
+
+    const tryAdd = (name, label) => {
       if (!inStore.has(name) && !seen.has(name) && !candidates.includes(name)) {
         candidates.push(name)
         seen.add(name)
         addedCount++
-        process.stderr.write(`  + injected candidate: ${name}\n`)
-      } else {
+        process.stderr.write(`  + injected candidate: ${name}${label ? `  (${label})` : ''}\n`)
+        return true
+      }
+      return false
+    }
+
+    for (const name of addNames) {
+      const added = tryAdd(name, '')
+
+      // Determine and probe the alternate form.
+      let alternate = null
+      if (!name.startsWith('@') && name.includes('/')) {
+        // e.g. 'angular/cli' → '@angular/cli'
+        alternate = `@${name}`
+      } else if (name.startsWith('@') && name.includes('/')) {
+        // e.g. '@angular/cli' → 'cli' (bare package name without scope)
+        alternate = name.replace(/^@[^/]+\//, '')
+      }
+
+      if (alternate && !inStore.has(alternate) && !seen.has(alternate) && !candidates.includes(alternate)) {
+        process.stderr.write(`  ? probing alternate form: ${alternate}\n`)
+        const exists = await fetchJson(
+          `https://registry.npmjs.org/${encodeURIComponent(alternate)}/latest`
+        ).then(() => true, () => false)
+        if (exists) {
+          tryAdd(alternate, `alternate form of '${name}'`)
+        } else {
+          process.stderr.write(`  ✗ ${alternate} not found on registry — skipping\n`)
+        }
+      } else if (alternate) {
+        process.stderr.write(`  ~ ${alternate} already known — skipping alternate\n`)
+      }
+
+      if (!added && !alternate) {
         process.stderr.write(`  ~ skipped (already known): ${name}\n`)
       }
     }
