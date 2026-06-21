@@ -1528,18 +1528,19 @@ When to use --reset:
 
     // Not matched — is it a build package at all?
     // Use the same hasBuildHint gate as the production approve-scripts scanner,
-    // passing deep referencedFiles when available so binary-download signals count.
-    if (!hasBuildHint(manifest.scripts || {}, deepRefs)) continue
+    // passing deep referencedFiles and deps so all hint sources are checked.
+    const allDeps = [
+      ...Object.keys(manifest.dependencies),
+      ...Object.keys(manifest.devDependencies),
+      ...Object.keys(manifest.optionalDependencies),
+    ]
+    if (!hasBuildHint(manifest.scripts || {}, deepRefs, undefined, allDeps)) continue
 
     const tokens = extractCommandTokens(lc)
     const inferred = inferIndicatorFiles(manifest)
     const signal = suggestSignal(tokens, inferred)
 
-    const buildDeps = [
-      ...Object.keys(manifest.dependencies),
-      ...Object.keys(manifest.devDependencies),
-      ...Object.keys(manifest.optionalDependencies),
-    ].filter(d => BUILD_DEP_PATTERNS.some(p => p.test(d)))
+    const buildDeps = allDeps.filter(d => BUILD_DEP_PATTERNS.some(p => p.test(d)))
 
     // Collect unique signals detected across all scanned files (including cross-package refs)
     const detectedSignals = [...new Set(deepRefs.flatMap(f => f.signals || []))]
