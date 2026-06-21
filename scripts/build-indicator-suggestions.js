@@ -1389,7 +1389,7 @@ When to use --reset:
       process.exit(0)
     }
 
-    process.stderr.write(`    ✓ +${mFound} new (${manifests.length} in store, ${hitRate}% hit rate)\n`)
+    process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate)\n`)
     // Checkpoint to both stores before next search refill
     await Promise.all([
       savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates),
