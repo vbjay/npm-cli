@@ -105,7 +105,11 @@
 //   DEEP_CACHE_SCHEMA encodes the active defanging scheme.  When it is bumped,
 //   the schemaVersion field in every .meta.json no longer matches, causing all
 //   existing cached files to be re-downloaded with the new defanging applied.
-//   Current value: 'defang-v4'.
+//   Current value: see DEEP_CACHE_SCHEMA constant at the top of the script.
+//   Increment the N in 'defang-vN' whenever the defanging approach changes in
+//   a way that affects what is written to disk (new file type covered, header
+//   format changed, etc.).  The indicator registry and signal patterns have
+//   their own hash and do not need a manual bump.
 //
 
 'use strict'
