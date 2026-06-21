@@ -80,12 +80,16 @@ const DEFAULT_CURSOR_TTL_HOURS = 168  // 7 days
 // Concurrency limiter — run at most `max` async tasks simultaneously
 // ---------------------------------------------------------------------------
 
-function makeLimiter (max) {
+const MANIFEST_CONCURRENCY = 5   // npm's own tooling (make-fetch-happen) uses 5 sockets
+const MANIFEST_DELAY_MS    = 150  // small inter-request stagger to avoid burst detection
+
+function makeLimiter (max, delayMs = 0) {
   let running = 0
   const queue = []
   return async function limit (fn) {
     if (running >= max) await new Promise(r => queue.push(r))
     running++
+    if (delayMs > 0) await sleep(delayMs)
     try {
       return await fn()
     } finally {
@@ -1365,7 +1369,7 @@ When to use --reset:
     // so a crash mid-drain resumes from this exact snapshot.
     await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates)
     process.stderr.write(`\n  manifests: fetching ${todo.length} candidates...\n`)
-    const mLimit = makeLimiter(10)
+    const mLimit = makeLimiter(MANIFEST_CONCURRENCY, MANIFEST_DELAY_MS)
     let mFetched = 0
     let mFound = 0
     let circuitTripped = false
