@@ -536,25 +536,31 @@ class CircuitOpenError extends Error {
 }
 
 // Centralized 429 handler — call once per response that returns 429.
-// Returns the backoff duration applied.
+// Only a NEW wave (first 429 outside an existing cooldown window) increments
+// the counter and prints a log line. Concurrent 429s in the same window
+// silently extend the existing cooldown using the server's retry-after floor —
+// this prevents 10 concurrent requests from each bumping the wave counter.
 function handle429 (headers, url) {
   const serverWait = retryAfterMs(headers['retry-after']) ?? 0
-  const base = Math.max(30_000, serverWait)
 
-  // Only escalate the backoff multiplier for a NEW wave — concurrent requests
-  // that all hit 429 within an existing cooldown share that level.
-  if (Date.now() >= _cooldownUntil) _consecutiveRateLimits++
-
-  const backoff = Math.min(MAX_BACKOFF_MS, base * Math.pow(2, _consecutiveRateLimits - 1))
-  _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
-
-  if (_consecutiveRateLimits >= CIRCUIT_OPEN_THRESHOLD) _circuitOpen = true
-
-  process.stderr.write(
-    `  🚦 HTTP 429 ${url} — backoff ${Math.ceil(backoff / 1000)}s` +
-    ` (wave ${_consecutiveRateLimits}${_circuitOpen ? ', circuit OPEN' : ''})\n`
-  )
-  return backoff
+  if (Date.now() >= _cooldownUntil) {
+    // New wave — escalate
+    _consecutiveRateLimits++
+    const ourBackoff = Math.min(MAX_BACKOFF_MS, 30_000 * Math.pow(2, _consecutiveRateLimits - 1))
+    // Server's retry-after acts as a floor (don't retry before they say to),
+    // but our own exponential drives the escalation, not the server header.
+    const waitMs = Math.max(ourBackoff, serverWait)
+    _cooldownUntil = Date.now() + waitMs
+    if (_consecutiveRateLimits >= CIRCUIT_OPEN_THRESHOLD) _circuitOpen = true
+    process.stderr.write(
+      `  🚦 HTTP 429 ${url} — backoff ${Math.ceil(waitMs / 1000)}s` +
+      ` (wave ${_consecutiveRateLimits}${_circuitOpen ? ', circuit OPEN' : ''})\n`
+    )
+  } else if (serverWait > 0) {
+    // Concurrent 429 in same cooldown window — extend only if server says longer
+    const extendedTo = Date.now() + serverWait
+    if (extendedTo > _cooldownUntil) _cooldownUntil = extendedTo
+  }
 }
 
 async function waitForCooldown (label) {
