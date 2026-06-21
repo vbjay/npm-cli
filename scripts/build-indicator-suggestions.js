@@ -1198,6 +1198,7 @@ When to use --reset:
   process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n\n`)
 
   let scanned = 0
+  let alreadySeenSkips = 0  // names already in `seen` across all pages this run — measures search redundancy
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
   // Skip collection if resuming step 4, or if no --top was given (topN === 0).
   let done = isStep4Resume || topN === 0
@@ -1266,12 +1267,14 @@ When to use --reset:
         }
         if (!page || !page.objects || page.objects.length === 0) break  // exhausted
 
-        const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
-        for (const n of pageNames) seen.add(n)
-        from += page.objects.length
+        const allNames = page.objects.map(o => o.package.name)
+        const newNames = allNames.filter(n => !seen.has(n))
+        alreadySeenSkips += allNames.length - newNames.length
+        for (const n of newNames) seen.add(n)
+        from += allNames.length
         pagesFetchedTotal++
 
-        for (const name of pageNames) {
+        for (const name of newNames) {
           if (done) break
           let manifest = null
           try {
@@ -1301,8 +1304,8 @@ When to use --reset:
           await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
           process.stderr.write(
             `    [${query}] page ${pagesFetchedTotal} total (offset=${from}) | ` +
-            `${scanned} scanned | ${newThisRun}/${topN} new with scripts | ` +
-            `${manifests.length} total\n`
+            `${scanned} fetched | ${newThisRun}/${topN} with scripts | ` +
+            `${alreadySeenSkips} already-seen skips | ${manifests.length} in store\n`
           )
         }
 
@@ -1633,6 +1636,10 @@ When to use --reset:
   const noBuildHint = manifests.length - Object.values(categorized).flat().length - uncategorized.length
   process.stderr.write(`\n✅ Done!\n`)
   process.stderr.write(`   New this run:         ${newThisRun}\n`)
+  if (alreadySeenSkips > 0) {
+    const skipPct = scanned > 0 ? Math.round((alreadySeenSkips / (scanned + alreadySeenSkips)) * 100) : 0
+    process.stderr.write(`   Already-seen skips:   ${alreadySeenSkips.toLocaleString()} (${skipPct}% of results were repeats)\n`)
+  }
   if (deepNewPkgs > 0) {
     process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} (cross-package imports)\n`)
   }
