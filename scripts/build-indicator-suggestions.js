@@ -1252,6 +1252,7 @@ When to use --reset:
       process.stderr.write(`  query: ${query}${fromLabel}\n`)
 
       const sweepStartOffset = from  // capture where this keyword started this run
+      let dryPageStreak = 0          // consecutive pages with zero new lifecycle-script packages
       while (!done) {
         const enc = encodeURIComponent(query)
         const url =
@@ -1279,6 +1280,7 @@ When to use --reset:
         from += allNames.length
         pagesFetchedTotal++
 
+        const newBeforePage = newThisRun
         for (const name of newNames) {
           if (done) break
           let manifest = null
@@ -1302,6 +1304,21 @@ When to use --reset:
           }
           finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
           if (delayMs > 0) await sleep(delayMs)
+        }
+
+        // Track consecutive dry pages (no new lifecycle-script packages found).
+        // High-offset spam zones return many packages with no scripts — bail early.
+        if (newThisRun > newBeforePage) {
+          dryPageStreak = 0
+        } else {
+          dryPageStreak++
+          if (dryPageStreak >= 3) {
+            process.stderr.write(
+              `  ⏭️  skipping ${query} after ${dryPageStreak} pages with no lifecycle scripts ` +
+              `(offset=${from}, likely low-quality results) — moving to next keyword\n`
+            )
+            break
+          }
         }
 
         // Every notifyPages pages (global across all keywords): checkpoint + stats
