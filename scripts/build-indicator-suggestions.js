@@ -1482,6 +1482,7 @@ When to use --reset:
         const skippedThisPage = allNames.length - newNames.length
         alreadySeenSkips += skippedThisPage
         for (const n of newNames) seen.add(n)
+        const pageFrom = from   // offset this page started at (for display)
         from += allNames.length
         pagesFetchedTotal++
 
@@ -1489,7 +1490,7 @@ When to use --reset:
         scanned += allNames.length
         finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
         process.stderr.write(
-          `    p${pagesFetchedTotal} offset=${from} fetch=${fetchMs}ms` +
+          `    p${pagesFetchedTotal} offset=${pageFrom} fetch=${fetchMs}ms` +
           ` | +${newNames.length} new names, ${skippedThisPage} seen-skips` +
           ` | ${candidates.length} candidates, ${manifests.length} in store\n`
         )
