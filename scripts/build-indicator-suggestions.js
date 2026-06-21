@@ -1260,6 +1260,7 @@ When to use --reset:
 
         let page
         const fetchStart = Date.now()
+        process.stderr.write(`    fetching offset=${from}...\r`)
         try {
           page = await fetchJson(url)
         } catch (err) {
@@ -1281,6 +1282,7 @@ When to use --reset:
         from += allNames.length
         pagesFetchedTotal++
 
+        process.stderr.write(`    scanning ${newNames.length} packages (${skippedThisPage} already seen)...\r`)
         const newBeforePage = newThisRun
         const scanStart = Date.now()
         for (const name of newNames) {
@@ -1315,7 +1317,9 @@ When to use --reset:
           ` | +${newThisPage} scripts, ${skippedThisPage} seen-skips` +
           ` | ${newThisRun}/${topN} total scripts, ${manifests.length} in store\n`
         )
+        process.stderr.write(`    saving checkpoint...\r`)
         await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
+        process.stderr.write(`                       \r`)  // clear the saving line
 
         // Track consecutive dry pages (no new lifecycle-script packages found).
         // High-offset spam zones return many packages with no scripts — bail early.
