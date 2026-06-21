@@ -1489,8 +1489,8 @@ When to use --reset:
           for (const m of (discoveredManifests || [])) {
             if (!seen.has(m.name)) {
               seen.add(m.name)
-              const lc = extractLifecycleScripts(m.scripts)
-              if (Object.keys(lc).length > 0) { manifests.push(m); newThisRun++; deepNewPkgs++ }
+              candidates.push(m.name)
+              deepNewPkgs++
             }
           }
           dsFetched++
@@ -1505,7 +1505,10 @@ When to use --reset:
       }
 
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
-      if (deepNewPkgs > 0) process.stderr.write(`  + ${deepNewPkgs} new packages via cross-package imports\n`)
+      if (deepNewPkgs > 0) {
+        process.stderr.write(`  + ${deepNewPkgs} new packages discovered via cross-package imports — draining...\n`)
+        await drain(DrainMode.Candidates)
+      }
       process.stderr.write(`    ✓ ${dsFetched} deep scans complete\n`)
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
