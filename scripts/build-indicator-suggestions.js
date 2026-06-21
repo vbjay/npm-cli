@@ -19,6 +19,7 @@
 
 'use strict'
 
+const http = require('http')
 const https = require('https')
 const path = require('path')
 const fs = require('fs/promises')
@@ -488,103 +489,106 @@ function retryAfterMs (header) {
 // Shares the global 429 cooldown with fetchJson so a rate-limit from unpkg
 // backs off all requests, not just JSON ones.
 // ---------------------------------------------------------------------------
+// Low-level HTTP GET with redirect following (up to MAX_REDIRECTS hops).
+// Returns { statusCode, headers, body: Buffer } on success, or throws on
+// network/timeout errors.  Caller is responsible for handling non-2xx codes.
+// ---------------------------------------------------------------------------
+
+const MAX_REDIRECTS = 5
+
+async function httpGet (url, redirectsLeft = MAX_REDIRECTS) {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(url)
+    const transport = parsed.protocol === 'https:' ? https : http
+    const req = transport.get(url, { headers: { 'User-Agent': USER_AGENT } }, res => {
+      // Follow 3xx redirects
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        res.resume()
+        if (redirectsLeft <= 0) {
+          return reject(new Error(`Too many redirects for ${url}`))
+        }
+        const next = new URL(res.headers.location, url).href
+        process.stderr.write(`  ↩️  HTTP ${res.statusCode} → ${next}\n`)
+        return httpGet(next, redirectsLeft - 1).then(resolve, reject)
+      }
+      const chunks = []
+      res.on('data', d => chunks.push(d))
+      res.on('end', () => resolve({ statusCode: res.statusCode, headers: res.headers, body: Buffer.concat(chunks) }))
+      res.on('error', reject)
+    })
+    req.on('error', reject)
+    req.setTimeout(15_000, () => { req.destroy(); reject(new Error(`Timeout: ${url}`)) })
+  })
+}
+
+// ---------------------------------------------------------------------------
 
 async function fetchRaw (url, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     await waitForCooldown(url)
-    const buf = await new Promise(resolve => {
-      const req = https.get(url, { headers: { 'User-Agent': USER_AGENT } }, res => {
-        if (res.statusCode === 429) {
-          _consecutiveRateLimits++
-          const serverWait = retryAfterMs(res.headers['retry-after']) ?? 0
-          const base = Math.max(30_000, serverWait)
-          const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
-          _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
-          process.stderr.write(`  🚦 HTTP 429 (raw) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${res.headers['retry-after'] ?? 'none'}\n`)
-          res.resume()
-          resolve('rate-limited')
-          return
-        }
-        if (res.statusCode !== 200 && res.statusCode !== 404) {
-          process.stderr.write(`  ⚠️  HTTP ${res.statusCode} (raw) attempt ${attempt}/${retries} ${url}\n`)
-        }
-        const chunks = []
-        res.on('data', d => chunks.push(d))
-        res.on('end', () => resolve(res.statusCode === 200 ? Buffer.concat(chunks) : null))
-        res.on('error', (err) => {
-          process.stderr.write(`  ⚠️  socket error (raw) ${url}: ${err.message}\n`)
-          resolve(null)
-        })
-      })
-      req.on('error', (err) => {
-        process.stderr.write(`  ⚠️  request error (raw) ${url}: ${err.message}\n`)
-        resolve(null)
-      })
-      req.setTimeout(15_000, () => {
-        process.stderr.write(`  ⏱️  timeout (raw) ${url}\n`)
-        req.destroy()
-        resolve(null)
-      })
-    })
-    if (buf === 'rate-limited') continue  // waitForCooldown on next iteration
+    let res
+    try {
+      res = await httpGet(url)
+    } catch (err) {
+      process.stderr.write(`  ⚠️  request error (raw) attempt ${attempt}/${retries} ${url}: ${err.message}\n`)
+      continue
+    }
+    const { statusCode, headers, body } = res
+    if (statusCode === 429) {
+      _consecutiveRateLimits++
+      const serverWait = retryAfterMs(headers['retry-after']) ?? 0
+      const base = Math.max(30_000, serverWait)
+      const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
+      _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
+      process.stderr.write(`  🚦 HTTP 429 (raw) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${headers['retry-after'] ?? 'none'}\n`)
+      continue
+    }
+    if (statusCode !== 200 && statusCode !== 404) {
+      process.stderr.write(`  ⚠️  HTTP ${statusCode} (raw) attempt ${attempt}/${retries} ${url}\n`)
+    }
     _consecutiveRateLimits = 0
-    return buf
+    return statusCode === 200 ? body : null
   }
   return null
 }
 
 async function fetchJson (url, retries = 5) {
   for (let attempt = 1; attempt <= retries; attempt++) {
-    // Always honour the global cooldown before firing any request
     await waitForCooldown()
-
+    let res
     try {
-      const result = await new Promise((resolve, reject) => {
-        const req = https.get(url, { headers: { 'User-Agent': USER_AGENT } }, res => {
-          let buf = ''
-          res.on('data', d => (buf += d))
-          res.on('end', () => {
-            if (res.statusCode === 404) {
-              resolve(null)
-            } else if (res.statusCode === 429) {
-              // Apply exponential global cooldown — ALL requests will wait,
-              // not just retries of this one.
-              _consecutiveRateLimits++
-              const serverWait = retryAfterMs(res.headers['retry-after']) ?? 0
-              // Base: 30s minimum, doubling with each consecutive 429, cap 5min
-              const base = Math.max(30_000, serverWait)
-              const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
-              _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
-              process.stderr.write(`  🚦 HTTP 429 (json) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${res.headers['retry-after'] ?? 'none'}\n`)
-              reject(Object.assign(
-                new Error(`HTTP 429 — cooldown ${Math.ceil(backoff / 1000)}s`),
-                { isRateLimit: true }
-              ))
-            } else if (res.statusCode >= 200 && res.statusCode < 300) {
-              try { resolve(JSON.parse(buf)) } catch (e) {
-                reject(new Error(`JSON parse error for ${url}: ${e.message}`))
-              }
-            } else {
-              process.stderr.write(`  ⚠️  HTTP ${res.statusCode} (json) attempt ${attempt}/${retries} ${url}\n`)
-              reject(new Error(`HTTP ${res.statusCode} for ${url}`))
-            }
-          })
-          res.on('error', reject)
-        })
-        req.on('error', reject)
-      })
-      // Successful response — reset consecutive rate-limit counter
-      _consecutiveRateLimits = 0
-      return result
+      res = await httpGet(url)
     } catch (err) {
       if (attempt === retries) throw err
-      if (!err.isRateLimit) {
-        // Non-429 error: short fixed backoff
-        await sleep(500 * attempt)
-      }
-      // 429: no extra sleep here — waitForCooldown() at the top of the next
-      // attempt already enforces the global cooldown set above.
+      process.stderr.write(`  ⚠️  request error (json) attempt ${attempt}/${retries} ${url}: ${err.message}\n`)
+      await sleep(500 * attempt)
+      continue
     }
+    const { statusCode, headers, body } = res
+    if (statusCode === 404) {
+      _consecutiveRateLimits = 0
+      return null
+    }
+    if (statusCode === 429) {
+      _consecutiveRateLimits++
+      const serverWait = retryAfterMs(headers['retry-after']) ?? 0
+      const base = Math.max(30_000, serverWait)
+      const backoff = Math.min(300_000, base * Math.pow(2, _consecutiveRateLimits - 1))
+      _cooldownUntil = Math.max(_cooldownUntil, Date.now() + backoff)
+      process.stderr.write(`  🚦 HTTP 429 (json) ${url} — backoff ${Math.ceil(backoff / 1000)}s retry-after=${headers['retry-after'] ?? 'none'}\n`)
+      continue
+    }
+    if (statusCode >= 200 && statusCode < 300) {
+      _consecutiveRateLimits = 0
+      const text = body.toString('utf8')
+      try { return JSON.parse(text) } catch (e) {
+        throw new Error(`JSON parse error for ${url}: ${e.message}`)
+      }
+    }
+    // Other error status
+    process.stderr.write(`  ⚠️  HTTP ${statusCode} (json) attempt ${attempt}/${retries} ${url}\n`)
+    if (attempt === retries) throw new Error(`HTTP ${statusCode} for ${url}`)
+    await sleep(500 * attempt)
   }
 }
 
