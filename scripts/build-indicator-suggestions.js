@@ -996,6 +996,11 @@ When to use --reset:
     ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
     : manifestStorePath
 
+  if (userKeywords.length > 0 && !topExplicit) {
+    process.stderr.write(`\n⛔  --keywords requires --top <n> (keywords only affect the collection phase).\n\n`)
+    process.exit(1)
+  }
+
   if (doReset) {
     await fs.unlink(manifestStorePath).catch(() => {})
     await fs.unlink(resumeCachePath).catch(() => {})
