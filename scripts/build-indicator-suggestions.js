@@ -1233,7 +1233,7 @@ When to use --reset:
             from = cursor.from  // continue forward within this sweep
             sweepStartedAt = cursor.startedAt  // keep the original sweep origin
             const ageH = (sweepAgeMs / 3_600_000).toFixed(1)
-            const approxPage = Math.floor(from / size) + 1
+            const approxPage = Math.floor(from / 250) + 1
             fromLabel = ` (cursor: offset ${from} ~page ${approxPage}, sweep age ${ageH}h/${searchTtlHours}h)`
           } else {
             from = 0  // sweep expired: restart from top to catch newly-popular packages
