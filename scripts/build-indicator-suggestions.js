@@ -1640,6 +1640,22 @@ When to use --reset:
   process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages} (have build hint, no matching indicator)\n`)
   process.stderr.write(`   Lifecycle-only (no build hint): ${noBuildHint} (postinstall/setup scripts, not native builders)\n`)
   process.stderr.write(`   Pattern gaps found:   ${commandPatternGaps.length}\n`)
+
+  // Warn when indicator coverage of lifecycle-script packages is low.
+  // Threshold: fewer than 30% of lifecycle-script packages matched an indicator.
+  const coveragePct = manifests.length > 0
+    ? Math.round((output.coverage.matchedByExistingDefinitions / manifests.length) * 100)
+    : 100
+  if (coveragePct < 30) {
+    process.stderr.write(
+      `\n   ⚠️  Only ${coveragePct}% of lifecycle-script packages are covered by existing indicators.\n` +
+      `   Consider reviewing ${outPath} and indicator-definitions.js with an AI assistant:\n` +
+      `   ask it to compare the uncategorizedPackages entries against the existing indicator\n` +
+      `   registry and suggest new commandPatterns, signals, or indicator entries. Improvements\n` +
+      `   affect both approve-scripts (production scanning) and this suggestion tool.\n`
+    )
+  }
+
   process.stderr.write(`\n   Written to: ${outPath}\n\n`)
 }
 
