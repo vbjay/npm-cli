@@ -1084,7 +1084,7 @@ When to use --reset:
     const dlMax  = sorted[0]?.weeklyDownloads ?? 0
     const dlMin  = sorted[sorted.length - 1]?.weeklyDownloads ?? 0
 
-    process.stderr.write(`  ✓ loaded ${manifests.length} packages (${seen.size} names scanned)\n`)
+    process.stderr.write(`  ✓ loaded ${manifests.length} packages with lifecycle scripts (${seen.size.toLocaleString()} names examined, no lifecycle scripts in the rest)\n`)
     if (withDl.length > 0) {
       process.stderr.write(
         `     download range: ${dlMin.toLocaleString()}–${dlMax.toLocaleString()}/wk` +
@@ -1338,8 +1338,8 @@ When to use --reset:
   const hitRate = scanned > 0 ? (newThisRun / scanned * 100).toFixed(1) : '0.0'
   process.stderr.write(
     `\n  ✓ scanned ${scanned} new packages this run` +
-    ` → ${newThisRun} with lifecycle scripts (${manifests.length} total in store, ${hitRate}% hit rate)\n` +
-    `     ${seen.size.toLocaleString()} unique package names examined across all runs\n\n`
+    ` → ${newThisRun} with lifecycle scripts (${manifests.length} with lifecycle scripts in store, ${hitRate}% hit rate)\n` +
+    `     ${seen.size.toLocaleString()} unique package names examined total (${(seen.size - manifests.length).toLocaleString()} had no lifecycle scripts)\n\n`
   )
 
   // ---------------------------------------------------------------------------
@@ -1632,7 +1632,7 @@ When to use --reset:
   if (deepNewPkgs > 0) {
     process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} (cross-package imports)\n`)
   }
-  process.stderr.write(`   Total in store:       ${manifests.length}\n`)
+  process.stderr.write(`   With lifecycle scripts: ${manifests.length} (of ${seen.size.toLocaleString()} total examined)\n`)
   process.stderr.write(`   Matched (existing):   ${output.coverage.matchedByExistingDefinitions}\n`)
   process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages}\n`)
   process.stderr.write(`   Pattern gaps found:   ${commandPatternGaps.length}\n`)
