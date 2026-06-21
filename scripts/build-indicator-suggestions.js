@@ -530,9 +530,26 @@ const MAX_BACKOFF_MS = 120_000    // cap individual backoff at 2 min (not 5)
 let _cooldownUntil = 0
 let _consecutiveRateLimits = 0
 let _circuitOpen = false
+let _cooldownTimerId = null  // single interval printing countdown updates every 20s
 
 class CircuitOpenError extends Error {
   constructor () { super('Circuit breaker open — rate limit waves exceeded'); this.isCircuitOpen = true }
+}
+
+// Start (or restart) the per-wave countdown ticker.
+// Fires every 20s and prints remaining seconds until the cooldown expires.
+// Self-clears when the cooldown window passes.
+function startCooldownCountdown () {
+  if (_cooldownTimerId) clearInterval(_cooldownTimerId)
+  _cooldownTimerId = setInterval(() => {
+    const remaining = Math.ceil((_cooldownUntil - Date.now()) / 1000)
+    if (remaining <= 0) {
+      clearInterval(_cooldownTimerId)
+      _cooldownTimerId = null
+    } else {
+      process.stderr.write(`  ⏳ cooldown: ${remaining}s remaining\n`)
+    }
+  }, 20_000)
 }
 
 // Centralized 429 handler — call once per response that returns 429.
@@ -555,20 +572,15 @@ function handle429 (headers, url) {
       `  🚦 HTTP 429 ${url} — ${Math.ceil(waitMs / 1000)}s` +
       ` (wave ${_consecutiveRateLimits}, ${source}${_circuitOpen ? ', circuit OPEN' : ''})\n`
     )
+    startCooldownCountdown()
   }
   // else: concurrent 429 in same cooldown window — silently absorbed
 }
 
-async function waitForCooldown (label) {
+async function waitForCooldown () {
   if (_circuitOpen) throw new CircuitOpenError()
   const remaining = _cooldownUntil - Date.now()
-  if (remaining > 0) {
-    process.stderr.write(
-      `  ⏳ rate-limit cooldown: waiting ${Math.ceil(remaining / 1000)}s` +
-      (label ? ` (${label})` : '') + '\n'
-    )
-    await sleep(remaining + 100) // +100ms buffer past the deadline
-  }
+  if (remaining > 0) await sleep(remaining + 100) // +100ms buffer past the deadline
   if (_circuitOpen) throw new CircuitOpenError()
 }
 
