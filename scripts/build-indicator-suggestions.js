@@ -24,6 +24,7 @@ const http = require('http')
 const https = require('https')
 const path = require('path')
 const fs = require('fs/promises')
+const { unlinkSync } = require('fs')
 
 const ROOT = path.resolve(__dirname, '..')
 const { version: PKG_VERSION } = require(path.join(ROOT, 'package.json'))
@@ -828,6 +829,37 @@ async function savePackageCache (filePath, manifests, seen, discoveryState) {
 }
 
 // ---------------------------------------------------------------------------
+// Process lock — prevents concurrent runs against the same output path
+// ---------------------------------------------------------------------------
+
+function makeLockHelpers (lockPath) {
+  function acquire () {
+    const existing = (() => { try { return require('fs').readFileSync(lockPath, 'utf8').trim() } catch { return null } })()
+    if (existing) {
+      const pid = parseInt(existing, 10)
+      if (!isNaN(pid)) {
+        let alive = false
+        try { process.kill(pid, 0); alive = true } catch {}
+        if (alive) {
+          process.stderr.write(`\n⛔  Already running (PID ${pid}) with the same output path.\n`)
+          process.stderr.write(`   Lock file: ${lockPath}\n`)
+          process.stderr.write(`   If that process is gone, delete the lock file and retry.\n\n`)
+          process.exit(1)
+        }
+        process.stderr.write(`⚠️  Stale lock from PID ${pid} — removing and continuing\n`)
+      }
+    }
+    require('fs').writeFileSync(lockPath, String(process.pid), 'utf8')
+  }
+
+  function release () {
+    try { unlinkSync(lockPath) } catch {}
+  }
+
+  return { acquire, release }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -858,10 +890,10 @@ Options:
   --reset            Delete both cache files and the deep cache dir; start fresh
   --deep             Fetch indicator files from unpkg and run the production scanner
                      (cached by name@version in *.deep/ next to --out)
-  --search-ttl <h>   Hours before the per-keyword page cursor resets to page 0  (default: 168 = 7 days)
-                     Within the TTL window each keyword continues from the last page reached,
-                     skipping already-walked pages.  Set to 0 to force page-0 restart for all
-                     keywords without wiping the package store (weaker than --reset).
+  --notify-pages <n> Pages between checkpoint saves and stats output     (default: 2 = every 500 results)
+  --search-ttl <h>   Hours before the per-keyword page cursor resets to page 0 (default: 168 = 7 days)
+                     Within the TTL window each keyword continues from the last page reached.
+                     Set to 0 to force page-0 restart for all keywords without wiping the store.
   -h, --help         Show this help message
 
 Cache files (written next to --out, gitignored):
@@ -898,8 +930,20 @@ When to use --reset:
   const delayMs = +flag('--delay', 60)
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
+
+  // Acquire process lock — prevents a second run from corrupting shared cache files.
+  // Lock is released automatically on any exit (normal, error, or signal).
+  const lockPath = outPath.replace(/\.json$/, '.lock')
+  const lock = makeLockHelpers(lockPath)
+  lock.acquire()
+  process.on('exit', lock.release)
+  for (const sig of ['SIGINT', 'SIGTERM']) {
+    process.on(sig, () => { process.exit(sig === 'SIGINT' ? 130 : 143) })
+  }
+
   const doReset = args.includes('--reset')
   const deepMode = args.includes('--deep')
+  const notifyPages = +flag('--notify-pages', 2)  // checkpoint + stats every N pages (default 2 = 500 seen)
   const searchTtlHours = args.includes('--search-ttl') ? parseFloat(flag('--search-ttl', DEFAULT_CURSOR_TTL_HOURS)) : DEFAULT_CURSOR_TTL_HOURS
   const searchTtlMs = searchTtlHours * 60 * 60 * 1000
 
@@ -1140,6 +1184,7 @@ When to use --reset:
       }
 
       const size = 250
+      let pagesFetched = 0
       process.stderr.write(`  query: ${query}${fromLabel}\n`)
 
       while (!done) {
@@ -1165,6 +1210,7 @@ When to use --reset:
         const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
         for (const n of pageNames) seen.add(n)
         from += page.objects.length
+        pagesFetched++
 
         for (const name of pageNames) {
           if (done) break
@@ -1187,18 +1233,19 @@ When to use --reset:
               if (newThisRun >= topN) done = true
             }
           }
-          // Progress: every 100 packages scanned (seen), regardless of how many have scripts
-          if (scanned % 100 === 0 || newThisRun <= 3) {
-            process.stderr.write(
-              `    scanned ${scanned} (${newThisRun}/${topN} with scripts, ${manifests.length} total)` +
-              ` — last: ${name}\n`
-            )
-          }
           finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }
           if (delayMs > 0) await sleep(delayMs)
         }
-        // Save resume cache after every page so interrupts resume from the right position
-        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
+
+        // Every notifyPages pages: checkpoint resume cache and print stats
+        if (pagesFetched % notifyPages === 0) {
+          await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors })
+          process.stderr.write(
+            `    page ${pagesFetched} (from=${from}) | ` +
+            `${scanned} scanned | ${newThisRun}/${topN} new with scripts | ` +
+            `${manifests.length} total\n`
+          )
+        }
 
         if (from >= 2000) break  // hit page cap
       }
