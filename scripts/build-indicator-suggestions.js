@@ -1633,7 +1633,7 @@ When to use --reset:
     process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} (cross-package imports)\n`)
   }
   process.stderr.write(`   With lifecycle scripts: ${manifests.length} (of ${seen.size.toLocaleString()} total examined)\n`)
-  process.stderr.write(`   Matched (existing):   ${output.coverage.matchedByExistingDefinitions}\n`)
+  process.stderr.write(`   Covered by existing indicator defs: ${output.coverage.matchedByExistingDefinitions} (of ${manifests.length} with lifecycle scripts)\n`)
   process.stderr.write(`   Uncategorized builds: ${output.coverage.uncategorizedBuildPackages}\n`)
   process.stderr.write(`   Pattern gaps found:   ${commandPatternGaps.length}\n`)
   process.stderr.write(`\n   Written to: ${outPath}\n\n`)
