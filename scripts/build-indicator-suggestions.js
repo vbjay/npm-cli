@@ -1467,50 +1467,65 @@ When to use --reset:
       pagesSinceLastDrain = 0
 
     // ── Counts mode ────────────────────────────────────────────────────────
+    // Bulk endpoint: up to 128 unscoped packages per request.
+    // Scoped packages (@scope/pkg) are not supported in bulk — fetched individually.
     } else if (mode === DrainMode.Counts) {
-      const countQueue = downloadCountsStale
+      const need = downloadCountsStale
         ? [...manifests]
         : manifests.filter(m => m.state === 'lifecycle')
-      if (countQueue.length === 0) return
-      const startCount = countQueue.length
+      if (need.length === 0) return
+
+      const unscoped = need.filter(m => !m.name.startsWith('@'))
+      const scoped   = need.filter(m =>  m.name.startsWith('@'))
+      const startCount = need.length
 
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
-      process.stderr.write(`\n  Counts: fetching ${startCount}...\n`)
+      process.stderr.write(`\n  Counts: fetching ${startCount} (${unscoped.length} bulk, ${scoped.length} scoped)...\n`)
       let cFetched = 0
       let cReady = 0
 
-      const worker = async (workerIndex) => {
-        await sleep(workerIndex * COUNTS_DELAY_MS)
-        while (true) {
-          const m = countQueue.shift()
-          if (!m) break
-          await sleep(COUNTS_DELAY_MS)
+      const checkpoint = async () => {
+        process.stderr.write(`    [${cFetched}/${startCount}] fetched, ${cReady} ready\n`)
+        await Promise.all([
+          savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+          savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+        ])
+      }
 
-          const encoded = m.name.replace(/\//g, '%2F')
-          let data = null
-          try {
-            data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${encoded}`)
-          } catch (_) {}
-
-          if (data) {
-            m.weeklyDownloads = data.downloads || 0
+      // Unscoped — batches of 128
+      for (let i = 0; i < unscoped.length; i += 128) {
+        const batch = unscoped.slice(i, i + 128)
+        let data = null
+        try {
+          data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${batch.map(m => m.name).join(',')}`)
+        } catch (_) {}
+        if (data) {
+          for (const m of batch) {
+            m.weeklyDownloads = data[m.name]?.downloads || 0
             m.state = 'ready'
             cReady++
           }
-
-          cFetched++
-          if (cFetched % DRAIN_CHECKPOINT_EVERY === 0) {
-            process.stderr.write(`    [${cFetched}/${startCount}] fetched, ${cReady} ready\n`)
-            await Promise.all([
-              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-            ])
-          }
         }
+        cFetched += batch.length
+        if (Math.floor(cFetched / DRAIN_CHECKPOINT_EVERY) > Math.floor((cFetched - batch.length) / DRAIN_CHECKPOINT_EVERY)) {
+          await checkpoint()
+        }
+        await sleep(COUNTS_DELAY_MS)
       }
 
-      await Promise.all(Array.from({ length: COUNTS_CONCURRENCY }, (_, i) => worker(i)))
-      process.stderr.write(`    [${cFetched}/${startCount}] fetched, ${cReady} ready\n`)
+      // Scoped — one at a time (bulk endpoint doesn't support @scope/pkg)
+      for (const m of scoped) {
+        const encoded = m.name.replace(/\//g, '%2F')
+        let data = null
+        try {
+          data = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${encoded}`)
+        } catch (_) {}
+        if (data) { m.weeklyDownloads = data.downloads || 0; m.state = 'ready'; cReady++ }
+        cFetched++
+        if (cFetched % DRAIN_CHECKPOINT_EVERY === 0) await checkpoint()
+        await sleep(COUNTS_DELAY_MS)
+      }
+
       process.stderr.write(`    ✓ +${cReady} of ${cFetched} download counts (${manifests.filter(m => m.state === 'ready').length} ready total)\n`)
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
