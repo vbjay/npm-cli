@@ -1668,6 +1668,16 @@ When to use --reset:
     }
 
     for (const name of addNames) {
+      // Reject bare scope with no package name: '@angular' is not a valid npm package.
+      // A scoped package must be '@scope/name'.
+      if (name.startsWith('@') && !name.includes('/')) {
+        process.stderr.write(
+          `  ✗ '${name}' looks like a scope, not a package name.\n` +
+          `    Did you mean '@${name.slice(1)}/<package>'?  e.g. '${name}/cli' or '${name}/core'\n`
+        )
+        continue
+      }
+
       const added = tryAdd(name, '')
 
       // Determine and probe the alternate form.
