@@ -1402,13 +1402,13 @@ When to use --reset:
             } else {
               networkRetry.push(name)
             }
-          } else if (!done && manifest) {
+          } else if (manifest) {
             const lc = extractLifecycleScripts(manifest.scripts)
             if (Object.keys(lc).length > 0) {
               manifests.push({ ...manifest, state: 'lifecycle' })
               mFound++
               newThisRun++
-              if (topN > 0 && newThisRun >= topN) done = true
+              if (topN > 0 && newThisRun >= topN) done = true  // stop search pages, not drain
             }
           }
 
