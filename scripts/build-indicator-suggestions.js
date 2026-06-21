@@ -1217,6 +1217,10 @@ Options:
   --search-ttl <h>   Hours before the per-keyword result cursor resets to offset 0 (default: 168 = 7 days)
                      Within the TTL window each keyword continues from the last result offset reached.
                      Set to 0 to force page-0 restart for all keywords without wiping the store.
+  --add <pkg,...>    Inject one or more package names as candidates (comma-separated).
+                     Skips names already in the store or seen set. Forces collection
+                     of specific packages without a full search run.
+                     Example: --add "9router,some-other-pkg"
   -h, --help         Show this help message
 
 Cache files (written next to --out, gitignored):
@@ -1512,6 +1516,28 @@ When to use --reset:
   let pagesSinceLastDrain = 0
   // Restore any candidates pending manifest fetch from a previous interrupted run.
   const candidates = [...loadedCandidates]
+
+  // --add <pkg1,pkg2,...>: inject package names as candidates regardless of seen/store.
+  // Useful for one-off additions or testing specific packages.
+  const addFlag = flag('--add', null)
+  if (addFlag) {
+    const addNames = addFlag.split(',').map(s => s.trim()).filter(Boolean)
+    const inStore = new Set(manifests.map(m => m.name))
+    let addedCount = 0
+    for (const name of addNames) {
+      if (!inStore.has(name) && !seen.has(name) && !candidates.includes(name)) {
+        candidates.push(name)
+        seen.add(name)
+        addedCount++
+        process.stderr.write(`  + injected candidate: ${name}\n`)
+      } else {
+        process.stderr.write(`  ~ skipped (already known): ${name}\n`)
+      }
+    }
+    if (addedCount > 0) {
+      process.stderr.write(`\n`)
+    }
+  }
   // Track HTTP 4xx/5xx failures across all drains this run.
   // Persisted as state:'failed' so the next run retries them as candidates.
   // (Network errors / circuit-open keep the name in candidates for retry instead.)
