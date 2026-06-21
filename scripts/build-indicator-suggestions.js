@@ -547,7 +547,7 @@ function startCooldownCountdown () {
       clearInterval(_cooldownTimerId)
       _cooldownTimerId = null
     } else {
-      process.stderr.write(`  ⏳ cooldown: ${remaining}s remaining\n`)
+      process.stderr.write(`  ⏳ cooldown: ${humanDuration(remaining)} remaining\n`)
     }
   }, 20_000)
 }
@@ -569,7 +569,7 @@ function handle429 (headers, url) {
     _cooldownUntil = Date.now() + waitMs
     if (_consecutiveRateLimits >= CIRCUIT_OPEN_THRESHOLD) _circuitOpen = true
     process.stderr.write(
-      `  🚦 HTTP 429 ${url} — ${Math.ceil(waitMs / 1000)}s` +
+      `  🚦 HTTP 429 ${url} — ${humanDuration(Math.ceil(waitMs / 1000))}` +
       ` (wave ${_consecutiveRateLimits}, ${source}${_circuitOpen ? ', circuit OPEN' : ''})\n`
     )
     startCooldownCountdown()
@@ -592,6 +592,16 @@ function retryAfterMs (header) {
   const date = Date.parse(header)
   if (!isNaN(date)) return Math.max(0, date - Date.now())
   return null
+}
+
+// Format a duration in seconds as human-readable: 30s, 1m 30s, 2h 5m
+function humanDuration (totalSecs) {
+  const h = Math.floor(totalSecs / 3600)
+  const m = Math.floor((totalSecs % 3600) / 60)
+  const s = totalSecs % 60
+  if (h > 0) return `${h}h${m > 0 ? ` ${m}m` : ''}`
+  if (m > 0) return `${m}m${s > 0 ? ` ${s}s` : ''}`
+  return `${s}s`
 }
 
 // ---------------------------------------------------------------------------
