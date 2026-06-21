@@ -911,6 +911,7 @@ Options:
   --deep             Fetch indicator files from unpkg and run the production scanner
                      (cached by name@version in *.deep/ next to --out)
   --notify-pages <n> Pages between checkpoint saves and stats output     (default: 2 = every 500 results)
+  --page-size <n>    Results per search page, 1–250 (default: 250 = npm registry max)
   --search-ttl <h>   Hours before the per-keyword result cursor resets to offset 0 (default: 168 = 7 days)
                      Within the TTL window each keyword continues from the last result offset reached.
                      Set to 0 to force page-0 restart for all keywords without wiping the store.
@@ -974,6 +975,7 @@ When to use --reset:
   const doReset = args.includes('--reset')
   const deepMode = args.includes('--deep')
   const notifyPages = +flag('--notify-pages', 2)  // checkpoint + stats every N pages (default 2 = 500 seen)
+  const pageSize = Math.min(250, Math.max(1, +flag('--page-size', 250)))  // results per npm search request (max 250)
   const searchTtlHours = args.includes('--search-ttl') ? parseFloat(flag('--search-ttl', DEFAULT_CURSOR_TTL_HOURS)) : DEFAULT_CURSOR_TTL_HOURS
   const searchTtlMs = searchTtlHours * 60 * 60 * 1000
 
@@ -1213,7 +1215,7 @@ When to use --reset:
     for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
       const query = DISCOVERY_QUERIES[qi]
 
-      // Determine starting page for this keyword:
+      // Determine starting offset for this keyword:
       //  1. Interrupted-run resume (tmp cursor): exact result offset from last fetch
       //  2. Rolling cursor within TTL: continue from last result offset — sweep start
       //     age (cursor.startedAt) determines TTL, not the last scan time.
@@ -1233,7 +1235,7 @@ When to use --reset:
             from = cursor.from  // continue forward within this sweep
             sweepStartedAt = cursor.startedAt  // keep the original sweep origin
             const ageH = (sweepAgeMs / 3_600_000).toFixed(1)
-            const approxPage = Math.floor(from / 250) + 1
+            const approxPage = Math.floor(from / pageSize) + 1
             fromLabel = ` (cursor: offset ${from} ~page ${approxPage}, sweep age ${ageH}h/${searchTtlHours}h)`
           } else {
             from = 0  // sweep expired: restart from top to catch newly-popular packages
@@ -1247,7 +1249,6 @@ When to use --reset:
         }
       }
 
-      const size = 250
       process.stderr.write(`  query: ${query}${fromLabel}\n`)
 
       while (!done) {
@@ -1255,7 +1256,7 @@ When to use --reset:
         const url =
           `https://registry.npmjs.org/-/v1/search` +
           `?text=${enc}&popularity=1.0&quality=0.0&maintenance=0.0` +
-          `&size=${size}&from=${from}`
+          `&size=${pageSize}&from=${from}`
 
         let page
         try {
@@ -1312,7 +1313,7 @@ When to use --reset:
           )
         }
 
-        if (from >= 2000) break  // hit result cap (2000 results = 8 pages at size 250)
+        if (from >= 2000) break  // npm registry caps results at offset 2000
       }
       // Save rolling cursor — covers exhaustion, 2000-cap, topN-reached, and error exits.
       // Preserve startedAt (sweep origin) so TTL is measured from the first page-0 scan,
