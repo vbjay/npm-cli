@@ -82,8 +82,8 @@ const DEFAULT_CURSOR_TTL_HOURS = 168  // 7 days
 
 const MANIFEST_CONCURRENCY = 5   // npm's own tooling (make-fetch-happen) uses 5 sockets
 const MANIFEST_DELAY_MS    = 150  // small inter-request stagger to avoid burst detection
-const COUNTS_CONCURRENCY   = 2   // api.npmjs.org/downloads has stricter rate limits
-const COUNTS_DELAY_MS      = 600  // ~3 req/sec across 2 workers
+const COUNTS_CONCURRENCY   = 1    // api.npmjs.org/downloads rate-limits aggressively
+const COUNTS_DELAY_MS      = 1200  // ~50 req/min — safe for downloads endpoint
 
 const DrainMode = Object.freeze({
   Candidates: 'Candidates',
