@@ -46,7 +46,7 @@ const { classifyUrl } = require(
 // Cache schema version — hash of every signal name+regex and every indicator
 // Increment when the on-disk file format changes (e.g. defang scheme, meta fields).
 // Mixed into DEEP_CACHE_VERSION so old caches are automatically invalidated.
-const DEEP_CACHE_SCHEMA = 'defang-v3'
+const DEEP_CACHE_SCHEMA = 'defang-v4'
 
 // registry key+commandPattern so that ANY change to signals or indicators
 // automatically invalidates all deep-scan cache entries and forces a rescan.
@@ -96,7 +96,8 @@ const DrainMode = Object.freeze({
 // Null byte at position 0 causes SyntaxError in all Node.js versions, preventing
 // accidental execution of cached JS files while leaving text content intact for
 // static analysis (regex matching is unaffected).
-const DEFANG_MSG = 'DEFANGED: static-analysis cache — do not execute'
+const DEFANG_MSG    = 'DEFANGED: static-analysis cache — do not execute'
+const DEFANG_SHEBANG = `#!/usr/bin/env false  # ${DEFANG_MSG}`
 
 // Binary executable magic bytes — these files are skipped entirely (defangBuf returns null).
 const BINARY_MAGIC = [
@@ -108,65 +109,126 @@ const BINARY_MAGIC = [
 ]
 
 /**
+ * Overwrite any existing shebang (or prepend one) with #!/usr/bin/env false,
+ * then inject killLine immediately after it.
+ * #!/usr/bin/env false causes OS-level execution to exit 1 before the interpreter
+ * ever sees the file content; killLine handles interpreter-direct invocation.
+ */
+function defangWithShebang (str, killLine) {
+  const nlIdx = str.indexOf('\n')
+  const afterFirst = nlIdx >= 0 ? str.slice(nlIdx + 1) : ''
+  return `${DEFANG_SHEBANG}\n# ${DEFANG_MSG}\n${killLine}\n${afterFirst}`
+}
+
+/**
  * Defang a downloaded file so it cannot be accidentally executed.
  * Returns null for binary executables (caller should skip writing).
- * Returns a modified Buffer with an inert header prepended for script types.
- * Returns the original buf unchanged for non-executable types (JSON, TOML, …).
+ * Returns a modified Buffer with an inert header for script/build-tool types.
+ * Returns the original buf unchanged for safe data types (JSON, TOML, .rs, …).
  */
 function defangBuf (relPath, buf) {
+  // 1. Binary executable → skip entirely
   if (BINARY_MAGIC.some(m => buf.length >= m.length && buf.slice(0, m.length).equals(m))) {
-    return null  // binary executable — skip
+    return null
   }
-  const ext = path.extname(relPath).toLowerCase()
+
+  const ext  = path.extname(relPath).toLowerCase()
+  const base = path.basename(relPath).toLowerCase()
+
+  // 2. JS/TS: null byte → SyntaxError; also overwrite any shebang
   if (['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'].includes(ext)) {
-    // Null byte → SyntaxError before any code runs
-    return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n`), buf])
+    let str = buf.toString('utf8')
+    if (str.startsWith('#!')) {
+      const nl = str.indexOf('\n')
+      str = `${DEFANG_SHEBANG}\n` + (nl >= 0 ? str.slice(nl + 1) : '')
+    }
+    return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n`), Buffer.from(str)])
   }
+
+  // 3. Shell scripts — defanged shebang + exit 1
   if (['.sh', '.bash', '.zsh', '.ksh', '.fish'].includes(ext)) {
-    // Preserve shebang on line 1 if present, inject exit 1 immediately after
-    const str = buf.toString('utf8')
-    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
-    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\nexit 1\n${str.slice(nl)}`)
+    return Buffer.from(defangWithShebang(buf.toString('utf8'), 'exit 1'))
   }
+
+  // 4. Windows batch — no shebang concept; prepend @exit
   if (['.bat', '.cmd'].includes(ext)) {
     return Buffer.from(`@rem ${DEFANG_MSG}\r\n@exit /b 1\r\n${buf.toString('utf8')}`)
   }
+
+  // 5. PowerShell — # comment + throw (shebang is harmless as a comment in PS)
   if (['.ps1', '.psm1', '.psd1'].includes(ext)) {
-    return Buffer.from(`# ${DEFANG_MSG}\nthrow '${DEFANG_MSG}'\n${buf.toString('utf8')}`)
+    return Buffer.from(defangWithShebang(buf.toString('utf8'), `throw '${DEFANG_MSG}'`))
   }
+
+  // 6. Python — defanged shebang + sys.exit
   if (['.py', '.pyw'].includes(ext)) {
-    const str = buf.toString('utf8')
-    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
-    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\nimport sys; sys.exit('${DEFANG_MSG}')\n${str.slice(nl)}`)
+    return Buffer.from(defangWithShebang(buf.toString('utf8'), `import sys; sys.exit('${DEFANG_MSG}')`))
   }
+
+  // 7. Ruby — defanged shebang + abort
   if (['.rb'].includes(ext)) {
-    const str = buf.toString('utf8')
-    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
-    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\nabort '${DEFANG_MSG}'\n${str.slice(nl)}`)
+    return Buffer.from(defangWithShebang(buf.toString('utf8'), `abort '${DEFANG_MSG}'`))
   }
+
+  // 8. Perl — defanged shebang + die
   if (['.pl', '.pm'].includes(ext)) {
-    const str = buf.toString('utf8')
-    const nl = str.startsWith('#!') ? str.indexOf('\n') + 1 : 0
-    return Buffer.from(`${str.slice(0, nl)}# ${DEFANG_MSG}\ndie '${DEFANG_MSG}';\n${str.slice(nl)}`)
+    return Buffer.from(defangWithShebang(buf.toString('utf8'), `die '${DEFANG_MSG}';`))
   }
-  // Makefile: override all common targets + .DEFAULT so `make` exits 1 immediately.
-  // Preserves content for static analysis (pattern matching still works).
-  const base = path.basename(relPath).toLowerCase()
+
+  // 9. Makefile variants — override every common target + .DEFAULT to exit 1
   if (['makefile', 'gnumakefile', 'bsdmakefile'].includes(base) || ['.mk', '.make'].includes(ext)) {
-    const str = buf.toString('utf8')
     return Buffer.from(
       `# ${DEFANG_MSG}\n` +
       `.PHONY: all install build clean test configure\n` +
       `all install build clean test configure: ; @exit 1\n` +
       `.DEFAULT: ; @exit 1\n\n` +
-      str
+      buf.toString('utf8')
     )
   }
-  // GYP/GYPI: Python-style comment marker (node-gyp still parses, but file is clearly marked).
+
+  // 10. Gradle / Kotlin build scripts — Groovy throw
+  if (['.gradle', '.gradle.kts'].includes(ext)) {
+    return Buffer.from(`// ${DEFANG_MSG}\nthrow new Exception('${DEFANG_MSG}')\n${buf.toString('utf8')}`)
+  }
+
+  // 11. GYP/GYPI — Python comment marker
   if (['.gyp', '.gypi'].includes(ext)) {
     return Buffer.from(`# ${DEFANG_MSG}\n${buf.toString('utf8')}`)
   }
-  return buf  // non-executable (JSON, TOML, CMakeLists.txt, …) — pass through unchanged
+
+  // 12. Content-based detection for extensionless / unrecognized extensions
+  const head = buf.slice(0, 512).toString('utf8')
+  if (head.startsWith('#!')) {
+    // Shebang present — check interpreter
+    const shebangLine = head.slice(0, head.indexOf('\n'))
+    if (/node|deno/.test(shebangLine)) {
+      // Node shebang script → JS defang (null byte + overwrite shebang)
+      const str = `${DEFANG_SHEBANG}\n` + head.slice(head.indexOf('\n') + 1)
+      return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n`), Buffer.from(str)])
+    }
+    if (/python/.test(shebangLine)) {
+      return Buffer.from(defangWithShebang(head, `import sys; sys.exit('${DEFANG_MSG}')`))
+    }
+    if (/ruby/.test(shebangLine)) {
+      return Buffer.from(defangWithShebang(head, `abort '${DEFANG_MSG}'`))
+    }
+    if (/perl/.test(shebangLine)) {
+      return Buffer.from(defangWithShebang(head, `die '${DEFANG_MSG}';`))
+    }
+    // Unknown interpreter — defanged shebang + exit 1 covers sh, env, etc.
+    return Buffer.from(defangWithShebang(buf.toString('utf8'), 'exit 1'))
+  }
+
+  // JS content without recognized extension (e.g. underscore-contrib .arity/.builders,
+  // appium extensionless modules, etc.)
+  if (/^["']use strict["']/.test(head) ||
+      /^\/\//.test(head) ||
+      /^\(function/.test(head) ||
+      /^(?:var |const |let |function |class |module\.exports|exports\.)/.test(head)) {
+    return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n`), buf])
+  }
+
+  return buf  // safe data files (JSON, TOML, .rs, .c, CMakeLists.txt, …)
 }
 
 /**
