@@ -1334,8 +1334,7 @@ When to use --reset:
     let circuitTripped = false
 
     await Promise.all(todo.map(name => mLimit(async () => {
-      if (circuitTripped || done) return
-      if (topN > 0 && newThisRun >= topN) { done = true; return }
+      if (circuitTripped) return
 
       let manifest = null
       let transientError = false
@@ -1358,12 +1357,14 @@ When to use --reset:
       const idx = candidates.indexOf(name)
       if (idx >= 0) candidates.splice(idx, 1)
 
-      if (manifest) {
+      // Only add to manifests if topN not yet hit
+      if (!done && manifest) {
         const lc = extractLifecycleScripts(manifest.scripts)
         if (Object.keys(lc).length > 0) {
           manifests.push({ ...manifest, state: 'lifecycle' })
           mFound++
           newThisRun++
+          if (topN > 0 && newThisRun >= topN) done = true  // signal: stop fetching new pages
         }
       }
 
