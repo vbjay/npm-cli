@@ -67,6 +67,11 @@ function computeDeepCacheVersion () {
 }
 const DEEP_CACHE_VERSION = computeDeepCacheVersion()
 
+// Default TTL for re-scanning an already-completed keyword search query.
+// Prevents redundant full-page traversals when re-running shortly after a
+// previous collection pass.  Override with --search-ttl <hours>.
+const DEFAULT_SEARCH_TTL_HOURS = 24
+
 // ---------------------------------------------------------------------------
 // Concurrency limiter — run at most `max` async tasks simultaneously
 // ---------------------------------------------------------------------------
@@ -850,6 +855,8 @@ Options:
   --reset            Delete both cache files and the deep cache dir; start fresh
   --deep             Fetch indicator files from unpkg and run the production scanner
                      (cached by name@version in *.deep/ next to --out)
+  --search-ttl <h>   Hours before a completed keyword search is re-run  (default: 24)
+                     Set to 0 to force a fresh search pass without --reset
   -h, --help         Show this help message
 
 Cache files (written next to --out, gitignored):
@@ -888,6 +895,8 @@ When to use --reset:
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
   const doReset = args.includes('--reset')
   const deepMode = args.includes('--deep')
+  const searchTtlHours = args.includes('--search-ttl') ? parseFloat(flag('--search-ttl', DEFAULT_SEARCH_TTL_HOURS)) : DEFAULT_SEARCH_TTL_HOURS
+  const searchTtlMs = searchTtlHours * 60 * 60 * 1000
 
   // Two cache files serve different purposes:
   //   .packages.json  — permanent manifest store; saved on every successful run;
@@ -974,6 +983,10 @@ When to use --reset:
 
   const { names, manifests: cached, seen: cachedSeen, discoveryState } = loaded
 
+  // Per-keyword timestamp of last full scan — persisted in discoveryState so TTL
+  // checks work across runs without --reset.
+  const keywordLastScanned = discoveryState?.keywordLastScanned || {}
+
   if (cached) {
     for (const m of cached) manifests.push(m)
     for (const n of (cachedSeen || [])) seen.add(n)
@@ -981,8 +994,6 @@ When to use --reset:
       resumeQueryIndex = discoveryState.queryIndex || 0
       resumeQueryFrom  = discoveryState.queryFrom  || 0
     }
-
-    // Startup summary — show what's loaded and what we're doing
     const withDl = manifests.filter(m => m.weeklyDownloads > 0)
     const sorted = [...withDl].sort((a, b) => b.weeklyDownloads - a.weeklyDownloads)
     const dlMax  = sorted[0]?.weeklyDownloads ?? 0
@@ -1082,7 +1093,7 @@ When to use --reset:
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
   // Skip collection if resuming step 4, or if no --top was given (topN === 0).
   let done = isStep4Resume || topN === 0
-  let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom }
+  let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordLastScanned }
   let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
 
   while (!done) {
@@ -1091,6 +1102,19 @@ When to use --reset:
     for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
       const query = DISCOVERY_QUERIES[qi]
       let from = (qi === resumeQueryIndex) ? resumeQueryFrom : 0
+
+      // TTL check: skip keywords that were fully scanned recently.
+      // Exception: if this is the exact keyword being resumed (from > 0), let it finish.
+      const isResumingThisKeyword = qi === resumeQueryIndex && from > 0
+      if (!isResumingThisKeyword && searchTtlMs > 0 && keywordLastScanned[query]) {
+        const ageMs = Date.now() - new Date(keywordLastScanned[query]).getTime()
+        if (ageMs < searchTtlMs) {
+          const ageH = (ageMs / 3_600_000).toFixed(1)
+          process.stderr.write(`  ⏭️  ${query.replace('keywords:', '')} — searched ${ageH}h ago, skipping (TTL ${searchTtlHours}h)\n`)
+          continue
+        }
+      }
+
       const size = 250
       process.stderr.write(`  query: ${query}${from > 0 ? ` (resuming from=${from})` : ''}\n`)
 
@@ -1112,7 +1136,10 @@ When to use --reset:
           process.stderr.write(`  ⚠️  error fetching ${query}: ${err.message} — skipping to next keyword\n`)
           break
         }
-        if (!page || !page.objects || page.objects.length === 0) break
+        if (!page || !page.objects || page.objects.length === 0) {
+          keywordLastScanned[query] = new Date().toISOString()  // exhausted — record completion
+          break
+        }
 
         const pageNames = page.objects.map(o => o.package.name).filter(n => !seen.has(n))
         for (const n of pageNames) seen.add(n)
@@ -1145,19 +1172,22 @@ When to use --reset:
               if (newThisRun >= topN) done = true
             }
           }
-          finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from }
+          finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordLastScanned }
           if (delayMs > 0) await sleep(delayMs)
         }
         // Save resume cache after every page so interrupts resume from the right position
-        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from })
+        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordLastScanned })
 
-        if (from >= 2000) break
+        if (from >= 2000) {
+          keywordLastScanned[query] = new Date().toISOString()  // hit page cap — record completion
+          break
+        }
       }
 
       // Advance to the next query: flush both caches so future merges start from a current base.
       const nextQi = qi + 1
       const nextFrom = 0
-      const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom }
+      const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom, keywordLastScanned }
       process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, nextState),
@@ -1324,9 +1354,10 @@ When to use --reset:
 
   process.stderr.write(`  ✓ all download counts fetched\n\n`)
 
-  // Save final manifests to permanent store with no discovery state — the run
-  // completed successfully, so the next run starts fresh from position 0.
-  await savePackageCache(pkgPath, manifests, seen, null)
+  // Save final manifests to permanent store.  discoveryState carries only
+  // keywordLastScanned (no resume position) so the next run starts collection
+  // at page 0 but can skip keywords scanned recently within the TTL window.
+  await savePackageCache(pkgPath, manifests, seen, { keywordLastScanned })
   process.stderr.write(`  ✓ manifests saved to ${pkgPath}\n\n`)
   await fs.unlink(resumeCachePath).catch(() => {})
 
