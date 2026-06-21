@@ -904,6 +904,9 @@ Options:
   --delay <ms>       Delay between npm registry requests in ms  (default: 60)
   --out <file>       Output JSON path                           (default: indicator-suggestions.json)
   --packages <file>  Seed package-name list instead of permanent store
+  --keywords <csv>   Comma-separated keyword list (case-insensitive, "keywords:" prefix optional)
+                     Resume: appends to existing list.  Fresh run: replaces defaults entirely.
+                     Example: --keywords "ruby,python,go"
   --reset            Delete both cache files and the deep cache dir; start fresh
   --deep             Fetch indicator files from unpkg and run the production scanner
                      (cached by name@version in *.deep/ next to --out)
@@ -947,6 +950,16 @@ When to use --reset:
   const delayMs = +flag('--delay', 60)
   const outFile = flag('--out', 'indicator-suggestions.json')
   const outPath = path.isAbsolute(outFile) ? outFile : path.join(ROOT, outFile)
+  // --keywords csv: normalize to "keywords:X" form; used to extend or replace the built-in list
+  const userKeywordsStr = flag('--keywords', null)
+  const userKeywords = userKeywordsStr
+    ? (() => {
+        const deduped = new Set()
+        return userKeywordsStr.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+          .map(k => k.startsWith('keywords:') ? k : `keywords:${k}`)
+          .filter(k => deduped.has(k) ? false : deduped.add(k))
+      })()
+    : []
 
   // Acquire process lock — prevents a second run from corrupting shared cache files.
   // Lock is released automatically on any exit (normal, error, or signal).
@@ -1111,7 +1124,7 @@ When to use --reset:
   // fetch manifests, keep only those with lifecycle scripts.
   // Packages already loaded from cache are pre-seeded in manifests/seen above.
   // ---------------------------------------------------------------------------
-  const DISCOVERY_QUERIES_BASE = [
+  let DISCOVERY_QUERIES_BASE = [
     'keywords:javascript',  // ~58K — broad; tslib, @babel/parser, typescript, …
     'keywords:node',        // ~36K — Node.js ecosystem; resolve, axios, …
     'keywords:npm',         // ~36K — npm tooling; execa, npm-run-path, …
@@ -1125,12 +1138,35 @@ When to use --reset:
     'keywords:react-native', // React Native packages (often have install scripts)
   ]
 
+  // Resolve saved keyword order first — needed to decide resume vs fresh for --keywords.
+  const savedOrder = discoveryState?.queryOrder || null
+
+  // Apply --keywords override before shuffle/reconciliation:
+  //   resume (savedOrder exists) → append user keywords not already in the base list
+  //   fresh (no savedOrder)      → replace the built-in list entirely
+  if (userKeywords.length > 0) {
+    if (savedOrder) {
+      const baseSet = new Set(DISCOVERY_QUERIES_BASE.map(k => k.toLowerCase()))
+      const toAdd = userKeywords.filter(k => !baseSet.has(k.toLowerCase()))
+      if (toAdd.length > 0) {
+        DISCOVERY_QUERIES_BASE = [...DISCOVERY_QUERIES_BASE, ...toAdd]
+        process.stderr.write(`  --keywords (resume): appending ${toAdd.map(k => k.replace('keywords:', '')).join(', ')}\n`)
+      } else {
+        process.stderr.write(`  --keywords (resume): all specified keywords already in list — no change\n`)
+      }
+    } else {
+      // dedupe the user list itself in case they passed dupes
+      const seen = new Set()
+      DISCOVERY_QUERIES_BASE = userKeywords.filter(k => { const lk = k.toLowerCase(); return seen.has(lk) ? false : seen.add(lk) })
+      process.stderr.write(`  --keywords (fresh): replacing defaults → ${DISCOVERY_QUERIES_BASE.map(k => k.replace('keywords:', '')).join(', ')}\n`)
+    }
+  }
+
   // Shuffle on a fresh run so different executions surface different packages.
   // The order is saved in the cache and restored on resume so qi indices stay stable.
   // If the keyword list has changed since the interrupted run, reconcile:
   //   - append new keywords (not in saved order) so they run after the current position
   //   - drop removed keywords (not in base list) so stale entries don't linger
-  const savedOrder = discoveryState?.queryOrder || null
   let DISCOVERY_QUERIES
   if (savedOrder) {
     const baseSet = new Set(DISCOVERY_QUERIES_BASE)
