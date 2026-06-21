@@ -1376,7 +1376,8 @@ When to use --reset:
   // topN defaults to 0 when not explicit — means "finish any in-progress run,
   // then re-analyze; don't collect new packages". A mid-step resume (tmp.json)
   // is still processed through steps 3.5, 4/5 using whatever was collected.
-  const topN = args.includes('--top') ? +flag('--top', 0) : 0
+  // NOTE: this is a let so --add can bump it to 1 when needed (see below).
+  let topN = args.includes('--top') ? +flag('--top', 0) : 0
   const topExplicit = args.includes('--top')
   const delayMs = +flag('--delay', 60)
   const outFile = flag('--out', 'indicator-suggestions.json')
@@ -1644,10 +1645,10 @@ When to use --reset:
   // --add <pkg1,pkg2,...>: inject package names as candidates regardless of seen/store.
   // Useful for one-off additions or testing specific packages.
   const addFlag = flag('--add', null)
+  let addedCount = 0
   if (addFlag) {
     const addNames = addFlag.split(',').map(s => s.trim()).filter(Boolean)
     const inStore = new Set(manifests.map(m => m.name))
-    let addedCount = 0
     for (const name of addNames) {
       if (!inStore.has(name) && !seen.has(name) && !candidates.includes(name)) {
         candidates.push(name)
@@ -1661,6 +1662,13 @@ When to use --reset:
     if (addedCount > 0) {
       process.stderr.write(`\n`)
     }
+  }
+  // If --add injected new candidates but no --top was given, bump topN to 1 so
+  // the candidates drain runs (done=true would otherwise skip it entirely).
+  if (addedCount > 0 && topN === 0) {
+    topN = 1
+    done = false
+    process.stderr.write(`  ↑ --add injected ${addedCount} candidate(s) with no --top; setting topN=1 to ensure they are fetched\n\n`)
   }
   // Track HTTP 4xx/5xx failures across all drains this run.
   // Persisted as state:'failed' so the next run retries them as candidates.
