@@ -1465,7 +1465,7 @@ When to use --reset:
           for (const m of (discoveredManifests || [])) allDiscovered.push(m.name)
           dfFetched++
           if (dfFetched % DRAIN_CHECKPOINT_EVERY === 0 || dfFetched === startCount) {
-            process.stderr.write(`    [${dfFetched}/${startCount}] fetched${fromCache ? ' [cached]' : ''}\n`)
+            process.stderr.write(`    [${dfFetched}/${startCount}] processed${fromCache ? ' [cached]' : ''}\n`)
             await Promise.all([
               savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
               savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
@@ -1487,7 +1487,7 @@ When to use --reset:
           newNames.push(name)
         }
       }
-      process.stderr.write(`    ✓ ${dfFetched} fetched` +
+      process.stderr.write(`    ✓ ${dfFetched} packages processed` +
         (newNames.length > 0 ? `, +${newNames.length} discovered:` : ', no new packages') + '\n')
       for (const name of newNames) process.stderr.write(`      + ${name}\n`)
       await Promise.all([
