@@ -1335,9 +1335,11 @@ When to use --reset:
       resumeQueryFrom = 0  // reset so next pass starts each keyword from the top
     }
   }
+  const hitRate = scanned > 0 ? (newThisRun / scanned * 100).toFixed(1) : '0.0'
   process.stderr.write(
-    `\n  ✓ collected ${newThisRun} new packages (${manifests.length} total)` +
-    ` (scanned ${scanned} new across ${seen.size} unique names)\n\n`
+    `\n  ✓ scanned ${scanned} new packages this run` +
+    ` → ${newThisRun} with lifecycle scripts (${manifests.length} total in store, ${hitRate}% hit rate)\n` +
+    `     ${seen.size.toLocaleString()} unique package names examined across all runs\n\n`
   )
 
   // ---------------------------------------------------------------------------
