@@ -539,19 +539,21 @@ class CircuitOpenError extends Error {
 // Only a NEW wave (first 429 outside an existing cooldown window) increments
 // the counter and prints a log line. Concurrent 429s in the same window are
 // silently absorbed — this prevents 10 concurrent requests from each bumping
-// the wave counter. The server's retry-after header is intentionally ignored:
-// npm sends aggressive values (120–370s) that would bypass our own 30→60→120s
-// escalation; the circuit breaker (4 waves) is the safety valve instead.
+// the wave counter.
+// Wait time: server's retry-after if present, otherwise linear fallback 30→60→90→120s.
 function handle429 (headers, url) {
   if (Date.now() >= _cooldownUntil) {
-    // New wave — escalate: 30s → 60s → 120s → circuit open
+    // New wave
     _consecutiveRateLimits++
-    const waitMs = Math.min(MAX_BACKOFF_MS, 30_000 * Math.pow(2, _consecutiveRateLimits - 1))
+    const serverWait = retryAfterMs(headers['retry-after']) ?? 0
+    const fallback = Math.min(MAX_BACKOFF_MS, 30_000 * _consecutiveRateLimits)
+    const waitMs = serverWait > 0 ? serverWait : fallback
+    const source = serverWait > 0 ? 'server' : `fallback ${Math.ceil(fallback / 1000)}s`
     _cooldownUntil = Date.now() + waitMs
     if (_consecutiveRateLimits >= CIRCUIT_OPEN_THRESHOLD) _circuitOpen = true
     process.stderr.write(
-      `  🚦 HTTP 429 ${url} — backoff ${Math.ceil(waitMs / 1000)}s` +
-      ` (wave ${_consecutiveRateLimits}${_circuitOpen ? ', circuit OPEN' : ''})\n`
+      `  🚦 HTTP 429 ${url} — ${Math.ceil(waitMs / 1000)}s` +
+      ` (wave ${_consecutiveRateLimits}, ${source}${_circuitOpen ? ', circuit OPEN' : ''})\n`
     )
   }
   // else: concurrent 429 in same cooldown window — silently absorbed
