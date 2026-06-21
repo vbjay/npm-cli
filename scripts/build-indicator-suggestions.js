@@ -95,11 +95,19 @@ async function deepScanPackage (manifest, deepDir, limit) {
   const pkgCacheDir = path.join(deepDir, safeName)
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
-  // Return cached results only when the version AND signal schema both match
-  try {
-    const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
-    if (meta.version === manifest.version && meta.schemaVersion === DEEP_CACHE_VERSION) return { results: meta.results, referencedFiles: meta.referencedFiles || [], fetchedFiles: meta.fetchedFiles || [], fromCache: true }
-  } catch { /* not cached or stale */ }
+  // Cache hit only when the package directory exists, the version matches,
+  // AND the signal schema hash matches.  A missing directory (deleted cache,
+  // partial reset, or first-time run) is treated exactly like a stale key —
+  // no error is thrown, we just fall through and re-fetch from scratch.
+  const dirExists = await fs.access(pkgCacheDir).then(() => true, () => false)
+  if (dirExists) {
+    try {
+      const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+      if (meta.version === manifest.version && meta.schemaVersion === DEEP_CACHE_VERSION) {
+        return { results: meta.results, referencedFiles: meta.referencedFiles || [], fetchedFiles: meta.fetchedFiles || [], fromCache: true }
+      }
+    } catch { /* .meta.json missing or corrupt — treat as stale */ }
+  }
 
   await fs.mkdir(pkgCacheDir, { recursive: true })
 
