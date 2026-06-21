@@ -1942,7 +1942,7 @@ When to use --reset:
     process.stderr.write(`   Already-seen skips:   ${alreadySeenSkips.toLocaleString()} (${skipPct}% of results were repeats)\n`)
   }
   if (deepNewPkgs > 0) {
-    process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} (cross-package imports)\n`)
+    process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} new packages added — discovered by following require() imports across package boundaries during file fetch\n`)
   }
   process.stderr.write(`   With lifecycle scripts: ${manifests.length} (of ${seen.size.toLocaleString()} total examined)\n`)
   process.stderr.write(`   Covered by existing indicator defs: ${output.coverage.matchedByExistingDefinitions} (of ${manifests.length} with lifecycle scripts)\n`)
