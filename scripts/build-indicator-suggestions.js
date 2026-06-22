@@ -2405,16 +2405,25 @@ When to use --reset:
 
   // Warn when indicator coverage of lifecycle-script packages is low.
   // Threshold: fewer than 30% of lifecycle-script packages matched an indicator.
+  // Minimum sample: skip the warning for tiny runs (< 20 packages with lifecycle scripts)
+  // because small samples produce noisy percentages that aren't actionable.
+  const COVERAGE_MIN_SAMPLE = 20
   const coveragePct = manifests.length > 0
     ? Math.round((matchedCount / manifests.length) * 100)
     : 100
-  if (coveragePct < 30) {
+  if (coveragePct < 30 && manifests.length >= COVERAGE_MIN_SAMPLE) {
     process.stderr.write(
-      `\n   ⚠️  Only ${coveragePct}% of lifecycle-script packages are covered by existing indicators.\n` +
+      `\n   ⚠️  Only ${coveragePct}% of lifecycle-script packages are covered by existing indicators` +
+      ` (${matchedCount} of ${manifests.length}).\n` +
       `   Consider reviewing ${outPath} and indicator-definitions.js with an AI assistant:\n` +
       `   ask it to compare the uncategorizedPackages entries against the existing indicator\n` +
       `   registry and suggest new commandPatterns, signals, or indicator entries. Improvements\n` +
       `   affect both approve-scripts (production scanning) and this suggestion tool.\n`
+    )
+  } else if (coveragePct < 30) {
+    process.stderr.write(
+      `\n   ℹ️  Coverage appears low (${coveragePct}%) but sample is small (${manifests.length} packages` +
+      ` with lifecycle scripts < ${COVERAGE_MIN_SAMPLE} minimum). Run with a larger --top value for a meaningful signal.\n`
     )
   }
 
