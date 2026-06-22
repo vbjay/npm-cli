@@ -1873,6 +1873,7 @@ When to use --reset:
           const manifest = fetchQueue.shift()
           if (!manifest) break
           await sleep(MANIFEST_DELAY_MS)
+          process.stderr.write(`    fetching ${manifest.name}@${manifest.version}...\n`)
           const { fetchedFiles, discoveredManifests, fromCache } =
             await deepFetchPackage(manifest, deepDir, fileLimit)
           deepFetchedFiles.set(manifest.name, fetchedFiles || [])
@@ -1927,6 +1928,7 @@ When to use --reset:
           const manifest = dsQueue.shift()
           if (!manifest) break
           await sleep(MANIFEST_DELAY_MS)
+          process.stderr.write(`    scanning ${manifest.name}@${manifest.version}...\n`)
           const { results, referencedFiles, fromCache } =
             await deepAnalyzePackage(manifest, deepDir)
           deepResults.set(manifest.name, results)
