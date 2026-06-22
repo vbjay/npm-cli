@@ -1243,6 +1243,15 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
     })
   }
 
+  // Sort packages deterministically: by name then version so diffs are stable.
+  packages.sort((a, b) => {
+    const n = a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+    if (n !== 0) return n
+    const av = a.version || ''
+    const bv = b.version || ''
+    return av < bv ? -1 : av > bv ? 1 : 0
+  })
+
   // Snapshot is fully built — now safe to yield for the file write.
   // Sanitize keywordCursors: strip any non-string key (e.g. the "undefined" string
   // that accumulates when a query was JavaScript undefined in a corrupted run).

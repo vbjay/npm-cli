@@ -46,6 +46,7 @@ jobs:
           path: |
             scan-output.txt
             indicator-suggestions.json
+            indicator-suggestions.packages.json
           if-no-files-found: warn
 
       - name: Post scan output as PR comment
@@ -77,6 +78,14 @@ jobs:
               jsonText = fs.readFileSync('indicator-suggestions.json', 'utf8')
             } catch (e) {
               jsonText = ''
+            }
+
+            // Read packages.json if present
+            let pkgText = ''
+            try {
+              pkgText = fs.readFileSync('indicator-suggestions.packages.json', 'utf8')
+            } catch (e) {
+              pkgText = ''
             }
 
             const header = [
@@ -117,11 +126,25 @@ jobs:
               '</details>',
             ].join('\n') : ''
 
+            const pkgSection = pkgText ? [
+              '<details>',
+              '<summary>Generated indicator-suggestions.packages.json (manifest store)</summary>',
+              '',
+              '```json',
+              pkgText.slice(0, 10000),
+              pkgText.length > 10000
+                ? `\n…(truncated — ${pkgText.length} chars total, see artifact for full file)`
+                : '',
+              '```',
+              '',
+              '</details>',
+            ].join('\n') : ''
+
             const artifactLine = artifactUrl
               ? `\n📦 [Download full scan artifacts (zip)](${artifactUrl})\n`
               : ''
 
-            let body = [header, outputSection, jsonSection && '\n' + jsonSection, artifactLine]
+            let body = [header, outputSection, jsonSection && '\n' + jsonSection, pkgSection && '\n' + pkgSection, artifactLine]
               .filter(Boolean)
               .join('\n')
 
