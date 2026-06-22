@@ -490,6 +490,13 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       if (fetched.has(relPosix)) return relPosix
       try { await fs.lstat(candidate); return relPosix } catch { /* not on disk yet */ }
     }
+    // If the path already has a non-JS extension (e.g. .json, .ts, .yaml),
+    // it won't be found by the loop above when not yet on disk.
+    // Return the bare relative path so fetchWithRefs can fetch it.
+    const bareRel = path.relative(pkgCacheDir, absPath)
+    if (!bareRel.startsWith('..') && path.extname(absPath) !== '') {
+      return bareRel.split(path.sep).join('/')
+    }
     return null
   }
 
@@ -597,8 +604,14 @@ async function deepFetchPackage (manifest, deepDir, limit) {
             await fetchWithRefs(resolved, depth + 1)
           } else {
             const rel = path.relative(pkgCacheDir, abs).split(path.sep).join('/')
-            if (!rel.startsWith('..') && !fetched.has(rel + '.js')) {
-              await fetchWithRefs(rel + '.js', depth + 1)
+            if (!rel.startsWith('..')) {
+              // If the ref already carries a file extension (e.g. "../package.json"),
+              // use it as-is; only append .js for extension-less module specifiers.
+              const hasExt = path.extname(rel) !== ''
+              const toFetch = hasExt ? rel : rel + '.js'
+              if (!fetched.has(toFetch)) {
+                await fetchWithRefs(toFetch, depth + 1)
+              }
             }
           }
         }),
