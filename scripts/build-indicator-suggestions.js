@@ -1811,7 +1811,15 @@ When to use --reset:
           } else if (manifest) {
             const lc = extractLifecycleScripts(manifest.scripts)
             if (Object.keys(lc).length > 0) {
-              const weekly = searchDownloads.get(manifest.name)
+              let weekly = searchDownloads.get(manifest.name)
+              if (weekly == null) {
+                // Package came from deep discovery, not a search page — fetch download count directly.
+                try {
+                  const enc = manifest.name.replace(/\//g, '%2F')
+                  const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${enc}`)
+                  if (dl?.downloads) weekly = dl.downloads
+                } catch { /* non-critical — leave as 0 */ }
+              }
               const state = weekly != null ? 'ready' : 'lifecycle'
               manifests.push({ ...manifest, state, weeklyDownloads: weekly ?? 0 })
               mFound++
