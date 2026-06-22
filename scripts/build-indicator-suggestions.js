@@ -225,6 +225,7 @@ const MANIFEST_DELAY_MS    = 150  // small inter-request stagger to avoid burst 
 
 const DrainMode = Object.freeze({
   Candidates: 'Candidates',
+  Downloads:  'Downloads',
   DeepFetch:  'DeepFetch',
   DeepScan:   'DeepScan',
 })
@@ -1779,6 +1780,7 @@ When to use --reset:
 
   // Worker-pool drain — mode selects what to fetch:
   //   drain(DrainMode.Candidates) — fetch manifests for candidate names, populate manifests[]
+  //   drain(DrainMode.Downloads)  — batch-fetch weekly download counts for 'lifecycle' manifests
   //   drain(DrainMode.DeepFetch)  — download files via unpkg for all manifests; collect discovered pkg names
   //   drain(DrainMode.DeepScan)   — run indicator scan on already-fetched manifests (reads from cache)
   // All modes use MANIFEST_CONCURRENCY workers staggered by MANIFEST_DELAY_MS.
@@ -1820,15 +1822,7 @@ When to use --reset:
           } else if (manifest) {
             const lc = extractLifecycleScripts(manifest.scripts)
             if (Object.keys(lc).length > 0) {
-              let weekly = searchDownloads.get(manifest.name)
-              if (weekly == null) {
-                // Package came from deep discovery, not a search page — fetch download count directly.
-                try {
-                  const enc = manifest.name.replace(/\//g, '%2F')
-                  const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${enc}`)
-                  if (dl?.downloads) weekly = dl.downloads
-                } catch { /* non-critical — leave as 0 */ }
-              }
+              const weekly = searchDownloads.get(manifest.name)
               const state = weekly != null ? 'ready' : 'lifecycle'
               manifests.push({ ...manifest, state, weeklyDownloads: weekly ?? 0 })
               mFound++
@@ -2021,6 +2015,61 @@ When to use --reset:
 
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
       process.stderr.write(`    ✓ ${dsFetched} packages analyzed\n\n`)
+
+    // ── Downloads mode ─────────────────────────────────────────────────────
+    // Resolve weekly download counts for manifests that weren't discovered via
+    // search pages (state:'lifecycle' means searchDownloads had no entry).
+    // Non-scoped packages are batched up to 128 per request; scoped packages
+    // use individual requests (the bulk endpoint doesn't support @scope/name).
+    // Both paths use fetchJson which handles redirects and 429 back-off.
+    } else if (mode === DrainMode.Downloads) {
+      const BATCH_SIZE = 128
+      const pending = manifests
+        .map((m, idx) => ({ m, idx }))
+        .filter(({ m }) => m.state === 'lifecycle')
+
+      if (pending.length === 0) return
+
+      process.stderr.write(`\n  Downloads: resolving counts for ${pending.length} packages...\n`)
+
+      const nonScoped = pending.filter(({ m }) => !m.name.startsWith('@'))
+      const scoped    = pending.filter(({ m }) => m.name.startsWith('@'))
+
+      for (let i = 0; i < nonScoped.length; i += BATCH_SIZE) {
+        const batch = nonScoped.slice(i, i + BATCH_SIZE)
+        const names = batch.map(({ m }) => encodeURIComponent(m.name)).join(',')
+        try {
+          const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${names}`)
+          if (dl && typeof dl === 'object') {
+            for (const { m, idx } of batch) {
+              // Single-name response is flat ({downloads:N}); multi-name is nested ({name:{downloads:N}}).
+              const entry = batch.length === 1 ? dl : dl[m.name]
+              if (typeof entry?.downloads === 'number') {
+                manifests[idx].weeklyDownloads = entry.downloads
+                manifests[idx].state = 'ready'
+              }
+            }
+          }
+        } catch { /* non-critical — leave as lifecycle/0 */ }
+      }
+
+      for (const { m, idx } of scoped) {
+        try {
+          const enc = encodeURIComponent(m.name)
+          const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${enc}`)
+          if (typeof dl?.downloads === 'number') {
+            manifests[idx].weeklyDownloads = dl.downloads
+            manifests[idx].state = 'ready'
+          }
+        } catch { /* non-critical */ }
+      }
+
+      const resolved = pending.filter(({ idx }) => manifests[idx].state === 'ready').length
+      process.stderr.write(`    ✓ resolved ${resolved}/${pending.length} download counts\n`)
+      await Promise.all([
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+      ])
     }
   }
 
@@ -2271,6 +2320,10 @@ When to use --reset:
     process.stderr.write('  └─ scanning indicators...\n')
     await drain(DrainMode.DeepScan)
   }
+
+  // Resolve download counts for packages discovered outside of search pages
+  // (deep-discovered deps, --add packages, scoped peer expansions).
+  await drain(DrainMode.Downloads)
 
   // Save final manifests to permanent store.  discoveryState carries only
   // keywordCursors (no resume position) so the next run continues forward
