@@ -483,7 +483,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       if (stateOk && meta.schemaVersion === DEEP_CACHE_VERSION) {
         const currentTreeHash = await hashDirTree(pkgCacheDir)
         if (currentTreeHash === meta.filesHash) {
-          return { fetchedFiles: meta.fetchedFiles || [], bareFollows: meta.bareFollows || [], fromCache: true }
+          return { fetchedFiles: meta.fetchedFiles || [], bareFollows: meta.bareFollows || [], resolvedFollows: meta.resolvedFollows || null, fromCache: true }
         }
         process.stderr.write(`  🗑️  file tree changed for ${manifest.name}@${manifest.version} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
       }
@@ -615,7 +615,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     state: 'fetched',
   }, null, 2) + '\n')
 
-  return { fetchedFiles, bareFollows: [...bareFollowsMap.values()], fromCache: false }
+  return { fetchedFiles, bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
 }
 
 async function deepAnalyzePackage (manifest, deepDir) {
@@ -1882,7 +1882,21 @@ When to use --reset:
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
       process.stderr.write(`\n  DeepFetch: ${fetchQueue.length} packages (${hasCache.filter(Boolean).length} cached)...\n`)
       let dfFetched = 0
+      let isCheckpointing = false  // guard against concurrent checkpoint writes
       const fileLimit = makeLimiter(5)
+
+      const checkpoint = async () => {
+        if (isCheckpointing) return  // a save is already in-flight — skip, state will be captured by the next one
+        isCheckpointing = true
+        try {
+          await Promise.all([
+            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+          ])
+        } finally {
+          isCheckpointing = false
+        }
+      }
 
       const worker = async (workerIndex) => {
         await sleep(workerIndex * MANIFEST_DELAY_MS)
@@ -1891,40 +1905,60 @@ When to use --reset:
           if (!manifest) break
           await sleep(MANIFEST_DELAY_MS)
           process.stderr.write(`    scanning ${manifest.name}@${manifest.version}...\n`)
-          const { fetchedFiles, bareFollows, fromCache } =
+          const { fetchedFiles, bareFollows, resolvedFollows, fromCache } =
             await deepFetchPackage(manifest, deepDir, fileLimit)
           deepFetchedFiles.set(`${manifest.name}@${manifest.version}`, fetchedFiles || [])
 
-          // Resolve each bare follow to name@version via unpkg and stage as candidate
-          if (!fromCache) {
-            await Promise.all((bareFollows || []).map(async ({ name, versionSpec }) => {
-              if (NODE_BUILTIN_MODULES.has(name) || !isValidNpmPackageName(name)) return
-              const enc = name.replace(/\//g, '%2F')
-              const suffix = versionSpec ? `@${encodeURIComponent(versionSpec)}` : ''
-              const buf = await fileLimit(() => fetchRaw(`https://unpkg.com/${enc}${suffix}/package.json`))
-              if (!buf) return
-              let resolvedVersion
-              try { resolvedVersion = JSON.parse(buf.toString('utf8')).version } catch { return }
-              if (!resolvedVersion) return
-              const key = `${name}@${resolvedVersion}`
-              // JS single-threaded: .has + .add is atomic across awaits ✓
-              if (!inStore.has(key) && !seen.has(key)) {
-                inStore.add(key)
-                seen.add(key)
-                candidates.push(key)
-                deepNewPkgs++
-                process.stderr.write(`      + discovered ${key}\n`)
+          // Resolve bare follows → stage as versioned candidates.
+          // Always run regardless of fromCache: if a previous run was interrupted
+          // after file-fetch but before the checkpoint saved these candidates, a
+          // cached package would otherwise permanently lose its discovered deps.
+          // resolvedFollows (cached in meta) lets us skip the HTTP round-trips when
+          // the resolution has already been done and stored.
+          const followsToStage = resolvedFollows
+            // Fast-path: meta already has resolved name@version list — no HTTP needed.
+            ? resolvedFollows.filter(key => !inStore.has(key) && !seen.has(key))
+            // Slow-path: resolve each bare follow via unpkg to get the concrete version.
+            : await (async () => {
+              const resolved = []
+              await Promise.all((bareFollows || []).map(async ({ name, versionSpec }) => {
+                if (NODE_BUILTIN_MODULES.has(name) || !isValidNpmPackageName(name)) return
+                const enc = name.replace(/\//g, '%2F')
+                const suffix = versionSpec ? `@${encodeURIComponent(versionSpec)}` : ''
+                const buf = await fileLimit(() => fetchRaw(`https://unpkg.com/${enc}${suffix}/package.json`))
+                if (!buf) return
+                let ver
+                try { ver = JSON.parse(buf.toString('utf8')).version } catch { return }
+                if (ver) resolved.push(`${name}@${ver}`)
+              }))
+              // Persist resolved list so future cache-hits skip the HTTP calls.
+              if (resolved.length > 0) {
+                const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
+                const metaPath = path.join(pkgCacheDir, '.meta.json')
+                try {
+                  const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+                  meta.resolvedFollows = resolved
+                  await fs.writeFile(metaPath, JSON.stringify(meta, null, 2) + '\n')
+                } catch { /* non-critical — will re-resolve next run */ }
               }
-            }))
+              return resolved.filter(key => !inStore.has(key) && !seen.has(key))
+            })()
+
+          for (const key of followsToStage) {
+            // .has() + .add() are synchronous — safe between awaits in single-threaded JS
+            if (!inStore.has(key) && !seen.has(key)) {
+              inStore.add(key)
+              seen.add(key)
+              candidates.push(key)
+              deepNewPkgs++
+              process.stderr.write(`      + discovered ${key}\n`)
+            }
           }
 
           dfFetched++
           if (dfFetched % DRAIN_CHECKPOINT_EVERY === 0) {
             process.stderr.write(`    [${dfFetched}] processed\n`)
-            await Promise.all([
-              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-            ])
+            await checkpoint()
           }
         }
       }
@@ -1933,10 +1967,7 @@ When to use --reset:
 
       process.stderr.write(`    ✓ ${dfFetched} packages processed` +
         (candidates.length > 0 ? `, ${candidates.length} new candidates queued` : ', no new candidates') + '\n')
-      await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
-      ])
+      await checkpoint()  // final save — always runs (isCheckpointing=false at this point)
       process.stderr.write(`    checkpoint saved\n\n`)
 
     // ── DeepScan mode ─────────────────────────────────────────────────────
