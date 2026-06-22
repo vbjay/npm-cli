@@ -155,7 +155,7 @@ const { classifyUrl } = require(
 // Cache schema version — hash of every signal name+regex and every indicator
 // Increment when the on-disk file format changes (e.g. defang scheme, meta fields).
 // Mixed into DEEP_CACHE_VERSION so old caches are automatically invalidated.
-const DEEP_CACHE_SCHEMA = 'defang-v4'
+const DEEP_CACHE_SCHEMA = 'defang-v6'
 
 // registry key+commandPattern so that ANY change to signals or indicators
 // automatically invalidates all deep-scan cache entries and forces a rescan.
@@ -483,7 +483,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       if (stateOk && meta.schemaVersion === DEEP_CACHE_VERSION) {
         const currentTreeHash = await hashDirTree(pkgCacheDir)
         if (currentTreeHash === meta.filesHash) {
-          return { fetchedFiles: meta.fetchedFiles || [], fetchedPkgs: meta.fetchedPkgs || [], discoveredManifests: [], fromCache: true }
+          return { fetchedFiles: meta.fetchedFiles || [], bareFollows: meta.bareFollows || [], fromCache: true }
         }
         process.stderr.write(`  🗑️  file tree changed for ${manifest.name}@${manifest.version} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
       }
@@ -510,17 +510,27 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     return true
   }
 
-  // Step 1: Fetch indicator files (binding.gyp, Cargo.toml, …)
-  await Promise.all(Object.keys(INDICATOR_REGISTRY).map(file =>
-    limit(() => fetchOne(file))
-  ))
+  // Step 1: Fetch indicator files (binding.gyp, Cargo.toml, …) + package.json.
+  // package.json is always cached so version-map resolution works for bare follows.
+  await Promise.all([
+    limit(() => fetchOne('package.json')),
+    ...Object.keys(INDICATOR_REGISTRY).map(file => limit(() => fetchOne(file))),
+  ])
+
+  // Build version map from manifest deps so bare require() calls resolve to the
+  // version the package actually declared, not just unpkg latest.
+  const parentVersionMap = {
+    ...manifest.dependencies,
+    ...manifest.devDependencies,
+    ...manifest.optionalDependencies,
+    ...manifest.peerDependencies,
+  }
 
   // Step 2: BFS fetch of lifecycle JS files and their require() deps.
   const MAX_FETCH_DEPTH = 10
   const fetched = new Set()
-  const fetchedPkgs = new Set()           // bare-name dedup guard
-  const fetchedPkgsVersioned = new Set()  // 'name@version' entries stored in meta
-  const discoveredManifests = []
+  // Bare package refs collected during BFS — outer worker pool resolves and enqueues them
+  const bareFollowsMap = new Map()  // bare name → {name, versionSpec}
 
   const resolveRelPosix = async (absPath) => {
     const exts = ['', '.js', '.mjs', '.cjs']
@@ -540,97 +550,6 @@ async function deepFetchPackage (manifest, deepDir, limit) {
       return bareRel.split(path.sep).join('/')
     }
     return null
-  }
-
-  const fetchBarePackage = async (pkgName, depth) => {
-    if (depth > MAX_FETCH_DEPTH || fetchedPkgs.has(pkgName)) return
-    // Skip Node built-ins and invalid npm package names (e.g. false positives
-    // from BARE_IMPORT_FROM_RE matching backtick strings inside JS comments).
-    if (NODE_BUILTIN_MODULES.has(pkgName) || !isValidNpmPackageName(pkgName)) return
-    fetchedPkgs.add(pkgName)  // dedup guard keyed on bare name
-
-    const enc = pkgName.replace(/\//g, '%2F')
-    const pkgJsonBuf = await limit(() => fetchRaw(`https://unpkg.com/${enc}/package.json`))
-    if (!pkgJsonBuf) return
-
-    let pkgJson
-    try { pkgJson = JSON.parse(pkgJsonBuf.toString('utf8')) } catch { return }
-
-    // Versioned cache dir: resolved after fetching package.json so we have the version.
-    const resolvedVersion = pkgJson.version || '0.0.0'
-    const pkgDir = path.join(deepDir, deepSafeName(pkgName, resolvedVersion))
-    await fs.mkdir(pkgDir, { recursive: true })
-
-    await fs.writeFile(path.join(pkgDir, 'package.json'), JSON.stringify(pkgJson, null, 2) + '\n')
-
-    // Record as 'name@version' so deepAnalyzePackage can locate the versioned cache dir.
-    fetchedFiles.push(`→ ${pkgName}@${resolvedVersion}`)
-    fetchedPkgsVersioned.add(`${pkgName}@${resolvedVersion}`)
-
-    // Record this package — caller will add all discoveries to candidates (unfiltered)
-    discoveredManifests.push({
-      name: pkgJson.name || pkgName,
-      version: resolvedVersion,
-      scripts: pkgJson.scripts || {},
-      dependencies: pkgJson.dependencies || {},
-      devDependencies: pkgJson.devDependencies || {},
-      optionalDependencies: pkgJson.optionalDependencies || {},
-      peerDependencies: pkgJson.peerDependencies || {},
-    })
-
-    const resolveExportsEntry = (exp) => {
-      if (!exp) return null
-      const dot = exp['.'] ?? exp
-      if (typeof dot === 'string') return dot
-      if (typeof dot === 'object') {
-        for (const cond of ['require', 'node', 'import', 'default']) {
-          if (typeof dot[cond] === 'string') return dot[cond]
-          if (typeof dot[cond] === 'object') {
-            const nested = resolveExportsEntry(dot[cond])
-            if (nested) return nested
-          }
-        }
-      }
-      return null
-    }
-
-    const exportsEntry = resolveExportsEntry(pkgJson.exports)
-    const rawEntry = exportsEntry
-      || (typeof pkgJson.module === 'string' && pkgJson.module)
-      || (typeof pkgJson.main === 'string' && pkgJson.main)
-      || 'index.js'
-    const entryRel = rawEntry.replace(/^\.\//, '')
-    const hasExt = /\.[cm]?js$/.test(entryRel)
-    const extsToTry = hasExt ? [entryRel] : [entryRel, entryRel + '.js', entryRel + '.mjs', entryRel + '.cjs']
-
-    for (const candidate of extsToTry) {
-      const buf = await limit(() => fetchRaw(`https://unpkg.com/${enc}/${candidate}`))
-      if (!buf) continue
-      const dest = path.join(pkgDir, ...candidate.split('/'))
-      await fs.mkdir(path.dirname(dest), { recursive: true })
-      if (!await writeDefanged(dest, candidate, buf)) break  // binary entry — skip
-      try {
-        const content = buf.toString('utf8')  // use original buf for ref-parsing — disk file is already defanged
-        const localRefs = findLocalRefs(content)
-        const fileDir = path.dirname(dest)
-        await Promise.all(localRefs.map(async (ref) => {
-          const abs = path.resolve(fileDir, ref)
-          const rel = path.relative(pkgDir, abs)
-          if (rel.startsWith('..')) return
-          const relPosix = rel.split(path.sep).join('/')
-          const exts2 = ['', '.js', '.mjs', '.cjs']
-          for (const ext of exts2) {
-            const buf2 = await limit(() => fetchRaw(`https://unpkg.com/${enc}/${relPosix + ext}`))
-            if (!buf2) continue
-            const dest2 = path.join(pkgDir, ...(`${relPosix}${ext}`).split('/'))
-            await fs.mkdir(path.dirname(dest2), { recursive: true })
-            if (!await writeDefanged(dest2, relPosix + ext, buf2)) break  // binary ref — skip
-            break
-          }
-        }))
-      } catch { /* skip */ }
-      break
-    }
   }
 
   const fetchWithRefs = async (relPosix, depth) => {
@@ -664,8 +583,13 @@ async function deepFetchPackage (manifest, deepDir, limit) {
             }
           }
         }),
-        ...bareRefs.map(pkg => fetchBarePackage(pkg, depth + 1)),
       ])
+      // Collect bare refs — do NOT follow inline; outer worker pool handles them
+      for (const pkg of bareRefs) {
+        if (!NODE_BUILTIN_MODULES.has(pkg) && isValidNpmPackageName(pkg) && !bareFollowsMap.has(pkg)) {
+          bareFollowsMap.set(pkg, { name: pkg, versionSpec: parentVersionMap[pkg] || null })
+        }
+      }
     } catch { /* file unreadable or ref resolution failed — skip */ }
   }
 
@@ -686,11 +610,12 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     schemaVersion: DEEP_CACHE_VERSION,
     filesHash,
     fetchedFiles,
-    fetchedPkgs: [...fetchedPkgsVersioned],
+    bareFollows: [...bareFollowsMap.values()],
+    fetchedPkgs: [],
     state: 'fetched',
   }, null, 2) + '\n')
 
-  return { fetchedFiles, fetchedPkgs: [...fetchedPkgsVersioned], discoveredManifests, fromCache: false }
+  return { fetchedFiles, bareFollows: [...bareFollowsMap.values()], fromCache: false }
 }
 
 async function deepAnalyzePackage (manifest, deepDir) {
@@ -717,7 +642,7 @@ async function deepAnalyzePackage (manifest, deepDir) {
   const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts, { maxFiles: MAX_FILES_DEEP_SCAN })
 
   for (const pkgEntry of (meta.fetchedPkgs || [])) {
-    // Entries are 'name@version' strings stored by fetchBarePackage.
+    // Old-format entries are 'name@version' strings from pre-v6 deep-fetch caches.
     const parsed = parseDeepPkgEntry(pkgEntry)
     if (!parsed) continue  // old-format bare name entry — skip
     const { name: depName, version: depVersion } = parsed
@@ -1840,7 +1765,7 @@ When to use --reset:
   // Deep-scan state (used by drain(DrainMode.DeepScan) and the output step).
   const deepResults = new Map()      // name → IndicatorResult[]
   const deepRefFiles = new Map()     // name → referencedFiles[]
-  const deepFetchedFiles = new Map() // name → fetchedFiles[]
+  const deepFetchedFiles = new Map() // name@version → fetchedFiles[]
   let deepNewPkgs = 0
 
   // Worker-pool drain — mode selects what to fetch:
@@ -1935,41 +1860,67 @@ When to use --reset:
       process.stderr.write(`    checkpoint saved — ready to refill\n`)
       pagesSinceLastDrain = 0
 
-    // ── DeepFetch mode ────────────────────────────────────────────────────
-    // Download files for all manifests via unpkg (Steps 1-2 of deep scan).
-    // Collects ALL discovered package names from require() BFS — no filtering.
-    // Caller dedupes and adds new names to candidates after the drain.
+    // ── DeepFetch mode ─────────────────────────────────────────────────────
+    // For each manifest: fetch indicator files + lifecycle JS (BFS within the
+    // package only).  Bare require()/import refs are collected as bareFollows.
+    // Workers resolve each follow to name@version via unpkg and push new ones
+    // to candidates so they go through the proper Candidates drain pipeline
+    // (full manifest fetch + weekly-downloads → packages.json update).
     } else if (mode === DrainMode.DeepFetch) {
-      // Sort: packages without a cache dir (need network fetch) come first so
-      // workers spend time on real work while cached packages fill the tail.
-      const safeDirs = manifests.map(m => path.join(deepDir, m.name.replace(/\//g, '__')))
-      const cached = await Promise.all(safeDirs.map(d => fs.access(d).then(() => true, () => false)))
+      // Sort: packages without a versioned cache dir come first (real network work).
+      const hasCache = await Promise.all(manifests.map(async m => {
+        const dir = path.join(deepDir, deepSafeName(m.name, m.version))
+        return fs.access(path.join(dir, '.meta.json')).then(() => true, () => false)
+      }))
       const fetchQueue = [
-        ...manifests.filter((_, i) => !cached[i]),
-        ...manifests.filter((_, i) =>  cached[i]),
+        ...manifests.filter((_, i) => !hasCache[i]),
+        ...manifests.filter((_, i) => hasCache[i]),
       ]
-      const startCount = fetchQueue.length
-      if (startCount === 0) return
+      if (fetchQueue.length === 0) return
+
+      const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
-      process.stderr.write(`\n  DeepFetch: fetching files for ${startCount} packages...\n`)
+      process.stderr.write(`\n  DeepFetch: ${fetchQueue.length} packages (${hasCache.filter(Boolean).length} cached)...\n`)
       let dfFetched = 0
-      const allDiscovered = []  // accumulate across all workers (names only, unfiltered)
       const fileLimit = makeLimiter(5)
 
       const worker = async (workerIndex) => {
         await sleep(workerIndex * MANIFEST_DELAY_MS)
-        while (true) {
+        while (fetchQueue.length > 0) {
           const manifest = fetchQueue.shift()
           if (!manifest) break
           await sleep(MANIFEST_DELAY_MS)
-          process.stderr.write(`    fetching ${manifest.name}@${manifest.version}...\n`)
-          const { fetchedFiles, discoveredManifests, fromCache } =
+          process.stderr.write(`    scanning ${manifest.name}@${manifest.version}...\n`)
+          const { fetchedFiles, bareFollows, fromCache } =
             await deepFetchPackage(manifest, deepDir, fileLimit)
-          deepFetchedFiles.set(manifest.name, fetchedFiles || [])
-          for (const m of (discoveredManifests || [])) allDiscovered.push(m.name)
+          deepFetchedFiles.set(`${manifest.name}@${manifest.version}`, fetchedFiles || [])
+
+          // Resolve each bare follow to name@version via unpkg and stage as candidate
+          if (!fromCache) {
+            await Promise.all((bareFollows || []).map(async ({ name, versionSpec }) => {
+              if (NODE_BUILTIN_MODULES.has(name) || !isValidNpmPackageName(name)) return
+              const enc = name.replace(/\//g, '%2F')
+              const suffix = versionSpec ? `@${encodeURIComponent(versionSpec)}` : ''
+              const buf = await fileLimit(() => fetchRaw(`https://unpkg.com/${enc}${suffix}/package.json`))
+              if (!buf) return
+              let resolvedVersion
+              try { resolvedVersion = JSON.parse(buf.toString('utf8')).version } catch { return }
+              if (!resolvedVersion) return
+              const key = `${name}@${resolvedVersion}`
+              // JS single-threaded: .has + .add is atomic across awaits ✓
+              if (!inStore.has(key) && !seen.has(key)) {
+                inStore.add(key)
+                seen.add(key)
+                candidates.push(key)
+                deepNewPkgs++
+                process.stderr.write(`      + discovered ${key}\n`)
+              }
+            }))
+          }
+
           dfFetched++
-          if (dfFetched % DRAIN_CHECKPOINT_EVERY === 0 || dfFetched === startCount) {
-            process.stderr.write(`    [${dfFetched}/${startCount}] processed${fromCache ? ' [cached]' : ''}\n`)
+          if (dfFetched % DRAIN_CHECKPOINT_EVERY === 0) {
+            process.stderr.write(`    [${dfFetched}] processed\n`)
             await Promise.all([
               savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
               savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
@@ -1980,20 +1931,8 @@ When to use --reset:
 
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
 
-      // Dedupe discovered names against seen + current store, add new ones to candidates
-      const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
-      const newNames = []
-      for (const name of new Set(allDiscovered)) {
-        if (!seen.has(name) && !inStore.has(name)) {
-          seen.add(name)
-          candidates.push(name)
-          deepNewPkgs++
-          newNames.push(name)
-        }
-      }
       process.stderr.write(`    ✓ ${dfFetched} packages processed` +
-        (newNames.length > 0 ? `, +${newNames.length} discovered:` : ', no new packages') + '\n')
-      for (const name of newNames) process.stderr.write(`      + ${name}\n`)
+        (candidates.length > 0 ? `, ${candidates.length} new candidates queued` : ', no new candidates') + '\n')
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
         savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
@@ -2267,22 +2206,21 @@ When to use --reset:
     process.stderr.write('Step 4/5: Deep scanning packages via unpkg...\n')
     await fs.mkdir(deepDir, { recursive: true })
 
-    // Phase A: fetch files for all current manifests, collect cross-package discoveries
-    process.stderr.write('  ├─ A: fetching files for all packages...\n')
-    await drain(DrainMode.DeepFetch)
-
-    // Phase B: drain any newly discovered packages into manifests[]
-    if (candidates.length > 0) {
-      process.stderr.write('  ├─ B: draining discovered packages...\n')
-      await drain(DrainMode.Candidates)
-
-      // Phase C: fetch files for the newly added packages
-      process.stderr.write('  ├─ C: fetching files for newly discovered packages...\n')
+    // Iterative BFS: fetch files → discover dep follows → drain new candidates
+    // into manifests (full manifest + packages.json update) → repeat until stable.
+    let deepPass = 0
+    while (true) {
+      deepPass++
+      process.stderr.write(`  ├─ pass ${deepPass}: fetching files + collecting follows...\n`)
       await drain(DrainMode.DeepFetch)
+
+      if (candidates.length === 0) break
+
+      process.stderr.write(`  ├─ pass ${deepPass}: draining ${candidates.length} discovered packages into manifests...\n`)
+      await drain(DrainMode.Candidates)
     }
 
-    // Phase D: run indicator scan across all packages (files now cached)
-    process.stderr.write('  └─ D: running indicator scan...\n')
+    process.stderr.write('  └─ scanning indicators...\n')
     await drain(DrainMode.DeepScan)
   }
 
@@ -2309,7 +2247,7 @@ When to use --reset:
     // Fall back to command-pattern matching when deep results aren't available.
     const deepScan = deepResults.get(manifest.name)
     const deepRefs = deepRefFiles.get(manifest.name) || []
-    const deepFetched = deepFetchedFiles.get(manifest.name) || []
+    const deepFetched = deepFetchedFiles.get(`${manifest.name}@${manifest.version}`) || []
     const matches = deepScan
       ? deepScan.map(r => r.indicatorFile)
       : matchExistingDefinitions(lc, manifest)
