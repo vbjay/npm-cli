@@ -181,6 +181,33 @@ function computeDeepCacheVersion () {
 }
 const DEEP_CACHE_VERSION = computeDeepCacheVersion()
 
+// Maximum files to BFS-scan per package in deep analysis.  Large compiled
+// bundles (e.g. node-llama-cpp with 258 JS files) otherwise consume minutes
+// of CPU.  100 files covers the vast majority of real-world packages while
+// bounding worst-case scan time to ~5s per package.
+const MAX_FILES_DEEP_SCAN = 100
+
+// Node.js built-in module names.  Bare require()s of these are never npm
+// packages and should not be fetched or scanned.
+const NODE_BUILTIN_MODULES = new Set([
+  'assert', 'async_hooks', 'buffer', 'child_process', 'cluster', 'console',
+  'constants', 'crypto', 'dgram', 'diagnostics_channel', 'dns', 'domain',
+  'events', 'fs', 'http', 'http2', 'https', 'inspector', 'module', 'net',
+  'os', 'path', 'perf_hooks', 'process', 'punycode', 'querystring',
+  'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 'tls',
+  'trace_events', 'tty', 'url', 'util', 'v8', 'vm', 'wasi', 'worker_threads',
+  'zlib',
+])
+
+// Minimal npm package-name validator.  Rejects names that are clearly not npm
+// packages: spaces, '=', uppercase-only identifiers from embedded C++ comments
+// (e.g. `LLM_TENSOR_NAMES`), C/C++ header filenames (e.g. `llama.h`), etc.
+// Valid names: lowercase + digits + [-._] with optional @scope/ prefix.
+const VALID_NPM_NAME_RE = /^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/
+const isValidNpmPackageName = (name) =>
+  typeof name === 'string' && name.length > 0 && name.length <= 214 &&
+  VALID_NPM_NAME_RE.test(name)
+
 // Default TTL for the per-keyword result cursor.  Within this window a new run
 // continues FROM the last result offset rather than re-walking results 0–2000.
 // Once the cursor expires the keyword restarts at offset 0 so newly-popular
@@ -502,6 +529,9 @@ async function deepFetchPackage (manifest, deepDir, limit) {
 
   const fetchBarePackage = async (pkgName, depth) => {
     if (depth > MAX_FETCH_DEPTH || fetchedPkgs.has(pkgName)) return
+    // Skip Node built-ins and invalid npm package names (e.g. false positives
+    // from BARE_IMPORT_FROM_RE matching backtick strings inside JS comments).
+    if (NODE_BUILTIN_MODULES.has(pkgName) || !isValidNpmPackageName(pkgName)) return
     fetchedPkgs.add(pkgName)
     fetchedFiles.push(`→ ${pkgName}`)
 
@@ -667,9 +697,13 @@ async function deepAnalyzePackage (manifest, deepDir) {
   }
 
   const lifecycleScripts = extractLifecycleScripts(manifest.scripts)
-  const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts)
+  const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts, { maxFiles: MAX_FILES_DEEP_SCAN })
 
   for (const pkgName of (meta.fetchedPkgs || [])) {
+    // Skip the package itself (self-reference causes double-scanning of all files).
+    if (pkgName === manifest.name) continue
+    // Skip Node built-ins and malformed names that slipped past validation.
+    if (NODE_BUILTIN_MODULES.has(pkgName) || !isValidNpmPackageName(pkgName)) continue
     const safePkg = pkgName.replace(/\//g, '__')
     const pkgDir = path.join(deepDir, safePkg)
     try {
@@ -677,7 +711,7 @@ async function deepAnalyzePackage (manifest, deepDir) {
       const pkgJson = JSON.parse(pkgJsonBuf)
       const main = (typeof pkgJson.main === 'string' && pkgJson.main) || 'index.js'
       const mainRel = main.startsWith('./') ? main.slice(2) : main
-      const depRefs = await scanPackageScripts(pkgDir, { postinstall: `node ${mainRel}` })
+      const depRefs = await scanPackageScripts(pkgDir, { postinstall: `node ${mainRel}` }, { maxFiles: MAX_FILES_DEEP_SCAN })
       referencedFiles.push(...depRefs)
     } catch { /* not fully fetched — skip */ }
   }

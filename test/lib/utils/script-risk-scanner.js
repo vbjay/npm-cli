@@ -1648,8 +1648,8 @@ t.test('follows local require() chains up to max depth (line 514 false)', async 
     'c.js': "require('./d')",
     'd.js': "require('fs')",
   }, async (dir) => {
-    const result = await scan(dir, { install: 'node install.js' })
-    // install.js (depth 0) → a.js (1) → b.js (2) → c.js (3=MAX_DEPTH) → d.js NOT scanned
+    const result = await scan(dir, { install: 'node install.js' }, { maxDepth: 3 })
+    // install.js (depth 0) → a.js (1) → b.js (2) → c.js (3=maxDepth) → d.js NOT scanned
     t.ok(result.some((f) => f.path === 'install.js'), 'depth 0 scanned')
     t.ok(result.some((f) => f.path === 'a.js'), 'depth 1 scanned')
     t.ok(result.some((f) => f.path === 'b.js'), 'depth 2 scanned')
