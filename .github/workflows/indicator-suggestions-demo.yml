@@ -32,7 +32,7 @@ jobs:
         id: scan
         run: |
           set +e
-          node scripts/build-indicator-suggestions.js --add 9router --top 2 --deep \
+          node scripts/build-indicator-suggestions.js --add 9router --top 100 --deep \
             2>&1 | tee scan-output.txt
           echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
         timeout-minutes: 10
@@ -82,7 +82,7 @@ jobs:
             const header = [
               `## ${badge} — indicator-suggestions deep scan`,
               '',
-              `**Command:** \`node scripts/build-indicator-suggestions.js --add 9router --top 2 --deep\``,
+              `**Command:** \`node scripts/build-indicator-suggestions.js --add 9router --top 100 --deep\``,
               '',
             ].join('\n')
 
