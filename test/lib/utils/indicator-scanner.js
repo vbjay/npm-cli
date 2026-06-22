@@ -385,23 +385,25 @@ t.test('scanBuildIndicatorsForPackage: native-build signal without triggeredByNa
   })
 })
 
-t.test('scanBuildIndicatorsForPackage: makes-executable signal triggers binary-downloader (none-scanner)', async (t) => {
+t.test('scanBuildIndicatorsForPackage: makes-executable signal triggers bundled-binary-installer (none-scanner)', async (t) => {
   await withPackage(t, {}, async (dir) => {
     // Simulate @icp-sdk/ic-wasm pattern: postinstall.js that chmod+xs a bundled binary.
-    // binary-downloader has no indicator file on disk — it uses scanner type 'none'.
+    // bundled-binary-installer has no indicator file on disk — it uses scanner type 'none'.
     const results = await scanBuildIndicatorsForPackage(
       dir,
       { postinstall: 'node postinstall.js' },
       [{ signals: ['makes-executable', 'writes-outside-package', 'reads-process-env'] }],
       INDICATOR_REGISTRY
     )
-    t.equal(results.length, 1, 'binary-downloader triggered by makes-executable signal')
-    t.equal(results[0].indicatorFile, 'binary-downloader')
-    t.ok(results[0].signals.includes('binary-download'), 'binary-download signal emitted')
+    const bundledResult = results.find(r => r.indicatorFile === 'bundled-binary-installer')
+    t.ok(bundledResult, 'bundled-binary-installer triggered by makes-executable signal')
+    t.ok(bundledResult.signals.includes('activates-bundled-binary'), 'activates-bundled-binary signal emitted')
+    t.notOk(results.find(r => r.indicatorFile === 'binary-downloader'),
+      'binary-downloader does NOT fire when only makes-executable is present (no download signal)')
   })
 })
 
-t.test('scanBuildIndicatorsForPackage: makes-executable alone (no download signal) still triggers binary-downloader', async (t) => {
+t.test('scanBuildIndicatorsForPackage: makes-executable alone triggers bundled-binary-installer (not binary-downloader)', async (t) => {
   await withPackage(t, {}, async (dir) => {
     const results = await scanBuildIndicatorsForPackage(
       dir,
@@ -409,8 +411,25 @@ t.test('scanBuildIndicatorsForPackage: makes-executable alone (no download signa
       [{ signals: ['makes-executable'] }],
       INDICATOR_REGISTRY
     )
-    const binaryDownloaderResult = results.find(r => r.indicatorFile === 'binary-downloader')
-    t.ok(binaryDownloaderResult, 'binary-downloader fires on makes-executable signal alone')
+    const bundledResult = results.find(r => r.indicatorFile === 'bundled-binary-installer')
+    t.ok(bundledResult, 'bundled-binary-installer fires on makes-executable signal alone')
+    t.notOk(results.find(r => r.indicatorFile === 'binary-downloader'),
+      'binary-downloader does NOT fire without a binary-download signal')
+  })
+})
+
+t.test('scanBuildIndicatorsForPackage: binary-download + makes-executable fires both indicators', async (t) => {
+  await withPackage(t, {}, async (dir) => {
+    const results = await scanBuildIndicatorsForPackage(
+      dir,
+      { postinstall: 'node install.js' },
+      [{ signals: ['binary-download', 'makes-executable'] }],
+      INDICATOR_REGISTRY
+    )
+    t.ok(results.find(r => r.indicatorFile === 'binary-downloader'),
+      'binary-downloader fires when binary-download signal is present')
+    t.ok(results.find(r => r.indicatorFile === 'bundled-binary-installer'),
+      'bundled-binary-installer also fires when makes-executable is present')
   })
 })
 
