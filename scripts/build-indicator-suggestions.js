@@ -455,23 +455,37 @@ async function hashDirTree (dir) {
   return crypto.createHash('sha256').update(entries.join('\n')).digest('hex').slice(0, 16)
 }
 
+// Returns a filesystem-safe directory name for a versioned package cache entry.
+// Scoped packages: '@scope/pkg@1.2.3' → '@scope__pkg@1.2.3'
+function deepSafeName (name, version) {
+  return name.replace(/\//g, '__') + '@' + version
+}
+
+// Parses a versioned fetchedPkgs entry back into { name, version }.
+// Entries look like 'pkg@1.2.3' or '@scope__pkg@1.2.3' (slashes already replaced).
+// The last '@' separates name from version.
+function parseDeepPkgEntry (entry) {
+  const at = entry.lastIndexOf('@')
+  if (at <= 0) return null  // no version suffix — old-format entry, skip
+  return { name: entry.slice(0, at).replace(/__/g, '/'), version: entry.slice(at + 1) }
+}
+
 async function deepFetchPackage (manifest, deepDir, limit) {
-  const safeName = manifest.name.replace(/\//g, '__')
-  const pkgCacheDir = path.join(deepDir, safeName)
+  const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
-  // Cache hit: files already on disk and version matches (state 'fetched' or 'scanned')
+  // Cache hit: directory name already encodes the version, so only check schema + file tree.
   const dirExists = await fs.access(pkgCacheDir).then(() => true, () => false)
   if (dirExists) {
     try {
       const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
       const stateOk = meta.state === 'fetched' || meta.state === 'scanned'
-      if (stateOk && meta.version === manifest.version && meta.schemaVersion === DEEP_CACHE_VERSION) {
+      if (stateOk && meta.schemaVersion === DEEP_CACHE_VERSION) {
         const currentTreeHash = await hashDirTree(pkgCacheDir)
         if (currentTreeHash === meta.filesHash) {
           return { fetchedFiles: meta.fetchedFiles || [], fetchedPkgs: meta.fetchedPkgs || [], discoveredManifests: [], fromCache: true }
         }
-        process.stderr.write(`  🗑️  file tree changed for ${manifest.name} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
+        process.stderr.write(`  🗑️  file tree changed for ${manifest.name}@${manifest.version} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
       }
     } catch { /* .meta.json missing or corrupt — treat as stale */ }
     await rmReadOnly(pkgCacheDir)
@@ -504,7 +518,8 @@ async function deepFetchPackage (manifest, deepDir, limit) {
   // Step 2: BFS fetch of lifecycle JS files and their require() deps.
   const MAX_FETCH_DEPTH = 10
   const fetched = new Set()
-  const fetchedPkgs = new Set()
+  const fetchedPkgs = new Set()           // bare-name dedup guard
+  const fetchedPkgsVersioned = new Set()  // 'name@version' entries stored in meta
   const discoveredManifests = []
 
   const resolveRelPosix = async (absPath) => {
@@ -532,12 +547,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     // Skip Node built-ins and invalid npm package names (e.g. false positives
     // from BARE_IMPORT_FROM_RE matching backtick strings inside JS comments).
     if (NODE_BUILTIN_MODULES.has(pkgName) || !isValidNpmPackageName(pkgName)) return
-    fetchedPkgs.add(pkgName)
-    fetchedFiles.push(`→ ${pkgName}`)
-
-    const safePkg = pkgName.replace(/\//g, '__')
-    const pkgDir = path.join(deepDir, safePkg)
-    await fs.mkdir(pkgDir, { recursive: true })
+    fetchedPkgs.add(pkgName)  // dedup guard keyed on bare name
 
     const enc = pkgName.replace(/\//g, '%2F')
     const pkgJsonBuf = await limit(() => fetchRaw(`https://unpkg.com/${enc}/package.json`))
@@ -546,12 +556,21 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     let pkgJson
     try { pkgJson = JSON.parse(pkgJsonBuf.toString('utf8')) } catch { return }
 
+    // Versioned cache dir: resolved after fetching package.json so we have the version.
+    const resolvedVersion = pkgJson.version || '0.0.0'
+    const pkgDir = path.join(deepDir, deepSafeName(pkgName, resolvedVersion))
+    await fs.mkdir(pkgDir, { recursive: true })
+
     await fs.writeFile(path.join(pkgDir, 'package.json'), JSON.stringify(pkgJson, null, 2) + '\n')
+
+    // Record as 'name@version' so deepAnalyzePackage can locate the versioned cache dir.
+    fetchedFiles.push(`→ ${pkgName}@${resolvedVersion}`)
+    fetchedPkgsVersioned.add(`${pkgName}@${resolvedVersion}`)
 
     // Record this package — caller will add all discoveries to candidates (unfiltered)
     discoveredManifests.push({
       name: pkgJson.name || pkgName,
-      version: pkgJson.version || '0.0.0',
+      version: resolvedVersion,
       scripts: pkgJson.scripts || {},
       dependencies: pkgJson.dependencies || {},
       devDependencies: pkgJson.devDependencies || {},
@@ -664,27 +683,25 @@ async function deepFetchPackage (manifest, deepDir, limit) {
   // reflects defanged file sizes on disk — not the original fetched content.
   const filesHash = await hashDirTree(pkgCacheDir)
   await fs.writeFile(metaPath, JSON.stringify({
-    version: manifest.version,
     schemaVersion: DEEP_CACHE_VERSION,
     filesHash,
     fetchedFiles,
-    fetchedPkgs: [...fetchedPkgs],
+    fetchedPkgs: [...fetchedPkgsVersioned],
     state: 'fetched',
   }, null, 2) + '\n')
 
-  return { fetchedFiles, fetchedPkgs: [...fetchedPkgs], discoveredManifests, fromCache: false }
+  return { fetchedFiles, fetchedPkgs: [...fetchedPkgsVersioned], discoveredManifests, fromCache: false }
 }
 
 async function deepAnalyzePackage (manifest, deepDir) {
-  const safeName = manifest.name.replace(/\//g, '__')
-  const pkgCacheDir = path.join(deepDir, safeName)
+  const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
   let meta
   try { meta = JSON.parse(await fs.readFile(metaPath, 'utf-8')) } catch { return { results: [], referencedFiles: [], fromCache: false } }
 
-  // Full cache hit: already scanned at this version
-  if (meta.state === 'scanned' && meta.version === manifest.version && meta.schemaVersion === DEEP_CACHE_VERSION) {
+  // Full cache hit: directory name already encodes the version; only check schema + file tree.
+  if (meta.state === 'scanned' && meta.schemaVersion === DEEP_CACHE_VERSION) {
     const currentTreeHash = await hashDirTree(pkgCacheDir)
     if (currentTreeHash === meta.filesHash) {
       return { results: meta.results, referencedFiles: meta.referencedFiles || [], fromCache: true }
@@ -699,18 +716,26 @@ async function deepAnalyzePackage (manifest, deepDir) {
   const lifecycleScripts = extractLifecycleScripts(manifest.scripts)
   const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts, { maxFiles: MAX_FILES_DEEP_SCAN })
 
-  for (const pkgName of (meta.fetchedPkgs || [])) {
+  for (const pkgEntry of (meta.fetchedPkgs || [])) {
+    // Entries are 'name@version' strings stored by fetchBarePackage.
+    const parsed = parseDeepPkgEntry(pkgEntry)
+    if (!parsed) continue  // old-format bare name entry — skip
+    const { name: depName, version: depVersion } = parsed
     // Skip the package itself (self-reference causes double-scanning of all files).
-    if (pkgName === manifest.name) continue
+    if (depName === manifest.name) continue
     // Skip Node built-ins and malformed names that slipped past validation.
-    if (NODE_BUILTIN_MODULES.has(pkgName) || !isValidNpmPackageName(pkgName)) continue
-    const safePkg = pkgName.replace(/\//g, '__')
-    const pkgDir = path.join(deepDir, safePkg)
+    if (NODE_BUILTIN_MODULES.has(depName) || !isValidNpmPackageName(depName)) continue
+    const pkgDir = path.join(deepDir, deepSafeName(depName, depVersion))
     try {
       const pkgJsonBuf = await fs.readFile(path.join(pkgDir, 'package.json'), 'utf8')
       const pkgJson = JSON.parse(pkgJsonBuf)
       const main = (typeof pkgJson.main === 'string' && pkgJson.main) || 'index.js'
       const mainRel = main.startsWith('./') ? main.slice(2) : main
+      // Skip large compiler/bundler main entries (e.g. typescript.js at 9MB) that
+      // are not lifecycle helpers and would block the event loop for minutes.
+      const mainAbs = path.join(pkgDir, ...mainRel.split('/'))
+      const mainStat = await fs.stat(mainAbs).catch(() => null)
+      if (mainStat && mainStat.size > 256 * 1024) continue  // >256 KB — skip
       const depRefs = await scanPackageScripts(pkgDir, { postinstall: `node ${mainRel}` }, { maxFiles: MAX_FILES_DEEP_SCAN })
       referencedFiles.push(...depRefs)
     } catch { /* not fully fetched — skip */ }
@@ -1044,9 +1069,19 @@ async function fetchJson (url, retries = 5) {
 // ---------------------------------------------------------------------------
 
 // Fetch the latest-version manifest for a single package.
-async function getPackageManifest (name) {
+async function getPackageManifest (nameAtVersion) {
+  // Support 'name@version' input (e.g. from --add react@17 or discovered manifests).
+  // A leading '@' on scoped packages is not a version — only split on a '@' that comes
+  // after at least one character following the last '/'.
+  let name = nameAtVersion
+  let versionTag = 'latest'
+  const lastAt = nameAtVersion.lastIndexOf('@')
+  if (lastAt > 0) {
+    name = nameAtVersion.slice(0, lastAt)
+    versionTag = nameAtVersion.slice(lastAt + 1) || 'latest'
+  }
   const encoded = name.replace(/\//g, '%2F')
-  const data = await fetchJson(`https://registry.npmjs.org/${encoded}/latest`)
+  const data = await fetchJson(`https://registry.npmjs.org/${encoded}/${versionTag}`)
   if (!data) return null
   return {
     name: data.name,
@@ -1304,12 +1339,14 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
 // Process lock — prevents concurrent runs against the same output path
 // ---------------------------------------------------------------------------
 
-// Lock file uses a heartbeat timestamp rather than a PID check.
-// PIDs are recycled by the OS, so `kill(pid, 0)` can return "alive" for an
-// unrelated process.  Instead, the lock owner refreshes `ts` every 30 seconds;
-// a checker that sees `ts` older than LOCK_STALE_MS considers the lock stale.
 const LOCK_HEARTBEAT_MS = 30_000
 const LOCK_STALE_MS     = 90_000  // 3 missed heartbeats → stale
+
+// Returns true when the OS reports the pid is alive (process exists).
+function isPidAlive (pid) {
+  if (!pid || typeof pid !== 'number') return false
+  try { process.kill(pid, 0); return true } catch { return false }
+}
 
 function makeLockHelpers (lockPath) {
   let heartbeatTimer = null
@@ -1326,14 +1363,27 @@ function makeLockHelpers (lockPath) {
       let lock = {}
       try { lock = JSON.parse(raw) } catch {}
       const age = Date.now() - (lock.ts || 0)
-      if (age < LOCK_STALE_MS) {
+      const isAlive = isPidAlive(lock.pid)
+      if (age < LOCK_STALE_MS && isAlive) {
         process.stderr.write(`\n⛔  Already running (PID ${lock.pid}) with the same output path.\n`)
         process.stderr.write(`   Lock file: ${lockPath}\n`)
         process.stderr.write(`   Heartbeat is ${Math.round(age / 1000)}s old (stale after ${LOCK_STALE_MS / 1000}s).\n`)
         process.stderr.write(`   If that process is gone, delete the lock file and retry.\n\n`)
         process.exit(1)
       }
-      process.stderr.write(`⚠️  Stale lock (PID ${lock.pid}, heartbeat ${Math.round(age / 1000)}s ago) — removing and continuing\n`)
+      if (isAlive) {
+        // Stale heartbeat but process still alive — it hung. Kill it so we can take over.
+        process.stderr.write(`⚠️  Stale lock (PID ${lock.pid}, heartbeat ${Math.round(age / 1000)}s ago) — killing hung process\n`)
+        try { process.kill(lock.pid, 'SIGTERM') } catch {}
+        // Give it 2s to exit gracefully, then SIGKILL
+        const deadline = Date.now() + 2000
+        while (isPidAlive(lock.pid) && Date.now() < deadline) { /* spin wait */ }
+        if (isPidAlive(lock.pid)) {
+          try { process.kill(lock.pid, 'SIGKILL') } catch {}
+        }
+      } else {
+        process.stderr.write(`⚠️  Stale lock (PID ${lock.pid}, heartbeat ${Math.round(age / 1000)}s ago) — removing and continuing\n`)
+      }
     }
     writeHeartbeat()
     heartbeatTimer = setInterval(writeHeartbeat, LOCK_HEARTBEAT_MS)
@@ -1708,10 +1758,15 @@ When to use --reset:
   let addedCount = 0
   if (addFlag) {
     const addNames = addFlag.split(',').map(s => s.trim().replace(/\\/g, '/')).filter(Boolean)
-    const inStore = new Set(manifests.map(m => m.name))
+    // For --add, check by name@version so the same name at a different version can be re-added.
+    const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
+    const inStoreNames = new Set(manifests.map(m => m.name))
 
     const tryAdd = (name, label) => {
-      if (!inStore.has(name) && !seen.has(name) && !candidates.includes(name)) {
+      // Allow re-adding if the version is explicitly specified and differs from stored.
+      const hasVersion = name.lastIndexOf('@') > 0
+      const alreadyStored = hasVersion ? inStore.has(name) : inStoreNames.has(name)
+      if (!alreadyStored && !seen.has(name) && !candidates.includes(name)) {
         candidates.push(name)
         seen.add(name)
         addedCount++
@@ -1744,7 +1799,7 @@ When to use --reset:
         alternate = name.replace(/^@[^/]+\//, '')
       }
 
-      if (alternate && !inStore.has(alternate) && !seen.has(alternate) && !candidates.includes(alternate)) {
+      if (alternate && !inStoreNames.has(alternate) && !seen.has(alternate) && !candidates.includes(alternate)) {
         process.stderr.write(`  ? probing alternate form: ${alternate}\n`)
         const exists = await fetchJson(
           `https://registry.npmjs.org/${encodeURIComponent(alternate)}/latest`
@@ -1926,7 +1981,7 @@ When to use --reset:
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
 
       // Dedupe discovered names against seen + current store, add new ones to candidates
-      const inStore = new Set(manifests.map(m => m.name))
+      const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
       const newNames = []
       for (const name of new Set(allDiscovered)) {
         if (!seen.has(name) && !inStore.has(name)) {
