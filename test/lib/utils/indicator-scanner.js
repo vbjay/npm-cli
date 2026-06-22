@@ -103,6 +103,12 @@ t.test('hasBuildHint: fires on native-build signal in already-scanned file', (t)
   t.end()
 })
 
+t.test('hasBuildHint: fires on makes-executable signal in already-scanned file', (t) => {
+  t.ok(hasBuildHint({ install: 'node postinstall.js' }, [{ signals: ['makes-executable'] }]),
+    'makes-executable signal triggers build hint (bundled-binary-installer pattern)')
+  t.end()
+})
+
 t.test('hasBuildHint: false when no command match and no signal', (t) => {
   t.notOk(hasBuildHint({ install: 'node install.js' }, []))
   t.notOk(hasBuildHint({}, [{ signals: ['reads-process-env'] }]))
@@ -376,6 +382,35 @@ t.test('scanBuildIndicatorsForPackage: native-build signal without triggeredByNa
     )
     // Disk check finds the file regardless of the signal flag
     t.equal(results.length, 1, 'disk check finds Cargo.toml independently')
+  })
+})
+
+t.test('scanBuildIndicatorsForPackage: makes-executable signal triggers binary-downloader (none-scanner)', async (t) => {
+  await withPackage(t, {}, async (dir) => {
+    // Simulate @icp-sdk/ic-wasm pattern: postinstall.js that chmod+xs a bundled binary.
+    // binary-downloader has no indicator file on disk — it uses scanner type 'none'.
+    const results = await scanBuildIndicatorsForPackage(
+      dir,
+      { postinstall: 'node postinstall.js' },
+      [{ signals: ['makes-executable', 'writes-outside-package', 'reads-process-env'] }],
+      INDICATOR_REGISTRY
+    )
+    t.equal(results.length, 1, 'binary-downloader triggered by makes-executable signal')
+    t.equal(results[0].indicatorFile, 'binary-downloader')
+    t.ok(results[0].signals.includes('binary-download'), 'binary-download signal emitted')
+  })
+})
+
+t.test('scanBuildIndicatorsForPackage: makes-executable alone (no download signal) still triggers binary-downloader', async (t) => {
+  await withPackage(t, {}, async (dir) => {
+    const results = await scanBuildIndicatorsForPackage(
+      dir,
+      { postinstall: 'node setup.js' },
+      [{ signals: ['makes-executable'] }],
+      INDICATOR_REGISTRY
+    )
+    const binaryDownloaderResult = results.find(r => r.indicatorFile === 'binary-downloader')
+    t.ok(binaryDownloaderResult, 'binary-downloader fires on makes-executable signal alone')
   })
 })
 
