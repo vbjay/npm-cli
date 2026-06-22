@@ -1237,10 +1237,16 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
   }
 
   // Snapshot is fully built — now safe to yield for the file write.
+  // Sanitize keywordCursors: strip any non-string key (e.g. the "undefined" string
+  // that accumulates when a query was JavaScript undefined in a corrupted run).
+  const cleanCursors = Object.fromEntries(
+    Object.entries(discoveryState?.keywordCursors ?? {})
+      .filter(([k]) => typeof k === 'string' && k !== 'undefined')
+  )
   const data = {
     generatedAt: new Date().toISOString(),
     count: manifests.length,
-    discoveryState,
+    discoveryState: discoveryState ? { ...discoveryState, keywordCursors: cleanCursors } : discoveryState,
     seenOnlyNames,
     packages,
   }
@@ -1577,7 +1583,8 @@ When to use --reset:
   ]
 
   // Resolve saved keyword order first — needed to decide resume vs fresh for --keywords.
-  const savedOrder = discoveryState?.queryOrder || null
+  // Filter out any null/undefined entries that may have crept in from a corrupted run.
+  const savedOrder = (discoveryState?.queryOrder || null)?.filter(q => typeof q === 'string' && q) ?? null
 
   // Apply --keywords override before shuffle/reconciliation:
   //   resume (savedOrder exists) → append user keywords not already in the base list
@@ -1613,7 +1620,7 @@ When to use --reset:
     const reconciled = savedOrder.filter(q => baseSet.has(q))
     // Append any new keywords from the base list not in the saved order
     const added = DISCOVERY_QUERIES_BASE.filter(q => !savedSet.has(q))
-    DISCOVERY_QUERIES = [...reconciled, ...added]
+    DISCOVERY_QUERIES = [...reconciled, ...added].filter(q => typeof q === 'string' && q)
     if (reconciled.length !== savedOrder.length || added.length > 0) {
       const dropped = savedOrder.filter(q => !baseSet.has(q))
       process.stderr.write(`  ⚠️  keyword list changed since last run\n`)
@@ -1938,6 +1945,10 @@ When to use --reset:
 
     for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
       const query = DISCOVERY_QUERIES[qi]
+      if (!query) {
+        process.stderr.write(`  ⚠️  skipping undefined/null query at index ${qi} — run --reset if this persists\n`)
+        continue
+      }
 
       // Determine starting offset for this keyword:
       //  1. Interrupted-run resume (tmp cursor): exact result offset from last fetch
