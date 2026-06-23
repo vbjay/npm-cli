@@ -204,9 +204,15 @@ const NODE_BUILTIN_MODULES = new Set([
 // (e.g. `LLM_TENSOR_NAMES`), C/C++ header filenames (e.g. `llama.h`), etc.
 // Valid names: lowercase + digits + [-._] with optional @scope/ prefix.
 const VALID_NPM_NAME_RE = /^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/
-const isValidNpmPackageName = (name) =>
-  typeof name === 'string' && name.length > 0 && name.length <= 214 &&
-  VALID_NPM_NAME_RE.test(name)
+const isValidNpmPackageName = (name) => {
+  if (typeof name !== 'string' || name.length === 0 || name.length > 214) return false
+  if (!VALID_NPM_NAME_RE.test(name)) return false
+  // Reject names with 2+ dots in the package portion — these look like hostnames
+  // (e.g. registry.npmjs.org) not npm packages.  Legitimate packages with dots
+  // (core.js, socket.io, highlight.js) have at most one dot.
+  const bare = name.startsWith('@') ? (name.split('/')[1] || '') : name
+  return (bare.match(/\./g) || []).length < 2
+}
 
 // Default TTL for the per-keyword result cursor.  Within this window a new run
 // continues FROM the last result offset rather than re-walking results 0–2000.
