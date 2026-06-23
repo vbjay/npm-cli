@@ -186,6 +186,7 @@ const DEEP_CACHE_VERSION = computeDeepCacheVersion()
 // of CPU.  100 files covers the vast majority of real-world packages while
 // bounding worst-case scan time to ~5s per package.
 const MAX_FILES_DEEP_SCAN = 100
+const INDICATOR_COUNT = Object.keys(INDICATOR_REGISTRY).length
 
 // Node.js built-in module names.  Bare require()s of these are never npm
 // packages and should not be fetched or scanned.
@@ -646,7 +647,6 @@ async function deepAnalyzePackage (manifest, deepDir) {
   }
 
   const lifecycleScripts = extractLifecycleScripts(manifest.scripts)
-  process.stderr.write(`      [scan] ${manifest.name}@${manifest.version}: scanning JS files...\n`)
   const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts, { maxFiles: MAX_FILES_DEEP_SCAN })
 
   for (const pkgEntry of (meta.fetchedPkgs || [])) {
@@ -674,7 +674,7 @@ async function deepAnalyzePackage (manifest, deepDir) {
     } catch { /* not fully fetched — skip */ }
   }
 
-  process.stderr.write(`      [scan] ${manifest.name}@${manifest.version}: running indicator scan...\n`)
+  process.stderr.write(`      checking ${manifest.name}@${manifest.version} against ${INDICATOR_COUNT} indicators...\n`)
   const results = await scanBuildIndicatorsForPackage(pkgCacheDir, manifest.scripts || {}, referencedFiles)
 
   await fs.writeFile(metaPath, JSON.stringify({
@@ -2005,7 +2005,7 @@ When to use --reset:
       const startCount = dsQueue.length
       if (startCount === 0) return
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
-      process.stderr.write(`\n  DeepScan: analyzing ${startCount} packages...\n`)
+      process.stderr.write(`\n  DeepScan: checking ${startCount} packages against ${INDICATOR_COUNT} indicators...\n`)
       let dsFetched = 0
 
       const worker = async (workerIndex) => {
@@ -2014,14 +2014,15 @@ When to use --reset:
           const manifest = dsQueue.shift()
           if (!manifest) break
           await sleep(MANIFEST_DELAY_MS)
-          process.stderr.write(`    scanning ${manifest.name}@${manifest.version}...\n`)
+          process.stderr.write(`    checking ${manifest.name}@${manifest.version}...\n`)
           const { results, referencedFiles, fromCache } =
             await deepAnalyzePackage(manifest, deepDir)
           deepResults.set(manifest.name, results)
           deepRefFiles.set(manifest.name, referencedFiles || [])
           const hitCount = results?.length ?? 0
-          const tag = fromCache ? ' [cached]' : hitCount > 0 ? ` — ${hitCount} indicator(s)` : ''
-          process.stderr.write(`    ${manifest.name}@${manifest.version}${tag}\n`)
+          const cacheTag = fromCache ? ' [cached]' : ''
+          const countTag = hitCount > 0 ? ` — ${hitCount} indicator(s)` : ' — 0 indicators'
+          process.stderr.write(`    ${manifest.name}@${manifest.version}${countTag}${cacheTag}\n`)
           dsFetched++
           if (dsFetched % DRAIN_CHECKPOINT_EVERY === 0 || dsFetched === startCount) {
             process.stderr.write(`    [${dsFetched}/${startCount}] analyzed\n`)
