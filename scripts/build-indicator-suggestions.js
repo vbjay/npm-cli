@@ -141,7 +141,7 @@ const USER_AGENT = `npm/${PKG_VERSION} npm-indicator-suggestions (https://github
 const { INDICATOR_REGISTRY, SIGNAL_DESCRIPTIONS } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-definitions.js')
 )
-const { hasBuildHint, scanBuildIndicatorsForPackage } = require(
+const { hasBuildHint, scanBuildIndicatorsForPackage, detectClues, investigate } = require(
   path.join(ROOT, 'lib', 'utils', 'indicator-scanner.js')
 )
 const scanPackageScripts = require(
@@ -647,7 +647,9 @@ async function deepAnalyzePackage (manifest, deepDir) {
   }
 
   const lifecycleScripts = extractLifecycleScripts(manifest.scripts)
+  process.stderr.write(`      [deepScan] ${manifest.name}: scanning JS files...\n`)
   const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts, { maxFiles: MAX_FILES_DEEP_SCAN })
+  process.stderr.write(`      [deepScan] ${manifest.name}: JS scan done (${referencedFiles.length} refs) — detecting clues...\n`)
 
   for (const pkgEntry of (meta.fetchedPkgs || [])) {
     // Old-format entries are 'name@version' strings from pre-v6 deep-fetch caches.
@@ -674,8 +676,16 @@ async function deepAnalyzePackage (manifest, deepDir) {
     } catch { /* not fully fetched — skip */ }
   }
 
-  process.stderr.write(`      checking ${manifest.name}@${manifest.version} against ${INDICATOR_COUNT} indicators...\n`)
-  const results = await scanBuildIndicatorsForPackage(pkgCacheDir, manifest.scripts || {}, referencedFiles)
+  process.stderr.write(`      [deepScan] ${manifest.name}: checking ${manifest.name}@${manifest.version} against ${INDICATOR_COUNT} indicators...\n`)
+  const clues = await detectClues(pkgCacheDir, manifest.scripts || {}, referencedFiles, INDICATOR_REGISTRY)
+  process.stderr.write(`      [deepScan] ${manifest.name}: ${clues.size} clue(s) found — investigating...\n`)
+  const results = []
+  for (const file of clues) {
+    process.stderr.write(`      [deepScan] ${manifest.name}: investigating ${file}...\n`)
+    const r = await investigate(file, INDICATOR_REGISTRY[file], pkgCacheDir)
+    results.push(r)
+    process.stderr.write(`      [deepScan] ${manifest.name}: ${file} done\n`)
+  }
 
   await fs.writeFile(metaPath, JSON.stringify({
     ...meta,
