@@ -2023,6 +2023,10 @@ When to use --reset:
           const cacheTag = fromCache ? ' [cached]' : ''
           const countTag = hitCount > 0 ? ` — ${hitCount} indicator(s)` : ' — 0 indicators'
           process.stderr.write(`    ${manifest.name}@${manifest.version}${countTag}${cacheTag}\n`)
+          for (const r of (results || [])) {
+            const signals = r.signals?.length ? ` [${r.signals.join(', ')}]` : ''
+            process.stderr.write(`      ✓ ${r.indicatorFile} — ${r.label}${signals}\n`)
+          }
           dsFetched++
           if (dsFetched % DRAIN_CHECKPOINT_EVERY === 0 || dsFetched === startCount) {
             process.stderr.write(`    [${dsFetched}/${startCount}] analyzed\n`)
