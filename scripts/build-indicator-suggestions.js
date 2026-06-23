@@ -646,6 +646,7 @@ async function deepAnalyzePackage (manifest, deepDir) {
   }
 
   const lifecycleScripts = extractLifecycleScripts(manifest.scripts)
+  process.stderr.write(`      [scan] ${manifest.name}@${manifest.version}: scanning JS files...\n`)
   const referencedFiles = await scanPackageScripts(pkgCacheDir, lifecycleScripts, { maxFiles: MAX_FILES_DEEP_SCAN })
 
   for (const pkgEntry of (meta.fetchedPkgs || [])) {
@@ -673,6 +674,7 @@ async function deepAnalyzePackage (manifest, deepDir) {
     } catch { /* not fully fetched — skip */ }
   }
 
+  process.stderr.write(`      [scan] ${manifest.name}@${manifest.version}: running indicator scan...\n`)
   const results = await scanBuildIndicatorsForPackage(pkgCacheDir, manifest.scripts || {}, referencedFiles)
 
   await fs.writeFile(metaPath, JSON.stringify({
@@ -1934,7 +1936,15 @@ When to use --reset:
           // the resolution has already been done and stored.
           const followsToStage = resolvedFollows
             // Fast-path: meta already has resolved name@version list — no HTTP needed.
-            ? resolvedFollows.filter(key => !inStore.has(key) && !seen.has(key))
+            // Still filter for validity: old meta may contain names that fail the
+            // current isValidNpmPackageName check (e.g. hostname-like strings).
+            ? resolvedFollows.filter(key => {
+                const at = key.lastIndexOf('@')
+                if (at <= 0) return false
+                const name = key.slice(0, at)
+                return isValidNpmPackageName(name) && !NODE_BUILTIN_MODULES.has(name) &&
+                       !inStore.has(key) && !seen.has(key)
+              })
             // Slow-path: resolve each bare follow via unpkg to get the concrete version.
             : await (async () => {
               const resolved = []
