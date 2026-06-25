@@ -140,6 +140,34 @@ const fs = require('fs/promises')
 const { unlinkSync } = require('fs')
 
 const ROOT = path.resolve(__dirname, '..')
+
+// ---------------------------------------------------------------------------
+// File integrity helpers — wrap JSON payloads with a seeded SHA-256 hash so
+// corrupted or tampered cache/output files are detected on next read.
+// ---------------------------------------------------------------------------
+
+const CACHE_HASH_SEED  = 'npm-build-pkg-cache-v1'
+const OUTPUT_HASH_SEED = 'npm-build-output-v1'
+
+function hashPayload (seed, dataObj) {
+  const content = seed + '\x00' + JSON.stringify(dataObj)
+  return 'sha256:' + crypto.createHash('sha256').update(content, 'utf8').digest('hex')
+}
+
+function wrapWithHash (seed, dataObj) {
+  return { hash: hashPayload(seed, dataObj), data: dataObj }
+}
+
+/** Returns the verified inner data object, or null if verification fails. */
+function unwrapVerified (seed, envelope, filePath) {
+  if (!envelope || typeof envelope !== 'object' || !envelope.hash || !envelope.data) return null
+  const expected = hashPayload(seed, envelope.data)
+  if (envelope.hash !== expected) {
+    process.stderr.write(`  ⚠️  integrity check failed for ${path.basename(filePath)} — file may be corrupt or tampered\n`)
+    return null
+  }
+  return envelope.data
+}
 const { version: PKG_VERSION } = require(path.join(ROOT, 'package.json'))
 const USER_AGENT = `npm/${PKG_VERSION} npm-indicator-suggestions (https://github.com/npm/cli)`
 const { INDICATOR_REGISTRY, SIGNAL_DESCRIPTIONS } = require(
@@ -1379,7 +1407,18 @@ function suggestSignal (tokens, inferredFiles) {
 
 async function loadPackageCache (filePath) {
   try {
-    const raw = JSON.parse(await fs.readFile(filePath, 'utf-8'))
+    const envelope = JSON.parse(await fs.readFile(filePath, 'utf-8'))
+
+    // Detect wrapped format (new): { hash, data }
+    // Fall back to unwrapped (legacy) if hash field absent.
+    let raw = envelope
+    if (envelope && typeof envelope === 'object' && envelope.hash !== undefined) {
+      const verified = unwrapVerified(CACHE_HASH_SEED, envelope, filePath)
+      if (!verified) {
+        return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [], lastChangesSeq: null }
+      }
+      raw = verified
+    }
     if (Array.isArray(raw)) {
       return { names: raw, manifests: null, seen: null, discoveryState: null, pendingCandidates: [] }
     }
@@ -1492,7 +1531,7 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
     seenOnlyNames,
     packages,
   }
-  await fs.writeFile(filePath, JSON.stringify(data, null, 2) + '\n', 'utf-8')
+  await fs.writeFile(filePath, JSON.stringify(wrapWithHash(CACHE_HASH_SEED, data), null, 2) + '\n', 'utf-8')
 }
 
 // ---------------------------------------------------------------------------
@@ -3041,7 +3080,7 @@ When to use --reset:
         'the INDICATOR_REGISTRY in lib/utils/indicator-definitions.js.',
         'Your job is to review the data below and propose concrete improvements to that file.',
       ].join(' '),
-      howToReadThisFile: 'Every top-level section (meta, coverage, existingDefinitionCoverage, uncategorizedPackages, commandPatternGaps) has a "description" field that explains what the section contains and how to interpret it, and a "data" field with the actual content.  Read the description first, then inspect data.',
+      howToReadThisFile: 'The file is wrapped in an integrity envelope: { hash, data }. The actual content lives in the "data" field. Every section inside data (meta, coverage, existingDefinitionCoverage, uncategorizedPackages, commandPatternGaps) has a "description" field that explains what the section contains and how to interpret it, and a "data" field with the actual content.  Read the description first, then inspect data.',
       sourceFile: 'lib/utils/indicator-definitions.js',
       tasks: [
         {
@@ -3147,7 +3186,7 @@ When to use --reset:
     },
   }
 
-  await fs.writeFile(outPath, JSON.stringify(output, null, 2) + '\n', 'utf-8')
+  await fs.writeFile(outPath, JSON.stringify(wrapWithHash(OUTPUT_HASH_SEED, output), null, 2) + '\n', 'utf-8')
 
   process.stderr.write(`\n✅ Done!\n`)
   process.stderr.write(`   New this run:         ${newThisRun}\n`)
