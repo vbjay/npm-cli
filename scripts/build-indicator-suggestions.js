@@ -2457,6 +2457,21 @@ When to use --reset:
     }
 
     process.stderr.write('  └─ scanning indicators...\n')
+
+    // Prune orphaned deep-cache dirs — packages no longer in the manifest list.
+    // All current packages are fully fetched at this point, so it's safe to delete.
+    const expectedDirs = new Set(manifests.map(m => deepSafeName(m.name, m.version)))
+    try {
+      const allDirs = await fs.readdir(deepDir, { withFileTypes: true })
+      const orphans = allDirs.filter(e => e.isDirectory() && !expectedDirs.has(e.name))
+      if (orphans.length > 0) {
+        process.stderr.write(`  🧹 pruning ${orphans.length} orphaned deep-cache ${orphans.length === 1 ? 'entry' : 'entries'}...\n`)
+        await Promise.all(orphans.map(e => rmReadOnly(path.join(deepDir, e.name))))
+      }
+    } catch (err) {
+      process.stderr.write(`  Warning: prune step failed: ${err.message}\n`)
+    }
+
     await drain(DrainMode.DeepScan)
   }
 
