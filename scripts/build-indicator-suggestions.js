@@ -1070,7 +1070,74 @@ async function fetchJson (url, retries = 5) {
 // npm registry helpers
 // ---------------------------------------------------------------------------
 
-// Fetch the latest-version manifest for a single package.
+// Fetch all package names that changed in the CouchDB _changes feed since
+// a given sequence number.  Returns { names: Set<string>, lastSeq: number }.
+// When sinceSeq is null (first run) returns { names: null, lastSeq } — null
+// signals "no filtering; re-check everything".
+//
+// replicate.npmjs.com notes:
+//   - Does NOT support include_docs=false or filter=_doc_ids — omit them
+//   - The seq space matches update_seq from the root (~116M range)
+//   - HTTP 400 for a stored seq means the feed tip was behind it at the time
+//     of the request (replication lag); fall back to full re-check and re-seed
+//     from update_seq so the next run starts from a fresh valid point
+const CHANGES_BATCH = 2500
+async function fetchChangedNames (sinceSeq) {
+  if (sinceSeq === null) {
+    // No stored seq — read the current update_seq from the root so the next
+    // run can diff from here.  Return null names → full re-check this run.
+    try {
+      const info = await fetchJson('https://replicate.npmjs.com/')
+      const lastSeq = info?.update_seq ?? null
+      process.stderr.write(`  (first run — recorded changes seq ${lastSeq?.toLocaleString?.() ?? lastSeq}; next run will filter)\n`)
+      return { names: null, lastSeq }
+    } catch {
+      return { names: null, lastSeq: null }
+    }
+  }
+
+  const names = new Set()
+  let seq = sinceSeq
+  let pages = 0
+  const seqStr = s => (typeof s === 'number' ? s.toLocaleString() : s)
+  process.stderr.write(`  fetching registry changes since seq ${seqStr(sinceSeq)}...\n`)
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    let data
+    try {
+      data = await fetchJson(
+        `https://replicate.npmjs.com/_changes?since=${seq}&limit=${CHANGES_BATCH}`
+      )
+    } catch (err) {
+      if (err.statusCode === 400) {
+        // 400 = stored seq is ahead of the replication tip (transient lag).
+        // Re-seed from the current update_seq so next run starts fresh.
+        process.stderr.write(`  ⚠️  _changes: seq ${seqStr(seq)} ahead of replication tip — re-seeding from current update_seq\n`)
+        try {
+          const info = await fetchJson('https://replicate.npmjs.com/')
+          return { names: null, lastSeq: info?.update_seq ?? null }
+        } catch {
+          return { names: null, lastSeq: null }
+        }
+      }
+      process.stderr.write(`  ⚠️  _changes fetch error: ${err.message} — falling back to full re-check\n`)
+      return { names: null, lastSeq: sinceSeq }
+    }
+    if (!data || !Array.isArray(data.results)) break
+    for (const r of data.results) {
+      if (typeof r.id === 'string' && !r.id.startsWith('_design/')) names.add(r.id)
+    }
+    seq = data.last_seq ?? seq
+    pages++
+    if (data.results.length < CHANGES_BATCH) break  // last page
+    if (pages % 10 === 0) {
+      process.stderr.write(`    ${names.size.toLocaleString()} changed names so far (seq ${seqStr(seq)})...\n`)
+    }
+  }
+  return { names, lastSeq: seq }
+}
+
+
 async function getPackageManifest (nameAtVersion) {
   // Support 'name@version' input (e.g. from --add react@17 or discovered manifests).
   // A leading '@' on scoped packages is not a version — only split on a '@' that comes
@@ -1326,6 +1393,7 @@ async function loadPackageCache (filePath) {
         seen: seenSet,
         discoveryState: raw.discoveryState || null,
         pendingCandidates,
+        lastChangesSeq: raw.lastChangesSeq || null,
       }
     }
   } catch (err) {
@@ -1333,13 +1401,13 @@ async function loadPackageCache (filePath) {
       process.stderr.write(`  Warning: could not read cache ${filePath}: ${err.message}\n`)
     }
   }
-  return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [] }
+  return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [], lastChangesSeq: null }
 }
 
 // Build snapshot synchronously before any await so concurrent Promise.all closures
 // cannot produce a torn checkpoint.  State for each package is derived from which
 // array it lives in (manifests = lifecycle|ready, candidates = candidate, rest = seen).
-async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = [], failedFetches = new Set()) {
+async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = [], failedFetches = new Set(), lastChangesSeq = null) {
   const candidateSet = new Set(candidates)
   const lifecycleSet = new Set(manifests.map(m => m.name))
 
@@ -1388,6 +1456,7 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
     generatedAt: new Date().toISOString(),
     count: manifests.length,
     discoveryState: discoveryState ? { ...discoveryState, keywordCursors: cleanCursors } : discoveryState,
+    lastChangesSeq: lastChangesSeq ?? null,
     seenOnlyNames,
     packages,
   }
@@ -1626,13 +1695,18 @@ When to use --reset:
 
   // Try permanent store first (from a previous successful run)
   let loaded = await loadPackageCache(pkgPath)
+  const pkgLastChangesSeq = loaded.lastChangesSeq ?? null
   let resumeMergeCount = 0
   let isPostCollectionResume = false  // true when tmp.json was written post-collection (collection already done)
+  // lastChangesSeq from the tmp cache, if any — used as the starting seq on a resume
+  // so the changes-feed filter stays consistent across an interrupted run.
+  let tmpLastChangesSeq = null
 
   // If permanent store empty or missing, try the resume cache
   if (!loaded.manifests && !loaded.names) {
     loaded = await loadPackageCache(resumeCachePath)
     if (loaded.manifests || loaded.names) {
+      tmpLastChangesSeq = loaded.lastChangesSeq ?? null
       process.stderr.write(`  (permanent store empty, loaded from resume cache)\n`)
       // discoveryState: null in tmp.json means collection was already complete
       if (loaded.manifests && loaded.discoveryState === null) isPostCollectionResume = true
@@ -1641,6 +1715,7 @@ When to use --reset:
     // Permanent store has data — also check if there's a newer resume cache
     // (from an interrupted run) to merge its additional packages and discovery state.
     const resume = await loadPackageCache(resumeCachePath)
+    tmpLastChangesSeq = resume.lastChangesSeq ?? null
     if (resume.manifests && resume.manifests.length > (loaded.manifests?.length ?? 0)) {
       resumeMergeCount = resume.manifests.length - (loaded.manifests?.length ?? 0)
       process.stderr.write(`  (merging resume cache: ${resumeMergeCount} additional packages)\n`)
@@ -1805,18 +1880,51 @@ When to use --reset:
   // Restore any candidates pending manifest fetch from a previous interrupted run.
   const candidates = [...loadedCandidates]
 
-  // Queue all previously-seen names as candidates so the Candidates drain
-  // re-checks them for version bumps or newly added lifecycle scripts.
+  // Use the CouchDB _changes feed to filter version re-checks to only packages
+  // that actually changed since the last run.
+  //
+  // changesStartSeq: the seq we fetch changes FROM — stored in tmp so a resume
+  //   uses the same starting point (and thus the same changedNames filter).
+  //   If tmp already has a seq (resuming), use that; otherwise use pkgPath's seq.
+  //   Only fetch from _changes when tmp is absent (fresh run start).
+  //
+  // lastChangesSeq: the new end seq returned by _changes — stored in pkgPath so
+  //   the NEXT fresh run starts from here.
   let versionRecheckCount = 0
-  if (topN > 0 && seen.size > 0) {
-    const inCandidates = new Set(candidates)
-    for (const name of seen) {
-      if (!inCandidates.has(name)) {
+  // changesStartSeq is what we pass to _changes and persist in tmp.
+  // If resuming (tmp had a seq), skip re-fetching — use same seq.
+  let changesStartSeq = tmpLastChangesSeq ?? pkgLastChangesSeq
+  // lastChangesSeq = the new end seq to save in pkgPath for the next run.
+  // Keep as changesStartSeq until _changes returns a new value; if _changes
+  // returns null (e.g. stale seq 400), reset to null so next run re-seeds.
+  let lastChangesSeq = changesStartSeq
+
+  // Always seed/fetch the changes seq when topN > 0, even if seen is empty —
+  // so a completely fresh start (packages.json missing) still records update_seq.
+  if (topN > 0) {
+    const { names: changedNames, lastSeq } = await fetchChangedNames(changesStartSeq)
+    lastChangesSeq = lastSeq
+    if (lastSeq === null) changesStartSeq = null
+
+    if (seen.size > 0) {
+      const inCandidates = new Set(candidates)
+      let skippedUnchanged = 0
+      for (const name of seen) {
+        if (inCandidates.has(name)) continue
+        if (changedNames !== null && !changedNames.has(name)) {
+          skippedUnchanged++
+          continue
+        }
         candidates.push(name)
         versionRecheckCount++
       }
+      const filterNote = changedNames !== null
+        ? ` (${skippedUnchanged.toLocaleString()} skipped — unchanged since last run)`
+        : changesStartSeq === null
+          ? ' (no seq — will seed on next run)'
+          : ' (full re-check — seq seeded this run)'
+      process.stderr.write(`  (re-queued ${versionRecheckCount.toLocaleString()} seen packages for version re-check${filterNote})\n`)
     }
-    process.stderr.write(`  (re-queued ${versionRecheckCount.toLocaleString()} seen packages for version re-check)\n`)
   }
   process.stderr.write('\n')
 
@@ -1928,7 +2036,7 @@ When to use --reset:
     if (mode === DrainMode.Candidates) {
       if (candidates.length === 0) return
       const startCount = candidates.length
-      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
+      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq)
       process.stderr.write(`\n  Candidates: fetching ${startCount}...\n`)
       let mFetched = 0
       let mFound = 0
@@ -2004,8 +2112,8 @@ When to use --reset:
           if (mFetched % DRAIN_CHECKPOINT_EVERY === 0) {
             process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} new, ${mUpdated} version updates\n`)
             await Promise.all([
-              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
             ])
           }
         }
@@ -2025,8 +2133,8 @@ When to use --reset:
           `     ${candidates.length} candidates remain for next run\n`
         )
         await Promise.all([
-          savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-          savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+          savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+          savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
         ])
         process.stderr.write(`  checkpoint saved — re-run to continue\n`)
         process.exit(0)
@@ -2034,8 +2142,8 @@ When to use --reset:
 
       process.stderr.write(`    ✓ +${mFound} of ${mFetched} candidates (${manifests.length} in store, ${hitRate}% hit rate${failLine}${retryLine})\n`)
       await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
       ])
       process.stderr.write(`    checkpoint saved — ready to refill\n`)
       pagesSinceLastDrain = 0
@@ -2081,7 +2189,7 @@ When to use --reset:
       const cacheNote = cacheParts.length > 0 ? cacheParts.join(', ') : 'all new'
 
       const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
-      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
+      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq)
       process.stderr.write(`\n  DeepFetch: ${fetchQueue.length} packages (${cacheNote})...\n`)
       let dfFetched = 0
       let isCheckpointing = false  // guard against concurrent checkpoint writes
@@ -2092,8 +2200,8 @@ When to use --reset:
         isCheckpointing = true
         try {
           await Promise.all([
-            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
           ])
         } finally {
           isCheckpointing = false
@@ -2189,7 +2297,7 @@ When to use --reset:
       const dsQueue = [...manifests]
       const startCount = dsQueue.length
       if (startCount === 0) return
-      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
+      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq)
       process.stderr.write(`\n  DeepScan: checking ${startCount} packages against ${INDICATOR_COUNT} indicators...\n`)
       let dsFetched = 0
 
@@ -2282,8 +2390,8 @@ When to use --reset:
         if ((bi + 1) % 10 === 0 || bi + 1 === nonScopedBatches) {
           process.stderr.write(`    batch ${bi + 1}/${nonScopedBatches} (${dlResolved} resolved so far)\n`)
           await Promise.all([
-            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
           ])
         }
       }
@@ -2315,8 +2423,8 @@ When to use --reset:
             scopedSinceCheckpoint = 0
             process.stderr.write(`    scoped: ${dlResolved} resolved so far\n`)
             await Promise.all([
-              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
             ])
             scopedCheckpointGuard = false
           }
@@ -2328,8 +2436,8 @@ When to use --reset:
 
       process.stderr.write(`    ✓ resolved ${dlResolved}/${pending.length} download counts\n`)
       await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
-        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+        savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+        savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
       ])
     }
   }
@@ -2408,8 +2516,8 @@ When to use --reset:
           if (err.isCircuitOpen) {
             process.stderr.write(`  ⚡ circuit open during search — checkpointing\n`)
             await Promise.all([
-              savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }, candidates),
-              savePackageCache(pkgPath, manifests, seen, { keywordCursors }),
+              savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }, candidates, new Set(), changesStartSeq),
+              savePackageCache(pkgPath, manifests, seen, { keywordCursors }, [], new Set(), lastChangesSeq),
             ])
             process.exit(0)
           }
@@ -2443,7 +2551,7 @@ When to use --reset:
           ` | ${candidates.length} candidates, ${manifests.length} in store\n`
         )
         process.stderr.write(`    saving checkpoint...\r`)
-        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }, candidates)
+        await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }, candidates, new Set(), changesStartSeq)
         process.stderr.write(`                       \r`)  // clear the saving line
 
         // Dry page: all results were already in seen-set — no new names to fetch.
@@ -2485,8 +2593,8 @@ When to use --reset:
       const nextState = { queryOrder: DISCOVERY_QUERIES, queryIndex: nextQi, queryFrom: nextFrom, keywordCursors }
       process.stderr.write(`  checkpoint: ${manifests.length} packages, ${seen.size} seen — saved\n`)
       await Promise.all([
-        savePackageCache(resumeCachePath, manifests, seen, nextState, candidates),
-        savePackageCache(pkgPath, manifests, seen, nextState),
+        savePackageCache(resumeCachePath, manifests, seen, nextState, candidates, new Set(), changesStartSeq),
+        savePackageCache(pkgPath, manifests, seen, nextState, [], new Set(), lastChangesSeq),
       ])
     }
 
@@ -2610,7 +2718,7 @@ When to use --reset:
   // Save final manifests to permanent store.  discoveryState carries only
   // keywordCursors (no resume position) so the next run continues forward
   // from the last page reached for each keyword, skipping already-walked pages.
-  await savePackageCache(pkgPath, manifests, seen, { keywordCursors })
+  await savePackageCache(pkgPath, manifests, seen, { keywordCursors }, [], new Set(), lastChangesSeq)
   process.stderr.write(`  ✓ manifests saved to ${pkgPath}\n\n`)
   await fs.unlink(resumeCachePath).catch(() => {})
 
