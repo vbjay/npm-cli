@@ -2061,12 +2061,13 @@ When to use --reset:
   let deepNewPkgs = 0
 
   // Worker-pool drain — mode selects what to fetch:
-  //   drain(DrainMode.Candidates) — fetch manifests for candidate names, populate manifests[]
-  //   drain(DrainMode.Downloads)  — batch-fetch weekly download counts for 'lifecycle' manifests
-  //   drain(DrainMode.DeepFetch)  — download files via unpkg for all manifests; collect discovered pkg names
-  //   drain(DrainMode.DeepScan)   — run indicator scan on already-fetched manifests (reads from cache)
+  //   drain(DrainMode.Candidates)                     — fetch manifests for candidate names, populate manifests[]
+  //   drain(DrainMode.Downloads)                      — batch-fetch weekly download counts for 'lifecycle' manifests
+  //   drain(DrainMode.DeepFetch)                      — download files via unpkg; collect discovered pkg names
+  //   drain(DrainMode.DeepFetch, {onlyMissing:true})  — same but skip packages that already have a valid cache
+  //   drain(DrainMode.DeepScan)                       — run indicator scan on already-fetched manifests (reads from cache)
   // All modes use MANIFEST_CONCURRENCY workers staggered by MANIFEST_DELAY_MS.
-  const drain = async (mode) => {
+  const drain = async (mode, opts = {}) => {
     // ── Candidates mode ────────────────────────────────────────────────────
     if (mode === DrainMode.Candidates) {
       if (candidates.length === 0) return
@@ -2199,6 +2200,12 @@ When to use --reset:
     // via unpkg and push new ones to candidates so they go through the proper
     // Candidates drain pipeline (full manifest fetch + weekly-downloads → packages.json).
     } else if (mode === DrainMode.DeepFetch) {
+      // opts.onlyMissing = true  → discovery pass: only fetch packages with no valid cache
+      //                            (newly added packages whose deps haven't been found yet).
+      // opts.onlyMissing = false → reverification pass: fetch all packages so stale caches
+      //                            are caught even for packages that looked valid at scan start.
+      const { onlyMissing = false } = opts
+
       // Sort: packages without a valid cache entry come first (real network work).
       // Cache status: 'valid' = fetchVersion matches, 'stale' = meta exists but version
       // changed (or file tree differs), 'missing' = no .meta.json yet.
@@ -2212,10 +2219,15 @@ When to use --reset:
           return 'missing'
         }
       }))
-      const fetchQueue = [
-        ...manifests.filter((_, i) => cacheStatus[i] !== 'valid'),  // missing + stale first
-        ...manifests.filter((_, i) => cacheStatus[i] === 'valid'),   // valid cache last
-      ]
+
+      // Discovery pass: only non-valid packages (new deps that might add more candidates).
+      // Reverification pass: all packages in execution order (non-valid first for fail-fast).
+      const fetchQueue = onlyMissing
+        ? manifests.filter((_, i) => cacheStatus[i] !== 'valid')
+        : [
+            ...manifests.filter((_, i) => cacheStatus[i] !== 'valid'),
+            ...manifests.filter((_, i) => cacheStatus[i] === 'valid'),
+          ]
       if (fetchQueue.length === 0) return
 
       const nValid   = cacheStatus.filter(s => s === 'valid').length
@@ -2230,11 +2242,12 @@ When to use --reset:
       } else if (nMissing > 0) {
         cacheParts.push(`${nMissing} new`)
       }
-      const cacheNote = cacheParts.length > 0 ? cacheParts.join(', ') : 'all new'
+      const cacheNote = cacheParts.length > 0 ? cacheParts.join(', ') : (onlyMissing ? 'all cached — nothing to fetch' : 'all cached')
+      const passLabel = onlyMissing ? 'DeepFetch (discovery)' : 'DeepFetch (reverify)'
 
       const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq)
-      process.stderr.write(`\n  DeepFetch: ${fetchQueue.length} packages (${cacheNote})...\n`)
+      process.stderr.write(`\n  ${passLabel}: ${fetchQueue.length} packages (${cacheNote})...\n`)
       let dfFetched = 0
       let isCheckpointing = false  // guard against concurrent checkpoint writes
       const fileLimit = makeLimiter(5)
@@ -2721,18 +2734,46 @@ When to use --reset:
     process.stderr.write('Step 4/5: Deep scanning packages via unpkg...\n')
     await fs.mkdir(deepDir, { recursive: true })
 
-    // Iterative BFS: fetch files → discover dep follows → drain new candidates
-    // into manifests (full manifest + packages.json update) → repeat until stable.
-    let deepPass = 0
-    while (true) {
-      deepPass++
-      process.stderr.write(`  ├─ pass ${deepPass}: fetching files + collecting follows...\n`)
-      await drain(DrainMode.DeepFetch)
+    // ── Deep-scan orchestration ────────────────────────────────────────────
+    //
+    // Phase 1 — Initial full fetch (all packages):
+    //   Walk every manifest cache.  Fetch missing/stale files, collect
+    //   cross-package require()/import deps as new candidates.
+    //
+    // Phase 2 — Targeted BFS (only newly discovered packages):
+    //   Drain new candidates into manifests, then deep-fetch only those new
+    //   arrivals (their caches are all missing).  Repeat until stable.
+    //   We already verified the original 6000+ packages in phase 1 — no need
+    //   to re-walk them every BFS round.
+    //
+    // Phase 3 — Final reverification (only when phase 2 added packages):
+    //   If discovery added new packages, run one more full fetch to confirm
+    //   every manifest (old + new) has a valid cache before the scan.
+    //   Skipped when phase 1 discovered nothing — it already verified all.
+    //
+    // Phase 4 — DeepScan:
+    //   Run indicator scan on cached files.
+    // ──────────────────────────────────────────────────────────────────────
 
-      if (candidates.length === 0) break
+    // Phase 1: full fetch
+    let deepPass = 1
+    process.stderr.write(`  ├─ pass ${deepPass} (initial full fetch): all ${manifests.length} packages...\n`)
+    await drain(DrainMode.DeepFetch)  // onlyMissing=false → all packages
 
-      process.stderr.write(`  ├─ pass ${deepPass}: draining ${candidates.length} discovered packages into manifests...\n`)
+    // Phase 2: BFS on only the newly discovered packages
+    let discoveredAny = candidates.length > 0
+    while (candidates.length > 0) {
+      process.stderr.write(`  ├─ draining ${candidates.length} discovered packages...\n`)
       await drain(DrainMode.Candidates)
+      deepPass++
+      process.stderr.write(`  ├─ pass ${deepPass} (discovered only): ${candidates.length === 0 ? 'none queued yet' : `${manifests.length} total, fetching newly added`}...\n`)
+      await drain(DrainMode.DeepFetch, { onlyMissing: true })
+    }
+
+    // Phase 3: final reverification (only if BFS added packages)
+    if (discoveredAny) {
+      process.stderr.write(`  ├─ reverify: full fetch (${manifests.length} packages — confirming all deps cached)...\n`)
+      await drain(DrainMode.DeepFetch)
     }
 
     process.stderr.write('  └─ scanning indicators...\n')
