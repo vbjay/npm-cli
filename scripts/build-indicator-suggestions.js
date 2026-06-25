@@ -117,14 +117,17 @@
 //
 // Cache invalidation:
 //   DEEP_CACHE_SCHEMA encodes the active defanging scheme.  When it is bumped,
-//   the schemaVersion field in every .meta.json no longer matches, causing all
-//   existing cached files to be re-downloaded with the new defanging applied.
-//   Current value: see DEEP_CACHE_SCHEMA constant at the top of the script.
-//   Increment the N in 'defang-vN' whenever the defanging approach or fetch
-//   coverage changes (new file type covered, header format changed, new script
-//   delegation following that would leave old caches incomplete, etc.).
-//   The indicator registry and signal patterns have their own hash and do not
-//   need a manual bump.
+//   all fetch caches (fetchVersion) are invalidated, causing all packages to
+//   be re-downloaded with the new defanging applied.  Scan caches are also
+//   invalidated (scanVersion includes fetchVersion).
+//   Increment the N in 'defang-vN' when the on-disk file content changes:
+//   new file type defanged, header format changed, fetch coverage broadened
+//   (e.g. new script delegation following that would leave old caches incomplete).
+//
+//   commandPatterns and signal patterns are hashed automatically into scanVersion
+//   so scanner-only changes (new regex, new verb in Justfile pattern, etc.) only
+//   invalidate scan caches — existing files on disk are re-scanned in-place
+//   without any network re-fetch.
 //
 
 'use strict'
@@ -153,25 +156,29 @@ const { classifyUrl } = require(
   path.join(ROOT, 'lib', 'utils', 'url-classifier.js')
 )
 
-// Cache schema version — hash of every signal name+regex and every indicator
-// Increment when the on-disk file format changes (e.g. defang scheme, meta fields).
-// Mixed into DEEP_CACHE_VERSION so old caches are automatically invalidated.
-const DEEP_CACHE_SCHEMA = 'defang-v7'
+// Increment when defanging or fetch coverage changes (e.g. new file type covered,
+// header format changed).  Mixed into both DEEP_FETCH_VERSION and DEEP_SCAN_VERSION.
+const DEEP_CACHE_SCHEMA = 'defang-v8'
 
-// registry key+commandPattern so that ANY change to signals or indicators
-// automatically invalidates all deep-scan cache entries and forces a rescan.
-function computeDeepCacheVersion () {
+// Two separate cache versions because fetch and scan have different invalidation triggers.
+//
+// DEEP_FETCH_VERSION — changes only when the on-disk file set needs to change:
+//   • DEEP_CACHE_SCHEMA bumped (defanging scheme changed)
+//   • INDICATOR_REGISTRY gains or removes a key (a new file to proactively fetch)
+// When this changes every package directory is deleted and re-downloaded.
+//
+// DEEP_SCAN_VERSION — changes any time the scanner logic changes:
+//   • DEEP_FETCH_VERSION changes (fetch invalidation implies scan invalidation)
+//   • Signal pattern source/flags changed
+//   • Any indicator commandPattern source changed (affects clue detection)
+//   • Any scanner step pattern changed (affects investigation output)
+// When this changes only .meta.json's scan results are stale; files stay on disk.
+// The scanner re-runs in place against the existing file tree.
+function computeDeepFetchVersion () {
   const parts = [DEEP_CACHE_SCHEMA]
-  // Signal patterns: name + full regex source (flags included)
-  for (const [name, pat] of SIGNAL_PATTERNS) {
-    const src = pat instanceof RegExp ? pat.source + pat.flags : String(pat)
-    parts.push(name + '=' + src)
-  }
-  // Indicator registry: file key + each command-pattern source
-  for (const [key, entry] of Object.entries(INDICATOR_REGISTRY)) {
-    const pats = (entry.detect?.commandPatterns || [])
-      .map(p => p instanceof RegExp ? p.source : String(p))
-    parts.push(key + ':' + pats.join('|'))
+  // Only include indicator file keys — these control which files are proactively fetched.
+  for (const key of Object.keys(INDICATOR_REGISTRY)) {
+    parts.push(key)
   }
   let h = 0
   const str = parts.join('\n')
@@ -180,7 +187,33 @@ function computeDeepCacheVersion () {
   }
   return (h >>> 0).toString(36)
 }
-const DEEP_CACHE_VERSION = computeDeepCacheVersion()
+
+function computeDeepScanVersion () {
+  const parts = [DEEP_CACHE_SCHEMA, computeDeepFetchVersion()]
+  // Signal patterns: name + full regex source (flags included)
+  for (const [name, pat] of SIGNAL_PATTERNS) {
+    const src = pat instanceof RegExp ? pat.source + pat.flags : String(pat)
+    parts.push(name + '=' + src)
+  }
+  // Indicator registry: file key + commandPatterns + scanner step patterns
+  for (const [key, entry] of Object.entries(INDICATOR_REGISTRY)) {
+    const cmdPats = (entry.detect?.commandPatterns || [])
+      .map(p => p instanceof RegExp ? p.source : String(p))
+    const stepPats = entry.scanner?.steps
+      ? entry.scanner.steps.map(s => s.pattern instanceof RegExp ? s.pattern.source : '')
+      : []
+    parts.push(key + ':' + [...cmdPats, ...stepPats].join('|'))
+  }
+  let h = 0
+  const str = parts.join('\n')
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0
+  }
+  return (h >>> 0).toString(36)
+}
+
+const DEEP_FETCH_VERSION = computeDeepFetchVersion()
+const DEEP_SCAN_VERSION = computeDeepScanVersion()
 
 // Maximum files to BFS-scan per package in deep analysis.  Large compiled
 // bundles (e.g. node-llama-cpp with 258 JS files) otherwise consume minutes
@@ -479,7 +512,7 @@ function parseDeepPkgEntry (entry) {
   return { name: entry.slice(0, at).replace(/__/g, '/'), version: entry.slice(at + 1) }
 }
 
-async function deepFetchPackage (manifest, deepDir, limit) {
+async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
   const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
@@ -489,12 +522,14 @@ async function deepFetchPackage (manifest, deepDir, limit) {
     try {
       const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
       const stateOk = meta.state === 'fetched' || meta.state === 'scanned'
-      if (stateOk && meta.schemaVersion === DEEP_CACHE_VERSION) {
+      if (stateOk && meta.fetchVersion === DEEP_FETCH_VERSION) {
         const currentTreeHash = await hashDirTree(pkgCacheDir)
         if (currentTreeHash === meta.filesHash) {
           return { fetchedFiles: meta.fetchedFiles || [], bareFollows: meta.bareFollows || [], resolvedFollows: meta.resolvedFollows || null, fromCache: true }
         }
-        process.stderr.write(`  🗑️  file tree changed for ${manifest.name}@${manifest.version} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
+        if (!opts?.quietTreeWarning) {
+          process.stderr.write(`  🗑️  file tree changed for ${manifest.name}@${manifest.version} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
+        }
       }
     } catch { /* .meta.json missing or corrupt — treat as stale */ }
     await rmReadOnly(pkgCacheDir)
@@ -616,7 +651,7 @@ async function deepFetchPackage (manifest, deepDir, limit) {
   // reflects defanged file sizes on disk — not the original fetched content.
   const filesHash = await hashDirTree(pkgCacheDir)
   await fs.writeFile(metaPath, JSON.stringify({
-    schemaVersion: DEEP_CACHE_VERSION,
+    fetchVersion: DEEP_FETCH_VERSION,
     filesHash,
     fetchedFiles,
     bareFollows: [...bareFollowsMap.values()],
@@ -634,8 +669,8 @@ async function deepAnalyzePackage (manifest, deepDir) {
   let meta
   try { meta = JSON.parse(await fs.readFile(metaPath, 'utf-8')) } catch { return { results: [], referencedFiles: [], fromCache: false } }
 
-  // Full cache hit: directory name already encodes the version; only check schema + file tree.
-  if (meta.state === 'scanned' && meta.schemaVersion === DEEP_CACHE_VERSION) {
+  // Full cache hit: scan results valid only if scan version matches.
+  if (meta.state === 'scanned' && meta.scanVersion === DEEP_SCAN_VERSION) {
     const currentTreeHash = await hashDirTree(pkgCacheDir)
     if (currentTreeHash === meta.filesHash) {
       return { results: meta.results, referencedFiles: meta.referencedFiles || [], fromCache: true }
@@ -690,6 +725,7 @@ async function deepAnalyzePackage (manifest, deepDir) {
 
   await fs.writeFile(metaPath, JSON.stringify({
     ...meta,
+    scanVersion: DEEP_SCAN_VERSION,
     results,
     referencedFiles,
     scannedAt: new Date().toISOString(),
@@ -1944,20 +1980,42 @@ When to use --reset:
     // to candidates so they go through the proper Candidates drain pipeline
     // (full manifest fetch + weekly-downloads → packages.json update).
     } else if (mode === DrainMode.DeepFetch) {
-      // Sort: packages without a versioned cache dir come first (real network work).
-      const hasCache = await Promise.all(manifests.map(async m => {
-        const dir = path.join(deepDir, deepSafeName(m.name, m.version))
-        return fs.access(path.join(dir, '.meta.json')).then(() => true, () => false)
+      // Sort: packages without a valid cache entry come first (real network work).
+      // Cache status: 'valid' = fetchVersion matches, 'stale' = meta exists but version
+      // changed (or file tree differs), 'missing' = no .meta.json yet.
+      const cacheStatus = await Promise.all(manifests.map(async m => {
+        const metaPath = path.join(deepDir, deepSafeName(m.name, m.version), '.meta.json')
+        try {
+          const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+          const stateOk = meta.state === 'fetched' || meta.state === 'scanned'
+          return (stateOk && meta.fetchVersion === DEEP_FETCH_VERSION) ? 'valid' : 'stale'
+        } catch {
+          return 'missing'
+        }
       }))
       const fetchQueue = [
-        ...manifests.filter((_, i) => !hasCache[i]),
-        ...manifests.filter((_, i) => hasCache[i]),
+        ...manifests.filter((_, i) => cacheStatus[i] !== 'valid'),  // missing + stale first
+        ...manifests.filter((_, i) => cacheStatus[i] === 'valid'),   // valid cache last
       ]
       if (fetchQueue.length === 0) return
 
+      const nValid   = cacheStatus.filter(s => s === 'valid').length
+      const nStale   = cacheStatus.filter(s => s === 'stale').length
+      const nMissing = cacheStatus.filter(s => s === 'missing').length
+      const cacheParts = []
+      if (nValid > 0) cacheParts.push(`${nValid} cached`)
+      if (nStale > 0) {
+        // When cache is invalidated, lump missing in — both will be re-fetched
+        const nRefetch = nStale + nMissing
+        cacheParts.push(`${nRefetch} cache invalidated — re-fetching`)
+      } else if (nMissing > 0) {
+        cacheParts.push(`${nMissing} new`)
+      }
+      const cacheNote = cacheParts.length > 0 ? cacheParts.join(', ') : 'all new'
+
       const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
       await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches)
-      process.stderr.write(`\n  DeepFetch: ${fetchQueue.length} packages (${hasCache.filter(Boolean).length} cached)...\n`)
+      process.stderr.write(`\n  DeepFetch: ${fetchQueue.length} packages (${cacheNote})...\n`)
       let dfFetched = 0
       let isCheckpointing = false  // guard against concurrent checkpoint writes
       const fileLimit = makeLimiter(5)
@@ -1975,6 +2033,8 @@ When to use --reset:
         }
       }
 
+      const deepFetchOpts = nStale > 0 ? { quietTreeWarning: true } : {}
+
       const worker = async (workerIndex) => {
         await sleep(workerIndex * MANIFEST_DELAY_MS)
         while (fetchQueue.length > 0) {
@@ -1983,7 +2043,7 @@ When to use --reset:
           await sleep(MANIFEST_DELAY_MS)
           process.stderr.write(`    scanning ${manifest.name}@${manifest.version}...\n`)
           const { fetchedFiles, bareFollows, resolvedFollows, fromCache } =
-            await deepFetchPackage(manifest, deepDir, fileLimit)
+            await deepFetchPackage(manifest, deepDir, fileLimit, deepFetchOpts)
           deepFetchedFiles.set(`${manifest.name}@${manifest.version}`, fetchedFiles || [])
 
           // Resolve bare follows → stage as versioned candidates.
