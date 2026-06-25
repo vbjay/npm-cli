@@ -1905,6 +1905,9 @@ When to use --reset:
   let newThisRun = resumeMergeCount  // count packages merged from interrupted run toward the --top target
   // Skip collection if resuming post-collection, or if no --top was given (topN === 0).
   let done = isPostCollectionResume || topN === 0
+  // Guarantee at least one search cycle even if version-upgrade candidates already
+  // satisfied the --top quota.  Resets to true once the first search pass starts.
+  let hasSearched = isPostCollectionResume || topN === 0
   let finalDiscoveryState = { queryOrder: DISCOVERY_QUERIES, queryIndex: resumeQueryIndex, queryFrom: resumeQueryFrom, keywordCursors }
   let passStartIndex = resumeQueryIndex  // where to start the next pass (0 after first wrap)
   let pagesFetchedTotal = 0  // global across all keywords
@@ -2490,10 +2493,14 @@ When to use --reset:
     process.stderr.write('\n')
   }
 
-  while (!done) {
+  while (!done || !hasSearched) {
+    hasSearched = true
     const newAtPassStart = manifests.length  // detect a pass with no new lifecycle packages
 
-    for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && !done; qi++) {
+    // Track whether this pass has executed at least one query (for the one-search guarantee).
+    let passQueried = false
+    for (let qi = passStartIndex; qi < DISCOVERY_QUERIES.length && (!done || !passQueried); qi++) {
+      passQueried = true
       const query = DISCOVERY_QUERIES[qi]
       if (!query) {
         process.stderr.write(`  ⚠️  skipping undefined/null query at index ${qi} — run --reset if this persists\n`)
