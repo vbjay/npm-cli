@@ -1807,16 +1807,16 @@ When to use --reset:
 
   // Queue all previously-seen names as candidates so the Candidates drain
   // re-checks them for version bumps or newly added lifecycle scripts.
+  let versionRecheckCount = 0
   if (topN > 0 && seen.size > 0) {
     const inCandidates = new Set(candidates)
-    let recheckCount = 0
     for (const name of seen) {
       if (!inCandidates.has(name)) {
         candidates.push(name)
-        recheckCount++
+        versionRecheckCount++
       }
     }
-    process.stderr.write(`  (re-queued ${recheckCount.toLocaleString()} seen packages for version re-check)\n`)
+    process.stderr.write(`  (re-queued ${versionRecheckCount.toLocaleString()} seen packages for version re-check)\n`)
   }
   process.stderr.write('\n')
 
@@ -1933,12 +1933,17 @@ When to use --reset:
       let mFetched = 0
       let mFound = 0
       let mUpdated = 0
-      let mRemoved = 0
       let circuitTripped = false
       const networkRetry = []
 
-      // Build a name→index map for O(1) lookup and in-place updates.
-      const manifestsByName = new Map(manifests.map((m, i) => [m.name, i]))
+      // name@version set for O(1) exact-match dedup
+      const manifestsByNameVer = new Set(manifests.map(m => `${m.name}@${m.version}`))
+      // Track the highest stored version per name for O(1) "do we already have latest?" check
+      const manifestMaxVerByName = new Map()
+      for (const m of manifests) {
+        const cur = manifestMaxVerByName.get(m.name)
+        if (!cur || semverGt(cur, m.version)) manifestMaxVerByName.set(m.name, m.version)
+      }
 
       const worker = async (workerIndex) => {
         await sleep(workerIndex * MANIFEST_DELAY_MS)
@@ -1964,46 +1969,40 @@ When to use --reset:
               networkRetry.push(name)
             }
           } else if (manifest) {
-            const lc = extractLifecycleScripts(manifest.scripts)
-            const hasLC = Object.keys(lc).length > 0
-            const existingIdx = manifestsByName.get(manifest.name)
-
-            if (existingIdx !== undefined) {
-              const existing = manifests[existingIdx]
-              if (existing.version === manifest.version) {
-                // Same version already in store — skip
-              } else if (hasLC) {
-                // Newer version with lifecycle scripts — update in place
-                const weekly = existing.weeklyDownloads || searchDownloads.get(manifest.name) || 0
-                const state = weekly > 0 ? 'ready' : 'lifecycle'
-                manifests[existingIdx] = { ...manifest, state, weeklyDownloads: weekly,
-                  downloadsFetchedAt: existing.downloadsFetchedAt || null }
-                process.stderr.write(`  ↑ ${manifest.name}: ${existing.version} → ${manifest.version}\n`)
-                mUpdated++
+            const key = `${manifest.name}@${manifest.version}`
+            if (manifestsByNameVer.has(key)) {
+              // Exact name@version already in store — skip
+            } else {
+              const lc = extractLifecycleScripts(manifest.scripts)
+              if (Object.keys(lc).length === 0) {
+                // Latest version has no lifecycle scripts — skip
               } else {
-                // Newer version dropped lifecycle scripts — remove from store
-                manifests.splice(existingIdx, 1)
-                // Rebuild map after splice since indices shifted
-                manifestsByName.clear()
-                for (let i = 0; i < manifests.length; i++) manifestsByName.set(manifests[i].name, i)
-                process.stderr.write(`  ↓ ${manifest.name}@${manifest.version}: no lifecycle scripts — removed\n`)
-                mRemoved++
+                const storedMax = manifestMaxVerByName.get(manifest.name)
+                if (storedMax && !semverGt(storedMax, manifest.version)) {
+                  // We already have this version or newer stored — skip
+                } else {
+                  // New package, or genuine new latest version with lifecycle — add alongside
+                  const weekly = searchDownloads.get(manifest.name) || 0
+                  const state = weekly > 0 ? 'ready' : 'lifecycle'
+                  manifests.push({ ...manifest, state, weeklyDownloads: weekly, downloadsFetchedAt: null })
+                  manifestsByNameVer.add(key)
+                  manifestMaxVerByName.set(manifest.name, manifest.version)
+                  if (storedMax) {
+                    process.stderr.write(`  ↑ ${manifest.name}: ${storedMax} → ${manifest.version}\n`)
+                    mUpdated++
+                  } else {
+                    mFound++
+                    newThisRun++
+                    if (topN > 0 && newThisRun >= topN) done = true
+                  }
+                }
               }
-            } else if (hasLC) {
-              const weekly = searchDownloads.get(manifest.name)
-              const state = weekly != null ? 'ready' : 'lifecycle'
-              const idx = manifests.length
-              manifests.push({ ...manifest, state, weeklyDownloads: weekly ?? 0 })
-              manifestsByName.set(manifest.name, idx)
-              mFound++
-              newThisRun++
-              if (topN > 0 && newThisRun >= topN) done = true  // stop search pages, not drain
             }
           }
 
           mFetched++
           if (mFetched % DRAIN_CHECKPOINT_EVERY === 0) {
-            process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} new, ${mUpdated} updated, ${mRemoved} removed\n`)
+            process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} new, ${mUpdated} version updates\n`)
             await Promise.all([
               savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
               savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
@@ -2014,7 +2013,7 @@ When to use --reset:
 
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
       for (const name of networkRetry) candidates.push(name)
-      process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} new, ${mUpdated} updated, ${mRemoved} removed\n`)
+      process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} new, ${mUpdated} version updates\n`)
 
       const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
       const failLine = failedFetches.size > 0 ? `, ${failedFetches.size} failed — retry next run` : ''
@@ -2337,7 +2336,12 @@ When to use --reset:
 
   // Drain any candidates left pending from a previous interrupted run before searching more.
   if (candidates.length > 0 && !done) {
-    process.stderr.write(`Step 3.25/4: Resuming ${candidates.length} pending candidates from previous run...\n`)
+    const pendingCount = loadedCandidates.length
+    const parts = []
+    if (pendingCount > 0) parts.push(`${pendingCount} pending from previous run`)
+    if (versionRecheckCount > 0) parts.push(`${versionRecheckCount.toLocaleString()} version re-checks`)
+    const note = parts.length > 0 ? ` (${parts.join(', ')})` : ''
+    process.stderr.write(`Step 3.25/${deepMode ? 5 : 4}: Processing ${candidates.length.toLocaleString()} candidates${note}...\n`)
     await drain(DrainMode.Candidates)
     process.stderr.write('\n')
   }
