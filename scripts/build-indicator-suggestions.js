@@ -2397,16 +2397,15 @@ When to use --reset:
         }
       }
 
-      // Scoped: one per request, but use a small worker pool with delays
+      // Scoped: one per request, serialized with a longer delay to avoid 429
+      // (api.npmjs.org rate-limits individual scoped lookups more aggressively
+      // than bulk non-scoped batches)
       let scopedCheckpointGuard = false
       let scopedSinceCheckpoint = 0
-      const scopedQueue = [...scoped]
-      const scopedWorker = async (workerIndex) => {
-        await sleep(workerIndex * MANIFEST_DELAY_MS)
-        while (scopedQueue.length > 0) {
-          const item = scopedQueue.shift()
-          if (!item) break
-          await sleep(MANIFEST_DELAY_MS)
+      const SCOPED_DELAY_MS = 500  // one scoped request every 500ms
+      if (scoped.length > 0) {
+        for (const item of scoped) {
+          await sleep(SCOPED_DELAY_MS)
           try {
             const enc = encodeURIComponent(item.m.name)
             const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${enc}`)
@@ -2418,7 +2417,6 @@ When to use --reset:
               scopedSinceCheckpoint++
             }
           } catch { /* non-critical */ }
-          // Checkpoint every DRAIN_CHECKPOINT_EVERY scoped packages resolved
           if (scopedSinceCheckpoint >= DRAIN_CHECKPOINT_EVERY && !scopedCheckpointGuard) {
             scopedCheckpointGuard = true
             scopedSinceCheckpoint = 0
@@ -2430,9 +2428,6 @@ When to use --reset:
             scopedCheckpointGuard = false
           }
         }
-      }
-      if (scoped.length > 0) {
-        await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => scopedWorker(i)))
       }
 
       process.stderr.write(`    ✓ resolved ${dlResolved}/${pending.length} download counts\n`)
