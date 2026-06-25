@@ -36,7 +36,7 @@
 //      scripts/install.js, then any require('./util') inside that file, etc.
 //
 // Nothing else is fetched — no node_modules, no test files, no assets.
-// Cross-package bare requires (require('some-dep')) are followed one level
+// Cross-package bare requires (require('some-dep')) and ESM imports (import … from 'some-dep') are followed one level
 // to discover new candidate packages, but only their entry file is fetched.
 //
 //
@@ -486,9 +486,9 @@ function makeLimiter (max, delayMs = 0) {
 // download.  Only two categories of files are pulled per package:
 //   1. Indicator files (binding.gyp, Cargo.toml, …) — fetched by exact name.
 //   2. JS/MJS/CJS files referenced in lifecycle scripts (e.g. "node install.js")
-//      and their transitive local require() dependencies (up to MAX_FETCH_DEPTH).
-// Cross-package bare requires (require('lodash')) are followed to discover
-// new candidate packages, but only their package entry file is fetched.
+//      and their transitive local require() / import dependencies (up to MAX_FETCH_DEPTH).
+// Cross-package bare require('pkg') calls and ESM imports (import … from 'pkg' / import('pkg'))
+// are followed to discover new candidate packages, but only their package entry file is fetched.
 // Results are cached by name@version in deepDir; re-runs read from cache.
 // ---------------------------------------------------------------------------
 
@@ -582,7 +582,7 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
     ...Object.keys(INDICATOR_REGISTRY).map(file => limit(() => fetchOne(file))),
   ])
 
-  // Build version map from manifest deps so bare require() calls resolve to the
+  // Build version map from manifest deps so bare require()/import calls resolve to the
   // version the package actually declared, not just unpkg latest.
   const parentVersionMap = {
     ...manifest.dependencies,
@@ -649,7 +649,7 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
           }
         }),
       ])
-      // Collect bare refs — do NOT follow inline; outer worker pool handles them
+      // Collect bare package refs (require()/import) — do NOT follow inline; outer worker pool handles them
       for (const pkg of bareRefs) {
         if (!NODE_BUILTIN_MODULES.has(pkg) && isValidNpmPackageName(pkg) && !bareFollowsMap.has(pkg)) {
           bareFollowsMap.set(pkg, { name: pkg, versionSpec: parentVersionMap[pkg] || null })
@@ -1598,7 +1598,7 @@ Options:
                          (e.g. "node scripts/install.js") plus their transitive
                          local require() dependencies, up to a depth limit.
                      Results are cached by name@version in *.deep/ so re-runs
-                     are instant.  Cross-package bare requires discover new
+                     are instant.  Cross-package require()/import refs discover new
                      candidate packages but only pull their entry file.
   --page-size <n>    Results per search page, 1–250 (default: 250 = npm registry max)
   --search-ttl <h>   Hours before the per-keyword result cursor resets to offset 0 (default: 168 = 7 days)
@@ -2191,10 +2191,10 @@ When to use --reset:
 
     // ── DeepFetch mode ─────────────────────────────────────────────────────
     // For each manifest: fetch indicator files + lifecycle JS (BFS within the
-    // package only).  Bare require()/import refs are collected as bareFollows.
-    // Workers resolve each follow to name@version via unpkg and push new ones
-    // to candidates so they go through the proper Candidates drain pipeline
-    // (full manifest fetch + weekly-downloads → packages.json update).
+    // package only).  Bare require()/import refs (ESM import…from, import())
+    // are collected as bareFollows.  Workers resolve each follow to name@version
+    // via unpkg and push new ones to candidates so they go through the proper
+    // Candidates drain pipeline (full manifest fetch + weekly-downloads → packages.json).
     } else if (mode === DrainMode.DeepFetch) {
       // Sort: packages without a valid cache entry come first (real network work).
       // Cache status: 'valid' = fetchVersion matches, 'stale' = meta exists but version
@@ -3063,7 +3063,7 @@ When to use --reset:
     process.stderr.write(`   Already-seen skips:   ${alreadySeenSkips.toLocaleString()} (${skipPct}% of results were repeats)\n`)
   }
   if (deepNewPkgs > 0) {
-    process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} new packages added — discovered by following require() imports across package boundaries during file fetch\n`)
+    process.stderr.write(`   Found via deep scan:  ${deepNewPkgs} new packages added — discovered by following require()/import across package boundaries during file fetch\n`)
   }
   process.stderr.write(`   With lifecycle scripts: ${manifests.length} (of ${seen.size.toLocaleString()} total examined)\n`)
   process.stderr.write(`   Covered by existing indicator defs: ${matchedCount} (of ${manifests.length} with lifecycle scripts)\n`)
