@@ -1343,6 +1343,7 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
       optionalDependencies: m.optionalDependencies,
       peerDependencies: m.peerDependencies,
       weeklyDownloads: m.weeklyDownloads || 0,
+      downloadsFetchedAt: m.downloadsFetchedAt || null,
     })
   }
 
@@ -2163,13 +2164,29 @@ When to use --reset:
     // Both paths use fetchJson which handles redirects and 429 back-off.
     } else if (mode === DrainMode.Downloads) {
       const BATCH_SIZE = 128
+      const DOWNLOADS_TTL_MS = 7 * 24 * 60 * 60 * 1000  // 7 days
+      const now = Date.now()
       const pending = manifests
         .map((m, idx) => ({ m, idx }))
-        .filter(({ m }) => m.state === 'lifecycle')
+        .filter(({ m }) => {
+          if (m.state === 'lifecycle') return true  // never fetched
+          if (m.state === 'ready') {
+            // Re-fetch if no timestamp or timestamp is older than 7 days
+            const fetchedAt = m.downloadsFetchedAt ? new Date(m.downloadsFetchedAt).getTime() : 0
+            return (now - fetchedAt) > DOWNLOADS_TTL_MS
+          }
+          return false
+        })
 
       if (pending.length === 0) return
 
-      process.stderr.write(`\n  Downloads: resolving counts for ${pending.length} packages...\n`)
+      const nNew   = pending.filter(({ m }) => m.state === 'lifecycle').length
+      const nStale = pending.length - nNew
+      const dlNote = [
+        nNew   > 0 ? `${nNew} new` : '',
+        nStale > 0 ? `${nStale} stale (>7d)` : '',
+      ].filter(Boolean).join(', ')
+      process.stderr.write(`\n  Downloads: resolving counts for ${pending.length} packages (${dlNote})...\n`)
 
       const nonScoped = pending.filter(({ m }) => !m.name.startsWith('@'))
       const scoped    = pending.filter(({ m }) => m.name.startsWith('@'))
@@ -2186,6 +2203,7 @@ When to use --reset:
               if (typeof entry?.downloads === 'number') {
                 manifests[idx].weeklyDownloads = entry.downloads
                 manifests[idx].state = 'ready'
+                manifests[idx].downloadsFetchedAt = new Date().toISOString()
               }
             }
           }
@@ -2199,6 +2217,7 @@ When to use --reset:
           if (typeof dl?.downloads === 'number') {
             manifests[idx].weeklyDownloads = dl.downloads
             manifests[idx].state = 'ready'
+            manifests[idx].downloadsFetchedAt = new Date().toISOString()
           }
         } catch { /* non-critical */ }
       }
