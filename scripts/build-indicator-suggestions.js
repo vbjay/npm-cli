@@ -1966,19 +1966,43 @@ When to use --reset:
   // Packages that are always injected as candidates on every run (unless already in store).
   // Covers well-known build tools, task runners, and security-relevant packages that
   // may not rank highly enough in keyword searches to be found organically.
+  // Confirmed via live npm registry data (June 2026) — all have lifecycle scripts.
   // User --add names are merged on top of this list.
   const DEFAULT_ADD_PACKAGES = [
-    // Security-research seed
+    // ── Security-research seeds ───────────────────────────────────────────
     '9router',
-    // Cross-platform script helpers
+
+    // ── Binary downloaders (fetch prebuilt native binaries at install time) ─
+    // Sorted by weekly downloads (descending, June 2026)
+    '@swc/core',            // 36.8M/wk — postinstall: node postinstall.js  (NAPI binding selector)
+    '@parcel/watcher',      // 28.8M/wk — install: node scripts/build-from-source.js
+    '@sentry/cli',          // 19.4M/wk — postinstall: node ./scripts/install.js  (GitHub Releases binary)
+    'prisma',               // 13.6M/wk — preinstall: node scripts/preinstall-entry.js
+    'puppeteer',            // 11.0M/wk — postinstall: node install.mjs  (Chromium ~170MB)
+    'better-sqlite3',       //  7.7M/wk — install: prebuild-install || node-gyp rebuild
+    'canvas',               //  7.2M/wk — install: prebuild-install -r napi || node-gyp rebuild
+    'cypress',              //  7.1M/wk — postinstall: node dist/index.js --exec install  (test runner binary)
+    'bcrypt',               //  5.5M/wk — install: node-gyp-build
+    'electron',             //  4.7M/wk — install: node install.js  (full Electron binary ~150MB)
+    'lefthook',             //  2.6M/wk — postinstall: node postinstall.js  (GitHub Releases binary)
+    'sqlite3',              //  2.4M/wk — install: prebuild-install || node-gyp rebuild
+    'ffmpeg-static',        //  1.2M/wk — install: node install.js  (ffmpeg/ffprobe static binary)
+    'node-sass',            //  934K/wk — install+postinstall: node scripts/install.js  (deprecated, still installed)
+    '@tensorflow/tfjs-node', // 113K/wk — install: node scripts/install.js  (TF C binary via node-pre-gyp)
+
+    // ── Cross-platform script helpers ─────────────────────────────────────
     'cross-env', 'cross-spawn', 'shelljs',
-    // Task runners
+
+    // ── Task runners ──────────────────────────────────────────────────────
     'gulp', 'gulp-cli', 'grunt', 'grunt-cli', 'jake', 'just-task', 'nps', 'wireit', 'taskr', 'nake',
-    // Bundlers / build tools
+
+    // ── Bundlers / build tools ────────────────────────────────────────────
     'esbuild', 'rollup', 'vite', 'webpack', 'parcel', 'tsup', 'unbuild',
-    // Older / niche bundlers
+
+    // ── Older / niche bundlers ────────────────────────────────────────────
     'brunch', 'broccoli', 'fuse-box', 'snowpack',
-    // Monorepo / task orchestration
+
+    // ── Monorepo / task orchestration ─────────────────────────────────────
     'nx', 'turborepo', 'lerna',
   ]
 
