@@ -148,6 +148,7 @@ const ROOT = path.resolve(__dirname, '..')
 
 const CACHE_HASH_SEED  = 'npm-build-pkg-cache-v1'
 const OUTPUT_HASH_SEED = 'npm-build-output-v1'
+const META_HASH_SEED   = 'npm-build-deep-meta-v1'
 
 function hashPayload (seed, dataObj) {
   const content = seed + '\x00' + JSON.stringify(dataObj)
@@ -699,14 +700,14 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
   // Hash is computed AFTER all writeDefanged() calls above complete, so it
   // reflects defanged file sizes on disk — not the original fetched content.
   const filesHash = await hashDirTree(pkgCacheDir)
-  await fs.writeFile(metaPath, JSON.stringify({
+  await fs.writeFile(metaPath, JSON.stringify(wrapWithHash(META_HASH_SEED, {
     fetchVersion: DEEP_FETCH_VERSION,
     filesHash,
     fetchedFiles,
     bareFollows: [...bareFollowsMap.values()],
     fetchedPkgs: [],
     state: 'fetched',
-  }, null, 2) + '\n')
+  }), null, 2) + '\n')
 
   return { fetchedFiles, bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
 }
@@ -716,7 +717,13 @@ async function deepAnalyzePackage (manifest, deepDir) {
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
   let meta
-  try { meta = JSON.parse(await fs.readFile(metaPath, 'utf-8')) } catch { return { results: [], referencedFiles: [], fromCache: false } }
+  try {
+    const envelope = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+    meta = (envelope?.hash !== undefined)
+      ? unwrapVerified(META_HASH_SEED, envelope, metaPath)
+      : envelope  // legacy unwrapped
+    if (!meta) return { results: [], referencedFiles: [], fromCache: false }
+  } catch { return { results: [], referencedFiles: [], fromCache: false } }
 
   // Full cache hit: scan results valid only if scan version matches.
   if (meta.state === 'scanned' && meta.scanVersion === DEEP_SCAN_VERSION) {
@@ -772,14 +779,14 @@ async function deepAnalyzePackage (manifest, deepDir) {
     process.stderr.write(`      [deepScan] ${manifest.name}: ${file} done\n`)
   }
 
-  await fs.writeFile(metaPath, JSON.stringify({
+  await fs.writeFile(metaPath, JSON.stringify(wrapWithHash(META_HASH_SEED, {
     ...meta,
     scanVersion: DEEP_SCAN_VERSION,
     results,
     referencedFiles,
     scannedAt: new Date().toISOString(),
     state: 'scanned',
-  }, null, 2) + '\n')
+  }), null, 2) + '\n')
 
   return { results, referencedFiles, fromCache: false }
 }
@@ -2397,9 +2404,14 @@ When to use --reset:
                 const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
                 const metaPath = path.join(pkgCacheDir, '.meta.json')
                 try {
-                  const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
-                  meta.resolvedFollows = resolved
-                  await fs.writeFile(metaPath, JSON.stringify(meta, null, 2) + '\n')
+                  const envelope = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+                  const meta = (envelope?.hash !== undefined)
+                    ? unwrapVerified(META_HASH_SEED, envelope, metaPath)
+                    : envelope
+                  if (meta) {
+                    meta.resolvedFollows = resolved
+                    await fs.writeFile(metaPath, JSON.stringify(wrapWithHash(META_HASH_SEED, meta), null, 2) + '\n')
+                  }
                 } catch { /* non-critical — will re-resolve next run */ }
               }
               return resolved.filter(key => !inStore.has(key) && !seen.has(key))
