@@ -120,10 +120,11 @@
 //   the schemaVersion field in every .meta.json no longer matches, causing all
 //   existing cached files to be re-downloaded with the new defanging applied.
 //   Current value: see DEEP_CACHE_SCHEMA constant at the top of the script.
-//   Increment the N in 'defang-vN' whenever the defanging approach changes in
-//   a way that affects what is written to disk (new file type covered, header
-//   format changed, etc.).  The indicator registry and signal patterns have
-//   their own hash and do not need a manual bump.
+//   Increment the N in 'defang-vN' whenever the defanging approach or fetch
+//   coverage changes (new file type covered, header format changed, new script
+//   delegation following that would leave old caches incomplete, etc.).
+//   The indicator registry and signal patterns have their own hash and do not
+//   need a manual bump.
 //
 
 'use strict'
@@ -155,7 +156,7 @@ const { classifyUrl } = require(
 // Cache schema version — hash of every signal name+regex and every indicator
 // Increment when the on-disk file format changes (e.g. defang scheme, meta fields).
 // Mixed into DEEP_CACHE_VERSION so old caches are automatically invalidated.
-const DEEP_CACHE_SCHEMA = 'defang-v6'
+const DEEP_CACHE_SCHEMA = 'defang-v7'
 
 // registry key+commandPattern so that ANY change to signals or indicators
 // automatically invalidates all deep-scan cache entries and forces a rescan.
@@ -1042,10 +1043,57 @@ async function getPackageManifest (nameAtVersion) {
 // Analysis helpers
 // ---------------------------------------------------------------------------
 
+// Matches explicit `<pm> run <name>` and `node --run <name>` delegation forms.
+// Captured group 1 is always the script name.
+const PM_RUN_RE = /\b(?:npm|yarn|pnpm|bun)\s+run\s+([\w:-]+)|\bnode\s+--run\s+([\w:-]+)/g
+
+// pm subcommands that are NOT script names — for bare-word matching below.
+const PM_SUBCOMMANDS = new Set([
+  'add', 'remove', 'install', 'uninstall', 'upgrade', 'update', 'ci',
+  'list', 'ls', 'info', 'view', 'show', 'publish', 'pack', 'login', 'logout',
+  'exec', 'dlx', 'create', 'init', 'link', 'unlink',
+  'workspace', 'workspaces', 'config', 'set', 'get', 'delete',
+  'cache', 'store', 'clean', 'audit', 'outdated', 'why',
+  'dedupe', 'prune', 'rebuild', 'version', 'build',
+])
+
+// Extract lifecycle hooks and transitively follow any delegation to another
+// named script.  Handles:
+//   npm run <name>  |  yarn run <name>  |  pnpm run <name>  |  bun run <name>
+//   node --run <name>
+//   yarn <name>  |  pnpm <name>  |  bun <name>  (bare-word form, if <name>
+//     is actually a key in scripts and not a PM subcommand)
+// E.g. { install: "npm run build", build: "node-gyp rebuild" } → includes
+// "build" in the result so pattern matching and deep scan see the real content.
 function extractLifecycleScripts (scripts) {
   const result = {}
-  for (const hook of LIFECYCLE_HOOKS) {
-    if (scripts[hook]) result[hook] = scripts[hook]
+  const visited = new Set()
+  const queue = [...LIFECYCLE_HOOKS]
+  while (queue.length > 0) {
+    const hook = queue.shift()
+    if (visited.has(hook) || !scripts[hook]) continue
+    visited.add(hook)
+    result[hook] = scripts[hook]
+
+    const src = scripts[hook]
+
+    // Explicit `<pm> run <name>` and `node --run <name>`
+    PM_RUN_RE.lastIndex = 0
+    for (const m of src.matchAll(PM_RUN_RE)) {
+      const delegated = m[1] || m[2]
+      if (delegated && !visited.has(delegated) && scripts[delegated]) {
+        queue.push(delegated)
+      }
+    }
+
+    // Bare-word `yarn <name>` / `pnpm <name>` / `bun <name>` — only follow
+    // when the name is a real key in scripts (not a PM subcommand or binary).
+    for (const m of src.matchAll(/\b(?:yarn|pnpm|bun)\s+([\w:-]+)/g)) {
+      const delegated = m[1]
+      if (!PM_SUBCOMMANDS.has(delegated) && !visited.has(delegated) && scripts[delegated]) {
+        queue.push(delegated)
+      }
+    }
   }
   return result
 }
@@ -2366,7 +2414,9 @@ When to use --reset:
   const analyzeStep = deepMode ? '5/5' : '4/4'
   process.stderr.write(`Step ${analyzeStep}: Analyzing...\n`)
 
-  const categorized = {} // indicatorFile → packageName[]
+  // indicatorFile → [{name, version, weeklyDownloads, signals, label?}]
+  // Signals come from the actual scan results (deep mode) or registry defaults (non-deep).
+  const categorized = {}
   const uncategorized = [] // packages with build signals but no definition match
 
   // token → { packages: string[], totalDownloads: number }
@@ -2380,9 +2430,6 @@ When to use --reset:
     const deepScan = deepResults.get(manifest.name)
     const deepRefs = deepRefFiles.get(manifest.name) || []
     const deepFetched = deepFetchedFiles.get(`${manifest.name}@${manifest.version}`) || []
-    const matches = deepScan
-      ? deepScan.map(r => r.indicatorFile)
-      : matchExistingDefinitions(lc, manifest)
 
     // Collect classified URLs from the deep scan (all files' url lists).
     // entry.urls is [{url, classification}]; older cached entries may be strings.
@@ -2390,10 +2437,37 @@ When to use --reset:
       typeof u === 'string' ? { url: u, classification: classifyUrl(u) } : u
     ))
 
+    if (deepScan && deepScan.length > 0) {
+      // Deep mode: use cached investigation results — signals/label reflect registry at scan time.
+      for (const r of deepScan) {
+        if (!categorized[r.indicatorFile]) categorized[r.indicatorFile] = []
+        categorized[r.indicatorFile].push({
+          name: manifest.name,
+          version: manifest.version,
+          weeklyDownloads: manifest.weeklyDownloads,
+          label: r.label,
+          signals: r.signals || [],
+        })
+      }
+      continue
+    }
+
+    const matches = deepScan
+      ? [] // deep scan ran but found nothing — fall through to uncategorized
+      : matchExistingDefinitions(lc, manifest)
+
     if (matches.length > 0) {
+      // Non-deep: command-pattern match — use current registry signals/label as best approximation.
       for (const m of matches) {
         if (!categorized[m]) categorized[m] = []
-        categorized[m].push(manifest.name)
+        const def = INDICATOR_REGISTRY[m]
+        categorized[m].push({
+          name: manifest.name,
+          version: manifest.version,
+          weeklyDownloads: manifest.weeklyDownloads,
+          label: def?.label || m,
+          signals: def?.signals?.onFound || [],
+        })
       }
       continue // already handled by existing definitions
     }
@@ -2459,7 +2533,7 @@ When to use --reset:
       suggestedCommandPattern: `\\b${token}\\b`,
     }))
 
-  const matchedCount = Object.values(categorized).flat().length
+  const matchedCount = Object.values(categorized).reduce((sum, pkgs) => sum + pkgs.length, 0)
   const noBuildHint = manifests.length - matchedCount - uncategorized.length
 
   const output = {
@@ -2524,7 +2598,14 @@ When to use --reset:
         generatedAt: new Date().toISOString(),
         topN,
         deepScan: deepMode,
-        registryDefinitions: Object.keys(INDICATOR_REGISTRY),
+        // Snapshot of the indicator registry at the time this file was written.
+        // Signals and labels here reflect the definitions that were active during the scan.
+        registryDefinitions: Object.fromEntries(
+          Object.entries(INDICATOR_REGISTRY).map(([file, def]) => [file, {
+            label: def.label,
+            signals: def.signals.onFound || [],
+          }])
+        ),
       },
     },
 
@@ -2541,11 +2622,15 @@ When to use --reset:
     },
 
     existingDefinitionCoverage: {
-      description: 'Per-indicator match counts against real packages. Each entry in data is keyed by indicator filename (e.g. "binding.gyp") with matchedCount = how many scanned packages matched that indicator\'s commandPatterns, and packages = the matched names. Low matchedCount relative to expected prevalence suggests commandPatterns need broadening.',
+      description: 'Per-indicator match counts against real packages. Each entry is keyed by indicator filename with matchedCount and packages (sorted by weeklyDownloads desc). Each package entry includes name, version, weeklyDownloads, label, and signals. Deep mode: label+signals come from cached investigation results (scan-time registry). Non-deep mode: label+signals come from current registry definitions.',
       data: Object.fromEntries(
         Object.entries(categorized)
           .sort((a, b) => b[1].length - a[1].length)
-          .map(([file, pkgs]) => [file, { matchedCount: pkgs.length, packages: pkgs.sort() }])
+          .map(([file, pkgs]) => [file, {
+            matchedCount: pkgs.length,
+            packages: pkgs
+              .sort((a, b) => (b.weeklyDownloads || 0) - (a.weeklyDownloads || 0)),
+          }])
       ),
     },
 
