@@ -1189,6 +1189,37 @@ const PM_SUBCOMMANDS = new Set([
 //     is actually a key in scripts and not a PM subcommand)
 // E.g. { install: "npm run build", build: "node-gyp rebuild" } → includes
 // "build" in the result so pattern matching and deep scan see the real content.
+// Produce a unified-diff-style string comparing lifecycle scripts between two
+// versions of the same package.  Returns null when nothing changed.
+// Hooks are ordered by lifecycle execution order (LIFECYCLE_HOOKS), with any
+// delegated extras appended alphabetically after — so preinstall always
+// precedes install, etc.  Each hook is matched by name so a changed install
+// script shows as a -/+ pair on the same hook, not a stray remove + add.
+function lifecycleDiff (name, oldVer, oldLc, newVer, newLc) {
+  const allKeys = new Set([...Object.keys(oldLc), ...Object.keys(newLc)])
+  // Stable execution order: known lifecycle hooks first, then extras sorted
+  const ordered = [
+    ...LIFECYCLE_HOOKS.filter(h => allKeys.has(h)),
+    ...[...allKeys].filter(h => !LIFECYCLE_HOOKS.includes(h)).sort(),
+  ]
+  const diffLines = []
+  let hasChange = false
+  for (const hook of ordered) {
+    const inOld = hook in oldLc
+    const inNew = hook in newLc
+    if (inOld && inNew && oldLc[hook] === newLc[hook]) {
+      diffLines.push(`      ${hook}: ${oldLc[hook]}`)
+    } else {
+      hasChange = true
+      if (inOld) diffLines.push(`    - ${hook}: ${oldLc[hook]}`)
+      if (inNew) diffLines.push(`    + ${hook}: ${newLc[hook]}`)
+    }
+  }
+  if (!hasChange) return null
+  const header = `    --- ${name}@${oldVer}\n    +++ ${name}@${newVer}`
+  return header + '\n' + diffLines.join('\n')
+}
+
 function extractLifecycleScripts (scripts) {
   const result = {}
   const visited = new Set()
@@ -2101,6 +2132,12 @@ When to use --reset:
                   manifestMaxVerByName.set(manifest.name, manifest.version)
                   if (storedMax) {
                     process.stderr.write(`  ↑ ${manifest.name}: ${storedMax} → ${manifest.version}\n`)
+                    const oldManifest = manifests.find(m => m.name === manifest.name && m.version === storedMax)
+                    if (oldManifest) {
+                      const oldLc = extractLifecycleScripts(oldManifest.scripts || {})
+                      const diff = lifecycleDiff(manifest.name, storedMax, oldLc, manifest.version, lc)
+                      if (diff) process.stderr.write(diff + '\n')
+                    }
                     mUpdated++
                   } else {
                     mFound++
