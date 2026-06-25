@@ -2517,8 +2517,61 @@ When to use --reset:
     }
   }
 
-  // Sort uncategorized by weekly downloads (highest first)
-  uncategorized.sort((a, b) => b.weeklyDownloads - a.weeklyDownloads)
+  // Serialize a RegExp to a JSON-safe object so AI readers can see the exact
+  // pattern that drives detection.
+  function serializeRegex (re) {
+    if (!(re instanceof RegExp)) return String(re)
+    return { source: re.source, flags: re.flags }
+  }
+
+  // Serialize one indicator definition completely — all patterns, scanner steps,
+  // and signal names — so the AI has the full picture from the JSON alone.
+  function serializeIndicatorDef (def) {
+    const out = {
+      label: def.label,
+      detect: {
+        commandPatterns: (def.detect.commandPatterns || []).map(serializeRegex),
+      },
+      signals: {
+        onFound: def.signals.onFound || [],
+        onWarning: def.signals.onWarning || [],
+      },
+    }
+    // Optional trigger flags
+    for (const flag of [
+      'triggeredByNativeBuildSignal',
+      'triggeredByBinaryDownloadSignal',
+      'triggeredByRuntimeInstallerSignal',
+      'triggeredByExternalUrlSignal',
+      'triggeredByMakesExecutableSignal',
+    ]) {
+      if (def.detect[flag]) out.detect[flag] = true
+    }
+    // Scanner
+    if (!def.scanner || def.scanner === 'none') {
+      out.scanner = 'none'
+    } else if (def.scanner === 'gyp') {
+      out.scanner = 'gyp'
+    } else if (def.scanner?.type === 'generic') {
+      out.scanner = {
+        type: 'generic',
+        steps: (def.scanner.steps || []).map(step => {
+          const s = { type: step.type }
+          if (step.pattern) s.pattern = serializeRegex(step.pattern)
+          if (step.group != null) s.group = step.group
+          if (step.label) s.label = step.label
+          if (step.presence) s.presence = step.presence
+          if (step.signal) s.signal = step.signal
+          if (step.globPattern != null) s.globPattern = step.globPattern
+          if (step.maxDisplay != null) s.maxDisplay = step.maxDisplay
+          return s
+        }),
+      }
+    }
+    return out
+  }
+
+
 
   // Produce gap table — only tokens that appear in 2+ uncategorized packages,
   // sorted by total download weight (most impactful gaps first).
@@ -2588,23 +2641,32 @@ When to use --reset:
           rationale: '<which packages would now be matched>',
         },
       },
-      availableSignals: Object.entries(SIGNAL_DESCRIPTIONS)
-        .map(([name, desc]) => `${name.padEnd(22)} — ${desc}`),
+      // Structured signal definitions: for each signal, its description and
+      // which indicator files raise it. Gives the AI a complete bidirectional
+      // picture: indicator→signals (via meta.registryDefinitions) and
+      // signal→indicators (via raisedBy here).
+      availableSignals: Object.fromEntries(
+        Object.entries(SIGNAL_DESCRIPTIONS).map(([name, description]) => {
+          const raisedBy = Object.entries(INDICATOR_REGISTRY)
+            .filter(([, def]) => (def.signals.onFound || []).includes(name) ||
+                                 (def.signals.onWarning || []).includes(name))
+            .map(([file]) => file)
+          return [name, { description, raisedBy }]
+        })
+      ),
     },
 
     meta: {
-      description: 'Run metadata: when generated, registry size limit (topN), whether cross-package import following was enabled (deepScan), and which indicator filenames are currently registered.',
+      description: 'Run metadata: when generated, registry size limit (topN), whether cross-package import following was enabled (deepScan), and the full indicator registry snapshot. registryDefinitions maps each indicator filename to its complete definition: label, detect (commandPatterns as {source,flags} objects, trigger flags), signals (onFound/onWarning), and scanner steps. See $ai.availableSignals for signal descriptions and the reverse mapping (signal → which indicators raise it).',
       data: {
         generatedAt: new Date().toISOString(),
         topN,
         deepScan: deepMode,
-        // Snapshot of the indicator registry at the time this file was written.
-        // Signals and labels here reflect the definitions that were active during the scan.
+        // Full snapshot of the indicator registry at the time this file was written.
+        // commandPatterns and scanner step patterns are serialized as {source, flags}
+        // objects so AI can read and reproduce the exact detection logic.
         registryDefinitions: Object.fromEntries(
-          Object.entries(INDICATOR_REGISTRY).map(([file, def]) => [file, {
-            label: def.label,
-            signals: def.signals.onFound || [],
-          }])
+          Object.entries(INDICATOR_REGISTRY).map(([file, def]) => [file, serializeIndicatorDef(def)])
         ),
       },
     },
