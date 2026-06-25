@@ -444,6 +444,27 @@ async function rmReadOnly (dir) {
   await fs.rm(dir, { recursive: true, force: true })
 }
 
+// Lightweight semver comparator: returns true if versionB > versionA.
+// Handles the common `major.minor.patch[-prerelease]` form used in npm.
+// Pre-release suffixes (e.g. '-beta.1') sort lower than the bare release.
+function semverGt (versionA, versionB) {
+  const parse = v => {
+    const [main, pre] = String(v || '0').split('-')
+    const parts = main.split('.').map(n => parseInt(n, 10) || 0)
+    while (parts.length < 3) parts.push(0)
+    return { parts, pre: pre ?? null }
+  }
+  const a = parse(versionA)
+  const b = parse(versionB)
+  for (let i = 0; i < 3; i++) {
+    if (b.parts[i] !== a.parts[i]) return b.parts[i] > a.parts[i]
+  }
+  // Equal numeric parts: release (no pre) > pre-release
+  if (a.pre === null && b.pre !== null) return false
+  if (a.pre !== null && b.pre === null) return true
+  return false
+}
+
 function makeLimiter (max, delayMs = 0) {
   let running = 0
   const queue = []
@@ -1770,7 +1791,7 @@ When to use --reset:
   process.stderr.write(`Steps 1–3/${deepMode ? 5 : 4}: Scanning popular packages for lifecycle scripts...\n`)
   const needToCollect = isPostCollectionResume ? 0 : topN - resumeMergeCount
   process.stderr.write(`  (target: ${needToCollect} more packages with lifecycle scripts)\n`)
-  process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n\n`)
+  process.stderr.write(`  (skipping ${seen.size} already-scanned names)\n`)
 
   let scanned = 0
   let alreadySeenSkips = 0  // names already in `seen` across all pages this run — measures search redundancy
@@ -1783,6 +1804,21 @@ When to use --reset:
   let pagesSinceLastDrain = 0
   // Restore any candidates pending manifest fetch from a previous interrupted run.
   const candidates = [...loadedCandidates]
+
+  // Queue all previously-seen names as candidates so the Candidates drain
+  // re-checks them for version bumps or newly added lifecycle scripts.
+  if (topN > 0 && seen.size > 0) {
+    const inCandidates = new Set(candidates)
+    let recheckCount = 0
+    for (const name of seen) {
+      if (!inCandidates.has(name)) {
+        candidates.push(name)
+        recheckCount++
+      }
+    }
+    process.stderr.write(`  (re-queued ${recheckCount.toLocaleString()} seen packages for version re-check)\n`)
+  }
+  process.stderr.write('\n')
 
   // --add <pkg1,pkg2,...>: inject package names as candidates regardless of seen/store.
   // Useful for one-off additions or testing specific packages.
@@ -1896,8 +1932,13 @@ When to use --reset:
       process.stderr.write(`\n  Candidates: fetching ${startCount}...\n`)
       let mFetched = 0
       let mFound = 0
+      let mUpdated = 0
+      let mRemoved = 0
       let circuitTripped = false
       const networkRetry = []
+
+      // Build a name→index map for O(1) lookup and in-place updates.
+      const manifestsByName = new Map(manifests.map((m, i) => [m.name, i]))
 
       const worker = async (workerIndex) => {
         await sleep(workerIndex * MANIFEST_DELAY_MS)
@@ -1924,10 +1965,36 @@ When to use --reset:
             }
           } else if (manifest) {
             const lc = extractLifecycleScripts(manifest.scripts)
-            if (Object.keys(lc).length > 0) {
+            const hasLC = Object.keys(lc).length > 0
+            const existingIdx = manifestsByName.get(manifest.name)
+
+            if (existingIdx !== undefined) {
+              const existing = manifests[existingIdx]
+              if (existing.version === manifest.version) {
+                // Same version already in store — skip
+              } else if (hasLC) {
+                // Newer version with lifecycle scripts — update in place
+                const weekly = existing.weeklyDownloads || searchDownloads.get(manifest.name) || 0
+                const state = weekly > 0 ? 'ready' : 'lifecycle'
+                manifests[existingIdx] = { ...manifest, state, weeklyDownloads: weekly,
+                  downloadsFetchedAt: existing.downloadsFetchedAt || null }
+                process.stderr.write(`  ↑ ${manifest.name}: ${existing.version} → ${manifest.version}\n`)
+                mUpdated++
+              } else {
+                // Newer version dropped lifecycle scripts — remove from store
+                manifests.splice(existingIdx, 1)
+                // Rebuild map after splice since indices shifted
+                manifestsByName.clear()
+                for (let i = 0; i < manifests.length; i++) manifestsByName.set(manifests[i].name, i)
+                process.stderr.write(`  ↓ ${manifest.name}@${manifest.version}: no lifecycle scripts — removed\n`)
+                mRemoved++
+              }
+            } else if (hasLC) {
               const weekly = searchDownloads.get(manifest.name)
               const state = weekly != null ? 'ready' : 'lifecycle'
+              const idx = manifests.length
               manifests.push({ ...manifest, state, weeklyDownloads: weekly ?? 0 })
+              manifestsByName.set(manifest.name, idx)
               mFound++
               newThisRun++
               if (topN > 0 && newThisRun >= topN) done = true  // stop search pages, not drain
@@ -1936,7 +2003,7 @@ When to use --reset:
 
           mFetched++
           if (mFetched % DRAIN_CHECKPOINT_EVERY === 0) {
-            process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
+            process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} new, ${mUpdated} updated, ${mRemoved} removed\n`)
             await Promise.all([
               savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
               savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
@@ -1947,7 +2014,7 @@ When to use --reset:
 
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
       for (const name of networkRetry) candidates.push(name)
-      process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} with lifecycle scripts\n`)
+      process.stderr.write(`    [${mFetched}/${startCount}] checked, ${mFound} new, ${mUpdated} updated, ${mRemoved} removed\n`)
 
       const hitRate = mFetched > 0 ? (mFound / mFetched * 100).toFixed(1) : '0.0'
       const failLine = failedFetches.size > 0 ? `, ${failedFetches.size} failed — retry next run` : ''
@@ -2315,6 +2382,7 @@ When to use --reset:
         const newNames = allNames.filter(n => !seen.has(n))
         const skippedThisPage = allNames.length - newNames.length
         alreadySeenSkips += skippedThisPage
+
         for (const o of page.objects) {
           if (!seen.has(o.package.name) && o.downloads?.weekly) {
             searchDownloads.set(o.package.name, o.downloads.weekly)
