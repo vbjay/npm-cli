@@ -2093,7 +2093,10 @@ When to use --reset:
                   // New package, or genuine new latest version with lifecycle — add alongside
                   const weekly = searchDownloads.get(manifest.name) || 0
                   const state = weekly > 0 ? 'ready' : 'lifecycle'
-                  manifests.push({ ...manifest, state, weeklyDownloads: weekly, downloadsFetchedAt: null })
+                  // When weekly comes from search results it's fresh — stamp the timestamp so
+                  // the Downloads drain doesn't immediately re-classify the entry as stale.
+                  const downloadsFetchedAt = weekly > 0 ? new Date().toISOString() : null
+                  manifests.push({ ...manifest, state, weeklyDownloads: weekly, downloadsFetchedAt })
                   manifestsByNameVer.add(key)
                   manifestMaxVerByName.set(manifest.name, manifest.version)
                   if (storedMax) {
