@@ -1963,6 +1963,25 @@ When to use --reset:
   }
   process.stderr.write('\n')
 
+  // Packages that are always injected as candidates on every run (unless already in store).
+  // Covers well-known build tools, task runners, and security-relevant packages that
+  // may not rank highly enough in keyword searches to be found organically.
+  // User --add names are merged on top of this list.
+  const DEFAULT_ADD_PACKAGES = [
+    // Security-research seed
+    '9router',
+    // Cross-platform script helpers
+    'cross-env', 'cross-spawn', 'shelljs',
+    // Task runners
+    'gulp', 'gulp-cli', 'grunt', 'grunt-cli', 'jake', 'just-task', 'nps', 'wireit', 'taskr', 'nake',
+    // Bundlers / build tools
+    'esbuild', 'rollup', 'vite', 'webpack', 'parcel', 'tsup', 'unbuild',
+    // Older / niche bundlers
+    'brunch', 'broccoli', 'fuse-box', 'snowpack',
+    // Monorepo / task orchestration
+    'nx', 'turborepo', 'lerna',
+  ]
+
   // --add <pkg1,pkg2,...>: inject package names as candidates regardless of seen/store.
   // Useful for one-off additions or testing specific packages.
   //
@@ -1972,9 +1991,11 @@ When to use --reset:
   //   '@angular/cli'  (scoped)         → also try 'cli' (bare pkg name, no scope)
   // Alternates are probed against the registry; only confirmed packages are added.
   const addFlag = flag('--add', null)
+  const userAddNames = addFlag ? addFlag.split(',').map(s => s.trim().replace(/\\/g, '/')).filter(Boolean) : []
+  // Merge: defaults first, then any user-supplied names (deduped by position)
+  const addNames = [...new Set([...DEFAULT_ADD_PACKAGES, ...userAddNames])]
   let addedCount = 0
-  if (addFlag) {
-    const addNames = addFlag.split(',').map(s => s.trim().replace(/\\/g, '/')).filter(Boolean)
+  if (addNames.length > 0) {
     // For --add, check by name@version so the same name at a different version can be re-added.
     const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
     const inStoreNames = new Set(manifests.map(m => m.name))
