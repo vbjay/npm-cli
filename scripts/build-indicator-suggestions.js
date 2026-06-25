@@ -2257,9 +2257,13 @@ When to use --reset:
 
       const nonScoped = pending.filter(({ m }) => !m.name.startsWith('@'))
       const scoped    = pending.filter(({ m }) => m.name.startsWith('@'))
+      let dlResolved  = 0
 
-      for (let i = 0; i < nonScoped.length; i += BATCH_SIZE) {
-        const batch = nonScoped.slice(i, i + BATCH_SIZE)
+      // Non-scoped: batch up to 128 per request, delay between batches
+      const nonScopedBatches = Math.ceil(nonScoped.length / BATCH_SIZE)
+      for (let bi = 0; bi < nonScopedBatches; bi++) {
+        if (bi > 0) await sleep(MANIFEST_DELAY_MS)
+        const batch = nonScoped.slice(bi * BATCH_SIZE, (bi + 1) * BATCH_SIZE)
         const names = batch.map(({ m }) => encodeURIComponent(m.name)).join(',')
         try {
           const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${names}`)
@@ -2271,26 +2275,59 @@ When to use --reset:
                 manifests[idx].weeklyDownloads = entry.downloads
                 manifests[idx].state = 'ready'
                 manifests[idx].downloadsFetchedAt = new Date().toISOString()
+                dlResolved++
               }
             }
           }
         } catch { /* non-critical — leave as lifecycle/0 */ }
+        if ((bi + 1) % 10 === 0 || bi + 1 === nonScopedBatches) {
+          process.stderr.write(`    batch ${bi + 1}/${nonScopedBatches} (${dlResolved} resolved so far)\n`)
+          await Promise.all([
+            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+            savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+          ])
+        }
       }
 
-      for (const { m, idx } of scoped) {
-        try {
-          const enc = encodeURIComponent(m.name)
-          const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${enc}`)
-          if (typeof dl?.downloads === 'number') {
-            manifests[idx].weeklyDownloads = dl.downloads
-            manifests[idx].state = 'ready'
-            manifests[idx].downloadsFetchedAt = new Date().toISOString()
+      // Scoped: one per request, but use a small worker pool with delays
+      let scopedCheckpointGuard = false
+      let scopedSinceCheckpoint = 0
+      const scopedQueue = [...scoped]
+      const scopedWorker = async (workerIndex) => {
+        await sleep(workerIndex * MANIFEST_DELAY_MS)
+        while (scopedQueue.length > 0) {
+          const item = scopedQueue.shift()
+          if (!item) break
+          await sleep(MANIFEST_DELAY_MS)
+          try {
+            const enc = encodeURIComponent(item.m.name)
+            const dl = await fetchJson(`https://api.npmjs.org/downloads/point/last-week/${enc}`)
+            if (typeof dl?.downloads === 'number') {
+              manifests[item.idx].weeklyDownloads = dl.downloads
+              manifests[item.idx].state = 'ready'
+              manifests[item.idx].downloadsFetchedAt = new Date().toISOString()
+              dlResolved++
+              scopedSinceCheckpoint++
+            }
+          } catch { /* non-critical */ }
+          // Checkpoint every DRAIN_CHECKPOINT_EVERY scoped packages resolved
+          if (scopedSinceCheckpoint >= DRAIN_CHECKPOINT_EVERY && !scopedCheckpointGuard) {
+            scopedCheckpointGuard = true
+            scopedSinceCheckpoint = 0
+            process.stderr.write(`    scoped: ${dlResolved} resolved so far\n`)
+            await Promise.all([
+              savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
+              savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
+            ])
+            scopedCheckpointGuard = false
           }
-        } catch { /* non-critical */ }
+        }
+      }
+      if (scoped.length > 0) {
+        await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => scopedWorker(i)))
       }
 
-      const resolved = pending.filter(({ idx }) => manifests[idx].state === 'ready').length
-      process.stderr.write(`    ✓ resolved ${resolved}/${pending.length} download counts\n`)
+      process.stderr.write(`    ✓ resolved ${dlResolved}/${pending.length} download counts\n`)
       await Promise.all([
         savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches),
         savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches),
