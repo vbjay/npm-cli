@@ -1416,6 +1416,7 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
   for (const name of seen) {
     if (!lifecycleSet.has(name) && !candidateSet.has(name) && !failedFetches.has(name)) seenOnlyNames.push(name)
   }
+  seenOnlyNames.sort()
 
   // Packages with explicit state: candidates, failed, and lifecycle/ready (full manifest).
   const packages = []
