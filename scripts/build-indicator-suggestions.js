@@ -2602,10 +2602,10 @@ When to use --reset:
       const sweepStartOffset = from  // capture where this keyword started this run
       let dryPageStreak = 0          // consecutive pages with zero new lifecycle-script packages
       while (!done) {
-        const enc = encodeURIComponent(query)
+        const textParam = encodeURIComponent(query)
         const url =
           `https://registry.npmjs.org/-/v1/search` +
-          `?text=${enc}&popularity=1.0&quality=0.0&maintenance=0.0` +
+          `?text=${textParam}&popularity=1.0&quality=0.0&maintenance=0.0` +
           `&size=${pageSize}&from=${from}`
 
         let page
