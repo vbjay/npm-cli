@@ -5,7 +5,7 @@ const path = require('path')
 
 const ROOT = path.resolve(__dirname, '..', '..')
 
-const { OUTPUT_HASH_SEED, wrapWithHash } = require('./integrity')
+const { OUTPUT_HASH_SEED, META_HASH_SEED, wrapWithHash, unwrapVerified } = require('./integrity')
 const {
   sleep, semverGt, makeLimiter, CircuitOpenError, humanDuration,
   fetchJson, fetchChangedNames, getPackageManifest,
@@ -738,7 +738,12 @@ When to use --reset:
       const cacheStatus = await Promise.all(manifests.map(async m => {
         const metaPath = path.join(deepDir, deepSafeName(m.name, m.version), '.meta.json')
         try {
-          const meta = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+          const envelope = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+          // Unwrap hash envelope (new format) or use raw (legacy format).
+          const meta = (envelope?.hash !== undefined)
+            ? unwrapVerified(META_HASH_SEED, envelope, metaPath)
+            : envelope
+          if (!meta) return 'stale'
           const stateOk = meta.state === 'fetched' || meta.state === 'scanned'
           return (stateOk && meta.fetchVersion === DEEP_FETCH_VERSION) ? 'valid' : 'stale'
         } catch {
