@@ -3035,6 +3035,8 @@ When to use --reset:
       'triggeredByRuntimeInstallerSignal',
       'triggeredByExternalUrlSignal',
       'triggeredByMakesExecutableSignal',
+      'triggeredByObfuscationPatternSignal',
+      'triggeredByDynamicRequireSignal',
     ]) {
       if (def.detect[flag]) out.detect[flag] = true
     }
