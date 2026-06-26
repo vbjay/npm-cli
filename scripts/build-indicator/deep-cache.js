@@ -305,6 +305,16 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
     }
   }
 
+  // package.json is always attempted (step 1 above). If it wasn't fetched, every
+  // file request failed — unpkg was unreachable or rate-limiting.  Write state
+  // 'failed' so the cache-validity check treats this as stale and re-fetches on
+  // the next run, rather than locking in an empty cache that looks valid forever.
+  const pkgJsonFetched = fetchedFiles.includes('package.json')
+  const fetchState = pkgJsonFetched ? 'fetched' : 'failed'
+  if (!pkgJsonFetched) {
+    process.stderr.write(`  ⚠️  ${manifest.name}@${manifest.version}: package.json unreachable on unpkg — marked failed, will retry next run\n`)
+  }
+
   // Hash is computed AFTER all writeDefanged() calls above complete, so it
   // reflects defanged file sizes on disk — not the original fetched content.
   const filesHash = await hashDirTree(pkgCacheDir)
@@ -314,7 +324,7 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
     fetchedFiles,
     bareFollows: [...bareFollowsMap.values()],
     fetchedPkgs: [],
-    state: 'fetched',
+    state: fetchState,
   }), null, 2) + '\n')
 
   return { fetchedFiles, bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
