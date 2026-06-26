@@ -156,7 +156,7 @@ function hashPayload (seed, dataObj) {
 }
 
 function wrapWithHash (seed, dataObj) {
-  return { hash: hashPayload(seed, dataObj), data: dataObj }
+  return { data: dataObj, hash: hashPayload(seed, dataObj) }
 }
 
 /** Returns the verified inner data object, or null if verification fails. */
