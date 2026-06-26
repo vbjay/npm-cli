@@ -1139,7 +1139,7 @@ When to use --reset:
         )
         process.stderr.write(`    saving checkpoint...\r`)
         await savePackageCache(resumeCachePath, manifests, seen, { queryOrder: DISCOVERY_QUERIES, queryIndex: qi, queryFrom: from, keywordCursors }, candidates, new Set(), changesStartSeq)
-        process.stderr.write(`                       \r`)  // clear the saving line
+        process.stderr.write(`                        \r`)  // 24 spaces — clears full "    saving checkpoint..."
 
         // Dry page: all results were already in seen-set — no new names to fetch.
         // Three consecutive all-seen pages signals we're in an overlapping or spam zone.
