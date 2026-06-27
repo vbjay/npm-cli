@@ -135,7 +135,7 @@ t.test('install-scripts ls lists unreviewed packages', async t => {
   })
   await npm.exec('install-scripts', ['ls'])
   const out = joinedOutput()
-  t.match(out, /2 packages have install scripts blocked because they are not covered by allowScripts/)
+  // Default format is markdown review report
   t.match(out, /canvas@1\.0\.0/)
   t.match(out, /sharp@1\.0\.0/)
 })
@@ -155,6 +155,27 @@ t.test('install-scripts ls rejects positional args', async t => {
   await t.rejects(
     npm.exec('install-scripts', ['ls', 'canvas']),
     /cannot be combined with positional arguments/
+  )
+})
+
+t.test('install-scripts ls --allow-scripts-report-format=markdown produces review report', async t => {
+  const { npm, joinedOutput } = await mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'] }),
+    argv: ['--allow-scripts-report-format=markdown'],
+  })
+  await npm.exec('install-scripts', ['ls'])
+  const out = joinedOutput()
+  t.match(out, /canvas/)
+})
+
+t.test('install-scripts approve --allow-scripts-report-format rejects without ls', async t => {
+  const { npm } = await mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'] }),
+    argv: ['--allow-scripts-report-format=markdown'],
+  })
+  await t.rejects(
+    npm.exec('install-scripts', ['approve', 'canvas']),
+    { code: 'EUSAGE', message: /requires.*--allow-scripts-pending.*npm install-scripts ls/ }
   )
 })
 

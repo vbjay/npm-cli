@@ -371,7 +371,7 @@ t.test('approve-scripts --pending --json with no unreviewed emits empty list', a
   t.strictSame(JSON.parse(joinedOutput()).packages, [])
 })
 
-t.test('approve-scripts --allow-scripts-report-format=null requires --pending', async t => {
+t.test('approve-scripts --allow-scripts-report-format=null requires --pending or ls mode', async t => {
   const { npm } = await mockNpm(t, {
     prefixDir: setupProject({ withScripts: ['canvas'] }),
     argv: ['--allow-scripts-report-format=null'],
