@@ -366,7 +366,7 @@ const isRegistryNode = (node) => {
 }
 
 // Trusted display identity for human-facing output (the `npm install`
-// blocked-scripts summary and `npm approve-scripts --allow-scripts-pending`).
+// blocked-scripts summary and `npm install-scripts ls`).
 // Same as getTrustedRegistryIdentity, but for display only: version
 // falls back to node.version when the URL doesn't carry one. Do not
 // use for policy matching.
