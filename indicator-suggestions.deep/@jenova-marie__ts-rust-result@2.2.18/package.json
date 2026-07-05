@@ -1,0 +1,144 @@
+{
+  "name": "@jenova-marie/ts-rust-result",
+  "version": "2.2.18",
+  "author": "Jenova Marie",
+  "license": "GPL-3.0",
+  "packageManager": "pnpm@10.11.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jenova-marie/ts-rust-result.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jenova-marie/ts-rust-result/issues"
+  },
+  "homepage": "https://github.com/jenova-marie/ts-rust-result#readme",
+  "description": "Opinionated TypeScript error handling with Rust's Result type, domain errors, and observability built-in",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "docs",
+    "content",
+    "scripts",
+    "README.md",
+    "API.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "directories": {
+    "doc": "docs",
+    "lib": "dist"
+  },
+  "documentation": {
+    "quick-start": "./API.md",
+    "api-overview": "./API.md",
+    "api-reference": "./docs/index.html",
+    "readme": "./README.md",
+    "guides": "./content/",
+    "changelog": "./CHANGELOG.md",
+    "patterns": "./content/PATTERNS.md",
+    "error-design": "./content/ERROR_DESIGN.md",
+    "opentelemetry": "./content/OPENTELEMETRY.md",
+    "sentry": "./content/SENTRY.md",
+    "zod": "./content/ZOD.md"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./errors": {
+      "types": "./dist/esm/errors/index.d.ts",
+      "import": "./dist/esm/errors/index.js",
+      "require": "./dist/cjs/errors/index.js"
+    },
+    "./observability": {
+      "types": "./dist/esm/observability/index.d.ts",
+      "import": "./dist/esm/observability/index.js",
+      "require": "./dist/cjs/observability/index.js"
+    },
+    "./helpers": {
+      "types": "./dist/esm/helpers.d.ts",
+      "import": "./dist/esm/helpers.js",
+      "require": "./dist/cjs/helpers.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc && tsc --project tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
+    "make": "pnpm run docs && pnpm run build && pnpm run test && npm publish",
+    "publish:public": "npm publish --@jenova-marie:registry=https://registry.npmjs.org/ --access public",
+    "pack": "pnpm run clean && pnpm run docs && pnpm run build && pnpm run test && npm pack && echo '\n✅ Package created! Install locally with:\n   pnpm add ./jenova-marie-ts-rust-result-*.tgz'",
+    "pack:local": "rm -f ts-rust-result.tgz jenova-marie-ts-rust-result-*.tgz && npm pack && mv jenova-marie-ts-rust-result-*.tgz ts-rust-result.tgz && echo '\n✅ Version-agnostic tarball created: ts-rust-result.tgz\n   Install with: pnpm add file:../ts-rust-result/ts-rust-result.tgz'",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:tsx": "tsx test/tsx-smoke-test.ts",
+    "lint": "eslint src --ext .ts",
+    "clean": "rm -rf dist",
+    "clean:all": "rm -rf dist docs",
+    "docs": "typedoc --options typedoc.json && echo '✅ Documentation generated in ./docs/'",
+    "docs:check": "pnpm run docs && git diff --exit-code docs/ || (echo '\n❌ Documentation is out of date! Run: pnpm docs' && exit 1)",
+    "postinstall": "node scripts/postinstall.cjs",
+    "prepublishOnly": "pnpm run docs && pnpm run build && pnpm run test",
+    "prepack": "pnpm run docs && pnpm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.39.1",
+    "tsx": "^4.20.6",
+    "typedoc": "^0.28.14",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "zod": "^4.1.13"
+  },
+  "peerDependenciesMeta": {
+    "zod": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "typescript",
+    "rust",
+    "result",
+    "assert",
+    "error",
+    "error-handling",
+    "domain-errors",
+    "observability",
+    "pattern",
+    "design-pattern",
+    "functional-programming",
+    "monad",
+    "either",
+    "option",
+    "maybe",
+    "railway-oriented-programming",
+    "error-management",
+    "type-safe",
+    "zero-dependencies",
+    "lightweight",
+    "elegant",
+    "sentry",
+    "opentelemetry",
+    "prometheus",
+    "grafana",
+    "loki",
+    "structured-logging",
+    "zod"
+  ],
+  "type": "module"
+}

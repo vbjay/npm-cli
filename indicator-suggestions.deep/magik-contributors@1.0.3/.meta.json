@@ -1,0 +1,76 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6f311524d85bf62c",
+    "fetchedFiles": [
+      "package.json",
+      "src/bin/install.js",
+      "src/lib/contributors.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "magik-hooks",
+        "versionSpec": "*"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "magik-hooks@1.1.3"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/bin/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "278f3a4dce21896446cfefc94d3e12bc203cfdb2f9b4086d5315014b73d618f4",
+        "sizeBytes": 280,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/contributors.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/contributors.js",
+        "reason": "required by ./src/bin/install.js",
+        "sha256": "445d669fafa92444f3c4437fdfe642bd0641d114cb9ff5bfa715a6d82398dc06",
+        "sizeBytes": 6483,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:08.432Z"
+  },
+  "hash": "sha256:291811673f67a7d79f585ff30a538699fcfba7b26cfd17ed0510ea9bbbe54dba"
+}

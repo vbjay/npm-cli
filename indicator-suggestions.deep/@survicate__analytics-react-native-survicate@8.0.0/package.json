@@ -1,0 +1,74 @@
+{
+  "name": "@survicate/analytics-react-native-survicate",
+  "version": "8.0.0",
+  "description": "The hassle-free way to add Segment analytics Survicate plugin to your React-Native app.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Survicate/analytics-react-native-survicate"
+  },
+  "main": "lib/commonjs/index.js",
+  "scripts": {
+    "build": "bob build",
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "segment",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "android",
+    "ios",
+    "cpp",
+    "segment-analytics-react-native.podspec",
+    "package.json",
+    "!src/**/*.e2e.mock.js"
+  ],
+  "author": "Survicate <support@survicate.com> (https://survicate.com/)",
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "bugs": {
+    "url": "https://survicate.com"
+  },
+  "homepage": "https://survicate.com",
+  "peerDependencies": {
+    "@segment/analytics-react-native": "*",
+    "@survicate/react-native-survicate": "^8.0.0"
+  },
+  "devDependencies": {
+    "@segment/analytics-react-native": "^2.17.0",
+    "@survicate/react-native-survicate": "^8.0.0",
+    "@types/jest": "^29.5.4",
+    "react-native-builder-bob": "^0.40.17",
+    "ts-jest": "^27.1.5",
+    "typescript": "^5.9.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
+}

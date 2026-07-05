@@ -1,0 +1,95 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "624b684d8a1c0a97",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b738753210856c9042d9d3b6b876e6801bcb722699dbd64c2084eead9d77bf7f",
+        "sizeBytes": 3354,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "718a612abca4f3dbe36ef77db2cd65f0efe4eea5d0ed2ea797fd36da103d6001",
+        "sizeBytes": 682,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:33.051Z"
+  },
+  "hash": "sha256:72abc4758cd5ac8eccec3f8816640f12f70150afd3cf81f6ab89d783fc3793d5"
+}

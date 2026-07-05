@@ -1,0 +1,94 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b87789f134abf9bb",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "cbaf651333c0570c6145729b22dd89b606f2d6f8b264fd3d934f873daac81581",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `picamera.js`  -  C/C++ sources",
+            "items": [
+              "src/node_binding.cpp",
+              "src/core/camera_manager.cpp",
+              "src/core/control_manager.cpp",
+              "src/core/stream_manager.cpp",
+              "src/encoders/jpeg_encoder.cpp"
+            ]
+          },
+          {
+            "label": "Target `picamera.js`  -  libraries",
+            "items": [
+              "<!@(pkg-config --libs libcamera)",
+              "-lturbojpeg"
+            ]
+          },
+          {
+            "label": "Target `picamera.js`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "src/include",
+              "/usr/include/libcamera"
+            ]
+          },
+          {
+            "label": "Target `picamera.js`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:34.568Z"
+  },
+  "hash": "sha256:49055838f833e1d115acd0f4cb29a6d39be91e93fc7eb6930e4f919143a98f98"
+}

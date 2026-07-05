@@ -1,0 +1,43 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.safeExtGet = {prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+  namespace "com.appsprint"
+  compileSdkVersion safeExtGet('compileSdkVersion', 36)
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 24)
+    targetSdkVersion safeExtGet('targetSdkVersion', 35)
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += 'src/main/kotlin'
+    }
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android:+"
+  implementation files('libs/appsprint-sdk.aar')
+  implementation "androidx.lifecycle:lifecycle-process:2.10.0"
+  implementation "com.google.android.gms:play-services-ads-identifier:18.3.0"
+  implementation "com.android.installreferrer:installreferrer:2.2"
+}

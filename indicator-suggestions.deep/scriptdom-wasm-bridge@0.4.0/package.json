@@ -1,0 +1,82 @@
+{
+  "name": "scriptdom-wasm-bridge",
+  "version": "0.4.0",
+  "description": "Node.js bridge for Microsoft ScriptDOM compiled to .NET WebAssembly.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./tokenizer": {
+      "types": "./dist/tokenizer.d.ts",
+      "import": "./dist/tokenizer.mjs",
+      "require": "./dist/tokenizer.cjs"
+    },
+    "./sanitizer": {
+      "types": "./dist/sanitizer.d.ts",
+      "import": "./dist/sanitizer.mjs",
+      "require": "./dist/sanitizer.cjs"
+    },
+    "./introspector": {
+      "types": "./dist/introspector.d.ts",
+      "import": "./dist/introspector.mjs",
+      "require": "./dist/introspector.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "scripts",
+    "vendor/scriptdom-tokenizer-wasm/AppBundle",
+    "vendor/scriptdom-introspector-wasm/AppBundle",
+    "!vendor/**/.stamp",
+    "!vendor/**/_framework/*.symbols",
+    "c-sharp/**/*.cs",
+    "c-sharp/**/*.csproj",
+    "c-sharp/**/main.mjs",
+    "!c-sharp/**/bin",
+    "!c-sharp/**/obj",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "DOTNET_THIRD_PARTY_NOTICES.txt",
+    "tsconfig.types.json"
+  ],
+  "scripts": {
+    "generate:introspector-projection": "node scripts/generate-introspector-projection.mjs",
+    "check:introspector-projection": "node scripts/generate-introspector-projection.mjs --check",
+    "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.types.json && node scripts/build-js.mjs",
+    "build:wasm": "dotnet publish c-sharp/tokenizer -c Release && dotnet publish c-sharp/introspector -c Release && node scripts/copy-appbundle.mjs",
+    "check": "npm run check:introspector-projection && npm run build && node --check dist/index.mjs && node --check dist/index.cjs && node --check dist/tokenizer.mjs && node --check dist/tokenizer.cjs && node --check dist/sanitizer.mjs && node --check dist/sanitizer.cjs && node --check dist/introspector.mjs && node --check dist/introspector.cjs && node --check test/scriptdom-wasm.test.mjs && node --check test/commonjs-smoke.cjs && node --check test/typescript-consumer-smoke.mjs && node --check scripts/copy-appbundle.mjs && node --check scripts/postprocess-appbundle.mjs && node --check scripts/verify-appbundle.mjs && node --check scripts/build-js.mjs && node --check scripts/clean-dist.mjs && node --check scripts/generate-introspector-projection.mjs && node --check scripts/verify-package-tarball.mjs",
+    "test": "npm run build && node test/scriptdom-wasm.test.mjs && node test/commonjs-smoke.cjs && node test/typescript-consumer-smoke.mjs",
+    "verify:package": "npm pack --dry-run --ignore-scripts --json | node scripts/verify-package-tarball.mjs --pack-json -",
+    "prepack": "npm run build && node scripts/verify-appbundle.mjs && npm run verify:package"
+  },
+  "keywords": [
+    "scriptdom",
+    "tsql",
+    "sqlserver",
+    "wasm",
+    "parser"
+  ],
+  "author": "Charles Anderson",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "ajv": "^8.20.0",
+    "esbuild": "^0.28.1",
+    "typescript": "^6.0.3"
+  }
+}

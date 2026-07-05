@@ -1,0 +1,70 @@
+{
+  "name": "@nixjs23n6/objectify",
+  "version": "0.0.1",
+  "description": "A tiny object utility",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types/index.d.ts",
+  "keywords": [
+    "object",
+    "objectify",
+    "merge-object",
+    "javascript",
+    "typescript",
+    "web"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nixjs/objectify.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "author": "nghinv",
+  "license": "MIT",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf lib/*",
+    "build:pre": "run-s clean",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "run-s build:pre build:cjs build:esm",
+    "test": "jest",
+    "test:coverage": "jest --collectCoverage",
+    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}'",
+    "format:check": "prettier --check --loglevel error 'src/**/*.{ts,tsx,js,jsx}'",
+    "format:write": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'",
+    "prepare": "is-ci || husky install"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.18.2",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@types/eslint": "^8.4.5",
+    "@types/eslint-plugin-prettier": "^3.1.0",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.0",
+    "@types/prettier": "^2.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.3",
+    "@typescript-eslint/parser": "^5.30.3",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "is-ci": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  },
+  "engines": {
+    "node": ">= 14"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fb5f3200a1f6d2ff",
+    "fetchedFiles": [
+      "Makefile",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "e5f54ca1274461e12c2c579145be405e1906cd6782ee761518314353045cb9eb",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\rslint-staged@0.0.15\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "c4f4bdb7d6479b365692a1239d1364fbb03a7b93f3e4951d6a6df8163f071b94",
+        "sizeBytes": 5481,
+        "signals": [
+          "uses-child-process",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://www.rust-lang.org/tools/install",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:06.884Z"
+  },
+  "hash": "sha256:2d90359b0666e09d1f1da4ffd5acbd28f1e92b308653650e6defd13fb486f1d8"
+}

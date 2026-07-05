@@ -1,0 +1,63 @@
+{
+  "name": "@vantanminh/harness",
+  "version": "0.12.1",
+  "description": "Agent-ready repository harness — global CLI with markdown durable SoT",
+  "type": "module",
+  "bin": {
+    "harness": "dist/cli.js"
+  },
+  "main": "dist/cli.js",
+  "files": [
+    "dist",
+    "templates",
+    "migrations",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node -e \"import('node:fs').then(fs=>fs.rmSync('dist',{recursive:true,force:true}))\"",
+    "prepack": "npm run build",
+    "pack:check": "node scripts/pack-check.mjs",
+    "bump": "node scripts/bump-version.mjs",
+    "release:check": "npm run typecheck && npm test && npm run pack:check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "harness": "node --import tsx src/cli.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "keywords": [
+    "harness",
+    "agents",
+    "cli",
+    "markdown",
+    "npm"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vantanminh/harness.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vantanminh/harness/issues"
+  },
+  "homepage": "https://github.com/vantanminh/harness#readme",
+  "author": "vantanminh",
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}

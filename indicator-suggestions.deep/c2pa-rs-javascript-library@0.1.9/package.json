@@ -1,0 +1,58 @@
+{
+  "name": "c2pa-rs-javascript-library",
+  "version": "0.1.9",
+  "description": "TypeScript bindings for C2PA signing and verification powered by Rust and WebAssembly",
+  "license": "MIT OR Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrappard/c2pa-rs-javascript-library.git"
+  },
+  "homepage": "https://github.com/mrappard/c2pa-rs-javascript-library#readme",
+  "bugs": {
+    "url": "https://github.com/mrappard/c2pa-rs-javascript-library/issues"
+  },
+  "keywords": [
+    "c2pa",
+    "content-credentials",
+    "wasm",
+    "rust",
+    "typescript",
+    "provenance"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE-APACHE",
+    "LICENSE-MIT"
+  ],
+  "type": "module",
+  "scripts": {
+    "build:wasm": "CC=/opt/homebrew/opt/llvm/bin/clang AR=/opt/homebrew/opt/llvm/bin/llvm-ar wasm-pack build crate --target bundler --out-dir ../pkg",
+    "test:wasm": "CC=/opt/homebrew/opt/llvm/bin/clang AR=/opt/homebrew/opt/llvm/bin/llvm-ar wasm-pack build crate --target nodejs --out-dir ../pkg",
+    "build:ts": "tsc",
+    "build:package": "node ./script/preparePublish.mjs",
+    "build": "npm run build:wasm && npm run build:ts && npm run build:package",
+    "test": "npm run test:wasm && vitest run",
+    "manifest:png": "node --input-type=module -e \"import('./script/outputManifestFromPng.ts')\"",
+    "manifest:jpg": "node --input-type=module -e \"import('./script/outputManifestFromJpg.ts')\"",
+    "manifest:structured-text": "node --input-type=module -e \"import('./script/outputManifestFromStructuredText.ts')\"",
+    "manifest:signPdf": "node --input-type=module -e \"import('./script/signPdf.ts')\"",
+     "manifest:extractSidecar": "node --input-type=module -e \"import('./script/extractSidecar.ts')\"",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.5"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.3.1"
+  }
+}

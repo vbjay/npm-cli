@@ -1,0 +1,73 @@
+{
+  "name": "@hasna/deployment",
+  "version": "0.0.18",
+  "description": "General-purpose deployment orchestration for AI agents — provision infrastructure, deploy apps, manage environments. CLI + MCP + REST + SDK.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "deployment": "dist/cli/index.js",
+    "deployment-mcp": "dist/mcp/index.js",
+    "deployment-serve": "dist/server/index.js"
+  },
+  "scripts": {
+    "build": "bun build src/cli/index.ts --outdir dist/cli --target bun --external commander --external chalk --external @modelcontextprotocol/sdk --external hono --external @hasna/secrets && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun --external hono && bun build src/index.ts --outdir dist --target bun && tsc --emitDeclarationOnly --outDir dist",
+    "dev:cli": "bun run src/cli/index.ts",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "typecheck": "tsc --noEmit",
+    "no-cloud:source": "bun test src/no-cloud-boundary.test.ts",
+    "no-cloud:pack": "node scripts/no-cloud-artifact-scan.mjs",
+    "build:dashboard": "cd dashboard && bun run build",
+    "prepack": "bun run test && bun run build && bun run no-cloud:source && bun run no-cloud:pack",
+    "prepublishOnly": "bun run test && bun run build && bun run no-cloud:source && bun run no-cloud:pack",
+    "postinstall": "mkdir -p $HOME/.hasna/deployment 2>/dev/null || true"
+  },
+  "files": [
+    "dist",
+    "dashboard/dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "keywords": [
+    "deployment",
+    "ai-agents",
+    "infrastructure",
+    "devops",
+    "vercel",
+    "cloudflare",
+    "railway",
+    "flyio",
+    "aws",
+    "digitalocean",
+    "mcp",
+    "cli"
+  ],
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "hono": "^4.7.4",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.20.0",
+    "typescript": "^5.7.3"
+  }
+}

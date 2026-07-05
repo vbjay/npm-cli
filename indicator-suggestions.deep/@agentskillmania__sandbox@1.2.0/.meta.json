@@ -1,0 +1,110 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e965627fba5ba5fc",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install-runtime.cjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.10"
+      },
+      {
+        "name": "mkdirp",
+        "versionSpec": "^3.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18",
+      "mkdirp@3.0.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-runtime.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "218f3959616d72cb5aa7618928604d61335011d69af7cc5036e06afeee853113",
+        "sizeBytes": 9594,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "http://127.0.0.1:7897",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:37.367Z"
+  },
+  "hash": "sha256:3d33b5466a8905982b4a8ab14f8087694306b482f542f279dab85d4bb2f94539"
+}

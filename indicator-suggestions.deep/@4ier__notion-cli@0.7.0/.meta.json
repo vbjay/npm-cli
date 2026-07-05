@@ -1,0 +1,97 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ad2d201202fd3572",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "263faa5326617b1091df80a7b660436cdc44ac1c3ab4ce34927e6274168ad716",
+        "sizeBytes": 4042,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/4ier/notion-cli/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "a945da00ef64a1a964eb36ac70e0f3ceb3e19d0c0375906b7e477e83cabe90e4",
+        "sizeBytes": 710,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:35.554Z"
+  },
+  "hash": "sha256:b784c668652b82c559b0cb58b6e6b46d76aa96d5dab99bf751d4a5d2b6fa2651"
+}

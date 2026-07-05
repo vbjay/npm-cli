@@ -1,0 +1,102 @@
+{
+  "name": "aie",
+  "version": "1.1.1",
+  "description": "Point-and-click feedback for the HTML artifacts an AI agent builds — annotate elements in the browser and deliver them to a specific running Claude Code instance.",
+  "type": "module",
+  "bin": {
+    "aie": "dist/aie.js"
+  },
+  "exports": {
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "default": "./dist/react/index.js"
+    },
+    "./kernel": {
+      "types": "./dist/kernel/kernel-public.d.ts",
+      "bun": "./dist/kernel.js",
+      "import": "./dist/kernel.js",
+      "default": "./dist/kernel.js"
+    },
+    "./kernel/client": {
+      "types": "./dist/kernel/kernel-client.d.ts",
+      "import": "./dist/kernel-client.js",
+      "default": "./dist/kernel-client.js"
+    }
+  },
+  "files": [
+    "dist/aie.js",
+    "dist/chrome.js",
+    "dist/kernel.js",
+    "dist/kernel-client.js",
+    "dist/kernel",
+    "dist/react/index.js",
+    "dist/react/index.d.ts",
+    "skill/SKILL.md"
+  ],
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "claude-code",
+    "ai-agent",
+    "html",
+    "annotate",
+    "review",
+    "feedback",
+    "bun",
+    "cli"
+  ],
+  "license": "UNLICENSED",
+  "author": "arafathusayn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arafathusayn/ai-editor.git"
+  },
+  "homepage": "https://github.com/arafathusayn/ai-editor#readme",
+  "bugs": {
+    "url": "https://github.com/arafathusayn/ai-editor/issues"
+  },
+  "scripts": {
+    "build": "bun run scripts/build.ts",
+    "prepack": "bun run build",
+    "prepublishOnly": "bun run verify",
+    "test": "bun test ./test",
+    "typecheck": "tsc --noEmit",
+    "verify": "bun run typecheck && bun run test",
+    "e2e": "playwright test",
+    "start": "bun run bin/aie.ts serve",
+    "dev": "bun run --watch bin/aie.ts serve",
+    "web:dev": "bun --bun vite dev",
+    "web:build": "bun --bun vite build"
+  },
+  "devDependencies": {
+    "@orpc/client": "latest",
+    "@orpc/server": "latest",
+    "@orpc/tanstack-query": "^1.14.6",
+    "@playwright/test": "latest",
+    "@tanstack/query-db-collection": "^1.0.42",
+    "@tanstack/react-db": "^0.1.88",
+    "@tanstack/react-query": "^5.101.1",
+    "@tanstack/react-router": "^1.170.16",
+    "@tanstack/react-start": "^1.168.26",
+    "@types/bun": "latest",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "@vitejs/plugin-rsc": "^0.5.20",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typescript": "^5.9.0",
+    "vite": "^8.1.0",
+    "zod": "^3.24.0"
+  }
+}

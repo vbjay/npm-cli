@@ -1,0 +1,120 @@
+{
+  "name": "@veloxdevworks/formulas",
+  "version": "0.2.1",
+  "description": "High-performance formula evaluation: WebAssembly for web/Node, TurboModule for React Native (Velox Formulas).",
+  "homepage": "https://velox.dev/formulas",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/veloxdevworks/formulas.git",
+    "directory": "platforms/js"
+  },
+  "bugs": {
+    "url": "https://github.com/veloxdevworks/formulas/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "react-native": "src/native.ts",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./src/native.ts",
+        "default": "./src/native.ts"
+      },
+      "browser": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/browser.js"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./wasm": "./dist/velox-formulas.wasm",
+    "./dist/velox-formulas.wasm": "./dist/velox-formulas.wasm",
+    "./input": {
+      "browser": {
+        "types": "./dist/input/index.d.ts",
+        "default": "./dist/input/index.js"
+      },
+      "default": {
+        "types": "./dist/input/index.d.ts",
+        "default": "./dist/input/index.js"
+      }
+    },
+    "./app.plugin.js": "./app.plugin.js"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "android/build.gradle",
+    "android/src/main/AndroidManifest.xml",
+    "android/src/main/java/**/*.kt",
+    "android/src/main/jniLibs/**/*.so",
+    "ios/NativeVeloxFormulas.h",
+    "ios/NativeVeloxFormulas.mm",
+    "ios/Frameworks",
+    "src/index.ts",
+    "src/native.ts",
+    "src/NativeVeloxFormulas.ts",
+    "src/browser.ts",
+    "src/types.ts",
+    "src/input",
+    "dist",
+    "VeloxFormulas.podspec",
+    "react-native.config.js",
+    "app.plugin.js"
+  ],
+  "keywords": [
+    "formula",
+    "spreadsheet",
+    "excel",
+    "wasm",
+    "react-native",
+    "turbomodule"
+  ],
+  "license": "Commercial",
+  "author": "Velox <sdk@velox.dev>",
+  "private": false,
+  "scripts": {
+    "build:wasm": "bash ./scripts/build-wasm.sh",
+    "build:ts": "tsc -p tsconfig.json",
+    "build": "npm run build:wasm && npm run build:ts",
+    "build:android": "bash ./scripts/build-android-prebuilts.sh",
+    "build:ios": "bash ./scripts/build-ios-xcframework.sh",
+    "build:native": "npm run build:android && npm run build:ios",
+    "codegen:android": "bash ./scripts/codegen-rn-android.sh",
+    "prepack": "bash ./scripts/prepack.sh",
+    "test": "npm run build:wasm && jest"
+  },
+  "codegenConfig": {
+    "name": "VeloxFormulasSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.velox.formulas.rn"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.73.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "@types/emscripten": "^1.39.6",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@seemseam/archi",
+  "version": "0.2.17",
+  "description": "Binary dispatcher for the Archi architecture-review CLI.",
+  "keywords": [
+    "architecture",
+    "architecture-review",
+    "binary",
+    "cli",
+    "code-analysis",
+    "llm"
+  ],
+  "homepage": "https://github.com/SeemSeam/architec#readme",
+  "author": "SeemSeam",
+  "bugs": {
+    "url": "https://github.com/SeemSeam/architec/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SeemSeam/architec"
+  },
+  "license": "MIT",
+  "bin": {
+    "archi": "bin/archi.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "scripts/check-release-assets.js",
+    "scripts/postinstall.js",
+    "docs/npm-release.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "test": "node --check bin/archi.js && node --check lib/archi-dispatcher.js && node scripts/smoke-dispatcher.js",
+    "pack:dry-run": "npm pack --dry-run --json",
+    "release-assets:check": "node scripts/check-release-assets.js"
+  }
+}

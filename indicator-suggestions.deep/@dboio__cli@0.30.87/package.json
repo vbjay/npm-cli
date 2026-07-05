@@ -1,0 +1,46 @@
+{
+  "name": "@dboio/cli",
+  "version": "0.30.87",
+  "description": "CLI for the DBO.io framework",
+  "type": "module",
+  "bin": {
+    "dbo": "./bin/dbo.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "CLAUDECODE.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "ignore": "^7.0.5",
+    "inquirer": "^9.3.0"
+  },
+  "keywords": [
+    "dbo",
+    "dboio",
+    "database",
+    "cli",
+    "api",
+    "rest",
+    "crud"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dboio/cli.git"
+  },
+  "homepage": "https://github.com/dboio/cli#readme",
+  "bugs": {
+    "url": "https://github.com/dboio/cli/issues"
+  },
+  "scripts": {
+    "postinstall": "node bin/postinstall.js",
+    "test": "DBO_SKIP_NETWORK=1 node --test src/**/*.test.js test/**/*.test.js test/**/*.test.mjs"
+  }
+}

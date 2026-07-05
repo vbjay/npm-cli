@@ -1,0 +1,61 @@
+{
+  "name": "rn-ota-updater",
+  "version": "1.1.0",
+  "description": "React Native OTA updater with atomic updates, rollback, and integrity validation",
+  "keywords": [
+    "react-native",
+    "ota",
+    "updater",
+    "hot-update",
+    "codepush-alternative"
+  ],
+  "license": "MIT",
+  "author": "Sudheendra",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "android/build.gradle",
+    "android/src",
+    "src/build-ota.js"
+  ],
+  "react-native": {
+    "android": {
+      "sourceDir": "./android",
+      "packageImportPath": "import com.rnotaupdater.OTARestartPackage;",
+      "packageInstance": "new OTARestartPackage()"
+    }
+  },
+  "bin": {
+    "rn-ota-build-file": "src/build-ota.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sudheendra-me/rn-ota-updater.git"
+  },
+  "homepage": "https://github.com/sudheendra-me/rn-ota-updater#readme",
+  "engines": {
+    "node": ">=16"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.70",
+    "react-native-fs": ">=2.20.0",
+    "react-native-zip-archive": ">=6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-fs": {
+      "optional": false
+    },
+    "react-native-zip-archive": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

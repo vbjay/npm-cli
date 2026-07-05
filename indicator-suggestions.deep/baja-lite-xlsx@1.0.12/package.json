@@ -1,0 +1,68 @@
+{
+  "name": "baja-lite-xlsx",
+  "version": "1.0.12",
+  "description": "A native Node.js module for reading Excel files and extracting images using xlnt library",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "install": "prebuild-install --runtime napi || node-gyp rebuild",
+    "prebuild": "prebuild --runtime napi --target 8 --strip",
+    "build": "node-gyp rebuild",
+    "build:dev": "node-gyp rebuild && npm run copy-dlls:dev",
+    "copy-dlls:dev": "node -e \"const fs=require('fs'); const path=require('path'); const src='E:/vcpkg/installed/x64-windows/bin'; const dest='./build/Release'; if(fs.existsSync(src) && fs.existsSync(dest)){fs.readdirSync(src).filter(f=>f.endsWith('.dll')).forEach(f=>fs.copyFileSync(path.join(src,f),path.join(dest,f)));console.log('✓ DLLs copied');}\"",
+    "clean": "node-gyp clean",
+    "test": "node test/test.js",
+    "example": "node examples/basic.js",
+    "example:json": "node examples/json-api.js",
+    "example:advanced": "node examples/advanced.js"
+  },
+  "binary": {
+    "napi_versions": [
+      8
+    ],
+    "module_name": "baja_xlsx",
+    "module_path": "./build/Release/",
+    "host": "https://github.com/void-soul/baja-lite-xlsx/releases/download/",
+    "remote_path": "v{version}",
+    "package_name": "{name}-v{version}-napi-v{abi}-{platform}-{arch}.tar.gz"
+  },
+  "keywords": [
+    "excel",
+    "xlsx",
+    "native",
+    "addon",
+    "xlnt",
+    "image",
+    "extraction",
+    "spreadsheet",
+    "workbook",
+    "node-addon-api"
+  ],
+  "author": "DEDEDE",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/void-soul/baja-lite-xlsx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/void-soul/baja-lite-xlsx/issues"
+  },
+  "homepage": "https://github.com/void-soul/baja-lite-xlsx#readme",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^8.0.0",
+    "prebuild-install": "^7.1.3"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0",
+    "prebuild": "^13.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "os": [
+    "win32",
+    "linux",
+    "darwin"
+  ]
+}

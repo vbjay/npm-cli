@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "be65b95060fbff6c",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "351ac84e91663b0e76b5d814fa0b6efd16d81496050fad61254970802dc94a9d",
+        "sizeBytes": 2867,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/youtiaoguagua/llm-lsp-index/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "7ad65669010213e3c1bd9ae1b621f5c94ffdf94b8cc37db7c32201414c6b6d16",
+        "sizeBytes": 854,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:07.831Z"
+  },
+  "hash": "sha256:f752feadf0c88ab595ce35b9115a9425438e4c0f600b8599b9de802f393a72b1"
+}

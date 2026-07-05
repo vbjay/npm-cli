@@ -1,0 +1,72 @@
+{
+  "name": "@ultralytics/yolo",
+  "version": "0.0.27",
+  "description": "Run Ultralytics YOLO models in the browser on WebGPU (WebAssembly, ONNX Runtime Web via ort-web).",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./pkg/*": "./pkg/*"
+  },
+  "files": [
+    "dist",
+    "pkg",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "./pkg/*"
+  ],
+  "scripts": {
+    "build:wasm": "wasm-pack build ../crates/web --release --target web --out-dir \"$PWD/pkg\" --out-name ultralytics_inference_web && rm -f \"$PWD/pkg/.gitignore\"",
+    "build:ts": "tsc",
+    "build": "npm run build:wasm && npm run build:ts",
+    "prepack": "cp ../LICENSE ./LICENSE",
+    "clean": "rm -rf dist pkg LICENSE"
+  },
+  "keywords": [
+    "yolo",
+    "ultralytics",
+    "inference",
+    "webgpu",
+    "wasm",
+    "onnx",
+    "object-detection",
+    "computer-vision"
+  ],
+  "license": "AGPL-3.0",
+  "author": "Ultralytics",
+  "contributors": [
+    "Glenn Jocher <glenn.jocher@ultralytics.com>",
+    "Onuralp Sezer <onuralp@ultralytics.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ultralytics/inference.git",
+    "directory": "web"
+  },
+  "bugs": {
+    "url": "https://github.com/ultralytics/inference/issues"
+  },
+  "homepage": "https://www.ultralytics.com",
+  "peerDependencies": {
+    "@litertjs/core": "^2.5.0"
+  },
+  "peerDependenciesMeta": {
+    "@litertjs/core": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@litertjs/core": "^2.5.0",
+    "typescript": "^5.4.0"
+  }
+}

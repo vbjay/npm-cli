@@ -1,0 +1,57 @@
+{
+  "name": "cimgres",
+  "version": "0.0.3",
+  "description": "High-performance C++ Node.js addon for fast and efficient image resizing",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "gypfile": true,
+  "scripts": {
+    "build:addon": "prebuildify --napi --stripe",
+    "build:all:addon": "prebuildify --napi --stripe --all",
+    "clean:addon": "rm -rf build prebuilds",
+    "build:lib": "tsc",
+    "clean:lib": "rm -rf lib",
+    "build": "npm run build:addon && npm run build:lib",
+    "clean": "npm run clean:addon && npm run clean:lib",
+    "install": "node-gyp-build",
+    "prepublish": "npm run clean && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hop-/cimgres.git"
+  },
+  "keywords": [
+    "image",
+    "image-resize",
+    "image-scale",
+    "thumbnail",
+    "png",
+    "png-resize",
+    "jpg",
+    "jpeg",
+    "jpeg-resize",
+    "webp",
+    "webp-resize",
+    "node-addon",
+    "napi",
+    "addon",
+    "c++",
+    "c"
+  ],
+  "author": "hop-",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hop-/cimgres/issues"
+  },
+  "homepage": "https://github.com/hop-/cimgres#readme",
+  "dependencies": {
+    "node-addon-api": "^8.3.1",
+    "node-gyp-build": "^4.8.4",
+    "prebuildify": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "typescript": "^5.8.2"
+  }
+}

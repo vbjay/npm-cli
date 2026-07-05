@@ -1,0 +1,54 @@
+{
+  "name": "@openfluke/portal",
+  "version": "0.3.0",
+  "description": "Paragon Orchestrated Runtime for Isomorphic Technologies Across Layers — isomorphic Go/WASM loader for browser, Bun, and Node.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "wasm",
+    "webassembly",
+    "go",
+    "golang",
+    "bun",
+    "node",
+    "vite",
+    "ionic",
+    "react",
+    "ml",
+    "ai",
+    "isomorphic",
+    "paragon"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfluke/portal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openfluke/portal/issues"
+  },
+  "homepage": "https://github.com/openfluke/portal#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "cp -r assets/* dist/",
+    "prepare": "bun run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3"
+  }
+}

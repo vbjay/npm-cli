@@ -1,0 +1,61 @@
+{
+  "name": "lighthouse-unit-converter",
+  "version": "1.0.9",
+  "description": "Fast native C++ unit converter with support for length, mass, temperature, time, and volume conversions",
+  "main": "index.js",
+  "scripts": {
+    "install": "node install.js || echo 'Native build failed, will use JavaScript fallback'",
+    "generate": "node generate_units.js",
+    "test": "node test.js",
+    "prebuild": "prebuildify --napi --strip",
+    "prebuild-all": "prebuildify --napi --strip --target 18.0.0 --target 20.0.0 --target 22.0.0",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "keywords": [
+    "unit",
+    "converter",
+    "conversion",
+    "length",
+    "mass",
+    "temperature",
+    "time",
+    "volume",
+    "native",
+    "addon",
+    "c++"
+  ],
+  "author": "Khoi Nguyen",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khoihng22/lighthouse-unit-converter.git"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.3.1",
+    "node-gyp-build": "^4.8.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^12.1.0",
+    "prebuildify": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "index.js",
+    "fallback.js",
+    "units_generated.js",
+    "install.js",
+    "binding.gyp",
+    "unit_converter.cpp",
+    "unit_converter.h",
+    "units_data.h",
+    "units_generated.h",
+    "prebuilds/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "gypfile": true
+}

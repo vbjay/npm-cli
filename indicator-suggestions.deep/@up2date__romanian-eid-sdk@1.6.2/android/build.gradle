@@ -1,0 +1,78 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:7.4.2'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24'
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+repositories {
+  google()
+  mavenCentral()
+
+  // eID Romania SDK — Google Cloud Artifact Registry (public read, no credentials).
+  maven {
+    url = uri("https://europe-west1-maven.pkg.dev/eid-romania/eid-romania-sdk")
+  }
+}
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', 36)
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 28)
+    targetSdkVersion safeExtGet('targetSdkVersion', 36)
+    versionCode 1
+    versionName "1.0.0"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force 'org.jetbrains.kotlin:kotlin-stdlib:1.9.24'
+    force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.24'
+    force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24'
+    force 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+    force 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1'
+    force 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.1'
+  }
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native:+'
+
+  // eID Romania SDK — Android native, published on Google Artifact Registry.
+  implementation 'com.up2date.eidromania:eidromania-android-sdk:1.0.9'
+
+  // Kotlin standard library (required by SDK)
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.24'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+}

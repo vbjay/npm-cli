@@ -1,0 +1,189 @@
+{
+  "name": "cm-sdk-react-native-v3-new-arch",
+  "version": "4.1.0",
+  "description": "Consent Management React Native Library by consentmanager.net",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-cm-sdk-react-native-v3-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "consent",
+    "gdpr",
+    "ccpa",
+    "cmp",
+    "privacy",
+    "turbomodule",
+    "new-architecture",
+    "consent-management",
+    "iab-tcf",
+    "google-consent-mode"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iubenda/cm-sdk-react-native-v3.git"
+  },
+  "author": "Fabio Torre <fabio.torre@iubenda.com> (https://github.com/fabiotorre)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iubenda/cm-sdk-react-native-v3/issues"
+  },
+  "homepage": "https://github.com/iubenda/cm-sdk-react-native-v3#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "^0.73.1",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.2.44",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "18.3.1",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.30.2",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.44"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "type": "module-legacy",
+    "languages": "kotlin-swift",
+    "version": "0.41.2"
+  },
+  "codegenConfig": {
+    "name": "CmSdkReactNativeV3Spec",
+    "type": "modules",
+    "jsSrcsDir": "src"
+  }
+}

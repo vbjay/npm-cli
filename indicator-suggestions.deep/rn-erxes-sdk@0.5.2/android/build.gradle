@@ -1,0 +1,78 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// Android native module for rn-erxes-sdk. Bridges the erxes Android Messenger
+// SDK (io.github.munkhorgilb:messenger-sdk) to React Native, mirroring the iOS bridge in
+// `ios/RnErxesSdk.swift`. Android currently implements chat mode only.
+//
+// Plugins (Android Gradle Plugin, Kotlin) come from the consuming app's
+// buildscript classpath via React Native autolinking, so this module does not
+// declare its own buildscript block — it is always built linked into an app
+// (or an Expo prebuild), never standalone.
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["RnErxesSdk_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["RnErxesSdk_" + name]).toInteger()
+}
+
+android {
+  namespace "com.erxessdk"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    // The erxes Android SDK requires API 24+.
+    minSdkVersion Math.max(24, getExtOrIntegerDefault("minSdkVersion"))
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  // The erxes Android SDK is compiled against Java 17.
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  // Version is supplied by the consuming app's React Native Gradle setup.
+  implementation "com.facebook.react:react-android"
+
+  // The erxes Android Messenger SDK (chat mode).
+  implementation "io.github.munkhorgilb:messenger-sdk:0.30.5"
+
+  // Needed at compile time to reference the Compose types in the SDK's public API:
+  // `Color` for `Appearance(primaryColor)` (ui-graphics) and `ImageVector`, which
+  // `ActionItem`'s constructor defaults reference (ui). The SDK pulls these
+  // transitively at runtime but exposes them as `implementation` (not `api`), so we
+  // depend on them explicitly. No Compose compiler is needed — these are referenced
+  // only as data types; this module has no @Composable code.
+  implementation platform("androidx.compose:compose-bom:2024.12.01")
+  implementation "androidx.compose.ui:ui"
+  implementation "androidx.compose.ui:ui-graphics"
+  // For resolving Material icons by name (the `Icons.Filled` receiver). Only the
+  // core icon set is bundled here; hosts add `material-icons-extended` for the
+  // full set (see README / docs).
+  implementation "androidx.compose.material:material-icons-core"
+
+  // For the StateFlow (isReady) collector on the main dispatcher.
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+}

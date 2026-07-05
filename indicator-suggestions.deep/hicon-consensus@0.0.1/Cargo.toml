@@ -1,0 +1,60 @@
+[package]
+name = "hybridconsensus"
+version = "0.1.0"
+edition = "2021"
+authors = ["Oscar Valois <osvaloismtz@gmail.com>"]
+description = "A high-performance hybrid consensus algorithm implementation"
+license = "MIT"
+repository = "https://github.com/osvalois/hicon"
+readme = "README.md"
+keywords = ["consensus", "blockchain", "distributed-systems"]
+categories = ["algorithms", "network-programming"]
+build = "build.rs"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+async-trait = "0.1.68"
+tokio = { version = "1.28", features = ["full"] }
+futures = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+rand = "0.8"
+blake3 = "1.3"
+ed25519-dalek = "1.0"
+rayon = "1.7"
+dashmap = "5.4"
+metrics = "0.20"
+metrics-exporter-prometheus = "0.11"
+sha2 = "0.10.6"
+chrono = "0.4"
+pqcrypto-kyber = "0.7.5"
+pqcrypto-traits = "0.3.4"
+aes-gcm = "0.10.1"
+flate2 = "1.1.1"
+napi = { version = "2.13.3", default-features = false, features = ["async", "napi4", "serde-json"] }
+napi-derive = "2.13.0"
+
+[dev-dependencies]
+criterion = "0.4"
+proptest = "1.1"
+
+[build-dependencies]
+napi-build = "2.0.1"
+
+[[bench]]
+name = "throughput"
+harness = false
+
+[features]
+default = ["node-api"]
+node-api = ["napi/napi4"]
+
+[package.metadata.napi]
+name = "hicon-consensus"
+triples.defaults = true
+triples.additional = ["x86_64-apple-darwin", "aarch64-apple-darwin", "x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu"]

@@ -1,0 +1,81 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+buildscript {
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    if (project == rootProject) {
+        repositories {
+            maven { url "https://maven.google.com" }
+            mavenCentral()
+            google()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:3.5.4'
+        }
+    }
+}
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+def DEFAULT_COMPILE_SDK_VERSION = 31
+def DEFAULT_BUILD_TOOLS_VERSION = "31.0.0"
+def DEFAULT_MIN_SDK_VERSION = 16
+def DEFAULT_TARGET_SDK_VERSION = 31
+
+android {
+  def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
+  namespace 'com.proyecto26.inappbrowser'
+  compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+  buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+    targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+    versionCode 1
+    versionName "1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation 'com.facebook.react:react-native:+'
+  def eventbusVersion = safeExtGet('eventbus', safeExtGet('eventbus', '3.3.1'))
+  implementation "org.greenrobot:eventbus:$eventbusVersion"
+  def supportLibVersion = safeExtGet('supportLibVersion', safeExtGet('supportVersion', null))
+  def androidXAnnotationVersion = safeExtGet('androidXAnnotationVersion', null)
+  def androidXBrowserVersion = safeExtGet('androidXBrowserVersion', null)
+  if (supportLibVersion) {
+    implementation "com.android.support:support-annotations:$supportLibVersion"
+    implementation "com.android.support:customtabs:$supportLibVersion"
+  } else {
+    def defaultAndroidXAnnotationVersion = "1.5.+"
+    def defaultAndroidXBrowserVersion = "1.4.+"
+    if (androidXAnnotationVersion == null) {
+      androidXAnnotationVersion = defaultAndroidXAnnotationVersion
+    }
+    if (androidXBrowserVersion == null) {
+      androidXBrowserVersion = defaultAndroidXBrowserVersion
+    }
+    def androidXAnnotation = safeExtGet('androidXAnnotation', androidXAnnotationVersion)
+    def androidXBrowser = safeExtGet('androidXBrowser', androidXBrowserVersion)
+    implementation "androidx.annotation:annotation:$androidXAnnotation"
+    implementation "androidx.browser:browser:$androidXBrowser"
+  }
+}
+  

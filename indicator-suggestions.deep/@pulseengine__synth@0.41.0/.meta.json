@@ -1,0 +1,136 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2cb8a09a03bfff7e",
+    "fetchedFiles": [
+      "index.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "06c8e5b06527727954086a8b14d986fa65ca19405ae4acd62248bbfb5ec166f2",
+        "sizeBytes": 5721,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "index.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/pulseengine/synth synth-cli",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/pulseengine/synth/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./install.js",
+        "sha256": "a20520c495d808137f117f549341c9e5fdfe923136e84a2c38f325e899630795",
+        "sizeBytes": 5866,
+        "signals": [
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/pulseengine/synth",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./index.js; required by ./install.js",
+        "sha256": "f053c241b2e0e45cd7b46d71cc1aeb8086fdaa46db1c46ad0a1b15d23de4d840",
+        "sizeBytes": 1199,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:44.089Z"
+  },
+  "hash": "sha256:d6726636ad668be0eefb16f71f2d08bece06778b33e72ee1b14a5d0077d10b17"
+}

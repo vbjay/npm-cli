@@ -1,0 +1,66 @@
+{
+  "name": "@helixnetwork/pad",
+  "version": "1.0.0-alpha.7",
+  "description": "Padding utility",
+  "main": "./out/pad/src/index.js",
+  "typings": "typings/pad/src",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepare": "tsc",
+    "test": "tsc && nyc ava",
+    "test-ci": "nyc ava",
+    "format": "prettier"
+  },
+  "contributors": [
+    "Dominik Schiener <dom@iota.org> (https://iota.org)",
+    "Edward Greve <edward@iota.org> (https://github.com/anyong)",
+    "Chris Dukakis <chris.dukakis@iota.org> (https://github.com/chrisdukakis)"
+  ],
+  "ava": {
+    "files": "out/pad/test/*.test.js",
+    "failFast": false,
+    "failWithoutAssertions": false,
+    "compileEnhancements": false,
+    "verbose": true
+  },
+  "nyc": {
+    "watermarks": {
+      "functions": [
+        80,
+        95
+      ],
+      "branches": [
+        80,
+        95
+      ],
+      "statements": [
+        80,
+        95
+      ]
+    },
+    "include": [
+      "out/*/src/*.js",
+      "out/*/test/*.js"
+    ]
+  },
+  "keywords": [
+    "helix",
+    "tangle",
+    "library",
+    "browser",
+    "javascript",
+    "nodejs",
+    "API"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/helixnetwork/helix.api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/helixnetwork/helix.api.git/tree/dev/packages/crypto"
+  },
+  "gitHead": "807205f4acf6d8d1fec044a57ff0ed717490aa34"
+}

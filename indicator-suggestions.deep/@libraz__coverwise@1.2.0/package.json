@@ -1,0 +1,82 @@
+{
+  "name": "@libraz/coverwise",
+  "version": "1.2.0",
+  "type": "module",
+  "packageManager": "yarn@4.12.0",
+  "description": "Combinatorial test coverage engine — analyze, generate, and extend t-wise test suites via WASM",
+  "main": "dist/js/index.js",
+  "types": "dist/js/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/js/index.d.ts",
+      "import": "./dist/js/index.js"
+    },
+    "./pure": {
+      "types": "./dist/js/pure/index.d.ts",
+      "import": "./dist/js/pure/index.js"
+    },
+    "./wasm": "./dist/coverwise.wasm",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prepare": "test -z \"$npm_config_production\" && simple-git-hooks || true",
+    "build": "yarn build:wasm && yarn build:js",
+    "build:wasm": "emcmake cmake -B build-wasm -DBUILD_WASM=ON -DCMAKE_BUILD_TYPE=Release && cmake --build build-wasm -j",
+    "build:js": "tsc",
+    "clean": "rm -rf dist build-wasm",
+    "lint": "biome check js/ tests/wasm/ src/ts/",
+    "lint:fix": "biome check --write js/ tests/wasm/",
+    "format": "biome format --write js/ tests/wasm/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "cp README.md /tmp/coverwise-readme-bak && cp README.npm.md README.md",
+    "postpack": "mv /tmp/coverwise-readme-bak README.md",
+    "prepublishOnly": "yarn clean && yarn build && yarn lint && yarn test"
+  },
+  "keywords": [
+    "combinatorial",
+    "pairwise",
+    "testing",
+    "t-wise",
+    "covering-array",
+    "test-generation",
+    "wasm",
+    "webassembly"
+  ],
+  "author": "libraz <libraz@libraz.net>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libraz/coverwise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/libraz/coverwise/issues"
+  },
+  "homepage": "https://github.com/libraz/coverwise#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.1",
+    "lint-staged": "^17.0.8",
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  },
+  "volta": {
+    "node": "22.21.1",
+    "yarn": "4.12.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "yarn lint-staged"
+  },
+  "lint-staged": {
+    "{js,tests/wasm}/**/*.{ts,js}": [
+      "biome check --write"
+    ]
+  }
+}

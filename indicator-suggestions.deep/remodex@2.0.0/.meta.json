@@ -1,0 +1,123 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4b928d6247fe235b",
+    "fetchedFiles": [
+      "package.json",
+      "src/bootstrap-codex-cli.js",
+      "src/codex-cli-bootstrap.js",
+      "src/ios-app-compatibility.js",
+      "src/secure-device-state.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "corrupted",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/bootstrap-codex-cli.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "443b3d6f090f5d069b4783980d094190719b160d5f82756bd77f62a57cb4b1bd",
+        "sizeBytes": 1614,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/codex-cli-bootstrap.js",
+          "package.json",
+          "src/secure-device-state.js",
+          "src/ios-app-compatibility.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/codex-cli-bootstrap.js",
+        "reason": "required by ./src/bootstrap-codex-cli.js",
+        "sha256": "adba15a109628b5538afcea9bc499f9cada8497c29c1939b70b2df22b9d933d0",
+        "sizeBytes": 4793,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./src/bootstrap-codex-cli.js",
+        "sha256": "fac9028467cb5a221cfcf2c8e90d689aeaf8cb9634ca4957635a5d5cea575ea4",
+        "sizeBytes": 844,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/secure-device-state.js",
+        "reason": "required by ./src/bootstrap-codex-cli.js",
+        "sha256": "9378625998f8bf7596de41782f9de38eef8828e845a2aa644d0f52204c59e0f1",
+        "sizeBytes": 14007,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/ios-app-compatibility.js",
+        "reason": "required by ./src/bootstrap-codex-cli.js",
+        "sha256": "df7a2eb8fa924393e3b57e50ccf90fbecea80fb37ea378a90f272cd6f9315ccc",
+        "sizeBytes": 7072,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/prepare-private-defaults.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:03.467Z"
+  },
+  "hash": "sha256:9984fdc4af6b7a51c0b9da1f87810117b088c86210b94542aaa7a52f9a683aec"
+}

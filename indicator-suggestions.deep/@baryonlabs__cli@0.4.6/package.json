@@ -1,0 +1,56 @@
+{
+  "name": "@baryonlabs/cli",
+  "version": "0.4.6",
+  "description": "Baryon CLI — AI 코딩·학습 에이전트. baryon.ai API에 기본 연결된 pi 코딩 에이전트 래퍼. 한 줄 설치, 상용·로컬 모델 전환.",
+  "type": "module",
+  "bin": {
+    "baryon": "bin/baryon.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "extensions",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "test": "node --test",
+    "postinstall": "node ./bin/baryon.js _welcome || true"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "^0.80.3"
+  },
+  "keywords": [
+    "baryon",
+    "baryon.ai",
+    "ai",
+    "coding-agent",
+    "cli",
+    "pi",
+    "llm",
+    "education",
+    "openai-compatible"
+  ],
+  "homepage": "https://cli.baryon.ai",
+  "bugs": {
+    "url": "https://github.com/baryonlabs/cli.baryon.ai/issues",
+    "email": "support@baryon.ai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baryonlabs/cli.baryon.ai.git",
+    "directory": "packages/cli"
+  },
+  "author": "Baryon Labs <support@baryon.ai> (https://baryon.ai)",
+  "license": "SEE LICENSE IN LICENSE",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "thailang",
+  "version": "0.1.0",
+  "description": "ภาษาโปรแกรมมิงไทย — Thai-first programming language. Compiles to JS; ships as a Node-only CLI (no Rust toolchain needed at install time).",
+  "keywords": [
+    "thailang",
+    "thai",
+    "programming-language",
+    "compiler",
+    "wasm",
+    "typescript-like"
+  ],
+  "homepage": "https://thailang.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/9Tech-Solutions/thailang.git",
+    "directory": "npm-cli"
+  },
+  "license": "MIT",
+  "bin": {
+    "thailang": "bin/thailang.js",
+    "thai": "bin/thailang.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "wasm",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepack": "node scripts/prepack.js",
+    "test": "node scripts/smoke.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

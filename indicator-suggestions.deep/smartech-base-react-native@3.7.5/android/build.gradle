@@ -1,0 +1,110 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: "kotlin-android"
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: 'com.facebook.react'
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "SmartechBaseReactNative"
+    codegenJavaPackageName = "com.smartechbasereactnative"
+  }
+}
+
+
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+            jcenter()
+        }
+
+        ext {
+            kotlin_version = "1.8.20"
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:8.1.2'
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        }
+    }
+}
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    namespace = "com.smartechbasereactnative"
+    compileSdk safeExtGet('SmartechBaseReactNative_compileSdkVersion', 34)
+    defaultConfig {
+        minSdkVersion safeExtGet('SmartechBaseReactNative_minSdkVersion', 16)
+        targetSdk safeExtGet('SmartechBaseReactNative_targetSdkVersion', 34)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+              println "Using NEW architecture source set"
+                java.srcDirs += ['src/newarch']
+                kotlin.srcDirs += ['src/newarch']
+            } else {
+              println "Using OLD architecture source set"
+                java.srcDirs += ['src/oldarch']
+                 kotlin.srcDirs += ['src/oldarch']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+       jvmTarget = "17"
+    }
+
+    buildFeatures {
+      buildConfig true
+    }
+}
+
+repositories {
+    maven { url 'https://artifacts.netcore.co.in/artifactory/android' }
+
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "com.facebook.react:react-native:+"
+    compileOnly "com.facebook.react:react-android:+"
+    implementation "com.facebook.react:react-native:+"
+    implementation "com.netcore.android:smartech-sdk:3.7.1"
+
+}

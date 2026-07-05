@@ -1,0 +1,60 @@
+{
+  "name": "@ollaid/native-sso",
+  "version": "2.9.8",
+  "description": "Package NPM fullstack pour l'authentification Native SSO Ollaid - Frontend-First (Link APIs & Refresh support)",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "docs",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist",
+    "dev": "vite build --watch",
+    "postinstall": "node ./scripts/copy-docs.mjs"
+  },
+  "peerDependencies": {
+    "@capacitor/device": "^7.0.0 || ^8.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@capacitor/device": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "lucide-react": "^0.400.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.4.0"
+  },
+  "keywords": [
+    "ollaid",
+    "sso",
+    "native",
+    "authentication",
+    "react",
+    "mobile"
+  ],
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ollaid/native-sso"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "name": "@deveco/deveco-cli",
+  "version": "1.0.0",
+  "description": "HarmonyOS application development command line tool",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "devecocli": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "templates",
+    "THIRD-PARTY-LICENSES",
+    "SKILL.md",
+    "docs.zip"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "build": "tsup",
+    "download-docs": "tsx scripts/download-docs.ts",
+    "dev": "tsx watch src/cli.ts",
+    "start": "tsx src/cli.ts",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write src",
+    "license": "generate-license-file --input package.json --output THIRD-PARTY-LICENSES --overwrite --ci",
+    "prepublishOnly": "npm run lint && npm run license && npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "harmonyos",
+    "deveco",
+    "cli"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/adm-zip": "^0.5.8",
+    "@types/fs-extra": "^11.0.4",
+    "@types/global-agent": "^3.0.0",
+    "@types/node": "^25.6.0",
+    "@types/turndown": "^5.0.5",
+    "eslint": "^10.2.1",
+    "generate-license-file": "^4.2.1",
+    "husky": "9.1.7",
+    "prettier": "^3.8.3",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "turndown": "^7.2.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.1"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@vscode/ripgrep": "^1.18.0",
+    "adm-zip": "^0.5.17",
+    "axios": "1.15.2",
+    "colorette": "^2.0.20",
+    "commander": "^13.1.0",
+    "execa": "^9.6.1",
+    "fs-extra": "^11.3.4",
+    "global-agent": "^4.1.3",
+    "json5": "^2.2.3",
+    "ora": "^8.2.0",
+    "p-limit": "^5.0.0",
+    "proper-lockfile": "^4.1.2",
+    "regedit": "^5.1.4",
+    "smol-toml": "^1.6.1",
+    "zod": "^4.4.3"
+  },
+  "overrides": {
+    "dotenv": "16.4.7"
+  }
+}

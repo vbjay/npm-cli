@@ -1,0 +1,32 @@
+{
+  "name": "empty-wasi",
+  "version": "0.1.3",
+  "description": "Empty WASI implementation.",
+  "type": "module",
+  "module": "./empty-wasi.js",
+  "types": "./empty-wasi.d.ts",
+  "exports": {
+    "import": "./empty-wasi.js"
+  },
+  "scripts": {
+    "test": "npm run prepare && make -C ./tests",
+    "prepare": "esbuild ./src/index.ts --bundle --outfile=empty-wasi.js --format=esm --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yskszk63/empty-wasi-js.git"
+  },
+  "keywords": [
+    "wasi",
+    "wasm"
+  ],
+  "author": "yskszk63",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yskszk63/empty-wasi-js/issues"
+  },
+  "homepage": "https://github.com/yskszk63/empty-wasi-js#readme",
+  "devDependencies": {
+    "esbuild": "^0.12.28"
+  }
+}

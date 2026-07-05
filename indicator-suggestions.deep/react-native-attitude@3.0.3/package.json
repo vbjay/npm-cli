@@ -1,0 +1,68 @@
+{
+  "name": "react-native-attitude",
+  "title": "React Native Attitude",
+  "version": "3.0.3",
+  "description": "Obtain device attitude (roll, pitch and heading)",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib",
+    "src",
+    "android/build.gradle",
+    "android/src",
+    "ios/*.h",
+    "ios/*.m",
+    "ios/*.mm",
+    "ios/*.swift",
+    "ios/*.cpp",
+    "react-native-attitude.podspec",
+    "react-native.config.js"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "homepage": "https://github.com/dpyeates/react-native-attitude#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpyeates/react-native-attitude.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dpyeates/react-native-attitude/issues"
+  },
+  "keywords": [
+    "react-native",
+    "attitude",
+    "pitch",
+    "roll",
+    "heading",
+    "ahrs"
+  ],
+  "author": {
+    "name": "Darren Yeates",
+    "email": "apps@sensorworks.co.uk"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.82"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "codegenConfig": {
+    "name": "RNAttitudeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.sensorworks.rnattitude"
+    }
+  }
+}

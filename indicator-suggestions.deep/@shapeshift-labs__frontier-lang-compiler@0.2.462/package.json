@@ -1,0 +1,87 @@
+{
+  "name": "@shapeshift-labs/frontier-lang-compiler",
+  "version": "0.2.462",
+  "description": "Compiler facade for Frontier Lang source documents and language projection adapters.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "examples",
+    "README.md",
+    "LICENSE",
+    "bench",
+    "benchmarks/package-bench.mjs"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node test/smoke.mjs",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit -p test/tsconfig.json",
+    "fuzz": "npm run build && node fuzz/smoke.mjs",
+    "bench": "npm run build && node bench/smoke.mjs",
+    "demo:ts-rust": "npm run build && node examples/js-frontier-rust-workbench.mjs --serve",
+    "demo:ts-rust:smoke": "npm run build && node examples/js-frontier-rust-workbench.mjs --smoke",
+    "demo:js-rust": "npm run demo:ts-rust",
+    "demo:js-rust:smoke": "npm run demo:ts-rust:smoke",
+    "prepare": "npm run build",
+    "prepack": "npm run lint && npm test",
+    "pack:dry": "npm pack --dry-run",
+    "readme:packages": "node benchmarks/package-readme-sections.mjs",
+    "readme:packages:check": "node benchmarks/package-readme-sections.mjs --check",
+    "lint": "node scripts/strict-source-policy.mjs"
+  },
+  "keywords": [
+    "frontier",
+    "semantic-merge",
+    "compiler",
+    "typescript",
+    "javascript",
+    "rust",
+    "python",
+    "c"
+  ],
+  "author": "ShapeShift Labs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siliconjungle/-shapeshift-labs-frontier-lang-compiler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/siliconjungle/-shapeshift-labs-frontier-lang-compiler/issues"
+  },
+  "homepage": "https://github.com/siliconjungle/-shapeshift-labs-frontier-lang-compiler#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@shapeshift-labs/frontier-lang-assembly": "0.1.1",
+    "@shapeshift-labs/frontier-lang-c": "0.2.14",
+    "@shapeshift-labs/frontier-lang-canvas": "0.1.1",
+    "@shapeshift-labs/frontier-lang-checker": "0.3.12",
+    "@shapeshift-labs/frontier-lang-css": "0.1.41",
+    "@shapeshift-labs/frontier-lang-dialects": "0.1.2",
+    "@shapeshift-labs/frontier-lang-html": "0.1.31",
+    "@shapeshift-labs/frontier-lang-javascript": "0.2.28",
+    "@shapeshift-labs/frontier-lang-jsx": "0.1.1",
+    "@shapeshift-labs/frontier-lang-kernel": "0.3.16",
+    "@shapeshift-labs/frontier-lang-package": "0.1.1",
+    "@shapeshift-labs/frontier-lang-parser": "^0.3.112",
+    "@shapeshift-labs/frontier-lang-python": "0.2.15",
+    "@shapeshift-labs/frontier-lang-rust": "0.2.31",
+    "@shapeshift-labs/frontier-lang-svg": "0.1.1",
+    "@shapeshift-labs/frontier-lang-swiftui": "0.1.1",
+    "@shapeshift-labs/frontier-lang-typescript": "0.3.28",
+    "@shapeshift-labs/frontier-lang-wasm": "0.1.0",
+    "@shapeshift-labs/frontier-runtime-proof": "0.1.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "name": "edgeone-pages-mcp-fullstack",
+  "version": "0.0.17",
+  "description": "An MCP service for deploying fullstack frontend projects to EdgeOne Pages.",
+  "main": "dist/index.js",
+  "bin": {
+    "edgeone-pages-mcp-fullstack": "./dist/index.js"
+  },
+  "files": [
+    "dist/index.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build:mcp": "webpack --mode=production && node scripts/add-shebang.js && chmod +x dist/index.js",
+    "build:web": "cd web && npm run build",
+    "publish:web": "./scripts/publish-web.sh",
+    "build": "npm run build:mcp",
+    "analyze": "ANALYZE=true webpack --mode=production",
+    "test": "npm run build && tsx tests/deploy.test.ts",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "edgeone",
+    "pages",
+    "deploy",
+    "mcp",
+    "cli",
+    "deployment",
+    "frontend",
+    "static-site",
+    "cdn",
+    "edge-computing",
+    "fullstack"
+  ],
+  "author": {
+    "name": "EdgeOne Pages",
+    "email": "edgeone_developer@tencent.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/TencentEdgeOne/edgeone-pages-mcp-fullstack#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TencentEdgeOne/edgeone-pages-mcp-fullstack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TencentEdgeOne/edgeone-pages-mcp-fullstack/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@koa/cors": "^5.0.0",
+    "@koa/router": "^14.0.0",
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@types/koa": "^3.0.0",
+    "@types/koa__cors": "^5.0.0",
+    "@types/koa__router": "^12.0.4",
+    "@types/koa-bodyparser": "^4.3.12",
+    "@types/node": "^20.11.28",
+    "@types/webpack": "^5.28.5",
+    "cos-nodejs-sdk-v5": "^2.15.4",
+    "dotenv": "^16.4.7",
+    "https-proxy-agent": "^7.0.6",
+    "koa": "^3.0.1",
+    "koa-bodyparser": "^4.4.1",
+    "terser-webpack-plugin": "^5.3.14",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.2",
+    "webpack": "^5.96.1",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^5.1.4",
+    "zod": "^3.24.2"
+  }
+}

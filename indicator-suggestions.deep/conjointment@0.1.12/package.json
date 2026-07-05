@@ -1,0 +1,50 @@
+{
+  "name": "conjointment",
+  "version": "0.1.12",
+  "description": "Just another portal library.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "typecheck": "tsc --noEmit",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "release:patch": "git checkout master && git fetch && git merge origin/master && npm version patch -m \"Bump version to %s\" && git push --follow-tags && npm whoami || npm login && npm publish"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "conjointment",
+    "Conjointment"
+  ],
+  "repository": "https://github.com/kaspernj/conjointment",
+  "bugs": {
+    "url": "https://github.com/kaspernj/conjointment/issues"
+  },
+  "author": "kaspernj <k@spernj.org> (https://github.com/kaspernj)",
+  "license": "MIT",
+  "homepage": "https://github.com/kaspernj/conjointment#readme",
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "prop-types-exact": "^1.2.5"
+  },
+  "devDependencies": {
+    "@types/prop-types": "^15.7.15",
+    "@types/react": "^19.2.14",
+    "expo": "~55.0.15",
+    "expo-module-scripts": "^55.0.2",
+    "react": "19.2.0",
+    "react-native": "0.83.4"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*",
+    "set-state-compare": ">= 1.0.83"
+  }
+}

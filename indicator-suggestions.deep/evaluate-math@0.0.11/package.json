@@ -1,0 +1,59 @@
+{
+  "name": "evaluate-math",
+  "version": "0.0.11",
+  "description": "Evaluate math expressions",
+  "main": "./evaluate-math.node",
+  "scripts": {
+    "test": "exit 0",
+    "postinstall": "test -n \"$NOINSTALL\" || node scripts/install.mjs",
+    "build": "napi build --platform --release",
+    "release": "node scripts/release.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1chiSensei/evaluate-math.git"
+  },
+  "keywords": [
+    "math",
+    "expressions",
+    "rust",
+    "evaluate",
+    "eval",
+    "expr"
+  ],
+  "author": "Yoshida Tomio <mail@tomio.codes>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/1chiSensei/evaluate-math/issues"
+  },
+  "homepage": "https://github.com/1chiSensei/evaluate-math#readme",
+  "packageManager": "yarn@3.1.1",
+  "napi": {
+    "name": "evaluate-math",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-gnu",
+        "i686-pc-windows-msvc",
+        "armv7-unknown-linux-gnueabihf",
+        "aarch64-apple-darwin",
+        "aarch64-linux-android",
+        "x86_64-unknown-freebsd",
+        "aarch64-unknown-linux-musl",
+        "aarch64-pc-windows-msvc"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@jsdevtools/npm-publish": "^1.4.3",
+    "@napi-rs/cli": "^1.3.5",
+    "@octokit/rest": "^18.12.0",
+    "glob": "^7.2.0"
+  },
+  "dependencies": {
+    "@napi-rs/triples": "^1.0.3",
+    "needle": "^3.0.0",
+    "node-fetch": "^3.1.0"
+  }
+}

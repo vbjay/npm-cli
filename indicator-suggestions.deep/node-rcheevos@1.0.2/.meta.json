@@ -1,0 +1,75 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2611d03868fcb5c3",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "df76b57126a777cdd2313bfa9ed00df7547b64383962c2efab2b590634d200f1",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `rcheevos`  -  C/C++ sources",
+            "items": [
+              "src/addon.cpp",
+              "src/rcheevos/src/rhash/aes.c",
+              "src/rcheevos/src/rhash/cdreader.c",
+              "src/rcheevos/src/rhash/hash.c",
+              "src/rcheevos/src/rhash/hash_disc.c",
+              "src/rcheevos/src/rhash/hash_encrypted.c",
+              "src/rcheevos/src/rhash/hash_rom.c",
+              "src/rcheevos/src/rhash/hash_zip.c",
+              "src/rcheevos/src/rhash/md5.c",
+              "src/rcheevos/src/rc_util.c"
+            ]
+          },
+          {
+            "label": "Target `rcheevos`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "src/rcheevos/include",
+              "src/rcheevos/src"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.192Z"
+  },
+  "hash": "sha256:dc34c8e5ccebbd605c6ee5ee1ad9b6114e0cb3bd08a8b5fa3544fbfcb5777a5f"
+}

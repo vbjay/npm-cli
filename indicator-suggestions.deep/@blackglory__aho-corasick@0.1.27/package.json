@@ -1,0 +1,76 @@
+{
+  "name": "@blackglory/aho-corasick",
+  "version": "0.1.27",
+  "description": "A simple Node.js wrapper for Rust's aho-corasick package",
+  "keywords": [
+    "aho-corasick",
+    "rust",
+    "native"
+  ],
+  "files": [
+    "lib",
+    "src",
+    "native/src",
+    "native/Cargo.lock",
+    "native/Cargo.toml"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "git@github.com:BlackGlory/aho-corasick.git",
+  "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
+  "license": "MIT",
+  "sideEffects": false,
+  "scripts": {
+    "install": "neon build --release && rimraf native/target",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --quiet src __tests__",
+    "test": "jest --config jest.config.js",
+    "test:coverage": "jest --coverage --config jest.config.js",
+    "prepublishOnly": "run-s clean build",
+    "clean": "run-p clean:*",
+    "clean:rs": "neon clean",
+    "clean:ts": "rimraf lib",
+    "build": "run-p build:*",
+    "build:rs": "neon build --release",
+    "build:ts": "run-s build:ts:*",
+    "build:ts:compile": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib",
+    "build:ts:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib",
+    "bench": "run-s bench:*",
+    "bench:compilation": "ts-node --require tsconfig-paths/register benches/compilation.ts",
+    "bench:matching": "ts-node --require tsconfig-paths/register benches/matching.ts",
+    "release": "standard-version"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s lint build test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@blackglory/go": "^1.1.2",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "@types/jest": "^29.2.5",
+    "@types/node": "14",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.31.0",
+    "extra-benchmark": "^0.2.2",
+    "extra-filesystem": "^0.4.8",
+    "husky": "4",
+    "iterable-operator": "^2.5.0",
+    "jest": "^29.3.1",
+    "npm-run-all": "^4.1.5",
+    "pretty-bytes": "5",
+    "standard-version": "^9.5.0",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2",
+    "tscpaths": "^0.0.9",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "neon-cli": "^0.10.1",
+    "rimraf": "^4.0.4"
+  }
+}

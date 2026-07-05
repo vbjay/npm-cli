@@ -1,0 +1,61 @@
+{
+  "name": "ai-sdk-provider-goose",
+  "version": "0.2.7",
+  "description": "AI SDK v6 provider for Goose CLI",
+  "keywords": [
+    "ai-sdk",
+    "goose",
+    "cli",
+    "language-model",
+    "llm"
+  ],
+  "license": "MIT",
+  "author": "Evan Feenstra",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "dev": "tsup --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
+    "typecheck": "tsc --noEmit",
+    "example": "npm run build && npx tsx examples/runner.ts",
+    "example:list": "npx tsx examples/runner.ts --help",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "ui": "npm run build && node examples/ui/server.js",
+    "openrouter": "npm run build && node examples/openrouter.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/provider": "^3.0.2",
+    "@ai-sdk/provider-utils": "^4.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.24",
+    "ai": "^6.0.11",
+    "tsup": "8.5.0",
+    "tsx": "^4.19.2",
+    "typescript": "5.6.3",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

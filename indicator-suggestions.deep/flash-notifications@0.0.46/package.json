@@ -1,0 +1,71 @@
+{
+  "name": "flash-notifications",
+  "version": "0.0.46",
+  "description": "My new module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "EXPO_NONINTERACTIVE=1 expo-module build",
+    "clean": "expo-module clean",
+    "export:web": "cd example && npm install && cd .. && npm run prepare:dummy && cd example && npx expo export -p web --output-dir dist",
+    "lint": "npm run eslint && npm run typecheck",
+    "prepare": "expo-module prepare",
+    "prepare:module": "expo-module prepare",
+    "test": "node scripts/velocious-test.js",
+    "typecheck": "tsc --noEmit",
+    "prepare:dummy": "npm run build && rm -rf example/node_modules/flash-notifications && mkdir -p example/node_modules/flash-notifications && cp -r build package.json example/node_modules/flash-notifications/",
+    "prepublishOnly": "EXPO_NONINTERACTIVE=1 npm run prepare:module && EXPO_NONINTERACTIVE=1 expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "release:patch": "EXPO_NONINTERACTIVE=1 release-patch",
+    "eslint": "expo-module lint -- --max-warnings 0"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "flash-notifications",
+    "FlashNotifications"
+  ],
+  "repository": "https://github.com/kaspernj/flash-notifications",
+  "bugs": {
+    "url": "https://github.com/kaspernj/flash-notifications/issues"
+  },
+  "author": "kaspernj <kasper@diestoeckels.de> (https://github.com/kaspernj)",
+  "license": "MIT",
+  "homepage": "https://github.com/kaspernj/flash-notifications#readme",
+  "dependencies": {
+    "awaitery": "^1.0.10",
+    "diggerize": "^1.0.9",
+    "env-sense": "^1.0.2",
+    "eventemitter3": "^5.0.1",
+    "fetching-object": "^1.0.3",
+    "prop-types-exact": "*",
+    "responsive-breakpoints": "^0.1.5",
+    "ya-use-event-emitter": "^0.1.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/react": "~18.3.12",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react": "^7.37.5",
+    "expo": "~55.0.5",
+    "expo-module-scripts": "^4.0.2",
+    "globals": "^17.5.0",
+    "react-native": "~0.76.9",
+    "release-patch": "^1.0.0",
+    "selenium-webdriver": "^4.35.0",
+    "system-testing": "^1.0.101",
+    "velocious": "^1.0.343"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*",
+    "set-state-compare": "^1.0.84"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

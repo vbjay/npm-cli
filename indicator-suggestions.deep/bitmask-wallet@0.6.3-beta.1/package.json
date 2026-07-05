@@ -1,0 +1,85 @@
+{
+  "name": "bitmask-wallet",
+  "version": "0.6.3-beta.1",
+  "description": "JS/TS wrapper containing all the functionality needed to access the BitMask wallet core",
+  "types": "index.d.ts",
+  "module": "index.js",
+  "files": [
+    "pkg/*",
+    "/*.js",
+    "/*.d.ts",
+    "/*.d.ts.map"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && npm run rename:esm",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "build:pkg": "cd ../bitmask-core && wasm-pack build --release --target bundler",
+    "rename:esm": "cp lib/esm/index.js index.mjs && cp lib/esm/constants.js constants.mjs && cp lib/esm/bitcoin.js bitcoin.mjs && cp lib/esm/rgb.js rgb.mjs && cp lib/esm/lightning.js lightning.mjs && cp lib/esm/carbonado.js carbonado.mjs",
+    "copy:pkg": "cp -R ../bitmask-core/pkg src/pkg && cp -R ../bitmask-core/pkg pkg",
+    "full": "npm run build && npm run build:pkg && npm run rename:pkg",
+    "test": "echo 'mocha is a terrible testing framework'",
+    "semantic-release": "semantic-release",
+    "prepack": "npm run build"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diba-io/bitmask.js.git"
+  },
+  "keywords": [
+    "bitmask",
+    "bitcoin",
+    "wallet",
+    "crypto",
+    "web3",
+    "diba",
+    "bitmask.js",
+    "bitmaskjs",
+    "wasm",
+    "rust",
+    "typescript",
+    "lightning",
+    "network",
+    "rgb",
+    "tokens",
+    "contracts",
+    "nft",
+    "protocol",
+    "satoshi",
+    "nakamoto",
+    "carbonado"
+  ],
+  "author": "Trevor O'Farrell <trevor@diba.io>",
+  "contributors": [
+    "Trevor O'Farrell <trevor@diba.io>",
+    "Jose Diego Robles <jose@diba.io>",
+    "Hunter Trujillo <hunter@diba.io>",
+    "Francisco Calderón <francisco@diba.io>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diba-io/bitmask.js/issues"
+  },
+  "homepage": "https://github.com/diba-io/bitmask.js#readme",
+  "dependencies": {
+    "bitmask-core": "0.6.3-rc.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "semantic-release": "^21.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}

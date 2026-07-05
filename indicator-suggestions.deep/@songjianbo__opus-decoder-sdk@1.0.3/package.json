@@ -1,0 +1,62 @@
+{
+  "name": "@songjianbo/opus-decoder-sdk",
+  "version": "1.0.3",
+  "description": "独立的 Opus 音频解码 SDK，支持 Ogg 容器解析、实时解码播放，无 UI 依赖",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "opus",
+    "audio",
+    "decoder",
+    "webassembly",
+    "wasm",
+    "ogg",
+    "audio-player",
+    "realtime-decoding",
+    "sdk",
+    "browser"
+  ],
+  "author": "songjianbo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiaosongaccount/opus-decoder-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xiaosongaccount/opus-decoder-web/issues"
+  },
+  "homepage": "https://github.com/xiaosongaccount/opus-decoder-web#readme",
+  "scripts": {
+    "build": "NODE_ENV=production npm run build:types && npm run build:types:save && vite build && npm run build:types && npm run build:types:restore",
+    "build:dev": "npm run build:types && npm run build:types:save && vite build && npm run build:types && npm run build:types:restore",
+    "build:types": "tsc",
+    "build:types:save": "node -e \"const fs=require('fs');const path=require('path');const src=path.join('dist','src','sdk','index.d.ts');const dest='.temp-index.d.ts';if(fs.existsSync(src)){fs.copyFileSync(src,dest);console.log('✅ 类型定义文件已保存');}\"",
+    "build:types:restore": "node -e \"const fs=require('fs');const path=require('path');const src='.temp-index.d.ts';const dest='dist/index.d.ts';if(fs.existsSync(src)){fs.copyFileSync(src,dest);fs.unlinkSync(src);console.log('✅ 类型定义文件已恢复到 dist/index.d.ts');}\" && node merge-types.js",
+    "build:legacy": "node build.js",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

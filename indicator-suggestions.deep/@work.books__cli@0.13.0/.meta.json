@@ -1,0 +1,110 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "defca3ded87c8d05",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "8144d580939ab94c734ae32e0453709407741b26cd3723cb43124f67bff01a77",
+        "sizeBytes": 5527,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://workbooks.sh/cli.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "6fe664ec82238f769b89b1a57d96f6cf7672bb7a7fd6e2495b2b0cafc344d3b1",
+        "sizeBytes": 647,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:12.788Z"
+  },
+  "hash": "sha256:7bc6bbc1fd6aba86eb14a13ce0354e7c6e6b060716201673eb58ec49ae892268"
+}

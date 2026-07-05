@@ -1,0 +1,104 @@
+{
+  "name": "@eamilos/cli",
+  "version": "1.6.5",
+  "description": "EamilOS v1.6.5 — Include README.md in npm package",
+  "type": "module",
+  "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "eamilos": "./bin/eamilos"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./core": {
+      "import": "./dist/core/index.js",
+      "types": "./dist/core/index.d.ts"
+    },
+    "./multi-agent": {
+      "import": "./dist/multi-agent/index.js"
+    },
+    "./multi-agent/agents": {
+      "import": "./dist/multi-agent/agents/index.js"
+    },
+    "./multi-agent/graph": {
+      "import": "./dist/multi-agent/graph/index.js"
+    },
+    "./multi-agent/orchestrator": {
+      "import": "./dist/multi-agent/orchestrator/index.js"
+    },
+    "./ui": {
+      "import": "./dist/eamilos-ui.js"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "bin/eamilos",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run typecheck && node src/ui/bundle.js",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.ui.json --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist",
+    "postinstall": "exit 0",
+    "ui": "node src/ui/bundle.js && node dist/eamilos-ui.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RayAKaan/EamilOS.git"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "agents",
+    "multi-agent",
+    "opencode",
+    "gemini-cli",
+    "orchestration",
+    "automation",
+    "ollama",
+    "llm",
+    "developer-tools",
+    "knowledge-graph"
+  ],
+  "dependencies": {
+    "acorn": "^8.16.0",
+    "better-sqlite3": "^11.8.0",
+    "blessed": "^0.1.81",
+    "chalk": "^5.4.0",
+    "commander": "^13.1.0",
+    "execa": "^9.5.0",
+    "ink": "^4.4.1",
+    "ink-text-input": "^5.0.1",
+    "nanoid": "^5.1.0",
+    "ora": "^8.2.0",
+    "react": "^18.3.1",
+    "simple-git": "^3.27.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/blessed": "^0.1.27",
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.0",
+    "@vitest/coverage-v8": "^4.1.2",
+    "esbuild": "^0.28.1",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Rayyan Ahmed Khan",
+  "license": "MIT"
+}

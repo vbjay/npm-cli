@@ -1,0 +1,77 @@
+{
+  "name": "hue-hunter",
+  "version": "0.4.1",
+  "description": "Cross-platform magnifying color picker for Electron applications",
+  "keywords": [
+    "electron",
+    "color-picker",
+    "eyedropper",
+    "magnifier",
+    "cross-platform",
+    "rust"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobbieTheWagner/hue-hunter.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Robbie Wagner",
+    "email": "rwwagner90@gmail.com",
+    "url": "https://robbiethewagner.dev"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": ".vite/build/main.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    ".vite/renderer",
+    "rust-sampler/src",
+    "rust-sampler/Cargo.toml",
+    "rust-sampler/Cargo.lock",
+    "rust-sampler/README.md"
+  ],
+  "dependencies": {
+    "color-name-list": "^14.27.0",
+    "electron-is-dev": "^3.0.1",
+    "nearest-color": "^0.4.4"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.11.1",
+    "@electron-forge/plugin-vite": "^7.11.1",
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/node": "^25.0.7",
+    "cross-env": "^10.1.0",
+    "electron": "^40.0.0",
+    "prettier": "^3.7.4",
+    "release-plan": "^0.17.4",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.16"
+  },
+  "peerDependencies": {
+    "electron": ">=38.0.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "pnpm build:rust && pnpm build:ts && vite build -c vite.magnifier.config.ts",
+    "build:rust": "cd rust-sampler && cargo build --release --features x11,wayland",
+    "build:rust:dev": "cd rust-sampler && cargo build --features x11,wayland",
+    "build:ts": "tsc",
+    "format": "prettier --write .",
+    "lint": "eslint src/ --ext .ts",
+    "postinstall": "pnpm build:rust",
+    "start": "pnpm build:rust:dev && pnpm build:ts && cross-env INTERNAL_DEV=true electron-forge start",
+    "test": "vitest run",
+    "test:rust": "cd rust-sampler && cargo test",
+    "test:watch": "vitest"
+  }
+}

@@ -1,0 +1,115 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has("kotlinVersion")
+    ? rootProject.ext.get("kotlinVersion")
+    : project.properties["AssentifySdk_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenCentral()
+
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.13.2'
+    classpath 'de.undercouch:gradle-download-task:4.1.1'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20"
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") &&
+    rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name)
+    ? rootProject.ext.get(name)
+    : project.properties["AssentifySdk_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name)
+    ? rootProject.ext.get(name)
+    : (project.properties["AssentifySdk_" + name]).toInteger()
+}
+
+def supportsNamespace() {
+  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+  def major = parsed[0].toInteger()
+  def minor = parsed[1].toInteger()
+
+  // Namespace support was added in 7.3.0
+  return (major == 7 && minor >= 3) || major >= 8
+}
+
+android {
+  if (supportsNamespace()) {
+    namespace "com.assentifysdk"
+
+    sourceSets {
+      main {
+        manifest.srcFile "src/main/AndroidManifestNew.xml"
+      }
+    }
+  }
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+
+  packagingOptions {
+    pickFirst '**/libc++_shared.so'
+    pickFirst '**/libfbjni.so'
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  compileOnly("com.facebook.react:react-android")
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  implementation 'com.github.AssentifyLTD:Assentify.SDK.Android:1.0.0-Beta.28'
+
+  implementation 'com.google.code.gson:gson:2.13.2'
+  implementation 'androidx.navigation:navigation-fragment-ktx:2.9.7'
+  implementation 'androidx.navigation:navigation-ui-ktx:2.9.7'
+  implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.31'
+  implementation 'com.squareup.picasso:picasso:2.71828'
+  implementation 'androidx.fragment:fragment:1.8.6'
+  implementation 'androidx.fragment:fragment-ktx:1.8.6'
+}

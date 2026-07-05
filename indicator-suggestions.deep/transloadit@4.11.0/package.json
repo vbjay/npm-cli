@@ -1,0 +1,96 @@
+{
+  "name": "transloadit",
+  "version": "4.11.0",
+  "description": "Node.js SDK for Transloadit",
+  "homepage": "https://github.com/transloadit/node-sdk/tree/main/packages/node",
+  "bugs": {
+    "url": "https://github.com/transloadit/node-sdk/issues"
+  },
+  "type": "module",
+  "keywords": [
+    "transloadit",
+    "tus",
+    "resumable-upload",
+    "upload",
+    "file-processing",
+    "assembly",
+    "assemblies",
+    "template",
+    "templates",
+    "encoding",
+    "transcoding",
+    "video",
+    "image",
+    "audio",
+    "mp3",
+    "cli",
+    "typescript"
+  ],
+  "author": "Tim Koschuetzki <tim@transloadit.com>",
+  "packageManager": "yarn@4.12.0",
+  "engines": {
+    "node": ">= 20"
+  },
+  "dependencies": {
+    "@transloadit/sev-logger": "^0.1.9",
+    "@transloadit/utils": "^4.4.0",
+    "cacheable-lookup": "^7.0.0",
+    "clipanion": "^4.0.0-rc.4",
+    "debug": "^4.4.3",
+    "dotenv": "^17.4.2",
+    "form-data": "^4.0.5",
+    "got": "14.6.6",
+    "into-stream": "^9.1.0",
+    "is-stream": "^4.0.1",
+    "json-to-ast": "^2.1.0",
+    "lodash-es": "^4.18.1",
+    "node-watch": "^0.7.4",
+    "p-map": "^7.0.4",
+    "p-queue": "^9.3.0",
+    "recursive-readdir": "^2.2.3",
+    "tus-js-client": "^4.3.1",
+    "typanion": "^3.14.0",
+    "type-fest": "^5.6.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.13",
+    "@types/node": "^25.8.0",
+    "@types/recursive-readdir": "^2.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/transloadit/node-sdk",
+    "directory": "packages/node"
+  },
+  "directories": {
+    "src": "./src"
+  },
+  "scripts": {
+    "check": "yarn sync:intent-docs && yarn lint:ts && yarn test:unit",
+    "sync:intent-docs": "node src/cli/generateIntentDocs.ts",
+    "fix:js": "biome check --write .",
+    "lint:ts": "yarn --cwd ../.. tsc:node",
+    "fix:js:unsafe": "biome check --write . --unsafe",
+    "lint:js": "biome check .",
+    "lint": "yarn lint:js",
+    "fix": "yarn fix:js",
+    "lint:deps": "knip --dependencies --no-progress",
+    "fix:deps": "knip --dependencies --no-progress --fix",
+    "prepack": "node ../../scripts/prepare-transloadit.ts",
+    "test:unit": "yarn --cwd ../.. tsc:utils && ../../node_modules/.bin/vitest run --coverage --passWithNoTests ./test/unit",
+    "test:e2e": "yarn --cwd ../.. tsc:utils && ../../node_modules/.bin/vitest run --passWithNoTests ./test/e2e",
+    "test": "yarn --cwd ../.. tsc:utils && ../../node_modules/.bin/vitest run --coverage --passWithNoTests"
+  },
+  "license": "MIT",
+  "main": "./dist/Transloadit.js",
+  "exports": {
+    ".": "./dist/Transloadit.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "bin": "./dist/cli.js"
+}

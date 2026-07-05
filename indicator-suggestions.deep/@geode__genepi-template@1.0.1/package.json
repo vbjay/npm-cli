@@ -1,0 +1,45 @@
+{
+    "name": "@geode/genepi-template",
+    "license": "MIT",
+    "version": "1.0.1",
+    "description": "Template for creating your Genepi addon",
+    "author": "Geode-solutions",
+    "keywords": [
+        "n-api",
+        "napi",
+        "wrapper",
+        "c++",
+        "addon",
+        "module",
+        "bindings",
+        "cmake"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Geode-solutions/genepi-template.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Geode-solutions/genepi-template/issues"
+    },
+    "homepage": "https://github.com/Geode-solutions/genepi-template#readme",
+    "scripts": {
+        "build": "cmake-js compile",
+        "build:debug": "cmake-js compile -D",
+        "install": "cmake-js compile",
+        "clean": "cmake-js clean",
+        "example": "node ./example.js"
+    },
+    "files": [
+        "/src",
+        "/CMakeLists.txt"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@geode/genepi": "^1.2.0"
+    },
+    "devDependencies": {
+        "bindings": "^1.5.0"
+    }
+}

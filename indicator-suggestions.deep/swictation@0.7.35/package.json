@@ -1,0 +1,93 @@
+{
+  "name": "swictation",
+  "version": "0.7.35",
+  "description": "Cross-platform voice-to-text dictation for Linux and macOS with GPU acceleration (NVIDIA CUDA/CoreML), Secretary Mode (60+ natural language commands), Context-Aware Meta-Learning, and pure Rust performance. Meta-package that automatically installs platform-specific binaries.",
+  "keywords": [
+    "voice-to-text",
+    "speech-recognition",
+    "dictation",
+    "secretary-mode",
+    "natural-language",
+    "transcription",
+    "stt",
+    "rust",
+    "parakeet-tdt",
+    "silero-vad",
+    "wayland",
+    "x11",
+    "macos",
+    "apple-silicon",
+    "coreml",
+    "onnx",
+    "text-transformation"
+  ],
+  "homepage": "https://github.com/robertelee78/swictation",
+  "bugs": {
+    "url": "https://github.com/robertelee78/swictation/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robertelee78/swictation.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Robert E. Lee <robert@agidreams.us>",
+  "main": "index.js",
+  "bin": {
+    "swictation": "./bin/swictation"
+  },
+  "files": [
+    "bin/",
+    "lib/model-downloader.js",
+    "config/",
+    "src/",
+    "docs/",
+    "templates/",
+    "scripts/",
+    "tests/",
+    "postinstall.js",
+    "preuninstall.js",
+    "checksums.txt",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node postinstall.js",
+    "preuninstall": "node preuninstall.js",
+    "test": "node test.js",
+    "build": "./scripts/build-release.sh",
+    "build-macos": "./scripts/build-macos-release.sh",
+    "build-ui": "../tauri-ui/scripts/build-ui-release.sh",
+    "verify": "../scripts/verify-before-push.sh",
+    "version:sync": "node scripts/sync-versions.js",
+    "version:sync:dry-run": "node scripts/sync-versions.js --dry-run",
+    "version:sync:verbose": "node scripts/sync-versions.js --verbose",
+    "version:bump": "node scripts/bump-version.js",
+    "version:bump:dry-run": "node scripts/bump-version.js --dry-run",
+    "version:bump:verbose": "node scripts/bump-version.js --verbose",
+    "version:verify": "node scripts/verify-versions.js",
+    "version:verify:verbose": "node scripts/verify-versions.js --verbose",
+    "version:verify:allow-missing": "node scripts/verify-versions.js --allow-missing"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "linux",
+    "darwin"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.5",
+    "which": "^2.0.2"
+  },
+  "optionalDependencies": {
+    "@agidreams/linux-x64": "0.7.35",
+    "@agidreams/darwin-arm64": "0.7.35"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
+}

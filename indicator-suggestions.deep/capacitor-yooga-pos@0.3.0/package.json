@@ -1,0 +1,91 @@
+{
+  "name": "capacitor-yooga-pos",
+  "version": "0.3.0",
+  "description": "Capacitor plugin para hardware POS Elgin (PIX4/TPro/M8/M10) e iMin (D1/M10): display traseiro e impressora térmica.",
+  "author": "Yooga Tecnologia",
+  "homepage": "https://github.com/yooga-tecnologia/capacitor-yooga-pos#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "android/src/main/",
+    "android/build.gradle",
+    "android/libs/",
+    "dist/",
+    "ios/Sources",
+    "ios/Tests",
+    "Package.swift",
+    "src/",
+    "CapacitorYoogaPos.podspec"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yooga-tecnologia/capacitor-yooga-pos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yooga-tecnologia/capacitor-yooga-pos/issues"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native",
+    "pos",
+    "elgin",
+    "imin",
+    "thermal-printer",
+    "yooga"
+  ],
+  "scripts": {
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "verify:ios": "xcodebuild -scheme CapacitorYoogaPos -destination generic/platform=iOS",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "npm run build",
+    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
+    "eslint": "eslint . --ext ts",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\" --plugin=prettier-plugin-java",
+    "swiftlint": "node-swiftlint",
+    "build": "npm run clean && tsc && rollup -c rollup.config.js",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "@ionic/eslint-config": "^0.4.0",
+    "@ionic/prettier-config": "^4.0.0",
+    "@ionic/swiftlint-config": "^1.1.2",
+    "@types/node": "^18.11.9",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-java": "^2.6.4",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.32.0",
+    "swiftlint": "^1.0.1",
+    "typescript": "~4.1.5"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=5.0.0"
+  },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  }
+}

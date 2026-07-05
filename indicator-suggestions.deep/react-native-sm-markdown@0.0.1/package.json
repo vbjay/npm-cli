@@ -1,0 +1,73 @@
+{
+  "name": "react-native-sm-markdown",
+  "repository": "https://github.com/dannyhw/react-native-simple-markdown",
+  "version": "0.0.1",
+  "description": "Fork of the original. Render Markdown in React Native with native components (iOS & Android)",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "author": "Daniel Williams",
+  "scripts": {
+    "lint": "eslint .",
+    "flow": "flow --show-all-errors",
+    "prepack": "npm run prepack:clean && npm run prepack:babel && npm run prepack:flow",
+    "prepack:clean": "rimraf lib",
+    "prepack:babel": "babel -d lib src",
+    "prepack:flow": "flow-copy-source -v src lib"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "prop-types": "^15.8.1",
+    "simple-markdown": "^0.7.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2",
+      "react",
+      "flow"
+    ],
+    "env": {
+      "production": {
+        "plugins": [
+          "transform-flow-strip-types"
+        ]
+      }
+    }
+  },
+  "keywords": [
+    "react-native",
+    "native",
+    "markdown",
+    "md",
+    "parse",
+    "parser"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-flowtype": "^2.41.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "flow-bin": "^0.61.0",
+    "flow-copy-source": "^1.2.1",
+    "husky": "^0.14.3",
+    "pretty-quick": "^1.2.2",
+    "rimraf": "^2.6.2"
+  }
+}

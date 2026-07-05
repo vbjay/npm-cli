@@ -1,0 +1,214 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import org.gradle.api.file.RelativePath
+
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:9.1.0"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: "com.android.library"
+apply plugin: 'org.jetbrains.kotlin.android'
+apply from: '../nitrogen/generated/android/NitroTflite+autolinking.gradle'
+apply from: "./fix-prefab.gradle"
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroTflite_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroTflite_" + name]).toInteger()
+}
+
+android {
+  namespace "com.margelo.nitro.tflite"
+
+  ndkVersion getExtOrDefault("ndkVersion")
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    externalNativeBuild {
+      cmake {
+        cppFlags "-frtti -fexceptions -Wall -Wextra -fstack-protector-all"
+        arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+        abiFilters (*reactNativeArchitectures())
+
+        buildTypes {
+          debug {
+            cppFlags "-O1 -g"
+          }
+          release {
+            cppFlags "-O2"
+          }
+        }
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  packagingOptions {
+    excludes = [
+            "META-INF",
+            "META-INF/**",
+            "**/libc++_shared.so",
+            "**/libNitroModules.so",
+            "**/libfbjni.so",
+            "**/libjsi.so",
+            "**/libfolly_json.so",
+            "**/libfolly_runtime.so",
+            "**/libglog.so",
+            "**/libhermes.so",
+            "**/libhermes-executor-debug.so",
+            "**/libhermes_executor.so",
+            "**/libreactnative.so",
+            "**/libreactnativejni.so",
+            "**/libturbomodulejsijni.so",
+            "**/libreact_nativemodule_core.so",
+            "**/libjscexecutor.so",
+            "**/libtensorflowlite_jni.so",
+            "**/libtensorflowlite_gpu_jni.so"
+    ]
+  }
+
+  buildFeatures {
+    buildConfig true
+    prefab true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {}
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+
+// AAR extraction configurations
+configurations {
+  extractHeaders
+  extractSO
+}
+
+dependencies {
+  // For < 0.71, this will be from the local maven repo
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+
+  // Add a dependency on NitroModules
+  implementation project(":react-native-nitro-modules")
+
+  // Tensorflow Lite .aar (includes C API via prefabs)
+  implementation "com.google.ai.edge.litert:litert:1.4.0"
+  extractSO("com.google.ai.edge.litert:litert:1.4.0")
+  extractHeaders("com.google.ai.edge.litert:litert:1.4.0")
+
+  // Tensorflow Lite GPU delegate
+  implementation "com.google.ai.edge.litert:litert-gpu:1.4.0"
+  extractSO("com.google.ai.edge.litert:litert-gpu:1.4.0")
+  extractHeaders("com.google.ai.edge.litert:litert-gpu:1.4.0")
+}
+
+// Clean leftover empty directories
+task cleanEmptyDirectories(type: Delete) {
+  delete 'src/main/cpp/lib/headers'
+  delete 'src/main/cpp/lib/res'
+}
+
+// Extract .h headers from AARs
+task extractAARHeaders {
+  finalizedBy cleanEmptyDirectories
+  doLast {
+    configurations.extractHeaders.files.each { aarFile ->
+      def packageName = aarFile.name.tokenize('-')[0]
+      copy {
+        from zipTree(aarFile)
+        into "src/main/cpp/lib/"
+        include "**/*.h"
+        eachFile { fileCopyDetails ->
+          if (fileCopyDetails.name.endsWith(".h")) {
+            def originalRelativePath = fileCopyDetails.relativePath.toString()
+            if (originalRelativePath.startsWith("headers/external/org_tensorflow/tensorflow/")) {
+              def newRelativePath = packageName + "/headers/" + originalRelativePath.substring("headers/external/org_tensorflow/".length())
+              fileCopyDetails.relativePath = new RelativePath(true, newRelativePath.split('/'))
+            } else {
+              def newRelativePath = packageName + "/" + originalRelativePath
+              fileCopyDetails.relativePath = new RelativePath(true, newRelativePath.split('/'))
+            }
+          } else {
+            exclude fileCopyDetails.name
+          }
+        }
+      }
+    }
+  }
+}
+
+// Extract .so files from AARs
+task extractSOFiles {
+  doLast {
+    configurations.extractSO.files.each {
+      def file = it.absoluteFile
+      def packageName = file.name.tokenize('-')[0]
+      copy {
+        from zipTree(file)
+        into "src/main/cpp/lib/$packageName/"
+        include "jni/**/*.so"
+      }
+    }
+  }
+}
+
+// Ensure AAR extraction runs before native build
+def nativeBuildDependsOn(dependsOnTask) {
+  def buildTasks = tasks.findAll({ task -> (
+          !task.name.contains("Clean")
+                  && (task.name.contains("externalNative")
+                  || task.name.contains("CMake")
+                  || task.name.contains("generateJsonModel")
+          )
+  ) })
+  buildTasks.forEach { task -> task.dependsOn(dependsOnTask) }
+}
+
+afterEvaluate {
+  nativeBuildDependsOn(extractAARHeaders)
+  nativeBuildDependsOn(extractSOFiles)
+}
+

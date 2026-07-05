@@ -1,0 +1,58 @@
+{
+	"name": "@sdcx/nested-scroll",
+	"description": "A react-native NestedScrollView component.",
+	"version": "1.0.8",
+	"main": "./dist/index",
+	"module": "./dist/index",
+	"types": "./dist/index.d.ts",
+	"react-native": "src/index",
+	"source": "src/index",
+	"nativePackage": true,
+	"files": [
+		"src",
+		"dist",
+		"android",
+		"ios",
+		"common",
+		"react-native.config.js",
+		"RNNestedScrollView.podspec",
+		"!android/build",
+		"!ios/build",
+		"!**/__tests__"
+	],
+	"repository": "https://github.com/listenzz/react-native-troika",
+	"homepage": "https://github.com/listenzz/react-native-troika/tree/master/packages/nested-scroll/README.md",
+	"author": "sdcx",
+	"license": "MIT",
+	"keywords": [
+		"react-native",
+		"nested-scroll"
+	],
+	"scripts": {
+		"build": "rm -rf ./dist && tsc -p tsconfig.json",
+		"prepare": "npm run build",
+		"tsc": "tsc",
+		"test": "jest",
+		"lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
+	},
+	"peerDependencies": {
+		"react": ">=16.8",
+		"react-native": ">=0.60"
+	},
+	"codegenConfig": {
+		"name": "nestedscrollview",
+		"type": "components",
+		"jsSrcsDir": "src",
+		"android": {
+			"javaPackageName": "com.reactnative.nestedscroll"
+		},
+		"ios": {
+			"componentProvider": {
+				"NestedScrollView": "RNNestedScrollView",
+				"NestedScrollViewHeader": "RNNestedScrollViewHeader",
+				"NestedScrollViewContent": "RNNestedScrollViewContent",
+				"NestedScrollViewChild": "RNNestedScrollViewChild"
+			}
+		}
+	}
+}

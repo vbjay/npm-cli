@@ -1,0 +1,76 @@
+{
+  "name": "@ccsk/cli",
+  "version": "1.2.4",
+  "description": "Claude Code Starter Kit CLI — scaffold Claude-ready projects in one command",
+  "type": "module",
+  "bin": {
+    "ccsk": "bin/ccsk.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepare": "tsc",
+    "start": "node ./bin/ccsk.js",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "check:docs": "node scripts/check-doc-drift.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "claude-code",
+    "starter-kit",
+    "scaffold",
+    "cli",
+    "ai-coding",
+    "harness-engineering",
+    "claude-code-workflows",
+    "orchestration",
+    "agents",
+    "subagents",
+    "prompt-engineering",
+    "context-engineering",
+    "slash-commands",
+    "mcp",
+    "ccsk",
+    "ccsk-cli",
+    "claude-code-starter-kit",
+    "@ccsk/cli",
+    "claude"
+  ],
+  "author": "Crystal D.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccsk-org/ccsk-cli.git"
+  },
+  "homepage": "https://github.com/ccsk-org/ccsk-cli#readme",
+  "bugs": {
+    "url": "https://github.com/ccsk-org/ccsk-cli/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.4.0",
+    "commander": "^15.0.0",
+    "execa": "^9.5.1",
+    "picocolors": "^1.1.1",
+    "qrcode": "^1.5.4",
+    "vietnam-qr-pay": "^1.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "@types/qrcode": "^1.5.5",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}

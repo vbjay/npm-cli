@@ -1,0 +1,85 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6a9cd59332ccf69c",
+    "fetchedFiles": [
+      "npm/build-zmr.mjs",
+      "npm/index.mjs",
+      "npm/postinstall.mjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4bd6a80803e198463c205a395adad0e016278ead27135d2fa4f5af54ab0e186b",
+        "sizeBytes": 1889,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/index.mjs",
+          "package.json",
+          "npm/build-zmr.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/index.mjs",
+        "reason": "required by ./npm/postinstall.mjs",
+        "sha256": "16ce86bbb12d5cbec3c6496cd3769f615ca6002671857dc28030ba4a64a4d380",
+        "sizeBytes": 2073,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./npm/postinstall.mjs",
+        "sha256": "dd0dd85fb7ca77598953ec0051350fa07144c39083e425ee62ccfaa177884991",
+        "sizeBytes": 4266,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "npm/build-zmr.mjs",
+        "reason": "required by ./npm/postinstall.mjs",
+        "sha256": "7979a51f8583564b7f12b039c0985717a85d3d4ce5765cfd1e26b3a6c7356965",
+        "sizeBytes": 936,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:33.402Z"
+  },
+  "hash": "sha256:65cf2c7a137b9f9a053337cf022147a607c40c13e2f034c1b669f6028fd00084"
+}

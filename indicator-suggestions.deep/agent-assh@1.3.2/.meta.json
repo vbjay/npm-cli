@@ -1,0 +1,108 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "60251ab118a04043",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js",
+      "scripts/platform.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0703035cbcde639efb0ad98d83564ed3a4a17634bcc8ba933775d802a63f4355",
+        "sizeBytes": 5221,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "scripts/platform.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/izzzzzi/agent-assh/releases/download/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "76a30a3aee9039e56065aea71fda57a5d818a58e8f9fa83f483ac439995bba49",
+        "sizeBytes": 1332,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/platform.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "e384b6c78f5857c79fe32c338ed6cd0068945342b6cb3a3ba5dac62d69cc4b89",
+        "sizeBytes": 809,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:17.625Z"
+  },
+  "hash": "sha256:44633b04b4097d38ffdcb98caaec53c2ebd79571955128f7968c6615c69c30a8"
+}

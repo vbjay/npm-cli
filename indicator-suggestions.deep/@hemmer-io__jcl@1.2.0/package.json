@@ -1,0 +1,42 @@
+{
+  "name": "@hemmer-io/jcl",
+  "version": "1.2.0",
+  "description": "Jack-of-All Configuration Language - A general-purpose configuration language with powerful built-in functions",
+  "main": "index.node",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics --features nodejs",
+    "build-release": "cargo-cp-artifact -nc index.node -- cargo build --release --message-format=json-render-diagnostics --features nodejs",
+    "install": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics --features nodejs",
+    "test": "cargo test --features nodejs"
+  },
+  "keywords": [
+    "configuration",
+    "config",
+    "parser",
+    "language",
+    "template",
+    "neon",
+    "rust"
+  ],
+  "author": {
+    "name": "Hemmer IO",
+    "email": "info@hemmer.io"
+  },
+  "license": "MIT OR Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hemmer-io/jcl",
+    "directory": "bindings/nodejs"
+  },
+  "homepage": "https://hemmer-io.github.io/jcl/",
+  "bugs": {
+    "url": "https://github.com/hemmer-io/jcl/issues"
+  },
+  "devDependencies": {
+    "cargo-cp-artifact": "^0.1"
+  },
+  "engines": {
+    "node": ">= 14"
+  }
+}

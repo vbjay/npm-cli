@@ -1,0 +1,58 @@
+{
+  "name": "neexrs",
+  "version": "0.2.2",
+  "description": "A concurrent command runner for development workflows",
+  "main": "bin/neexrs",
+  "bin": {
+    "neexrs": "./bin/neexrs"
+  },
+  "scripts": {
+    "build": "cargo build --release",
+    "install": "npm run build && mkdir -p bin && cp target/release/neexrs bin/neexrs && strip bin/neexrs || true",
+    "prepack": "npm run install",
+    "test": "cargo test",
+    "clean": "cargo clean && rm -rf bin/",
+    "dev": "cargo run --",
+    "publish:npm": "npm publish --access public"
+  },
+  "files": [
+    "bin/",
+    "README.md"
+  ],
+  "keywords": [
+    "cli",
+    "concurrent",
+    "runner",
+    "development",
+    "parallel",
+    "sequential",
+    "rust",
+    "command-runner",
+    "npm-scripts",
+    "workflow"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/neexrs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/neexrs/issues"
+  },
+  "homepage": "https://github.com/yourusername/neexrs#readme",
+  "engines": {
+    "node": ">=14"
+  },
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "devDependencies": {},
+  "dependencies": {}
+}

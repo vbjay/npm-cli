@@ -1,0 +1,60 @@
+{
+  "name": "clang-format-node",
+  "version": "3.0.7",
+  "type": "commonjs",
+  "description": "Node wrapper for clang-format native binary inspired by angular/clang-format.🐉",
+  "main": "build/index.js",
+  "files": [
+    "bin",
+    "build",
+    "chmod.js",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "bin": {
+    "clang-format": "build/cli.js",
+    "clang-format-node": "build/cli.js"
+  },
+  "keywords": [
+    "clang-format",
+    "clang",
+    "cli",
+    "format",
+    "formatter",
+    "lint",
+    "linter",
+    "cpplint",
+    "eslint",
+    "prettier",
+    "checker",
+    "c",
+    "cpp",
+    "c++"
+  ],
+  "author": "lumir <rpfos@naver.com> (https://github.com/lumirlumir)",
+  "funding": "https://github.com/sponsors/lumirlumir",
+  "license": "MIT",
+  "homepage": "https://clang-format-node.lumir.page",
+  "repository": {
+    "type": "github",
+    "url": "git+https://github.com/lumirlumir/npm-clang-format-node.git",
+    "directory": "packages/clang-format-node"
+  },
+  "bugs": {
+    "url": "https://github.com/lumirlumir/npm-clang-format-node/issues"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "publishConfig": {
+    "provenance": true
+  },
+  "scripts": {
+    "postinstall": "node chmod.js || exit 0",
+    "prepublishOnly": "npm run build",
+    "build": "tsc --emitDeclarationOnly false && node ../../scripts/cp.js ../../LICENSE.md LICENSE.md ../../README.md README.md",
+    "test": "node --test",
+    "dev": "node src/cli.js",
+    "start": "node build/cli.js"
+  }
+}

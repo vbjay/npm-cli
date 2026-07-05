@@ -1,0 +1,161 @@
+{
+  "name": "react-native-ulid-jsi",
+  "version": "0.2.3",
+  "description": "High-performance ULID generator for React Native using JSI and C++. Supports both old and new architecture on iOS and Android.",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "./src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-ulid-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest",
+    "release": "release-it --only-version"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "ulid",
+    "jsi",
+    "cpp",
+    "native-module",
+    "react-native-ulid-jsi",
+    "react-native-ulid",
+    "uuid",
+    "unique-id",
+    "identifier",
+    "turbomodule",
+    "fabric",
+    "new-architecture",
+    "old-architecture",
+    "performance",
+    "fast",
+    "native",
+    "c++"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pioner92/react-native-ulid-jsi.git"
+  },
+  "author": "Alex Shumihin <shumolek@gmail.com> (https://github.com/pioner92)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pioner92/react-native-ulid-jsi/issues"
+  },
+  "homepage": "https://github.com/pioner92/react-native-ulid-jsi#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/compat": "^1.3.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
+    "@react-native/babel-preset": "0.83.0",
+    "@react-native/eslint-config": "0.83.0",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.2.0",
+    "commitlint": "^19.8.1",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^29.7.0",
+    "prettier": "^2.8.8",
+    "react": "19.2.0",
+    "react-native": "0.83.0",
+    "react-native-builder-bob": "^0.35.2",
+    "release-it": "^19.0.4",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "type": "legacy-module",
+    "languages": "cpp",
+    "version": "0.45.5"
+  }
+}

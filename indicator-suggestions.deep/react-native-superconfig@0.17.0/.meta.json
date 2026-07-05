@@ -1,0 +1,90 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f4e186e82bbdb151",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/generate-config.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "value",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "value@0.4.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "8c2ea4566e6402f60d762aa542e4e96208378a567dbef9ddddd1eddd15419ad5",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/generate-config.js",
+        "reason": "referenced by lifecycle script: `postinstall`; referenced by lifecycle script: `prepare`",
+        "sha256": "4a306adadc487b57a42a18a8ecdcc2e901a828ea98cda0a99528ba794e275f70",
+        "sizeBytes": 25830,
+        "signals": [
+          "reads-process-env",
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:56.010Z"
+  },
+  "hash": "sha256:a029b58eff65f7d2957152839336477cd330a1958d27b986911ba0e36467ba3e"
+}

@@ -1,0 +1,69 @@
+{
+  "name": "resend-cli",
+  "version": "2.8.1",
+  "description": "The official CLI for Resend",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resend/resend-cli"
+  },
+  "homepage": "https://github.com/resend/resend-cli#readme",
+  "keywords": [
+    "cli",
+    "resend",
+    "email",
+    "api",
+    "tanstack-intent"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.8.0",
+  "files": [
+    "dist/cli.cjs",
+    "skills/"
+  ],
+  "type": "module",
+  "bin": {
+    "resend": "./dist/cli.cjs"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "dev:watch": "tsx --watch src/cli.ts",
+    "build": "node scripts/build.mjs",
+    "build:bin": "pnpm build && pkg dist/cli.cjs --config package.json --compress Brotli --target node24 --output dist/resend",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "vitest run --config vitest.config.e2e.ts",
+    "prepack": "pnpm install && pnpm build && node scripts/verify-bundle.mjs"
+  },
+  "dependencies": {
+    "@clack/prompts": "1.4.0",
+    "@commander-js/extra-typings": "14.0.0",
+    "commander": "14.0.3",
+    "esbuild": "0.28.1",
+    "esbuild-wasm": "0.28.0",
+    "picocolors": "1.1.1",
+    "resend": "6.17.1"
+  },
+  "pkg": {
+    "scripts": [
+      "node_modules/esbuild-wasm/bin/esbuild",
+      "node_modules/esbuild-wasm/wasm_exec.js",
+      "node_modules/esbuild-wasm/wasm_exec_node.js"
+    ],
+    "assets": [
+      "node_modules/esbuild-wasm/esbuild.wasm"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.11",
+    "@types/node": "24.12.4",
+    "@yao-pkg/pkg": "6.20.0",
+    "tsx": "4.22.4",
+    "typescript": "5.9.3",
+    "vitest": "4.1.9"
+  }
+}

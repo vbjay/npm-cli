@@ -1,0 +1,49 @@
+{
+  "name": "@thedataco/mdocs",
+  "version": "0.2.17",
+  "description": "CLI for mdocs — Docs for Markdown. Auth, list, and pull markdown docs from the terminal.",
+  "type": "module",
+  "bin": {
+    "mdocs": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "prepare": "tsup",
+    "release": "npm version patch -m 'release v%s' && npm publish && git push --follow-tags",
+    "release:minor": "npm version minor -m 'release v%s' && npm publish && git push --follow-tags",
+    "lint": "biome lint ."
+  },
+  "keywords": [
+    "markdown",
+    "docs",
+    "cli",
+    "collaboration",
+    "agents"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheDataCo/mdocs.git"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0",
+    "@types/node": "^22.0.0",
+    "tsup": "^8.0.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

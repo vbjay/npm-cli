@@ -1,0 +1,80 @@
+{
+  "name": "@baerae/zkap-zkp-react-native",
+  "version": "0.1.12",
+  "description": "React Native SDK for zkap-zkp — on-device ZK proving with Groth16 (BN254) and Poseidon hash.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "source": "./src/index.ts",
+  "react-native": "./src/index.ts",
+  "files": [
+    "README.md",
+    "src/",
+    "cpp/",
+    "ios/ZkapReactNative.h",
+    "ios/ZkapReactNative.mm",
+    "ios/ZkapZkp.xcframework/",
+    "ZkapReactNative.podspec",
+    "android/src/main/AndroidManifest.xml",
+    "android/src/main/java/com/baerae/zkapreactnative/",
+    "android/CMakeLists.txt",
+    "android/cpp-adapter.cpp",
+    "android/build.gradle",
+    "android/libs/arm64-v8a/libzkap_uniffi_bindings.so",
+    "android/libs/x86_64/libzkap_uniffi_bindings.so",
+    "android/proguard-rules.pro",
+    "ubrn.config.yaml"
+  ],
+  "scripts": {
+    "generate:ubrn": "node ../../scripts/generate-rn-bindings.mjs",
+    "prepack": "node ../../scripts/generate-rn-bindings.mjs && node ../../scripts/check-rn-native-artifacts.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "zk",
+    "groth16",
+    "poseidon",
+    "zkap",
+    "react-native",
+    "ubrn",
+    "zero-knowledge"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baerae-zkap/zkap-zkp-sdk.git",
+    "directory": "packages/sdk-react-native"
+  },
+  "homepage": "https://github.com/baerae-zkap/zkap-zkp-sdk",
+  "bugs": "https://github.com/baerae-zkap/zkap-zkp-sdk/issues",
+  "author": "baerae-zkap",
+  "license": "MIT OR Apache-2.0",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.73.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "uniffi-bindgen-react-native": "0.31.0-2"
+  },
+  "codegenConfig": {
+    "name": "ZkapReactNativeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}

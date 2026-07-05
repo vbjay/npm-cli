@@ -1,0 +1,87 @@
+{
+  "name": "@octavius2929-personal/scaffold-generator",
+  "version": "0.13.0",
+  "description": "Opinionated project scaffolder CLI (React, TypeScript library, React component library, NestJS API)",
+  "license": "MIT",
+  "author": "Justin <justinoctavio2001@gmail.com>",
+  "keywords": [
+    "scaffold",
+    "scaffolding",
+    "generator",
+    "cli",
+    "boilerplate",
+    "starter",
+    "template",
+    "react",
+    "nestjs",
+    "ddd"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/proyectos-octavio/scaffold-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/proyectos-octavio/scaffold-generator/issues"
+  },
+  "homepage": "https://github.com/proyectos-octavio/scaffold-generator#readme",
+  "type": "module",
+  "bin": {
+    "scaffold-generator": "dist/presentation/cli.js"
+  },
+  "main": "./dist/presentation/composition-root.js",
+  "types": "./dist/presentation/composition-root.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/presentation/composition-root.js",
+      "types": "./dist/presentation/composition-root.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-templates.mjs",
+    "dev": "tsx src/presentation/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky",
+    "check:plugin-version": "node scripts/check-plugin-version.mjs"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "execa": "^9.0.0",
+    "tinyglobby": "^0.2.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.0",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "@types/node": "^20.14.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0",
+    "semantic-release": "^25.0.3",
+    "tsx": "^4.15.0",
+    "typescript": "^5.5.0",
+    "vitest": "^1.6.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "biome check --write --no-errors-on-unmatched",
+      "vitest related --run --passWithNoTests"
+    ],
+    "*.json": "biome check --write --no-errors-on-unmatched"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

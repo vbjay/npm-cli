@@ -1,0 +1,144 @@
+{
+  "name": "react-native-big-list",
+  "version": "1.6.4",
+  "description": "High-performance, virtualized list for React Native. Efficiently renders large datasets with recycler API for smooth scrolling and low memory usage. Ideal for fast, scalable, customizable lists on Android, iOS, and web.",
+  "keywords": [
+    "react-native-big-list",
+    "react",
+    "react-native",
+    "javascript",
+    "ui-lib",
+    "rn",
+    "big-list",
+    "fast-list",
+    "scroll-list",
+    "large-list",
+    "biglist",
+    "fastlist",
+    "scrolllist",
+    "largelist",
+    "fast",
+    "scroll",
+    "large",
+    "bigdata",
+    "big",
+    "massive",
+    "list",
+    "performance",
+    "virtualized list",
+    "infinite scroll",
+    "listview",
+    "flatlist alternative",
+    "mobile list",
+    "ui library",
+    "react native ui",
+    "react native component",
+    "efficient list",
+    "memory optimization",
+    "recycler view",
+    "large data set",
+    "dynamic list",
+    "custom list",
+    "expo",
+    "android",
+    "ios"
+  ],
+  "main": "dist/commonjs/index.js",
+  "module": "dist/module/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "author": "Marco Cesarato <cesarato.developer@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/marcocesarato/react-native-big-list/issues"
+  },
+  "homepage": "https://marcocesarato.github.io/react-native-big-list-docs/",
+  "license": "Apache-2.0",
+  "scripts": {
+    "prepare": "bob build && node scripts/dist.js",
+    "lint": "eslint --ignore-path .gitignore \"./lib/*.{js,jsx}\"",
+    "prettify": "prettier --write \"./**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format": "yarpm run prettify && yarpm run lint --fix",
+    "release": "standard-version",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/eslint-parser": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@react-native/metro-config": "^0.81.1",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^13.3.3",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^30.2.0",
+    "eslint": "^8.36.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-native": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "glob": "^9.3.2",
+    "husky": "^8.0.3",
+    "jest": "^30.2.0",
+    "lint-staged": "^13.2.0",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "prettier": "^2.8.7",
+    "react": "^19.2.0",
+    "react-native": "^0.81.4",
+    "react-native-builder-bob": "^0.20.4",
+    "react-native-svg-mock": "^2.0.0",
+    "react-test-renderer": "^19.2.0",
+    "standard-version": "^9.5.0",
+    "typescript": "^4.5.2",
+    "yarpm": "^1.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx}": [
+      "eslint --ignore-path .gitignore . --fix"
+    ],
+    "**/*.{ts,tsx,js,jsx,json}": [
+      "prettier --write ."
+    ]
+  },
+  "peerDependencies": {
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "dependencies": {
+    "prop-types": "^15.8.1"
+  },
+  "bit": {
+    "env": {},
+    "packageManager": "npm"
+  },
+  "react-native-builder-bob": {
+    "source": "lib",
+    "output": "dist",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ]
+}

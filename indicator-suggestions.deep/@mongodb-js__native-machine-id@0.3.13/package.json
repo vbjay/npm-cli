@@ -1,0 +1,94 @@
+{
+  "name": "@mongodb-js/native-machine-id",
+  "version": "0.3.13",
+  "description": "Native retrieval of a unique desktop machine ID without admin privileges or child processes. Faster and more reliable alternative to node-machine-id.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json && node-gyp rebuild && gen-esm-wrapper . ./dist/.esm-wrapper.mjs",
+    "bootstrap": "npm run compile",
+    "pretest": "npm run compile",
+    "install": "node-gyp rebuild",
+    "prettier": "prettier",
+    "typecheck": "tsc --noEmit",
+    "test": "mocha",
+    "test-cov": "nyc -x \"**/*.spec.*\" --reporter=lcov --reporter=text --reporter=html npm run test",
+    "test-ci": "npm run test-cov",
+    "lint": "eslint . && prettier --check .",
+    "depcheck": "depcheck",
+    "check": "npm run typecheck && npm run lint && npm run depcheck",
+    "prepublishOnly": "npm run compile",
+    "benchmark": "ts-node scripts/benchmark.ts",
+    "reformat": "npm run prettier -- --write ."
+  },
+  "author": "Compass Team <compass@mongodb.com>",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^8.0.0"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    "require": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "import": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/.esm-wrapper.mjs"
+    }
+  },
+  "homepage": "https://github.com/mongodb-js/devtools-shared",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb-js/devtools-shared.git"
+  },
+  "bugs": "https://jira.mongodb.org/projects/COMPASS/issues",
+  "bin": {
+    "native-machine-id": "dist/bin/machine-id.js"
+  },
+  "files": [
+    "binding.cc",
+    "binding.gyp",
+    "dist",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@mongodb-js/eslint-config-devtools": "^0.11.7",
+    "@mongodb-js/mocha-config-devtools": "^1.1.2",
+    "@mongodb-js/prettier-config-devtools": "^1.0.3",
+    "@mongodb-js/tsconfig-devtools": "^1.1.2",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^25.5.2",
+    "@types/sinon-chai": "^4.0.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^7.25.0 || ^8.0.0",
+    "gen-esm-wrapper": "^1.1.3",
+    "mocha": "^8.4.0",
+    "node-machine-id": "^1.1.12",
+    "prettier": "^3.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "machine id",
+    "node machine id",
+    "device identifier",
+    "node id",
+    "unique identifier",
+    "device id",
+    "machine identifier",
+    "unique id",
+    "platform id",
+    "electron id",
+    "node-machine-id",
+    "uuid",
+    "restrictions",
+    "native",
+    "telemetry",
+    "telemetry id"
+  ],
+  "gitHead": "04e390e1e6157b3edbc120f3d9359d3fb47ab839"
+}

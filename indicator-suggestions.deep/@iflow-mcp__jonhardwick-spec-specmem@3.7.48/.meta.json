@@ -1,0 +1,201 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0913ecfafffb6ea0",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/check-global-install.cjs",
+      "scripts/global-postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check-global-install.cjs",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "9cd249b99c8db1614597adae202b205eb8c8ffece2a081755446345bb86ae1f7",
+        "sizeBytes": 7813,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/global-postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5a4c747766897b8947ab17238f761be1feebdef03b60fd7415fcd6b136da6e09",
+        "sizeBytes": 88820,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://aur.archlinux.org/postgresql-pgvector.git",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/pgvector/pgvector.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://get.docker.com",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://download.docker.com/linux/ubuntu/gpg",
+            "classification": "download"
+          },
+          {
+            "url": "https://download.docker.com/linux/ubuntu",
+            "classification": "download"
+          },
+          {
+            "url": "https://download.docker.com/linux/fedora/docker-ce.repo",
+            "classification": "download"
+          },
+          {
+            "url": "https://get.docker.com/rootless",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://brew.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.postgresql.org/download/windows/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://docs.docker.com/desktop/install/windows-install/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://docs.docker.com/desktop/install/mac-install/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://download.docker.com/linux/${repoDistro}",
+            "classification": "download"
+          },
+          {
+            "url": "https://download.docker.com/linux/centos/docker-ce.repo",
+            "classification": "download"
+          },
+          {
+            "url": "https://docs.docker.com/engine/install/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://justcalljon.pro",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/global-postinstall.cjs",
+        "sha256": "72d64e864c03273cecaad10611dcf81f61432f748c36757ed24d5c9d2ea48979",
+        "sizeBytes": 4877,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:42:40.563Z"
+  },
+  "hash": "sha256:632ba2f75eb95ddfbe3ddfa849c50d4cda5a0695625d6420379ccb8898c5b492"
+}

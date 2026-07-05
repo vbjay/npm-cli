@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "324673f791ba65a0",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "7dd832de7ded7060b1680d9b23d84fcc968eaf1b997fda6b85e18b05f4a1a557",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `parse`  -  C/C++ sources",
+            "items": [
+              "./lib/parse.cc"
+            ]
+          },
+          {
+            "label": "Target `parse`  -  libraries",
+            "items": [
+              "<!@(pkg-config cairo --libs)",
+              "<!@(pkg-config libpng --libs)"
+            ]
+          },
+          {
+            "label": "Target `parse`  -  include directories",
+            "items": [
+              "<!@(pkg-config cairo --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config libpng --cflags-only-I | sed s/-I//g)"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:17.592Z"
+  },
+  "hash": "sha256:a5082e74599eedfc9d489d8ce241f813d6465bc03932d325e1289e377a510121"
+}

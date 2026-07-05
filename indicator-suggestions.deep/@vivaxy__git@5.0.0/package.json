@@ -1,0 +1,58 @@
+{
+  "name": "@vivaxy/git",
+  "version": "5.0.0",
+  "description": "💭Git operations.",
+  "keywords": [
+    "git",
+    "node",
+    "npm",
+    "node.js"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.js",
+  "packageManager": "npm@8.19.4",
+  "scripts": {
+    "build": "rm -rf lib && tsc",
+    "test": "vitest run",
+    "coverage": "jest --collect-coverage",
+    "release:beta": "npm test && npm run build && standard-version --prerelease beta && npm publish --access=public --tag beta && git push --follow-tags",
+    "release": "npm test && npm run build && standard-version && npm publish --access=public && git push --follow-tags",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vivaxy/git.git"
+  },
+  "author": "vivaxy <xyxuye2007@126.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vivaxy/git/issues"
+  },
+  "homepage": "https://github.com/vivaxy/git#readme",
+  "lint-staged": {
+    "*.{js,ts,css,less,json,md,html,yml,yaml,pcss,jsx,tsx}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.0.0",
+    "@commitlint/config-conventional": "^12.0.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^18.7.6",
+    "callsites": "^3.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.2.1",
+    "standard-version": "^9.0.0",
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.1"
+  },
+  "dependencies": {
+    "execa": "^9.3.0",
+    "fs-extra": "^10.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

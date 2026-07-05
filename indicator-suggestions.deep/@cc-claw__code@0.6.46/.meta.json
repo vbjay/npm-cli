@@ -1,0 +1,110 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a9dfb68d863b7844",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.16"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0479a5e407b74d1f70ccaece255175133428801f7edd5da5cb3fe119e20d0f13",
+        "sizeBytes": 10334,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://api.deepseek.com/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://github.com/cc-claws/cc-code",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "d1947f567ed2d6ba371011609f535982e19a69264d38b6ba501876926b14a009",
+        "sizeBytes": 935,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:49.265Z"
+  },
+  "hash": "sha256:2c1893c22054696da6d5a446a1a673b79b3133af6502fe41b46c54b5408ec643"
+}

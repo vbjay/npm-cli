@@ -1,0 +1,43 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace "expo.modules.gifski"
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        consumerProguardFiles 'consumer-proguard-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation project(':expo-modules-core')
+    implementation "net.java.dev.jna:jna:5.14.0@aar"
+}

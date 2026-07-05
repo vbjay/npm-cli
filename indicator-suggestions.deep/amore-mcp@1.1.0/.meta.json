@@ -1,0 +1,121 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "acefde762514cf60",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f5c4a0a9d9dffb3d845470127d6d663e6cfb9edf3d3a2f382b8f5f5015b4c9c4",
+        "sizeBytes": 13411,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/sigstore/cosign/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/${REPO_OWNER}/${REPO_NAME}/issues",
+            "classification": "reference"
+          },
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://docs.sigstore.dev/cosign/system_config/installation/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github\\\\.com/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://token.actions.githubusercontent.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "5873464661c9552157b78468cf2b72a1195c71897fa4854c098192b65628d2cc",
+        "sizeBytes": 1066,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:20.204Z"
+  },
+  "hash": "sha256:045db41947a22e52bdd02319e86ee29078d52dd6506088a035a7b505f1c1b26b"
+}

@@ -1,0 +1,99 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c43203af1c2f427c",
+    "fetchedFiles": [
+      "CMakeLists.txt",
+      "package.json",
+      "scripts/build-auto.js",
+      "scripts/install-auto.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "CMakeLists.txt",
+        "label": "CMake build descriptor",
+        "sha256": "ea8424ca88a426008c4e64faf0027b41d23e8dfa638debe076ce056ce5199776",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Native libraries",
+            "items": [
+              "juce_audio_processor"
+            ]
+          },
+          {
+            "label": "Linked libraries",
+            "items": [
+              "juce_analytics"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\juce-audio-processor@1.0.18\\binding.gyp'",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "CMakePresets.json",
+        "label": "CMake build presets",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\juce-audio-processor@1.0.18\\CMakePresets.json'",
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-auto.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "59ad2a39cea61e59455eea4977c597f76faba627602451adb3064d3dbb215c51",
+        "sizeBytes": 3405,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/build-auto.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/build-auto.js",
+        "reason": "required by ./scripts/install-auto.js",
+        "sha256": "ebaa2dd6ad4587b0496b05a44f92ea8ad62c700fa213c492a7e39a1318160399",
+        "sizeBytes": 4655,
+        "signals": [
+          "uses-child-process",
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:29.281Z"
+  },
+  "hash": "sha256:cc1a2a56273d65593b50e45f2f105816bfe4ee9ac6fabeb943f2e3545b04ef62"
+}

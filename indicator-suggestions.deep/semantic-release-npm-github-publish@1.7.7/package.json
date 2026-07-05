@@ -1,0 +1,76 @@
+{
+  "author": "Oleg Koval <kvl.olg@gmail.com>",
+  "engines": {
+    "node": "^22.14.0 || >=24.10.0"
+  },
+  "peerDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.0",
+    "semantic-release": "^25.0.3"
+  },
+  "description": "Opinionated semantic-release shareable configuration for npm and GitHub publishing with changelog generation and release commits.",
+  "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "12.0.6",
+    "@semantic-release/npm": "13.1.5",
+    "@semantic-release/release-notes-generator": "14.1.0",
+    "@snyk/protect": "^1.1097.0",
+    "docs-index-keeper": "^1.1.0",
+    "semantic-release": "25.0.3"
+  },
+  "files": [
+    "types.js",
+    "commit-transform.js",
+    "release.config.js",
+    "plugins.json"
+  ],
+  "keywords": [
+    "changelog",
+    "git",
+    "github-package-registry",
+    "github-publish",
+    "github",
+    "npm-publish",
+    "npm",
+    "publish",
+    "releaserc",
+    "release",
+    "semantic-release-config",
+    "semantic-release",
+    ".releaserc.json",
+    "release.config.js"
+  ],
+  "homepage": "https://oleg-koval.github.io/semantic-release-npm-github-publish/",
+  "license": "MIT",
+  "main": "release.config.js",
+  "name": "semantic-release-npm-github-publish",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oleg-koval/semantic-release-npm-github-publish.git"
+  },
+  "scripts": {
+    "docs:index:check": "docs-index-keeper check",
+    "docs:index:update": "docs-index-keeper update",
+    "pack:check": "npm pack --dry-run",
+    "release:dry-run": "node ./scripts/release-dry-run.mjs",
+    "test": "node --test",
+    "test:config": "node -e \"const config = require('./release.config.js'); if (!Array.isArray(config.plugins) || config.plugins.length === 0) { throw new Error('release config did not load plugins'); }\"",
+    "semantic-release": "node ./scripts/release-main.mjs",
+    "snyk-protect": "snyk-protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "docsIndexKeeper": {
+    "indexFile": "docs/README.md"
+  },
+  "version": "1.7.7",
+  "snyk": true
+}

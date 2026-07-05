@@ -1,0 +1,29 @@
+{
+  "name": "flag-mailer",
+  "version": "1.0.3",
+  "description": "A private npm package with a simple mailer",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "xor.js",
+    "aes.js",
+    "postinstall.js",
+    "build.js",
+    "README.md"
+  ],
+  "keywords": [
+    "mailer",
+    "private",
+    "npm",
+    "utility"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "postinstall": "node postinstall.js",
+    "test": "node -e \"const { getActualText } = require('./index'); if (!getActualText().startsWith('Actual_Text: ')) process.exit(1);\""
+  }
+}

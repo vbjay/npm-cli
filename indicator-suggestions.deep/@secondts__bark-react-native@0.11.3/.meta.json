@@ -1,0 +1,113 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c341c812ff0b30dd",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "bdf7795c19d008e1c3817e28450461fb40e08085a8926be8a5acad4029add4b8",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())",
+              "\"arm64-v8a\", \"armeabi-v7a\", \"x86\", \"x86_64\""
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@secondts__bark-react-native@0.11.3\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "1e28c7e38d2997450a5b4f3baf880ced7b29f12b877d71d557acd42fdee2cbda",
+        "sizeBytes": 6907,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://gitlab.com/ark-bitcoin/bark-ffi-bindings/-/releases",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:54.705Z"
+  },
+  "hash": "sha256:812ab26430fccd31d4dc806c67c8c61b2860c7510e6afedea810145f00a5dd20"
+}

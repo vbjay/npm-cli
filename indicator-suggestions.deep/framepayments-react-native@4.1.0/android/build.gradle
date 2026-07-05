@@ -1,0 +1,45 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace "com.framepayments.reactnativeframe"
+  compileSdk safeExtGet('compileSdkVersion', 36)
+  defaultConfig {
+    minSdk safeExtGet('minSdkVersion', 26)
+    targetSdk safeExtGet('targetSdkVersion', 36)
+    // Apply consumer-rules.pro to host apps so R8 / ProGuard minification
+    // doesn't break the Prove SDK classes the bridge calls directly, the
+    // Frame RN module bridge (RN annotations), or play-services-wallet
+    // reflection.
+    consumerProguardFiles 'consumer-rules.pro'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native:+'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.0"
+  // PaymentsClient, WalletConstants, PaymentDataRequest used by GooglePayBridge.
+  implementation 'com.google.android.gms:play-services-wallet:19.4.0'
+  // Suspending Prove flow inside ProveAuthBridge.
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+  // Prove Android SDK. compileOnly so the bridge can use real types without
+  // forcing host apps that don't ship phone_verification to pull it in. At
+  // runtime, ProveAuthBridge probes for the class and degrades to
+  // PROVE_UNAVAILABLE if missing. Host apps that DO ship phone_verification
+  // must add it to their own app/build.gradle:
+  //   implementation 'com.prove.sdk:proveauth:6.10.3'
+  compileOnly 'com.prove.sdk:proveauth:6.10.3'
+}

@@ -1,0 +1,89 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "cba866c32fdfcf57",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/copy-bundled-icons.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "0eb68a45860599d9c87346a01a3dd9f296f1823685b581c0c9bf577729514d73",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "com.github.bumptech.glide:glide:4.16.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "1d4e08133f8f574bad226fd3bef4792a03ba4e0eb84807de772d2d77ce8c82e7",
+        "sizeBytes": 2746,
+        "signals": [
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://icon-sets.iconify.design/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/copy-bundled-icons.js",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": "3239b2d5566be3d599bcc3e12550f79176365641464e89773cc039e63356e892",
+        "sizeBytes": 2454,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:15.435Z"
+  },
+  "hash": "sha256:727a4709a6ba0bc4694649d1407e23a9e454e64521b4d24aae6ea74dc21c561d"
+}

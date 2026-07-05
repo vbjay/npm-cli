@@ -1,0 +1,65 @@
+{
+  "name": "@tacone/prosey",
+  "version": "0.8.1",
+  "description": "Download YouTube video transcripts from the CLI",
+  "module": "src/index.ts",
+  "type": "module",
+  "bin": {
+    "prosey": "bin/prosey"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --target node --outfile bin/prosey",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "prettier": "prettier --write .",
+    "prepack": "bun run build",
+    "prepare": "husky || true"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  },
+  "author": "tacone <tacone@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tacone/prosey.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tacone/prosey/issues"
+  },
+  "homepage": "https://github.com/tacone/prosey#readme",
+  "keywords": [
+    "youtube",
+    "transcript",
+    "subtitles",
+    "captions",
+    "cli",
+    "npx",
+    "bun"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "js-toml": "^1.1.2",
+    "marked": "^18.0.5",
+    "prettier": "^3.8.4",
+    "youtube-transcript-plus": "^2.0.0"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "@caf.io/react-native-sdk",
+  "description": "CAF React Native library for face liveness",
+  "version": "5.0.0",
+  "keywords": [
+    "combateafraude",
+    "caf",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "homepage": "https://docs.caf.io/caf-sdk/react-native/getting-started-with-the-sdk",
+  "react-native": "src/index.tsx",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "plugin",
+    "app.plugin.js",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "clean": "del-cli android/build lib",
+    "prepack": "bob build && yarn build:plugin",
+    "build:plugin": "npx rimraf plugin/build && tsc --build plugin"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "peerDependencies": {
+    "expo": ">=50.0.0",
+    "react": "*",
+    "react-native": ">=0.73.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node-lts": "^22.0.2",
+    "@types/react": "^19.1.4",
+    "expo": "^50.0.14",
+    "react": "^19.1.4",
+    "react-native": "0.81.6",
+    "react-native-builder-bob": "^0.23.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.3"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

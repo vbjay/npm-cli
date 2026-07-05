@@ -1,0 +1,67 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2f71fa600e4d6172",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/consumer-postinstall-resolve-args.cjs",
+      "scripts/consumer-postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/consumer-postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "24ee58a3ea1512472fdbc67b8ab20681b8de9bcd2f6fbc3f34765b8d1e5b01b3",
+        "sizeBytes": 3240,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/consumer-postinstall-resolve-args.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/consumer-postinstall-resolve-args.cjs",
+        "reason": "required by ./scripts/consumer-postinstall.cjs",
+        "sha256": "3ac38b2605b696e8151f2b5c82775cb30ac8d8c0e4d14600088b04cc29d24c84",
+        "sizeBytes": 1259,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:28.383Z"
+  },
+  "hash": "sha256:9c750c5b8dcc21c471d2e03ebfcce55437e0c5bc2a43c2b9929928243c3f67dd"
+}

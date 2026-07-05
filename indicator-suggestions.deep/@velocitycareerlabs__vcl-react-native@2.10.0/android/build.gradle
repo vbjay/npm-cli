@@ -1,0 +1,95 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['VclReactNative_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.13.0"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def packageJson = new groovy.json.JsonSlurper().parse(file("$projectDir/../package.json"))
+def vclNativeSdkVersions = packageJson.vclNativeSdkVersions instanceof Map ? packageJson.vclNativeSdkVersions : [:]
+def firstPresentValue = { values ->
+  return values.find { value -> value != null && value.toString().trim() }
+}
+def vclSdkVersion = firstPresentValue([
+  vclNativeSdkVersions.android,
+  packageJson.version,
+])
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["VclReactNative_" + name]).toInteger()
+}
+
+android {
+  namespace "io.velocitycareerlabs.reactnative"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+//--------- Must: be added:
+  implementation "io.velocitycareerlabs:vcl:$vclSdkVersion"
+  implementation 'com.nimbusds:nimbus-jose-jwt:10.5'
+  implementation "androidx.security:security-crypto:1.1.0"
+//-------------------------
+}

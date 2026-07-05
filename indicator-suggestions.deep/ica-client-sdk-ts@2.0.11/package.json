@@ -1,0 +1,57 @@
+{
+  "name": "ica-client-sdk-ts",
+  "version": "2.0.11",
+  "type": "module",
+  "description": "ICA Client SDK for TypeScript, supporting React and React Native, for interacting with dataspace-ica-ts services via DIDComm.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "ICA_BASE_URL=http://localhost:3310 jest",
+    "test:local": "ICA_BASE_URL=http://localhost:3310 jest",
+    "test:binding": "NODE_OPTIONS=--experimental-vm-modules jest --config ./jest.live.config.js --runInBand --runTestsByPath src/__tests__/controllerBinding.test.ts",
+    "test:live": "NODE_OPTIONS=--experimental-vm-modules ICA_LIVE_E2E=1 ICA_BASE_URL=http://localhost:3310 jest --config ./jest.live.config.js --runInBand --runTestsByPath src/__tests__/IcaClient.live.test.ts",
+    "test:pack:esm": "npm run build && node ./scripts/smoke-esm-consumer.mjs",
+    "lint": "eslint src/**/*.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "ica",
+    "sdk",
+    "didcomm",
+    "vc",
+    "vp",
+    "typescript",
+    "react",
+    "react-native"
+  ],
+  "author": "Antifraud Services Inc.",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.0.0",
+    "gdc-common-utils-ts": "^2.0.11",
+    "jose": "^4.0.0",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.60.0"
+  }
+}

@@ -1,0 +1,167 @@
+{
+    "name": "@zegocloud/zego-uikit-prebuilt-call-rn",
+    "version": "6.7.0",
+    "description": "PrebuiltCall is a full-featured call kit that provides a ready-made call invitation, voice/video chat, device detection, etc. You can easily add a voice/video call to your app within 30 minutes.",
+    "main": "lib/commonjs/index",
+    "module": "lib/module/index",
+    "types": "lib/typescript/index.d.ts",
+    "files": [
+        "lib",
+        "android",
+        "ios",
+        "zego-uikit-prebuilt-call-rn.podspec",
+        "!lib/typescript/example",
+        "!android/.editorconfig",
+        "!android/.gradle",
+        "!android/.idea",
+        "!android/.settings",
+        "!android/build",
+        "!android/gradle",
+        "!android/gradlew",
+        "!android/gradlew.bat",
+        "!android/local.properties",
+        "!ios/build",
+        "!example/**",
+        "!**/__tests__",
+        "!**/__fixtures__",
+        "!**/__mocks__"
+    ],
+    "scripts": {
+        "test": "jest",
+        "typescript": "tsc --noEmit",
+        "lint": "eslint \"**/*.{js,ts,tsx}\"",
+        "prepare": "bob build",
+        "release": "release-it",
+        "example": "yarn --cwd example",
+        "pods": "cd example && RCT_NEW_ARCH_ENABLED=0 pod-install --quiet",
+        "bootstrap": "yarn example && yarn && yarn pods"
+    },
+    "keywords": [
+        "react-native",
+        "ios",
+        "android"
+    ],
+    "repository": "https://github.com/ZEGOCLOUD/zego_uikit_prebuilt_call_rn.git",
+    "author": "Oliver.Yeung <oliveryang@zego.im> (https://zegocloud.com)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ZEGOCLOUD/zego_uikit_prebuilt_call_rn/issues"
+    },
+    "homepage": "https://zegocloud.com",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "devDependencies": {
+        "@arkweid/lefthook": "^0.7.7",
+        "@babel/eslint-parser": "^7.18.2",
+        "@react-native-community/eslint-config": "^3.0.2",
+        "@react-navigation/native": "^7.1.17",
+        "@release-it/conventional-changelog": "^5.0.0",
+        "@types/jest": "^28.1.2",
+        "@types/react": "~17.0.21",
+        "@types/react-native": "0.68.0",
+        "@zegocloud/zego-uikit-rn": "link:../../",
+        "babel-preset-minify": "^0.5.2",
+        "eslint": "^8.4.1",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "jest": "^28.1.1",
+        "pod-install": "^0.1.0",
+        "prettier": "^2.0.5",
+        "react": "17.0.2",
+        "react-native": "0.68.2",
+        "react-native-builder-bob": "^0.18.2",
+        "react-native-sound": "git+https://github.com/ZEGOCLOUD/react-native-sound.git#v0.11.5",
+        "react-native-uuid": "^2.0.3",
+        "redux": "^4.2.0",
+        "release-it": "^15.0.0",
+        "typescript": "^4.5.2"
+    },
+    "resolutions": {
+        "@types/react": "^17"
+    },
+    "peerDependencies": {
+        "react": "*",
+        "react-native": "*",
+        "@react-navigation/native": ">=6.0.0",
+        "@react-navigation/native-stack": ">=6.0.0",
+        "react-native-safe-area-context": "*",
+        "react-native-screens": "*",
+        "react-delegate-component": "*",
+        "react-native-encrypted-storage": "*",
+        "@sayem314/react-native-keep-awake": ">=1.4.0",
+        "react-native-sound": "*",
+        "react-native-uuid": "^2.0.3",
+        "@zegocloud/zego-uikit-rn": ">=2.19.0"
+    },
+    "jest": {
+        "preset": "react-native",
+        "modulePathIgnorePatterns": [
+            "<rootDir>/example/node_modules",
+            "<rootDir>/lib/"
+        ]
+    },
+    "release-it": {
+        "git": {
+            "commitMessage": "chore: release ${version}",
+            "tagName": "v${version}"
+        },
+        "npm": {
+            "publish": true
+        },
+        "github": {
+            "release": true
+        },
+        "plugins": {
+            "@release-it/conventional-changelog": {
+                "preset": "angular"
+            }
+        }
+    },
+    "eslintConfig": {
+        "root": true,
+        "parser": "@babel/eslint-parser",
+        "extends": [
+            "@react-native-community",
+            "prettier"
+        ],
+        "rules": {
+            "prettier/prettier": [
+                "error",
+                {
+                    "quoteProps": "consistent",
+                    "singleQuote": true,
+                    "tabWidth": 2,
+                    "trailingComma": "es5",
+                    "useTabs": false
+                }
+            ]
+        }
+    },
+    "eslintIgnore": [
+        "node_modules/",
+        "lib/"
+    ],
+    "prettier": {
+        "quoteProps": "consistent",
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "useTabs": false
+    },
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            "commonjs",
+            "module",
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.json"
+                }
+            ]
+        ]
+    },
+    "dependencies": {}
+}

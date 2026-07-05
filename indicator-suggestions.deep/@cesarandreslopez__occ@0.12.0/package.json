@@ -1,0 +1,445 @@
+{
+  "name": "@cesarandreslopez/occ",
+  "version": "0.12.0",
+  "description": "Office Cloc and Count — document metrics, structure extraction, content inspection, and code exploration for real repositories",
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "bin": {
+    "occ": "./dist/bin/occ.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Cesar Andres Lopez <cesarandreslopez@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cesarandreslopez/occ.git"
+  },
+  "homepage": "https://github.com/cesarandreslopez/occ",
+  "bugs": {
+    "url": "https://github.com/cesarandreslopez/occ/issues"
+  },
+  "keywords": [
+    "office",
+    "documents",
+    "document-metrics",
+    "document-inspection",
+    "structure-extraction",
+    "table-extraction",
+    "code-exploration",
+    "workspace-analysis",
+    "cloc",
+    "count",
+    "metrics",
+    "scc",
+    "docx",
+    "xlsx",
+    "pptx",
+    "pdf",
+    "odt",
+    "ods",
+    "odp",
+    "cli",
+    "typescript",
+    "agent-skills",
+    "ai-agents",
+    "coding-agents",
+    "claude",
+    "claude-code",
+    "codex",
+    "skill"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./code/build": {
+      "types": "./dist/src/code/build.d.ts",
+      "default": "./dist/src/code/build.js"
+    },
+    "./code/types": {
+      "types": "./dist/src/code/types.d.ts",
+      "default": "./dist/src/code/types.js"
+    },
+    "./code/query": {
+      "types": "./dist/src/code/query.d.ts",
+      "default": "./dist/src/code/query.js"
+    },
+    "./code/discover": {
+      "types": "./dist/src/code/discover.d.ts",
+      "default": "./dist/src/code/discover.js"
+    },
+    "./code/preview": {
+      "types": "./dist/src/code/preview.d.ts",
+      "default": "./dist/src/code/preview.js"
+    },
+    "./code/isolated": {
+      "types": "./dist/src/code/isolated.d.ts",
+      "default": "./dist/src/code/isolated.js"
+    },
+    "./code/incremental": {
+      "types": "./dist/src/code/incremental.d.ts",
+      "default": "./dist/src/code/incremental.js"
+    },
+    "./code/slim": {
+      "types": "./dist/src/code/slim.d.ts",
+      "default": "./dist/src/code/slim.js"
+    },
+    "./code/chunk": {
+      "types": "./dist/src/code/chunk.d.ts",
+      "default": "./dist/src/code/chunk.js"
+    },
+    "./code/session": {
+      "types": "./dist/src/code/session.d.ts",
+      "default": "./dist/src/code/session.js"
+    },
+    "./code/cache": {
+      "types": "./dist/src/code/cache.d.ts",
+      "default": "./dist/src/code/cache.js"
+    },
+    "./code/store": {
+      "types": "./dist/src/code/store.d.ts",
+      "default": "./dist/src/code/store.js"
+    },
+    "./code/diff": {
+      "types": "./dist/src/code/diff.d.ts",
+      "default": "./dist/src/code/diff.js"
+    },
+    "./code/source": {
+      "types": "./dist/src/code/source.d.ts",
+      "default": "./dist/src/code/source.js"
+    },
+    "./code/check": {
+      "types": "./dist/src/code/check.d.ts",
+      "default": "./dist/src/code/check.js"
+    },
+    "./git": {
+      "types": "./dist/src/git/index.d.ts",
+      "default": "./dist/src/git/index.js"
+    },
+    "./git/types": {
+      "types": "./dist/src/git/types.d.ts",
+      "default": "./dist/src/git/types.js"
+    },
+    "./git/api": {
+      "types": "./dist/src/git/api.d.ts",
+      "default": "./dist/src/git/api.js"
+    },
+    "./git/client": {
+      "types": "./dist/src/git/client.d.ts",
+      "default": "./dist/src/git/client.js"
+    },
+    "./git/parse": {
+      "types": "./dist/src/git/parse.d.ts",
+      "default": "./dist/src/git/parse.js"
+    },
+    "./doc/inspect": {
+      "types": "./dist/src/doc/inspect.d.ts",
+      "default": "./dist/src/doc/inspect.js"
+    },
+    "./doc/types": {
+      "types": "./dist/src/doc/types.d.ts",
+      "default": "./dist/src/doc/types.js"
+    },
+    "./doc/discover": {
+      "types": "./dist/src/doc/discover.d.ts",
+      "default": "./dist/src/doc/discover.js"
+    },
+    "./doc/batch": {
+      "types": "./dist/src/doc/batch.d.ts",
+      "default": "./dist/src/doc/batch.js"
+    },
+    "./doc/chunk": {
+      "types": "./dist/src/doc/chunk.d.ts",
+      "default": "./dist/src/doc/chunk.js"
+    },
+    "./workspace/analyze": {
+      "types": "./dist/src/workspace/analyze.d.ts",
+      "default": "./dist/src/workspace/analyze.js"
+    },
+    "./workspace/describe": {
+      "types": "./dist/src/workspace/describe.d.ts",
+      "default": "./dist/src/workspace/describe.js"
+    },
+    "./workspace/documents": {
+      "types": "./dist/src/workspace/documents.d.ts",
+      "default": "./dist/src/workspace/documents.js"
+    },
+    "./workspace/types": {
+      "types": "./dist/src/workspace/types.d.ts",
+      "default": "./dist/src/workspace/types.js"
+    },
+    "./workspace/prepare": {
+      "types": "./dist/src/workspace/prepare.d.ts",
+      "default": "./dist/src/workspace/prepare.js"
+    },
+    "./workspace/prepare-types": {
+      "types": "./dist/src/workspace/prepare-types.d.ts",
+      "default": "./dist/src/workspace/prepare-types.js"
+    },
+    "./workspace/bundle": {
+      "types": "./dist/src/workspace/bundle.d.ts",
+      "default": "./dist/src/workspace/bundle.js"
+    },
+    "./markdown/convert": {
+      "types": "./dist/src/markdown/convert.d.ts",
+      "default": "./dist/src/markdown/convert.js"
+    },
+    "./structure/extract": {
+      "types": "./dist/src/structure/extract.d.ts",
+      "default": "./dist/src/structure/extract.js"
+    },
+    "./structure/types": {
+      "types": "./dist/src/structure/types.d.ts",
+      "default": "./dist/src/structure/types.js"
+    },
+    "./sheet/inspect": {
+      "types": "./dist/src/sheet/inspect.d.ts",
+      "default": "./dist/src/sheet/inspect.js"
+    },
+    "./sheet/types": {
+      "types": "./dist/src/sheet/types.d.ts",
+      "default": "./dist/src/sheet/types.js"
+    },
+    "./slide/inspect": {
+      "types": "./dist/src/slide/inspect.d.ts",
+      "default": "./dist/src/slide/inspect.js"
+    },
+    "./table/inspect": {
+      "types": "./dist/src/table/inspect.d.ts",
+      "default": "./dist/src/table/inspect.js"
+    },
+    "./table/types": {
+      "types": "./dist/src/table/types.d.ts",
+      "default": "./dist/src/table/types.js"
+    },
+    "./health": {
+      "types": "./dist/src/health.d.ts",
+      "default": "./dist/src/health.js"
+    },
+    "./errors": {
+      "types": "./dist/src/errors.d.ts",
+      "default": "./dist/src/errors.js"
+    },
+    "./tokens": {
+      "types": "./dist/src/tokens.d.ts",
+      "default": "./dist/src/tokens.js"
+    },
+    "./doc/entities": {
+      "types": "./dist/src/doc/entities.d.ts",
+      "default": "./dist/src/doc/entities.js"
+    },
+    "./doc/references": {
+      "types": "./dist/src/doc/references.d.ts",
+      "default": "./dist/src/doc/references.js"
+    },
+    "./progress-event": {
+      "types": "./dist/src/progress-event.d.ts",
+      "default": "./dist/src/progress-event.js"
+    },
+    "./types": {
+      "types": "./dist/src/types.d.ts",
+      "default": "./dist/src/types.js"
+    },
+    "./stats": {
+      "types": "./dist/src/stats.d.ts",
+      "default": "./dist/src/stats.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "code/build": [
+        "dist/src/code/build.d.ts"
+      ],
+      "code/types": [
+        "dist/src/code/types.d.ts"
+      ],
+      "code/query": [
+        "dist/src/code/query.d.ts"
+      ],
+      "code/discover": [
+        "dist/src/code/discover.d.ts"
+      ],
+      "code/preview": [
+        "dist/src/code/preview.d.ts"
+      ],
+      "code/isolated": [
+        "dist/src/code/isolated.d.ts"
+      ],
+      "code/incremental": [
+        "dist/src/code/incremental.d.ts"
+      ],
+      "code/slim": [
+        "dist/src/code/slim.d.ts"
+      ],
+      "code/chunk": [
+        "dist/src/code/chunk.d.ts"
+      ],
+      "code/session": [
+        "dist/src/code/session.d.ts"
+      ],
+      "code/cache": [
+        "dist/src/code/cache.d.ts"
+      ],
+      "code/store": [
+        "dist/src/code/store.d.ts"
+      ],
+      "code/diff": [
+        "dist/src/code/diff.d.ts"
+      ],
+      "code/source": [
+        "dist/src/code/source.d.ts"
+      ],
+      "code/check": [
+        "dist/src/code/check.d.ts"
+      ],
+      "git": [
+        "dist/src/git/index.d.ts"
+      ],
+      "git/types": [
+        "dist/src/git/types.d.ts"
+      ],
+      "git/api": [
+        "dist/src/git/api.d.ts"
+      ],
+      "git/client": [
+        "dist/src/git/client.d.ts"
+      ],
+      "git/parse": [
+        "dist/src/git/parse.d.ts"
+      ],
+      "doc/inspect": [
+        "dist/src/doc/inspect.d.ts"
+      ],
+      "doc/types": [
+        "dist/src/doc/types.d.ts"
+      ],
+      "doc/discover": [
+        "dist/src/doc/discover.d.ts"
+      ],
+      "doc/batch": [
+        "dist/src/doc/batch.d.ts"
+      ],
+      "doc/chunk": [
+        "dist/src/doc/chunk.d.ts"
+      ],
+      "doc/entities": [
+        "dist/src/doc/entities.d.ts"
+      ],
+      "doc/references": [
+        "dist/src/doc/references.d.ts"
+      ],
+      "workspace/analyze": [
+        "dist/src/workspace/analyze.d.ts"
+      ],
+      "workspace/describe": [
+        "dist/src/workspace/describe.d.ts"
+      ],
+      "workspace/documents": [
+        "dist/src/workspace/documents.d.ts"
+      ],
+      "workspace/types": [
+        "dist/src/workspace/types.d.ts"
+      ],
+      "workspace/prepare": [
+        "dist/src/workspace/prepare.d.ts"
+      ],
+      "workspace/prepare-types": [
+        "dist/src/workspace/prepare-types.d.ts"
+      ],
+      "workspace/bundle": [
+        "dist/src/workspace/bundle.d.ts"
+      ],
+      "markdown/convert": [
+        "dist/src/markdown/convert.d.ts"
+      ],
+      "structure/extract": [
+        "dist/src/structure/extract.d.ts"
+      ],
+      "structure/types": [
+        "dist/src/structure/types.d.ts"
+      ],
+      "sheet/inspect": [
+        "dist/src/sheet/inspect.d.ts"
+      ],
+      "sheet/types": [
+        "dist/src/sheet/types.d.ts"
+      ],
+      "slide/inspect": [
+        "dist/src/slide/inspect.d.ts"
+      ],
+      "table/inspect": [
+        "dist/src/table/inspect.d.ts"
+      ],
+      "table/types": [
+        "dist/src/table/types.d.ts"
+      ],
+      "health": [
+        "dist/src/health.d.ts"
+      ],
+      "errors": [
+        "dist/src/errors.d.ts"
+      ],
+      "tokens": [
+        "dist/src/tokens.d.ts"
+      ],
+      "progress-event": [
+        "dist/src/progress-event.d.ts"
+      ],
+      "types": [
+        "dist/src/types.d.ts"
+      ],
+      "stats": [
+        "dist/src/stats.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist/",
+    "scripts/postinstall.js",
+    "skills/",
+    "vendor/tree-sitter/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx bin/occ.ts",
+    "format": "prettier . --write --ignore-unknown",
+    "format:check": "prettier . --check --ignore-unknown",
+    "start": "node dist/bin/occ.js",
+    "test": "npm run build && node --import tsx --test test/*.test.ts",
+    "test:update-golden": "UPDATE_GOLDEN=1 node --import tsx --test test/graph-golden.test.ts",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.5.39",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^13.1.0",
+    "fast-glob": "^3.3.2",
+    "gpt-tokenizer": "^3.4.0",
+    "ignore": "^7.0.5",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.12.0",
+    "officeparser": "^7.2.3",
+    "pdf-parse": "^1.1.4",
+    "turndown": "^7.2.4",
+    "typescript": "^5.9.3",
+    "web-tree-sitter": "^0.26.10",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.4",
+    "@types/turndown": "^5.0.6",
+    "docx": "^9.7.1",
+    "prettier": "^3.9.4",
+    "tsx": "^4.23.0"
+  }
+}

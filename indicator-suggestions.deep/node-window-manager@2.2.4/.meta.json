@@ -1,0 +1,89 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "44efad29dba5b4df",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "5e22cb1fc9c791e0e6a92e92b2ca6aa6d80d416889b74c1ab2eb2c92c6266314",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `addon`  -  C/C++ sources",
+            "items": [
+              "lib/windows.cc",
+              "lib/macos.mm"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  libraries",
+            "items": [
+              "-framework AppKit",
+              "-framework ApplicationServices"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `rebuild`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.397Z"
+  },
+  "hash": "sha256:d13baf630bc5ae35305e65cdb07a16223eb7c1179b7b8e1c07fe378e76aa67e7"
+}

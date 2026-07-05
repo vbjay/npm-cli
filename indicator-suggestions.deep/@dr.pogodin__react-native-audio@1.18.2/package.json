@@ -1,0 +1,126 @@
+{
+  "name": "@dr.pogodin/react-native-audio",
+  "version": "1.18.2",
+  "description": "React Native: access to the audio input stream",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "example": "yarn workspace @dr.pogodin/react-native-audio-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "test": "yarn lint && yarn typecheck",
+    "lint": "eslint"
+  },
+  "keywords": [
+    "audio",
+    "microphone",
+    "input",
+    "recording",
+    "playback",
+    "sample",
+    "player",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/birdofpreyru/react-native-audio.git"
+  },
+  "author": "Dr. Sergey Pogodin <doc@pogodin.studio> (https://dr.pogodin.studio)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/birdofpreyru/react-native-audio/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/birdofpreyru"
+  },
+  "homepage": "https://dr.pogodin.studio/docs/react-native-audio",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.1.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@react-native/babel-preset": "0.86.0",
+    "@react-native/eslint-config": "^0.86.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.17",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.6",
+    "prettier": "^3.8.4",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-builder-bob": "^0.42.1",
+    "react-native-permissions": "^5.6.0",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-permissions": ">=3.8"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.17.0",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "@dr.pogodin/js-utils": "^0.1.8",
+    "buffer": "^6.0.3"
+  },
+  "codegenConfig": {
+    "name": "ReactNativeAudioSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.drpogodin.reactnativeaudio"
+    }
+  },
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
+    "tools": [
+      "eslint"
+    ],
+    "version": "0.62.2"
+  }
+}

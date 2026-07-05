@@ -1,0 +1,76 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d83213edd4898746",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f05c15b998ec0622a94302a31156b0a1102835576e44f8a532ef91a36aa6aa34",
+        "sizeBytes": 3119,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/postinstall.cjs",
+        "sha256": "bc29e8379a80e8a409aa9a83629ff9f6661382d8e8983333d69da366d56b608b",
+        "sizeBytes": 8419,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:20.206Z"
+  },
+  "hash": "sha256:e311e3d59cfc30d370a368df5e6254464580ac2e3800f34cb10ce00a644236ec"
+}

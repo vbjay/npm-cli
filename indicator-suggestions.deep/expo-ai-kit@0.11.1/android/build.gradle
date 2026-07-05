@@ -1,0 +1,59 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+group = 'expo.modules.aikit'
+version = '0.1.0'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+// If you want to use the managed Android SDK versions from expo-modules-core, set this to true.
+// The Android SDK versions will be bumped from time to time in SDK releases and may introduce breaking changes in your module code.
+// Most of the time, you may like to manage the Android SDK versions yourself.
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+  useDefaultAndroidSdkVersions()
+} else {
+  buildscript {
+    // Simple helper that allows the root project to override versions declared by this library.
+    ext.safeExtGet = { prop, fallback ->
+      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+  }
+  project.android {
+    compileSdkVersion safeExtGet("compileSdkVersion", 36)
+    defaultConfig {
+      minSdkVersion safeExtGet("minSdkVersion", 26)
+      targetSdkVersion safeExtGet("targetSdkVersion", 36)
+    }
+  }
+}
+
+android {
+  namespace "expo.modules.aikit"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+// litertlm-android 0.10.0 ships Kotlin 2.3.0 metadata. Expo SDK 55 pins
+// the Kotlin compiler to 2.1.x which can only read up to 2.2.0 metadata.
+// This flag tells the compiler to skip the metadata version check.
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    freeCompilerArgs += ["-Xskip-metadata-version-check"]
+  }
+}
+
+dependencies {
+  implementation "com.google.mlkit:genai-prompt:1.0.0-beta2"
+  implementation "com.google.ai.edge.litertlm:litertlm-android:0.10.0"
+}

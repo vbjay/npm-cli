@@ -1,0 +1,80 @@
+{
+  "name": "@clauderecallhq/cli",
+  "version": "0.96.11",
+  "description": "Never lose a Claude Code session again. Local, fast, searchable memory over every session you've ever run.",
+  "type": "module",
+  "homepage": "https://clauderecall.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/clauderecallhq/clauderecallhq.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/clauderecallhq/clauderecallhq/-/issues"
+  },
+  "bin": {
+    "recall": "dist/cli.js",
+    "claude-recall-mcp": "dist/mcp-server.js"
+  },
+  "mcpName": "com.clauderecall/recall",
+  "main": "dist/cli.js",
+  "files": [
+    "dist/cli.js",
+    "dist/mcp-server.js",
+    "dist/daemon/entrypoint.js",
+    "dist/daemon/embedder-worker.js",
+    "dist/daemon/query-worker.js",
+    "dist/share/fonts/",
+    "dist/web/",
+    "scripts/postinstall.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "cli",
+    "memory",
+    "session",
+    "recall"
+  ],
+  "author": "Claude Recall HQ <hello@clauderecall.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": false,
+  "engines": {
+    "node": ">=22.13.0 <23.0.0 || >=23.4.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "overrides": {
+    "onnxruntime-node": "1.23.2"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.108.0",
+    "@hono/node-server": "^2.0.2",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "chalk": "^5.3.0",
+    "chokidar": "^5.0.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^15.0.0",
+    "date-fns": "^4.1.0",
+    "hono": "^4.12.19",
+    "ink": "^7.0.1",
+    "ink-text-input": "^6.0.0",
+    "jose": "^6.2.2",
+    "react": "^19.2.7",
+    "satori": "^0.26.0",
+    "sharp": "^0.35.2",
+    "sqlite-vec": "^0.1.6",
+    "zod": "^4.3.6"
+  }
+}

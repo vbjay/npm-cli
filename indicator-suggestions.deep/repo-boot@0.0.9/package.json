@@ -1,0 +1,53 @@
+{
+    "name": "repo-boot",
+    "version": "0.0.9",
+    "description": "Initialize your Folder with default README.md and PR Template",
+    "bin": {
+        "repo-boot": "./dist/cli.js"
+    },
+    "homepage": "https://github.com/Jenith-Panchal-Simform/Package_Repo-Boot",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Jenith-Panchal-Simform/Package_Repo-Boot"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup src/cli.ts --format esm --clean && cpy \"templates/**/*\" dist/templates",
+        "prepare": "husky install"
+    },
+    "lint-staged": {
+        "src/**/*.{ts,tsx,html,css}": "prettier --write",
+        "src/**/*.{ts,tsx}": "eslint"
+    },
+    "keywords": [
+        "Repo-Boot",
+        "Project-Setup",
+        "Project-Initializer",
+        "cli",
+        "npm",
+        "boilerplate",
+        "github-template"
+    ],
+    "author": "Jenith",
+    "license": "MIT",
+    "type": "module",
+    "dependencies": {
+        "chalk": "^5.6.2",
+        "fs-extra": "^11.3.5"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@types/fs-extra": "^11.0.4",
+        "@types/node": "^25.6.0",
+        "cpy-cli": "^7.0.0",
+        "eslint": "^10.4.1",
+        "husky": "^8.0.0",
+        "lint-staged": "^17.0.7",
+        "prettier": "^3.8.4",
+        "tsup": "^8.5.1",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.61.0"
+    }
+}

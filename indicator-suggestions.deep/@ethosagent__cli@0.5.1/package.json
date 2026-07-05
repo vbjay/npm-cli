@@ -1,0 +1,124 @@
+{
+  "name": "@ethosagent/cli",
+  "version": "0.5.1",
+  "description": "Ethos — TypeScript AI agent framework where personality is architecture. Curated toolsets, first-person identities, scoped memory.",
+  "keywords": [
+    "agent",
+    "ai",
+    "llm",
+    "claude",
+    "openai",
+    "personality",
+    "framework",
+    "cli",
+    "anthropic"
+  ],
+  "homepage": "https://ethosagent.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethosagent/ethos.git",
+    "directory": "apps/ethos"
+  },
+  "bugs": "https://github.com/ethosagent/ethos/issues",
+  "license": "MIT",
+  "author": "Ethos contributors",
+  "type": "module",
+  "bin": {
+    "ethos": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "data",
+    "skills",
+    "web",
+    "templates",
+    "scripts/postinstall.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.96.0",
+    "@aws-sdk/client-secrets-manager": "^3.800.0",
+    "@hono/node-server": "^2.0.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@orpc/contract": "^1.14.3",
+    "@orpc/openapi": "^1.14.0",
+    "@orpc/server": "^1.14.0",
+    "argon2": "^0.43.0",
+    "croner": "^9.0.0",
+    "gray-matter": "^4.0.3",
+    "hono": "^4.12.15",
+    "ink": "^7.0.0",
+    "mammoth": "^1.8.0",
+    "openai": "^6.37.0",
+    "pdf-parse": "^1.1.1",
+    "pino": "^10.3.1",
+    "react": "19.2.6",
+    "ws": "^8.20.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "yaml": "^2.7.1",
+    "zod": "^4.3.6",
+    "@ethosagent/core": "0.5.1",
+    "@ethosagent/types": "0.5.1"
+  },
+  "devDependencies": {
+    "@ethosagent/agent-bridge": "0.0.0",
+    "@ethosagent/agent-mesh": "0.0.0",
+    "@ethosagent/cron": "0.0.0",
+    "@ethosagent/digest": "0.0.0",
+    "@ethosagent/gateway": "0.0.0",
+    "@ethosagent/goal-runner": "0.0.0",
+    "@ethosagent/kanban-store": "0.0.0",
+    "@ethosagent/logger": "0.0.0",
+    "@ethosagent/mcp-server": "0.0.0",
+    "@ethosagent/goal-store": "0.0.0",
+    "@ethosagent/observability-sqlite": "0.1.0",
+    "@ethosagent/nightly-loop": "0.0.0",
+    "@ethosagent/personalities": "0.0.0",
+    "@ethosagent/request-dump": "0.0.0",
+    "@ethosagent/safety-channel": "0.0.0",
+    "@ethosagent/personality-judge": "0.0.0",
+    "@ethosagent/safety-scanner": "0.0.0",
+    "@ethosagent/secrets-aws": "0.0.0",
+    "@ethosagent/session-lane": "0.0.0",
+    "@ethosagent/skills": "0.0.0",
+    "@ethosagent/storage-fs": "0.0.0",
+    "@ethosagent/session-sqlite": "0.0.0",
+    "@ethosagent/sqlite": "0.0.0",
+    "@ethosagent/team-supervisor": "0.0.0",
+    "@ethosagent/tools-process": "0.0.0",
+    "@ethosagent/safety-redact": "0.0.0",
+    "@ethosagent/wiring": "0.0.0",
+    "@ethosagent/web-api": "0.0.0"
+  },
+  "optionalDependencies": {
+    "@xenova/transformers": "^2.17.2",
+    "@slack/bolt": "^3.21.0",
+    "discord.js": "^14.16.0",
+    "grammy": "^1.26.0",
+    "imapflow": "^1.0.170",
+    "mailparser": "^3.7.2",
+    "nodemailer": "^6.10.1",
+    "playwright": "^1.48.0"
+  },
+  "scripts": {
+    "copy-data": "rm -rf data && cp -R ../../extensions/personalities/data data",
+    "copy-web": "pnpm --filter @ethosagent/web build && rm -rf web && cp -R ../web/dist web && find web -name '*.map' -delete",
+    "copy-skills": "rm -rf skills && cp -R ../../skills skills",
+    "prebuild": "pnpm copy-data && pnpm copy-web && pnpm copy-skills",
+    "build": "tsup",
+    "postinstall": "node scripts/postinstall.mjs"
+  }
+}

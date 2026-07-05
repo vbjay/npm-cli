@@ -1,0 +1,153 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b2b4ddf724246cc0",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.mjs",
+      "scripts/postinstall/migrate.mjs",
+      "scripts/postinstall/reach.mjs",
+      "scripts/postinstall/shortcut.mjs",
+      "scripts/postinstall/ui.mjs",
+      "scripts/postinstall/win-encoding.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "58931066ccbb4f19945928a597beb3d49b86c64253dd83999cfd7b39529f1a76",
+        "sizeBytes": 11637,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/postinstall/reach.mjs",
+          "scripts/postinstall/migrate.mjs",
+          "scripts/postinstall/shortcut.mjs",
+          "scripts/postinstall/win-encoding.mjs",
+          "scripts/postinstall/ui.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/reach.mjs",
+        "reason": "required by ./scripts/postinstall.mjs; required by ./scripts/postinstall/ui.mjs",
+        "sha256": "3ac91473fc845b70905f8e9f0507906c2c11d168e7e7167385d35f7539147496",
+        "sizeBytes": 17640,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "modifies-shell-config",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/migrate.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "3b737925dcb9a57d28359fd8d13d069fc6427a7efce73ddc406d269f4a17fe58",
+        "sizeBytes": 13152,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/shortcut.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "77bd5e9849d732b2fe89a4645d47b2e9c2e64175822ea2e0ba7ed8c7318c3b8d",
+        "sizeBytes": 2444,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/win-encoding.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "56a6c06980f2365db36a53b9a14bfaa48f64a272b280e0fb0b2a751dfd38fc66",
+        "sizeBytes": 3194,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/ui.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "4e6c2dd0c3841ec4f9f54cba4b6f092c53ae0049751e43d4f3057ba6f3c688b1",
+        "sizeBytes": 18355,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/postinstall/reach.mjs"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:25.275Z"
+  },
+  "hash": "sha256:6dd5cbf761278531d31053da6262e83b9f9cb01549a2e97150abd6740f1c2d7d"
+}

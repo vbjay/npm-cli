@@ -1,0 +1,63 @@
+{
+  "name": "@flyingrobots/bijou-node",
+  "version": "7.2.0",
+  "description": "Node.js adapter for bijou — chalk styling, readline I/O, process runtime.",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "prepack": "tsc -b",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@flyingrobots/bijou-tui": "7.2.0",
+    "chalk": "^5.6.2",
+    "gifenc": "^1.0.3",
+    "oled-font-5x7": "^1.0.3"
+  },
+  "peerDependencies": {
+    "@flyingrobots/bijou": "7.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "cli",
+    "terminal",
+    "bijou",
+    "node",
+    "adapter",
+    "chalk"
+  ],
+  "author": "James Ross <james@flyingrobots.dev>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flyingrobots/bijou.git",
+    "directory": "packages/bijou-node"
+  },
+  "homepage": "https://github.com/flyingrobots/bijou",
+  "bugs": "https://github.com/flyingrobots/bijou/issues",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

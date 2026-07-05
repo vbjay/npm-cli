@@ -1,0 +1,57 @@
+{
+  "name": "@expo/material-symbols",
+  "version": "0.1.1",
+  "description": "Material Symbols icons for Expo, rendered via @expo/ui.",
+  "sideEffects": false,
+  "exports": {
+    "./*.xml": {
+      "types": "./icons/*.xml.d.ts",
+      "default": "./icons/*.xml"
+    }
+  },
+  "bin": {
+    "add-material-symbols": "./bin/add-material-symbols.mjs"
+  },
+  "scripts": {
+    "generate": "bun run generate.ts",
+    "update-icons": "bun run update-icons.ts",
+    "add-material-symbols": "bun run add-material-symbols.ts",
+    "build-cli": "bun build add-material-symbols.ts --target node --format esm --outfile bin/add-material-symbols.mjs",
+    "typecheck": "tsc",
+    "test": "bun test",
+    "prepare": "bun run build-cli",
+    "prepublishOnly": "bun run generate.ts"
+  },
+  "bugs": {
+    "url": "https://github.com/expo/material-symbols/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/expo/material-symbols.git",
+    "directory": "packages/expo-material-symbols"
+  },
+  "author": "650 Industries, Inc.",
+  "license": "MIT",
+  "files": [
+    "icons",
+    "bin",
+    "NOTICE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "android",
+    "expo",
+    "expo-ui",
+    "icons",
+    "jetpack-compose",
+    "material-design",
+    "material-symbols",
+    "react-native",
+    "vector-drawable"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

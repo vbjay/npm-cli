@@ -1,0 +1,82 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def getKotlinVersion() {
+    return rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : "2.2.21"
+}
+
+buildscript {
+  ext.safeExtGet = {prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+  repositories {
+    google()
+    gradlePluginPortal()
+  }
+
+  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : "2.2.21"
+  dependencies {
+    classpath("com.android.tools.build:gradle:7.3.1")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+  }
+}
+
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', 34)
+  namespace "com.mattermost.networkclient"
+
+  defaultConfig {
+      minSdkVersion safeExtGet('minSdkVersion', 24)
+      targetSdkVersion safeExtGet('targetSdkVersion', 34)
+      buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
+  }
+
+  sourceSets {
+    main {
+        if (isNewArchitectureEnabled()) {
+            java.srcDirs += ['src/newarch']
+        } else {
+            java.srcDirs += ['src/oldarch']
+        }
+    }
+}
+}
+
+repositories {
+  maven {
+      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+      url "$projectDir/../node_modules/react-native/android"
+  }
+  mavenCentral()
+  google()
+}
+
+configurations.all {
+  resolutionStrategy {
+    force "com.squareup.okhttp3:okhttp:5.3.2"
+    force "com.squareup.okhttp3:okhttp-urlconnection:5.3.2"
+    force "com.squareup.okhttp3:okhttp-brotli:5.3.2"
+    force "com.squareup.okio:okio:3.16.4"
+    force "org.jetbrains.kotlin:kotlin-stdlib:${getKotlinVersion()}"
+  }
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${getKotlinVersion()}"
+  implementation "com.squareup.okhttp3:okhttp:5.3.2"
+  implementation "com.squareup.okhttp3:okhttp-urlconnection:5.3.2"
+  implementation "com.squareup.okhttp3:okhttp-brotli:5.3.2"
+  implementation "androidx.datastore:datastore-preferences:1.1.1"
+
+  testImplementation "junit:junit:4.13.2"
+}

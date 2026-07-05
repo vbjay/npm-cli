@@ -1,0 +1,85 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "348bb8959568b4b2",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "58736ad78d443f45503b39957c8bef96f582d3f9e30f5e2150f209b949414521",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `nftables_napi`  -  C/C++ sources",
+            "items": [
+              "src/addon.cpp",
+              "src/nft_manager.cpp",
+              "src/validation.cpp",
+              "src/netlink/nl_batch.cpp",
+              "src/netlink/nl_socket.cpp",
+              "src/netlink/set_ops.cpp",
+              "src/netlink/table_ops.cpp",
+              "src/workers/nft_worker.cpp"
+            ]
+          },
+          {
+            "label": "Target `nftables_napi`  -  libraries",
+            "items": [
+              "<!@(pkg-config --libs libnftnl libmnl)"
+            ]
+          },
+          {
+            "label": "Target `nftables_napi`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<!@(pkg-config --cflags-only-I libnftnl libmnl | sed 's/-I//g')"
+            ]
+          },
+          {
+            "label": "Target `nftables_napi`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:15.402Z"
+  },
+  "hash": "sha256:85b3e41ee12a6a931cb205b5492251f1932368e18ec47dd637d64c8908b09d91"
+}

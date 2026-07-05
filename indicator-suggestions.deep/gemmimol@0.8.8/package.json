@@ -1,0 +1,72 @@
+{
+  "name": "gemmimol",
+  "version": "0.8.8",
+  "description": "Gemmi-backed macromolecular viewer for crystallographers",
+  "keywords": [
+    "crystallography",
+    "biochemistry",
+    "webgl",
+    "coot",
+    "protein",
+    "structure",
+    "space-groups",
+    "cheminformatics",
+    "molecule",
+    "molecule-visualization",
+    "molecule-viewer",
+    "wasm",
+    "gemmi"
+  ],
+  "homepage": "https://gemmimol.github.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gemmimol/gemmimol.git"
+  },
+  "license": "MIT",
+  "main": "gemmimol.js",
+  "module": "src/all.ts",
+  "files": [
+    "gemmimol.js",
+    "gemmimol.min.js",
+    "src",
+    "vendor/wasm"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm test",
+    "bundle": "GIT_DESCRIBE=$(git describe --always --dirty --tags 2>/dev/null || echo $npm_package_version) GEMMI_GIT_DESCRIBE=$(git -C ../gemmi describe --always --tags 2>/dev/null || echo unknown) rollup -c",
+    "compare-three-r162": "node tools/compare-three-r162.js",
+    "coverage": "npm run bundle -- --sourcemap && jest --testMatch='<rootDir>/test/*.js' --coverage --collectCoverageFrom='gemmimol.js'",
+    "ci": "npm run download-data && npm test",
+    "download-data": "node perf/util.js download-data",
+    "lint": "eslint src test perf",
+    "prepack": "npm run build",
+    "serve": "serve -l 7890",
+    "start": "npm run watch & npm run serve",
+    "test": "npm run lint && npm run typecheck && npm run bundle && npm run download-data && jest --testMatch='<rootDir>/test/*.js'",
+    "typecheck": "tsc -p .",
+    "version": "npm run build && git add -A gemmimol.js gemmimol.min.js",
+    "watch": "GIT_DESCRIBE=$(git describe --always --dirty --tags 2>/dev/null || echo $npm_package_version) GEMMI_GIT_DESCRIBE=$(git -C ../gemmi describe --always --tags 2>/dev/null || echo unknown) rollup -c --watch"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@rollup/plugin-sucrase": "^5.1.0",
+    "@rollup/plugin-terser": "^1.0.0",
+    "@types/node": "^25.5.2",
+    "benchmark": "^2.1.0",
+    "eslint": "^10.2.1",
+    "jest": "^30.3.0",
+    "rollup": "^4.60.2",
+    "serve": "^14.2.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.0"
+  }
+}

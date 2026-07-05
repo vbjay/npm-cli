@@ -1,0 +1,199 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d43ef45e846723f7",
+    "fetchedFiles": [
+      "drivers/js/cli-postinstall.js",
+      "drivers/js/src/internal/asset-fetcher/asset-name.js",
+      "drivers/js/src/internal/asset-fetcher/checksum.js",
+      "drivers/js/src/internal/asset-fetcher/download.js",
+      "drivers/js/src/internal/asset-fetcher/index.js",
+      "drivers/js/src/internal/version-compare/index.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "drivers",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@reddb-io__cli@1.22.0\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "drivers/js/cli-postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "2d095fcf53834f164f7bf02e8e4eb401215170381bd62d4bb5f6670be7703b82",
+        "sizeBytes": 5762,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "makes-executable",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "drivers/js/src/internal/asset-fetcher/index.js",
+          "drivers/js/src/internal/version-compare/index.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/${repo}#build-from-source\\n",
+            "classification": "reference"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/${repo}/main/install.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/${repo}/releases\\n",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./drivers/js/cli-postinstall.js",
+        "sha256": "ba9bede546fe1b3a3cfd6a615032801f8e224512d930db7d19fd21c462348378",
+        "sizeBytes": 1421,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "drivers/js/src/internal/asset-fetcher/index.js",
+        "reason": "required by ./drivers/js/cli-postinstall.js",
+        "sha256": "4af268557137206dcab61148fc6c4e73d1521b2767be1408874559736f0bc7fd",
+        "sizeBytes": 2315,
+        "signals": [
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "drivers/js/src/internal/asset-fetcher/asset-name.js",
+          "drivers/js/src/internal/asset-fetcher/download.js",
+          "drivers/js/src/internal/asset-fetcher/checksum.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "drivers/js/src/internal/asset-fetcher/asset-name.js",
+        "reason": "required by ./drivers/js/src/internal/asset-fetcher/index.js",
+        "sha256": "73c1447a97a2ee745083b80e3562336286ea8baa63cde52a80336e53b1b3c271",
+        "sizeBytes": 1689,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "drivers/js/src/internal/asset-fetcher/download.js",
+        "reason": "required by ./drivers/js/src/internal/asset-fetcher/index.js",
+        "sha256": "89f36c816143126d45a585415e44724f4dc5ec36f710885b38c3d0676bb4b74c",
+        "sizeBytes": 2554,
+        "signals": [
+          "network-access"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "drivers/js/src/internal/asset-fetcher/checksum.js",
+        "reason": "required by ./drivers/js/src/internal/asset-fetcher/index.js",
+        "sha256": "58901f6bdd29cadb5b215fbe0f191909858d06d5f5c5f49d3811f117a6bd8a0f",
+        "sizeBytes": 732,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "drivers/js/src/internal/version-compare/index.js",
+        "reason": "required by ./drivers/js/cli-postinstall.js",
+        "sha256": "a291613cc2ba923036abfc209e69f2578d85b01cfa21bf226ba109274540677d",
+        "sizeBytes": 5342,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:50.557Z"
+  },
+  "hash": "sha256:dc284ace3f901c4c5f422d1b3bb146d70de3f92c86017883ac4866d334b1c330"
+}

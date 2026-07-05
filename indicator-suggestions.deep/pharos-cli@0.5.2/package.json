@@ -1,0 +1,46 @@
+{
+  "name": "pharos-cli",
+  "version": "0.5.2",
+  "description": "A CLI tool to help upgrade vulnerable JavaScript packages by analyzing dependency chains",
+  "bin": {
+    "pharos": "bin/pharos.js"
+  },
+  "scripts": {
+    "postinstall": "node ./scripts/install.js",
+    "version:bump": "node ./scripts/bump-version.js",
+    "docs:dev": "npm --prefix website run dev -- --hostname 127.0.0.1 --port 3000",
+    "docs:build": "npm --prefix website run build"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "binaries",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "security",
+    "dependencies",
+    "npm",
+    "yarn",
+    "vulnerabilities",
+    "cli",
+    "dependency-tree",
+    "audit",
+    "yarn-why",
+    "lockfile",
+    "rust",
+    "security-tools",
+    "dependency-management"
+  ],
+  "author": "Vasilis Kortsimelidis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaskort/pharos.git"
+  },
+  "homepage": "https://pharos-cli.io/",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

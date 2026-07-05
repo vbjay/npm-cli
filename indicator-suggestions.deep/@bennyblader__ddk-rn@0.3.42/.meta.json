@@ -1,0 +1,140 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e34e76d34670249f",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/apply-hotfix.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "173530983767c77e6627334de1a8fb02b0fe68dd8bb1f7e03a2423f6ee4ad33c",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())",
+              "\"arm64-v8a\", \"armeabi-v7a\", \"x86\", \"x86_64\""
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "net.java.dev.jna:jna:5.17.0@aar"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4f11cccef64e9ee1865cf51216af296f4cb3cf7e58b0bb8050a9db47805ba5ed",
+        "sizeBytes": 9207,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/apply-hotfix.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/bennyhodl/ddk-ffi/issues",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/apply-hotfix.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "b2bcd6cad918658c4dd6bc4b0d2f102680db2d3c8498a35a16acfc5827b5d68f",
+        "sizeBytes": 3281,
+        "signals": [
+          "uses-child-process",
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:45.463Z"
+  },
+  "hash": "sha256:d3a9e31fb233039b8e2251bb0af349252e230e700029af82417361ab9db5dc3e"
+}

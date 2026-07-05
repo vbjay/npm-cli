@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b277b09adfe18658",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/bundle-cli.mjs",
+      "scripts/bundle-viewer.mjs",
+      "scripts/copy-root-docs.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "esbuild",
+        "versionSpec": "^0.24.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "esbuild@0.24.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/copy-root-docs.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "9a69dcc90ea7e995dacb35cacc9298e9ae276b5cf1945ab090d1257be8871927",
+        "sizeBytes": 1078,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/bundle-cli.mjs",
+        "reason": "referenced by lifecycle script: `build:bundle`",
+        "sha256": "536be7ad75c4a042e0b121de3c5bf9ea0157ee528c12d881d57dc7a799c99b29",
+        "sizeBytes": 3568,
+        "signals": [
+          "makes-executable"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/bundle-viewer.mjs",
+        "reason": "referenced by lifecycle script: `build:bundle`",
+        "sha256": "4db134182398cd285b762b5d162ce506ab015bdb47b363364de264940141efe7",
+        "sizeBytes": 8184,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:18.305Z"
+  },
+  "hash": "sha256:52fc80118f1227340595c5448112c83f640f05bf1c7fc8baf6f88c3c660f26da"
+}

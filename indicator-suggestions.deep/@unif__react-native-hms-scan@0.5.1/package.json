@@ -1,0 +1,209 @@
+{
+  "name": "@unif/react-native-hms-scan",
+  "version": "0.5.1",
+  "description": "华为 HMS 统一扫码服务 React Native bridge：定制视图扫码 + 图片识别 (Scan SDK-Plus / ScanKitFrameWork，@unif 私有)",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./mock": {
+      "source": "./src/mock.ts",
+      "types": "./lib/typescript/src/mock.d.ts",
+      "default": "./lib/module/mock.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "*.podspec",
+    "react-native.config.js",
+    "scripts",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @unif/react-native-hms-scan-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "test": "jest",
+    "lint": "eslint \"**/*.{js,ts,tsx}\""
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "huawei",
+    "hms",
+    "scan",
+    "scankit",
+    "barcode",
+    "qrcode",
+    "扫码"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unif-design/react-native-hms-scan.git"
+  },
+  "author": "unif-design <382724935@qq.com> (https://github.com/unif-design)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unif-design/react-native-hms-scan/issues"
+  },
+  "homepage": "https://unif-design.github.io/react-native-hms-scan/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/js": "^9.39.0",
+    "@react-native/babel-preset": "0.85.3",
+    "@react-native/eslint-config": "0.85.0",
+    "@react-native/jest-preset": "0.85.3",
+    "@release-it/conventional-changelog": "^11.0.0",
+    "@sbaiahmed1/react-native-blur": "^4.6.2",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.0",
+    "@types/react": "^19.2.0",
+    "@types/react-test-renderer": "^19",
+    "@unif/react-native-design": "0.8.1",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^29.7.0",
+    "prettier": "^3.8.1",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-builder-bob": "^0.41.0",
+    "react-native-gesture-handler": "^2.21.0",
+    "react-native-reanimated": "^4.0.0",
+    "react-native-reanimated-carousel": "^5.0.0-beta.5",
+    "react-native-safe-area-context": "^5.0.0",
+    "react-native-svg": "^15.15.5",
+    "react-native-worklets": "*",
+    "react-test-renderer": "19.2.3",
+    "release-it": "^20.0.1",
+    "turbo": "^2.8.21",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.20.0"
+  },
+  "peerDependencies": {
+    "@sbaiahmed1/react-native-blur": ">=4",
+    "@unif/react-native-design": ">=0.8.0",
+    "react": ">=19.0.0",
+    "react-native": ">=0.80.0",
+    "react-native-gesture-handler": ">=2.21.0",
+    "react-native-reanimated": ">=4.0.0",
+    "react-native-reanimated-carousel": ">=5.0.0-beta.0",
+    "react-native-safe-area-context": ">=5.0.0",
+    "react-native-svg": ">=15",
+    "react-native-worklets": "*"
+  },
+  "workspaces": [
+    "example",
+    "website"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "codegenConfig": {
+    "name": "ReactNativeHmsScanSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "ios": {
+      "componentProvider": {
+        "HmsScanView": "HmsScanView"
+      }
+    },
+    "android": {
+      "javaPackageName": "com.unif.reactnativehmsscan"
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version} [skip ci]",
+      "tagName": "v${version}",
+      "requireCommits": true
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        },
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "setupFiles": [
+      "./jest.setup.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/website/",
+      "<rootDir>/lib/"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "create-react-native-library": {
+    "type": "fabric-view",
+    "languages": "kotlin-objc",
+    "version": "0.62.0"
+  }
+}

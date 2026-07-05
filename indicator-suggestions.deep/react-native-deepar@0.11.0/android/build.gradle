@@ -1,0 +1,70 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  if (project == rootProject) {
+    repositories {
+      google()
+      mavenCentral()
+    }
+
+    dependencies {
+      classpath 'com.android.tools.build:gradle:3.5.4'
+    }
+  }
+}
+
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  compileSdkVersion safeExtGet('Deepar_compileSdkVersion', 29)
+  buildToolsVersion safeExtGet('Deepar_buildToolsVersion', '29.0.2')
+  defaultConfig {
+    minSdkVersion safeExtGet('Deepar_minSdkVersion', 21)
+    targetSdkVersion safeExtGet('Deepar_targetSdkVersion', 29)
+    versionCode 1
+    versionName "1.0"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenLocal()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url("$rootDir/../node_modules/react-native/android")
+  }
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"  // From node_modules
+  implementation fileTree(dir: "libs", include: ["*.aar"])
+
+  // CameraX core library using the camera2 implementation
+  def camerax_version = "1.1.0"
+
+  implementation "androidx.camera:camera-camera2:${camerax_version}"
+  implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+  implementation "androidx.camera:camera-view:${camerax_version}"
+
+  // The following line is optional, as the core library is included indirectly by camera-camera2
+  implementation "androidx.camera:camera-core:${camerax_version}"
+}

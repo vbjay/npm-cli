@@ -1,0 +1,181 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import java.nio.file.Paths
+
+def isNewArchEnabled = rootProject.hasProperty("newArchEnabled") ? rootProject.newArchEnabled.toString()?.toBoolean() : false
+
+buildscript {
+    ext.kotlin_version = '2.1.0'
+    ext.android_gradle_plugin_version = '7.3.1'
+
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+        maven {
+            setUrl("https://plugins.gradle.org/m2/")
+        }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:$android_gradle_plugin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        if (project == rootProject) {
+            classpath("com.facebook.react:react-native-gradle-plugin")
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+if (isNewArchEnabled) {
+    apply plugin: 'com.facebook.react'
+}
+apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply from: "$projectDir/config/dependencies.gradle"
+
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', 33)
+    buildToolsVersion safeExtGet('buildToolsVersion', "33.0.0")
+    namespace "com.contentsquare.rn"
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', 21)
+        targetSdkVersion safeExtGet('targetSdkVersion', 33)
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        buildConfigField 'boolean', 'IS_NEW_ARCHITECTURE_ENABLED', isNewArchEnabled ? 'true' : 'false'
+        consumerProguardFiles("$projectDir/config/proguard/consumer-proguard-rules.pro")
+    }
+    sourceSets {
+        main {
+            if (isNewArchEnabled) {
+                java.srcDirs += ["src/newarch"]
+            } else {
+                java.srcDirs += ["src/oldarch"]
+            }
+        }
+
+        test {
+            if (isNewArchEnabled) {
+                java.srcDirs += ["src/newarchTest"]
+            } else {
+                java.srcDirs += ["src/oldarchTest"]
+            }
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+static def findNodeModulePath(baseDir, packageName) {
+    def basePath = baseDir.toPath().normalize()
+    while (basePath) {
+        def candidatePath = Paths.get(basePath.toString(), "node_modules", packageName)
+        if (candidatePath.toFile().exists()) {
+            return candidatePath.toString()
+        }
+        basePath = basePath.getParent()
+    }
+    return null
+}
+
+def resolveReactNativeDirectory() {
+    def reactNativeLocation = rootProject.hasProperty("reactNativeDir") ? rootProject.getProperty("reactNativeDir") : null
+
+    if (reactNativeLocation != null) {
+        return file(reactNativeLocation)
+    }
+
+    def reactNativePath = findNodeModulePath(projectDir, "react-native")
+
+    if (reactNativePath != null) {
+        return file(reactNativePath)
+    }
+
+    throw new GradleException(
+            "Unable to resolve 'react-native' for project '${project.name}'.\n" +
+                    "Please ensure that 'react-native' is correctly included as a dependency, or specify the path to 'react-native' using the 'reactNativeDir' property in your 'gradle.properties' file."
+    )
+}
+
+def reactNativeRootDir = resolveReactNativeDirectory()
+def reactProperties = new Properties()
+file("$reactNativeRootDir/ReactAndroid/gradle.properties").withInputStream { reactProperties.load(it) }
+
+def reactNativeVersion = reactProperties.getProperty("VERSION_NAME")
+def (reactNativeMajorVersion, reactNativeMinorVersion) = reactNativeVersion.split("\\.").collect { it.isInteger() ? it.toInteger() : it }
+
+repositories {
+    mavenCentral()
+    google()
+    maven { url "https://jitpack.io" }
+
+    // Check if the React Native version is lower than 0.71 (older versions)
+    // This check ensures compatibility with older versions of React Native (specifically versions below 0.71),
+    // which used a different approach to handle the Android source code.
+    // In versions prior to 0.71, React Native's Android sources were included locally in the project,
+    // meaning that the necessary Android-related code was part of the React Native repository itself
+    // rather than being distributed as a separate published package in a Maven repository.
+    // As a result, for these older versions, we need to directly reference the local Android sources
+    // to ensure that the build system can find and resolve dependencies properly.
+    // Starting from version 0.71 and above, React Native switched to publishing the Android source as part of a
+    // Maven package, making this step unnecessary for newer versions.
+    if (reactNativeMajorVersion == 0 && reactNativeMinorVersion < 71) {
+        def androidSourcesDir = file("$reactNativeRootDir/android")
+        def androidSourcesName = "React Native sources"
+
+        if (androidSourcesDir.exists()) {
+            maven {
+                url androidSourcesDir.toString()
+                name androidSourcesName
+            }
+        }
+    }
+}
+
+dependencies {
+    if (reactNativeMajorVersion == 0 && reactNativeMinorVersion < 71) {
+        // noinspection GradleDynamicVersion
+        api 'com.facebook.react:react-native:+'
+    } else {
+        api "com.facebook.react:react-android:$reactNativeVersion"
+    }
+
+    // CS Native SDK
+    api ("com.contentsquare.android:library:4.51.0")
+    implementation("com.contentsquare.android:sdk:1.11.2")
+    implementation("com.contentsquare.android:sdk-core:0.2.0")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+    // test dependencies
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
+    testImplementation libraries.unit_tests
+}
+
+if (isNewArchEnabled) {
+    tasks.matching { it.name.startsWith('test') }.configureEach {
+        dependsOn 'generateCodegenArtifactsFromSchema'
+    }
+}

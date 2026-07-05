@@ -1,0 +1,99 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "85b5e2faf095a8cd",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7a04cd98a0cccf13d8790a06714c367acf688b2698dc2f38202092c8f6ba0102",
+        "sizeBytes": 4757,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Blankeos/crabcode/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/Blankeos/crabcode/releases/latest/download/crabcode-installer.sh",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "61df11869daf60878661f1ac52d41df475a0ad47b8d3b5b42af3947b79499696",
+        "sizeBytes": 620,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:34.596Z"
+  },
+  "hash": "sha256:144b8b04169d5abfb83ebdee02bfb76e5d2c7e4ab910935ef114ef92796611d8"
+}

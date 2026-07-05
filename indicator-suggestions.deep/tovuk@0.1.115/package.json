@@ -1,0 +1,47 @@
+{
+  "name": "tovuk",
+  "version": "0.1.115",
+  "description": "Use Tovuk scraper APIs from a native CLI.",
+  "type": "module",
+  "bin": {
+    "tovuk": "bin/tovuk.mjs"
+  },
+  "files": [
+    "bin",
+    "install.mjs",
+    "native-release-targets.json",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "keywords": [
+    "tovuk",
+    "rust",
+    "scraper",
+    "api",
+    "cli"
+  ],
+  "homepage": "https://tovuk.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tovuk/tovuk.git",
+    "directory": "packages/tovuk"
+  },
+  "bugs": {
+    "url": "https://github.com/tovuk/tovuk/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "node install.mjs",
+    "precheck": "cargo run --locked --quiet --manifest-path ../../checks/Cargo.toml --bin sync-native-release-targets --",
+    "check": "npm run check:policy && npm run runtime && npm run pack:dry",
+    "check:policy": "cargo run --locked --quiet --manifest-path ../../checks/Cargo.toml --bin check-public-contracts -- npm-cli-package",
+    "runtime": "cargo run --locked --quiet --manifest-path ../../checks/Cargo.toml --bin check-public-contracts -- npm-native-runtime",
+    "prepack": "cargo run --locked --quiet --manifest-path ../../checks/Cargo.toml --bin sync-native-release-targets --",
+    "pack:dry": "npm pack --dry-run"
+  }
+}

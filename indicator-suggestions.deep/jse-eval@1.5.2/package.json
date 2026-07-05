@@ -1,0 +1,162 @@
+{
+  "name": "jse-eval",
+  "version": "1.5.2",
+  "description": "JavaScript expression parsing and evaluation.",
+  "source": "index.ts",
+  "type": "module",
+  "main": "dist/jse-eval.cjs",
+  "module": "dist/jse-eval.module.js",
+  "exports": {
+    "import": "./dist/jse-eval.modern.js",
+    "require": "./dist/jse-eval.cjs"
+  },
+  "unpkg": "dist/jse-eval.umd.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/6utt3rfly/jse-eval.git"
+  },
+  "scripts": {
+    "dev": "microbundle watch",
+    "build": "microbundle",
+    "test": "node test.js | tap-spec && npm run --prefix test-cjs test",
+    "lint": "eslint *.ts",
+    "prepare": "husky install",
+    "ci": "npm run lint && npm run build && npm test",
+    "release": "semantic-release",
+    "release:test": "semantic-release --dry-run --no-cli --debug"
+  },
+  "keywords": [
+    "expression",
+    "eval",
+    "evaluation",
+    "parser",
+    "ast",
+    "abstract",
+    "syntax",
+    "tree",
+    "math",
+    "jsep",
+    "analysis",
+    "estree",
+    "javascript",
+    "safe",
+    "safe-eval",
+    "esprima",
+    "js-eval",
+    "expression-eval"
+  ],
+  "author": "Shelly (https://github.com/6utt3rfly)",
+  "contributors": [
+    "Don McCurdy <dm@donmccurdy.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jsep": "^1.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-angular": "^17.1.0",
+    "@jsep-plugin/arrow": "^1.0.5",
+    "@jsep-plugin/assignment": "^1.2.1",
+    "@jsep-plugin/async-await": "^1.0.2",
+    "@jsep-plugin/new": "^1.0.2",
+    "@jsep-plugin/object": "^1.2.1",
+    "@jsep-plugin/regex": "^1.0.3",
+    "@jsep-plugin/spread": "^1.0.2",
+    "@jsep-plugin/template": "^1.0.2",
+    "@jsep-plugin/ternary": "^1.1.3",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@types/tape": "^4.13.2",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "eslint": "^8.24.0",
+    "husky": "^8.0.1",
+    "microbundle": "^0.15.1",
+    "semantic-release": "^19.0.5",
+    "source-map-support": "^0.5.21",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.6.1",
+    "typescript": "^4.8.4"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "release": {
+    "branches": [
+      "+([0-9])?(.{+([0-9]),x}).x",
+      "main",
+      "next",
+      "next-major",
+      {
+        "name": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "alpha",
+        "prerelease": true
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "commitsSort": [
+              "scope",
+              "subject"
+            ]
+          }
+        }
+      ],
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "tarballDir": "./"
+        }
+      ],
+      "@semantic-release/git",
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "./*.tgz",
+              "label": "build"
+            }
+          ]
+        }
+      ]
+    ]
+  }
+}

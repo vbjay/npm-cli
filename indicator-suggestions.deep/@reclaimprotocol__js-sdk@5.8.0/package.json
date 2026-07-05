@@ -1,0 +1,104 @@
+{
+  "name": "@reclaimprotocol/js-sdk",
+  "version": "5.8.0",
+  "description": "Designed to request proofs from the Reclaim protocol and manage the flow of claims and witness interactions.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "reclaim",
+    "protocol",
+    "blockchain",
+    "proof",
+    "verification",
+    "identity",
+    "claims",
+    "witness",
+    "sdk",
+    "javascript",
+    "typescript",
+    "decentralized",
+    "web3"
+  ],
+  "files": [
+    "dist"
+  ],
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true
+  },
+  "scripts": {
+    "build": "sh scripts/build.sh",
+    "prepare": "npm run build",
+    "release": "release-it",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "commitlint": "commitlint --edit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reclaimprotocol/reclaim-js-sdk"
+  },
+  "author": "ali <ali@creatoros.co>",
+  "license": "See License in <https://github.com/reclaimprotocol/.github/blob/main/LICENSE>",
+  "bugs": {
+    "url": "https://github.com/reclaimprotocol/reclaim-js-sdk/issues"
+  },
+  "homepage": "https://github.com/reclaimprotocol/reclaim-js-sdk/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true,
+      "tag": "latest"
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@release-it/conventional-changelog": "10.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node-forge": "^1.3.14",
+    "@types/qrcode": "^1.5.5",
+    "@types/qs": "^6.9.11",
+    "@types/url-parse": "^1.4.11",
+    "@types/uuid": "^9.0.7",
+    "jest": "^30.1.3",
+    "jest-environment-jsdom": "^30.1.2",
+    "qs": "^6.11.2",
+    "release-it": "^19.2.4",
+    "ts-jest": "^29.4.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "canonicalize": "^2.0.0",
+    "ethers": "^6.9.1",
+    "fetch-retry": "^6.0.0",
+    "node-forge": "^1.3.3",
+    "qrcode": "^1.5.4",
+    "url-parse": "^1.5.10",
+    "uuid": "^9.0.1"
+  },
+  "overrides": {
+    "@conventional-changelog/git-client": "^2.0.0"
+  }
+}

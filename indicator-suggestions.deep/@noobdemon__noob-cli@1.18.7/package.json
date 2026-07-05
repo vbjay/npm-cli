@@ -1,0 +1,77 @@
+{
+  "name": "@noobdemon/noob-cli",
+  "version": "1.18.7",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Trợ lý lập trình agentic trong terminal (kiểu Claude Code), tiếng Việt, dùng sức mạnh Noob Demon — 3 mô hình flagship (Claude Opus 4.8, GPT-5.5, DeepSeek V4 Pro).",
+  "type": "module",
+  "bin": {
+    "noob": "bin/noob.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "!src/**/*.test.js",
+    "skills/",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node bin/noob.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "i18n:check": "node scripts/check-i18n-orphans.mjs",
+    "check": "npm run lint && npm run format:check && npm run i18n:check && npm run test",
+    "postpublish": "node scripts/notify-discord.js",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "coding-agent",
+    "claude-code",
+    "gemini-cli",
+    "agent",
+    "tui",
+    "llm",
+    "vietnamese"
+  ],
+  "author": "yukkis3nse1",
+  "license": "MIT",
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.4.1",
+    "cli-highlight": "^2.1.11",
+    "gpt-tokenizer": "^3.4.0",
+    "gradient-string": "^3.0.0",
+    "marked": "^15.0.12",
+    "marked-terminal": "^7.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.4",
+    "vitest": "^4.1.8"
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

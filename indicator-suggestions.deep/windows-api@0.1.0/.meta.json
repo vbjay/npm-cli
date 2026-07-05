@@ -1,0 +1,75 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ceefe098d4745623",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "d548d94fec80ac76c0fc9b43dbf368691f9d0944aa5264539c6a38339ba7794d",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `addon`  -  C/C++ sources",
+            "items": [
+              "cppsrc/main.cpp"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "imports/rapidxml-1.13"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:30.314Z"
+  },
+  "hash": "sha256:ee5d6b94efa22b7c7d260f9c75897d6b11ef06247d57b6badf7e1aec4b518bce"
+}

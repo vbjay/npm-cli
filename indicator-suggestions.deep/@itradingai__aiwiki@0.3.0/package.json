@@ -1,0 +1,84 @@
+{
+  "name": "@itradingai/aiwiki",
+  "version": "0.3.0",
+  "type": "module",
+  "description": "Local Markdown knowledge base for AI assistants. Save what your AI reads, ask it later, and keep everything local.",
+  "license": "MIT",
+  "keywords": [
+    "aiwiki",
+    "ai-knowledge-base",
+    "knowledge-base",
+    "knowledge-management",
+    "agent",
+    "ai-agent",
+    "agentic-workflow",
+    "llm-wiki",
+    "markdown",
+    "cli",
+    "codex",
+    "claude-code",
+    "openclaw",
+    "qclaw",
+    "content-workflow",
+    "writing-workflow",
+    "obsidian",
+    "dataview"
+  ],
+  "homepage": "https://maxking.cc/aiwiki",
+  "bugs": {
+    "url": "https://github.com/iTradingAI/aiwiki/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iTradingAI/aiwiki.git"
+  },
+  "files": [
+    "dist/src",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "docs/20260607-aiwiki-feature-pruning-plan.md",
+    "docs/20260607-aiwiki-long-term-operating-roadmap.md",
+    "docs/AGENT_HANDOFF.md",
+    "docs/AGENT_HANDOFF.zh-CN.md",
+    "docs/FAQ.md",
+    "docs/FAQ.zh-CN.md",
+    "docs/OBSIDIAN_DATAVIEW_PLAN.md",
+    "docs/OPERATING_FEEDBACK_LOOP.md",
+    "docs/OPERATING_FEEDBACK_LOOP.zh-CN.md",
+    "docs/README.md",
+    "docs/README.zh-CN.md",
+    "docs/RELEASE.md",
+    "docs/RELEASE.zh-CN.md",
+    "docs/ROADMAP.md",
+    "docs/ROADMAP.zh-CN.md",
+    "docs/SHOWCASE.md",
+    "docs/SHOWCASE.zh-CN.md",
+    "docs/TRIAL_FEEDBACK_TEMPLATE.md",
+    "docs/USAGE.md",
+    "docs/USAGE.zh-CN.md",
+    "docs/development-log.md",
+    "docs/architecture.svg",
+    "examples",
+    "skill"
+  ],
+  "bin": {
+    "aiwiki": "dist/src/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node scripts/run-tests.mjs",
+    "check": "npm run test",
+    "release:check": "npm test && node scripts/release-check.mjs",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

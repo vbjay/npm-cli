@@ -1,0 +1,136 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2ccbda776940aa18",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/build.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "8da58c36d1beaa35d8fd9c3e482516e284a548da05eb32fe039943bf06094206",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `blsct`  -  C/C++ sources",
+            "items": [
+              "./swig/blsct_wrap.cxx"
+            ]
+          },
+          {
+            "label": "Target `blsct`  -  include directories",
+            "items": [
+              "<(module_root_dir)/navio-core/src/bls/include",
+              "<(module_root_dir)/navio-core/src/bls/mcl/include",
+              "<(module_root_dir)/navio-core/src"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/build.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "be4cdbd6a901c8dfc201fc1ffcd08c3a38779a431697b7110d478ac78501deaa",
+        "sizeBytes": 21165,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/nav-io/navio-core",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/gogoex/navio-core",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/swig/swig\\n\\n",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:14.398Z"
+  },
+  "hash": "sha256:a03e194008fbe9f18dd2bdc8377f82e1c54fb2ad875c1cf194adf0368940775e"
+}

@@ -1,0 +1,56 @@
+{
+  "name": "palabre",
+  "version": "0.11.1",
+  "description": "Orchestrateur de debat entre agents IA locaux, CLIs et Ollama.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.18.3",
+  "homepage": "https://github.com/JuReyms/Palabre#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuReyms/Palabre.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JuReyms/Palabre/issues"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "agents",
+    "ollama",
+    "codex",
+    "claude",
+    "opencode",
+    "vibe",
+    "debate",
+    "orchestrator"
+  ],
+  "bin": {
+    "palabre": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "palabre.config.example.json"
+  ],
+  "scripts": {
+    "build": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "prepack": "pnpm build",
+    "start": "node ./dist/index.js",
+    "test": "pnpm build:test && node --test .tmp/test-dist/tests/*.test.js && pnpm test:release-social",
+    "test:release-social": "node --test scripts/post_release_bluesky.test.mjs",
+    "build:test": "node -e \"fs.rmSync('.tmp/test-dist',{recursive:true,force:true})\" && tsc -p tsconfig.test.json",
+    "smoke:real-presets": "node -e \"fs.rmSync('.tmp/smoke-real',{recursive:true,force:true})\" && tsc --target ES2022 --module NodeNext --moduleResolution NodeNext --types node --outDir .tmp/smoke-real scripts/smoke_real_presets.ts && node .tmp/smoke-real/smoke_real_presets.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "node-pty": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "typescript": "^5.4.0"
+  }
+}

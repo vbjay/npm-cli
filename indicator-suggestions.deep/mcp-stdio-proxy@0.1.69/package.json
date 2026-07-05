@@ -1,0 +1,101 @@
+{
+  "artifactDownloadUrl": "https://nuwa-packages.oss-rg-china-mainland.aliyuncs.com/mcp-stdio-proxy/v0.1.69",
+  "author": "nuwax-ai",
+  "bin": {
+    "mcp-proxy": "run-mcp-proxy.js"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "axios-proxy-builder": "^0.1.2",
+    "console.table": "^0.10.0",
+    "detect-libc": "^2.1.2",
+    "rimraf": "^6.1.2"
+  },
+  "description": "MCP (Model Context Protocol) proxy server and CLI tool for protocol conversion and remote service access",
+  "devDependencies": {
+    "prettier": "^3.7.4"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "glibcMinimum": {
+    "major": 2,
+    "series": 35
+  },
+  "keywords": [
+    "web-programming",
+    "command-line-utilities",
+    "network-programming",
+    "mcp",
+    "proxy",
+    "protocol",
+    "sse",
+    "cli"
+  ],
+  "license": "MIT OR Apache-2.0",
+  "name": "mcp-stdio-proxy",
+  "preferUnplugged": true,
+  "repository": "https://github.com/nuwax-ai/mcp-proxy",
+  "scripts": {
+    "fmt": "prettier --write **/*.js",
+    "fmt:check": "prettier --check **/*.js",
+    "postinstall": "node ./install.js"
+  },
+  "supportedPlatforms": {
+    "aarch64-apple-darwin": {
+      "artifactName": "mcp-stdio-proxy-aarch64-apple-darwin.tar.xz",
+      "bins": {
+        "mcp-proxy": "mcp-proxy"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "aarch64-pc-windows-msvc": {
+      "artifactName": "mcp-stdio-proxy-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "mcp-proxy": "mcp-proxy.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "aarch64-unknown-linux-gnu": {
+      "artifactName": "mcp-stdio-proxy-aarch64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "mcp-proxy": "mcp-proxy"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "x86_64-apple-darwin": {
+      "artifactName": "mcp-stdio-proxy-x86_64-apple-darwin.tar.xz",
+      "bins": {
+        "mcp-proxy": "mcp-proxy"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "x86_64-pc-windows-gnu": {
+      "artifactName": "mcp-stdio-proxy-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "mcp-proxy": "mcp-proxy.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "x86_64-pc-windows-msvc": {
+      "artifactName": "mcp-stdio-proxy-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "mcp-proxy": "mcp-proxy.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "x86_64-unknown-linux-gnu": {
+      "artifactName": "mcp-stdio-proxy-x86_64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "mcp-proxy": "mcp-proxy"
+      },
+      "zipExt": ".tar.xz"
+    }
+  },
+  "version": "0.1.69",
+  "volta": {
+    "node": "18.14.1",
+    "npm": "9.5.0"
+  }
+}

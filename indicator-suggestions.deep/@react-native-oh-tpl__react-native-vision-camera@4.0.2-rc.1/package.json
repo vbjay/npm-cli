@@ -1,0 +1,178 @@
+{
+  "name": "@react-native-oh-tpl/react-native-vision-camera",
+  "version": "4.0.2-rc.1",
+  "description": "A powerful, high-performance React Native Camera library.",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib/commonjs",
+    "lib/module",
+    "lib/typescript",
+    "app.plugin.js",
+    "VisionCamera.podspec",
+    "README.md",
+    "harmony"
+  ],
+  "harmony": {
+    "alias": "react-native-vision-camera"
+  },
+  "codegenConfig": {
+    "name": "RTNVisionCameraSpecs",
+    "type": "components",
+    "jsSrcsDir": "src"
+  },
+  "scripts": {
+    "codegen": "cd D:\\rnoh\\tester && npm run codegen",
+    "har": "rm -rf .\\harmony\\vision_camera && cp -r D:\\rnoh\\tester\\harmony\\vision_camera .\\harmony\\vision_camera",
+    "move": "npm run build && npm pack && copy .\\*.tgz D:\\rnoh\\tester && cd D:\\rnoh\\tester && npm i @react-native-oh-tpl/react-native-vision-camera@file:./react-native-oh-tpl-react-native-vision-camera-4.0.1-0.0.9.tgz -dd",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint-ci": "yarn lint -f ./node_modules/@firmnav/eslint-github-actions-formatter/dist/formatter.js",
+    "start": "cd example && yarn start",
+    "build": "bob build",
+    "release": "bob build && release-it",
+    "pods": "cd example && yarn pods",
+    "bootstrap": "yarn && cd example && yarn && yarn pods",
+    "check-js": "yarn lint --fix && yarn typescript",
+    "check-cpp": "scripts/clang-format.sh",
+    "check-all": "scripts/check-all.sh",
+    "clean-js": "scripts/clean-js.sh",
+    "prepack": "cp ../README.md ./README.md",
+    "postpack": "rm ./README.md"
+  },
+  "keywords": [
+    "harmony",
+    "react",
+    "native",
+    "camera",
+    "react-native",
+    "react-native-camera",
+    "vision",
+    "javascript",
+    "typescript",
+    "library",
+    "instagram",
+    "snapchat",
+    "ai",
+    "scanner",
+    "qrcode",
+    "barcode",
+    "qr-code",
+    "jsi",
+    "worklet",
+    "module",
+    "frame",
+    "processing",
+    "realtime"
+  ],
+  "repository": "https://github.com/mrousavy/react-native-vision-camera",
+  "author": "Marc Rousavy <me@mrousavy.com> (https://github.com/mrousavy)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrousavy/react-native-vision-camera/issues"
+  },
+  "homepage": "https://react-native-vision-camera.com/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^7.2.5",
+    "@jamesacarr/eslint-formatter-github-actions": "^0.2.0",
+    "@react-native/eslint-config": "^0.72.2",
+    "@react-native/typescript-config": "^0.74.0",
+    "@release-it/conventional-changelog": "^7.0.0",
+    "@shopify/react-native-skia": "^1.2.3",
+    "@types/react": "^18.2.19",
+    "@types/react-native": "^0.72.2",
+    "eslint": "^8.46.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.1",
+    "react": "^18.2.0",
+    "react-native": "^0.74.1",
+    "react-native-builder-bob": "^0.21.3",
+    "react-native-reanimated": "^3.8.1",
+    "react-native-worklets-core": "^1.1.1",
+    "release-it": "^16.1.3",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "@shopify/react-native-skia": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "*",
+    "react-native-worklets-core": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native-worklets-core": {
+      "optional": true
+    },
+    "react-native-reanimated": {
+      "optional": true
+    },
+    "@shopify/react-native-skia": {
+      "optional": true
+    }
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "perf",
+              "section": "💨 Performance Improvements"
+            },
+            {
+              "type": "fix",
+              "section": "🐛 Bug Fixes"
+            },
+            {
+              "type": "chore(deps)",
+              "section": "🛠️ Dependency Upgrades"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json",
+          "tsc": "./node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+}

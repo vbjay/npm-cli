@@ -1,0 +1,47 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+group = 'expo.modules.calendarkit'
+version = '1.0.0'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useExpoPublishing()
+
+android {
+  namespace "expo.modules.calendarkit"
+  compileSdkVersion 36
+  
+  defaultConfig {
+    minSdkVersion 24
+    targetSdkVersion 36
+    versionCode 1
+    versionName "1.0.0"
+  }
+  
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+  
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.23"
+  implementation 'androidx.recyclerview:recyclerview:1.3.2'
+  implementation 'androidx.viewpager2:viewpager2:1.0.0'
+  implementation 'androidx.cardview:cardview:1.0.0'
+}

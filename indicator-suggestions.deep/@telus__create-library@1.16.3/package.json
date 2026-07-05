@@ -1,0 +1,70 @@
+{
+  "version": "1.16.3",
+  "name": "@telus/create-library",
+  "description": "an opinionated npm package initializer",
+  "author": "Ahmad Nassri <ahmad.nassri@telus.com>",
+  "contributors": [
+    "Kyle Spaans <kyle.spaans@telus.com>",
+    "Ruxandra Fediuc <ruxandra.fediuc@telus.com>"
+  ],
+  "homepage": "https://github.com/telus/create-library",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telus/create-library.git"
+  },
+  "license": "MIT",
+  "bin": "index.js",
+  "files": [
+    "template",
+    "lib"
+  ],
+  "keywords": [
+    "telus",
+    "init",
+    "npm",
+    "create",
+    "initializer"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "bugs": {
+    "url": "https://github.com/telus/create-library/issues"
+  },
+  "scripts": {
+    "lint:audit": "npx audit-ci --config .audit-ci.jsonc",
+    "lint:ec": "editorconfig-checker",
+    "lint:js": "npx @telus/telus-standard --verbose",
+    "lint": "npm-run-all -p -c -l lint:*",
+    "fix:js": "npm run lint:js -- --fix",
+    "format": "prettier '{,!(template)/**/}*.+(js|jsx|json|yml|yaml|css|less|scss|md|graphql|mdx)' --write",
+    "release:dryrun": "npx semantic-release --dry-run --branch $(git describe --contains --all HEAD)",
+    "release": "npx semantic-release",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "fast-glob": "^3.2.12",
+    "inquirer": "^8.2.5",
+    "mkdirp": "^1.0.4",
+    "spdx-license-list": "^6.6.0",
+    "validate-npm-package-name": "^5.0.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "@telus/prettier-config": "^3.3.0",
+    "@telus/remark-config": "^2.3.0",
+    "@telus/semantic-release-config": "^2.4.0",
+    "@telus/telus-standard": "^4.1.0",
+    "audit-ci": "^6.6.1",
+    "editorconfig-checker": "^5.0.1",
+    "husky": "^8.0.0",
+    "npm-run-all": "^4.1.5"
+  },
+  "telus-standard": {
+    "ignore": [
+      "template/"
+    ]
+  }
+}

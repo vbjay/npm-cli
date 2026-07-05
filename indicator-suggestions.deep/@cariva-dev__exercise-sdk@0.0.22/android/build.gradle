@@ -1,0 +1,168 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.CarivaExerciseSdk = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return CarivaExerciseSdk[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "jacoco"
+
+apply plugin: "com.facebook.react"
+
+jacoco {
+  toolVersion = "0.8.12"
+}
+
+android {
+  namespace "com.carivaexercisesdk"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  testOptions {
+    unitTests.all {
+      jacoco {
+        includeNoLocationClasses = true
+        excludes = ["jdk.internal.*"]
+      }
+    }
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "androidx.health.connect:connect-client:1.1.0"
+  implementation "androidx.activity:activity-ktx:1.9.3"
+  testImplementation "junit:junit:4.13.2"
+  testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+  testImplementation "io.mockk:mockk:1.14.0"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
+  testImplementation "org.json:json:20231013"
+}
+
+def coreCoverageClassFiles = [
+  "com/carivaexercisesdk/core/service/HealthDataBucketingService.class",
+  "com/carivaexercisesdk/core/usecase/GetHealthDataUseCase.class",
+  "com/carivaexercisesdk/core/usecase/ResetPermissionsUseCase.class",
+]
+
+def coreCoverageExecutionData = files(
+  "$buildDir/jacoco/testDebugUnitTest.exec",
+  "$buildDir/jacoco/testDebugUnitTest.ec",
+  "$buildDir/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
+  "$buildDir/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.ec",
+  fileTree(
+    dir: "$buildDir/jacoco",
+    includes: ["testDebugUnitTest.exec", "testDebugUnitTest.ec"]
+  ),
+  fileTree(
+    dir: "$buildDir/outputs/unit_test_code_coverage/debugUnitTest",
+    includes: ["testDebugUnitTest.exec", "testDebugUnitTest.ec"]
+  )
+)
+
+tasks.register("jacocoCoreCoverageReport", JacocoReport) {
+  dependsOn "testDebugUnitTest"
+
+  classDirectories.setFrom(
+    files(
+      fileTree(
+        dir: "$buildDir/tmp/kotlin-classes/debug",
+        includes: coreCoverageClassFiles
+      ),
+      fileTree(
+        dir: "$buildDir/intermediates/javac/debug/compileDebugJavaWithJavac/classes",
+        includes: coreCoverageClassFiles
+      )
+    )
+  )
+  sourceDirectories.setFrom(files("$projectDir/src/main/java"))
+  executionData.setFrom(coreCoverageExecutionData)
+
+  reports {
+    xml.required = true
+    html.required = true
+    csv.required = false
+  }
+}
+
+def jacocoCoreCoverageReportTask = tasks.named("jacocoCoreCoverageReport", JacocoReport)
+
+tasks.register("jacocoCoreCoverageVerification", JacocoCoverageVerification) {
+  dependsOn jacocoCoreCoverageReportTask
+
+  classDirectories.setFrom(jacocoCoreCoverageReportTask.get().classDirectories.files)
+  sourceDirectories.setFrom(jacocoCoreCoverageReportTask.get().sourceDirectories.files)
+  executionData.setFrom(jacocoCoreCoverageReportTask.get().executionData.files)
+
+  violationRules {
+    rule {
+      element = "BUNDLE"
+      limit {
+        counter = "LINE"
+        value = "COVEREDRATIO"
+        minimum = 1.0
+      }
+      limit {
+        counter = "BRANCH"
+        value = "COVEREDRATIO"
+        minimum = 1.0
+      }
+    }
+  }
+}
+
+tasks.register("coreCoverageGate") {
+  group = "verification"
+  description = "Runs core algorithm coverage report and enforces 100% line+branch."
+  dependsOn "jacocoCoreCoverageVerification"
+}
+
+tasks.named("check").configure {
+  dependsOn "coreCoverageGate"
+}

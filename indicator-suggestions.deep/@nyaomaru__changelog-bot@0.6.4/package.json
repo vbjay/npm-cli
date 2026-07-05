@@ -1,0 +1,74 @@
+{
+  "name": "@nyaomaru/changelog-bot",
+  "version": "0.6.4",
+  "description": "CLI and GitHub Action to auto-update CHANGELOG.md from git history and release notes, optionally using LLMs.",
+  "type": "module",
+  "bin": {
+    "changelog-bot": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "lint": "eslint .",
+    "start": "node dist/cli.js",
+    "dev": "ts-node-esm src/cli.ts",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "format": "prettier --write .",
+    "check:dist": "node scripts/check-dist-alias.mjs",
+    "prepack": "pnpm build",
+    "prepare": "lefthook install",
+    "prepublishOnly": "pnpm build && pnpm run check:dist"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nyaomaru/changelog-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nyaomaru/changelog-bot/issues"
+  },
+  "homepage": "https://github.com/nyaomaru/changelog-bot#readme",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "changelog",
+    "release",
+    "github-actions",
+    "cli",
+    "openai",
+    "anthropic",
+    "gemini"
+  ],
+  "dependencies": {
+    "is-kit": "^1.6.4",
+    "octokit": "^5.0.5",
+    "yargs": "^18.0.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@jest/globals": "^30.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "@types/yargs": "^17.0.35",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
+    "jest": "^30.3.0",
+    "jiti": "^2.6.1",
+    "lefthook": "^2.1.6",
+    "prettier": "3.8.3",
+    "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.0"
+  }
+}

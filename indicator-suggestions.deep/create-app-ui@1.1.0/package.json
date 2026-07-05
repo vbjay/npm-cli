@@ -1,0 +1,69 @@
+{
+  "name": "create-app-ui",
+  "version": "1.1.0",
+  "description": "Scaffold enterprise React admin apps (Vite, TypeScript, shadcn-style UI) from the Omobio UI platform",
+  "type": "module",
+  "license": "MIT",
+  "author": "Omobio",
+  "keywords": [
+    "react",
+    "vite",
+    "typescript",
+    "boilerplate",
+    "cli",
+    "generator",
+    "admin",
+    "shadcn"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omobio-sl/common-gui.git",
+    "directory": "ui-platform/create-app-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/omobio-sl/common-gui/issues"
+  },
+  "homepage": "https://github.com/omobio-sl/common-gui/tree/main/ui-platform/create-app-ui#readme",
+  "bin": {
+    "create-app-ui": "dist/bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "boilerplate",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare-publish": "node scripts/prepare-publish.mjs",
+    "prepublishOnly": "npm run build && npm run prepare-publish",
+    "prepack": "npm run build && npm run prepare-publish",
+    "pack:check": "npm run prepack && npm pack --dry-run",
+    "publish:npm": "npm publish --registry https://registry.npmjs.org/",
+    "dev:watch": "tsx watch bin/index.ts",
+    "dev:sync": "node scripts/dev-sync.mjs",
+    "start": "tsx bin/index.ts"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "execa": "^9.3.0",
+    "fs-extra": "^11.2.0",
+    "ora": "^8.0.1",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.1",
+    "@types/prompts": "^2.4.9",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

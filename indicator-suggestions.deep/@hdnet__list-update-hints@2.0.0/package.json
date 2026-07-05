@@ -1,0 +1,37 @@
+{
+  "name": "@hdnet/list-update-hints",
+  "version": "2.0.0",
+  "description": "Script to list custom hints to updatable dependencies",
+  "author": "HDNET",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "dependency",
+    "hdnet",
+    "npm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HDNET/list-update-hints.git"
+  },
+  "bin": {
+    "hdnet-list-update-hints": "index.js"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "prepare": "husky || exit 0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.1",
+    "@hdnet/commitlint-config": "^1.0.2",
+    "husky": "^9.1.7"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}

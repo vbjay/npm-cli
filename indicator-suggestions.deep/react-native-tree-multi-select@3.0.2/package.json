@@ -1,0 +1,254 @@
+{
+  "name": "react-native-tree-multi-select",
+  "version": "3.0.2",
+  "description": "Super-fast, customizable tree view component for React Native with drag-and-drop reordering, multi-selection, and search filtering.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-tree-multi-select-example",
+    "test": "jest",
+    "test:cov": "jest --coverage --maxWorkers=2 --coverageReporters=\"json-summary\" --coverageReporters=\"html\"",
+    "typecheck": "tsc --noEmit --skipLibCheck",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-web",
+    "ios",
+    "android",
+    "web",
+    "expo",
+    "react-component",
+    "treeview",
+    "tree-view",
+    "tree-select",
+    "tree-structure",
+    "checkbox",
+    "tri-state-checkbox",
+    "indeterminate-checkbox",
+    "drag-and-drop",
+    "drag-drop",
+    "reorder",
+    "sortable-tree",
+    "nested-list",
+    "hierarchical-list",
+    "collapsible-list",
+    "expandable-list",
+    "multi-select",
+    "multi-selection",
+    "react-tree-view",
+    "react-tree-select",
+    "react-checkbox-tree",
+    "react-native-tree-view",
+    "react-native-tree-select",
+    "react-native-checkbox-list",
+    "react-native-tree-checkbox",
+    "react-native-drag-drop",
+    "flashlist",
+    "search-filter",
+    "category-tree",
+    "file-tree",
+    "folder-tree",
+    "typescript",
+    "customizable"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JairajJangle/react-native-tree-multi-select.git"
+  },
+  "author": "Jairaj Jangle <reachout.jairaj.jangle@gmail.com> (https://github.com/JairajJangle)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JairajJangle/react-native-tree-multi-select/issues",
+    "email": "reachout.jairaj.jangle@gmail.com"
+  },
+  "homepage": "https://github.com/JairajJangle/react-native-tree-multi-select#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.27.6",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@evilmartians/lefthook": "^1.10.10",
+    "@expo/vector-icons": "14.1.0",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@react-native/babel-preset": "0.78.3",
+    "@release-it/conventional-changelog": "^10.0.5",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.5",
+    "@semantic-release/npm": "^13.1.4",
+    "@shopify/flash-list": "1.x.x",
+    "@testing-library/react-native": "^12.9.0",
+    "@types/color": "^3.0.6",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.0.24",
+    "@types/react-native": "0.70.19",
+    "@types/react-native-vector-icons": "^6.4.18",
+    "@types/react-test-renderer": "18.3.1",
+    "commitlint": "^19.4.1",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.8.1",
+    "react": "18.2.0",
+    "react-native": "0.78.3",
+    "react-native-builder-bob": "^0.40.17",
+    "react-test-renderer": "18.3.1",
+    "release-it": "^19.2.4",
+    "semantic-release": "^25.0.3",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@shopify/flash-list": "1.x.x || 2.x.x",
+    "react": ">=18.0.0",
+    "react-native": "*",
+    "react-native-vector-icons": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native-vector-icons": {
+      "optional": true
+    }
+  },
+  "packageManager": "yarn@4.9.2",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "./src/jest.setup.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|@react-native-community|@react-navigation|@react-native/js-polyfills|fast-is-equal)"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "off",
+      "quotes": [
+        "error",
+        "double"
+      ],
+      "react/react-in-jsx-scope": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "coverage/",
+    "lib/",
+    "dist/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "@futurejj/react-native-checkbox": "^1.0.5",
+    "fast-is-equal": "^1.2.4",
+    "zustand": "^5.0.11"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/JairajJangle"
+    },
+    {
+      "type": "paypal",
+      "url": "https://www.paypal.com/paypalme/jairajjangle001/usd"
+    },
+    {
+      "type": "individual",
+      "url": "https://liberapay.com/FutureJJ/donate"
+    },
+    {
+      "type": "ko-fi",
+      "url": "https://ko-fi.com/futurejj"
+    }
+  ]
+}

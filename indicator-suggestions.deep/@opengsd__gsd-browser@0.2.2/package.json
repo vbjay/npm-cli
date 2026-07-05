@@ -1,0 +1,61 @@
+{
+  "name": "@opengsd/gsd-browser",
+  "version": "0.2.2",
+  "description": "Browser automation CLI powered by Chrome DevTools Protocol — 92 commands for navigation, interaction, live viewing, annotations, recording bundles, screenshots, accessibility, network mocking, visual diffing, and more.",
+  "license": "MIT OR Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-gsd/gsd-browser.git"
+  },
+  "homepage": "https://github.com/open-gsd/gsd-browser",
+  "bugs": {
+    "url": "https://github.com/open-gsd/gsd-browser/issues"
+  },
+  "keywords": [
+    "browser",
+    "automation",
+    "cdp",
+    "chrome",
+    "devtools",
+    "testing",
+    "accessibility",
+    "screenshot",
+    "cli"
+  ],
+  "bin": {
+    "gsd-browser": "bin/gsd-browser"
+  },
+  "scripts": {
+    "build": "node scripts/build-package.js",
+    "postinstall": "node scripts/postinstall.js",
+    "prepublishOnly": "npm test && npm run build",
+    "smoke": "node bin/gsd-browser --version",
+    "test": "node scripts/test-package.js",
+    "verify:release-tag": "node scripts/verify-release-tag.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+    "SKILL.md",
+    "AGENTS.md"
+  ]
+}

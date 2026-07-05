@@ -1,0 +1,101 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.10.1"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  // Default to 64-bit only. 32-bit ABIs (armeabi-v7a, x86) are excluded from the default
+  // because all Android devices on API 24+ support 64-bit, and 32-bit increases APK size with no
+  // practical benefit for this library. Override via gradle.properties if needed.
+  return value ? value.split(",") : ["arm64-v8a", "x86_64"]
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: 'org.jetbrains.kotlin.android'
+apply from: '../nitrogen/generated/android/NitroMarkdown+autolinking.gradle'
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroMarkdown_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroMarkdown_" + name]).toInteger()
+}
+
+android {
+  namespace "com.nitromarkdown"
+
+  ndkVersion getExtOrDefault("ndkVersion")
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    consumerProguardFiles 'consumer-rules.pro'
+
+    externalNativeBuild {
+      cmake {
+        // -fstack-protector-strong replaces -fstack-protector-all (better coverage/perf
+        // tradeoff). -Wformat/-Werror=format-security guard against format-string exploits.
+        // -D_FORTIFY_SOURCE=2 enables glibc/Bionic source fortification for buffer overflows.
+        cppFlags "-frtti -fexceptions -Wall -Wextra -fstack-protector-strong -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2"
+        arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+        abiFilters (*reactNativeArchitectures())
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  buildFeatures {
+    buildConfig true
+    prefab true
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += ["src/main/java"]
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ["${project.buildDir}/generated/source/codegen/java"]
+      }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation project(":react-native-nitro-modules")
+}

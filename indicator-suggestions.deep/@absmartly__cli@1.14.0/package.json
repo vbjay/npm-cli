@@ -1,0 +1,125 @@
+{
+  "name": "@absmartly/cli",
+  "version": "1.14.0",
+  "description": "ABSmartly CLI - A/B Testing and Feature Flags command-line tool for AI agents and humans",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./api-client": {
+      "types": "./dist/api-client/index.d.ts",
+      "default": "./dist/api-client/index.js"
+    },
+    "./core/*": {
+      "types": "./dist/core/*/index.d.ts",
+      "default": "./dist/core/*/index.js"
+    },
+    "./formatting": {
+      "types": "./dist/formatting/index.d.ts",
+      "default": "./dist/formatting/index.js"
+    },
+    "./config": {
+      "types": "./dist/config-export/index.d.ts",
+      "default": "./dist/config-export/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "api-client": [
+        "./dist/api-client/index.d.ts"
+      ],
+      "core/*": [
+        "./dist/core/*/index.d.ts"
+      ],
+      "formatting": [
+        "./dist/formatting/index.d.ts"
+      ],
+      "config": [
+        "./dist/config-export/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/absmartly/cli-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/absmartly/cli-ts/issues"
+  },
+  "homepage": "https://github.com/absmartly/cli-ts#readme",
+  "bin": {
+    "abs": "./dist/index.js",
+    "absmartly-cli": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "dev": "bun src/index.ts",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write 'src/**/*.ts'",
+    "typecheck": "tsc --noEmit",
+    "test:live": "bun src/test/live/run-live-vitest.ts --profile test-1",
+    "test:live-quick": "bun src/test/live/run-live-tests.ts --profile test-1",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "keywords": [
+    "absmartly",
+    "ab-testing",
+    "feature-flags",
+    "experimentation",
+    "cli"
+  ],
+  "author": "ABsmartly",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.3.2",
+    "axios": "^1.7.9",
+    "axios-retry": "^4.5.0",
+    "chalk": "^5.4.1",
+    "cli-highlight": "^2.1.11",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "gray-matter": "^4.0.3",
+    "image-size": "^2.0.2",
+    "js-yaml": "^4.1.0",
+    "keytar": "^7.9.0",
+    "marked": "^17.0.5",
+    "marked-terminal": "^7.3.0",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.2.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
+    "@vitest/coverage-v8": "^4.1.4",
+    "@vitest/ui": "^4.0.18",
+    "absmartly-api-mocks": "npm:@absmartly/api-mocks@^1.0.6",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.19.0",
+    "jsdom": "^28.0.0",
+    "msw": "^2.12.8",
+    "playwright": "^1.58.2",
+    "prettier": "^3.4.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

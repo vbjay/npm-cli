@@ -1,0 +1,80 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9336d1574c1964b1",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "35add965e76f6bdd1d2f3572e48bfa971add7bf533d6c9fbca560e4e53ecd9b0",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:47.190Z"
+  },
+  "hash": "sha256:c71bde274478914a7794168c6313bacd25bbcc74df10f93c43df80871f0cd8b0"
+}

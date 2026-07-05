@@ -1,0 +1,88 @@
+{
+  "name": "pushci",
+  "version": "1.9.6",
+  "description": "AI-native CI/CD that runs on your machine. Zero config, zero cost. Works inside AI agent sandboxes (Claude, Cursor, Windsurf). 33 languages, 40+ frameworks, 22 deploy targets, 25 installable skills, Tailscale mesh, blast radius analysis.",
+  "bin": {
+    "pushci": "bin/pushci.js"
+  },
+  "files": [
+    "bin/pushci.js",
+    "bin/pushci-darwin-amd64",
+    "bin/pushci-darwin-arm64",
+    "bin/pushci-linux-amd64",
+    "bin/pushci-linux-arm64",
+    "bin/pushci-windows-amd64.exe",
+    "bin/pushci-windows-arm64.exe",
+    "bin/pushci-*.cdx.sbom.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepack": "bash scripts/build-bundled-binaries.sh",
+    "prepublishOnly": "echo 'Publishing pushci v'${npm_package_version}",
+    "postpublish": "bash scripts/submit-registries.sh"
+  },
+  "keywords": [
+    "ci",
+    "cd",
+    "cicd",
+    "continuous-integration",
+    "continuous-deployment",
+    "github-actions",
+    "github-actions-alternative",
+    "gitlab-ci",
+    "circleci",
+    "jenkins-alternative",
+    "travis-ci-alternative",
+    "buildkite-alternative",
+    "zero-config",
+    "yaml-free",
+    "local",
+    "self-hosted",
+    "ai",
+    "ai-cicd",
+    "ai-devops",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "devops",
+    "deploy",
+    "pipeline",
+    "automation",
+    "go",
+    "node",
+    "python",
+    "rust",
+    "java",
+    "docker",
+    "typescript",
+    "claude",
+    "cursor",
+    "windsurf",
+    "copilot",
+    "tailscale",
+    "llamafile",
+    "blast-radius",
+    "impact-analysis",
+    "self-hosted-runner",
+    "free-ci",
+    "kubernetes",
+    "terraform",
+    "vercel",
+    "cloudflare"
+  ],
+  "author": "FinsavvyAI",
+  "license": "BUSL-1.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finsavvyai/pushci.git"
+  },
+  "mcpName": "io.github.finsavvyai/pushci",
+  "homepage": "https://pushci.dev",
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "name": "htmlsave",
+  "version": "3.0.0",
+  "description": "HTML save string utilities ",
+  "main": "lib/htmlsave.js",
+  "scripts": {
+    "clean": "rimraf lib dist es coverage",
+    "format": "prettier --write \"{src,test}/**/*.{js,ts}\" \"**/*.md\"",
+    "lint": "xo --fix",
+    "test": "jasmine --config=./test/jasmine.json",
+    "pretest": "npm run build",
+    "test:cov": "nyc npm test && nyc report --reporter=lcov",
+    "build": "rollup -c",
+    "prepare": "npm run clean && npm run lint && npm test",
+    "browserstack": "npx browserstack-runner",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "unpkg": "dist/htmlsave.js",
+  "module": "es/htmlsave.js",
+  "browser": "dist/htmlsave.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bezoerb/htmlsave.git"
+  },
+  "keywords": [
+    "javascript",
+    "split",
+    "truncate",
+    "htmlsave"
+  ],
+  "author": {
+    "name": "Ben Zörb",
+    "email": "ben@sommerlaune.com"
+  },
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "bezoerb.mit-license.org"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/bezoerb/htmlsave/issues"
+  },
+  "jam": {
+    "dependencies": {},
+    "main": "dist/htmlsave.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
+    "@babel/plugin-external-helpers": "^7.12.13",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.14.1",
+    "@babel/register": "^7.13.16",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "browserstack-runner": "git://github.com:bezoerb/browserstack-runner.git#bump-yargs",
+    "core-js": "^3.12.1",
+    "coveralls": "^3.1.0",
+    "htmlhint": "^0.14.2",
+    "jasmine": "^3.7.0",
+    "jsdom": "^16.5.3",
+    "nyc": "^15.1.0",
+    "prettier": "^2.3.0",
+    "regenerator-runtime": "^0.13.7",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.47.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "xo": "^0.40.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "printWidth": 120,
+    "bracketSpacing": false
+  },
+  "xo": {
+    "space": 2,
+    "prettier": true,
+    "ignores": [
+      "dist",
+      "es",
+      "lib",
+      "rollup.config.js",
+      "test"
+    ],
+    "rules": {
+      "prefer-destructuring": 0,
+      "no-new-object": 0,
+      "valid-jsdoc": 0,
+      "import/no-unresolved": 0,
+      "import/no-unassigned-import": 0,
+      "unicorn/prefer-string-slice": 0,
+      "unicorn/no-for-loop": 0,
+      "unicorn/prefer-includes": 0
+    }
+  },
+  "npmName": "htmlsave",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ],
+  "jest": {
+    "testEnvironment": "./test/helpers/environment.js",
+    "transform": {
+      "^.+\\.(js|jsx)?$": "babel-jest"
+    }
+  }
+}

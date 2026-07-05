@@ -1,0 +1,60 @@
+{
+  "name": "create-heroui-native-app",
+  "version": "1.0.1",
+  "description": "Scaffold a new React Native (Expo) project with HeroUI Native preconfigured.",
+  "main": "./dist/index.js",
+  "bin": {
+    "create-heroui-native-app": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "prepare": "npm run clean && npm run build",
+    "prepublishOnly": "pnpm -w run cli:build && pnpm -w run template:pack"
+  },
+  "keywords": [
+    "heroui",
+    "heroui-native",
+    "cli",
+    "create-app",
+    "expo",
+    "react-native",
+    "boilerplate"
+  ],
+  "author": "HeroUI",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heroui-inc/create-heroui-native-app.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/heroui-inc/create-heroui-native-app/issues"
+  },
+  "homepage": "https://github.com/heroui-inc/create-heroui-native-app#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20.19.4"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.1.1",
+    "update-notifier": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.0",
+    "@types/node": "^20.0.0",
+    "@types/update-notifier": "^6.0.8",
+    "typescript": "^5.0.0"
+  }
+}

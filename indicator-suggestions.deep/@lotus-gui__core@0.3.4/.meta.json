@@ -1,0 +1,95 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1f90be954cec3e23",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@lotus-gui__core@0.3.4\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4d20b68a40ccafa52bb1f75cd992dc1979973769420a9f8dd574f3dc6a1d0706",
+        "sizeBytes": 3371,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "1efaa460cd881f01a0579f89cf0355dadb78d1695d055cc58600fe0886d3ca56",
+        "sizeBytes": 1539,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:26.444Z"
+  },
+  "hash": "sha256:f4ec2a37099d13b7bf6882eca688cae68d292e649113370dd618cf66e32166ce"
+}

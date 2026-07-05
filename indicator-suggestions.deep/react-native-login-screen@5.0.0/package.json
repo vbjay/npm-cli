@@ -1,0 +1,62 @@
+{
+  "name": "react-native-login-screen",
+  "version": "5.0.0",
+  "description": "Fully Customizable & Ready to use Login Screen for React Native",
+  "keywords": [
+    "login",
+    "sign-up",
+    "sign-in",
+    "login-screen",
+    "screen",
+    "FreakyCoder",
+    "freakycoder",
+    "kuray",
+    "Kuray",
+    "react",
+    "react-native",
+    "javascript",
+    "ui-lib",
+    "rn"
+  ],
+  "homepage": "https://www.freakycoder.com",
+  "bugs": "https://github.com/WrathChaos/react-native-login-screen/issues",
+  "main": "./build/dist/index.js",
+  "repository": "git@github.com:WrathChaos/react-native-login-screen.git",
+  "author": "Kuray (FreakyCoder) <kurayogun@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react-native-text-input-interactive": ">=0.1.4"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@react-native/eslint-config": "^0.72.1",
+    "@types/react": "^18.0.17",
+    "@types/react-native": "^0.71.0",
+    "cpx": "^1.5.0",
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "npm-post-install": "0.0.2",
+    "prettier": "^2.8.4",
+    "prettier-format": "^3.1.0",
+    "react-native-typescript-transformer": "^1.2.13",
+    "semantic-release": "^20.1.1",
+    "typescript": "^5.0.2"
+  },
+  "scripts": {
+    "build": "cd lib && tsc && npm run copy:assets && npm run copy:package",
+    "prepare": "husky install",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prettier": "cd lib && npx prettier --write . && git add .",
+    "husky:setup": "npx husky-init && npm run husky:commitlint && npm run husky:prettier && npm run husky:lint",
+    "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
+    "semantic-release": "semantic-release",
+    "copy:assets": "cpx 'lib/local-assets/**' './build/dist/local-assets'",
+    "copy:package": "cpx '../package.json' '../build/dist/'",
+    "husky:lint": "npx husky add .husky/pre-commit 'npm run lint'",
+    "husky:prettier": "npx husky set .husky/pre-commit 'npm run prettier'"
+  }
+}

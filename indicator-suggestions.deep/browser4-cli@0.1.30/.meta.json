@@ -1,0 +1,90 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "01be5fd0aa8933d1",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\browser4-cli@0.1.30\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7de0404f0e3ed49a9f2f5b19d44dbd76e77684ec72605048a7ff9d25860a558f",
+        "sizeBytes": 12329,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://browser4.oss-cn-beijing.aliyuncs.com/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:25.738Z"
+  },
+  "hash": "sha256:93cd0d93a68c3fbe9504fc726bbddeed377c8166b955a0384623c9589559887b"
+}

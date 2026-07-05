@@ -1,0 +1,134 @@
+{
+  "name": "@moritzbrantner/charts",
+  "version": "0.2.1",
+  "description": "Density-aware chart indexing and React components for large numeric series.",
+  "private": false,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moritzbrantner/charts.git"
+  },
+  "homepage": "https://moritzbrantner.github.io/charts/",
+  "bugs": {
+    "url": "https://github.com/moritzbrantner/charts/issues"
+  },
+  "license": "MIT",
+  "author": "Moritz Brantner",
+  "keywords": [
+    "charts",
+    "data-visualization",
+    "density",
+    "react",
+    "recharts",
+    "typescript",
+    "wasm"
+  ],
+  "packageManager": "bun@1.3.14",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./analytics": {
+      "types": "./dist/analytics.d.ts",
+      "import": "./dist/analytics.js"
+    },
+    "./components": {
+      "types": "./dist/components.d.ts",
+      "import": "./dist/components.js"
+    },
+    "./density": {
+      "types": "./dist/density.d.ts",
+      "import": "./dist/density.js"
+    },
+    "./labels": {
+      "types": "./dist/labels.d.ts",
+      "import": "./dist/labels.js"
+    }
+  },
+  "dependencies": {
+    "@chenglou/pretext": "0.0.7",
+    "@moritzbrantner/ui": "^1.0.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^3.0.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "@changesets/cli": "^2.31.0",
+    "@eslint/js": "^9",
+    "@playwright/test": "^1.60.0",
+    "@storybook/addon-a11y": "^10.4.1",
+    "@storybook/react-vite": "^10.4.1",
+    "@tailwindcss/vite": "^4.3.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitest/coverage-istanbul": "^4.1.7",
+    "eslint": "^9",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.6.0",
+    "jsdom": "^26.1.0",
+    "@moritzbrantner/viz-engine": "^0.2.0",
+    "prettier": "^3.8.3",
+    "publint": "^0.3.21",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "recharts": "^3.8.1",
+    "storybook": "^10.4.1",
+    "tsup": "^8.5.0",
+    "typedoc": "^0.28.19",
+    "typescript": "6.0.2",
+    "typescript-eslint": "^8.60.0",
+    "unlighthouse": "^0.17.9",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "scripts": {
+    "api:check": "bun run build && node ./scripts/check-api-report.mjs",
+    "audit:production": "bun audit --production",
+    "bench:check": "node ./scripts/check-benchmarks.mjs",
+    "bench:large-data": "node ./scripts/benchmark-large-data.mjs",
+    "build": "tsup src/index.ts src/density.ts src/components.ts src/labels.ts src/analytics.ts --format esm --dts --clean --out-dir dist && tsup src/density/worker.ts --format esm --out-dir dist --clean=false",
+    "build:examples": "vite build --outDir ../dist-examples --emptyOutDir",
+    "build:examples:pages": "vite build --base=/charts/ --outDir ../dist-examples --emptyOutDir",
+    "build:storybook": "storybook build --output-dir storybook-static",
+    "changeset": "changeset",
+    "check-types": "tsc --noEmit",
+    "dev": "vite",
+    "docs": "typedoc",
+    "docs:check": "typedoc --emit none",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings 0",
+    "pack:check": "bun run build && publint --pack bun --strict && node ./scripts/check-packed-artifact.mjs",
+    "prepack": "bun run build",
+    "release": "changeset publish",
+    "storybook": "storybook dev -p 6006",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:storybook": "playwright test -c playwright.storybook.config.ts",
+    "test:unlighthouse": "node ./scripts/run-unlighthouse.mjs",
+    "test:visual": "playwright test -c playwright.visual.config.ts",
+    "version-packages": "changeset version",
+    "verify": "bun run check-types && bun run lint && bun run format:check && bun run docs:check && bun run test:coverage && bun run api:check && bun run build:examples && bun run pack:check && bun run test:e2e && bun run build:storybook && bun run test:storybook && bun run test:visual && bun run test:unlighthouse",
+    "verify:release": "bun run verify && bun run bench:large-data && bun run bench:check"
+  }
+}

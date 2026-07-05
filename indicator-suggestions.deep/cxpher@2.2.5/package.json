@@ -1,0 +1,68 @@
+{
+  "name": "cxpher",
+  "version": "2.2.5",
+  "type": "module",
+  "description": "Agentics Package Manager — Encrypted native binary compiler + package manager for JavaScript",
+  "main": "bin/cXpher.js",
+  "bin": {
+    "cxpher": "./bin/cXpher.js",
+    "cXpher": "./bin/cXpher.js",
+    "cx": "./bin/cXpher.js",
+    "cX": "./bin/cXpher.js"
+  },
+  "files": [
+    "bin/",
+    "cli-wrapper.cjs",
+    "install.cjs",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "cxpher": {
+    "brand": "cXpher"
+  },
+  "scripts": {
+    "postinstall": "node install.cjs",
+    "buildpkg": "make clean; make install",
+    "prep": "make bump; make git",
+    "update": "make publish-main; make publish-platforms;",
+    "build": "npm run buildpkg; npm run prep; npm run update;"
+  },
+  "keywords": [
+    "package-manager",
+    "bundler",
+    "compiler",
+    "binary",
+    "encryption",
+    "aes",
+    "native",
+    "standalone",
+    "cli",
+    "build-tool",
+    "javascript",
+    "typescript",
+    "node",
+    "sea"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/agentics-ai/cxpher"
+  },
+  "homepage": "https://gitlab.com/agentics-ai/cxpher",
+  "bugs": {
+    "url": "https://gitlab.com/agentics-ai/cxpher/-/issues"
+  },
+  "author": "Connor Etherington <connor@agentics.co.za>",
+  "license": "MIT",
+  "optionalDependencies": {
+    "cxpher-darwin-arm64": "2.2.5",
+    "cxpher-darwin-x64": "2.2.5",
+    "cxpher-linux-arm32": "2.2.5",
+    "cxpher-linux-arm64": "2.2.5",
+    "cxpher-linux-x64": "2.2.5",
+    "cxpher-linux-x86": "2.2.5",
+    "cxpher-win-arm32": "2.2.5",
+    "cxpher-win-arm64": "2.2.5",
+    "cxpher-win-x64": "2.2.5",
+    "cxpher-win-x86": "2.2.5"
+  }
+}

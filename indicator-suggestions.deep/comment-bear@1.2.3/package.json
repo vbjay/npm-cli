@@ -1,0 +1,101 @@
+{
+  "name": "comment-bear",
+  "version": "1.2.3",
+  "description": "Fast, string-aware comment remover for 80+ programming languages, with CLI, stream API and TypeScript support",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "comment-bear": "dist/cli.js"
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc",
+    "prepack": "npm run build",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "npm run build && npm test",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "comment",
+    "remover",
+    "strip-comments",
+    "typescript",
+    "javascript",
+    "python",
+    "ruby",
+    "java",
+    "csharp",
+    "go",
+    "rust",
+    "php",
+    "html",
+    "css",
+    "scss",
+    "less",
+    "sql",
+    "yaml",
+    "toml",
+    "json",
+    "shell",
+    "bash",
+    "powershell",
+    "perl",
+    "dockerfile",
+    "makefile",
+    "graphql",
+    "elixir",
+    "julia",
+    "nim",
+    "terraform",
+    "dart",
+    "solidity",
+    "protobuf",
+    "objective-c",
+    "zig",
+    "json5",
+    "glsl",
+    "lua",
+    "ocaml",
+    "fsharp",
+    "erlang",
+    "latex",
+    "matlab",
+    "pascal",
+    "fortran",
+    "clojure",
+    "vue",
+    "svelte",
+    "markdown",
+    "kotlin",
+    "scala",
+    "haskell",
+    "cli",
+    "code-cleanup"
+  ],
+  "author": "ivan-markov-666",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivan-markov-666/comment-bear.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ivan-markov-666/comment-bear/issues"
+  },
+  "homepage": "https://github.com/ivan-markov-666/comment-bear#readme",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.9.2",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
+    "typescript": "^5.9.3"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,19 @@
+[package]
+name = "canlang"
+version = "0.2.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+name = "canlang"
+crate-type = ["cdylib"]
+path = "rust/src/lib.rs"
+
+[dependencies]
+napi = { version = "2", default-features = false, features = ["napi8"] }
+napi-derive = "2"
+rand = "0.8"
+thiserror = "1.0"
+
+[build-dependencies]
+napi-build = "2"

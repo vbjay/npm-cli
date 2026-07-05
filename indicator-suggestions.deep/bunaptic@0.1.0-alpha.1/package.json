@@ -1,0 +1,128 @@
+{
+  "name": "bunaptic",
+  "version": "0.1.0-alpha.1",
+  "description": "Bun-first neural network and neuroevolution engine with Workers, Rust WASM, SIMD, dense fast paths, recurrent training, and Node fallback.",
+  "type": "module",
+  "author": "Nixaut CodeLabs",
+  "homepage": "https://github.com/nixaut-codelabs/bunaptic#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nixaut-codelabs/bunaptic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nixaut-codelabs/bunaptic/issues"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "bun": "./dist/bun.js",
+      "node": "./dist/node.js",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./bun": {
+      "types": "./dist/bun.d.ts",
+      "import": "./dist/bun.js",
+      "default": "./dist/bun.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js",
+      "default": "./dist/node.js"
+    },
+    "./worker": {
+      "types": "./dist/runtime/evaluate-worker.d.ts",
+      "import": "./dist/runtime/evaluate-worker.js",
+      "default": "./dist/runtime/evaluate-worker.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun run scripts/build.ts",
+    "build:wasm": "cargo build --manifest-path rust/kernel/Cargo.toml --release --target wasm32-unknown-unknown",
+    "test": "bun test",
+    "typecheck": "bunx tsc --noEmit",
+    "smoke": "bun run smoke:bun && bun run smoke:node && bun run smoke:package",
+    "smoke:bun": "bun run scripts/smoke-bun.mjs",
+    "smoke:node": "node scripts/smoke-node.mjs",
+    "smoke:package": "bun run scripts/smoke-package.mjs",
+    "bench:recurrent": "bun run bench/recurrent.ts",
+    "check": "bunx tsc --noEmit && bun test && bun run build && bun run smoke && BENCH_PROFILE=ci bun run bench && BENCH_PROFILE=ci bun run bench:recurrent",
+    "prepack": "bun run build",
+    "bench": "bun run bench/evaluate.ts"
+  },
+  "keywords": [
+    "ai",
+    "ann",
+    "artificial-intelligence",
+    "backpropagation",
+    "bptt",
+    "bun",
+    "bun-first",
+    "bunjs",
+    "classification",
+    "deep-learning",
+    "dense-network",
+    "desktop-runtime",
+    "deterministic",
+    "esm",
+    "evolutionary-algorithms",
+    "feedforward",
+    "genetic-algorithm",
+    "gru",
+    "inference",
+    "javascript",
+    "lstm",
+    "machine-learning",
+    "mlp",
+    "model-serialization",
+    "neat",
+    "neataptic",
+    "neural-network",
+    "neural-networks",
+    "neuroevolution",
+    "node",
+    "nodejs",
+    "optimization",
+    "parallel-evaluation",
+    "population-evaluation",
+    "ragged-sequences",
+    "recurrent-neural-network",
+    "regression",
+    "rnn",
+    "rust",
+    "rust-wasm",
+    "sequence-modeling",
+    "server-side",
+    "simd",
+    "simd128",
+    "training",
+    "typescript",
+    "typed-arrays",
+    "wasm",
+    "webassembly",
+    "worker-threads",
+    "workers"
+  ],
+  "engines": {
+    "bun": ">=1.2.0",
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "alpha"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "latest",
+    "bun-types": "latest",
+    "typescript": "latest"
+  }
+}

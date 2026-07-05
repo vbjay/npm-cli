@@ -1,0 +1,34 @@
+{
+  "name": "@opencode-cloud/core",
+  "version": "25.1.3",
+  "description": "Core NAPI bindings for opencode-cloud (internal package)",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "author": "pRizz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pRizz/opencode-cloud.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/pRizz/opencode-cloud",
+  "bugs": {
+    "url": "https://github.com/pRizz/opencode-cloud/issues"
+  },
+  "keywords": ["opencode", "ai", "cloud", "napi", "rust"],
+  "napi": {
+    "binaryName": "core",
+    "triples": {}
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "napi build --platform --release --features napi --no-js && cp src/bindings.js index.js && cp src/bindings.d.ts index.d.ts",
+    "build:debug": "napi build --platform --features napi --no-js && cp src/bindings.js index.js && cp src/bindings.d.ts index.d.ts",
+    "postinstall": "echo 'Building native module (requires Rust 1.85+)...' && npm run build"
+  },
+  "dependencies": {
+    "@napi-rs/cli": "^3.0.0-alpha.69"
+  }
+}

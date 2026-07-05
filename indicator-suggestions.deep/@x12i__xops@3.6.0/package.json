@@ -1,0 +1,77 @@
+{
+  "name": "@x12i/xops",
+  "version": "3.6.0",
+  "description": "Repository operating layer for Node.js tools, releases, and code agents",
+  "type": "module",
+  "bin": {
+    "xops": "dist/cli.js",
+    "xnpm": "dist/cli.js",
+    "xgit": "dist/cli.js",
+    "x12i-xops": "dist/cli.js",
+    "x12i-npm": "dist/cli.js",
+    "x12i-git": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp/server.d.ts",
+      "import": "./dist/mcp/server.js"
+    },
+    "./playbooks": {
+      "types": "./dist/playbooks/index.d.ts",
+      "import": "./dist/playbooks/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "LICENSE",
+    "scripts/postinstall.mjs",
+    "scripts/windowsGlobalInstall.mjs"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs",
+    "build": "rm -rf dist && tsc && rm -rf dist/catalog && cp -r src/catalog dist/catalog && cp docs/troubleshooting.md dist/docs/troubleshooting.md && cp docs/agent-monorepo-deploy.md dist/docs/agent-monorepo-deploy.md",
+    "generate:trusted-catalog": "node scripts/generate-trusted-catalog.mjs --fetch",
+    "test": "npm run build && tsc -p tsconfig.test.json && node --test dist-test/cliVariant.test.js dist-test/agent/*.test.js dist-test/ask/*.test.js dist-test/args/*.test.js dist-test/agentInit/*.test.js dist-test/clean/*.test.js dist-test/config/*.test.js dist-test/creation/*.test.js dist-test/discovery/*.test.js dist-test/docs/*.test.js dist-test/execution/*.test.js dist-test/exports/*.test.js dist-test/fast/*.test.js dist-test/inspect/*.test.js dist-test/list/*.test.js dist-test/lifecycle/*.test.js dist-test/logging/*.test.js dist-test/map/*.test.js dist-test/mcp/*.test.js dist-test/operations/*.test.js dist-test/package-graph/*.test.js dist-test/passthrough/*.test.js dist-test/patches/*.test.js dist-test/plan/*.test.js dist-test/playbooks/*.test.js dist-test/progress/*.test.js dist-test/publish/*.test.js dist-test/rollback/*.test.js dist-test/safety/*.test.js dist-test/stacks/*.test.js dist-test/upstream/*.test.js dist-test/validate/*.test.js tests/scripts/*.test.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "npm",
+    "git",
+    "monorepo",
+    "cli",
+    "automation"
+  ],
+  "author": "x12i",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/tar-stream": "^3.1.4",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/x12i/npm.git"
+  },
+  "dependencies": {
+    "@x12i/ask-cli": "^1.2.0",
+    "tar-stream": "^3.2.0"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1f4025bbbd1367cc",
+    "fetchedFiles": [
+      "install.js",
+      "lib/resolve.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9c5061913fecae0e022583e72bef3d697b5825ee8dd0b5df10bc79cf8c8b127b",
+        "sizeBytes": 3023,
+        "signals": [
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/resolve.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/resolve.cjs",
+        "reason": "required by ./install.js",
+        "sha256": "28d7ba0f101df1005fb77f6e8a76dcf0825cc0a09846ca12bf21b6d3e446de88",
+        "sizeBytes": 3585,
+        "signals": [
+          "makes-executable",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:52.787Z"
+  },
+  "hash": "sha256:5d5e773f0dba00c1277bf03da08caf283788e03b2f67dd8d755cd39d65ba6d93"
+}

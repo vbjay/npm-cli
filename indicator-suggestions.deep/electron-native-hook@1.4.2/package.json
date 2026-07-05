@@ -1,0 +1,76 @@
+{
+  "name": "electron-native-hook",
+  "version": "1.4.2",
+  "description": "Cross-platform native keyboard and mouse hook for Electron applications",
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.js",
+      "types": "./types/index.d.ts"
+    }
+  },
+  "author": "ykzou",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ykzou777/electron-native-hook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ykzou777/electron-native-hook/issues"
+  },
+  "homepage": "https://github.com/ykzou777/electron-native-hook#readme",
+  "keywords": [
+    "electron",
+    "keyboard",
+    "mouse",
+    "hook",
+    "native",
+    "addon",
+    "global-hotkey",
+    "input-capture",
+    "key-interception",
+    "event-blocking"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "lib/",
+    "types/",
+    "LICENSE",
+    "prebuilds/",
+    "scripts/install.js"
+  ],
+  "scripts": {
+    "install": "node scripts/install.js",
+    "prebuild": "node scripts/prebuild.js",
+    "prebuild:win": "node scripts/prebuild.js win32 x64",
+    "prebuild:win:arm64": "node scripts/prebuild.js win32 arm64",
+    "prebuild:linux": "node scripts/prebuild.js linux x64",
+    "prebuild:linux:arm64": "node scripts/prebuild.js linux arm64",
+    "prebuild:mac": "node scripts/prebuild.js darwin x64",
+    "prebuild:mac:arm64": "node scripts/prebuild.js darwin arm64",
+    "test": "node test/test.js",
+    "demo": "npm --prefix example start",
+    "example": "npm --prefix example start"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0"
+  },
+  "devDependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp": "^11.5.0"
+  }
+}

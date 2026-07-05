@@ -1,0 +1,117 @@
+{
+  "name": "@askuzminov/simple-release",
+  "version": "1.3.1",
+  "description": "Zero-dependency auto release pipeline for npm packages — conventional commits, monorepo/workspace, changelog, multi-registry publish",
+  "keywords": [
+    "release",
+    "version",
+    "publish",
+    "conventional-commits",
+    "changelog",
+    "semver",
+    "monorepo",
+    "workspace",
+    "lerna",
+    "changesets",
+    "semantic-release",
+    "npm",
+    "bun",
+    "pnpm",
+    "yarn",
+    "github",
+    "gitlab",
+    "ci",
+    "automation",
+    "zero-dependencies"
+  ],
+  "author": {
+    "name": "Kuzminov Alexander",
+    "url": "https://github.com/askuzminov"
+  },
+  "contributors": [
+    {
+      "name": "Kuzminov Alexander",
+      "url": "https://github.com/askuzminov",
+      "email": "askuzminov@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/askuzminov/simple-release.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/askuzminov/simple-release/issues"
+  },
+  "homepage": "https://github.com/askuzminov/simple-release#readme",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "bin": {
+    "simple-release": "./dist/cjs/index.js",
+    "simple-release-lint": "./dist/cjs/lint.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=10.12"
+  },
+  "scripts": {
+    "test": "node --import tsx --test tests/*.test.ts",
+    "check-types": "tsc --noEmit && tsc -p tsconfig.build.json --noEmit",
+    "check-types:watch": "npm run check-types -- --watch",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:esm": "tsc -p tsconfig.build.json --module es2015 --outDir ./dist/esm/",
+    "build:types": "tsc -p tsconfig.build.json --outDir ./dist/types/ --declaration --emitDeclarationOnly",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:types",
+    "lint:prettier": "prettier --write \"@(src)/**/*.{ts,tsx,js,json,css,md,html,yml}\"",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "release": "node ./dist/cjs/index.js --file src --file package.json",
+    "lint-staged": "lint-staged",
+    "dev:no-git": "node --import tsx src disable-git disable-github --file src --file package.json",
+    "dev:no-push": "node --import tsx src disable-push disable-github --file src --file package.json",
+    "dev:current-version": "node --import tsx src --mode current-version --file src prerelease=next",
+    "dev:next-version": "node --import tsx src --mode next-version --file src prerelease=next",
+    "dev:has-changes": "node --import tsx src --mode has-changes --file src prerelease=next",
+    "prepare": "if test \"$CI\" != \"true\" ; then husky install ; fi"
+  },
+  "devDependencies": {
+    "@types/node": "18.19.130",
+    "@types/semver": "7.7.1",
+    "husky": "9.1.7",
+    "lint-staged": "16.4.0",
+    "oxc-parser": "0.124.0",
+    "oxfmt": "0.44.0",
+    "oxlint": "1.59.0",
+    "oxlint-tsgolint": "0.20.0",
+    "prettier": "3.8.2",
+    "semver": "7.7.4",
+    "tsx": "4.21.0",
+    "typescript": "6.0.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "oxlint --fix",
+      "prettier --write"
+    ],
+    "*.{css,less,sass}": [
+      "prettier --write"
+    ],
+    "*.{js,json,md,html,yml}": [
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "printWidth": 120,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "useTabs": false
+  }
+}

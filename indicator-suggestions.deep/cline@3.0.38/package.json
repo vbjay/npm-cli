@@ -1,0 +1,54 @@
+{
+  "name": "cline",
+  "version": "3.0.38",
+  "description": "Autonomous coding agent CLI - capable of creating/editing files, running commands, using the browser, and more",
+  "license": "Apache-2.0",
+  "keywords": [
+    "cline",
+    "claude",
+    "dev",
+    "mcp",
+    "openrouter",
+    "coding",
+    "agent",
+    "autonomous",
+    "chatgpt",
+    "sonnet",
+    "ai",
+    "llama",
+    "cli"
+  ],
+  "author": {
+    "name": "Cline Bot Inc."
+  },
+  "homepage": "https://cline.bot",
+  "bugs": {
+    "url": "https://github.com/cline/cline/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cline/cline.git",
+    "directory": "apps/cli"
+  },
+  "bin": {
+    "cline": "./bin/cline"
+  },
+  "scripts": {
+    "postinstall": "node ./postinstall.mjs || true"
+  },
+  "dependencies": {
+    "@cline/sdk": "0.0.58",
+    "@cline/core": "0.0.58",
+    "@cline/agents": "0.0.58",
+    "@cline/llms": "0.0.58",
+    "@cline/shared": "0.0.58"
+  },
+  "optionalDependencies": {
+    "@cline/cli-linux-arm64": "3.0.38",
+    "@cline/cli-darwin-x64": "3.0.38",
+    "@cline/cli-windows-arm64": "3.0.38",
+    "@cline/cli-darwin-arm64": "3.0.38",
+    "@cline/cli-linux-x64": "3.0.38",
+    "@cline/cli-windows-x64": "3.0.38"
+  }
+}

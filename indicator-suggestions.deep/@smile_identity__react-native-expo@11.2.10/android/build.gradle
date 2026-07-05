@@ -1,0 +1,94 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+
+group = 'com.smileidentity.react.expo'
+version = '11.1.1'
+
+buildscript {
+    ext.kotlin_version = '2.1.20'
+
+    // Simple helper that allows the root project to override versions declared by this library.
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:14.1.0"
+    }
+}
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+// If you want to use the managed Android SDK versions from expo-modules-core, set this to true.
+// The Android SDK versions will be bumped from time to time in SDK releases and may introduce breaking changes in your module code.
+// Most of the time, you may like to manage the Android SDK versions yourself.
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+    useDefaultAndroidSdkVersions()
+} else {
+    project.android {
+        compileSdkVersion safeExtGet("compileSdkVersion", 36)
+        defaultConfig {
+            minSdkVersion safeExtGet("minSdkVersion", 21)
+            targetSdkVersion safeExtGet("targetSdkVersion", 36)
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+android {
+    namespace "com.smileidentity.react.expo"
+
+    defaultConfig {
+        versionCode 1
+        versionName "0.1.0"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+        freeCompilerArgs += ['-Xskip-metadata-version-check']
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        compose true
+    }
+}
+
+dependencies {
+    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("com.smileidentity:android-sdk:11.1.11")
+    implementation("androidx.fragment:fragment-ktx:1.8.9")
+}

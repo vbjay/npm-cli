@@ -1,0 +1,41 @@
+{
+  "name": "ticketlens",
+  "version": "0.9.2",
+  "description": "Jira CLI for developers — fetch ticket context, triage your queue, and stop tab-switching. Zero dependencies, all local.",
+  "type": "module",
+  "bin": {
+    "ticketlens": "bin/ticketlens.mjs"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "skills/jtb/SKILL.md",
+    "skills/jtb/scripts/lib/",
+    "skills/jtb/scripts/fetch-ticket.mjs",
+    "skills/jtb/scripts/fetch-my-tickets.mjs"
+  ],
+  "scripts": {
+    "test": "node --test skills/jtb/scripts/test/*.test.mjs",
+    "postinstall": "node scripts/postinstall.mjs",
+    "prepublishOnly": "node scripts/preflight.mjs"
+  },
+  "keywords": [
+    "jira",
+    "cli",
+    "developer-tools",
+    "productivity",
+    "ticket",
+    "triage",
+    "context"
+  ],
+  "author": "Ralph Moran",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ralphmoran/ticket-lens.git"
+  },
+  "homepage": "https://github.com/ralphmoran/ticket-lens",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

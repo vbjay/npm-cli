@@ -1,0 +1,119 @@
+{
+  "name": "slopbrick",
+  "version": "0.43.0",
+  "description": "Discovered, modeled, and governed repository structure. SlopBrick scans source code, classifies it against 103 rules in 24 categories, computes 4 scores (aiSlopScore: lower=cleaner, engineeringHygiene, security, repositoryHealth composite), and persists the structure for AI agents and CI. v10-calibrated against 576,750 real files; v0.38.0 trims to 103 rules by deleting 37 v10-DORMANT rules.",
+  "type": "module",
+  "bin": {
+    "slopbrick": "bin/slopbrick.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE",
+    "!dist/**/*.map"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "generate:rules": "tsx scripts/generate-rule-registry.ts && tsx scripts/generate-rule-catalog.ts",
+    "generate:rules:catalog": "tsx scripts/generate-rule-catalog.ts",
+    "bench:scan": "tsx scripts/bench-scan.ts",
+    "prebuild": "pnpm --filter @usebrick/engine build",
+    "build": "pnpm --filter @usebrick/engine build && pnpm generate:rules && tsup",
+    "test": "pnpm generate:rules && tsup && vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "pnpm generate:rules && vitest run --coverage",
+    "test:perf": "tsx tests/perf/large-codebase.ts",
+    "generate-perf-fixtures": "tsx scripts/generate-perf-fixtures.ts",
+    "drift:collect": "tsx scripts/collect-drift-signals.ts",
+    "drift:compute": "tsx scripts/compute-drift-calibration.ts",
+    "typecheck": "tsc --noEmit",
+    "prepack": "node scripts/prepack-guard.mjs",
+    "prepublishOnly": "pnpm typecheck && pnpm test && pnpm build && pnpm prepack",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@swc/core": "^1.10.0",
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "globby": "^14.0.0",
+    "minimatch": "^9.0.5",
+    "pgsql-parser": "^17.9.15",
+    "tree-sitter": "^0.22.4",
+    "tree-sitter-cpp": "^0.23.4",
+    "tree-sitter-kotlin": "^0.3.8",
+    "tree-sitter-rust": "^0.24.0",
+    "tree-sitter-swift": "^0.7.1"
+  },
+  "//_usebrick_note": "@usebrick/core and @usebrick/engine are private workspace packages. They are listed in devDependencies to keep pnpm-lock.yaml in sync; tsup.config.ts \u2192 noExternal bundles them into dist/; the prepack-guard.mjs allowlist includes both. Neither ends up in the published tarball's runtime deps. See https://github.com/usebrick/platform/blob/main/docs/repository-structure.md",
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@usebrick/core": "workspace:*",
+    "@usebrick/engine": "workspace:^",
+    "@vitest/coverage-v8": "^2.1.9",
+    "fast-check": "^4.8.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "ai-coding-agents",
+    "claude-code",
+    "cursor",
+    "copilot",
+    "aider",
+    "mcp",
+    "model-context-protocol",
+    "repository-constitution",
+    "repository-memory",
+    "drift-detection",
+    "pattern-fragmentation",
+    "coherence",
+    "code-quality",
+    "linter",
+    "static-analysis",
+    "react",
+    "vue",
+    "svelte",
+    "typescript",
+    "python",
+    "go",
+    "swift",
+    "kotlin",
+    "rust",
+    "wcag",
+    "ai-slop",
+    "ai-debt",
+    "pre-commit",
+    "ci",
+    "prevention"
+  ],
+  "author": "usebrick.dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usebrick/platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/usebrick/platform/issues"
+  },
+  "homepage": "https://github.com/usebrick/platform#readme"
+}

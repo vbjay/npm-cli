@@ -1,0 +1,70 @@
+{
+  "name": "node-binary-parser",
+  "description": "Parsing binary data by rules",
+  "version": "0.3.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "gypfile": true,
+  "homepage": "https://github.com/sergak01/node-binary-parser",
+  "bugs": {
+    "url": "https://github.com/sergak01/node-binary-parser/issues"
+  },
+  "scripts": {
+    "test": "jest",
+    "codecov": "codecov",
+    "typedoc": "typedoc && git add -A docs",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "cformat": "clang-format --style=file --glob=\"./*.{cpp,h}\"",
+    "clean": "node-gyp clean",
+    "lint": "tslint -p tsconfig.json",
+    "install": "node-gyp rebuild && npm run build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && npm run cformat && git add -A src && npm run typedoc",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/node": "^14.17.27",
+    "clang-format": "^1.5.0",
+    "codecov": "^3.6.4",
+    "husky": "^4.2.5",
+    "jest": "^27.3.0",
+    "lint-staged": "^10.2.2",
+    "node-gyp": "^8.2.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^27.0.7",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.22.6",
+    "typescript": "^4.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergak01/node-binary-parser"
+  },
+  "keywords": [
+    "binary",
+    "parser",
+    "node",
+    "typescript",
+    "addon"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run test"
+    }
+  },
+  "lint-staged": {
+    "*.{ts}": [
+      "npm test",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "node-addon-api": "^5.0.0"
+  }
+}

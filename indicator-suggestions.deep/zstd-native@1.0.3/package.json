@@ -1,0 +1,33 @@
+{
+  "name": "zstd-native",
+  "version": "1.0.3",
+  "main": "index.js",
+  "gypfile": true,
+  "scripts": {
+    "preinstall": "npm install node-addon-api",
+    "install": "npx node-gyp rebuild && node test.js",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kzolti/zstd-native"
+  },
+  "keywords": [
+    "zstd",
+    "compression",
+    "decompression",
+    "native",
+    "addon",
+    "nodejs"
+  ],
+  "devDependencies": {
+    "node-gyp": "^9.0.0",
+    "node-addon-api": "^7.1.1"
+  },
+  "description": "A native Node.js addon for Zstandard compression and decompression",
+  "author": "Zoltan Istvan KADA",
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^7.1.1"
+  }
+}

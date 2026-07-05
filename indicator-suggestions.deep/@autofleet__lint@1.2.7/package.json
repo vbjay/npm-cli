@@ -1,0 +1,45 @@
+{
+  "name": "@autofleet/lint",
+  "version": "1.2.7",
+  "description": "Shared Oxlint and Oxfmt configuration for Autofleet projects (Rust-powered, ultra-fast)",
+  "main": "index.js",
+  "bin": {
+    "autofleet-lint": "./bin/oxlint.cjs",
+    "autofleet-fmt": "./bin/oxfmt.cjs"
+  },
+  "author": "Autofleet",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Autofleet/autorepo.git",
+    "directory": "packages/lint"
+  },
+  "files": [
+    "bin/",
+    ".oxlintrc.json",
+    ".oxfmtrc.json",
+    "MIGRATION_GAPS.md",
+    "README.md",
+    "RULES.md"
+  ],
+  "dependencies": {
+    "oxfmt": "^0.57.0",
+    "oxlint": "^1.72.0",
+    "oxlint-tsgolint": "^0.24.0"
+  },
+  "keywords": [
+    "oxlint",
+    "oxfmt",
+    "lint",
+    "format",
+    "config",
+    "autofleet",
+    "batteries-included",
+    "rust",
+    "fast"
+  ],
+  "scripts": {
+    "build": "echo 'No build needed - config files only'",
+    "postinstall": "node ./bin/postinstall.cjs"
+  }
+}

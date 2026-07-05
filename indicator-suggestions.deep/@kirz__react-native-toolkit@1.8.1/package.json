@@ -1,0 +1,212 @@
+{
+  "name": "@kirz/react-native-toolkit",
+  "version": "1.8.1",
+  "license": "MIT",
+  "description": "Toolkit to speed up React Native development",
+  "author": "Kirill Zaidulin <zaidulinkirill@gmail.com>",
+  "homepage": "https://github.com/zaikir/react-native-toolkit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zaikir/react-native-toolkit.git"
+  },
+  "keywords": [
+    "react-native-toolkit",
+    "react-native",
+    "toolkit",
+    "devkit",
+    "tools"
+  ],
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib",
+    "scripts",
+    "adapty",
+    "sentry",
+    "firebase",
+    "facebook",
+    "appsflyer",
+    "apphud",
+    "network",
+    "iap",
+    "idfa",
+    "appmetrica",
+    "amplitude",
+    "branch",
+    "onesignal"
+  ],
+  "sideEffects": false,
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/index.d.ts",
+      "import": "./lib/module/index.js",
+      "default": "./lib/commonjs/index.js"
+    },
+    "./sentry": {
+      "types": "./lib/typescript/plugins/SentryPlugin/index.d.ts",
+      "import": "./lib/module/plugins/SentryPlugin/index.js",
+      "default": "./lib/commonjs/plugins/SentryPlugin/index.js"
+    },
+    "./adapty": {
+      "types": "./lib/typescript/plugins/AdaptyPlugin/index.d.ts",
+      "import": "./lib/module/plugins/AdaptyPlugin/index.js",
+      "default": "./lib/commonjs/plugins/AdaptyPlugin/index.js"
+    },
+    "./firebase": {
+      "types": "./lib/typescript/plugins/FirebasePlugin/index.d.ts",
+      "import": "./lib/module/plugins/FirebasePlugin/index.js",
+      "default": "./lib/commonjs/plugins/FirebasePlugin/index.js"
+    },
+    "./facebook": {
+      "types": "./lib/typescript/plugins/FacebookPlugin/index.d.ts",
+      "import": "./lib/module/plugins/FacebookPlugin/index.js",
+      "default": "./lib/commonjs/plugins/FacebookPlugin/index.js"
+    },
+    "./appsflyer": {
+      "types": "./lib/typescript/plugins/AppsFlyerPlugin/index.d.ts",
+      "import": "./lib/module/plugins/AppsFlyerPlugin/index.js",
+      "default": "./lib/commonjs/plugins/AppsFlyerPlugin/index.js"
+    },
+    "./apphud": {
+      "types": "./lib/typescript/plugins/ApphudPlugin/index.d.ts",
+      "import": "./lib/module/plugins/ApphudPlugin/index.js",
+      "default": "./lib/commonjs/plugins/ApphudPlugin/index.js"
+    },
+    "./iap": {
+      "types": "./lib/typescript/plugins/InAppPurchasePlugin/index.d.ts",
+      "import": "./lib/module/plugins/InAppPurchasePlugin/index.js",
+      "default": "./lib/commonjs/plugins/InAppPurchasePlugin/index.js"
+    },
+    "./network": {
+      "types": "./lib/typescript/plugins/NetworkPlugin/index.d.ts",
+      "import": "./lib/module/plugins/NetworkPlugin/index.js",
+      "default": "./lib/commonjs/plugins/NetworkPlugin/index.js"
+    },
+    "./idfa": {
+      "types": "./lib/typescript/plugins/IdfaPlugin/index.d.ts",
+      "import": "./lib/module/plugins/IdfaPlugin/index.js",
+      "default": "./lib/commonjs/plugins/IdfaPlugin/index.js"
+    },
+    "./appmetrica": {
+      "types": "./lib/typescript/plugins/AppMetricaPlugin/index.d.ts",
+      "import": "./lib/module/plugins/AppMetricaPlugin/index.js",
+      "default": "./lib/commonjs/plugins/AppMetricaPlugin/index.js"
+    },
+    "./amplitude": {
+      "types": "./lib/typescript/plugins/AmplitudePlugin/index.d.ts",
+      "import": "./lib/module/plugins/AmplitudePlugin/index.js",
+      "default": "./lib/commonjs/plugins/AmplitudePlugin/index.js"
+    },
+    "./branch": {
+      "types": "./lib/typescript/plugins/BranchPlugin/index.d.ts",
+      "import": "./lib/module/plugins/BranchPlugin/index.js",
+      "default": "./lib/commonjs/plugins/BranchPlugin/index.js"
+    },
+    "./onesignal": {
+      "types": "./lib/typescript/plugins/OneSignalPlugin/index.d.ts",
+      "import": "./lib/module/plugins/OneSignalPlugin/index.js",
+      "default": "./lib/commonjs/plugins/OneSignalPlugin/index.js"
+    },
+    "./scripts": "./scripts/index.js"
+  },
+  "scripts": {
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build && npx tsc-alias -p tsconfig.main.json && npx tsc-alias -p tsconfig.module.json && npx tsc-alias -p tsconfig.typescript.json",
+    "release": "npm publish --access public"
+  },
+  "peerDependencies": {
+    "@kirz/react-native-blur": "^1.0.0",
+    "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-masked-view/masked-view": "^0.3.0",
+    "@react-navigation/native": "^6.0.0",
+    "react": "^18.2.0",
+    "react-native": "^0.72.6",
+    "react-native-bootsplash": "^4.4.0",
+    "react-native-gesture-handler": "^2.16.0",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-localize": "^3.0.2",
+    "react-native-permissions": "^3.9.3",
+    "react-native-reanimated": "^3.5.4",
+    "react-native-svg": "^13.7.0",
+    "react-native-view-shot": "^3.7.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@amplitude/analytics-react-native": "^1.1.7",
+    "@babel/core": "^7.16.10",
+    "@babel/runtime": "^7.12.5",
+    "@kirz/react-native-apphud": "^2.0.1",
+    "@kirz/react-native-appmetrica": "^2.1.0",
+    "@kirz/react-native-blur": "^1.0.0",
+    "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-firebase/analytics": "^14.12.0",
+    "@react-native-firebase/app": "^14.12.0",
+    "@react-native-firebase/remote-config": "^14.12.0",
+    "@react-native-masked-view/masked-view": "^0.3.0",
+    "@react-navigation/native": "^6.1.7",
+    "@sentry/integrations": "^7.28.1",
+    "@sentry/react-native": "^5.0.0-alpha.10",
+    "@sparkfabrik/react-native-idfa-aaid": "^0.8.5",
+    "@types/react": "^18.0.26",
+    "@types/react-native": "^0.70.8",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "@zerollup/ts-transform-paths": "^1.7.18",
+    "eslint": "^8.32.0",
+    "eslint-config-universe": "^11.1.1",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-exports": "^1.0.0-beta.4",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "prettier": "^2.8.3",
+    "react": "^18.2.0",
+    "react-native": "^0.72.6",
+    "react-native-adapty": "^2.6.0",
+    "react-native-appsflyer": "^6.9.4",
+    "react-native-bootsplash": "^4.4.0",
+    "react-native-branch": "^5.9.2",
+    "react-native-builder-bob": "^0.20.3",
+    "react-native-fbsdk-next": "^12.1.0",
+    "react-native-gesture-handler": "^2.16.0",
+    "react-native-iap": "^12.4.14",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-onesignal": "^5.1.0",
+    "react-native-permissions": "^3.9.3",
+    "react-native-purchases": "^5.4.0",
+    "react-native-reanimated": "^3.5.4",
+    "react-native-svg": "^13.7.0",
+    "react-native-view-shot": "^3.7.0",
+    "tsc-alias": "^1.8.2",
+    "typescript": "^4.8.4"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "dependencies": {
+    "@formatjs/intl": "^2.9.3",
+    "@gorhom/portal": "^1.0.14",
+    "@types/color": "^3.0.5",
+    "chalk": "^4.1.2",
+    "color": "^4.2.3",
+    "font-color-contrast": "^11.1.0",
+    "intl": "^1.2.5",
+    "jotai": "^2.5.1",
+    "p-queue": "^6.6.2",
+    "plist": "^3.0.6",
+    "react-native-dropdownalert": "^5.1.0",
+    "react-native-easing-gradient": "^1.1.1",
+    "react-native-localize": "^3.0.2",
+    "react-native-modal": "^13.0.1",
+    "use-async-effect": "^2.2.7"
+  }
+}

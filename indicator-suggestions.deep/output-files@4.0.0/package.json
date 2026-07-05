@@ -1,0 +1,68 @@
+{
+  "name": "output-files",
+  "version": "4.0.0",
+  "description": "Output a tree of files and directories by providing an object. Especially useful for testing with real files.",
+  "keywords": [
+    "build",
+    "create",
+    "declarative",
+    "directory",
+    "file",
+    "files-system",
+    "fs",
+    "generate",
+    "json",
+    "object",
+    "recursive",
+    "test",
+    "tree",
+    "write"
+  ],
+  "repository": "dword-design/output-files",
+  "funding": "https://github.com/sponsors/dword-design",
+  "license": "MIT",
+  "author": "Sebastian Landwehr <info@sebastianlandwehr.com>",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "checkUnknownFiles": "base checkUnknownFiles",
+    "commit": "base commit",
+    "depcheck": "base depcheck",
+    "dev": "base dev",
+    "lint": "base lint",
+    "prepare": "base prepare",
+    "prepublishOnly": "base prepublishOnly",
+    "test": "base test",
+    "typecheck": "base typecheck",
+    "verify": "base verify"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.0"
+  },
+  "devDependencies": {
+    "@dword-design/base": "^16.0.0",
+    "@dword-design/defaults": "^1.1.1",
+    "@playwright/test": "^1.54.1",
+    "@types/fs-extra": "^11.0.4",
+    "endent": "npm:@dword-design/endent@^1.4.7",
+    "execa": "^9.6.0",
+    "globby": "^13.1.3",
+    "tsx": "^4.20.3"
+  },
+  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

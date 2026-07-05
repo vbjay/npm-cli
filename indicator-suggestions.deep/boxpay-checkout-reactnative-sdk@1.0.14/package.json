@@ -1,0 +1,156 @@
+{
+  "name": "boxpay-checkout-reactnative-sdk",
+  "version": "1.0.14",
+  "description": "Boxpay Payment Gateway",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./interface": {
+      "types": "./lib/typescript/src/interface.d.ts",
+      "default": "./lib/module/interface.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "assets",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!**/__tests__",
+    "!**/__mocks__",
+    "!**/node_modules"
+  ],
+  "scripts": {
+    "typecheck": "tsc",
+    "clean": "del-cli lib",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "build": "bob build",
+    "prepare": "echo \"{ \\\"version\\\": \\\"$(node -p 'require(\"./package.json\").version')\\\" }\" > src/sdk-version.json && cp -r assets lib/assets",
+    "release": "release-it --only-version",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoxPay-SDKs/checkout-react-native-sdk"
+  },
+  "author": "ishika bansal <ishika.bansal@boxpay.tech> (https://github.com/Ishika1601-boxpay)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BoxPay-SDKs/checkout-react-native-sdk/issues"
+  },
+  "homepage": "https://github.com/BoxPay-SDKs/checkout-react-native-sdk#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-navigation/native": "^7.1.17",
+    "@react-navigation/native-stack": "^7.3.26",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/base-64": "^1.0.2",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.0.12",
+    "babel-plugin-transform-define": "^2.1.4",
+    "del-cli": "^5.1.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "release-it": "^17.10.0",
+    "typescript": "^5.5.4",
+    "react-native-builder-bob": "^0.40.13",
+    "@react-native/babel-preset": "0.78.2",
+    "@react-native/eslint-config": "^0.78.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-paper": ">=5.0.0",
+    "react-native-shimmer-placeholder": ">=2.0.0",
+    "react-native-toast-message": ">=2.0.0",
+    "react-native-webview": ">=13.0.0",
+    "react-native-country-picker-modal": "^2.0.0",
+    "react-native-render-html" : "^6.3.4",
+
+    "lottie-react-native": "^7.3.4",
+    "react-native-modal": "^14.0.0-rc.1",
+    "react-native-svg": ">=15.0.0"
+  },
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "1.0.14"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "base-64": "^1.0.0",
+    "currency-symbol-map": "^5.1.0"
+  },
+  "module": "lib/module/index.js"
+}

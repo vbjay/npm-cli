@@ -1,0 +1,118 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['EasebuzzSdk_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+  try {
+    apply plugin: "com.facebook.react"
+  } catch (Exception e) {
+    // Plugin not available
+  }
+}
+
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["EasebuzzSdk_" + name]).toInteger()
+}
+
+def supportsNamespace() {
+  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+  def major = parsed[0].toInteger()
+  def minor = parsed[1].toInteger()
+
+  // Namespace support was added in 7.3.0
+  return (major == 7 && minor >= 3) || major >= 8
+}
+
+android {
+  if (supportsNamespace()) {
+    namespace "com.easebuzzsdk"
+
+    sourceSets {
+      main {
+        manifest.srcFile "src/main/AndroidManifestNew.xml"
+      }
+    }
+  }
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  sourceSets {
+    main {
+      if (!isNewArchitectureEnabled()) {
+        java.srcDirs += ['src/oldarch/java']
+      }
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+  }
+
+}
+kotlin {
+  jvmToolchain(17)
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+
+  def rnDir = rootProject.file("../node_modules/react-native")
+  if (rnDir.exists()) {
+    maven { url "$rnDir/android" }
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  compileOnly("com.facebook.react:react-android:+")
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'in.easebuzz:android-v2:1.0.9'
+}

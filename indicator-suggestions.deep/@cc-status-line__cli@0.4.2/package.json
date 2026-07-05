@@ -1,0 +1,42 @@
+{
+  "name": "@cc-status-line/cli",
+  "version": "0.4.2",
+  "description": "Multi-line, mode-switchable status line for Claude Code (Rust binary, npm-distributed)",
+  "keywords": [
+    "claude-code",
+    "claude",
+    "anthropic",
+    "statusline",
+    "status-line",
+    "cli",
+    "rust"
+  ],
+  "homepage": "https://github.com/hankeGui/cc-status",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hankeGui/cc-status.git"
+  },
+  "bugs": "https://github.com/hankeGui/cc-status/issues",
+  "license": "MIT",
+  "author": "hankeGui",
+  "bin": {
+    "ccs": "bin/ccs.js"
+  },
+  "files": [
+    "bin",
+    "index.js",
+    "postinstall.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.js || true"
+  },
+  "optionalDependencies": {
+    "@cc-status-line/darwin-arm64": "0.4.2",
+    "@cc-status-line/linux-x64": "0.4.2",
+    "@cc-status-line/linux-arm64": "0.4.2"
+  }
+}

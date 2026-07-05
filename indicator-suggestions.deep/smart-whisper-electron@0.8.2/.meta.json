@@ -1,0 +1,125 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "63b80658acf9ddbd",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "fd98f510c997229f31dd6ce0d2de94162e8d8b959b04ab9c3fe51381d7a5f06b",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `smart-whisper`  -  C/C++ sources",
+            "items": [
+              "src/binding/binding.cc",
+              "src/binding/common.cc",
+              "src/binding/model.cc",
+              "src/binding/transcribe.cc",
+              "<!@(node -p \"require('./dist/build.js').sources\")"
+            ]
+          },
+          {
+            "label": "Target `smart-whisper`  -  libraries",
+            "items": [
+              "<!@(node -p \"require('./dist/build.js').libraries\")"
+            ]
+          },
+          {
+            "label": "Target `smart-whisper`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "whisper.cpp/include",
+              "whisper.cpp/ggml/include",
+              "whisper.cpp/examples"
+            ]
+          },
+          {
+            "label": "Target `smart-whisper`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:12.012Z"
+  },
+  "hash": "sha256:bd489ecb36a33e58b042cb7ed256555109353cf6f79a3e8c5d669a32b5fd129a"
+}

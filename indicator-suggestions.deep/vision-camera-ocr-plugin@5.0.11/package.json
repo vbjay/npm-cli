@@ -1,0 +1,110 @@
+{
+  "name": "vision-camera-ocr-plugin",
+  "version": "5.0.11",
+  "description": "VisionCamera Frame Processor Plugin to provide OCR support",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib",
+    "nitrogen",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "scripts/patch-ios-nitrogen-includes.js",
+    "nitro.json",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build && npx nitrogen && node scripts/patch-ios-nitrogen-includes.js",
+    "patch-ios-nitrogen-includes": "node scripts/patch-ios-nitrogen-includes.js",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francesco-clementi-92/vision-camera-ocr.git"
+  },
+  "author": "francesco-clementi-92 Sousa <francesco-clementi-921998sousa@gmail.com> (https://github.com/francesco-clementi-92sousa)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/francesco-clementi-92sousa/vision-camera-ocr/issues"
+  },
+  "homepage": "https://github.com/francesco-clementi-92sousa/vision-camera-ocr#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "nitrogen": "0.36.1",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "react-native-builder-bob": "0.41.0",
+    "react-native-nitro-modules": "0.36.1",
+    "react-native-vision-camera": "*",
+    "release-it": "^20.0.1",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": ">=0.36.0",
+    "react-native-vision-camera": ">=5.1.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

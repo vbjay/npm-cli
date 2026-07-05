@@ -1,0 +1,146 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import in.juspay.payments.core.ClientConfig
+
+ext {
+    androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://maven.juspay.in/hyper-sdk/" }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath 'in.juspay:hypersdk.plugin:2.2.8'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    namespace "in.juspay.hypersdk.capacitor"
+    compileSdk project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 34
+    defaultConfig {
+        minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 22
+        targetSdkVersion project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 34
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+if (!rootProject.hasProperty('skipHyperSdk') || !rootProject.skipHyperSdk.toBoolean()) {
+    apply plugin: 'hypersdk.plugin'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':capacitor-android')
+    compileOnly "in.juspay:hypersdk:${getHyperSDKVersion(rootProject)}"
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+}
+
+static def mostRecentVersion(List<String> versions) {
+    return versions.sort(false) { a, b ->
+        [a, b]*.tokenize('-rc')*.join('')*.tokenize('.')*.collect {
+            it as int
+        }.with { u, v ->
+            [u, v].transpose().findResult { x, y -> x <=> y ?: null } ?: u.size() <=> v.size()
+        }
+    }[-1]
+}
+
+static def getHyperSDKVersion(rootProject) {
+    def hyperSdkVersion = '2.2.2'
+    if (!rootProject.hasProperty('hyperSDKVersion')) {
+        return hyperSdkVersion
+    }
+    def rootVersion = rootProject.hyperSDKVersion
+    hyperSdkVersion = mostRecentVersion([rootVersion, hyperSdkVersion])
+    if (hyperSdkVersion != rootVersion) {
+        System.out.println("Ignoring the overriden SDK version present in root build.gradle ($rootVersion), as there is a newer version present in the SDK ($hyperSdkVersion).")
+    }
+    return hyperSdkVersion
+}
+
+static def getExcludedMicroSdks(rootProject) {
+    if (!rootProject.hasProperty('excludedMicroSDKs')) {
+        return []
+    }
+    return rootProject.excludedMicroSDKs
+}
+
+static def getClientId(rootProject) {
+    return rootProject.clientId
+}
+
+static def getClientConfigs(rootProject, Project project) {
+    def clientConfigs = rootProject.clientConfigs
+
+    def namedDomainObjectContainer = project.container(ClientConfig) { name ->
+        def clientConfig = new ClientConfig(name)
+
+        def configClosure = clientConfigs.get(name)
+
+        if (configClosure instanceof Closure) {
+            def configMap = configClosure.call()
+
+            if (configMap instanceof Map) {
+                if (configMap.containsKey("tenantName")) {
+                    clientConfig.tenantName = configMap.tenantName
+                }
+                if (configMap.containsKey("assetVersion")) {
+                    clientConfig.assetVersion = configMap.assetVersion
+                }
+            }
+        }
+
+        return clientConfig
+    }
+
+    clientConfigs.each { key, configClosure ->
+        if (configClosure instanceof Closure) {
+            def configMap = configClosure.call()
+            if (configMap instanceof Map) {
+                namedDomainObjectContainer.create(key)
+            }
+        }
+    }
+
+    return namedDomainObjectContainer
+}
+
+if (!rootProject.hasProperty('skipHyperSdk') || !rootProject.skipHyperSdk.toBoolean()) {
+    hyperSdkPlugin {
+        sdkVersion = getHyperSDKVersion(rootProject)
+        excludedMicroSDKs = getExcludedMicroSdks(rootProject)
+    }
+    if (rootProject.hasProperty("clientId")) {
+        hyperSdkPlugin.clientId = getClientId(rootProject)
+    }
+    if (!rootProject.hasProperty("clientId") && rootProject.hasProperty("clientConfigs")) {
+        hyperSdkPlugin.clientConfigs = getClientConfigs(rootProject, project)
+    }
+}

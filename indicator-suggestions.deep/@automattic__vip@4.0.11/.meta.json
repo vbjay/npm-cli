@@ -1,0 +1,97 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "17ffbd1402f3dbe7",
+    "fetchedFiles": [
+      "helpers/check-version.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "semver",
+        "versionSpec": "7.8.5"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "semver@7.8.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "helpers/check-version.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b2218995b4d234d534f291da6bf442c8f364cd37ad4ba91f50425cd052d3a7b3",
+        "sizeBytes": 564,
+        "signals": [
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://nodejs.org/en/download/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./helpers/check-version.js",
+        "sha256": "6afea5115ae40b8a385b265c518f8ecd413a7ba86d68f6339806cea80c6450e9",
+        "sizeBytes": 8203,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:42.538Z"
+  },
+  "hash": "sha256:719eed88f3d8cd20a33c5b9da59b0bbd1280ce868397f54217a11bc7f76d2112"
+}

@@ -1,0 +1,365 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a2070247765c872c",
+    "fetchedFiles": [
+      "dist/lib/auth-store.js",
+      "dist/lib/config.js",
+      "dist/lib/errors.js",
+      "dist/lib/help-center.js",
+      "dist/lib/migrate-auth.js",
+      "dist/lib/skills/content.js",
+      "dist/lib/skills/create-installer.js",
+      "dist/lib/skills/index.js",
+      "dist/lib/skills/update-installed.js",
+      "dist/lib/usage-tracking.js",
+      "dist/lib/user-records.js",
+      "dist/lib/users.js",
+      "dist/postinstall.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "@doist/todoist-sdk",
+        "versionSpec": "10.5.1"
+      },
+      {
+        "name": "@doist/cli-core",
+        "versionSpec": "0.26.0"
+      },
+      {
+        "name": "inner",
+        "versionSpec": null
+      },
+      {
+        "name": "src",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@doist/cli-core@0.26.0",
+      "@doist/todoist-sdk@10.5.1",
+      "inner@0.2.0",
+      "src@1.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0620528eaa186efbe27488277340b1fe0c567d7abea5873b1401b5a11c2a468d",
+        "sizeBytes": 444,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/postinstall.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/postinstall.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "0912e346031aaf3d28167be1f4b159dc34bfeececafcbd7cb69a242d0a9cb849",
+        "sizeBytes": 337,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/migrate-auth.js",
+          "dist/lib/skills/update-installed.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/migrate-auth.js",
+        "reason": "required by ./dist/postinstall.js",
+        "sha256": "2fe7bae9a29f29734e4571bf897006455d03dd8948b5d29f81e3b9f2eed6962a",
+        "sizeBytes": 4539,
+        "signals": [
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/auth-store.js",
+          "dist/lib/config.js",
+          "dist/lib/usage-tracking.js",
+          "dist/lib/user-records.js"
+        ],
+        "urls": [
+          {
+            "url": "https://api.todoist.com/api/v1/user",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/lib/auth-store.js",
+        "reason": "required by ./dist/lib/migrate-auth.js; required by ./dist/lib/user-records.js",
+        "sha256": "3195f25aa9498d0851564ca19c18a928821d0c29c4af10eeb5833513f6b06ad4",
+        "sizeBytes": 4144,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/config.js",
+          "dist/lib/user-records.js",
+          "dist/lib/users.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/config.js",
+        "reason": "required by ./dist/lib/auth-store.js; required by ./dist/lib/user-records.js; required by ./dist/lib/migrate-auth.js",
+        "sha256": "3ccf4807dec5f5d9abca5f8dfb69d459fd3a7b990fcb5b0a900dd2747dc4cff7",
+        "sizeBytes": 11005,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/errors.js",
+          "dist/lib/help-center.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/errors.js",
+        "reason": "required by ./dist/lib/config.js; required by ./dist/lib/help-center.js; required by ./dist/lib/users.js; required by ./dist/lib/skills/create-installer.js",
+        "sha256": "901c3936fc5e2798758bec4b67c904a7bea4e8cdedfc88360192d0af7a194eb8",
+        "sizeBytes": 806,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/help-center.js",
+        "reason": "required by ./dist/lib/config.js",
+        "sha256": "c1b981117235e2b459ebe4fb109b5b323a0d3f7b5c022dbefe3607fac1aa9a13",
+        "sizeBytes": 19359,
+        "signals": [
+          "network-access",
+          "obfuscation-pattern",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/errors.js"
+        ],
+        "urls": [
+          {
+            "url": "https://todoist.zendesk.com/api/v2/help_center/articles/search",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://todoist.zendesk.com/api/v2/help_center",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://todoist.zendesk.com/api/v2/help_center/locales",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://todoist.zendesk.com/api/v2/locales.json",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://get.todoist.help/hc/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/lib/user-records.js",
+        "reason": "required by ./dist/lib/auth-store.js; required by ./dist/lib/migrate-auth.js",
+        "sha256": "d3cb354ae33eef47143248b496c02fc1074e9a5f167fe9083cc87dddacb224f1",
+        "sizeBytes": 3249,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/auth-store.js",
+          "dist/lib/config.js",
+          "dist/lib/users.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/users.js",
+        "reason": "required by ./dist/lib/user-records.js; required by ./dist/lib/auth-store.js",
+        "sha256": "d54e31d9086ad6ab02e86fb0b96fcc01d8ee9fa62dd857eb4f4c94639ed2b291",
+        "sizeBytes": 4628,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/errors.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/usage-tracking.js",
+        "reason": "required by ./dist/lib/migrate-auth.js",
+        "sha256": "c43bda2746f8fa03a5c5ea7ad86eb436f792b9b8de4d0ebef72d8f334ec37027",
+        "sizeBytes": 4146,
+        "signals": [
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./dist/lib/usage-tracking.js; required by ./dist/lib/skills/create-installer.js",
+        "sha256": "7fa54f1b8bfc7862f46ae854019751c42f2b91e439d6735eced28300e6d03f1b",
+        "sizeBytes": 2060,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/update-installed.js",
+        "reason": "required by ./dist/postinstall.js",
+        "sha256": "2a8cfb08b58d7602ea9b22fa9f81e21ee8f6498cf42cd0034d0c32e0d6eee884",
+        "sizeBytes": 741,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/skills/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/index.js",
+        "reason": "required by ./dist/lib/skills/update-installed.js",
+        "sha256": "864badd5b3637d34ac93ace9bc579ea02e62df30916f505f4f688c5af7849edf",
+        "sizeBytes": 1397,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/skills/create-installer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/create-installer.js",
+        "reason": "required by ./dist/lib/skills/index.js",
+        "sha256": "f9632ea77e8b30edf7c73f7b3af8f768a53d88e873cfcb8751764535fd6a1038",
+        "sizeBytes": 3216,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "dist/lib/errors.js",
+          "dist/lib/skills/content.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/content.js",
+        "reason": "required by ./dist/lib/skills/create-installer.js",
+        "sha256": "c23495405670582510a801257d1476d2cb257888894fbf1ef26b63547434f4cf",
+        "sizeBytes": 29342,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://app.todoist.com/app/task/buy-milk-8Jx4mVr72kPn3QwB\\",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://app.todoist.com/app/project/work-2pN7vKx49mRq6YhT\\",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://files.todoist.com/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.todoist.com/help/articles/introduction-to-filters-V98wIH",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://example.com/callback",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://example.com/webhook",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://app.todoist.com/app/install/<distribution_token>\\",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://app.todoist.com/app/task/buy-milk-abc123",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://app.todoist.com/app/today",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:58.616Z"
+  },
+  "hash": "sha256:f518e374b79835a8f0df4aa9165429ae73a4378f31e64653808f499b5b43ec3f"
+}

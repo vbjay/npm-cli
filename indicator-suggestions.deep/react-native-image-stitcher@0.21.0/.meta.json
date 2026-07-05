@@ -1,0 +1,129 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f5c34a2454295c6a",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/postinstall-fetch-binaries.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "83561a88bde5ec25281648be02c383fba04fd3a1f98f5eeb5b4486f628f8325c",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "'arm64-v8a'"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android",
+              "org.jetbrains.kotlin:kotlin-stdlib:1.9.22",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3",
+              "androidx.exifinterface:exifinterface:1.3.7",
+              "com.google.ar:core:1.45.0",
+              "androidx.camera:camera-core:1.5.0-alpha03"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall-fetch-binaries.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "3c866bbebcfd8a6b5dfd9bd03fd07c27edaff9d9887397922d6923ba0c01c4d0",
+        "sizeBytes": 10716,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "dynamic-require",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/bhargavkanda/react-native-image-stitcher/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:42.112Z"
+  },
+  "hash": "sha256:af55c4d9014d5935038fb5da527a4c8c27c6136b5e77b5b6859ec2727be26cff"
+}

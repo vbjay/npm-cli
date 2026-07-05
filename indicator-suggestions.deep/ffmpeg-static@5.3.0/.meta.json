@@ -1,0 +1,106 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "dc5cef8f6a084efd",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "env-paths",
+        "versionSpec": "^2.2.0"
+      },
+      {
+        "name": "@derhuerst/http-basic",
+        "versionSpec": "^8.2.0"
+      },
+      {
+        "name": "progress",
+        "versionSpec": "^2.0.3"
+      },
+      {
+        "name": "https-proxy-agent",
+        "versionSpec": "^5.0.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@derhuerst/http-basic@8.2.4",
+      "env-paths@2.2.1",
+      "https-proxy-agent@5.0.1",
+      "progress@2.0.3"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "a9949b374c5636cd854ef2f3e699bf4603fc938c5b3a2b5400574acb2f0ae168",
+        "sizeBytes": 6244,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://example.org/foo?bar",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github-production-release-asset-2e65be.s3.amazonaws.com/29458513/26341680-4231-11ea-8e36-ae454621d74a?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200405%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200405T225358Z&X-Amz-Expires=300&X-Amz-Signature=d6415097af04cf62ea9b69d3c1a421278e96bcb069afa48cf021ec3b6941bae4&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Ddarwin-x64&response-content-type=application%2Foctet-stream",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github-production-release-asset-2e65be.s3.amazonaws.com/29458513/26341680-4231-11ea-8e36-ae454621d74a?actor_id=0&response-content-disposition=attachment%3B%20filename%3Ddarwin-x64&response-content-type=application%2Foctet-stream",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/eugeneware/ffmpeg-static/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:51.336Z"
+  },
+  "hash": "sha256:08935bea18404fb1ccec6fe648e9f289499479ea52221483b235c69c00a0cb7d"
+}

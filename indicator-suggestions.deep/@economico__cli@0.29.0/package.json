@@ -1,0 +1,48 @@
+{
+  "name": "@economico/cli",
+  "version": "0.29.0",
+  "description": "Agent-facing CLI for Economico — general ledger over a REST API. Pair with the hosted SKILL.md at https://economi.co/skill.md.",
+  "keywords": [
+    "economico",
+    "ledger",
+    "accounting",
+    "agent",
+    "ai-agent",
+    "cli",
+    "skill"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "economico": "dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "gen": "openapi-typescript ../../../public_html/openapi.json -o src/api/types.ts || openapi-typescript http://localhost:8080/openapi.json -o src/api/types.ts",
+    "build": "tsc --noEmit && node esbuild.config.js",
+    "dev": "node esbuild.config.js --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "openapi-fetch": "^0.13.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.27.0",
+    "fast-check": "^4.8.0",
+    "openapi-typescript": "^7.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

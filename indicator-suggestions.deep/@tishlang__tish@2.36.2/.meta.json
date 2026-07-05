@@ -1,0 +1,124 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d724167904cdbc16",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "Justfile",
+      "package.json",
+      "scripts/install-bin.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "fd21e318ac6cac6a3b01dba78312eb5ad52b96e257186817539d8713715f8908",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate version",
+            "items": [
+              "1.0.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Justfile",
+        "label": "Just task runner script",
+        "sha256": "54116627b11e63827b4fdef29d0b168f03ba239a6cd288efb152e59349d9ac21",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "Just recipes (tasks)",
+            "items": [
+              "default",
+              "build-secure",
+              "build-full",
+              "build-http",
+              "build-fs",
+              "build-process",
+              "build-regex",
+              "test-quick",
+              "test-coverage",
+              "test-cargo",
+              "test-secure",
+              "check-all",
+              "refresh-lattish",
+              "clean",
+              "fmt",
+              "lint",
+              "test262",
+              "test262-verbose",
+              "array-stress-profile",
+              "optional-chaining-profile",
+              "perf-suite-gen",
+              "sizes"
+            ]
+          },
+          {
+            "label": "External tools invoked in Justfile",
+            "items": [
+              "cargo",
+              "curl"
+            ]
+          },
+          {
+            "label": "Justfile",
+            "items": [
+              "Justfile"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-bin.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c724bd762e5ef6086d6e707ad42f0e9d9a11ab66646295f2ee73602132c9ac3c",
+        "sizeBytes": 1261,
+        "signals": [
+          "reads-process-env",
+          "makes-executable",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:05.746Z"
+  },
+  "hash": "sha256:714a047b7496df1ab630bb7d6fe2115e486ab9da80b1a3b8abb8c4ce7a072ac4"
+}

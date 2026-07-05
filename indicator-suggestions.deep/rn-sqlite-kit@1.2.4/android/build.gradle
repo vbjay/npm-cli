@@ -1,0 +1,67 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  def kotlinVersion = rootProject.ext.has('kotlinVersion')
+      ? rootProject.ext.get('kotlinVersion')
+      : project.properties['ReactNativeSqliteKit_kotlinVersion'] ?: '2.0.21'
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("com.android.tools.build:gradle:8.6.1")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'com.facebook.react'
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name)
+      ? rootProject.ext.get(name)
+      : (project.properties["ReactNativeSqliteKit_${name}"] as Integer)
+}
+
+react {
+  jsRootDir = file('../src')
+  libraryName = 'ReactNativeSqliteKit'
+  codegenJavaPackageName = 'com.reactnativesqlitekit'
+}
+
+android {
+  namespace 'com.reactnativesqlitekit'
+  compileSdk getExtOrIntegerDefault('compileSdkVersion')
+
+  defaultConfig {
+    minSdk getExtOrIntegerDefault('minSdkVersion')
+    targetSdk getExtOrIntegerDefault('targetSdkVersion')
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += ["$buildDir/generated/source/codegen/java"]
+    }
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation('com.facebook.react:react-android')
+}

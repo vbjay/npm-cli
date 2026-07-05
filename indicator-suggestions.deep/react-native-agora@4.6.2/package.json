@@ -1,0 +1,175 @@
+{
+  "name": "react-native-agora",
+  "version": "4.6.2",
+  "description": "Agora RTC SDK For React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/examples",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "!**/*.xcframework",
+    "!ios/AgoraRtcWrapper.podspec",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-agora-example-expo",
+    "legacy": "yarn workspace react-native-agora-example-legacy",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{cjs,js,ts,tsx}\"",
+    "clean": "del-cli android/build examples/legacy/android/build examples/legacy/android/app/build examples/legacy/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it",
+    "doc": "typedoc src --out ./docs --exclude \"examples/**\"",
+    "build:ts-interface": "ts-interface-builder src/*.ts -o src/ti/"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "ios",
+    "android"
+  ],
+  "repository": "https://github.com/AgoraIO-Extensions/react-native-agora",
+  "author": "HUI <luxuhui@agora.io> (https://github.com/LichKing-2234)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgoraIO-Extensions/react-native-agora/issues"
+  },
+  "homepage": "https://github.com/AgoraIO-Extensions/react-native-agora#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native/eslint-config": "^0.77.1",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.2",
+    "@types/json-bigint": "^1.0.1",
+    "@types/react": "18.3.1",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-auto-import": "^0.1.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.1",
+    "pod-install": "^0.2.0",
+    "prettier": "2.8.8",
+    "react": "18.3.1",
+    "react-native": "0.77.1",
+    "react-native-builder-bob": "^0.20.0",
+    "release-it": "^15.0.0",
+    "ts-interface-builder": "^0.3.3",
+    "turbo": "^1.10.7",
+    "typedoc": "^0.24.1",
+    "typescript": "5.0.4"
+  },
+  "resolutions": {
+    "@types/react": "18.3.1",
+    "eslint-plugin-auto-import@^0.1.1": "patch:eslint-plugin-auto-import@npm%3A0.1.1#./.yarn/patches/eslint-plugin-auto-import-npm-0.1.1-79fd8c84dd.patch",
+    "json-bigint@^1.0.0": "patch:json-bigint@npm%3A1.0.0#./.yarn/patches/json-bigint-npm-1.0.0-8e35bcb143.patch",
+    "eslint@^8.4.1": "patch:eslint@npm%3A8.56.0#./.yarn/patches/eslint-npm-8.56.0-6eec398a41.patch",
+    "ts-interface-builder@^0.3.3": "patch:ts-interface-builder@npm%3A0.3.3#./.yarn/patches/ts-interface-builder-npm-0.3.3-64253a8816.patch",
+    "react-native-color-picker@^0.6.0": "patch:react-native-color-picker@npm%3A0.6.0#./.yarn/patches/react-native-color-picker-npm-0.6.0-aaefc9686a.patch"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "examples/*"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">=18"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/examples/legacy/node_modules",
+      "<rootDir>/examples/expo/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/examples/expo/e2e",
+      "<rootDir>/examples/legacy/e2e"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "eventemitter3": "^5.0.1",
+    "json-bigint": "^1.0.0",
+    "ts-interface-checker": "^1.0.2"
+  },
+  "codegenConfig": {
+    "name": "AgoraRtcNgSpec",
+    "type": "all",
+    "jsSrcsDir": "src/specs",
+    "ios": {
+      "componentProvider": {
+        "AgoraRtcSurfaceView": "AgoraRtcSurfaceView"
+      }
+    },
+    "android": {
+      "javaPackageName": "io.agora.rtc.ng.react"
+    }
+  }
+}

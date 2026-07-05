@@ -1,0 +1,129 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1319924100e5a2a0",
+    "fetchedFiles": [
+      "bin/binaries-link.mjs",
+      "bin/download.mjs",
+      "bin/index.mjs",
+      "bin/set-permissions.mjs",
+      "bin/toolchain-install.mjs",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "execa",
+        "versionSpec": "^8.0.0"
+      },
+      {
+        "name": "fs-extra",
+        "versionSpec": "^11.2.0"
+      },
+      {
+        "name": "rimraf",
+        "versionSpec": "^5.0.7"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "execa@8.0.1",
+      "fs-extra@11.3.6",
+      "rimraf@5.0.10"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/index.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f0dfad9da6cd94181cfc320351fc7ca21e80f41677c1ddcff6fde51f3b61a9da",
+        "sizeBytes": 1599,
+        "signals": [
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/toolchain-install.mjs",
+          "bin/download.mjs",
+          "bin/binaries-link.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://sh.rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "bin/toolchain-install.mjs",
+        "reason": "required by ./bin/index.mjs",
+        "sha256": "773d76285a72fcf5f526c6837f7f97af5e3391c70f17fbe98c4ddd6f2655e05c",
+        "sizeBytes": 2149,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "bin/download.mjs",
+        "reason": "required by ./bin/index.mjs",
+        "sha256": "5b62c415b69ed8134b66fee7c903339e2cf8c20097e234c4b15b4ee1fcc03ed7",
+        "sizeBytes": 741,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/set-permissions.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/set-permissions.mjs",
+        "reason": "required by ./bin/download.mjs",
+        "sha256": "12249f18a16f53d9376704826bdb3469709f1325746d31f168777a55f0faa47f",
+        "sizeBytes": 794,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "bin/binaries-link.mjs",
+        "reason": "required by ./bin/index.mjs",
+        "sha256": "22cf4b1f4d0c74c1423e18d454e2767c46a67ac533431e1badb87bf563442b22",
+        "sizeBytes": 616,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:43:17.853Z"
+  },
+  "hash": "sha256:6561dcceb9b0847280b47aeb8690ea2485473edbf56cb554b00ed5a4ecde5a15"
+}

@@ -1,0 +1,93 @@
+{
+  "name": "@brainwav/diagram",
+  "version": "1.1.0",
+  "packageManager": "npm@10.9.2",
+  "description": "Generate architecture evidence for humans and AI agents",
+  "main": "src/diagram.js",
+  "bin": {
+    "archscope": "src/diagram.js",
+    "diagram": "src/diagram.js"
+  },
+  "scripts": {
+    "test": "mocha",
+    "test:watch": "mocha --watch",
+    "test:deep": "node scripts/deep-regression.js",
+    "migration:readiness": "node scripts/validate-archscope-readiness.js",
+    "ci:artifacts": "node scripts/assert-ci-artifacts.js",
+    "prepublishOnly": "npm test",
+    "release:prepare": "bash scripts/release-npm.sh",
+    "release:prepare:initial": "bash scripts/release-npm.sh --initial",
+    "release:publish": "bash scripts/release-npm.sh --publish",
+    "release:publish:initial": "bash scripts/release-npm.sh --publish --initial",
+    "harness": "echo 'Harness command is disabled in this repo. Run: npm run harness:check' >&2 && exit 1",
+    "harness:pr-gates": "bash scripts/harness-pr-gates.sh",
+    "prepare": "simple-git-hooks",
+    "harness:check": "bash scripts/harness-check.sh",
+    "lint": "echo 'No linter configured (plain JS project)' && exit 0",
+    "typecheck": "echo 'No TypeScript configured (plain JS project)' && exit 0",
+    "audit": "npm audit --audit-level=high",
+    "check": "npm test",
+    "secrets:staged": "bash scripts/check-staged-secrets.sh",
+    "docs:lint": "echo 'No docs linter configured (plain JS project)' && exit 0",
+    "docs:style:changed": "bash scripts/check-doc-style.sh",
+    "test:related": "bash scripts/check-related-tests.sh",
+    "semgrep:changed": "bash scripts/check-semgrep-changed.sh"
+  },
+  "keywords": [
+    "diagrams",
+    "mermaid",
+    "architecture",
+    "code-analysis",
+    "cli"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^14.0.3",
+    "glob": "^10.0.0",
+    "picomatch": "^4.0.3",
+    "yaml": "^2.8.4",
+    "zod": "^4.4.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jscraik/diagram-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jscraik/diagram-cli/issues"
+  },
+  "homepage": "https://github.com/jscraik/diagram-cli#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    ".diagram/contracts/**/*.json",
+    ".diagram/migration/finalization-policy.json",
+    ".diagram/migration/migration-readiness.json",
+    ".diagram/migration/releases/**/*.json",
+    "src/**/*.js",
+    "README.md",
+    "scripts/refresh-diagram-context.sh",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "mocha": "^11.3.0",
+    "simple-git-hooks": "^2.13.1"
+  },
+  "overrides": {
+    "chai": "^4.5.0",
+    "serialize-javascript": "^7.0.0",
+    "diff": "^8.0.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "make hooks-pre-commit",
+    "commit-msg": "node scripts/validate-commit-msg.js $1",
+    "pre-push": "make hooks-pre-push"
+  }
+}

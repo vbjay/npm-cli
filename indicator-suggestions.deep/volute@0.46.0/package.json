@@ -1,0 +1,108 @@
+{
+  "name": "volute",
+  "version": "0.46.0",
+  "description": "CLI for creating and managing self-modifying AI minds powered by the Claude Agent SDK",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mimsy/volute.git"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "minds",
+    "claude",
+    "anthropic"
+  ],
+  "workspaces": [
+    "packages/*",
+    "packages/extensions/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "volute": "dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/cli.js",
+    "./api": {
+      "types": "./dist/api.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "drizzle/",
+    "templates/",
+    "packages/extensions/notes/dist/ui/",
+    "packages/extensions/notes/skills/",
+    "packages/extensions/pages/dist/ui/",
+    "packages/extensions/pages/skills/",
+    "packages/extensions/plan/dist/ui/",
+    "packages/extensions/plan/skills/"
+  ],
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "npm run build:ext && tsup && cp -r skills dist/skills && npm run build:web",
+    "build:ext": "npm run build:ext-theme --workspace=packages/ui && cp packages/ui/dist/ext-theme.css packages/web/public/ext-theme.css && npm run build:ui --workspace=packages/extensions/notes && npm run build:ui --workspace=packages/extensions/pages && npm run build:ui --workspace=packages/extensions/plan",
+    "build:web": "npm run build:ui --workspace=packages/web",
+    "dev:web": "npm run dev --workspace=packages/web",
+    "test": "node --import tsx --import ./test/setup.ts --test --test-force-exit --test-concurrency=4 $(find test -name '*.test.ts' ! -name 'daemon-e2e.test.ts' | sort)",
+    "test:e2e": "node --import tsx --import ./test/setup.ts --test --test-force-exit --test-concurrency=1 test/daemon-e2e.test.ts",
+    "test:all": "npm test && npm run test:e2e",
+    "lint": "biome check src/ test/",
+    "lint:fix": "biome check --write src/ test/",
+    "format": "biome format --write src/ test/",
+    "typecheck": "tsc --noEmit",
+    "typecheck:templates": "tsx scripts/typecheck-templates.ts",
+    "lint:templates": "biome check templates/",
+    "typecheck:web": "svelte-check --tsconfig packages/web/tsconfig.json",
+    "prepare": "lefthook install",
+    "prepublishOnly": "npm run build",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@anthropic-ai/sandbox-runtime": "^0.0.56",
+    "@hono/node-server": "^2.0.6",
+    "@hono/zod-validator": "^0.8.0",
+    "@libsql/client": "^0.17.4",
+    "@earendil-works/pi-ai": "^0.80.3",
+    "@slack/bolt": "^4.7.3",
+    "adm-zip": "^0.5.17",
+    "bcryptjs": "^3.0.3",
+    "cron-parser": "^5.6.0",
+    "discord.js": "^14.26.4",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.26",
+    "isomorphic-dompurify": "^2.36.0",
+    "libsql": "^0.5.29",
+    "replicate": "^1.4.0",
+    "telegraf": "^4.16.3",
+    "undici": "^6.24.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.197",
+    "@biomejs/biome": "2.5.0",
+    "@earendil-works/pi-coding-agent": "^0.80.3",
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@types/adm-zip": "^0.5.8",
+    "@types/node": "^26.0.0",
+    "dompurify": "^3.4.11",
+    "drizzle-kit": "^0.31.10",
+    "lefthook": "^2.1.9",
+    "marked": "^18.0.5",
+    "sharp": "^0.35.2",
+    "svelte": "^5.56.3",
+    "svelte-check": "4.7.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
+  },
+  "overrides": {
+    "esrap": "2.2.11"
+  }
+}

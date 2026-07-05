@@ -1,0 +1,119 @@
+{
+  "name": "@storybook/addon-console",
+  "version": "3.0.0",
+  "description": "Show console output like logs, errors, and warnings in the Storybook",
+  "keywords": [
+    "storybook-addons",
+    "debug",
+    "code",
+    "storybook",
+    "storybookjs",
+    "storybook-addon",
+    "addon",
+    "console",
+    "action",
+    "logs",
+    "output",
+    "decorator",
+    "warning",
+    "warnings",
+    "error",
+    "errors",
+    "redirect",
+    "devtools"
+  ],
+  "homepage": "https://github.com/storybooks/storybook-addon-console",
+  "bugs": {
+    "url": "https://github.com/storybooks/storybook-addon-console/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybooks/storybook-addon-console.git"
+  },
+  "license": "MIT",
+  "author": "Oleg Proskurin (https://github.com/UsulPro)",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "build-storybook": "storybook build",
+    "build:docs": "yarn build:readme.md && yarn build:readme",
+    "build:readme": "jsdoc2md -t docs/readme.hbs -c docs/jsdoc.config.json src/*.jsx  > README; echo",
+    "build:readme.md": "jsdoc2md -t docs/readme.hbs -c docs/jsdoc.config.json src/*.jsx  > README.md; echo",
+    "build:tests": "rm -rdf .jest-dist && babel ./src -d ./.jest-dist -s",
+    "debug": "node --debug-brk --inspect npm test",
+    "deploy:storybook": "storybook-to-ghpages",
+    "dev:docs": "nodemon --config docs/nodemon.json -x 'npm run build:docs'",
+    "lint": "eslint ./src",
+    "release": "auto shipit",
+    "prepare": "yarn build",
+    "storybook": "storybook dev",
+    "tdd": "jest --watch",
+    "test": "jest",
+    "test:publish": "npm pack"
+  },
+  "dependencies": {
+    "@storybook/global": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-react": "^7.18.6",
+    "@storybook/addon-actions": "^7.0.12",
+    "@storybook/addon-backgrounds": "^7.0.12",
+    "@storybook/addon-essentials": "^7.0.12",
+    "@storybook/addon-interactions": "^7.0.12",
+    "@storybook/addon-links": "^7.0.12",
+    "@storybook/addon-storysource": "^7.0.12",
+    "@storybook/addons": "^7.0.12",
+    "@storybook/blocks": "^7.0.12",
+    "@storybook/react": "^7.0.12",
+    "@storybook/react-vite": "^7.0.12",
+    "@storybook/testing-library": "^0.0.14-next.2",
+    "@storybook/theming": "^7.0.12",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^9.1.2",
+    "enzyme": "^3.3.0",
+    "auto": "^11.0.4",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.1.2",
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-storybook": "^0.6.12",
+    "jest-environment-jsdom": "^29.5.0",
+    "jest-enzyme": "^6.0.1",
+    "jsdoc-to-markdown": "^4.0.1",
+    "lint-staged": "^7.1.3",
+    "nodemon": "^1.12.0",
+    "prettier": "^1.5.3",
+    "prop-types": "^15.5.10",
+    "react-dom": "^16.4.0",
+    "react-test-renderer": "^16.4.0",
+    "storybook": "^7.0.12",
+    "tsup": "^8.0.1",
+    "typescript": "^5.0.3",
+    "url-loader": "^2.1.0",
+    "vite": "^4.3.7"
+  },
+  "peerDependencies": {
+    "@storybook/addon-actions": "*",
+    "react": "*"
+  },
+  "storybook": {
+    "displayName": "Console",
+    "icon": "https://user-images.githubusercontent.com/263385/101991668-479cc600-3c7c-11eb-9aac-09cd7b5b9f97.png"
+  },
+  "auto": {
+    "plugins": [
+      "npm",
+      "released"
+    ]
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "name": "@oxdev03/node-tantivy-binding",
+  "version": "0.2.1",
+  "description": "Node.js bindings for Tantivy. Provides indexing, querying, and advanced search features with TypeScript support.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": "https://github.com/oxdev03/node-tantivy-binding",
+  "license": "MIT",
+  "keywords": [
+    "nodejs",
+    "search",
+    "typescript",
+    "indexing",
+    "lucene",
+    "document-search",
+    "tantivy",
+    "napi-rs",
+    "full-text-search",
+    "rust"
+  ],
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "napi": {
+    "binaryName": "node-tantivy-binding",
+    "targets": [
+      "aarch64-apple-darwin",
+      "x86_64-apple-darwin",
+      "x86_64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu"
+    ]
+  },
+  "engines": {
+    "node": ">= 22.15.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "format": "run-p format:prettier format:rs format:toml",
+    "format:prettier": "prettier . -w",
+    "format:toml": "taplo format",
+    "format:rs": "cargo fmt",
+    "lint": "oxlint .",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "vitest run",
+    "bench": "vitest bench",
+    "version": "napi version",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@emnapi/core": "^1.4.5",
+    "@emnapi/runtime": "^1.4.5",
+    "@napi-rs/cli": "^3.1.4",
+    "@oxc-node/core": "^0.0.35",
+    "@taplo/cli": "^0.7.0",
+    "@tybys/wasm-util": "^0.10.0",
+    "@types/node": "^24.0.0",
+    "chalk": "^5.4.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "marked": "^17.0.0",
+    "npm-run-all2": "^8.0.4",
+    "oxlint": "^1.8.0",
+    "prettier": "^3.6.2",
+    "tinybench": "^6.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.0.0"
+  },
+  "lint-staged": {
+    "*.@(js|ts|tsx)": [
+      "oxlint --fix"
+    ],
+    "*.@(js|ts|tsx|yml|yaml|md|json)": [
+      "prettier --write"
+    ],
+    "*.toml": [
+      "taplo format"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "arrowParens": "always"
+  },
+  "packageManager": "yarn@4.12.0",
+  "optionalDependencies": {
+    "@oxdev03/node-tantivy-binding-darwin-arm64": "0.2.1",
+    "@oxdev03/node-tantivy-binding-darwin-x64": "0.2.1",
+    "@oxdev03/node-tantivy-binding-win32-x64-msvc": "0.2.1",
+    "@oxdev03/node-tantivy-binding-linux-x64-gnu": "0.2.1"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "name": "delivery-intel",
+  "version": "1.7.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "description": "Evidence-driven repo intelligence: DORA metrics, forensic signals, vulnerability scan, and delivery verdict for any GitHub repo. One command, no setup.",
+  "keywords": [
+    "dora",
+    "dora-metrics",
+    "devops",
+    "metrics",
+    "github",
+    "ci-cd",
+    "deployment-frequency",
+    "lead-time",
+    "change-failure-rate",
+    "mean-time-to-restore",
+    "mttr",
+    "vulnerability",
+    "osv",
+    "cli",
+    "dashboard",
+    "software-delivery",
+    "engineering-metrics",
+    "developer-productivity",
+    "platform-engineering",
+    "engineering-effectiveness",
+    "dx",
+    "forensics",
+    "verdict",
+    "repo-intelligence"
+  ],
+  "license": "MIT",
+  "author": "ParthibanRajasekaran",
+  "homepage": "https://github.com/ParthibanRajasekaran/delivery-intel#readme",
+  "bugs": {
+    "url": "https://github.com/ParthibanRajasekaran/delivery-intel/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ParthibanRajasekaran/delivery-intel"
+  },
+  "bin": {
+    "delivery-intel": "./bin/delivery-intel.js"
+  },
+  "main": "./dist/cli/analyzer.js",
+  "types": "./dist/cli/analyzer.d.ts",
+  "files": [
+    "dist/cli/",
+    "bin/"
+  ],
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "build:cli": "tsc -p tsconfig.cli.json",
+    "prepublishOnly": "npm run build:cli",
+    "start": "next start",
+    "lint": "eslint . --max-warnings 15",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.cli.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:jittest": "vitest run src/__tests__/jittest --reporter=verbose",
+    "jittest": "tsx src/jittest/cli.ts",
+    "jittest:ci": "tsx src/jittest/cli.ts",
+    "validate": "npm run lint && npm run typecheck && npm run test",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix --max-warnings 15",
+      "prettier --write"
+    ],
+    "*.{json,css,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@octokit/graphql": "^9.0.3",
+    "@octokit/rest": "^22.0.1",
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "date-fns": "^4.1.0",
+    "nanospinner": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.14",
+    "framer-motion": "^12.34.2",
+    "ioredis": "^5.9.3",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-is": "^19.2.4",
+    "recharts": "^3.7.0",
+    "typescript": "^5.9.3",
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/postcss": "^4.2.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "@vitest/coverage-v8": "^4.0.18",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^10.0.0",
+    "eslint-config-next": "^16.1.6",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
+    "jsdom": "^28.1.0",
+    "lint-staged": "^16.2.7",
+    "postcss": "^8.5.6",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.2.0",
+    "tsx": "^4.21.0",
+    "typescript-eslint": "^8.56.0",
+    "vitest": "^4.0.18"
+  },
+  "overrides": {
+    "minimatch": ">=3.1.3"
+  }
+}

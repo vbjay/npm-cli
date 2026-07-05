@@ -1,0 +1,77 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d8fcdddbc2270e8a",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "internal/module_scripts/prepare.js",
+      "internal/module_scripts/util.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "95c6c0fb712c49a5cc29491e5564217b711ce5d786969a1531e40b94073dbd41",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "internal/module_scripts/prepare.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "e3b17d4ef31ab368d61d40bf59a12cca0f2587a384ddc62b8bf2b77dcf358274",
+        "sizeBytes": 976,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "internal/module_scripts/util.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "internal/module_scripts/util.js",
+        "reason": "required by ./internal/module_scripts/prepare.js",
+        "sha256": "b77a8d72db63d3f0c1d07fd627ed941edb8e40f7e12aaeec71c2108be88faa38",
+        "sizeBytes": 488,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:45.775Z"
+  },
+  "hash": "sha256:986e244d141c98945e7ae579e7328aa4f77223e1271b240fcf9fcf606b9c3ee7"
+}

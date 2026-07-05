@@ -1,0 +1,70 @@
+{
+  "name": "@hermespilot/link",
+  "version": "0.9.5",
+  "private": false,
+  "description": "Hermes Link companion service and CLI for connecting hermes-agent through HermesPilot",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "hermeslink": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "model-capabilities",
+    ".env.example",
+    "scripts/check-node-version.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "hermespilot",
+    "hermes",
+    "hermes-agent",
+    "relay",
+    "link",
+    "cli"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup src/cli/index.ts src/http/app.ts --format esm --target node20 --dts --clean",
+    "check": "tsc --noEmit",
+    "dev": "tsx src/cli/index.ts",
+    "preinstall": "node ./scripts/check-node-version.mjs",
+    "prepack": "npm run build",
+    "pack:dry-run": "npm pack --dry-run",
+    "release": "node ./scripts/release.mjs",
+    "start": "node ./dist/cli/index.js",
+    "test": "vitest",
+    "publish:npm": "npm publish --access public"
+  },
+  "dependencies": {
+    "@koa/router": "15.4.0",
+    "commander": "12.1.0",
+    "koa": "2.15.3",
+    "qrcode": "1.5.4",
+    "qrcode-terminal": "0.12.0",
+    "ws": "8.18.0",
+    "yaml": "2.6.1",
+    "zod": "3.24.1"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "12.9.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
+    "@types/koa": "2.15.0",
+    "@types/node": "20.19.39",
+    "@types/qrcode": "1.5.6",
+    "@types/qrcode-terminal": "0.12.2",
+    "@types/ws": "8.5.13",
+    "tsup": "8.3.5",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "@bobfrankston/msger",
+  "version": "0.1.388",
+  "description": "Fast, lightweight, cross-platform message box - Rust-powered alternative to msgview",
+  "type": "module",
+  "main": "./index.js",
+  "bin": {
+    "msger": "cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "npm run build:ts && npm run build:native",
+    "build:native": "cd msger-native && npm run build",
+    "build:ts": "tsc",
+    "watch": "tsc -w",
+    "clean": "node msger-native/builder/clean.ts",
+    "test": "node test.js",
+    "postinstall": "node msger-native/builder/postinstall.js",
+    "prep:mac": "node prep-mac-source.js",
+    "prepublishOnly": "node sync-mac-binary.js && npm run build:ts && npm run build:native",
+    "prerelease:local": "git add -A && (git diff-index --quiet HEAD || git commit -m \"Pre-release commit\")",
+    "preversion": "npm run build:ts && npm run build:native && git add -A",
+    "release": "npm run prerelease:local && npm version patch && npm publish --quiet",
+    "installer": "npm run release && node utils/install-latest.ts"
+  },
+  "keywords": [
+    "message-box",
+    "dialog",
+    "webview",
+    "rust",
+    "native",
+    "cross-platform",
+    "typescript"
+  ],
+  "author": "Bob Frankston",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BobFrankston/msger.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.1"
+  },
+  "dependencies": {
+    "@bobfrankston/msgcommon": "^0.1.23",
+    "@bobfrankston/rust-builder": "^0.1.5",
+    "ansi-to-html": "^0.7.2",
+    "json5": "^2.2.3"
+  },
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "*.d.ts.map",
+    "msger-native/bin/",
+    "msger-native/builder/",
+    "README.md"
+  ],
+  ".dependencies": {
+    "@bobfrankston/msgcommon": "^0.1.23",
+    "@bobfrankston/rust-builder": "file:../../rust-builder",
+    "ansi-to-html": "^0.7.2",
+    "json5": "^2.2.3"
+  },
+  ".transformedSnapshot": {
+    "dependencies": {
+      "@bobfrankston/msgcommon": "^0.1.23",
+      "@bobfrankston/rust-builder": "^0.1.5",
+      "ansi-to-html": "^0.7.2",
+      "json5": "^2.2.3"
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2e2fb44ff5aef3b7",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/artifacts.js",
+      "scripts/install.js",
+      "scripts/preflight-glibc.js",
+      "scripts/verify-bundled-termux.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6a8e221ce9c82a8862e87d5e7c094def164333f3cbbac7e3a4d6702674be9979",
+        "sizeBytes": 30140,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/artifacts.js",
+          "scripts/preflight-glibc.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/artifacts.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "21a3639ccd8a018c8760af46f25b03ff0facdde1ba4b6a848eea90a4e7e1a356",
+        "sizeBytes": 3678,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/DioNanos/deepseek-tui-termux.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/DioNanos/deepseek-tui-termux/blob/main/docs/TERMUX_BUILD.md",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/preflight-glibc.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "725f64bec4f5a728b062376421c714d7d463ab261eb51eb4fae30c0c0e949a2b",
+        "sizeBytes": 3982,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/Hmbown/DeepSeek-TUI.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/Hmbown/DeepSeek-TUI/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js; required by ./scripts/verify-bundled-termux.js",
+        "sha256": "93abc275dfa3b667dcd09f6c9cad3ff5180b281cf4d3bc5d62d06ed1e4b12977",
+        "sizeBytes": 1212,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/verify-bundled-termux.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "560aee64e16872e7dcf475a9f294aad967dba9416ff435cfe6cd1b5821232618",
+        "sizeBytes": 1376,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:30.048Z"
+  },
+  "hash": "sha256:7278db00aee5bd2be36c5991bdfcc49a6e21ecc75cd19d96c8b6b4235ccbe604"
+}

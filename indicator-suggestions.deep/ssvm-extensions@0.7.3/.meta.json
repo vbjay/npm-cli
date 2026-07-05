@@ -1,0 +1,138 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c5c2363d38ce8d3f",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/preinstall.sh"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "ee9d399addbd351b0774e24312d9daca6d2c049a8b6578f0b2377e536c0b1438",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `<(module_name)`  -  C/C++ sources",
+            "items": [
+              "ssvmaddon.cc",
+              "ssvm-napi/src/addon.cc",
+              "ssvm-napi/src/bytecode.cc",
+              "ssvm-napi/src/options.cc",
+              "ssvm-napi/src/utils.cc",
+              "ssvm-napi/ssvm-core/lib/aot/compiler.cpp",
+              "ssvm-napi/ssvm-core/lib/ast/description.cpp",
+              "ssvm-napi/ssvm-core/lib/ast/expression.cpp",
+              "ssvm-napi/ssvm-core/lib/ast/instruction.cpp",
+              "ssvm-napi/ssvm-core/lib/ast/module.cpp",
+              "ssvm-napi/ssvm-core/lib/ast/section.cpp",
+              "ssvm-napi/ssvm-core/lib/ast/segment.cpp",
+              "ssvm-napi/ssvm-core/lib/ast/type.cpp",
+              "ssvm-napi/ssvm-core/lib/common/hexstr.cpp",
+              "ssvm-napi/ssvm-core/lib/common/log.cpp",
+              "ssvm-napi/ssvm-core/lib/common/proposal.cpp",
+              "ssvm-napi/ssvm-core/lib/host/ssvm_process/processfunc.cpp",
+              "ssvm-napi/ssvm-core/lib/host/ssvm_process/processmodule.cpp",
+              "ssvm-napi/ssvm-core/lib/host/wasi/wasienv.cpp",
+              "ssvm-napi/ssvm-core/lib/host/wasi/wasifunc.cpp",
+              "ssvm-napi/ssvm-core/lib/host/wasi/wasimodule.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/engine/control.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/engine/engine.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/engine/memory.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/engine/proxy.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/engine/table.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/engine/variable.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/data.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/elem.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/export.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/function.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/global.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/import.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/memory.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/module.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/instantiate/table.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/helper.cpp",
+              "ssvm-napi/ssvm-core/lib/interpreter/interpreter.cpp",
+              "ssvm-napi/ssvm-core/lib/loader/filemgr.cpp",
+              "ssvm-napi/ssvm-core/lib/loader/ldmgr.cpp",
+              "ssvm-napi/ssvm-core/lib/loader/loader.cpp",
+              "ssvm-napi/ssvm-core/lib/loader/shared_library.cpp",
+              "ssvm-napi/ssvm-core/lib/validator/formchecker.cpp",
+              "ssvm-napi/ssvm-core/lib/validator/validator.cpp",
+              "ssvm-napi/ssvm-core/lib/vm/vm.cpp",
+              "ssvm-napi/ssvm-core/thirdparty/easyloggingpp/easylogging++.cc",
+              "ssvm-image/lib/image_func.cpp",
+              "ssvm-image/lib/image_module.cpp",
+              "ssvm-storage/lib/storage_func.cpp",
+              "ssvm-storage/lib/storage_module.cpp",
+              "ssvm-tensorflow/lib/tensorflow_func.cpp",
+              "ssvm-tensorflow/lib/tensorflow_module.cpp",
+              "ssvm-tensorflow/lib/tensorflowlite_func.cpp",
+              "ssvm-tensorflow/lib/tensorflowlite_module.cpp"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "ssvm-napi",
+              "ssvm-napi/src",
+              "ssvm-napi/ssvm-core/include",
+              "ssvm-napi/ssvm-core/thirdparty",
+              "ssvm-napi/ssvm-core/thirdparty/googletest/include",
+              "ssvm-image/include",
+              "ssvm-storage/include",
+              "ssvm-tensorflow/include",
+              "ssvm-tensorflow/utils/ssvm-tensorflow-deps",
+              "rust_native_storage_library/src",
+              "/usr/lib/llvm-10/include"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/preinstall.sh",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "ea6599a5b3273607df8951bacda0591e339b57f66e6d572e52cc7a61bed3bd06",
+        "sizeBytes": 675,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:14.058Z"
+  },
+  "hash": "sha256:d5f68883b655b790d6d7297b76bc3f69304c8dc090ee50c90402d226a3e0f100"
+}

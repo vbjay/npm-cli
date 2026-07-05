@@ -1,0 +1,71 @@
+{
+  "name": "@criipto/verify-expo",
+  "version": "4.0.0",
+  "description": "Accept MitID, NemID, Swedish BankID, Norwegian BankID and more logins in your Expo (React-Native) app",
+  "main": "./dist/index.mjs",
+  "type": "commonjs",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "jwt-decode": "^3.1.2"
+  },
+  "peerDependencies": {
+    "expo": ">=54",
+    "react": ">=19",
+    "react-native": ">=0.81"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.9",
+    "expo": "^54.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "publint": "^0.3.20",
+    "react-native": "^0.81.0",
+    "tsdown": "^0.22.0",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "tsc --noEmit",
+    "build": "tsdown",
+    "pack": "npm run build && npm pack",
+    "generate-native-types": "node scripts/generate-native-types.mjs",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/criipto/criipto-verify-expo.git"
+  },
+  "keywords": [
+    "criipto",
+    "verify",
+    "expo",
+    "react-native",
+    "mitid",
+    "bankid"
+  ],
+  "files": [
+    "dist",
+    "android/src",
+    "android/build.gradle",
+    "ios",
+    "expo-module.config.json",
+    "app.plugin.js",
+    "plugin/build"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/criipto/criipto-verify-expo/issues"
+  },
+  "homepage": "https://github.com/criipto/criipto-verify-expo#readme",
+  "lint-staged": {
+    "*.{js,ts,cjs,json,md,yml}": "prettier --write",
+    "*.kt": [
+      "ktlint -F"
+    ]
+  }
+}

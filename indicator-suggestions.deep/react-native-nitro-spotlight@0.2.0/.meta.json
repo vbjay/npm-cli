@@ -1,0 +1,79 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3e5565f8df461371",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "6ff3e566ba8eca479d45497c5444d536c88b5e537034c608c49ca230f2dd1413",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/copy-nitrogen-json-to-lib.mjs",
+        "reason": "referenced by lifecycle script: `prepare`; referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:47.371Z"
+  },
+  "hash": "sha256:be322d60a7bacb5d1bdd286d3513fbb75f5079ddd25d809dcc70a785779ee11b"
+}

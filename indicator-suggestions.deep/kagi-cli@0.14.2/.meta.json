@@ -1,0 +1,103 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6b60fdda8a5ab3df",
+    "fetchedFiles": [
+      "lib/install.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/install.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a0e001212648530c92a8a7186f17ec5e0b2d9ca4c049bf24f1a96c34e7da9975",
+        "sizeBytes": 3816,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "obfuscation-pattern",
+          "dynamic-require",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:04.278Z"
+  },
+  "hash": "sha256:5872fdcbd20c44773eb0787477c10265c1b679a80f3a93ba56c8ee0bd2d0be6c"
+}

@@ -1,0 +1,99 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e2f1754dc6a750c4",
+    "fetchedFiles": [
+      "hooks/postinstall.js",
+      "hooks/sqliteRuntime.js",
+      "hooks/trayRuntime.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "hooks/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "176f25d06b8dd6b5f59ecbbb1f92c0b41897cca3932a7de084e2b385d7d60c4f",
+        "sizeBytes": 802,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "hooks/sqliteRuntime.js",
+          "hooks/trayRuntime.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "hooks/sqliteRuntime.js",
+        "reason": "required by ./hooks/postinstall.js; required by ./hooks/trayRuntime.js",
+        "sha256": "9a145762a5b34a15c00d671de700585862efbfe35f4fb619b85c382676f42841",
+        "sizeBytes": 6233,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "hooks/trayRuntime.js",
+        "reason": "required by ./hooks/postinstall.js",
+        "sha256": "4cfc3bea22c4c146fb4949dee1257f1004782dc66abc77d500b6b660a3fbe7c6",
+        "sizeBytes": 4469,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "hooks/sqliteRuntime.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:25.686Z"
+  },
+  "hash": "sha256:5c19aeba37463bcac082c109ee50c8152f7193e0772ddfdc118c5a66932d23ae"
+}

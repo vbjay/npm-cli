@@ -1,0 +1,47 @@
+{
+  "name": "claude-statusline-88code",
+  "version": "1.0.3",
+  "description": "Claude Code 状态栏 - Node.js/TypeScript 实现，支持 NoNoCode/88Code 平台",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "claude-statusline": "./dist/index.js",
+    "statusline-setup": "./dist/setup.js"
+  },
+  "files": [
+    "dist/**/*",
+    "scripts/**/*",
+    "README.md",
+    "LICENSE",
+    "statusline.config.example.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "statusline",
+    "88code",
+    "nonocode",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/f_rogers/claude-statusline-88code.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  }
+}

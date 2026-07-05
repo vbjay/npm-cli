@@ -1,0 +1,140 @@
+{
+  "name": "@tosspayments/widget-sdk-react-native",
+  "version": "1.5.2",
+  "description": "PaymentWidget SDK for React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "example": "yarn workspace widget-sdk-react-native-example",
+    "changeset": "changeset",
+    "release": "yarn prepare && changeset publish"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://git.tosspayments.bz/tosspayments/widget-sdk-react-native.git"
+  },
+  "author": "김진규 <mqz@toss.im> (https://github.com/mqzkim)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://git.tosspayments.bz/tosspayments/widget-sdk-react-native/issues"
+  },
+  "homepage": "https://git.tosspayments.bz/tosspayments/widget-sdk-react-native#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@biomejs/biome": "^2.2.3",
+    "@changesets/cli": "^2.27.8",
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.2.2",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
+    "@react-native-community/cli-platform-ios": "15.0.1",
+    "@react-native/babel-preset": "0.76.9",
+    "@react-native/metro-config": "0.76.9",
+    "@react-native/typescript-config": "0.76.9",
+    "@types/jest": "^28.1.2",
+    "@types/react": "^18.2.6",
+    "@types/react-test-renderer": "^18.0.0",
+    "babel-jest": "^29.6.3",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "jest": "^29.6.3",
+    "minimatch": "^10.0.3",
+    "pod-install": "^0.1.0",
+    "react": "18.3.1",
+    "react-native": "0.76.9",
+    "react-native-builder-bob": "^0.20.0",
+    "react-native-webview": "^13.13.5",
+    "react-test-renderer": "18.3.1",
+    "turbo": "^1.10.7",
+    "typescript": "5.0.4"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.6",
+    "@changesets/cli@^2.27.8": "patch:@changesets/cli@npm%3A2.27.8#./.yarn/patches/@changesets-cli-npm-2.27.8-04703536bd.patch"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-webview": ">=13.3.0 <14.0.0"
+  },
+  "workspaces": [
+    ".",
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">=18"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "react-native-url-polyfill": "^2.0.0"
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  }
+}

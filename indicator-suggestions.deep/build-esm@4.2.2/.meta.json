@@ -1,0 +1,124 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e60a5240fef524c3",
+    "fetchedFiles": [
+      "package.json",
+      "src/bin/build-esm.js",
+      "src/copyFile.js",
+      "src/createDir.js",
+      "src/readFile.js",
+      "src/removeDir.js",
+      "src/writeFile.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "mkdirp",
+        "versionSpec": "^0.5.1"
+      },
+      {
+        "name": "rimraf",
+        "versionSpec": "^3.0.0"
+      },
+      {
+        "name": "@babel/core",
+        "versionSpec": "^7.5.5"
+      },
+      {
+        "name": "overdub",
+        "versionSpec": "^2.5.1"
+      },
+      {
+        "name": "npm-packlist",
+        "versionSpec": "^1.4.4"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@babel/core@7.29.7",
+      "mkdirp@0.5.6",
+      "npm-packlist@1.4.8",
+      "overdub@2.5.2",
+      "rimraf@3.0.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [],
+    "referencedFiles": [
+      {
+        "path": "src/bin/build-esm.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "e974af69aebb54875fe631dc2021a5d4136a479c28bec9bb369ba3f41b603d4d",
+        "sizeBytes": 3120,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/createDir.js",
+          "src/removeDir.js",
+          "src/readFile.js",
+          "src/writeFile.js",
+          "src/copyFile.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/createDir.js",
+        "reason": "required by ./src/bin/build-esm.js; required by ./src/writeFile.js; required by ./src/copyFile.js",
+        "sha256": "cef43b8758a71e426f10cb68cc431a655985980ffb40980552ee235d98917347",
+        "sizeBytes": 998,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/removeDir.js",
+        "reason": "required by ./src/bin/build-esm.js",
+        "sha256": "a84b25e644611808b4a26cd423e2d6d0c6dfeba85c67845de355ef1bdd8f8111",
+        "sizeBytes": 998,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/readFile.js",
+        "reason": "required by ./src/bin/build-esm.js",
+        "sha256": "1f17df4b6008aef0fd5cf3015a4f1e02786f10b569415adf4f63712e91c70a2a",
+        "sizeBytes": 816,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/writeFile.js",
+        "reason": "required by ./src/bin/build-esm.js",
+        "sha256": "fd31840d496f475451c16e480c67bd5d1737492b4eb7c4a84930672760354bb1",
+        "sizeBytes": 1061,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/createDir.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/copyFile.js",
+        "reason": "required by ./src/bin/build-esm.js",
+        "sha256": "c007a1b6d095744508186ab78e3f206a1bdf288fedaa3de8d29ce704072d2033",
+        "sizeBytes": 1064,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/createDir.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:25.911Z"
+  },
+  "hash": "sha256:010f9dc7a329bfa54787f69dfe21441fd4d7274a55d79d2e00537eb381dd8fdc"
+}

@@ -1,0 +1,58 @@
+{
+  "name": "@shapeshift-labs/frontier-lang-wasm",
+  "version": "0.1.0",
+  "description": "Runtime-neutral WebAssembly semantic merge and translation evidence for Frontier Lang.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "bench"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node test/smoke.mjs",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit -p test/tsconfig.json",
+    "fuzz": "npm run build && node fuzz/smoke.mjs",
+    "bench": "npm run build && node bench/smoke.mjs",
+    "prepare": "npm run build",
+    "prepack": "npm run lint && npm test && npm run typecheck",
+    "pack:dry": "npm pack --dry-run",
+    "lint": "node scripts/lint.mjs"
+  },
+  "keywords": [
+    "frontier",
+    "semantic-merge",
+    "webassembly",
+    "wasm",
+    "wat"
+  ],
+  "author": "ShapeShift Labs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siliconjungle/-shapeshift-labs-frontier-lang-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/siliconjungle/-shapeshift-labs-frontier-lang-wasm/issues"
+  },
+  "homepage": "https://github.com/siliconjungle/-shapeshift-labs-frontier-lang-wasm#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@shapeshift-labs/frontier-lang-kernel": "0.3.15"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

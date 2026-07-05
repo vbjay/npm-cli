@@ -1,0 +1,102 @@
+{
+  "name": "@webeleon/nestjs-openai",
+  "version": "0.5.2",
+  "description": "An openAi API client for nestjs",
+  "author": "webeleon<julien@webeleon.dev>",
+  "private": false,
+  "license": "lgpl-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Webeleon/nestjs-openai"
+  },
+  "bugs": {
+    "url": "https://github.com/Webeleon/nestjs-openai/issues"
+  },
+  "contributors": [
+    {
+      "name": "Julien Prugne",
+      "email": "julien@webeleon.dev"
+    }
+  ],
+  "keywords": [
+    "webeleon",
+    "npm",
+    "typescript",
+    "NestJS",
+    "openAI",
+    "chatGPT"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "prepare": "husky install",
+    "release": "standard-version",
+    "doc:generate": "typedoc"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/platform-express": "^10.0.0",
+    "openai": "^4.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.2.0",
+    "standard-version": "^9.5.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
+    "@nestjs/cli": "^10.0.0",
+    "@nestjs/schematics": "^10.0.0",
+    "@nestjs/testing": "^10.0.0",
+    "@types/express": "^4.17.13",
+    "@types/jest": "29.5.4",
+    "@types/node": "18.17.11",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
+    "jest": "29.6.4",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.0.0",
+    "source-map-support": "^0.5.20",
+    "ts-jest": "29.1.1",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "4.2.0",
+    "typedoc": "^0.25.0",
+    "typescript": "^5.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "./src/**/*.ts"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ],
+    "coverageDirectory": "./coverage",
+    "collectCoverage": true
+  },
+  "lint-staged": {
+    "*.ts": "prettier --write"
+  }
+}

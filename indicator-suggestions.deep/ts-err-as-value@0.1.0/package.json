@@ -1,0 +1,62 @@
+{
+  "name": "ts-err-as-value",
+  "version": "0.1.0",
+  "description": "Errors as values in typescript",
+  "main": "index.js",
+  "keywords": [
+    "result",
+    "option",
+    "rust",
+    "kotlin",
+    "errors",
+    "errors as values",
+    "typescript"
+  ],
+  "types": "index.d.ts",
+  "scripts": {
+    "publish-npm": "npm publish --access public",
+    "preinstall": "npx only-allow pnpm",
+    "start": "node --require ts-node/register --require @babel/register src/types-scratch-board.ts",
+    "test": "jest",
+    "clean": "rm globals.d.ts 2>/dev/null || true && rm globals.js 2>/dev/null || true && rm index.d.ts 2>/dev/null || true && rm index.js 2>/dev/null || true && rm partition-results.d.ts 2>/dev/null || true && rm partition-results.js 2>/dev/null || true && rm utils.d.ts 2>/dev/null || true && rm utils.js 2>/dev/null || true && rm with-result.d.ts 2>/dev/null || true && rm with-result.js 2>/dev/null || true",
+    "prepublishOnly": "pnpm clean && tsc && node cp.js"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "globals.d.ts",
+    "globals.js",
+    "index.d.ts",
+    "index.js",
+    "partition-results.d.ts",
+    "partition-results.js",
+    "utils.d.ts",
+    "utils.js",
+    "with-result-d-ts",
+    "with-result.js"
+  ],
+  "repository": "https://github.com/bigbizze/ts-error-as-value",
+  "readme": "https://github.com/bigbizze/ts-error-as-value#readme",
+  "author": "Charles Anderson",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-typescript": "^7.10.1",
+    "@babel/register": "^7.10.5",
+    "@types/jest": "^29.5.3",
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "esbuild": "^0.25.2",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-no-null": "^1.0.2",
+    "jest": "^29.2.0",
+    "prettier": "^2.7.1",
+    "ts-jest": "^29.0.3",
+    "ts-node": "latest",
+    "typescript": "latest"
+  }
+}

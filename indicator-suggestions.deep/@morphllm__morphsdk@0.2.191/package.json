@@ -1,0 +1,266 @@
+{
+  "name": "@morphllm/morphsdk",
+  "version": "0.2.191",
+  "description": "TypeScript SDK and CLI for Morph Fast Apply integration",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./logger": {
+      "types": "./dist/logger.d.ts",
+      "import": "./dist/logger.js",
+      "require": "./dist/logger.cjs"
+    },
+    "./edge": {
+      "types": "./dist/edge.d.ts",
+      "import": "./dist/edge.js",
+      "require": "./dist/edge.cjs"
+    },
+    "./tools/warp-grep": {
+      "types": "./dist/tools/warp_grep/index.d.ts",
+      "import": "./dist/tools/warp_grep/index.js",
+      "require": "./dist/tools/warp_grep/index.cjs"
+    },
+    "./tools/warp-grep/openai": {
+      "types": "./dist/tools/warp_grep/openai.d.ts",
+      "import": "./dist/tools/warp_grep/openai.js",
+      "require": "./dist/tools/warp_grep/openai.cjs"
+    },
+    "./tools/warp-grep/anthropic": {
+      "types": "./dist/tools/warp_grep/anthropic.d.ts",
+      "import": "./dist/tools/warp_grep/anthropic.js",
+      "require": "./dist/tools/warp_grep/anthropic.cjs"
+    },
+    "./tools/warp-grep/vercel": {
+      "types": "./dist/tools/warp_grep/vercel.d.ts",
+      "import": "./dist/tools/warp_grep/vercel.js",
+      "require": "./dist/tools/warp_grep/vercel.cjs"
+    },
+    "./tools/warp-grep/client": {
+      "types": "./dist/tools/warp_grep/client.d.ts",
+      "import": "./dist/tools/warp_grep/client.js",
+      "require": "./dist/tools/warp_grep/client.cjs"
+    },
+    "./tools/warp-grep/gemini": {
+      "types": "./dist/tools/warp_grep/gemini.d.ts",
+      "import": "./dist/tools/warp_grep/gemini.js",
+      "require": "./dist/tools/warp_grep/gemini.cjs"
+    },
+    "./tools/warp-grep/harness": {
+      "types": "./dist/tools/warp_grep/harness.d.ts",
+      "import": "./dist/tools/warp_grep/harness.js",
+      "require": "./dist/tools/warp_grep/harness.cjs"
+    },
+    "./tracing": {
+      "types": "./dist/tracing/index.d.ts",
+      "import": "./dist/tracing/index.js",
+      "require": "./dist/tracing/index.cjs"
+    },
+    "./tracing/otel": {
+      "types": "./dist/tracing/otel.d.ts",
+      "import": "./dist/tracing/otel.js",
+      "require": "./dist/tracing/otel.cjs"
+    },
+    "./tools/fastapply": {
+      "types": "./dist/tools/fastapply/index.d.ts",
+      "import": "./dist/tools/fastapply/index.js",
+      "require": "./dist/tools/fastapply/index.cjs"
+    },
+    "./tools/fastapply/anthropic": {
+      "types": "./dist/tools/fastapply/anthropic.d.ts",
+      "import": "./dist/tools/fastapply/anthropic.js",
+      "require": "./dist/tools/fastapply/anthropic.cjs"
+    },
+    "./tools/fastapply/openai": {
+      "types": "./dist/tools/fastapply/openai.d.ts",
+      "import": "./dist/tools/fastapply/openai.js",
+      "require": "./dist/tools/fastapply/openai.cjs"
+    },
+    "./tools/fastapply/vercel": {
+      "types": "./dist/tools/fastapply/vercel.d.ts",
+      "import": "./dist/tools/fastapply/vercel.js",
+      "require": "./dist/tools/fastapply/vercel.cjs"
+    },
+    "./tools/codebase-search": {
+      "types": "./dist/tools/codebase_search/index.d.ts",
+      "import": "./dist/tools/codebase_search/index.js",
+      "require": "./dist/tools/codebase_search/index.cjs"
+    },
+    "./tools/codebase-search/anthropic": {
+      "types": "./dist/tools/codebase_search/anthropic.d.ts",
+      "import": "./dist/tools/codebase_search/anthropic.js",
+      "require": "./dist/tools/codebase_search/anthropic.cjs"
+    },
+    "./tools/codebase-search/openai": {
+      "types": "./dist/tools/codebase_search/openai.d.ts",
+      "import": "./dist/tools/codebase_search/openai.js",
+      "require": "./dist/tools/codebase_search/openai.cjs"
+    },
+    "./tools/codebase-search/vercel": {
+      "types": "./dist/tools/codebase_search/vercel.d.ts",
+      "import": "./dist/tools/codebase_search/vercel.js",
+      "require": "./dist/tools/codebase_search/vercel.cjs"
+    },
+    "./tools/git": {
+      "types": "./dist/git/index.d.ts",
+      "import": "./dist/git/index.js",
+      "require": "./dist/git/index.cjs"
+    },
+    "./tools/browser": {
+      "types": "./dist/tools/browser/index.d.ts",
+      "import": "./dist/tools/browser/index.js",
+      "require": "./dist/tools/browser/index.cjs"
+    },
+    "./tools/browser/anthropic": {
+      "types": "./dist/tools/browser/anthropic.d.ts",
+      "import": "./dist/tools/browser/anthropic.js",
+      "require": "./dist/tools/browser/anthropic.cjs"
+    },
+    "./tools/browser/openai": {
+      "types": "./dist/tools/browser/openai.d.ts",
+      "import": "./dist/tools/browser/openai.js",
+      "require": "./dist/tools/browser/openai.cjs"
+    },
+    "./tools/browser/vercel": {
+      "types": "./dist/tools/browser/vercel.d.ts",
+      "import": "./dist/tools/browser/vercel.js",
+      "require": "./dist/tools/browser/vercel.cjs"
+    },
+    "./tools/browser/profiles": {
+      "types": "./dist/tools/browser/profiles/index.d.ts",
+      "import": "./dist/tools/browser/profiles/index.js",
+      "require": "./dist/tools/browser/profiles/index.cjs"
+    },
+    "./modelrouter": {
+      "types": "./dist/modelrouter/index.d.ts",
+      "import": "./dist/modelrouter/index.js",
+      "require": "./dist/modelrouter/index.cjs"
+    },
+    "./tools/compact": {
+      "types": "./dist/tools/compact/index.d.ts",
+      "import": "./dist/tools/compact/index.js",
+      "require": "./dist/tools/compact/index.cjs"
+    },
+    "./tools/reflex": {
+      "types": "./dist/tools/reflex/index.d.ts",
+      "import": "./dist/tools/reflex/index.js",
+      "require": "./dist/tools/reflex/index.cjs"
+    },
+    "./tools/traces": {
+      "types": "./dist/tools/traces/index.d.ts",
+      "import": "./dist/tools/traces/index.js",
+      "require": "./dist/tools/traces/index.cjs"
+    },
+    "./subagents": {
+      "types": "./dist/subagents/index.d.ts",
+      "import": "./dist/subagents/index.js",
+      "require": "./dist/subagents/index.cjs"
+    },
+    "./subagents/vercel": {
+      "types": "./dist/subagents/vercel.d.ts",
+      "import": "./dist/subagents/vercel.js",
+      "require": "./dist/subagents/vercel.cjs"
+    },
+    "./subagents/anthropic": {
+      "types": "./dist/subagents/anthropic.d.ts",
+      "import": "./dist/subagents/anthropic.js",
+      "require": "./dist/subagents/anthropic.cjs"
+    }
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.cjs",
+    "dist/**/*.d.ts",
+    "dist/**/*.map",
+    "!dist/**/__tests__/**",
+    "!dist/**/*.test.*"
+  ],
+  "scripts": {
+    "build": "tsup version.ts index.ts edge.ts client.ts core/index.ts core/client.ts core/resource.ts core/error.ts tools/index.ts tools/fastapply/index.ts tools/fastapply/core.ts tools/fastapply/apply.ts tools/fastapply/types.ts tools/fastapply/prompts.ts tools/fastapply/anthropic.ts tools/fastapply/openai.ts tools/fastapply/vercel.ts tools/codebase_search/index.ts tools/codebase_search/core.ts tools/codebase_search/types.ts tools/codebase_search/prompts.ts tools/codebase_search/anthropic.ts tools/codebase_search/openai.ts tools/codebase_search/vercel.ts tools/warp_grep/index.ts tools/warp_grep/client.ts tools/warp_grep/openai.ts tools/warp_grep/anthropic.ts tools/warp_grep/vercel.ts tools/warp_grep/gemini.ts tools/warp_grep/harness.ts tools/warp_grep/agent/config.ts tools/warp_grep/agent/parser.ts tools/warp_grep/agent/runner.ts tools/warp_grep/agent/types.ts tools/warp_grep/agent/formatter.ts tools/warp_grep/providers/types.ts tools/warp_grep/providers/local.ts tools/warp_grep/providers/remote.ts tools/warp_grep/providers/code_storage_http.ts tools/warp_grep/tools/grep.ts tools/warp_grep/tools/analyse.ts tools/warp_grep/tools/read.ts tools/warp_grep/tools/finish.ts tools/warp_grep/utils/paths.ts tools/warp_grep/utils/github.ts tools/warp_grep/utils/ripgrep.ts tools/warp_grep/utils/format.ts tools/warp_grep/utils/files.ts git/index.ts git/client.ts git/config.ts git/types.ts tools/browser/index.ts tools/browser/core.ts tools/browser/types.ts tools/browser/prompts.ts tools/browser/anthropic.ts tools/browser/openai.ts tools/browser/vercel.ts tools/browser/live.ts tools/browser/errors.ts tools/browser/profiles/index.ts tools/browser/profiles/core.ts tools/browser/profiles/types.ts modelrouter/index.ts modelrouter/core.ts modelrouter/types.ts tools/compact/index.ts tools/compact/core.ts tools/compact/types.ts tools/reflex/index.ts tools/reflex/core.ts tools/reflex/types.ts tools/traces/index.ts tools/traces/core.ts tools/traces/types.ts tools/utils/resilience.ts subagents/index.ts subagents/types.ts subagents/prompts.ts subagents/vercel.ts subagents/anthropic.ts tracing/index.ts tracing/core.ts tracing/interaction.ts tracing/otel.ts tracing/types.ts --format esm,cjs --sourcemap --clean --dts --dts-resolve",
+    "prepare": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:anthropic": "vitest run anthropic",
+    "test:openai": "vitest run openai",
+    "test:vercel": "vitest run vercel",
+    "test:git": "vitest run git",
+    "test:browser": "vitest run browser",
+    "test:agent": "npx tsx tests/fullAgentTest.ts",
+    "test:integration": "npx tsx tests/fullIntegrationTest.ts",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish"
+  },
+  "keywords": [
+    "morph",
+    "fast-apply",
+    "cli",
+    "sdk",
+    "edit-file"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.203.0",
+    "@opentelemetry/sdk-trace-base": "^2.7.1",
+    "@traceloop/node-server-sdk": "^0.27.0",
+    "@vscode/ripgrep": "^1.17.0",
+    "ai": ">=5.0.0",
+    "diff": "^7.0.0",
+    "isomorphic-git": "^1.25.10",
+    "openai": "^4.52.7",
+    "zod": ">=3.23.0"
+  },
+  "devDependencies": {
+    "@ai-sdk/anthropic": "^2.0.70",
+    "@ai-sdk/openai": "^2.0.35",
+    "@anthropic-ai/sdk": "^0.30.1",
+    "@google/generative-ai": "^0.24.1",
+    "@types/diff": "^7.0.2",
+    "@types/node": "^20.14.10",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "shx": "^0.3.4",
+    "tsup": "^8.5.0",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.6"
+  },
+  "peerDependencies": {
+    "@anthropic-ai/sdk": ">=0.25.0",
+    "@google/generative-ai": ">=0.21.0",
+    "ai": ">=5.0.0",
+    "zod": ">=3.23.0"
+  },
+  "peerDependenciesMeta": {
+    "@anthropic-ai/sdk": {
+      "optional": true
+    },
+    "@google/generative-ai": {
+      "optional": true
+    },
+    "ai": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

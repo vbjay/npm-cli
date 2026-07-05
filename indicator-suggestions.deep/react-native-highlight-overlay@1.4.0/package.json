@@ -1,0 +1,142 @@
+{
+  "name": "react-native-highlight-overlay",
+  "version": "1.4.0",
+  "description": "A tinted overlay that allows one or more elements to be highlighted (non-tinted)",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-highlight-overlay.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "release": "dotenv release-it --",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "web",
+    "overlay",
+    "highlight",
+    "focus",
+    "typed",
+    "typescript",
+    "tooltip",
+    "tutorial",
+    "hint",
+    "walkthrough"
+  ],
+  "repository": "https://github.com/Charanor/react-native-highlight-overlay",
+  "author": "Jesper Sporron <jesper.sporron@gmail.com> (https://github.com/Charanor)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Charanor/react-native-highlight-overlay/issues"
+  },
+  "homepage": "https://github.com/Charanor/react-native-highlight-overlay#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^11.0.0",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@release-it/conventional-changelog": "^2.0.0",
+    "@types/jest": "^26.0.0",
+    "@types/lodash.isequal": "^4.5.5",
+    "@types/react": "^16.9.19",
+    "@types/react-native": "^0.64.12",
+    "@typescript-eslint/eslint-plugin": "^5.24.0",
+    "@typescript-eslint/parser": "^5.24.0",
+    "@typescript-eslint/typescript-estree": "^5.24.0",
+    "commitlint": "^11.0.0",
+    "dotenv-cli": "^4.0.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-native-wcandillon": "^3.8.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-tsc": "^2.0.0",
+    "husky": "^7.0.0",
+    "jest": "^27.0.6",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.6.2",
+    "react": "17.0.2",
+    "react-native": "0.66.0",
+    "react-native-builder-bob": "^0.18.0",
+    "react-native-reanimated": "^2.6.0",
+    "react-native-svg": "^12.3.0",
+    "release-it": "^14.2.2",
+    "typescript": "4.8.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "^2.6.0",
+    "react-native-svg": "^12.3.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "lodash.isequal": "^4.5.0"
+  }
+}

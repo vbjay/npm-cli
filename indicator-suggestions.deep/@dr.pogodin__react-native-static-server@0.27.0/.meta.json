@@ -1,0 +1,79 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "bd3de137b8c7f0f7",
+    "fetchedFiles": [
+      "CMakeLists.txt",
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "CMakeLists.txt",
+        "label": "CMake build descriptor",
+        "sha256": "346e4b1c9ee1f2231ae88a7f53d2784bcf4f18c69d35595f9a32eab7b2e18986",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "ab8a4a0c112a0cac8f12065ff8edf726ba53e5b8f663fa1c282e7eef381e895d",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android"
+            ]
+          },
+          {
+            "label": "Native build descriptor path",
+            "items": [
+              "../CMakeLists.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [],
+    "scannedAt": "2026-07-12T00:01:59.125Z"
+  },
+  "hash": "sha256:cfbc8d9ba696b4793d323522dda7636da92634a67198692e39f5963da96d1b1f"
+}

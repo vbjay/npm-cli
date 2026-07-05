@@ -1,0 +1,40 @@
+{
+  "name": "sphere-cli",
+  "version": "0.2.10",
+  "description": "SPHERE CLI — synthetic data generation, evaluation, and certification (sealed native binary)",
+  "keywords": [
+    "synthetic-data",
+    "privacy",
+    "cli",
+    "data-science"
+  ],
+  "homepage": "https://github.com/statzihuai/sphere-cli",
+  "bugs": "https://github.com/statzihuai/sphere-cli/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/statzihuai/sphere-cli.git"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bin": {
+    "sphere": "bin/sphere.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "bin/sphere.js",
+    "scripts/postinstall.js",
+    "scripts/engine.js"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6e15f73122039717",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "89169145c91e140ed6365732b39cc162637980e93018ab9925fbfd4336aa04a3",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `baja_xlsx`  -  C/C++ sources",
+            "items": [
+              "src/addon.cpp",
+              "src/xlsx_reader.cpp",
+              "src/image_extractor.cpp"
+            ]
+          },
+          {
+            "label": "Target `baja_xlsx`  -  libraries",
+            "items": [
+              "<!(echo %VCPKG_ROOT%)/installed/x64-windows/lib/xlnt.lib",
+              "<!(echo %VCPKG_ROOT%)/installed/x64-windows/lib/zip.lib",
+              "-lxlnt",
+              "-lzip",
+              "-lxlnt",
+              "-lzip"
+            ]
+          },
+          {
+            "label": "Target `baja_xlsx`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<(module_root_dir)/src",
+              "<!(echo %VCPKG_ROOT%)/installed/x64-windows/include",
+              "/usr/local/include",
+              "/usr/local/include"
+            ]
+          },
+          {
+            "label": "Target `baja_xlsx`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:23.809Z"
+  },
+  "hash": "sha256:8dbf3427455a13fc88f9299c00a5c3598ac03a12d67b637618f34fed88f7d5fe"
+}

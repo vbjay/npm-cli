@@ -1,0 +1,107 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "530f96ef157adc7f",
+    "fetchedFiles": [
+      "install.js",
+      "lib/verify.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b934f37a7ebf17b614f64d9cb9b3a43533227db9969a0ab335758deb26164651",
+        "sizeBytes": 4546,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/verify.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/verify.js",
+        "reason": "required by ./install.js",
+        "sha256": "9930174b0352e9feeb2431a67c15c2513a8e6daf66fd7bdd543fa25c95a1f408",
+        "sizeBytes": 4015,
+        "signals": [
+          "base64-decode-exec",
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "21f8dabd2c8d9a6420bf487aac601c8dcffc33bdf6705fb46eec8c55015d8802",
+        "sizeBytes": 918,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:23.144Z"
+  },
+  "hash": "sha256:3325782024413e46871b6e7550ff8a2f3462e3527647591015fca96dd36b1037"
+}

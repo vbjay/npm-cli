@@ -1,0 +1,194 @@
+{
+  "name": "autosnippet",
+  "version": "3.4.2",
+  "description": "Extract code patterns into a knowledge base for AI coding assistants",
+  "type": "module",
+  "main": "dist/lib/bootstrap.js",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "imports": {
+    "#shared/*": {
+      "asd-dev": "./lib/shared/*",
+      "default": "./dist/lib/shared/*"
+    },
+    "#infra/*": {
+      "asd-dev": "./lib/infrastructure/*",
+      "default": "./dist/lib/infrastructure/*"
+    },
+    "#service/*": {
+      "asd-dev": "./lib/service/*",
+      "default": "./dist/lib/service/*"
+    },
+    "#agent/*": {
+      "asd-dev": "./lib/agent/*",
+      "default": "./dist/lib/agent/*"
+    },
+    "#domain/*": {
+      "asd-dev": "./lib/domain/*",
+      "default": "./dist/lib/domain/*"
+    },
+    "#inject/*": {
+      "asd-dev": "./lib/injection/*",
+      "default": "./dist/lib/injection/*"
+    },
+    "#core/*": {
+      "asd-dev": "./lib/core/*",
+      "default": "./dist/lib/core/*"
+    },
+    "#external/*": {
+      "asd-dev": "./lib/external/*",
+      "default": "./dist/lib/external/*"
+    },
+    "#platform/*": {
+      "asd-dev": "./lib/platform/*",
+      "default": "./dist/lib/platform/*"
+    },
+    "#repo/*": {
+      "asd-dev": "./lib/repository/*",
+      "default": "./dist/lib/repository/*"
+    },
+    "#types/*": {
+      "asd-dev": "./lib/types/*",
+      "default": "./dist/lib/types/*"
+    },
+    "#http/*": {
+      "asd-dev": "./lib/http/*",
+      "default": "./dist/lib/http/*"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:check": "tsc --noEmit",
+    "postbuild": "node scripts/postbuild.mjs",
+    "prepublishOnly": "npm run build && npm run build:dashboard",
+    "build:screenshot": "swiftc -O -framework ScreenCaptureKit -framework AppKit resources/native-ui/screenshot.swift -o resources/native-ui/screenshot",
+    "install:cursor-skill": "node dist/scripts/install-cursor-skill.js",
+    "install:cursor-skill:mcp": "node dist/scripts/install-cursor-skill.js --mcp",
+    "install:vscode-copilot": "node dist/scripts/install-vscode-copilot.js",
+    "verify:context-api": "node dist/scripts/verify-context-api.js",
+    "setup:mcp": "node dist/scripts/setup-mcp-config.js --editor vscode && node dist/scripts/setup-mcp-config.js --editor cursor",
+    "build:dashboard": "cd dashboard && npm run build",
+    "dashboard": "node dist/bin/cli.js ui",
+    "test": "vitest run",
+    "test:unit": "vitest run test/unit",
+    "test:integration": "vitest run test/integration",
+    "test:e2e": "vitest run test/e2e",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "dev:link": "npm run build && npm install -g .",
+    "dev:verify": "which asd && asd -v",
+    "release:check": "node dist/scripts/release.js check",
+    "release:patch": "node dist/scripts/release.js patch",
+    "release:minor": "node dist/scripts/release.js minor",
+    "release:major": "node dist/scripts/release.js major",
+    "cli": "node dist/bin/cli.js",
+    "mcp": "node dist/bin/mcp-server.js",
+    "diagnose:mcp": "node dist/scripts/diagnose-mcp.js",
+    "lint": "biome check lib/ bin/ config/ scripts/",
+    "lint:fix": "biome check --fix lib/ bin/ config/ scripts/",
+    "lint:repo-boundary": "node scripts/lint-repo-boundary.mjs",
+    "format": "biome format --write lib/ bin/ config/ scripts/",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint",
+    "prepare": "husky"
+  },
+  "author": "gaoxuefeng",
+  "license": "MIT",
+  "bin": {
+    "asd": "dist/bin/cli.js",
+    "asd-mcp": "dist/bin/mcp-server.js"
+  },
+  "keywords": [
+    "knowledge-base",
+    "ai",
+    "ai-agent",
+    "mcp",
+    "copilot",
+    "cursor",
+    "code-review",
+    "guard",
+    "ast",
+    "tree-sitter",
+    "typescript",
+    "javascript",
+    "python",
+    "swift",
+    "rust",
+    "kotlin",
+    "developer-tools",
+    "cli"
+  ],
+  "homepage": "https://github.com/GxFn/AutoSnippet#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GxFn/AutoSnippet.git"
+  },
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.59.0",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "better-sqlite3": "^12.6.2",
+    "commander": "^14.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "drizzle-orm": "^0.45.1",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "js-yaml": "^4.1.1",
+    "minimist": "^1.2.8",
+    "open": "^11.0.0",
+    "ora": "^9.3.0",
+    "p-limit": "^7.3.0",
+    "socket.io": "^4.8.3",
+    "undici": "^7.22.0",
+    "uuid": "^13.0.0",
+    "web-tree-sitter": "^0.26.6",
+    "winston": "^3.19.0",
+    "zod": "^4.3.6"
+  },
+  "bugs": {
+    "url": "https://github.com/GxFn/AutoSnippet/issues"
+  },
+  "files": [
+    "dist",
+    "config",
+    "scripts/postbuild.mjs",
+    "skills",
+    "templates",
+    "dashboard/dist",
+    "template.json",
+    "resources/native-ui/screenshot.swift",
+    "resources/native-ui/screenshot",
+    "resources/openChrome.applescript",
+    "resources/grammars"
+  ],
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.6",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/js-yaml": "^4.0.9",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^25.3.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "overrides": {
+    "minimatch": "^10.2.2",
+    "diff": "^8.0.3",
+    "glob": "^11.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,js,mjs,cjs}": [
+      "biome check --fix --no-errors-on-unmatched --diagnostic-level=error",
+      "biome format --write --no-errors-on-unmatched"
+    ]
+  }
+}

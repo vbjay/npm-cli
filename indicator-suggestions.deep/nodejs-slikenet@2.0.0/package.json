@@ -1,0 +1,45 @@
+{
+  "name": "nodejs-slikenet",
+  "version": "2.0.0",
+  "description": "Node.js native addon for SLikeNet networking library with improved thread management architecture",
+  "main": "index.js",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean"
+  },
+  "keywords": [
+    "slikenet",
+    "networking",
+    "native",
+    "addon",
+    "raknet",
+    "threading",
+    "event-driven"
+  ],
+  "author": "diclo",
+  "license": "MIT",
+
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "index.js",
+    "binding.gyp",
+    "NodeJSSlikenet/*.h",
+    "NodeJSSlikenet/*.cpp",
+    "SLikeNet/Source/**/*",
+    "SLikeNet/Lib/**/*",
+    "README.md",
+    "BUILD_INSTRUCTIONS.md",
+    "example.js",
+    "example-new-architecture.js"
+  ],
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.1"
+  },
+  "gypfile": true
+}

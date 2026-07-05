@@ -1,0 +1,105 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "42c5f09f82482001",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c9201cfe58e6ef3c6425fb90ac8b4f4726ccc05ce98724ef4f476547b0f7ad15",
+        "sizeBytes": 11067,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://www.python.org/ftp/python/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/indygreg/python-build-standalone/releases/download/20250311/cpython-",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/cloudflare/cloudflared/releases/download/",
+            "classification": "download"
+          },
+          {
+            "url": "https://developers.cloudflare.com/cloudflared/downloads/",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-11T22:42:02.336Z"
+  },
+  "hash": "sha256:b1e0f587aed4280287543e5f2d4fe6d16e4d56e40002e0cf098c294f5924f197"
+}

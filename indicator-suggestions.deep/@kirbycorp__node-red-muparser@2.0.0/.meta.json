@@ -1,0 +1,90 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "95dc066aa6eabec7",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "17154f669fcc532cc3cc53f291e716cb4ccc8d61896429ac8d9ee801f1a1a6c9",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `muparser_node`  -  C/C++ sources",
+            "items": [
+              "src/muparser_node.cpp",
+              "muparser/src/muParser.cpp",
+              "muparser/src/muParserBase.cpp",
+              "muparser/src/muParserBytecode.cpp",
+              "muparser/src/muParserCallback.cpp",
+              "muparser/src/muParserError.cpp",
+              "muparser/src/muParserTokenReader.cpp"
+            ]
+          },
+          {
+            "label": "Target `muparser_node`  -  include directories",
+            "items": [
+              "muparser/include",
+              "node_modules/node-addon-api",
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `muparser_node`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:21.913Z"
+  },
+  "hash": "sha256:070ea914ffd6dcf9a137998d971473693c7d88270e08a636bc10eb24291510ed"
+}

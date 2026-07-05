@@ -1,0 +1,104 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5cc9b0f7842c12f9",
+    "fetchedFiles": [
+      "Makefile",
+      "meson.build",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "meson.build",
+        "label": "Meson build descriptor",
+        "sha256": "e756e46dde0732a9f44d618ea2b95c48042deb84df9eee748fd33cc7a22ca04e",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Compiled targets",
+            "items": [
+              "frida_binding"
+            ]
+          },
+          {
+            "label": "Library dependencies",
+            "items": [
+              "frida-core-1.0"
+            ]
+          },
+          {
+            "label": "External programs required",
+            "items": [
+              "python3",
+              "strip",
+              "node",
+              "npm"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "da256539295c1642ddc402589471147ee09b0450935f5513036888fea074d2b2",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked",
+            "items": [
+              "python3",
+              "python"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "3f16a9457048d2442928839cd4b2efcff355ff8607e978d39d3e05151a338937",
+        "sizeBytes": 576,
+        "signals": [
+          "uses-child-process",
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:52.989Z"
+  },
+  "hash": "sha256:5ebdb97072b371205dfb63ba946f629241e075c278ea5c5545194f2b8486ca70"
+}

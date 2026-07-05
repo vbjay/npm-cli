@@ -1,0 +1,90 @@
+{
+  "name": "@playdrop/playdrop-cli",
+  "version": "0.12.6",
+  "description": "Official Playdrop CLI for publishing browser games, creator apps, and AI-generated game assets on playdrop.ai",
+  "homepage": "https://www.playdrop.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/playdrop-ai/playdrop.git",
+    "directory": "packages/playdrop-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/playdrop-ai/playdrop/issues"
+  },
+  "keywords": [
+    "playdrop",
+    "cli",
+    "browser-games",
+    "web-games",
+    "game-dev",
+    "game-assets",
+    "ai-assets",
+    "publishing",
+    "creator-tools",
+    "typescript"
+  ],
+  "bin": {
+    "playdrop": "bin/playdrop"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin",
+    "config/client-meta.json",
+    "dist",
+    "node_modules/@playdrop/ai-client",
+    "node_modules/@playdrop/api-client",
+    "node_modules/@playdrop/config",
+    "node_modules/@playdrop/boxel-core",
+    "node_modules/@playdrop/boxel-three",
+    "node_modules/@playdrop/vox-three",
+    "node_modules/@playdrop/types",
+    "node_modules/three",
+    "package.json",
+    "README.md"
+  ],
+  "bundleDependencies": [
+    "@playdrop/ai-client",
+    "@playdrop/api-client",
+    "@playdrop/config",
+    "@playdrop/boxel-core",
+    "@playdrop/boxel-three",
+    "@playdrop/vox-three",
+    "@playdrop/types",
+    "three"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc --build",
+    "test": "npm run build && node --test --test-concurrency=1 test/*.test.js",
+    "test:packaging": "node scripts/smoke-pack.js",
+    "dev": "tsc --build --watch",
+    "clean": "node -e \"const fs=require('fs'); fs.rmSync('dist',{recursive:true,force:true}); fs.rmSync('tsconfig.tsbuildinfo',{force:true});\"",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build && node scripts/bundle-deps.js",
+    "postpack": "node -e \"const fs=require('fs'); fs.rmSync('node_modules',{recursive:true,force:true}); fs.rmSync('config',{recursive:true,force:true});\""
+  },
+  "dependencies": {
+    "@playdrop/ai-client": "file:../ai-client",
+    "@playdrop/api-client": "file:../api-client",
+    "@playdrop/boxel-core": "file:../boxel-core",
+    "@playdrop/boxel-three": "file:../boxel-three",
+    "@playdrop/config": "file:../config",
+    "@playdrop/types": "file:../types",
+    "@playdrop/vox-three": "file:../vox-three",
+    "ajv": "^8.17.1",
+    "commander": "^11.1.0",
+    "esbuild": "^0.24.0",
+    "fflate": "^0.8.2",
+    "playwright-core": "^1.56.0",
+    "semver": "^7.7.2",
+    "sharp": "^0.34.5",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  }
+}

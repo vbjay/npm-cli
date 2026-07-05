@@ -1,0 +1,113 @@
+{
+  "name": "usetraceforge",
+  "version": "0.1.29",
+  "private": false,
+  "description": "TraceForge JavaScript SDK for sending errors to a TraceForge ingest endpoint.",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khushalp2004/TraceForge.git",
+    "directory": "packages/sdk"
+  },
+  "homepage": "https://usetraceforge.com/docs",
+  "bugs": {
+    "url": "https://github.com/khushalp2004/TraceForge/issues"
+  },
+  "keywords": [
+    "traceforge",
+    "monitoring",
+    "error-tracking",
+    "observability",
+    "javascript",
+    "sdk"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.js",
+      "default": "./dist/react.js"
+    },
+    "./fastify": {
+      "import": "./dist/fastify.js",
+      "require": "./dist/fastify.js",
+      "types": "./dist/fastify.d.ts"
+    },
+    "./nestjs": {
+      "import": "./dist/nestjs.js",
+      "require": "./dist/nestjs.js",
+      "types": "./dist/nestjs.d.ts"
+    },
+    "./express": {
+      "types": "./dist/express.d.ts",
+      "import": "./dist/express.js",
+      "require": "./dist/express.js",
+      "default": "./dist/express.js"
+    },
+    "./next": {
+      "types": "./dist/next.d.ts",
+      "import": "./dist/next.js",
+      "require": "./dist/next.js",
+      "default": "./dist/next.js"
+    },
+    "./vue": {
+      "import": "./dist/vue.js",
+      "require": "./dist/vue.js",
+      "types": "./dist/vue.d.ts"
+    },
+    "./angular": {
+      "import": "./dist/angular.js",
+      "require": "./dist/angular.js",
+      "types": "./dist/angular.d.ts"
+    },
+    "./svelte": {
+      "import": "./dist/svelte.js",
+      "require": "./dist/svelte.js",
+      "types": "./dist/svelte.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npx tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "prepack": "npm run build",
+    "publish:public": "npm publish --access public"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^11.1.27",
+    "@types/express": "^4.17.21",
+    "@types/react": "^18.2.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "express": ">=4.0.0",
+    "react": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "express": {
+      "optional": true
+    }
+  }
+}

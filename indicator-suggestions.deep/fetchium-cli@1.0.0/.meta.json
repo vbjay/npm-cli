@@ -1,0 +1,122 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ee267b188440136a",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5ffa7f34e294da4719534f12cf936cdc24de14cc4fadadea32aaf561cb464316",
+        "sizeBytes": 6791,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/${REPO}#build-from-source",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://install.fetchium.com",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://docs.fetchium.com\\n",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://docs.fetchium.com/self-hosting\\n",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "69271066b7b2bd8fb5d6a87e88f8815e5a18314902f6f33de89398bc06798a87",
+        "sizeBytes": 872,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:51.334Z"
+  },
+  "hash": "sha256:f31d926dc4a4e99c6230a841899a95167aea6736dc6a9d2984ff5e67a81db936"
+}

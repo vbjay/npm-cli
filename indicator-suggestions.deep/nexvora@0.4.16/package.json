@@ -1,0 +1,45 @@
+{
+  "name": "nexvora",
+  "version": "0.4.16",
+  "description": "NexVora — one binary for the MCP server, CLI, and donor daemon. Single login, run anything.",
+  "keywords": [
+    "nexvora",
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "cli",
+    "donor",
+    "ai"
+  ],
+  "license": "UNLICENSED",
+  "bin": {
+    "nexvora": "bin/nexvora.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "//": "The actual native (Rust) binary ships in exactly one of these per-platform packages; npm installs only the one matching the user's os/cpu (see each package's os/cpu fields). bin/nexvora.js resolves and execs it.",
+  "optionalDependencies": {
+    "@nexvora/cli-darwin-arm64": "0.4.16",
+    "@nexvora/cli-darwin-x64": "0.4.16",
+    "@nexvora/cli-linux-x64": "0.4.16",
+    "@nexvora/cli-win32-x64": "0.4.16"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buntythecoder/nexvora-backend.git",
+    "directory": "packages/nexvora"
+  }
+}

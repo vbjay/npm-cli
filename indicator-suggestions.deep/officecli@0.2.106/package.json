@@ -1,0 +1,62 @@
+{
+  "name": "officecli",
+  "version": "0.2.106",
+  "description": "AI document generation CLI for PPTX, DOCX, XLSX, reports, and images.",
+  "license": "UNLICENSED",
+  "private": false,
+  "bin": {
+    "officecli": "bin/officecli.js",
+    "officecli-dev": "bin/officecli-dev.js"
+  },
+  "files": [
+    "README.md",
+    "bin",
+    "lib",
+    "scripts"
+  ],
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.js",
+    "smoke:version": "node ./bin/officecli.js --version",
+    "test": "node --test ./test/install.test.js",
+    "pack:dry-run": "npm pack --dry-run",
+    "check:release-version": "node ./scripts/check-release-version.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "homepage": "https://officecli.io/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/officecli/officecli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/officecli/officecli/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "officecli",
+    "ai",
+    "cli",
+    "ai-document-generator",
+    "document-automation",
+    "pptx",
+    "powerpoint",
+    "docx",
+    "xlsx",
+    "report-generation",
+    "image-generation",
+    "office-documents",
+    "ai-agents"
+  ]
+}

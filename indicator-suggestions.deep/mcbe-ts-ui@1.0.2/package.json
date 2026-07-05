@@ -1,0 +1,105 @@
+{
+  "name": "mcbe-ts-ui",
+  "version": "1.0.2",
+  "description": "A TypeScript library for generating Minecraft Bedrock JSON UI files with a fluent builder API.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./builders": {
+      "types": "./dist/builders/index.d.ts",
+      "import": "./dist/builders/index.js",
+      "require": "./dist/builders/index.js"
+    },
+    "./compiler": {
+      "types": "./dist/compiler/index.d.ts",
+      "import": "./dist/compiler/index.js",
+      "require": "./dist/compiler/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "mcbe-ts-ui": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "minecraft",
+    "bedrock",
+    "json-ui",
+    "ui-generator",
+    "typescript",
+    "builder",
+    "fluent-api",
+    "mcbe",
+    "addon",
+    "resource-pack"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "jiti": "^2.4.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

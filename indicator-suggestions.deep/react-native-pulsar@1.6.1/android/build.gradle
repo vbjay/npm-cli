@@ -1,0 +1,110 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['Pulsar_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Pulsar_" + name]).toInteger()
+}
+
+def getStringPropertyOrEnv(name, defaultValue) {
+  def projectValue = rootProject.findProperty(name) ?: project.findProperty(name)
+  return (projectValue ?: System.getenv(name) ?: defaultValue).toString()
+}
+
+def useLocalPulsarAndroid = getStringPropertyOrEnv("USE_LOCAL_PULSAR_ANDROID", "0") == "1"
+def pulsarAndroidVersion = getStringPropertyOrEnv("PULSAR_ANDROID_MAVEN_VERSION", "1.1.2")
+def localPulsarAndroidDir = new File(projectDir, "../../../Android/Pulsar")
+def localPulsarAndroidSourceDir = new File(localPulsarAndroidDir, "src/main/java")
+
+if (useLocalPulsarAndroid) {
+  if (!localPulsarAndroidSourceDir.exists()) {
+    throw new GradleException("USE_LOCAL_PULSAR_ANDROID=1 but local Pulsar Android sources were not found at ${localPulsarAndroidSourceDir}")
+  }
+  logger.lifecycle("Using local Pulsar Android sources from ${localPulsarAndroidSourceDir}")
+} else {
+  logger.lifecycle("Using published Pulsar Android artifact com.swmansion:pulsar:${pulsarAndroidVersion}")
+}
+
+android {
+  namespace "com.swmansion.pulsar.reactnative"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+      if (useLocalPulsarAndroid) {
+        // Local Pulsar Android sources + a shim BuildConfig so their
+        // `import com.swmansion.pulsar.BuildConfig` resolves (this
+        // module's namespace is com.swmansion.pulsar.reactnative, so
+        // AGP's generated BuildConfig lives at a different package).
+        java.srcDirs += [
+          localPulsarAndroidSourceDir.absolutePath,
+          "src/localPulsar/java"
+        ]
+      }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  if (useLocalPulsarAndroid) {
+    implementation "androidx.core:core-ktx:1.17.0"
+  } else {
+    implementation "com.swmansion:pulsar:$pulsarAndroidVersion"
+  }
+}

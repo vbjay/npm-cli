@@ -1,0 +1,78 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: "com.android.library"
+
+android {
+    namespace "net.empower.mobile.ads.reactnative"
+    compileSdk 35
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 35
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ["src/main/java"]
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://maven.empower.net/release" }
+    // Mediation network repositories
+    maven { url "https://artifacts.applovin.com/android" }
+    maven { url "https://artifact.bytedance.com/repository/pangle/" }
+    maven { url "https://android-sdk.is.com/" }
+    maven { url "https://maven.ogury.co" }
+}
+
+dependencies {
+    implementation "com.facebook.react:react-android:0.70.+"
+    implementation "net.empower.mobile.ads:empower-mobile-ads:5.7.28"
+    implementation "net.empower.mobile.ads:empower-mobile-ads-mediation:5.7.28"
+    compileOnly "androidx.media3:media3-ui:1.5.1"
+    compileOnly "androidx.media3:media3-common:1.5.1"
+}
+
+// Inject mediation Maven repositories into the consuming app so that
+// transitive mediation-adapter dependencies can be resolved without
+// requiring the host project to declare them manually.
+def mediationRepos = [
+    "https://maven.empower.net/release",
+    "https://artifacts.applovin.com/android",
+    "https://artifact.bytedance.com/repository/pangle/",
+    "https://android-sdk.is.com/",
+    "https://maven.ogury.co",
+]
+
+rootProject.allprojects { proj ->
+    proj.repositories {
+        mediationRepos.each { repoUrl ->
+            maven {
+                url repoUrl
+                allowInsecureProtocol false
+            }
+        }
+    }
+
+    // The native Empower SDK is compiled against Kotlin 2.2.0 stdlib. Consumers on
+    // RN 0.71–0.77 use Kotlin 1.9.x, which can't read the newer metadata without
+    // -Xskip-metadata-version-check. Injecting it from here frees partner apps
+    // from having to configure it manually.
+    proj.pluginManager.withPlugin("org.jetbrains.kotlin.android") {
+        proj.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            compilerOptions {
+                freeCompilerArgs.addAll(["-Xskip-metadata-version-check"])
+            }
+        }
+    }
+}

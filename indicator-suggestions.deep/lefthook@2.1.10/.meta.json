@@ -1,0 +1,70 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "da4f6d6be1702c5c",
+    "fetchedFiles": [
+      "get-exe.js",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "62fc88716eb57a2ebf82e54fa02c6812b1014aaea9ad23fcbe562136378585d6",
+        "sizeBytes": 591,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "git-hook-setup",
+          "requires-local-file"
+        ],
+        "references": [
+          "get-exe.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "get-exe.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "7e4e65a65f4722554be928dfce4f6174349b17ce4eff78ce717bf5db19ddb2cc",
+        "sizeBytes": 578,
+        "signals": [
+          "platform-specific-script",
+          "git-hook-setup",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:06.023Z"
+  },
+  "hash": "sha256:b659de9f7e57e6337ef30c27532ee9d33ae50f9e25ba6bc593b4fe7714cb30d1"
+}

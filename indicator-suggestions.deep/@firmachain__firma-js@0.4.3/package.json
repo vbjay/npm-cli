@@ -1,0 +1,72 @@
+{
+  "name": "@firmachain/firma-js",
+  "version": "0.4.3",
+  "description": "The Official FirmaChain Javascript SDK written in Typescript",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test:integration": "NODE_OPTIONS=--no-experimental-strip-types TS_NODE_TRANSPILE_ONLY=true mocha 'test/integration/**/*.test.ts'",
+    "test:ledger": "NODE_OPTIONS=--no-experimental-strip-types TS_NODE_TRANSPILE_ONLY=true mocha 'test/ledger/**/*.test.ts'",
+    "lint": "eslint src test --ext .ts,.tsx",
+    "nodemon": "nodemon",
+    "dev": "ts-node ./test/test_index.ts",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc --module commonjs",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/firmachain/firma-js.git"
+  },
+  "keywords": [
+    "firma",
+    "firmachain",
+    "javascript",
+    "typescript"
+  ],
+  "author": "FirmaChain <developer@firmagroup.co>",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/firmachain/firma-js/issues"
+  },
+  "homepage": "https://firmachain.org",
+  "dependencies": {
+    "@cosmjs/amino": "0.34.0",
+    "@cosmjs/math": "0.34.0",
+    "@cosmjs/proto-signing": "0.34.0",
+    "@cosmjs/stargate": "0.34.0",
+    "@cosmjs/tendermint-rpc": "0.34.0",
+    "@kintsugi-tech/cosmjs-types": "^0.10.0",
+    "@ledgerhq/hw-transport-webhid": "^6.29.4",
+    "@tharsis/address-converter": "0.1.8",
+    "@types/pako": "2.0.0",
+    "@zondax/ledger-cosmos-js": "^4.0.1",
+    "axios": "1.16.0",
+    "bignumber.js": "^9.3.0",
+    "cosmjs-types": "0.9.0",
+    "crypto-js": "4.2.0",
+    "fast-deep-equal": "^3.1.3",
+    "form-data": "4.0.4",
+    "pako": "2.0.2",
+    "protobufjs": "7.6.1",
+    "readline-sync": "1.4.10"
+  },
+  "overrides": {
+    "diff": "8.0.4",
+    "serialize-javascript": "7.0.5"
+  },
+  "devDependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^6.33.0",
+    "@types/chai": "4.2.21",
+    "@types/mocha": "9.0.0",
+    "@types/node": "16.4.3",
+    "chai": "4.3.4",
+    "mocha": "11.7.5",
+    "nodemon": "3.1.14",
+    "ts-node": "10.2.1",
+    "typescript": "^4.9.5"
+  }
+}

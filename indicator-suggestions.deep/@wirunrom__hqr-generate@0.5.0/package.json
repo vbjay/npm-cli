@@ -1,0 +1,90 @@
+{
+  "name": "@wirunrom/hqr-generate",
+  "version": "0.5.0",
+  "description": "High-performance QR code generator and decoder powered by Rust + WASM",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wirunrom/hqr-generate.git"
+  },
+  "homepage": "https://github.com/wirunrom/hqr-generate#readme",
+  "files": [
+    "pkg/**",
+    "index.node.js",
+    "index.web.js",
+    "index.d.ts",
+    "index.web.d.ts",
+    "react/**",
+    "LICENSE",
+    "README.md"
+  ],
+  "types": "./index.d.ts",
+  "main": "./index.node.js",
+  "module": "./index.web.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.web.js",
+      "require": "./index.node.js",
+      "browser": "./index.web.js",
+      "node": "./index.node.js",
+      "default": "./index.web.js"
+    },
+    "./react": {
+      "types": "./react/index.d.ts",
+      "default": "./react/index.js"
+    },
+    "./web": {
+      "types": "./index.d.ts",
+      "default": "./index.web.js"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf pkg",
+    "build:web": "wasm-pack build --target web --out-dir pkg/web -- --features wasm,decode",
+    "build:node": "wasm-pack build --target nodejs --out-dir pkg/nodejs -- --features wasm,decode",
+    "build:react": "tsc -p tsconfig.react.json",
+    "build": "npm run build:web && npm run build:node && npm run build:react",
+    "prepack": "npm run clean && npm run build && find pkg \\( -name README.md -o -name LICENSE -o -name package.json -o -name .gitignore \\) -delete",
+    "bench": "cargo bench --bench generate",
+    "release:test": "npm version prerelease --preid=next && npm run publish:test",
+    "publish:test": "npm publish --tag next --registry=https://registry.npmjs.org --access public",
+    "publish:npm": "npm publish --registry=https://registry.npmjs.org --access public",
+    "publish:github": "npm publish --registry=https://npm.pkg.github.com --userconfig .npmrc.github --access public",
+    "postpublish": "git push --follow-tags"
+  },
+  "keywords": [
+    "qrcode",
+    "qr",
+    "qr-decode",
+    "rust",
+    "wasm",
+    "webassembly",
+    "react",
+    "nextjs",
+    "ssr",
+    "browser",
+    "vanilla-js",
+    "png",
+    "svg",
+    "uint8array",
+    "binary",
+    "blob",
+    "performance",
+    "scan-reliability"
+  ],
+  "devDependencies": {
+    "@types/react": "^19.2.9",
+    "react": "^19.2.4",
+    "typescript": "^5.9.3"
+  }
+}

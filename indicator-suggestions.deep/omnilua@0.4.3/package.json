@@ -1,0 +1,37 @@
+{
+  "name": "omnilua",
+  "version": "0.4.3",
+  "description": "Every Lua, everywhere — pure-Rust Lua 5.1–5.5, suite-passing, LuaRocks-compatible, wasm-ready.",
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs",
+    "./node": "./node.mjs"
+  },
+  "scripts": {
+    "build:wasm": "node scripts/build-wasm.mjs",
+    "prepack": "npm run build:wasm",
+    "test": "node scripts/smoke.mjs",
+    "test:versions": "node scripts/version-smoke.mjs",
+    "test:install": "node scripts/install-smoke.mjs",
+    "test:registry": "node scripts/registry-smoke.mjs"
+  },
+  "files": [
+    "dist/lua_wasm.wasm",
+    "index.mjs",
+    "node.mjs",
+    "README.md",
+    "scripts/*.mjs"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianm199/omnilua.git",
+    "directory": "packages/omnilua"
+  },
+  "keywords": [
+    "lua",
+    "wasm",
+    "webassembly",
+    "rust"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "876c60d0c19755c7",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@rotifer__playground@0.9.0\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "eb51e79dfc700dd8f3f07ac850d206be92fccda18f651087e2806ddbb6051a80",
+        "sizeBytes": 1484,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://rotifer.dev/docs",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "f39afb164268dc20a31cd3ef0c4ce0ac247766c6076cc0098f65cbc8f03eb7f2",
+        "sizeBytes": 3131,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:52.619Z"
+  },
+  "hash": "sha256:106c70d7a3fac17b7629776da3603375d73bf5d92c803a24fe8e88bd5b0f2b30"
+}

@@ -1,0 +1,66 @@
+{
+  "name": "@eliav2/react-native-collapsible-view",
+  "version": "1.5.1",
+  "description": "A collapsible View element implemented using react-native-collapsible",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "homepage": "https://eliav2.github.io/react-native-collapsible-view/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Eliav2/react-native-collapsible-view"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start --prefix ./example",
+    "build": "concurrently \"npm run build:cjs\" \"npm run build:esm\"",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc",
+    "build-watch": "concurrently \"npm run build-watch:cjs\" \"npm run build-watch:esm\"",
+    "build-watch:esm": "tsc -w",
+    "build-watch:cjs": "tsc -w -p tsconfig.cjs.json",
+    "prepack": "npm run build"
+  },
+  "prettier": {
+    "printWidth": 120
+  },
+  "author": "Eliav Louski",
+  "license": "MIT",
+  "dependencies": {
+    "react-native-collapsible": "^1.6.1",
+    "react-native-svg": "^13.0.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@types/react": "^18.2.21",
+    "@types/react-native": "^0.72.2",
+    "concurrently": "^8.2.1",
+    "react": "^16.10.0",
+    "react-native": "^0.72.4",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "^13.0.0"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-native-collapsible-view",
+    "view",
+    "collapsible",
+    "expandable",
+    "collapsed",
+    "expanded",
+    "animation",
+    "animated",
+    "spinner",
+    "IOS",
+    "Android",
+    "Web"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ]
+}

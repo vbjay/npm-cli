@@ -1,0 +1,154 @@
+{
+  "name": "strata-storage",
+  "version": "2.8.2",
+  "description": "Zero-dependency universal storage plugin providing a unified API for all storage operations across web, Android, and iOS platforms",
+  "type": "module",
+  "packageManager": "yarn@4.17.0",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "ios/",
+    "android/",
+    "scripts/",
+    "StrataStorage.podspec",
+    "AI-INTEGRATION-GUIDE.md",
+    "!**/CLAUDE.md",
+    "!**/AGENTS.md"
+  ],
+  "bin": "./scripts/cli.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./capacitor": {
+      "types": "./dist/capacitor.d.ts",
+      "default": "./dist/capacitor.js"
+    },
+    "./firebase": {
+      "types": "./dist/firebase.d.ts",
+      "default": "./dist/firebase.js"
+    },
+    "./react": {
+      "types": "./dist/integrations/react/index.d.ts",
+      "default": "./dist/integrations/react/index.js"
+    },
+    "./vue": {
+      "types": "./dist/integrations/vue/index.d.ts",
+      "default": "./dist/integrations/vue/index.js"
+    },
+    "./angular": {
+      "types": "./dist/integrations/angular/index.d.ts",
+      "default": "./dist/integrations/angular/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "clean": "rm -rf dist/",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "typecheck": "tsc --noEmit",
+    "prepack": "yarn build && yarn lint && yarn typecheck",
+    "prepublishOnly": "yarn build && yarn lint && yarn typecheck",
+    "postinstall": "node scripts/postinstall.js || true"
+  },
+  "keywords": [
+    "storage",
+    "capacitor",
+    "ionic",
+    "react",
+    "vue",
+    "angular",
+    "localStorage",
+    "indexedDB",
+    "sqlite",
+    "keychain",
+    "preferences",
+    "zero-dependencies",
+    "cross-platform",
+    "web",
+    "ios",
+    "android"
+  ],
+  "author": {
+    "name": "Ahsan Mahmood",
+    "email": "aoneahsan@gmail.com",
+    "url": "https://aoneahsan.com"
+  },
+  "contributors": [
+    "Strata Storage Team"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aoneahsan/strata-storage.git"
+  },
+  "bugs": {
+    "url": "https://stratastorage.aoneahsan.com/contact",
+    "email": "aoneahsan@gmail.com"
+  },
+  "homepage": "https://stratastorage.aoneahsan.com",
+  "peerDependencies": {
+    "@angular/core": ">=21.0.6",
+    "@angular/forms": ">=21.0.6",
+    "@capacitor/core": ">=8.0.0",
+    "firebase": ">=10.0.0",
+    "react": ">=19.2.3",
+    "vue": ">=3.5.26"
+  },
+  "peerDependenciesMeta": {
+    "@angular/core": {
+      "optional": true
+    },
+    "@angular/forms": {
+      "optional": true
+    },
+    "@capacitor/core": {
+      "optional": true
+    },
+    "firebase": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@capacitor/core": "^8.4.0",
+    "@types/node": "^25.9.2",
+    "@types/react": "^19.2.17",
+    "@typescript-eslint/eslint-plugin": "^8.60.1",
+    "@typescript-eslint/parser": "^8.60.1",
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "prettier": "^3.8.3",
+    "react": "^19.2.7",
+    "rxjs": "^7.8.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.1",
+    "vue": "^3.5.35",
+    "zone.js": "~0.16.2"
+  },
+  "engines": {
+    "node": ">=24.13.0"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android",
+      "androidModule": "strata-storage"
+    }
+  }
+}

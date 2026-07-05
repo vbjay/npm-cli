@@ -1,0 +1,74 @@
+{
+  "name": "bfs-vault",
+  "version": "0.11.0",
+  "description": "Backup File System — distributed backup with Reed-Solomon erasure coding",
+  "type": "module",
+  "preferGlobal": true,
+  "bin": {
+    "bfs": "./dist/index.js"
+  },
+  "exports": {
+    "./provider": {
+      "types": "./dist/lib.d.ts",
+      "import": "./dist/lib.js"
+    }
+  },
+  "files": [
+    "dist",
+    "docs/adapter-guide.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "biome check .",
+    "dev": "tsx src/index.ts",
+    "build": "tsup",
+    "prepare": "npm run build",
+    "smoke": "tsx scripts/smoke.ts",
+    "smoke:ftp": "tsx scripts/ftp-test-server.ts"
+  },
+  "keywords": [
+    "backup",
+    "reed-solomon",
+    "erasure-coding",
+    "cli",
+    "encryption",
+    "distributed",
+    "aes-256-gcm",
+    "disaster-recovery"
+  ],
+  "author": "Paweł Franczyk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pfranczyk/bfs.git"
+  },
+  "homepage": "https://pfranczyk.github.io/bfs/",
+  "bugs": {
+    "url": "https://github.com/pfranczyk/bfs/issues"
+  },
+  "license": "AGPL-3.0-or-later",
+  "dependencies": {
+    "@node-rs/argon2": "^2.0.2",
+    "@subspace/reed-solomon-erasure.wasm": "^0.2.5",
+    "basic-ftp": "^6.0.1",
+    "chalk": "^5.6.2",
+    "commander": "^15.0.0",
+    "ignore": "^7.0.5",
+    "inquirer": "^14.0.2",
+    "ora": "^9.4.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.1",
+    "@lydell/node-pty": "^1.2.0-beta.12",
+    "@types/node": "^26.0.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}

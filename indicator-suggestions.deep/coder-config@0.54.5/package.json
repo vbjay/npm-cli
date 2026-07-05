@@ -1,0 +1,82 @@
+{
+  "name": "coder-config",
+  "version": "0.54.5",
+  "description": "Configuration manager for AI coding tools - Claude Code, Gemini CLI, Codex CLI, Antigravity. Manage MCPs, rules, permissions, memory, and workstreams.",
+  "author": "regression.io",
+  "main": "config-loader.js",
+  "type": "commonjs",
+  "bin": {
+    "coder-config": "cli.js",
+    "claude-config": "cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js ui",
+    "display": "node cli.js display",
+    "ui": "node cli.js ui",
+    "ui:dev": "cd ui && npm run dev",
+    "ui:build": "cd ui && npm run build",
+    "version:sync": "node scripts/sync-version.js",
+    "version:bump": "node scripts/sync-version.js --bump",
+    "build": "cd ui && npm install && npm run build",
+    "build:ci": "cd ui && npm install && npm run build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/postinstall.js",
+    "preuninstall": "node scripts/preuninstall.js",
+    "test": "node --test test/*.test.js",
+    "release": "./scripts/release.sh"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "anthropic",
+    "gemini",
+    "codex",
+    "openai",
+    "antigravity",
+    "ai",
+    "coding-assistant",
+    "configuration",
+    "mcp",
+    "model-context-protocol",
+    "cli"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.47",
+    "@iarna/toml": "^3.0.0",
+    "chalk": "^4.1.2",
+    "js-yaml": "^4.1.1",
+    "node-pty": "^1.1.0",
+    "ws": "^8.19.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regression-io/coder-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/regression-io/coder-config/issues"
+  },
+  "homepage": "https://github.com/regression-io/coder-config#readme",
+  "files": [
+    "cli.js",
+    "config-loader.js",
+    "lib/**",
+    "ui/server.cjs",
+    "ui/terminal-server.cjs",
+    "ui/routes/**",
+    "ui/dist/**",
+    "templates/**",
+    "shared/**",
+    "scripts/**",
+    "hooks/**",
+    "skills/**",
+    "shell/**",
+    "README.md"
+  ],
+  "devDependencies": {
+    "playwright": "^1.57.0"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "name": "react-native-spike-sdk",
+  "version": "4.8.23",
+  "iosVersion": "4.8.21",
+  "description": "Spike API for health and productivity data from wearables and IoT devices",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "lib/typescript",
+    "android",
+    "ios",
+    "ios-expo-module",
+    "cpp",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "prepack": "npm run generate-version && bob build",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install && yarn example pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
+    "generate-version": "./scripts/generate-version.sh",
+    "docs": "typedoc",
+    "docs:watch": "typedoc --watch",
+    "docs:json": "typedoc --json docs/documentation.json",
+    "docs:serve": "typedoc && npx http-server docs -p 8080 -o"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/spike_api/spike-react-native-sdk.git"
+  },
+  "author": "SpikeAPI <vytenis@spikeapi.com> (https://gitlab.com/spike_api/spike-react-native-sdk)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/spike_api/spike-react-native-sdk/issues"
+  },
+  "homepage": "https://gitlab.com/spike_api/spike-react-native-sdk#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.0",
+    "@babel/preset-env": "^7.1.6",
+    "@react-native/babel-preset": "^0.79.0",
+    "@react-native/typescript-config": "^0.76.0",
+    "@types/jest": "^28.1.2",
+    "@types/react": "~18.2.6",
+    "@types/react-native": "0.70.0",
+    "del-cli": "^5.0.0",
+    "jest": "^29.2.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "19.0.0",
+    "react-native": "^0.79.0",
+    "react-native-builder-bob": "^0.37.0",
+    "typedoc": "^0.28.13",
+    "typescript": "^5.7.0"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "dependencies": {
+    "@expo/config-plugins": "^10.1.2",
+    "@expo/config-types": "^53.0.5",
+    "@expo/fingerprint": "^0.13.4"
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "packageManager": "yarn@1.22.15",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "tsc": "./node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  }
+}

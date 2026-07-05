@@ -1,0 +1,202 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0c30d9d6c834d0f0",
+    "fetchedFiles": [
+      "lib/install.js",
+      "lib/paths.js",
+      "lib/platform.js",
+      "lib/platform_matrix.js",
+      "lib/postinstall_setup.js",
+      "lib/release_manifest.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^6.2.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "tar@6.2.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6643fbf2049bf93ab45a55e46e324fc8c3d9a31ceecd2b64903b91cf675a3465",
+        "sizeBytes": 93517,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "lib/platform.js",
+          "lib/release_manifest.js",
+          "lib/postinstall_setup.js",
+          "lib/paths.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./lib/install.js",
+        "sha256": "e0186e34a38a6ca0257d96e65f73ba849c54233d7db4ed9c5ee5506178e206c9",
+        "sizeBytes": 1343,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/platform.js",
+        "reason": "required by ./lib/install.js; required by ./lib/postinstall_setup.js",
+        "sha256": "b71dc570185093232adb686d6bc05ea4fb93cbe1d5d56c8f746cf4c48cd979c8",
+        "sizeBytes": 9591,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform_matrix.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/platform_matrix.js",
+        "reason": "required by ./lib/platform.js",
+        "sha256": "cc73bd73bc26c4bb293ffa48925f797a22da5cac20ccb7cc3e4a06eea468aa74",
+        "sizeBytes": 3395,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/release_manifest.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "26d90c0d295b06af3df951c8d31076e4f9adab61ce4fa63fe9ae497edb792861",
+        "sizeBytes": 6927,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/postinstall_setup.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "be70512e89ac961f44e276b2c0044a8116472efc46d87714a3392d68671591fc",
+        "sizeBytes": 108989,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "shell-network-fetch",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js",
+          "lib/paths.js"
+        ],
+        "urls": [
+          {
+            "url": "https://ollama.com/download",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://ollama.com/install.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "lib/paths.js",
+        "reason": "required by ./lib/postinstall_setup.js; required by ./lib/install.js",
+        "sha256": "66a5012b4f81455ae8f323a52c1e6b259e655a824f8178f3cb3d34fd6577de65",
+        "sizeBytes": 4032,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:38.904Z"
+  },
+  "hash": "sha256:483af70540be2bf80f5f1826edcdcd2322a55cc3d401403aab905bd05ebee5df"
+}

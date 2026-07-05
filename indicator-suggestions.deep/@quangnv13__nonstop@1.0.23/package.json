@@ -1,0 +1,67 @@
+{
+  "name": "@quangnv13/nonstop",
+  "version": "1.0.23",
+  "preferGlobal": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "nonstop Telegram terminal control CLI",
+  "author": "quangnv13",
+  "license": "MIT",
+  "homepage": "https://github.com/quangnv13/nonstop#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quangnv13/nonstop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/quangnv13/nonstop/issues"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "pty",
+    "terminal",
+    "cli",
+    "tui",
+    "remote-control",
+    "ai agent"
+  ],
+  "files": [
+    "dist",
+    "images",
+    "scripts",
+    "README.md",
+    "README.vi.md",
+    "README.zh.md"
+  ],
+  "bin": {
+    "nonstop": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "preinstall": "node scripts/preinstall.js",
+    "preuninstall": "node scripts/preinstall.js"
+  },
+  "dependencies": {
+    "boxen": "^5.1.2",
+    "chalk": "^4.1.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^15.0.0",
+    "dotenv": "^16.4.5",
+    "grammy": "^1.22.4",
+    "inquirer": "^14.0.2",
+    "node-pty": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

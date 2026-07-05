@@ -1,0 +1,72 @@
+{
+  "name": "claude-e",
+  "version": "0.1.10",
+  "description": "PTY-backed exec wrapper for Claude Code with claude -p-compatible CLI and cli-jaw runtime support",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "cli",
+    "pty",
+    "rust",
+    "ai-agents",
+    "automation",
+    "cli-jaw"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lidge-jun/claude-e.git"
+  },
+  "homepage": "https://github.com/lidge-jun/claude-e#readme",
+  "bugs": {
+    "url": "https://github.com/lidge-jun/claude-e/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "claude-exec": "bin/claude-exec",
+    "claude-e": "bin/claude-e",
+    "claude-i": "bin/claude-i",
+    "jaw-claude-i": "bin/jaw-claude-i"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.cjs",
+    "build": "cargo build --release --locked",
+    "test": "cargo test --locked && npm run test:postinstall",
+    "test:postinstall": "node --test tests/*.test.cjs",
+    "fmt": "cargo fmt",
+    "fmt:check": "cargo fmt --check",
+    "check": "cargo check --locked",
+    "verify": "npm run fmt:check && npm run test && npm run build",
+    "pack:dry": "npm pack --dry-run",
+    "publish:dry-run": "node scripts/publish-dry-run.mjs",
+    "prepublishOnly": "npm run verify && npm run publish:dry-run",
+    "release:check": "bash scripts/release-npm.sh --dry-run",
+    "release:dry-run": "bash scripts/release-npm.sh --dry-run",
+    "release:npm": "bash scripts/release-npm.sh --publish",
+    "release:publish-current": "bash scripts/release-npm.sh --publish",
+    "release:patch": "bash scripts/release.sh patch",
+    "release:minor": "bash scripts/release.sh minor",
+    "release:major": "bash scripts/release.sh major",
+    "release:preview": "bash scripts/release-preview.sh",
+    "smoke": "bash scripts/smoke.sh",
+    "install:local": "cargo install --path . --locked"
+  },
+  "optionalDependencies": {
+    "@bitkyc08/claude-e-darwin-arm64": "0.1.10",
+    "@bitkyc08/claude-e-darwin-x64": "0.1.10",
+    "@bitkyc08/claude-e-linux-x64": "0.1.10",
+    "@bitkyc08/claude-e-linux-arm64": "0.1.10"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "src/",
+    "Cargo.toml",
+    "Cargo.lock",
+    "README.md",
+    "LICENSE",
+    "structure/"
+  ]
+}

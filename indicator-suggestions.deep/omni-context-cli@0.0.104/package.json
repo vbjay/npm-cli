@@ -1,0 +1,77 @@
+{
+  "name": "omni-context-cli",
+  "version": "0.0.104",
+  "description": "Omx is a small, helpful, zero-telemetry coding assistant.",
+  "type": "module",
+  "bin": {
+    "omni-context-cli": "./dist/cli.js",
+    "omx": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch",
+    "start": "node dist/cli.js",
+    "clean": "node scripts/clean.mjs",
+    "bump": "node scripts/bump-version.mjs",
+    "release": "node scripts/release-build.mjs",
+    "release:lite": "node scripts/release-build.mjs --skip-desktop",
+    "format": "dprint fmt",
+    "format:check": "dprint check",
+    "postinstall": "node scripts/fix-bin-permissions.js"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "assistant"
+  ],
+  "author": "bluenoah1991",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "scripts"
+  ],
+  "dependencies": {
+    "@mixmark-io/domino": "^2.2.0",
+    "@node-rs/jieba": "^2.0.1",
+    "better-sqlite3": "^12.9.0",
+    "figlet": "^1.8.0",
+    "qrcode-terminal": "^0.12.0",
+    "yoga-layout": "~3.2.1"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1",
+    "@types/diff": "^7.0.2",
+    "@types/figlet": "^1.7.0",
+    "@types/glob": "^8.1.0",
+    "@types/handlebars": "^4.0.40",
+    "@types/marked": "^5.0.2",
+    "@types/node": "^25.0.3",
+    "@types/qrcode-terminal": "^0.12.2",
+    "@types/react": "^19.2.7",
+    "@types/turndown": "^5.0.6",
+    "@types/ws": "^8.18.1",
+    "commander": "^14.0.2",
+    "diff": "^8.0.3",
+    "dprint": "^0.50.2",
+    "esbuild": "^0.27.2",
+    "glob": "^13.0.0",
+    "gray-matter": "^4.0.3",
+    "handlebars": "^4.7.8",
+    "highlight.js": "^11.11.1",
+    "ignore": "^7.0.5",
+    "ink": "^6.5.1",
+    "javascript-obfuscator": "^5.1.0",
+    "marked": "^17.0.1",
+    "react": "^19.2.3",
+    "react-reconciler": "^0.33.0",
+    "string-width": "^8.1.0",
+    "turndown": "^7.2.2",
+    "typescript": "^5.9.3",
+    "undici": "^7.16.0",
+    "ws": "^8.18.3",
+    "zustand": "^5.0.8"
+  },
+  "optionalDependencies": {
+    "koffi": "^2.15.6"
+  }
+}

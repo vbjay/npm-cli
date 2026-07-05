@@ -1,0 +1,77 @@
+{
+  "name": "askance",
+  "version": "0.1.5",
+  "description": "Promise-based confirmation dialogs for React Native and Expo apps.",
+  "type": "module",
+  "files": [
+    "build/**"
+  ],
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./confirm-dialog": {
+      "types": "./build/confirm-dialog.d.ts",
+      "default": "./build/confirm-dialog.js"
+    },
+    "./confirm-dialog-host": {
+      "types": "./build/confirm-dialog-host.d.ts",
+      "default": "./build/confirm-dialog-host.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf build tsconfig.build.tsbuildinfo tsconfig.tsbuildinfo",
+    "fallow:audit": "fallow audit --gate new-only",
+    "fallow:ci": "fallow audit --base origin/master --gate new-only --quiet",
+    "fallow:scan": "fallow",
+    "lint": "npm run eslint && npm run typecheck && npm run fallow",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
+    "release:patch": "release-patch",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "eslint": "eslint src tests --max-warnings 0",
+    "fallow": "npm run fallow:audit"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "dialog",
+    "confirm",
+    "askance",
+    "Askance"
+  ],
+  "repository": "https://github.com/kaspernj/askance",
+  "bugs": {
+    "url": "https://github.com/kaspernj/askance/issues"
+  },
+  "author": "kaspernj <k@spernj.org> (https://github.com/kaspernj)",
+  "license": "MIT",
+  "homepage": "https://github.com/kaspernj/askance#readme",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.76.0"
+  },
+  "dependencies": {
+    "react-native-propforge": "^1.0.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.14",
+    "eslint": "^10.5.0",
+    "esmock": "^2.7.3",
+    "fallow": "^2.88.3",
+    "globals": "^17.7.0",
+    "react": "^19.2.0",
+    "react-native": "^0.86.0",
+    "react-test-renderer": "^19.2.0",
+    "release-patch": "^1.0.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.46.0"
+  },
+  "sideEffects": false
+}

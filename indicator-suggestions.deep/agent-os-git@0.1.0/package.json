@@ -1,0 +1,58 @@
+{
+  "name": "agent-os-git",
+  "version": "0.1.0",
+  "description": "Git CLI packaged as AgentOS/RivetKit WASI software",
+  "type": "module",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/janik-io/agent-os-git#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/janik-io/agent-os-git.git"
+  },
+  "bugs": {
+    "url": "https://github.com/janik-io/agent-os-git/issues"
+  },
+  "keywords": [
+    "agent-os",
+    "agentos",
+    "rivetkit",
+    "rivet",
+    "git",
+    "go-git",
+    "wasi",
+    "wasm"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "wasm"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:wasm": "make build-agentos",
+    "check-types": "tsc --noEmit && tsc -p tsconfig.typecheck.json",
+    "test": "npm run build && make build-agentos && vitest run",
+    "validate": "npm run check-types && npm run build && make validate-agentos && vitest run",
+    "pack:check": "npm pack --dry-run --json",
+    "release:check": "npm run validate && npm run pack:check",
+    "prepack": "npm run build && make validate-agentos",
+    "prepublishOnly": "npm run validate"
+  },
+  "dependencies": {
+    "@rivet-dev/agent-os-coreutils": "0.0.260331072558"
+  },
+  "devDependencies": {
+    "@rivet-dev/agent-os-core": "0.1.1",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.6"
+  }
+}

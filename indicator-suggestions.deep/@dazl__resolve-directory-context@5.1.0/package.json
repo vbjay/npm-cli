@@ -1,0 +1,63 @@
+{
+  "name": "@dazl/resolve-directory-context",
+  "description": "Helpers to get information about single/multi-package contexts",
+  "version": "5.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "clean": "node -e \"fs.rmSync('./dist', { recursive: true, force: true })\"",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.build.json",
+    "pretest": "npm run typecheck",
+    "test": "npm run test:node && npm run test:browser",
+    "test:node": "mocha \"./test/**/*.{spec,nodespec}.ts\"",
+    "test:browser": "mocha-web \"./test/**/*.spec.ts\"",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "minimatch": "^10.0.3",
+    "type-fest": "^5.0.0"
+  },
+  "devDependencies": {
+    "@file-services/memory": "^11.0.0",
+    "@file-services/path": "^11.0.0",
+    "@playwright/browser-chromium": "^1.55.0",
+    "@ts-tools/esm": "^6.1.0",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20",
+    "chai": "^6.0.1",
+    "esbuild": "^0.25.9",
+    "mocha": "^11.7.2",
+    "mocha-web": "^2.4.0",
+    "typescript": "~5.9.2"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "packages",
+    "directory",
+    "workspace",
+    "npm",
+    "yarn"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Dazl",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dazl-dev/resolve-directory-context.git"
+  },
+  "sideEffects": false
+}

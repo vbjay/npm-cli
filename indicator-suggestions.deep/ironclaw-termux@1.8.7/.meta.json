@@ -1,0 +1,66 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ff9bc87dc5a14465",
+    "fetchedFiles": [
+      "lib/bionic-bypass.js",
+      "lib/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b20b2b151dabf4469b5bb007da3365d17c32110a0bd4e02ce66b08317850a696",
+        "sizeBytes": 764,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/bionic-bypass.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/bionic-bypass.js",
+        "reason": "required by ./lib/postinstall.js",
+        "sha256": "4f7f1e25ed85ebcccf7832863555eb833c72a04baf3c74ce7a0d4b4c00cbe124",
+        "sizeBytes": 925,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:27.517Z"
+  },
+  "hash": "sha256:9091da424cef6db6f29c487b6641e79febf55d7d1362f983ff5045bbf6335dac"
+}

@@ -1,0 +1,109 @@
+{
+  "name": "polyops",
+  "version": "0.1.1",
+  "description": "Fast polygon clipping & Boolean operations (intersection, union, difference, xor) for Node.js — Rust (Martinez–Rueda) under the hood, with prebuilt binaries. Drop-in replacement for martinez-polygon-clipping.",
+  "main": "polyops.js",
+  "module": "polyops.mjs",
+  "types": "polyops.d.ts",
+  "exports": {
+    ".": {
+      "types": "./polyops.d.ts",
+      "import": "./polyops.mjs",
+      "require": "./polyops.js"
+    },
+    "./flat": {
+      "types": "./flat.d.ts",
+      "import": "./flat.mjs",
+      "require": "./flat.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "author": "Samuel Opeyemi <samuel@fasteditor.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trenchesdeveloper/PolyOps.git",
+    "directory": "crates/polyops-napi"
+  },
+  "homepage": "https://github.com/trenchesdeveloper/PolyOps",
+  "bugs": {
+    "url": "https://github.com/trenchesdeveloper/PolyOps/issues"
+  },
+  "keywords": [
+    "polygon",
+    "clipping",
+    "polygon-clipping",
+    "boolean",
+    "boolean-operations",
+    "intersection",
+    "union",
+    "difference",
+    "xor",
+    "geometry",
+    "computational-geometry",
+    "geojson",
+    "gis",
+    "spatial",
+    "martinez",
+    "martinez-polygon-clipping",
+    "clipper",
+    "napi-rs",
+    "native",
+    "rust"
+  ],
+  "napi": {
+    "name": "polyops",
+    "triples": {
+      "defaults": false,
+      "additional": [
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin",
+        "x86_64-unknown-linux-gnu",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-musl",
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "prepack": "npm run build",
+    "prepublishOnly": "napi prepublish -t npm --skip-gh-release",
+    "test": "node --test __test__/*.test.mjs",
+    "universal": "napi universal",
+    "version": "napi version"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "files": [
+    "polyops.js",
+    "polyops.mjs",
+    "polyops.d.ts",
+    "index.d.ts",
+    "index.js",
+    "flat.js",
+    "flat.mjs",
+    "flat.d.ts",
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "optionalDependencies": {
+    "polyops-darwin-arm64": "0.1.1",
+    "polyops-darwin-x64": "0.1.1",
+    "polyops-linux-arm64-gnu": "0.1.1",
+    "polyops-linux-arm64-musl": "0.1.1",
+    "polyops-linux-x64-gnu": "0.1.1",
+    "polyops-linux-x64-musl": "0.1.1",
+    "polyops-win32-x64-msvc": "0.1.1"
+  }
+}

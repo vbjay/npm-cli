@@ -1,0 +1,145 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6665cebea8a38fb8",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.mjs",
+      "scripts/preinstall.mjs",
+      "scripts/verify-deps.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/preinstall.mjs",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "aa68f3ad0040e0e23ee7c8a0aaf3482e44121f30100df51c2ab67847b7e5710d",
+        "sizeBytes": 4803,
+        "signals": [
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6e91292df43bf3d2a75503e2cd5959d62073011f301c7f94477607650f431f78",
+        "sizeBytes": 11308,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/verify-deps.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/BurntSushi/ripgrep/releases/download/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/verify-deps.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "e369d50fe03d7f6d9a8cba6f5bd3d41bcc42d93434bfeeee3ccf7c783762011f",
+        "sizeBytes": 7980,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:42:00.098Z"
+  },
+  "hash": "sha256:a168fab471058f3ef119afcd13b968a2d544666a500c7e0ff15722415cab94c5"
+}

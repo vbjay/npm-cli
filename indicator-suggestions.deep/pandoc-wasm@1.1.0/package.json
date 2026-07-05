@@ -1,0 +1,57 @@
+{
+  "name": "pandoc-wasm",
+  "version": "1.1.0",
+  "description": "Pandoc WASM binary wrapper for use in browsers and Node.js.",
+  "type": "module",
+  "main": "index.js",
+  "browser": "./src/index.browser.js",
+  "exports": {
+    ".": {
+      "node": "./src/index.node.js",
+      "browser": "./src/index.browser.js",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "src/index.js",
+    "src/index.node.js",
+    "src/index.browser.js",
+    "src/core.js",
+    "src/pandoc.wasm",
+    "pandoc-version.txt",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prepare": "node scripts/download-wasm.js",
+    "setup-demo": "node scripts/setup-demo.js && esbuild demo/src/index.js --bundle --minify --format=esm --outfile=demo/dist/index.js && cp demo/src/index.html demo/dist/index.html",
+    "test": "node test-simple.js && node test-media-extraction.js && node test-non-ascii-filenames.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandoc/pandoc-wasm.git"
+  },
+  "homepage": "https://github.com/pandoc/pandoc-wasm",
+  "bugs": {
+    "url": "https://github.com/pandoc/pandoc-wasm/issues"
+  },
+  "keywords": [
+    "pandoc",
+    "wasm"
+  ],
+  "author": "Johannes Wilm",
+  "contributors": [
+    "Johannes Wilm <mail@johanneswilm.org>",
+    "George Stagg <george.stagg@posit.co>",
+    "John MacFarlane <jgm@berkeley.edu>"
+  ],
+  "license": "GPL-2.0-or-later",
+  "dependencies": {
+    "@bjorn3/browser_wasi_shim": "^0.4.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.3"
+  }
+}

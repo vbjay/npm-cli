@@ -1,0 +1,89 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def kotlinVersion = rootProject.ext.has("kotlinVersion")
+        ? rootProject.ext.get("kotlinVersion")
+        : project.properties["AndroidKeyboardAdjustOriginallyus_kotlinVersion"]
+
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}        
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.7.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+def getExtOrIntegerDefault(name) {
+    return rootProject.ext.has(name)
+        ? rootProject.ext.get(name)
+        : (project.properties["AndroidKeyboardAdjustOriginallyus_" + name]).toInteger()
+}
+
+android {
+    namespace "originallyus.androidkeyboardadjust"
+
+    compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+    defaultConfig {
+        minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+        targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lintOptions {
+        disable "GradleCompatible"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/newarch/java']
+            } else {
+                java.srcDirs += ['src/oldarch/java']
+            }
+        }
+    }
+
+}
+
+repositories {
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url "$projectDir/../node_modules/react-native/android"
+    }
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation "com.facebook.react:react-android"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}

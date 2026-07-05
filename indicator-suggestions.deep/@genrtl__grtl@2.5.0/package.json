@@ -1,0 +1,77 @@
+{
+  "name": "@genrtl/grtl",
+  "version": "2.5.0",
+  "description": "CLI, MCP, and coding-agent Skills for GenRTL RTL engineering knowledge",
+  "type": "module",
+  "bin": {
+    "grtl": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --fix",
+    "lint:check": "eslint src",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src",
+    "clean": "rm -rf dist node_modules",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run lint:check && npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.2.0",
+    "boxen": "^8.0.1",
+    "commander": "^13.1.0",
+    "figlet": "^1.9.4",
+    "open": "^10.2.0",
+    "ora": "^9.0.0",
+    "picocolors": "^1.1.1",
+    "yauzl": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^22.19.1",
+    "@types/yauzl": "^2.10.3",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "eslint": "^9.34.0",
+    "eslint-plugin-prettier": "^5.2.5",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0",
+    "vitest": "^4.0.13"
+  },
+  "keywords": [
+    "genrtl",
+    "cli",
+    "ai",
+    "rtl",
+    "systemverilog",
+    "verilog",
+    "verification",
+    "mcp"
+  ],
+  "author": "xroting",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xroting/grtl.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/xroting/grtl/issues"
+  },
+  "homepage": "https://genrtl.com",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20.12.0"
+  }
+}

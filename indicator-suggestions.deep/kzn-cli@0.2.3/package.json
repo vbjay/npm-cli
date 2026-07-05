@@ -1,0 +1,42 @@
+{
+  "name": "kzn-cli",
+  "version": "0.2.3",
+  "description": "Ultra-fast JavaScript/TypeScript static analyzer written in Rust with security focus",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpiton/kaizen"
+  },
+  "homepage": "https://github.com/mpiton/kaizen",
+  "bugs": {
+    "url": "https://github.com/mpiton/kaizen/issues"
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "linter",
+    "static-analysis",
+    "security",
+    "rust"
+  ],
+  "bin": {
+    "kaizen": "bin/kaizen.js"
+  },
+  "files": [
+    "bin",
+    "install.js"
+  ],
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "optionalDependencies": {
+    "kzn-cli-linux-x64": "0.2.3",
+    "kzn-cli-linux-arm64": "0.2.3",
+    "kzn-cli-darwin-x64": "0.2.3",
+    "kzn-cli-darwin-arm64": "0.2.3",
+    "kzn-cli-win32-x64": "0.2.3"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

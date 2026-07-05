@@ -1,0 +1,173 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+buildscript {
+    // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+    def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['StripeTerminalReactNative_kotlinVersion']
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.8.2'
+        // noinspection DifferentKotlinGradleVersion
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'org.codehaus.groovy:groovy-json:3.0.10'
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def getExtOrDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['StripeTerminalReactNative_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['StripeTerminalReactNative_' + name]).toInteger()
+}
+
+def terminalAndroidSdkVersion = getExtOrDefault('terminalSdkVersion')
+def taptopayEnabled = getExtOrDefault('taptopay.enabled') == "true"
+
+def reactNativeSdkVersion = getVersionFromNpm()
+
+android {
+    buildToolsVersion getExtOrDefault('buildToolsVersion')
+    compileSdk getExtOrIntegerDefault('compileSdkVersion')
+
+    namespace 'com.stripeterminalreactnative'
+    defaultConfig {
+        manifestPlaceholders = [REACT_NATIVE_SDK_VERSION: reactNativeSdkVersion]
+        minSdkVersion 26
+        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+        versionCode 1
+        versionName reactNativeSdkVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+repositories {
+    maven {
+        url '$rootDir/../../../localMavenRepo'
+    }
+    mavenCentral()
+    google()
+
+    def found = false
+    def defaultDir = null
+    def androidSourcesName = 'React Native sources'
+
+    if (rootProject.ext.has('reactNativeAndroidRoot')) {
+        defaultDir = rootProject.ext.get('reactNativeAndroidRoot')
+    } else {
+        defaultDir = new File(
+                projectDir,
+                '/../../../node_modules/react-native/android'
+        )
+    }
+
+    if (defaultDir.exists()) {
+        maven {
+            url defaultDir.toString()
+            name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${defaultDir.canonicalPath}")
+        found = true
+    } else {
+        def parentDir = rootProject.projectDir
+
+        1.upto(5, {
+            if (found) return true
+            parentDir = parentDir.parentFile
+
+            def androidSourcesDir = new File(
+                    parentDir,
+                    'node_modules/react-native'
+            )
+
+            def androidPrebuiltBinaryDir = new File(
+                    parentDir,
+                    'node_modules/react-native/android'
+            )
+
+            if (androidPrebuiltBinaryDir.exists()) {
+                maven {
+                    url androidPrebuiltBinaryDir.toString()
+                    name androidSourcesName
+                }
+
+                logger.info(":${project.name}:reactNativeAndroidRoot ${androidPrebuiltBinaryDir.canonicalPath}")
+                found = true
+            } else if (androidSourcesDir.exists()) {
+                maven {
+                    url androidSourcesDir.toString()
+                    name androidSourcesName
+                }
+
+                logger.info(":${project.name}:reactNativeAndroidRoot ${androidSourcesDir.canonicalPath}")
+                found = true
+            }
+        })
+    }
+
+    if (!found) {
+        throw new GradleException(
+                "${project.name}: unable to locate React Native android sources. " +
+                        "Ensure you have you installed React Native as a dependency in your project and try again."
+        )
+    }
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+
+dependencies {
+    // noinspection GradleDynamicVersion
+
+    api 'com.facebook.react:react-android:0.78.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.stripe:stripeterminal-core:$terminalAndroidSdkVersion"
+    if (taptopayEnabled) {
+      implementation("com.stripe:stripeterminal-taptopay:$terminalAndroidSdkVersion")
+    }
+    implementation "com.stripe:stripeterminal-appsondevices:$terminalAndroidSdkVersion"
+
+    implementation 'com.google.code.gson:gson:2.12.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1'
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation 'io.mockk:mockk:1.12.3'
+}
+
+// Read package.json and return `version` field
+def getVersionFromNpm() {
+    def inputFile = new File("$projectDir/../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+
+    println ("RN SDK package.json version: " +  packageJson["version"])
+    return packageJson["version"]
+}

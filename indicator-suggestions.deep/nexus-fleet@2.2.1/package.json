@@ -1,0 +1,41 @@
+{
+  "name": "nexus-fleet",
+  "version": "2.2.1",
+  "description": "Nexus Fleet + SecOps — agent/manager/cli/dashboard + SOC brain (SIEM·XDR·EDR·UEBA·SOAR·Threat-Intel·NDR·Cloud·local-AI). npm membungkus engine Python stdlib-only.",
+  "keywords": ["security", "soc", "edr", "xdr", "siem", "soar", "ueba", "ndr", "cspm", "threat-intelligence", "agent", "manager", "monitoring", "wazuh", "fleet", "cli"],
+  "author": "chandafa (Nexus Security) <ck271138@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "copyright": "Copyright (c) 2026 chandafa (Nexus Security). All rights reserved.",
+  "engines": { "node": ">=14" },
+  "bin": {
+    "nexus": "bin/nexus.js",
+    "nexus-manager": "bin/nexus-manager.js",
+    "nexus-agent": "bin/nexus-agent.js",
+    "nexus-cli": "bin/nexus-cli.js",
+    "nexus-dashboard": "bin/nexus-dashboard.js",
+    "nexus-license": "bin/nexus-license.js"
+  },
+  "files": [
+    "bin/",
+    "nexus_common/",
+    "nexus_manager/",
+    "nexus_agent/",
+    "nexus_cli/",
+    "nexus_dashboard/",
+    "nexus_license/",
+    "nexus_secops/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node bin/_check-python.js",
+    "prepack": "node -e \"const fs=require('fs'),p=require('path');(function w(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const f=p.join(d,e.name);if(e.isDirectory()){if(e.name==='__pycache__')fs.rmSync(f,{recursive:true,force:true});else w(f)}else if(e.name.endsWith('.pyc')||e.name.endsWith('.pyo'))fs.rmSync(f)}})('.')\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chandafa/cyber-nexus-.git",
+    "directory": "python/fleet"
+  },
+  "homepage": "https://github.com/chandafa/cyber-nexus-#readme",
+  "bugs": { "url": "https://github.com/chandafa/cyber-nexus-/issues" }
+}

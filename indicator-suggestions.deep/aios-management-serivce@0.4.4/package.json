@@ -1,0 +1,74 @@
+{
+  "name": "aios-management-serivce",
+  "version": "0.4.4",
+  "description": "AIOS / OpenClaw 的 MQTT 管理控制台服务。",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "aios-management-serivce": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "tsx --tsconfig tsconfig.spec.json test/run-jasmine.ts",
+    "verify": "npm run check && npm run test",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run verify"
+  },
+  "keywords": [
+    "aios",
+    "openclaw",
+    "mqtt",
+    "agent",
+    "management",
+    "cli",
+    "typescript",
+    "service"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitee.com/low-code-dev-lab/aios-oc.git",
+    "directory": "kernal/aios-management-serivce"
+  },
+  "bugs": {
+    "url": "https://gitee.com/low-code-dev-lab/aios-oc/issues"
+  },
+  "homepage": "https://gitee.com/low-code-dev-lab/aios-oc/tree/main/kernal/aios-management-serivce#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1047.0",
+    "adm-zip": "^0.5.17",
+    "clawhub": "^0.15.0",
+    "dayjs": "^1.11.21",
+    "mqtt": "^5.15.1",
+    "pino": "^10.3.1"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^5.1.13",
+    "@types/node": "^25.8.0",
+    "jasmine": "^5.12.0",
+    "tsx": "^4.22.0",
+    "typescript": "^6.0.3"
+  }
+}

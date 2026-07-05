@@ -1,0 +1,96 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e38f9aeeb4eff33a",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/build-assets.js",
+      "scripts/set-ios-rn-version.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "react-native",
+        "versionSpec": ">=0.63.4 <1.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "react-native@0.86.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "77b4cd518bf73fd125d6ad0385408459125e51db4a20281e77f5dce8169ffbc4",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "com.facebook.react:react-android:$reactNativeVersion",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "com.datadoghq:dd-sdk-android-session-replay:3.10.0",
+              "com.datadoghq:dd-sdk-android-internal:3.10.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/set-ios-rn-version.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a258ae6d1db6b0a2101defbeb1550d0e8f524a7bf2e4afa391f8630510a86f61",
+        "sizeBytes": 1432,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/build-assets.js",
+        "reason": "referenced by lifecycle script: `build:assets`",
+        "sha256": "041d14640d0318b4e8802609493fda7ac60a899caa0b0f568915a946bf765e61",
+        "sizeBytes": 1049,
+        "signals": [
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:56.194Z"
+  },
+  "hash": "sha256:316aa676d60b577bd92a7481f1ebacae5b392e3d77269029531eae01581e8e92"
+}

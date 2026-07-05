@@ -1,0 +1,67 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+def safeExtGet(name) {
+  project.ext.get('AmazonIvsReactNativeBroadcast_' + name)
+}
+
+buildscript {
+  if (project == rootProject) {
+    repositories {
+      google()
+      mavenCentral()
+    }
+
+    dependencies {
+      classpath 'com.android.tools.build:gradle:4.2.2'
+    }
+  }
+}
+
+apply plugin: 'com.android.library'
+
+def rootPkgJsonFile = file('../package.json')
+def pkgJsonData = new JsonSlurper().parseText(rootPkgJsonFile.text)
+def ivsBroadcastSdkVersion = pkgJsonData.sdkVersion.android
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion').toInteger()
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion').toInteger()
+    targetSdkVersion safeExtGet('targetSdkVersion').toInteger()
+    versionCode 1
+    versionName pkgJsonData.version
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenLocal()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url("$rootDir/../node_modules/react-native/android")
+  }
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-native:+"  // From node_modules
+  implementation "com.amazonaws:ivs-broadcast:$ivsBroadcastSdkVersion"
+
+  // Unit testing dependencies
+  // testImplementation 'junit:junit:4.13.2'
+  // testImplementation 'org.robolectric:robolectric:4.8'
+}

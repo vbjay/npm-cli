@@ -1,0 +1,47 @@
+{
+  "name": "bluefairy",
+  "version": "0.0.31",
+  "type": "module",
+  "bin": {
+    "bluefairy": "./dist/cli.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:test": "tsc -p tsconfig.test.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "clean:test": "node -e \"require('node:fs').rmSync('dist-test', { recursive: true, force: true })\"",
+    "postinstall": "node scripts/postinstall.mjs",
+    "prepare": "npm run build",
+    "test:prepare": "npm run build && npm run build:test",
+    "test:unit": "npm run test:prepare && node scripts/run-node-tests.mjs unit",
+    "test:unit:explain": "npm run test:prepare && node scripts/run-node-tests.mjs unit --explain",
+    "test:integration:fake": "npm run test:prepare && node scripts/run-node-tests.mjs integration:fake",
+    "test:integration:fake:explain": "npm run test:prepare && node scripts/run-node-tests.mjs integration:fake --explain",
+    "test:integration:real": "npm run test:prepare && node scripts/run-node-tests.mjs integration:real",
+    "test:integration:real:explain": "npm run test:prepare && node scripts/run-node-tests.mjs integration:real --explain",
+    "test:explain": "node scripts/run-explain-tests.mjs",
+    "test": "npm run test:unit && npm run test:integration:fake",
+    "test:ci": "npm run test && npm run test:integration:real"
+  },
+  "keywords": [
+    "bluefairy",
+    "uv",
+    "npm",
+    "bun",
+    "security",
+    "supply-chain"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@iarna/toml": "^2.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}

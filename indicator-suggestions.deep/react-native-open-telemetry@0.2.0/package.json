@@ -1,0 +1,120 @@
+{
+  "name": "react-native-open-telemetry",
+  "version": "0.2.0",
+  "description": "Observability SDK for React Native",
+  "license": "MIT",
+  "author": "Adam Horodyski <adam.horodyski@callstack.com> (https://github.com/callstack)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callstack/react-native-open-telemetry.git"
+  },
+  "bugs": {
+    "url": "https://github.com/callstack/react-native-open-telemetry/issues"
+  },
+  "homepage": "https://github.com/callstack/react-native-open-telemetry#readme",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "source": "./src/index.tsx",
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "prepare": "bunx bob build",
+    "codegen": "react-native codegen",
+    "version": "bunx changeset version",
+    "publish": "bunx changeset publish"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/core": "^2.0.0",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.200.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.200.0",
+    "@opentelemetry/instrumentation": "^0.200.0",
+    "@opentelemetry/instrumentation-fetch": "^0.200.0",
+    "@opentelemetry/resources": "^2.0.0",
+    "@opentelemetry/sdk-metrics": "^2.0.0",
+    "@opentelemetry/sdk-trace-base": "^2.0.0",
+    "@opentelemetry/sdk-trace-web": "^2.0.0",
+    "@opentelemetry/semantic-conventions": "^1.30.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.28.1",
+    "@react-native-community/cli": "15.0.1",
+    "@types/react": "^19.1.0",
+    "oxlint": "^0.16.5",
+    "react": "19.0.0",
+    "react-native": "0.78.1",
+    "react-native-builder-bob": "^0.40.6",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "codegen",
+      "typescript",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNOpenTelemetrySpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.opentelemetry"
+    },
+    "includesGeneratedCode": true
+  },
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
+    "version": "0.48.5"
+  }
+}

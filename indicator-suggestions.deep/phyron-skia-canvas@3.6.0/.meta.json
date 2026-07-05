@@ -1,0 +1,115 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e8255387986d4b35",
+    "fetchedFiles": [
+      "lib/prebuild.mjs",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "detect-libc",
+        "versionSpec": "^2.1.1"
+      },
+      {
+        "name": "follow-redirects",
+        "versionSpec": "^1.15.11"
+      },
+      {
+        "name": "https-proxy-agent",
+        "versionSpec": "^7.0.6"
+      },
+      {
+        "name": "package.json",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "detect-libc@2.1.2",
+      "follow-redirects@1.16.0",
+      "https-proxy-agent@7.0.6",
+      "package.json@2.0.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\phyron-skia-canvas@3.6.0\\binding.gyp'",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/prebuild.mjs",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "e81b280ca09b5dee87895d676a3954cc63f4d72a33e6a4c32bf41d55efc58598",
+        "sizeBytes": 7966,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "native-build",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/phyrondev/phyron-skia-canvas",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:25.380Z"
+  },
+  "hash": "sha256:41beb0dfaef60e18916751b40450d916b6eec47ea0eff1c1e1d7496cb34f4c0c"
+}

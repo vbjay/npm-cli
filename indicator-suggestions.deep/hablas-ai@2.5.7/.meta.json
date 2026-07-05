@@ -1,0 +1,104 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4de195ea8a1e9a44",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4ea003bc2ad5a681abd7f41a210a80f61fc7ed2e3ef58cd6a1ebc24350cc9f55",
+        "sizeBytes": 4678,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.js",
+        "sha256": "fd00ab92b0774718474d5b77ddbffa141c055bd35a1fd4169cd1140c68762a6c",
+        "sizeBytes": 2288,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:56.914Z"
+  },
+  "hash": "sha256:dc85550708f57fae6a79e65c137707f84441deed6a967aca8df39dc215f38dca"
+}

@@ -1,0 +1,95 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5da38de04d5258db",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b71402c51ac0ca8c350622c0b695e098e043770f103d016e6d3de3236611b83d",
+        "sizeBytes": 5115,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Sponzey-com/DevEnv/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "c5a17525923d921734039e1fa911474c3aad52ba48f904980361d3b86f90e519",
+        "sizeBytes": 932,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:59.970Z"
+  },
+  "hash": "sha256:896be3f7be66e31267480942a92997619e6940eaef465b227c5ce76a08163d49"
+}

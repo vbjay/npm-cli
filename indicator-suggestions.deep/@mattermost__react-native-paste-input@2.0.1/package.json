@@ -1,0 +1,139 @@
+{
+  "name": "@mattermost/react-native-paste-input",
+  "version": "2.0.1",
+  "description": "React Native TextInput replacement to allow pasting files (Fabric only)",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-paste-input.podspec",
+    "!lib/typescript/example",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!example",
+    "!.vscode",
+    "!**/.idea",
+    "!**/.gradle",
+    "!android/build",
+    "!ios/Build",
+    ".circleci"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build && husky",
+    "release": "release-it",
+    "example": "cd example && npm",
+    "pods": "cd example && RCT_NEW_ARCH_ENABLED=1 pod-install --quiet",
+    "bootstrap": "npm run example i && npm run pods"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "paste",
+    "text-input"
+  ],
+  "repository": "https://github.com/mattermost/react-native-paste-input",
+  "author": "Elias Nahum <nahumhbl@gmail.com> (https://github.com/mattermost)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattermost/react-native-paste-input/issues"
+  },
+  "homepage": "https://github.com/mattermost/react-native-paste-input#readme",
+  "devDependencies": {
+    "@commitlint/config-conventional": "20.5.0",
+    "@react-native/eslint-config": "0.83.6",
+    "@react-native/metro-config": "0.83.6",
+    "@react-native/typescript-config": "0.83.6",
+    "@release-it/conventional-changelog": "11.0.0",
+    "@types/invariant": "^2.2.37",
+    "@types/react": "19.2.14",
+    "@typescript-eslint/eslint-plugin": "8.59.0",
+    "@typescript-eslint/parser": "8.59.0",
+    "commitlint": "20.5.0",
+    "eslint": "10.2.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-jest": "29.15.2",
+    "eslint-plugin-prettier": "5.5.5",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "husky": "9.1.7",
+    "jest": "30.3.0",
+    "pod-install": "1.0.15",
+    "prettier": "3.8.3",
+    "react": "19.2.5",
+    "react-native": "0.83.6",
+    "react-native-builder-bob": "0.41.0",
+    "release-it": "20.0.1",
+    "typescript": "6.0.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.76.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "conventionalcommits"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "codegenConfig": {
+    "name": "PasteTextInputSpecs",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.mattermost.pasteinputtext"
+    },
+    "ios": {
+      "componentProvider": {
+        "PasteTextInput": "PasteTextInputComponentView"
+      }
+    }
+  },
+  "overrides": {
+    "@release-it/conventional-changelog": {
+      "release-it": "$release-it"
+    }
+  }
+}

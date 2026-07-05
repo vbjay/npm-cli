@@ -1,0 +1,96 @@
+{
+  "name": "impactlens",
+  "version": "1.1.7",
+  "description": "Static code graph scanner and ticket-driven briefing CLI for AI-assisted development. currently only supports php and laravel, js, ts ,vue and nuxt",
+  "main": "bin/impactlens.js",
+  "bin": {
+    "impactlens": "bin/impactlens.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "assets/",
+    "scripts/",
+    "config/architecture_scan/laravel.example.json",
+    "impactlens.config.example.json",
+    "docs/",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scan": "tsx src/cli/scan.ts",
+    "analyze:impact": "tsx src/cli/commands/impact.ts",
+    "analyze:cycles": "tsx src/cli/commands/cycles.ts",
+    "analyze:dead-code": "tsx src/cli/commands/deadCode.ts",
+    "analyze:architecture": "tsx src/cli/commands/architecture.ts",
+    "analyze:hotspots": "tsx src/cli/commands/hotspots.ts",
+    "analyze:change-impact": "tsx src/cli/commands/changeImpact.ts",
+    "analyze:ai-context": "tsx src/cli/commands/aiContext.ts",
+    "analyze:find": "tsx src/cli/commands/find.ts",
+    "analyze:trace": "tsx src/cli/commands/trace.ts",
+    "analyze:ticket": "tsx src/cli/commands/ticket.ts",
+    "trace" : "tsx src/cli/commands/trace.ts",
+    "test:ticket-input": "tsx src/cli/shared/ticketInput.test.ts",
+    "test:ticket": "tsx src/analyzers/ticket/ticketAnalyzerV3.test.ts",
+    "test:ticket-text-tokens": "tsx src/analyzers/ticket/ticketTextTokens.test.ts",
+    "test:ticket-session": "tsx src/analyzers/ticket/ticketSession.test.ts",
+    "test:ticket-briefing": "tsx src/analyzers/ticket/ticketBriefing.test.ts",
+    "test:ticket-target-rerank": "tsx src/analyzers/ticket/ticketTargetRerank.test.ts",
+    "test:field-layers": "tsx src/analyzers/ticket/fieldLayerAnalysis.test.ts",
+    "test:nested-response-fields": "tsx src/scanner/php/astHandlers/node_types/returnStatement.test.ts",
+    "test:ticket-anchoring": "tsx src/analyzers/ticket/ticketAnchoring.test.ts",
+    "test:nuxt-strip-typescript": "tsx src/scanner/js/nuxt/stripTypescript.test.ts",
+    "test:ts-parser": "tsx src/scanner/js/ts/tsParser.test.ts",
+    "test:vue-ts-script": "tsx src/scanner/js/vue/processVueFile.test.ts",
+    "test:nuxt-fetch": "tsx src/scanner/js/resolvers/nuxtFetchExtractor.test.ts",
+    "test:ticket-ranking-hints": "tsx src/analyzers/ticket/ticketRankingHints.test.ts",
+    "test:ticket-briefing-ranking-hints": "tsx src/analyzers/ticket/ticketBriefingRankingHints.test.ts",
+    "test:ticket-briefing-sprint1": "tsx src/analyzers/ticket/ticketBriefingSprint1.test.ts",
+    "test:ticket-editorial-anchoring": "tsx src/analyzers/ticket/ticketEditorialAnchoring.test.ts",
+    "test:ticket-vague-triage": "tsx src/analyzers/ticket/ticketVagueTriage.test.ts",
+    "analyze:risk": "tsx src/cli/commands/risk.ts",
+    "smoke:real-db": "npm run smoke:real-db:fast",
+    "smoke:real-db:fast": "npm run analyze:cycles -- sqlite/Graph.sqlite --limit=10 && npm run analyze:architecture -- sqlite/Graph.sqlite --include-depends-on --ignore-likely-false-positives --limit=10 && npm run analyze:hotspots -- sqlite/Graph.sqlite --limit=10 && npm run analyze:risk -- sqlite/Graph.sqlite --limit=10 && npm run analyze:ai-context -- sqlite/Graph.sqlite \"SpOTTBackend\\Services\\Content\\Search\\SearchService::buildParamsFromRequest\" --compact",
+    "smoke:real-db:full": "npm run smoke:real-db:fast && npm run analyze:dead-code -- sqlite/Graph.sqlite --limit=10 && npm run analyze:change-impact -- sqlite/Graph.sqlite \"SpOTTBackend\\Services\\Content\\Search\\SearchService::buildParamsFromRequest\" --depth=2 --limit=10"
+  },
+  "keywords": [
+    "static-analysis",
+    "code-graph",
+    "php",
+    "vue",
+    "laravel",
+    "impact-analysis",
+    "cursor",
+    "cli"
+  ],
+  "author": "Luca Dogaru",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucaDogaru1/ImpectLens.git"
+  },
+  "homepage": "https://github.com/LucaDogaru1/ImpectLens#readme",
+  "bugs": {
+    "url": "https://github.com/LucaDogaru1/ImpectLens/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^12.11.1",
+    "chalk": "^5.6.2",
+    "tree-sitter": "^0.21.1",
+    "tree-sitter-javascript": "^0.21.4",
+    "tree-sitter-php": "^0.22.8",
+    "tree-sitter-typescript": "^0.21.2",
+    "tsx": "^4.22.4"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.19.19",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

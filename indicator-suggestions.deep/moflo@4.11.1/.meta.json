@@ -1,0 +1,124 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ad8ff02fe529738c",
+    "fetchedFiles": [
+      "bin/lib/file-sync.mjs",
+      "bin/lib/shipped-scripts.mjs",
+      "package.json",
+      "scripts/post-install-bootstrap.mjs",
+      "scripts/post-install-notice.mjs",
+      "scripts/prune-native-binaries.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/prune-native-binaries.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "eecb08d734bdb236b066cdcdc96e42baf8da267126a1916e5717533cf847e497",
+        "sizeBytes": 19987,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/post-install-notice.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "960993dfc6ad7a5cfe40715fe6765bdbe400fe40f3419e8d10598bd06a9fbe0d",
+        "sizeBytes": 5071,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/post-install-bootstrap.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f66dd6fd97b0b9ef6a5944128d4dc8de118e653db77724433d42817460048b78",
+        "sizeBytes": 11629,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/lib/file-sync.mjs",
+          "bin/lib/shipped-scripts.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/lib/file-sync.mjs",
+        "reason": "required by ./scripts/post-install-bootstrap.mjs",
+        "sha256": "e915da384d992b6db6766cd79f1e5c01b3bb721acf19ee5d33bbc892f15875ae",
+        "sizeBytes": 9721,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "bin/lib/shipped-scripts.mjs",
+        "reason": "required by ./scripts/post-install-bootstrap.mjs",
+        "sha256": "2d9038824f813cf4e1ddd7843f94849a542cfbc2f095d52e1af1a7ab56ba8a10",
+        "sizeBytes": 1618,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:11.694Z"
+  },
+  "hash": "sha256:5deb3328fb00b451db1a1b6a5b5fcc3b7d12b22178b89af7f561e87da3970efe"
+}

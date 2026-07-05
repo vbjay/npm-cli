@@ -1,0 +1,100 @@
+{
+  "name": "rn-tradingview",
+  "version": "2.3.0",
+  "description": "Production-grade multi-exchange candlestick chart for React Native and React (web). Supports Binance, OKX, and Bybit. GPU-accelerated on native (Skia), lightweight-charts on web. Reanimated v3 gestures, technical indicators (MACD, RSI, Bollinger Bands), drawing tools, live WebSocket candles, order book depth chart, and custom exchange adapter support.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": {
+        "import": "./dist/index.web.mjs",
+        "require": "./dist/index.web.js"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist || true",
+    "build": "tsup",
+    "prepare": "npm run build || true",
+    "start": "tsup --watch"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-native-tradingview",
+    "react-web-chart",
+    "react-native-crypto-chart",
+    "react-native-candlestick-chart",
+    "react-native-trading-chart",
+    "binance-okx-bybit-chart-react-native",
+    "multi-exchange-chart-react-native",
+    "crypto-exchange-chart-react-native",
+    "trading-chart-react-native",
+    "candlestick-chart",
+    "trading-chart",
+    "binance",
+    "tradingview",
+    "trading",
+    "crypto",
+    "cryptocurrency",
+    "crypto-chart",
+    "multi-exchange",
+    "exchange-adapter",
+    "ohlcv",
+    "technical-analysis",
+    "indicators",
+    "reanimated",
+    "lightweight-charts",
+    "okx",
+    "bybit",
+    "order-book",
+    "depth-chart",
+    "macd",
+    "rsi",
+    "bollinger-bands",
+    "financial-chart",
+    "stock-chart",
+    "defi"
+  ],
+  "author": "Salil Samdarshy & Shubham Narula",
+  "license": "MIT",
+  "peerDependencies": {
+    "lightweight-charts": ">=4",
+    "react": ">=18 <20",
+    "react-native": ">=0.72 <0.86",
+    "react-native-gesture-handler": ">=2",
+    "react-native-orientation-locker": ">=1.0.0",
+    "react-native-reanimated": ">=3",
+    "react-native-safe-area-context": ">=4",
+    "react-native-svg": ">=13",
+    "react-native-web": ">=0.19"
+  },
+  "peerDependenciesMeta": {
+    "react-native-orientation-locker": {
+      "optional": true
+    },
+    "react-native-web": {
+      "optional": true
+    },
+    "lightweight-charts": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "lightweight-charts": "^5.2.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "d3-shape": "^3.2.0"
+  }
+}

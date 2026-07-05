@@ -1,0 +1,64 @@
+{
+  "name": "corecdtl",
+  "version": "0.2.0",
+  "description": "High-performance customizable HTTP engine",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "gypfile": true,
+  "keywords": [
+    "http",
+    "server",
+    "parser",
+    "engine",
+    "native",
+    "addon",
+    "low-level",
+    "fast",
+    "corecdtl"
+  ],
+  "scripts": {
+    "build": "node-gyp rebuild && rm -rf dist && tsc",
+    "install": "node-gyp-build",
+    "prebuild": "prebuildify --napi --strip",
+    "build-ts": "tsc",
+    "test": "vitest run",
+    "benchmark": "node benchmark/e2e/run.js",
+    "prepublishOnly": "npm run build",
+    "example": "node example/server.js",
+    "example:web": "node example/server.web.js",
+    "example:api": "node example/server.api.js"
+  },
+  "files": [
+    "dist",
+    "prebuilds",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@fastify/express": "^4.0.4",
+    "@types/bindings": "^1.5.5",
+    "@types/node": "^24.8.1",
+    "autocannon": "^8.0.0",
+    "cmake-js": "^7.3.1",
+    "express": "^5.2.1",
+    "fastify": "^5.6.2",
+    "prebuildify": "^6.0.1",
+    "rimraf": "^6.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DirikTi/corecdtl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DirikTi/corecdtl/issues"
+  },
+  "homepage": "https://github.com/DirikTi/corecdtl#quickstart"
+}

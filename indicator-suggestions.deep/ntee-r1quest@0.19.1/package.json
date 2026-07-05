@@ -1,0 +1,87 @@
+{
+  "name": "ntee-r1quest",
+  "version": "0.19.1",
+  "homepage": "https://codeberg.org/nickoan/ntee-r1quest",
+  "license": "GPL-3.0-only",
+  "keywords": [
+    "http",
+    "http-client",
+    "rest",
+    "rest-client",
+    "api",
+    "api-client",
+    "graphql",
+    "cli",
+    "tui",
+    "terminal",
+    "postman",
+    "request",
+    "curl",
+    "ai"
+  ],
+  "main": "dist/index.js",
+  "bin": {
+    "ntee-r1quest": "./dist/index.js",
+    "r1q": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "docs/assets",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "workspaces": [
+    "ntee-db/ntee-db-js"
+  ],
+  "bundleDependencies": [
+    "@ntee/ntee-db"
+  ],
+  "scripts": {
+    "build:ts": "node ./bin/scripts/clean-dist.mjs && tsc -p tsconfig.build.json && node ./bin/scripts/copy-assets.mjs",
+    "build:tui": "node ./bin/scripts/build-tui.mjs",
+    "build:db": "bash ntee-db/capi/build.sh && npm run build:db-linux",
+    "build:db-linux": "node ./bin/scripts/build-db-linux.mjs",
+    "build": "npm run build:ts && npm run build:tui && npm run build:db",
+    "prepack": "npm run build",
+    "start:go": "npm run build && npm run start",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "start:codex": "node ./dist/index.js -r ./example -ai codex",
+    "start:claude": "R1QUEST_ACP_DEBUG=1 node ./dist/index.js -r ./example -ai claude",
+    "start:cursor": "node ./dist/index.js -r ./example -ai cursor",
+    "start": "node ./dist/index.js -r ./example",
+    "start:p": "node ./dist/index.js -r ./example -p request/example",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test:tui": "cd tui && go test ./...",
+    "test:tui-int": "npm run build:ts && cd tui && go test -tags integration ./...",
+    "typecheck": "tsc -p tsconfig.json",
+    "pack:dry-run": "npm pack --dry-run",
+    "clean": "node ./bin/scripts/clean-dist.mjs",
+    "version:bump": "node ./bin/scripts/bump-version.mjs"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.12.4",
+    "jest": "^30.2.0",
+    "msw": "^2.13.4",
+    "prettier": "^3.8.3",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@agentclientprotocol/claude-agent-acp": "^0.36.1",
+    "@agentclientprotocol/codex-acp": "^1.1.0",
+    "@agentclientprotocol/sdk": "^0.22.1",
+    "@ntee/ntee-db": "*",
+    "@types/react": "^19.2.14",
+    "axios": "^1.16.1",
+    "ink": "^7.0.1",
+    "ohm-js": "^17.5.0",
+    "react": "^19.2.5",
+    "yaml": "^2.9.0"
+  }
+}

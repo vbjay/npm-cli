@@ -1,0 +1,78 @@
+{
+  "name": "@component-controls/viewport-plugin",
+  "version": "4.0.3",
+  "description": "Viewport plugin",
+  "keywords": [
+    "addon",
+    "viewport"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "package.json",
+    "README.md",
+    "ViewportPage.d.ts",
+    "ViewportPage.js"
+  ],
+  "scripts": {
+    "build": "yarn cross-env NODE_ENV=production rollup -c",
+    "dev": "yarn cross-env NODE_ENV=development rollup -cw",
+    "docs": "api-readme",
+    "fix": "yarn lint --fix",
+    "lint": "yarn eslint . --ext mdx,ts,tsx",
+    "prepare": "yarn build",
+    "test:create": "cc-cli -g doc -c ./.config -w -d 5",
+    "test": "yarn jest"
+  },
+  "homepage": "https://github.com/ccontrols/component-controls",
+  "bugs": {
+    "url": "https://github.com/ccontrols/component-controls/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccontrols/component-controls.git",
+    "directory": "plugins/addon-stats"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@component-controls/blocks": "^4.0.3",
+    "@component-controls/components": "^4.0.3",
+    "react": "^17.0.1",
+    "theme-ui": "^0.8.4"
+  },
+  "devDependencies": {
+    "@component-controls/cc-cli": "^4.0.3",
+    "@emotion/jest": "^11.3.0",
+    "typescript": "^4.2.4"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "Martin Stoyanov",
+    "Atanas Stoyanov"
+  ],
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.ts"
+    ],
+    "roots": [
+      "./src"
+    ],
+    "snapshotSerializers": [
+      "@emotion/jest/serializer"
+    ]
+  },
+  "gitHead": "c31f66fb91f771e7c8da3988616962f1b40d52af"
+}

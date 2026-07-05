@@ -1,0 +1,64 @@
+{
+  "name": "create-principles-disciple",
+  "version": "1.104.0",
+  "description": "Interactive CLI installer for Principles Disciple OpenClaw plugin",
+  "type": "module",
+  "bin": {
+    "create-principles-disciple": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "plugin",
+    "pd-cli",
+    "console",
+    "core",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "bundle": "node scripts/bundle-plugin.mjs",
+    "prepack": "npm run build && npm run bundle",
+    "prepublishOnly": "npm run build && npm run bundle",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "openclaw",
+    "principles-disciple",
+    "cli",
+    "installer",
+    "interactive"
+  ],
+  "author": "csuzngjh",
+  "license": "MIT",
+  "dependencies": {
+    "@inquirer/prompts": "^8.4.3",
+    "commander": "^14.0.3",
+    "fs-extra": "^11.3.5",
+    "js-yaml": "^5.2.0",
+    "ora": "^9.4.0",
+    "picocolors": "^1.0.0",
+    "semver": "^7.8.4",
+    "tar": "^7.5.15"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^26.0.1",
+    "@types/semver": "^7.7.0",
+    "@types/tar": "^7.0.87",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.9"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/csuzngjh/principles.git",
+    "directory": "packages/create-principles-disciple"
+  }
+}

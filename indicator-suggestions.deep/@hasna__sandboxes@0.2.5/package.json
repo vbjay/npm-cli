@@ -1,0 +1,100 @@
+{
+  "name": "@hasna/sandboxes",
+  "version": "0.2.5",
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/sandboxes.git"
+  },
+  "main": "dist/index.js",
+  "dependencies": {
+    "@daytonaio/sdk": "^0.18.0",
+    "@e2b/code-interpreter": "^1.5.0",
+    "@hasna/contracts": "^0.5.2",
+    "@hasna/events": "^0.1.7",
+    "@hasna/mcp-harness": "file:../open-mcp",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@onkernel/sdk": "^0.66.0",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "pg": "^8.13.3",
+    "react": "^18.3.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.11.11",
+    "@types/react": "^18.3.18",
+    "typescript": "^5.7.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "import": "./dist/storage.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    }
+  },
+  "bin": {
+    "sandboxes": "dist/cli/index.js",
+    "sandboxes-mcp": "dist/mcp/index.js",
+    "sandboxes-serve": "dist/server/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/hasna/sandboxes/issues"
+  },
+  "description": "Universal cloud sandbox manager for AI coding agents - supports e2b, Daytona, Modal, Kernel",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "files": [
+    "dist",
+    "migrations",
+    "hasna.contract.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "homepage": "https://github.com/hasna/sandboxes",
+  "keywords": [
+    "sandbox",
+    "cloud",
+    "e2b",
+    "daytona",
+    "modal",
+    "kernel",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "codex",
+    "gemini",
+    "cli"
+  ],
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rm -rf dist && bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external pg --external @hasna/contracts --external @hasna/mcp-harness --external @modelcontextprotocol/sdk --external @e2b/code-interpreter --external @daytonaio/sdk --external @onkernel/sdk --external modal && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external pg --external @hasna/contracts --external @hasna/mcp-harness --external @modelcontextprotocol/sdk --external @e2b/code-interpreter --external @daytonaio/sdk --external @onkernel/sdk --external modal && bun build src/server/index.ts --outdir dist/server --target bun --external pg --external @hasna/contracts --external @hasna/mcp-harness --external @e2b/code-interpreter --external @daytonaio/sdk --external @onkernel/sdk --external modal && bun build src/sdk/index.ts --outdir dist/sdk --target bun --external pg --external @hasna/contracts --external @hasna/mcp-harness --external @e2b/code-interpreter --external @daytonaio/sdk --external @onkernel/sdk --external modal && bun build src/index.ts src/storage.ts --outdir dist --target bun --external pg --external @hasna/contracts --external @hasna/mcp-harness --external @e2b/code-interpreter --external @daytonaio/sdk --external @onkernel/sdk --external modal && tsc --emitDeclarationOnly --outDir dist",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "migrate": "bun run src/server/index.ts migrate",
+    "generate:sdk": "bun run scripts/generate-sdk.ts",
+    "verify:release": "bun run scripts/release-guard.ts",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "prepack": "bun run build && bun run verify:release",
+    "prepublishOnly": "bun run typecheck && bun run test",
+    "postinstall": "mkdir -p $HOME/.hasna/sandboxes 2>/dev/null || true"
+  },
+  "type": "module",
+  "types": "dist/index.d.ts"
+}

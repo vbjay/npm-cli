@@ -1,0 +1,82 @@
+{
+  "name": "@jovjs/num.js",
+  "version": "0.1.0",
+  "description": "A powerful numerical computing library for JavaScript/TypeScript, inspired by NumPy",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "CONTRIBUTING.md"
+  ],
+  "scripts": {
+    "build": "npm run build:clean && npm run build:all",
+    "build:clean": "rimraf dist",
+    "build:all": "npm run build:wasm && npm run build:esm && npm run build:cjs && npm run build:types",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build:wasm": "cd wasm && wasm-pack build --target web --out-dir ../dist/wasm",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "jest",
+    "test:e2e": "playwright test",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test:unit && npm run lint",
+    "docs": "typedoc --out docs src/index.ts",
+    "serve": "vite examples --port 3000"
+  },
+  "keywords": [
+    "numerical",
+    "computing",
+    "mathematics",
+    "arrays",
+    "linear-algebra",
+    "numpy",
+    "typescript",
+    "webgpu",
+    "wasm"
+  ],
+  "author": "JovJS Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jovjs/num.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jovjs/num.js/issues"
+  },
+  "homepage": "https://github.com/jovjs/num.js#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.41.0",
+    "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@webgpu/types": "^0.1.40",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.4",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "typedoc": "^0.25.7",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "wasm-pack": "^0.12.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "browser": {
+    "./dist/cjs/gpu/webgpu.js": "./dist/cjs/gpu/webgpu.browser.js",
+    "./dist/esm/gpu/webgpu.js": "./dist/esm/gpu/webgpu.browser.js"
+  }
+} 

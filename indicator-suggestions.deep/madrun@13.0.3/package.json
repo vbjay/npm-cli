@@ -1,0 +1,88 @@
+{
+  "name": "madrun",
+  "version": "13.0.3",
+  "description": "CLI tool to run multiple npm-scripts in a madly comfortable way",
+  "main": "lib/madrun.js",
+  "types": "./lib/madrun.d.ts",
+  "type": "module",
+  "scripts": {
+    "wisdom": "madrun wisdom",
+    "lint": "madrun lint",
+    "fresh:lint": "madrun fresh:lint",
+    "lint:fresh": "madrun lint:fresh",
+    "fix:lint": "madrun fix:lint",
+    "test": "madrun test",
+    "test:dts": "madrun test:dts",
+    "watch:test": "madrun watch:test",
+    "watch:tape": "madrun watch:tape",
+    "watch:lint": "madrun watch:lint",
+    "watcher": "madrun watcher",
+    "coverage": "madrun coverage",
+    "report": "madrun report",
+    "hello": "madrun hello",
+    "prepare": "madrun prepare"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderaiser/madrun.git"
+  },
+  "bin": {
+    "madrun": "bin/madrun.js",
+    "madrun-completion": "bin/madrun-completion.js"
+  },
+  "keywords": [
+    "madrun",
+    "scripts",
+    "package",
+    "npm",
+    "npm run",
+    "npm-scripts",
+    "tool",
+    "cli",
+    "command",
+    "task",
+    "parallel",
+    "serial",
+    "run",
+    "commandline"
+  ],
+  "author": "coderaiser <mnemonic.enemy@gmail.com> (http://coderaiser.github.io/)",
+  "bugs": {
+    "url": "https://github.com/coderaiser/madrun/issues"
+  },
+  "homepage": "https://github.com/coderaiser/madrun",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@putout/cli-choose": "^4.0.0",
+    "@putout/engine-reporter": "^8.0.2",
+    "@putout/formatter-dump": "^7.0.0",
+    "all-object-keys": "^3.0.0",
+    "enquirer": "^2.3.6",
+    "find-up": "^8.0.0",
+    "jessy": "^5.0.0",
+    "mapsome": "^1.0.0",
+    "montag": "^2.0.1",
+    "once": "^1.4.0",
+    "putout": "^42.0.0",
+    "try-catch": "^4.0.1",
+    "try-to-catch": "^4.0.0",
+    "yargs-parser": "^22.0.0"
+  },
+  "devDependencies": {
+    "@putout/formatter-json": "^3.0.0",
+    "check-dts": "^1.0.0",
+    "eslint": "^10.0.0",
+    "eslint-plugin-putout": "^31.0.0",
+    "nodemon": "^3.0.1",
+    "redlint": "^6.0.0",
+    "runsome": "^2.0.0",
+    "superc8": "^12.2.4",
+    "supertape": "^13.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

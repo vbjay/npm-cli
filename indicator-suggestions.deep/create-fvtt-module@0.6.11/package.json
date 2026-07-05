@@ -1,0 +1,72 @@
+{
+	"name": "create-fvtt-module",
+	"version": "0.6.11",
+	"description": "A CLI tool to scaffold Foundry VTT modules",
+	"keywords": [
+		"foundry-vtt",
+		"module",
+		"scaffold",
+		"cli"
+	],
+	"license": "MIT",
+	"author": "mrvauxs",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/MrVauxs/create-fvtt-module"
+	},
+	"homepage": "https://github.com/MrVauxs/create-fvtt-module#readme",
+	"bugs": {
+		"url": "https://github.com/MrVauxs/create-fvtt-module/issues"
+	},
+	"type": "module",
+	"main": "./dist/index.js",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./bin": {
+			"import": "./dist/bin.js",
+			"types": "./dist/bin.d.ts"
+		}
+	},
+	"bin": {
+		"create-fvtt-module": "./dist/bin.js"
+	},
+	"files": [
+		"dist/",
+		"templates/",
+		"addons/",
+		"LICENSE",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsc",
+		"build:watch": "tsc --watch",
+		"type-check": "tsc --noEmit",
+		"lint": "eslint src",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"prepublishOnly": "npm run build",
+		"prepack": "npm run build",
+		"dev": "bun src/bin.ts \"My New Module\" --auto-id --override --template vite"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.0.0",
+		"@types/adm-zip": "^0.5.7",
+		"@types/node": "^20.19.39",
+		"eslint": "^9.0.0",
+		"typescript-eslint": "^8.0.0",
+		"vitest": "^2.0.0"
+	},
+	"peerDependencies": {
+		"@clack/prompts": "^1.0.0-alpha.9",
+		"kolorist": "^1.8.0",
+		"@foundryvtt/foundryvtt-cli": "^1.0.0",
+		"adm-zip": "^0.5.16",
+		"typescript": "^5"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	}
+}

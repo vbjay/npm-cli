@@ -1,0 +1,118 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d4a2523e3eb595fe",
+    "fetchedFiles": [
+      "install.js",
+      "package.json",
+      "platform.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^7.5.16"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "tar@7.5.19"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "24540dc0808288b9e8390695db58a61860c9dec3fb82cff6ca984e11b2f71db3",
+        "sizeBytes": 12088,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "platform.js"
+        ],
+        "urls": [
+          {
+            "url": "https://downloads.tokenade.net",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "platform.js",
+        "reason": "required by ./install.js",
+        "sha256": "2d225b29a71ce3510c0234e08186bdd80c9ced95edac529d3332730569adaeef",
+        "sizeBytes": 3780,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:06.093Z"
+  },
+  "hash": "sha256:9c3966438f3e7b41580c4c2831276e342549d0255a4075674ce36bfa3a592315"
+}

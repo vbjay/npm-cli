@@ -1,0 +1,183 @@
+{
+  "name": "qcobjects-cli",
+  "version": "2.5.158",
+  "description": "qcobjects cli command line tool",
+  "main": "public/cjs/index.js",
+  "module": "public/esm/index.mjs",
+  "browser": "public/browser/index.js",
+  "type": "commonjs",
+  "types": "public/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./public/types/index.d.ts",
+      "deno": "./mod.ts",
+      "require": "./public/cjs/index.js",
+      "import": "./public/esm/index.mjs",
+      "default": "./public/cjs/index.js"
+    },
+    "./types/*": "./types/*",
+    "./package.json": "./package.json",
+    "./tsconfig.json": "./tsconfig.json",
+    "./tsconfig.d.json": "./tsconfig.d.json",
+    "./tsconfig.jasmine.json": "./tsconfig.jasmine.json",
+    "./*.js": "./public/*.js",
+    "./*.cjs": "./public/cjs/*.js",
+    "./*.mjs": "./public/esm/*.mjs",
+    "./*": {
+      "types": "./public/types/index.d.ts",
+      "deno": "./mod.ts",
+      "require": "./public/cjs/*.js",
+      "import": "./public/esm/*.mjs",
+      "default": "./public/cjs/*.js"
+    },
+    "./qcobjects-collab": {
+      "require": "./public/cjs/qcobjects-collab.js",
+      "import": "./public/esm/qcobjects-collab.mjs"
+    },
+    "./qcobjects-cli": {
+      "require": "./public/cjs/qcobjects-cli.js",
+      "import": "./public/mjs/qcobjects-cli.mjs"
+    },
+    "./qcobjects-createcert": {
+      "require": "./public/cjs/qcobjects-createcert.js",
+      "import": "./public/mjs/qcobjects-createcert.mjs"
+    },
+    "./createcert": {
+      "require": "./public/cjs/qcobjects-createcert.js",
+      "import": "./public/mjs/qcobjects-createcert.mjs"
+    },
+    "./qcobjects-gae-http-server": {
+      "require": "./public/cjs/qcobjects-gae-http-server.js",
+      "import": "./public/mjs/qcobjects-gae-http-server.mjs"
+    },
+    "./qcobjects-http-server": {
+      "require": "./public/cjs/qcobjects-http-server.js",
+      "import": "./public/mjs/qcobjects-http-server.mjs"
+    },
+    "./qcobjects-http2-server": {
+      "require": "./public/cjs/qcobjects-http2-server.js",
+      "import": "./public/mjs/qcobjects-http2-server.mjs"
+    },
+    "./qcobjects-shell": {
+      "require": "./public/cjs/qcobjects-shell.js",
+      "import": "./public/mjs/qcobjects-shell.mjs"
+    },
+    "./defaultsettings": {
+      "require": "./public/cjs/defaultsettings.js",
+      "import": "./public/esm/defaultsettings.mjs"
+    },
+    "./com.qcobjects.cli.commands": {
+      "require": "./public/cjs/cli-commands.js",
+      "import": "./public/esm/cli-commands.mjs"
+    },
+    "./cli-commands": {
+      "require": "./public/cjs/cli-commands.js",
+      "import": "./public/esm/cli-commands.mjs"
+    }
+  },
+  "license": "LGPL-3.0",
+  "scripts": {
+    "build": "npm run build:ts-types && npm run build:ts && npm run build:esbuild",
+    "build:ts": "npm test && node ./transpile.js tsconfig.json",
+    "build:ts-types": "node ./transpile.js tsconfig.d.json",
+    "build:browser": "npm run build:esbuild",
+    "build:esbuild": "node ./build-esbuild-esm.js",
+    "start": "qcobjects-shell",
+    "test:ts-types": "node ./transpile.js ./tsconfig.jasmine.json",
+    "test:jasmine": "npm run test:ts-types && npx ts-node --project ./tsconfig.jasmine.json ./node_modules/jasmine/bin/jasmine",
+    "test": "(npm run lint && npm run test:jasmine)",
+    "lint": "(npx -y eslint src/**/*.ts --fix )",
+    "preversion": "npm cache verify && npm test",
+    "sync": "git add . && git commit -am ",
+    "postversion": "git push",
+    "v-patch": "qcobjects v-patch",
+    "v-minor": "qcobjects v-minor",
+    "v-major": "qcobjects v-major",
+    "qcobjects": "qcobjects",
+    "cli": "qcobjects",
+    "prepare": "node -e \"if(!require('fs').existsSync('.git')){process.exit(0)}\" || npx -y husky install",
+    "cli:help": "qcobjects --help",
+    "tree": "tree -d --gitignore",
+    "generate-readme-pdf": "(npx -y markdown-pdf --paper-format \"Letter\" -o README.pdf README.md && npx markdown-pdf --paper-format \"Letter\" -o README-es.pdf README-es.md) && npm uninstall markdown-pdf"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QCObjects/qcobjects-cli.git"
+  },
+  "keywords": [
+    "node",
+    "quickcorp",
+    "javascript",
+    "pure",
+    "mvc",
+    "objects",
+    "sdk",
+    "middleware",
+    "framework",
+    "quick",
+    "components",
+    "web",
+    "webcomponents",
+    "cli",
+    "qcobjects"
+  ],
+  "author": "Jean Machuca <correojean@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/QCObjects/qcobjects-cli/issues"
+  },
+  "homepage": "https://qcobjects.dev",
+  "bin": {
+    "qco": "bin/qcobjects-cli.js",
+    "qcobjects": "bin/qcobjects-cli.js",
+    "qcobjects-cli": "bin/qcobjects-cli.js",
+    "qcobjects-server": "bin/qcobjects-cli.js",
+    "qcobjects-http2-server": "bin/qcobjects-cli.js",
+    "qcobjects-shell": "bin/qcobjects-cli.js",
+    "qcobjects-createcert": "bin/qcobjects-cli.js",
+    "qcobjects-gae-server": "bin/qcobjects-cli.js",
+    "qcobjects-http-server": "bin/qcobjects-cli.js",
+    "qcobjects-collab": "bin/qcobjects-cli.js"
+  },
+  "dependencies": {
+    "commander": "^10.0.1",
+    "esbuild": "^0.28.0",
+    "esbuild-plugin-alias": "^0.2.1",
+    "glob": "^8.0.3",
+    "mime": "^2.6.0",
+    "typescript": "^5.7.2",
+    "yaml": "^2.6.0"
+  },
+  "peerDependencies": {
+    "qcobjects": ">=2.5.142",
+    "qcobjects-sdk": ">=2.5.105"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^2.1.4",
+    "@eslint/js": "^8.56.0",
+    "@types/glob": "^8.1.0",
+    "@types/jasmine": "^5.1.4",
+    "@types/mime": "^3.0.4",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "globals": "^15.11.0",
+    "hint": "^2.0.0",
+    "install": "^0.13.0",
+    "jasmine": "^3.7.0",
+    "qcobjects": ">=2.5.142",
+    "qcobjects-sdk": ">=2.5.105",
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.18.1"
+  },
+  "engines": {
+    "npm": ">=10",
+    "node": ">=22"
+  }
+}

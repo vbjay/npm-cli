@@ -1,0 +1,49 @@
+{
+  "name": "code-extend",
+  "description": "Code-Extend is a framework for enabling a codebase to integrate plugins, addons, and extensions.  By using a variety of customizable hook topologies, your architecture will become highly extensible and loosely coupled",
+  "keywords": [
+    "plugin",
+    "addon",
+    "extension",
+    "callback",
+    "typescript",
+    "tapable",
+    "tap",
+    "tapable",
+    "hook",
+    "code-evolve",
+    "twelvetone",
+    "extend",
+    "codeextend"
+  ],
+  "version": "0.1.2",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "vitest run",
+    "testc": "vitest",
+    "build": "vite build && yarn build:lic",
+    "build:lic": "license-check-and-add add",
+    "dry": "yarn build && yarn test && yarn pack --dry-run",
+    "prepack": "yarn build && yarn test"
+  },
+  "devDependencies": {
+    "@rollup/pluginutils": "^5.1.0",
+    "license-check-and-add": "^4.0.5",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.12",
+    "vite-node": "^1.6.0",
+    "vite-plugin-dts": "^3.9.1",
+    "vitest": "^1.6.0",
+    "vue": "^3.4.27"
+  },
+  "files": [
+    "dist",
+    "samples",
+    "!samples/ideal*"
+  ],
+  "runkitExampleFilename": "samples/example.cjs",
+  "license": "MIT",
+  "packageManager": "yarn@4.2.2"
+}

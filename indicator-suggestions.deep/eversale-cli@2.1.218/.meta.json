@@ -1,0 +1,136 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9a4d3099590fb417",
+    "fetchedFiles": [
+      "bin/eversale.js",
+      "bin/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "bb463d9138c45eaccc2440bf316ee1d5304fcc7a9490028740b085df505cf1ad",
+        "sizeBytes": 7165,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "bin/eversale.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ae355f5b36d402cf914832055cbd42360a94a39c613e6b20e6fb7a77b80ef952",
+        "sizeBytes": 49527,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "dynamic-require",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://www.python.org/downloads/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://registry.npmjs.org/eversale-cli/latest",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:44.399Z"
+  },
+  "hash": "sha256:747ab7c48ca63cbf35133442389be09fd164bd457e8c54183f1974b7331c27a9"
+}

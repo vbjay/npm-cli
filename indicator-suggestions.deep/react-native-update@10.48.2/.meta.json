@@ -1,0 +1,112 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ff0f009cd61aaeaa",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/check-expo-version.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "7a32b664e996254dea241c2fac3822bd7a5043464c5a58ef3a90ea4633b824df",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check-expo-version.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "fdf36dbdb50a2b900a3d40af68156b75e6fbef0d2d7c889bb0fb468a272c2956",
+        "sizeBytes": 2889,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/check-expo-version.js",
+        "sha256": "fc4fc7db101781ea3cd83e2260f6973db9e63e4b3eba57ff776bbdb1ac481614",
+        "sizeBytes": 3809,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "submodule",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "lint",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/check-harmony-types.js",
+        "reason": "referenced by lifecycle script: `lint`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:58.649Z"
+  },
+  "hash": "sha256:a5c97e067f49cdf2ef67b09a0cbc83c09d088611540fe85013a0a82064615988"
+}

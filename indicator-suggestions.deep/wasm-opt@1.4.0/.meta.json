@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7f9ad5b340ec7231",
+    "fetchedFiles": [
+      "bin/index.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^6.1.13"
+      },
+      {
+        "name": "node-fetch",
+        "versionSpec": "^2.6.9"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "node-fetch@2.7.0",
+      "tar@6.2.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/index.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4736ed2c92c7d97645e79b20a3c45c30c38688f30e31c5dcc0c50c9de3f1c62d",
+        "sizeBytes": 4390,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "binary-download",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/WebAssembly/binaryen/releases/download/version_",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:28.405Z"
+  },
+  "hash": "sha256:1f85c07f9c1214213e082dbc7ae7c676a208ba4cd1c707695ee8f27b704bb519"
+}

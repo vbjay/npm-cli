@@ -1,0 +1,77 @@
+{
+  "name": "@thelabnyc/typed-scss-modules",
+  "version": "8.2.4",
+  "description": "TypeScript type definition generator for SCSS CSS Modules",
+  "type": "module",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "author": "Spencer Miskoviak <smiskoviak@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/thelabnyc/typed-scss-modules.git"
+  },
+  "homepage": "https://gitlab.com/thelabnyc/typed-scss-modules",
+  "keywords": [
+    "scss",
+    "css modules",
+    "cli",
+    "typescript",
+    "type generator",
+    "scss modules"
+  ],
+  "files": [
+    "dist/lib"
+  ],
+  "bin": {
+    "typed-scss-modules": "dist/lib/cli.js"
+  },
+  "scripts": {
+    "prepack": "npm run build",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
+    "typed-scss-modules": "tsx ./lib/cli.ts",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && tsc && chmod +x dist/lib/cli.js",
+    "check:types": "tsc --noEmit",
+    "check:lint": "eslint .",
+    "check": "npm run check:types && npm run check:lint",
+    "format": "prettier . --write"
+  },
+  "peerDependencies": {
+    "sass": "^1.89.0"
+  },
+  "dependencies": {
+    "bundle-require": "^5.1.0",
+    "chalk": "^5.4.1",
+    "change-case": "^5.4.4",
+    "chokidar": "^4.0.3",
+    "esbuild": "^0.25.5",
+    "glob": "^11.0.2",
+    "joycon": "^3.1.1",
+    "minimatch": "^10.0.2",
+    "postcss": "^8.4.27",
+    "postcss-modules": "^6.0.1",
+    "prettier": "^3.5.3",
+    "reserved-words": "^0.1.2",
+    "slash": "^5.1.0",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@thelabnyc/standards": "^0.4.5",
+    "@tsconfig/node20": "^20.1.5",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.15.24",
+    "@types/reserved-words": "^0.1.4",
+    "@types/yargs": "^17.0.33",
+    "eslint-import-resolver-typescript": "^4.4.1",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.3.4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

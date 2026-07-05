@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5e0efe4bef0805aa",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f666b706fab04c93e581340025d42485b62ca593b5dc818e12047a751d8c3c8b",
+        "sizeBytes": 2397,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "b9e2a31b70cd26156796f5e62a5a13f9d6f4cbc1bbf43b39973c33c4e0ac4e33",
+        "sizeBytes": 827,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:37.572Z"
+  },
+  "hash": "sha256:a454061046991a333075253de9e3df5f840694114e621dcb8dcdda5c1fd5d7c4"
+}

@@ -1,0 +1,55 @@
+{
+  "name": "formualizer",
+  "version": "0.7.1",
+  "description": "Embeddable spreadsheet engine — parse, evaluate & mutate Excel workbooks in the browser. 320+ functions, Arrow-powered.",
+  "homepage": "https://github.com/psu3d0/formualizer",
+  "type": "module",
+  "packageManager": "pnpm@11.0.9",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./pkg/*": "./pkg/*"
+  },
+  "files": [
+    "dist",
+    "pkg",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:wasm && npm run build:ts",
+    "build:wasm": "wasm-pack build --target bundler --out-dir pkg --release && rm -f pkg/.gitignore",
+    "build:ts": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "test": "wasm-pack test --node",
+    "clean": "rm -rf dist pkg"
+  },
+  "keywords": [
+    "excel",
+    "formula",
+    "parser",
+    "wasm",
+    "webassembly",
+    "spreadsheet",
+    "spreadsheet-engine",
+    "formula-evaluation",
+    "evaluation",
+    "arrow",
+    "workbook"
+  ],
+  "license": "MIT OR Apache-2.0",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.19.37",
+    "rollup": "^4.60.1",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PSU3D0/formualizer"
+  }
+}

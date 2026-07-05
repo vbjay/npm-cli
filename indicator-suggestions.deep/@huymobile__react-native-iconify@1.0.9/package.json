@@ -1,0 +1,66 @@
+{
+  "name": "@huymobile/react-native-iconify",
+  "version": "1.0.9",
+  "description": "200,000+ icons for React Native with native caching and zero configuration",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "lib/index.js",
+  "files": [
+    "lib",
+    "ios",
+    "android",
+    "scripts",
+    "*.podspec",
+    "react-native.config.js"
+  ],
+  "bundledIconsPath": "lib/bundled-icons.generated.js",
+  "scripts": {
+    "build": "tsc && node scripts/copy-bundled-icons.js",
+    "clean": "rm -rf lib",
+    "prepare": "npm run clean && npm run build",
+    "prepublishOnly": "npm run prepare",
+    "postinstall": "node scripts/postinstall.js",
+    "bundle": "node scripts/bundle-production.js",
+    "bundle:force": "node scripts/bundle-production.js --force",
+    "scan": "node scripts/scan-icons.js",
+    "fetch": "node scripts/fetch-icons.js",
+    "clear-cache": "node scripts/fetch-icons.js clear",
+    "publish": "node publish-commands.sh"
+  },
+  "keywords": [
+    "react-native",
+    "iconify",
+    "icons",
+    "svg",
+    "native",
+    "cache",
+    "mdi",
+    "feather",
+    "heroicons",
+    "phosphor",
+    "lucide"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huytdps13400/react-native-iconify.git"
+  },
+  "author": "huymobile",
+  "license": "MIT",
+  "homepage": "https://github.com/huytdps13400/react-native-iconify#readme",
+  "bugs": {
+    "url": "https://github.com/huytdps13400/react-native-iconify/issues"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.68.0",
+    "react-native-svg": ">=13.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "react": "18.2.0",
+    "react-native": "0.73.0",
+    "react-native-svg": "^15.0.0",
+    "typescript": "^5.4.5"
+  }
+}

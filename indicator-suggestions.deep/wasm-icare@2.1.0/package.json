@@ -1,0 +1,96 @@
+{
+  "name": "wasm-icare",
+  "version": "2.1.0",
+  "description": "JavaScript/TypeScript SDK for py-icare (iCARE: individualized Coherent Absolute Risk Estimation), run in Pyodide/WebAssembly.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Jeya Balaji Balasubramanian",
+  "homepage": "https://github.com/jeyabbalas/wasm-icare",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeyabbalas/wasm-icare.git"
+  },
+  "keywords": [
+    "icare",
+    "absolute-risk",
+    "epidemiology",
+    "pyodide",
+    "webassembly",
+    "wasm"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "assets",
+    "scripts/vendor-pyodide.mjs",
+    "CHANGELOG.md"
+  ],
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "types": "./dist/index.node.d.ts",
+        "default": "./dist/index.node.js"
+      },
+      "browser": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "worker": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./worker": {
+      "types": "./dist/worker.d.ts",
+      "default": "./dist/worker.js"
+    },
+    "./assets/*": "./assets/*",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "wasm-icare-vendor": "./scripts/vendor-pyodide.mjs"
+  },
+  "dependencies": {
+    "pyodide": "314.0.2"
+  },
+  "optionalDependencies": {
+    "apache-arrow": "^21"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.4",
+    "@types/node": "^26",
+    "@vitest/browser": "^4",
+    "@vitest/browser-playwright": "^4",
+    "playwright": "^1.61.1",
+    "publint": "^0.3.21",
+    "tsup": "^8",
+    "typescript": "^5.6",
+    "vitest": "^4"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:e2e": "vitest run --project e2e",
+    "test:e2e:slow": "RUN_SLOW=1 vitest run --project e2e-slow",
+    "test:browser": "npm run build && vitest run --project browser",
+    "sync-fixtures": "node scripts/sync-fixtures.mjs",
+    "verify-fixtures": "node scripts/sync-fixtures.mjs --verify",
+    "vendor-wheel": "node scripts/vendor-wheel.mjs",
+    "vendor-pyodide": "node scripts/vendor-pyodide.mjs",
+    "publint": "publint --strict",
+    "attw": "attw --pack . --profile esm-only",
+    "check-package": "node scripts/check-package.mjs",
+    "smoke-tarball": "node scripts/smoke-tarball.mjs"
+  }
+}

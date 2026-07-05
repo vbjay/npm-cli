@@ -1,0 +1,406 @@
+{
+  "name": "scip-query",
+  "version": "0.15.0",
+  "description": "Evidence and verification for AI coding agents: map code, reuse concepts, finish migrations, and gate diffs.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "scip-query": "dist/cli.js"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "docs/assets/**/*",
+    "docs/*.md",
+    "scripts/build-scip-windows.mjs",
+    "scripts/evidence-product-contract.mjs",
+    "skills/**/*.md",
+    "skills/**/agents/*.yaml"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./queries": {
+      "import": "./dist/queries/index.js",
+      "types": "./dist/queries/index.d.ts"
+    },
+    "./queries/affected": {
+      "import": "./dist/queries/affected.js",
+      "types": "./dist/queries/affected.d.ts"
+    },
+    "./queries/bottlenecks": {
+      "import": "./dist/queries/bottlenecks.js",
+      "types": "./dist/queries/bottlenecks.d.ts"
+    },
+    "./queries/by-kind": {
+      "import": "./dist/queries/by-kind.js",
+      "types": "./dist/queries/by-kind.d.ts"
+    },
+    "./queries/call-graph": {
+      "import": "./dist/queries/call-graph.js",
+      "types": "./dist/queries/call-graph.d.ts"
+    },
+    "./queries/change-surface": {
+      "import": "./dist/queries/change-surface.js",
+      "types": "./dist/queries/change-surface.d.ts"
+    },
+    "./queries/cleanup-plan": {
+      "import": "./dist/queries/cleanup-plan.js",
+      "types": "./dist/queries/cleanup-plan.d.ts"
+    },
+    "./queries/co-change": {
+      "import": "./dist/queries/co-change.js",
+      "types": "./dist/queries/co-change.d.ts"
+    },
+    "./queries/code": {
+      "import": "./dist/queries/code.js",
+      "types": "./dist/queries/code.d.ts"
+    },
+    "./queries/complexity": {
+      "import": "./dist/queries/complexity.js",
+      "types": "./dist/queries/complexity.d.ts"
+    },
+    "./queries/complexity-hotspots": {
+      "import": "./dist/queries/complexity-hotspots.js",
+      "types": "./dist/queries/complexity-hotspots.d.ts"
+    },
+    "./queries/convergence": {
+      "import": "./dist/queries/convergence.js",
+      "types": "./dist/queries/convergence.d.ts"
+    },
+    "./queries/coupling": {
+      "import": "./dist/queries/coupling.js",
+      "types": "./dist/queries/coupling.d.ts"
+    },
+    "./queries/cycles": {
+      "import": "./dist/queries/cycles.js",
+      "types": "./dist/queries/cycles.d.ts"
+    },
+    "./queries/dataflow": {
+      "import": "./dist/queries/dataflow.js",
+      "types": "./dist/queries/dataflow.d.ts"
+    },
+    "./queries/dead": {
+      "import": "./dist/queries/dead.js",
+      "types": "./dist/queries/dead.d.ts"
+    },
+    "./queries/decorative-checkers": {
+      "import": "./dist/queries/decorative-checkers.js",
+      "types": "./dist/queries/decorative-checkers.d.ts"
+    },
+    "./queries/deep-chains": {
+      "import": "./dist/queries/deep-chains.js",
+      "types": "./dist/queries/deep-chains.d.ts"
+    },
+    "./queries/deps": {
+      "import": "./dist/queries/deps.js",
+      "types": "./dist/queries/deps.d.ts"
+    },
+    "./queries/diff-gate": {
+      "import": "./dist/queries/diff-gate.js",
+      "types": "./dist/queries/diff-gate.d.ts"
+    },
+    "./queries/diff-impact": {
+      "import": "./dist/queries/diff-impact.js",
+      "types": "./dist/queries/diff-impact.d.ts"
+    },
+    "./queries/doc-drift": {
+      "import": "./dist/queries/doc-drift.js",
+      "types": "./dist/queries/doc-drift.d.ts"
+    },
+    "./queries/duplicate-bodies": {
+      "import": "./dist/queries/duplicate-bodies.js",
+      "types": "./dist/queries/duplicate-bodies.d.ts"
+    },
+    "./queries/drift": {
+      "import": "./dist/queries/drift.js",
+      "types": "./dist/queries/drift.d.ts"
+    },
+    "./queries/extract-candidates": {
+      "import": "./dist/queries/extract-candidates.js",
+      "types": "./dist/queries/extract-candidates.d.ts"
+    },
+    "./queries/fan": {
+      "import": "./dist/queries/fan.js",
+      "types": "./dist/queries/fan.d.ts"
+    },
+    "./queries/files": {
+      "import": "./dist/queries/files.js",
+      "types": "./dist/queries/files.d.ts"
+    },
+    "./queries/health": {
+      "import": "./dist/queries/health.js",
+      "types": "./dist/queries/health.d.ts"
+    },
+    "./queries/hierarchy": {
+      "import": "./dist/queries/hierarchy.js",
+      "types": "./dist/queries/hierarchy.d.ts"
+    },
+    "./queries/hotspots": {
+      "import": "./dist/queries/hotspots.js",
+      "types": "./dist/queries/hotspots.d.ts"
+    },
+    "./queries/imports": {
+      "import": "./dist/queries/imports.js",
+      "types": "./dist/queries/imports.d.ts"
+    },
+    "./queries/incomplete-migration": {
+      "import": "./dist/queries/incomplete-migration.js",
+      "types": "./dist/queries/incomplete-migration.d.ts"
+    },
+    "./queries/index": {
+      "import": "./dist/queries/index.js",
+      "types": "./dist/queries/index.d.ts"
+    },
+    "./queries/isolated": {
+      "import": "./dist/queries/isolated.js",
+      "types": "./dist/queries/isolated.d.ts"
+    },
+    "./queries/locality-candidates": {
+      "import": "./dist/queries/locality-candidates.js",
+      "types": "./dist/queries/locality-candidates.d.ts"
+    },
+    "./queries/members": {
+      "import": "./dist/queries/members.js",
+      "types": "./dist/queries/members.d.ts"
+    },
+    "./queries/methods": {
+      "import": "./dist/queries/methods.js",
+      "types": "./dist/queries/methods.d.ts"
+    },
+    "./queries/not-implemented": {
+      "import": "./dist/queries/not-implemented.js",
+      "types": "./dist/queries/not-implemented.d.ts"
+    },
+    "./queries/outline": {
+      "import": "./dist/queries/outline.js",
+      "types": "./dist/queries/outline.d.ts"
+    },
+    "./queries/passthrough-candidates": {
+      "import": "./dist/queries/passthrough-candidates.js",
+      "types": "./dist/queries/passthrough-candidates.d.ts"
+    },
+    "./queries/plan-context": {
+      "import": "./dist/queries/plan-context.js",
+      "types": "./dist/queries/plan-context.d.ts"
+    },
+    "./queries/recent-duplicates": {
+      "import": "./dist/queries/recent-duplicates.js",
+      "types": "./dist/queries/recent-duplicates.d.ts"
+    },
+    "./queries/redundant-reexports": {
+      "import": "./dist/queries/redundant-reexports.js",
+      "types": "./dist/queries/redundant-reexports.d.ts"
+    },
+    "./queries/refs": {
+      "import": "./dist/queries/refs.js",
+      "types": "./dist/queries/refs.d.ts"
+    },
+    "./queries/self-audit": {
+      "import": "./dist/queries/self-audit.js",
+      "types": "./dist/queries/self-audit.d.ts"
+    },
+    "./queries/similar": {
+      "import": "./dist/queries/similar.js",
+      "types": "./dist/queries/similar.d.ts"
+    },
+    "./queries/similar-chains": {
+      "import": "./dist/queries/similar-chains.js",
+      "types": "./dist/queries/similar-chains.d.ts"
+    },
+    "./queries/similar-files": {
+      "import": "./dist/queries/similar-files.js",
+      "types": "./dist/queries/similar-files.d.ts"
+    },
+    "./queries/react-component-duplicates": {
+      "import": "./dist/queries/react-component-duplicates.js",
+      "types": "./dist/queries/react-component-duplicates.d.ts"
+    },
+    "./queries/react-hook-candidates": {
+      "import": "./dist/queries/react-hook-candidates.js",
+      "types": "./dist/queries/react-hook-candidates.d.ts"
+    },
+    "./queries/react-large-component-pressure": {
+      "import": "./dist/queries/react-large-component-pressure.js",
+      "types": "./dist/queries/react-large-component-pressure.d.ts"
+    },
+    "./queries/vue-component-duplicates": {
+      "import": "./dist/queries/vue-component-duplicates.js",
+      "types": "./dist/queries/vue-component-duplicates.d.ts"
+    },
+    "./queries/vue-composable-candidates": {
+      "import": "./dist/queries/vue-composable-candidates.js",
+      "types": "./dist/queries/vue-composable-candidates.d.ts"
+    },
+    "./queries/vue-large-view-pressure": {
+      "import": "./dist/queries/vue-large-view-pressure.js",
+      "types": "./dist/queries/vue-large-view-pressure.d.ts"
+    },
+    "./queries/similar-signatures": {
+      "import": "./dist/queries/similar-signatures.js",
+      "types": "./dist/queries/similar-signatures.d.ts"
+    },
+    "./queries/slice": {
+      "import": "./dist/queries/slice.js",
+      "types": "./dist/queries/slice.d.ts"
+    },
+    "./queries/stale-abstractions": {
+      "import": "./dist/queries/stale-abstractions.js",
+      "types": "./dist/queries/stale-abstractions.d.ts"
+    },
+    "./queries/stats": {
+      "import": "./dist/queries/stats.js",
+      "types": "./dist/queries/stats.d.ts"
+    },
+    "./queries/surface": {
+      "import": "./dist/queries/surface.js",
+      "types": "./dist/queries/surface.d.ts"
+    },
+    "./queries/symbols": {
+      "import": "./dist/queries/symbols.js",
+      "types": "./dist/queries/symbols.d.ts"
+    },
+    "./queries/system": {
+      "import": "./dist/queries/system.js",
+      "types": "./dist/queries/system.d.ts"
+    },
+    "./queries/test-quality": {
+      "import": "./dist/queries/test-quality.js",
+      "types": "./dist/queries/test-quality.d.ts"
+    },
+    "./queries/trace": {
+      "import": "./dist/queries/trace.js",
+      "types": "./dist/queries/trace.d.ts"
+    },
+    "./queries/twin-ab": {
+      "import": "./dist/queries/twin-ab.js",
+      "types": "./dist/queries/twin-ab.d.ts"
+    },
+    "./queries/twin-drift": {
+      "import": "./dist/queries/twin-drift.js",
+      "types": "./dist/queries/twin-drift.d.ts"
+    },
+    "./queries/unused-params": {
+      "import": "./dist/queries/unused-params.js",
+      "types": "./dist/queries/unused-params.d.ts"
+    },
+    "./queries/unused-imports": {
+      "import": "./dist/queries/unused-imports.js",
+      "types": "./dist/queries/unused-imports.d.ts"
+    },
+    "./queries/wrapper-candidates": {
+      "import": "./dist/queries/wrapper-candidates.js",
+      "types": "./dist/queries/wrapper-candidates.d.ts"
+    },
+    "./reindex": {
+      "import": "./dist/reindex.js",
+      "types": "./dist/reindex.d.ts"
+    },
+    "./runtime": {
+      "import": "./dist/runtime.js",
+      "types": "./dist/runtime.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "node --max-old-space-size=8192 ./node_modules/tsup/dist/cli-default.js",
+    "dev": "tsup --watch",
+    "format": "prettier --write \"{src,tests,scripts}/**/*.{ts,tsx,js,mjs,json}\" \"*.{ts,js,json}\"",
+    "format:check": "prettier --check \"{src,tests,scripts}/**/*.{ts,tsx,js,mjs,json}\" \"*.{ts,js,json}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "npm run format:check && eslint src tests tsup.config.ts && node scripts/check-skill-links.mjs",
+    "build:scip-windows": "node scripts/build-scip-windows.mjs",
+    "bench:evidence-products": "node scripts/evidence-product-contract.mjs",
+    "calibrate": "node scripts/accuracy-calibration.mjs",
+    "docs:commands": "vite-node scripts/render-command-reference.ts --write",
+    "prepublishOnly": "npm run publish:scip-windows && npm run build",
+    "postinstall": "node dist/postinstall.js || true",
+    "publish:scip-windows": "vite-node scripts/publish-scip-windows.ts"
+  },
+  "keywords": [
+    "scip",
+    "code-intelligence",
+    "code-navigation",
+    "go-to-definition",
+    "find-references",
+    "dead-code",
+    "dependency-graph",
+    "sourcegraph",
+    "typescript",
+    "python",
+    "rust",
+    "java",
+    "ruby",
+    "php",
+    "csharp"
+  ],
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.11.0",
+    "@c4312/scip": "^0.1.0",
+    "@vue/compiler-dom": "^3.5.38",
+    "@vue/compiler-sfc": "^3.5.38",
+    "better-sqlite3": "^12.9.0",
+    "commander": "^13.1.0",
+    "ignore": "^7.0.3",
+    "ts-morph": "^28.0.0"
+  },
+  "//optionalDependencies": "Native parsers and bundled SCIP indexers go in optionalDependencies so a failed install (missing build tools, restricted registry, incompatible platform) downgrades scip-query gracefully — the affected language falls back to regex parsing or asks the user to install its indexer manually — instead of blocking npm install.",
+  "optionalDependencies": {
+    "@sourcegraph/scip-typescript": "^0.4.0",
+    "scip-python-plus": "^0.7.4",
+    "scip-query-scip-windows": "0.13.0",
+    "tree-sitter": "0.21.1",
+    "tree-sitter-c": "0.23.2",
+    "tree-sitter-c-sharp": "0.23.1",
+    "tree-sitter-cpp": "0.23.4",
+    "tree-sitter-java": "0.23.5",
+    "tree-sitter-javascript": "0.23.1",
+    "tree-sitter-kotlin": "0.3.8",
+    "tree-sitter-php": "0.23.12",
+    "tree-sitter-python": "0.23.4",
+    "tree-sitter-ruby": "0.23.1",
+    "tree-sitter-rust": "0.23.1",
+    "tree-sitter-scala": "0.24.0",
+    "tree-sitter-typescript": "0.23.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.0",
+    "eslint": "^10.2.0",
+    "globals": "^17.5.0",
+    "prettier": "^3.8.4",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.58.1",
+    "vitest": "^3.0.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.9.0": true,
+    "esbuild@0.27.7": true,
+    "fsevents@2.3.3": true,
+    "tree-sitter@0.21.1": true,
+    "tree-sitter-c@0.23.2": true,
+    "tree-sitter-c-sharp@0.23.1": true,
+    "tree-sitter-cpp@0.23.4": true,
+    "tree-sitter-java@0.23.5": true,
+    "tree-sitter-javascript@0.23.1": true,
+    "tree-sitter-kotlin@0.3.8": true,
+    "tree-sitter-php@0.23.12": true,
+    "tree-sitter-python@0.23.4": true,
+    "tree-sitter-ruby@0.23.1": true,
+    "tree-sitter-rust@0.23.1": true,
+    "tree-sitter-scala@0.24.0": true,
+    "tree-sitter-typescript@0.23.2": true
+  }
+}

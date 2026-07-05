@@ -1,0 +1,57 @@
+{
+  "name": "@vygr-labs/ndi-node",
+  "version": "1.0.0",
+  "description": "Node.js bindings for NDI (Network Device Interface) SDK",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "postinstall": "node scripts/postinstall.js",
+    "build": "node-gyp build",
+    "rebuild": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "test": "node test/test.js",
+    "check-ndi": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "ndi",
+    "newtek",
+    "video",
+    "streaming",
+    "broadcast",
+    "native",
+    "addon",
+    "network-device-interface",
+    "video-production"
+  ],
+  "author": "Eyetu Kingsley Oghenekome <eyetukingsley330@gmail.com>",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/vygr-labs/ndi-node#readme",
+  "bugs": {
+    "url": "https://github.com/vygr-labs/ndi-node/issues"
+  },
+  "gypfile": true,
+  "files": [
+    "lib/",
+    "src/",
+    "scripts/",
+    "deps/ndi/include/",
+    "deps/ndi/lib/",
+    "binding.gyp",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

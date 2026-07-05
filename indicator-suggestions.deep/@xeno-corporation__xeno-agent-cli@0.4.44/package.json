@@ -1,0 +1,61 @@
+{
+  "name": "@xeno-corporation/xeno-agent-cli",
+  "version": "0.4.44",
+  "description": "XENO AGENT - AI-powered terminal agent CLI",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "bin": {
+    "xeno": "dist/index.js",
+    "xeno-agent": "dist/index.js",
+    "xeno-code": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "scripts/install.sh",
+    "scripts/install.ps1",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsup --config tsup.config.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "bench:coding-tools": "tsx src/index.ts bench coding-tools --json",
+    "update:check": "tsx src/index.ts update --check --json",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run prepack && npm run typecheck"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://xenostudio.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XENO-CORPORATION/xeno-agent-cli.git"
+  },
+  "bugs": {
+    "url": "https://xenostudio.ai/contact"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "cli",
+    "llm",
+    "tools",
+    "terminal",
+    "code-assistant"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@xeno-corporation/xeno-agent-sdk": "0.6.8",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

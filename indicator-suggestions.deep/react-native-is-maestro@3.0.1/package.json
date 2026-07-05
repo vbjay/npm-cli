@@ -1,0 +1,120 @@
+{
+  "name": "react-native-is-maestro",
+  "version": "3.0.1",
+  "description": "Detect synchronously if the app is currently running in an E2E test environment with maestro",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint",
+    "release": "release-it",
+    "precommit": "yarn lint && yarn typecheck",
+    "prepack": "bob build",
+    "prepare": "husky && yarn prepack",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build"
+  },
+  "main": "./lib/commonjs/index",
+  "module": "./lib/module/index",
+  "types": "./lib/typescript/src/index.d.ts",
+  "react-native": "./src/index",
+  "source": "./src/index",
+  "files": [
+    "src",
+    "lib",
+    "ios",
+    "android",
+    "cxx",
+    "react-native.config.js",
+    "react-native-is-maestro.podspec",
+    "!lib/typescript/examples",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/*.spec.ts",
+    "!**/*.spec.tsx",
+    "!**/.*"
+  ],
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "react-native-web",
+    "maestro"
+  ],
+  "repository": "https://github.com/jpudysz/react-native-is-maestro",
+  "author": "Jacek Pudysz <jacekpudysz@gmail.com> (https://github.com/jpudysz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jpudysz/react-native-is-maestro/issues"
+  },
+  "homepage": "https://github.com/jpudysz/react-native-is-maestro#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "19.2.2",
+    "@eslint/compat": "1.1.0",
+    "@release-it/conventional-changelog": "8.0.1",
+    "@types/jest": "29.5.12",
+    "@types/node": "20.14.9",
+    "@types/react": "18.3.3",
+    "commitlint": "19.3.0",
+    "del-cli": "5.1.0",
+    "eslint": "9.5.0",
+    "eslint-config-codemask": "2.0.0-beta.13",
+    "eslint-plugin-react-native": "4.1.0",
+    "husky": "9.0.11",
+    "metro-react-native-babel-preset": "0.77.0",
+    "pod-install": "0.2.2",
+    "react": "18.3.1",
+    "react-native": "0.74.2",
+    "react-native-builder-bob": "0.23.2",
+    "release-it": "15.11.0",
+    "typescript": "5.5.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 20"
+  },
+  "packageManager": "yarn@1.22.22",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

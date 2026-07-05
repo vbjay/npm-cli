@@ -1,0 +1,136 @@
+{
+  "name": "react-native-qualtrics",
+  "version": "2.12.0",
+  "description": "Qualtrics Digital SDK React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepack": "bob build",
+    "example": "yarn --cwd example",
+    "build:android": "cd example/android && ./gradlew assembleDebug --no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a",
+    "build:ios": "cd example/ios && xcodebuild -workspace RNQualtricsDigitalExample.xcworkspace -scheme RNQualtricsDigitalExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO",
+    "bootstrap": "yarn example && yarn install && yarn example pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
+    "prepublishOnly": "mv README.md README-gitlab.md && mv README-npm.md README.md",
+    "postpublish": "mv README.md README-npm.md && mv README-gitlab.md README.md"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "Qualtrics ",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://www.qualtrics.com/",
+  "devDependencies": {
+    "@react-native/babel-preset": "0.85.1",
+    "@react-native/jest-preset": "0.85.1",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@react-native/typescript-config": "0.85.1",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.2.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "19.2.3",
+    "react-native": "0.85.1",
+    "react-native-builder-bob": "^0.41.0",
+    "react-test-renderer": "19.2.3",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNRNQualtricsDigitalSpec",
+    "type": "modules",
+    "jsSrcsDir": "src"
+  }
+}

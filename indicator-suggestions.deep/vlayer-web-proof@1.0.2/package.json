@@ -1,0 +1,77 @@
+{
+  "name": "vlayer-web-proof",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/batikankutluer/vlayer-web-proof.git"
+  },
+  "description": "It is a npm package for vlayer web proof mechanism. It uses native rust bindings for maximum efficiency.",
+  "version": "1.0.2",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.mjs",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun run build:rust && bun run build:esm && npm run build:cjs && bun run copy:native",
+    "build:rust": "cd ../rust && cargo build --lib --release --features napi",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json --resolveJsonModule false && npm run fix-esm-imports",
+    "fix-esm-imports": "sh ./scripts/fix-esm.sh",
+    "rename:esm": "sh ./scripts/fix-mjs.sh",
+    "rename:tgz": "sh ./scripts/fix-tgz.sh",
+    "copy:native": "cp ../rust/target/release/libvlayer_web_proof.so ./vlayer-web-proof.linux-x64-gnu.node && cp vlayer-web-proof.linux-x64-gnu.node dist/",
+    "dev": "bun run build && bun run dist/index.js",
+    "test": "bun run test:unit && bun run test:integration && npm pack && npm run rename:tgz && bun run test:package",
+    "test:unit": "bun test tests/unit.test.ts",
+    "test:integration": "bun test tests/integration.test.ts",
+    "test:package": "cd tests/package-tests && bun run test && cd ../../",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist && rm -rf node_modules/.cache && rm -rf .tsbuildinfo",
+    "prepublishOnly": "bun run clean && bun run build && bun run test",
+    "prepack": "bun run build"
+  },
+  "keywords": [
+    "vlayer-web-proof",
+    "tlsn",
+    "web-proof",
+    "notarization",
+    "cryptographic-proof",
+    "blockchain",
+    "vlayer",
+    "performance",
+    "native",
+    "rust"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^20.0.0"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "shiina",
+  "version": "0.0.31",
+  "description": "A react-native-web framework for simple cross-platform app development.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "scripts": {
+    "build": "rm -rf ./lib && tsc",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "postversion": "git push --follow-tags",
+    "version": "git add -A src"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-native-web",
+    "shiina"
+  ],
+  "author": "Karim Issa",
+  "license": "MIT",
+  "files": [
+    "lib/**/*"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@formatjs/intl-datetimeformat": "^6.17.4",
+    "@formatjs/intl-getcanonicallocales": "^2.5.5",
+    "@formatjs/intl-locale": "^4.2.11",
+    "@formatjs/intl-pluralrules": "^5.4.4",
+    "@hookform/resolvers": "^3.3.4",
+    "i18next": "^23.9.0",
+    "react-hook-form": "^7",
+    "react-i18next": "^14.0.5",
+    "yup": "^1.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@react-navigation/bottom-tabs": "^6.0.1",
+    "@react-navigation/native": "^6.0.1",
+    "@react-navigation/stack": "^6.0.1",
+    "@types/react": "^18.2.57",
+    "@types/react-native": "^0.71.5",
+    "add": "^2.0.6",
+    "eslint": "^8.56.0",
+    "eslint-config-shiina": "^1.0.2",
+    "prettier": "^3.2.5",
+    "prettier-preset": "^1.0.1",
+    "react": "18.2.0",
+    "react-native": "0.74.1",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^3.4.0",
+    "react-native-svg": "^12.1.1",
+    "typescript": "^5.3.3",
+    "typescript-preset": "^1.0.1",
+    "yarn": "^1.22.11"
+  },
+  "peerDependencies": {
+    "@react-navigation/bottom-tabs": "^6.0.1",
+    "@react-navigation/native": "^6.0.1",
+    "@react-navigation/stack": "^6.0.1",
+    "react": ">=17.0.1",
+    "react-native": ">=0.64.0",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^3.4.0",
+    "react-native-svg": "^12.1.1"
+  },
+  "resolutions": {
+    "eslint-plugin-prettier": ">=5"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "shiina"
+  },
+  "prettier": "prettier-preset"
+}

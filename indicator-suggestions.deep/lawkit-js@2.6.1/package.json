@@ -1,0 +1,99 @@
+{
+  "name": "lawkit-js",
+  "version": "2.6.1",
+  "description": "Node.js bindings for lawkit - statistical law analysis toolkit for fraud detection, data quality assessment, and audit compliance. Powered by Rust for blazing fast performance.",
+  "keywords": [
+    "statistics",
+    "benford",
+    "pareto",
+    "zipf",
+    "normal",
+    "poisson",
+    "fraud-detection",
+    "data-quality",
+    "audit",
+    "compliance",
+    "statistical-analysis",
+    "financial-analysis",
+    "napi-rs",
+    "rust"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "napi prepublish -t npm",
+    "artifacts": "napi artifacts",
+    "version": "napi version",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node"
+  ],
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "author": "kako-jun",
+  "license": "MIT",
+  "homepage": "https://github.com/kako-jun/lawkit-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kako-jun/lawkit-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kako-jun/lawkit-js/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/kako-jun"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.5.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/tests"
+    ],
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "forceExit": true
+  },
+  "napi": {
+    "binaryName": "lawkit-js",
+    "targets": [
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-pc-windows-msvc"
+    ]
+  },
+  "optionalDependencies": {
+    "lawkit-js-linux-x64-gnu": "2.6.1",
+    "lawkit-js-linux-x64-musl": "2.6.1",
+    "lawkit-js-linux-arm64-gnu": "2.6.1",
+    "lawkit-js-darwin-x64": "2.6.1",
+    "lawkit-js-darwin-arm64": "2.6.1",
+    "lawkit-js-win32-x64-msvc": "2.6.1"
+  }
+}

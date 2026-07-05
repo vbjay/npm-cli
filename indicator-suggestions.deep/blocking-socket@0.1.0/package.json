@@ -1,0 +1,42 @@
+{
+  "name": "blocking-socket",
+  "version": "0.1.0",
+  "description": "intentionally blocking unix-domain-socket (addon for Node.js)",
+  "homepage": "http://github.com/kotarondo/blocking-socket",
+  "author": "Kotaro Endo <kotarondo@gmail.com>",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "Node.js",
+    "addon",
+    "unix-domain",
+    "IPC",
+    "blocking",
+    "socket"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kotarondo/blocking-socket.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kotarondo/blocking-socket/issues"
+  },
+  "main": "./build/Release/addon.node",
+  "files": [
+    "blocking-socket.cc",
+    "binding.gyp"
+  ],
+  "engines": {
+    "node": ">= 0.12.x"
+  },
+  "engine-strict": true,
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "directories": {},
+  "scripts": {
+    "test": "./test/test.sh"
+  }
+}

@@ -1,0 +1,126 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:7.4.1"
+  }
+}
+
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+
+
+
+
+
+def appProject = rootProject.allprojects.find { it.plugins.hasPlugin('com.android.application') }
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["FacePassReactNativeModule_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["FacePassReactNativeModule_" + name]).toInteger()
+}
+
+// Override `hermesEnabled` by `expo.jsEngine`
+ext {
+  hermesEnabled = (findProperty('expo.jsEngine') ?: "hermes") == "hermes"
+}
+
+
+android {
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+  useLibrary("org.apache.http.legacy")
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+
+
+}
+
+repositories {
+  google()
+  mavenCentral()
+  maven { url 'https://www.jitpack.io' }
+  flatDir { dirs 'libs' }
+}
+
+
+dependencies {
+  // For < 0.71, this will be from the local maven repo
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  // implementation fileTree(dir: "libs", include: ["*.aar"])
+  // implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation (name:"FacePassAndroidSDK-year-release",ext:'aar')
+  implementation (name:"q-zhenglib",ext:'aar')
+  implementation (name:"yface",ext:'jar')
+  implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+  implementation ('org.apache.httpcomponents:httpmime:4.5.6'){
+     exclude module: 'httpclient'
+     exclude module:'httpcore-4.4.10'
+  }
+  implementation 'com.android.volley:volley:1.2.1'
+  implementation 'com.android.support:appcompat-v7:25.3.1'
+  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+  testImplementation 'junit:junit:4.12'
+  implementation 'com.google.guava:guava:27.0.1-android'
+  implementation 'com.licheedev:android-serialport:2.1.3'
+  implementation 'com.google.mlkit:barcode-scanning:17.0.2'
+  debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.squareup.okhttp3', module:'okhttp'
+    }
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
+
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "FacePassReactNativeModule"
+    codegenJavaPackageName = "com.fppreactnativemodule"
+  }
+}
+
+

@@ -1,0 +1,61 @@
+{
+  "name": "@soloco/client",
+  "version": "0.1.1",
+  "private": false,
+  "description": "Soloco 本地客户端 daemon — local-first 长期使命型 agent 操作系统的本地执行权威",
+  "keywords": [
+    "soloco",
+    "ai",
+    "agents",
+    "agent-os",
+    "local-first",
+    "orchestration",
+    "daemon",
+    "cli"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/EarthbornLab/soloco-new#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EarthbornLab/soloco-new.git",
+    "directory": "apps/client-daemon"
+  },
+  "bugs": {
+    "url": "https://github.com/EarthbornLab/soloco-new/issues"
+  },
+  "type": "module",
+  "bin": {
+    "soloco": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "postinstall.mjs",
+    "welcome-banner.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.4",
+    "hono": "^4.12.23"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "@soloco/shared": "0.1.0"
+  },
+  "scripts": {
+    "build": "pnpm --filter @soloco/client-web build && tsup && node scripts/normalize-node-builtins.mjs dist && node scripts/copy-web.mjs",
+    "dev": "tsx --env-file-if-exists=.env src/cli.ts run",
+    "dev:isolated": "tsx --env-file=dev.env src/cli.ts run",
+    "postinstall": "node postinstall.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run typecheck && tsx --test test/*.test.ts"
+  }
+}

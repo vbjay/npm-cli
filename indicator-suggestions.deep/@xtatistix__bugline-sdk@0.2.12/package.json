@@ -1,0 +1,52 @@
+{
+  "name": "@xtatistix/bugline-sdk",
+  "version": "0.2.12",
+  "description": "Bugline SDK — in-app feedback and audit for React Native / Expo apps",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
+    "mobile:start": "npm --prefix apps/mobile start",
+    "mobile:mock-api": "node tools/mock-api/server.js"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.73"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.0",
+    "@types/react-native": "^0.73.0",
+    "react": "^19.2.6",
+    "react-native": "^0.85.3",
+    "typescript": "~5.9.2"
+  },
+  "dependencies": {
+    "docx": "^9.6.1",
+    "react-native-view-shot": "^4.0.3"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "bug-report",
+    "audit",
+    "feedback"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

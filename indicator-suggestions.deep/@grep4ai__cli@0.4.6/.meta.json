@@ -1,0 +1,90 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8dcc534487f4dff3",
+    "fetchedFiles": [
+      "install.js",
+      "package.json",
+      "postinstall-msg.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "68e56b28e84877ced3d8986a613deaf7b9001a4b16c4eb48232ff384128a0049",
+        "sizeBytes": 2573,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "postinstall-msg.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ea2dd0470ea6e819ec6c2102deea6724a07e2d048a529a6c63da20d3064fb225",
+        "sizeBytes": 1959,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/ItzDevoo/grep4ai",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:10.638Z"
+  },
+  "hash": "sha256:f04a31b6d88e71aa020dc5bbc2d212f9c0d7a484d3d6b183a3355b58638be31e"
+}

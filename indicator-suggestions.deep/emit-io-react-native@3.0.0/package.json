@@ -1,0 +1,83 @@
+{
+  "name": "emit-io-react-native",
+  "version": "3.0.0",
+  "description": "React Native bindings for emit-io — hooks, provider, AppState + navigation tracking",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./dist/index.js",
+  "exports": {
+    ".": {
+      "react-native": "./dist/index.js",
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "esbuild src/_bundle.ts --bundle --outfile=dist/index.js --format=esm --platform=browser --external:react --external:react/jsx-runtime --external:react-native --external:@react-navigation/native --external:expo-router --external:emit-io-core --minify --jsx=automatic && esbuild src/_bundle.ts --bundle --outfile=dist/index.cjs --format=cjs --platform=browser --external:react --external:react/jsx-runtime --external:react-native --external:@react-navigation/native --external:expo-router --external:emit-io-core --minify --jsx=automatic",
+    "build:types": "bun x tsc --emitDeclarationOnly",
+    "build:all": "bun run build && bun run build:types",
+    "test": "vitest run",
+    "prepack": "bun run build:all"
+  },
+  "peerDependencies": {
+    "emit-io-core": "^2.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-native": ">=0.72.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-navigation/native": {
+      "optional": true
+    },
+    "expo-router": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "emit-io-core": "workspace:*",
+    "@types/react": "^18.2.0",
+    "react": "^18.2.0",
+    "react-native": "^0.76.0",
+    "@react-navigation/native": "^6.0.0",
+    "@testing-library/react": "^16.0.0",
+    "happy-dom": "^15.0.0",
+    "typescript": "^5.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/movibe/emit-io.git",
+    "directory": "packages/react-native"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "mobile",
+    "logging",
+    "analytics",
+    "typescript",
+    "observability",
+    "emit-io"
+  ],
+  "bugs": {
+    "url": "https://github.com/movibe/emit-io/issues"
+  },
+  "homepage": "https://github.com/movibe/emit-io#readme",
+  "author": "Movibe",
+  "license": "MIT"
+}

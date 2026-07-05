@@ -1,0 +1,35 @@
+[package]
+name = "anveesa"
+version = "0.7.12"
+edition = "2024"
+default-run = "anveesa"
+description = "Multi-provider terminal AI assistant — TUI, web UI, and one-shot mode backed by any OpenAI-compatible API"
+license = "MIT"
+repository = "https://github.com/PandhuWibowo/anveesa-cli"
+homepage = "https://github.com/PandhuWibowo/anveesa-cli"
+documentation = "https://github.com/PandhuWibowo/anveesa-cli#readme"
+keywords = ["ai", "cli", "llm", "assistant", "tui"]
+categories = ["command-line-utilities", "development-tools"]
+readme = "README.md"
+exclude = ["npm/", ".github/", "src/web_ui.html"]
+
+[dependencies]
+base64 = "0.22"
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive"] }
+libc = "0.2"
+crossterm = "0.28"
+ratatui = "0.29"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "stream"] }
+rustyline = "14"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread", "process", "time", "sync", "io-util", "signal", "net"] }
+tokio-stream = { version = "0.1", features = ["sync"] }
+toml = "0.8"
+axum = { version = "0.7", features = ["json"] }
+glob = "0.3"
+regex = "1.11"
+
+[dev-dependencies]
+tempfile = "3"

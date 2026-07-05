@@ -1,0 +1,93 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fdbaa5146ef166dc",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "e9f580c21c17e2b8c40406d12f523915f46cc923da22719a220412d9b5ab7dcc",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "androidx.browser:browser:1.10.0",
+              "androidx.core:core:1.18.0",
+              "androidx.core:core-ktx:1.18.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:42.440Z"
+  },
+  "hash": "sha256:fc50cb35e7b02b914f4cfa7a2c2f701f2ab5c6ed8e76c8c6469988c0c1d7a9ce"
+}

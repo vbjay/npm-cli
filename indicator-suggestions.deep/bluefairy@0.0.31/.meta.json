@@ -1,0 +1,111 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7c4cf7bdbf147214",
+    "fetchedFiles": [
+      "dist/fs-utils.js",
+      "dist/install.js",
+      "dist/paths.js",
+      "dist/shims.js",
+      "package.json",
+      "scripts/postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "016221212b91ebad82c1f28fa05248ffe51ee6f1c6427da2b109d76275dc7c61",
+        "sizeBytes": 1598,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/install.js",
+          "dist/paths.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/install.js",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "4875286ede0232004103f5f5d146fcd0ad88d1c27dddfb32191941a7d0856e6c",
+        "sizeBytes": 5159,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/fs-utils.js",
+          "dist/shims.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/fs-utils.js",
+        "reason": "required by ./dist/install.js; required by ./dist/shims.js",
+        "sha256": "76b307163a0c5c3fff0af73d6bcd8eddbb11f8199667b9a48aee28bb2e12731f",
+        "sizeBytes": 853,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/shims.js",
+        "reason": "required by ./dist/install.js",
+        "sha256": "fb6f9d35e983bee0ccd569afb81b551f064efd62950dfecae61b074a37eaf044",
+        "sizeBytes": 1535,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/fs-utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/paths.js",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "f53a8abbdc2ac8020d99146cb728fa3d0937aa1c01dbe38dd8f1b915811bd214",
+        "sizeBytes": 980,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:25.219Z"
+  },
+  "hash": "sha256:cfff7f323181e797672a493361577a1828db4dc1100fbb57f8eee0e20b59369d"
+}

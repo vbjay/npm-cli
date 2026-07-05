@@ -1,0 +1,74 @@
+{
+  "name": "@3leaps/string-metrics-wasm",
+  "version": "0.3.11",
+  "description": "High-performance string similarity metrics via WASM bindings to rapidfuzz-rs",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!dist/similarity-validator*",
+    "pkg/web",
+    "!pkg/web/string_metrics_wasm_bg.wasm",
+    "src",
+    "!src/wasm-inline.ts",
+    "docs",
+    "LICENSE",
+    "README.md",
+    "Cargo.toml"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build:wasm": "wasm-pack build --target web --out-dir pkg/web && node scripts/embed-wasm.js && node scripts/prepare-wasm-package.js",
+    "build:ts": "tsc",
+    "build": "npm run build:wasm && npm run build:ts",
+    "pretest": "make version-check",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --run --coverage",
+    "bench": "node bench.js",
+    "version:check": "make version-check",
+    "version:sync": "make version-sync",
+    "lint": "biome lint src/",
+    "lint:fix": "biome lint --write src/",
+    "typecheck": "tsc --noEmit",
+    "format": "biome format src/ && prettier --write '**/*.{json,yaml,yml,md}'",
+    "format:check": "biome format src/ && prettier --check '**/*.{json,yaml,yml,md}'",
+    "license:check": "node scripts/check-licenses.js",
+    "quality": "make quality",
+    "prepare": "husky",
+    "prepublishOnly": "make quality && make build"
+  },
+  "keywords": [
+    "wasm",
+    "string",
+    "similarity",
+    "levenshtein",
+    "jaro-winkler"
+  ],
+  "author": "3leaps",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3leaps/string-metrics-wasm.git"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.13.2",
+    "@vitest/coverage-v8": "^4.1.8",
+    "husky": "^9.1.7",
+    "js-yaml": "^4.2.0",
+    "license-checker": "^25.0.1",
+    "prettier": "^3.8.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.8",
+    "wasm-pack": "^0.13.1"
+  }
+}

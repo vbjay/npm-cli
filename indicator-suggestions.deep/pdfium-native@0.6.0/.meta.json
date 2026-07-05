@@ -1,0 +1,186 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "82db13977dc26a5e",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/install.mjs",
+      "scripts/lib/integrity.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "3c95369127b86e1c0a2271add1107b61621ad2b52598807e33434a04842ec667",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `pdfium`  -  C/C++ sources",
+            "items": [
+              "src/pdfium_addon.cc",
+              "src/stb_image_write.cc"
+            ]
+          },
+          {
+            "label": "Target `pdfium`  -  libraries",
+            "items": [
+              "-L<(module_root_dir)/deps/pdfium/lib",
+              "-lpdfium",
+              "-Wl,-rpath,'$$ORIGIN'",
+              "-Wl,--gc-sections",
+              "-Wl,-S",
+              "-flto",
+              "-lpthread",
+              "-ldl",
+              "<(module_root_dir)/deps/pdfium/lib/pdfium.dll.lib"
+            ]
+          },
+          {
+            "label": "Target `pdfium`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "deps/pdfium/include",
+              "src"
+            ]
+          },
+          {
+            "label": "Target `pdfium`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.mjs",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "ec459ffa3acf6bfdf9c7aa77b57d7c717229136a263b093619344a97b5ffd3fa",
+        "sizeBytes": 3920,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "native-build",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/integrity.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/lib/integrity.mjs",
+        "reason": "required by ./scripts/install.mjs",
+        "sha256": "c4a2f0f815141be0af243dccf5f363d4dfd0fa71b64d7e6bde65cfc7bbadc11d",
+        "sizeBytes": 4150,
+        "signals": [
+          "uses-child-process",
+          "network-access"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:24.716Z"
+  },
+  "hash": "sha256:e3a02c5afa359b3ce5a556e302dbbd5a2c3d776eff19cf9643e8954739254f1e"
+}

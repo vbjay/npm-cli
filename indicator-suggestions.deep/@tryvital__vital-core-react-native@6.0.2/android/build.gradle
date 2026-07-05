@@ -1,0 +1,170 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def default_kotlin_version = project.properties['VitalCoreReactNative_kotlinVersion']
+  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : default_kotlin_version
+  def default_ksp_version = project.properties['VitalCoreReactNative_kspVersion']
+  // Keep KSP pinned for the default Expo 54 line, but if a host app overrides Kotlin
+  // without providing kspVersion, fall back to the matching KSP line for that Kotlin version.
+  def ksp_version = rootProject.ext.has('kspVersion')
+    ? rootProject.ext.get('kspVersion')
+    : (rootProject.ext.has('kotlinVersion') && kotlin_version.toString() != default_kotlin_version.toString()
+      ? "${kotlin_version}+"
+      : default_ksp_version)
+
+  repositories {
+      google()
+      mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.5.3'
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:$ksp_version"
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") &&  rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.devtools.ksp'
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: 'com.facebook.react'
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['VitalCoreReactNative_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['VitalCoreReactNative_' + name]).toInteger()
+}
+
+android {
+  compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+    targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+}
+
+repositories {
+  mavenCentral()
+  google()
+
+  def found = false
+  def defaultDir = null
+  def androidSourcesName = 'React Native sources'
+
+  if (rootProject.ext.has('reactNativeAndroidRoot')) {
+    defaultDir = rootProject.ext.get('reactNativeAndroidRoot')
+  } else {
+    defaultDir = new File(
+      projectDir,
+      '/../../../node_modules/react-native/android'
+    )
+  }
+
+  if (defaultDir.exists()) {
+    maven {
+      url defaultDir.toString()
+      name androidSourcesName
+    }
+
+    logger.info(":${project.name}:reactNativeAndroidRoot ${defaultDir.canonicalPath}")
+    found = true
+  } else {
+    def parentDir = rootProject.projectDir
+
+    1.upto(5, {
+      if (found) return true
+      parentDir = parentDir.parentFile
+
+      def androidSourcesDir = new File(
+        parentDir,
+        'node_modules/react-native'
+      )
+
+      def androidPrebuiltBinaryDir = new File(
+        parentDir,
+        'node_modules/react-native/android'
+      )
+
+      if (androidPrebuiltBinaryDir.exists()) {
+        maven {
+          url androidPrebuiltBinaryDir.toString()
+          name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidPrebuiltBinaryDir.canonicalPath}")
+        found = true
+      } else if (androidSourcesDir.exists()) {
+        maven {
+          url androidSourcesDir.toString()
+          name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidSourcesDir.canonicalPath}")
+        found = true
+      }
+    })
+  }
+
+  if (!found) {
+    throw new GradleException(
+      "${project.name}: unable to locate React Native android sources. " +
+      "Ensure you have you installed React Native as a dependency in your project and try again."
+    )
+  }
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+def vital_sdk_version = '5.0.2'
+
+dependencies {
+  ksp "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+
+    //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+  api "com.squareup.moshi:moshi:1.13.0"
+  api "com.squareup.moshi:moshi-adapters:1.13.0"
+
+  implementation "io.tryvital:vital-client:$vital_sdk_version"
+
+  testImplementation "junit:junit:4.13.2"
+
+// From node_modules
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "VitalCoreReactNative"
+    codegenJavaPackageName = "com.vitalcorereactnative"
+  }
+}

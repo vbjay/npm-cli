@@ -1,0 +1,20 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'host.exp.exponent'
+version = '8.0.0'
+
+android {
+  namespace "expo.modules.shareintent"
+  defaultConfig {
+    versionCode 1
+    versionName "8.0.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}

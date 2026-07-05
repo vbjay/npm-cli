@@ -1,0 +1,35 @@
+{
+  "name": "ask-bridge",
+  "version": "0.2.4",
+  "description": "Automate ChatGPT, Gemini or Claude from the command line through Chrome.",
+  "bin": {
+    "ask-bridge": "npm/cli.cjs",
+    "ask": "npm/cli.cjs"
+  },
+  "scripts": {
+    "postinstall": "node npm/postinstall.cjs",
+    "test": "node --test tests/postinstall.test.cjs",
+    "prepublishOnly": "npm test && npm pack --dry-run && node npm/prepublish-check.cjs"
+  },
+  "files": [
+    "npm/cli.cjs",
+    "npm/postinstall.cjs",
+    "npm/prepublish-check.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doggy8088/ask-bridge.git"
+  },
+  "keywords": [
+    "chatgpt",
+    "gemini",
+    "claude",
+    "chrome",
+    "rust",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT"
+}

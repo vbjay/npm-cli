@@ -1,0 +1,98 @@
+{
+  "name": "csv-mcp",
+  "version": "1.4.0",
+  "description": "A Model Context Protocol (MCP) server for powerful CSV file operations - read, write, query, transform, analyze CSV data with formulas and charts.",
+  "main": "dist/server.js",
+  "types": "dist/server.d.ts",
+  "bin": {
+    "csv-mcp": "dist/server.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "build:dev": "tsc",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:compare": "node build.js --compare",
+    "start": "node dist/server.js",
+    "dev": "ts-node server.ts",
+    "dev:watch": "nodemon --exec ts-node server.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --testPathIgnorePatterns=integration",
+    "test:cli": "jest tests/cli.test.ts",
+    "configure": "npm run build && node dist/server.js --configure",
+    "find-config": "npm run build && node dist/server.js --find-config",
+    "clean": "rimraf dist coverage",
+    "prepare": "husky",
+    "prepublishOnly": "npm run clean && npm run build && npm run build:types",
+    "release": "npm run build && node dist/release.js",
+    "release:patch": "npm run build && node dist/release.js patch --yes",
+    "release:minor": "npm run build && node dist/release.js minor --yes",
+    "release:major": "npm run build && node dist/release.js major --yes",
+    "release:dry": "npm run build && node dist/release.js --dry-run",
+    "version:check": "echo \"Current version: $(node -p 'require(\"./package.json\").version')\"",
+    "publish:check": "npm run prepublishOnly && npm pack --dry-run",
+    "publish:public": "npm publish --access public"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "npx",
+    "csv",
+    "csv-parser",
+    "csv-writer",
+    "data-processing",
+    "data-analysis",
+    "claude",
+    "ai",
+    "csv-tools",
+    "data-transformation",
+    "csv-query",
+    "csv-filter",
+    "analytics",
+    "cli",
+    "open-source",
+    "typescript"
+  ],
+  "author": "Nitai Aharoni <nitaiaharoni1@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitaiaharoni1/csv-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nitaiaharoni1/csv-mcp/issues"
+  },
+  "homepage": "https://github.com/nitaiaharoni1/csv-mcp#readme",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "preferGlobal": true,
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.0",
+    "csv-parse": "^5.5.6",
+    "csv-stringify": "^6.4.6",
+    "csv-writer": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.13",
+    "@types/node": "^24.0.3",
+    "esbuild": "^0.25.5",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.0",
+    "rimraf": "^5.0.10",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

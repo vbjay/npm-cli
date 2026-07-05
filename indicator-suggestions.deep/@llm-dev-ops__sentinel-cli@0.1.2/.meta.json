@@ -1,0 +1,75 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "64a036751c20243a",
+    "fetchedFiles": [
+      "lib/install.js",
+      "lib/prepare.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "87d7b91e351d15bbacb2a218d83178f823f0817339f481ffd9f25753081c1f6e",
+        "sizeBytes": 3528,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/prepare.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "2487a6989cf88b7b3db8e06e3d8c8bfad495f76910e8cf4f1e55582f0aeb8e22",
+        "sizeBytes": 1644,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:25.602Z"
+  },
+  "hash": "sha256:33b7bc37aaa59359f1f67a0a5c8e433cb21d866146760aa5e84b4dc0284b2c6c"
+}

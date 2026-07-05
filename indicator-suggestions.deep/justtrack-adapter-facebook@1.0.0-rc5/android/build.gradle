@@ -1,0 +1,94 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['JusttrackAdapterFacebook_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+    maven {
+      url "https://sdk.justtrack.io/maven"
+    }
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["JusttrackAdapterFacebook_" + name]).toInteger()
+}
+
+android {
+  namespace "io.justtrack.adapter.facebook"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+  maven {
+    url "https://sdk.justtrack.io/maven"
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  implementation ("io.justtrack:adapter-facebook:1.0.0-rc2")
+  implementation ("io.justtrack:justtrack-android-sdk:7.1.0-rc3")
+}
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "JusttrackAdapterFacebook"
+  codegenJavaPackageName = "io.justtrack.adapter.facebook"
+}

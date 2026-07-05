@@ -1,0 +1,58 @@
+{
+  "name": "@applaudiq/embed-react-native",
+  "version": "1.3.0",
+  "description": "React Native SDK to embed the Applaud IQ recognition portal (auto + manual login, native SSO). Works with bare React Native and Expo.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index.tsx",
+  "source": "src/index.tsx",
+  "files": [
+    "src",
+    "lib",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rm -rf lib",
+    "prepare": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "release": "release-it"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "applaudiq",
+    "embed",
+    "sso",
+    "webview",
+    "recognition"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therewardstore/applaudiq-embed-react-native.git"
+  },
+  "homepage": "https://github.com/therewardstore/applaudiq-embed-react-native#readme",
+  "bugs": {
+    "url": "https://github.com/therewardstore/applaudiq-embed-react-native/issues"
+  },
+  "author": "Arulraj V <abofficial1997@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.71",
+    "react-native-webview": ">=13"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "react": "18.2.0",
+    "react-native": "0.74.0",
+    "react-native-webview": "13.8.6",
+    "release-it": "^17.10.0",
+    "typescript": "^5.4.0"
+  }
+}

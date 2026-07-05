@@ -1,0 +1,210 @@
+{
+  "name": "@xyne/xyne-cli",
+  "version": "0.3.1",
+  "description": "Xyne CLI - A powerful AI assistant in your terminal with file operations, bash mode, drag-and-drop support, and multi-provider AI integration",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist-lib/src/agent/index.d.ts",
+      "import": "./dist-lib/src/agent/index.js",
+      "default": "./dist-lib/src/agent/index.js"
+    },
+    "./agent": {
+      "types": "./dist-lib/src/agent/index.d.ts",
+      "import": "./dist-lib/src/agent/index.js",
+      "default": "./dist-lib/src/agent/index.js"
+    },
+    "./agent/session-factory": {
+      "types": "./dist-lib/src/agent/session-factory.d.ts",
+      "import": "./dist-lib/src/agent/session-factory.js",
+      "default": "./dist-lib/src/agent/session-factory.js"
+    },
+    "./agent/bridge": {
+      "types": "./dist-lib/src/agent/bridge.d.ts",
+      "import": "./dist-lib/src/agent/bridge.js",
+      "default": "./dist-lib/src/agent/bridge.js"
+    },
+    "./agent/types": {
+      "types": "./dist-lib/src/agent/types.d.ts",
+      "import": "./dist-lib/src/agent/types.js",
+      "require": "./dist-lib/src/agent/types.js",
+      "default": "./dist-lib/src/agent/types.js"
+    },
+    "./agent/config": {
+      "types": "./dist-lib/src/agent/config.d.ts",
+      "import": "./dist-lib/src/agent/config.js",
+      "default": "./dist-lib/src/agent/config.js"
+    },
+    "./agent/context": {
+      "types": "./dist-lib/src/agent/context/mentions.d.ts",
+      "import": "./dist-lib/src/agent/context/mentions.js",
+      "default": "./dist-lib/src/agent/context/mentions.js"
+    },
+    "./agent/context/pure": {
+      "types": "./dist-lib/src/agent/context/mentions-shared.d.ts",
+      "import": "./dist-lib/src/agent/context/mentions-shared.js",
+      "default": "./dist-lib/src/agent/context/mentions-shared.js"
+    },
+    "./protocol": {
+      "types": "./dist-lib/packages/protocol/src/index.d.ts",
+      "import": "./dist-lib/packages/protocol/src/index.js",
+      "default": "./dist-lib/packages/protocol/src/index.js"
+    },
+    "./agent/runtime/types": {
+      "types": "./dist-lib/src/agent/runtime/types.d.ts",
+      "import": "./dist-lib/src/agent/runtime/types.js",
+      "default": "./dist-lib/src/agent/runtime/types.js"
+    },
+    "./local-server": {
+      "types": "./dist-lib/src/utils/local-server.d.ts",
+      "import": "./dist-lib/src/utils/local-server.js",
+      "default": "./dist-lib/src/utils/local-server.js"
+    }
+  },
+  "bin": {
+    "xyne": "dist/index.js"
+  },
+  "files": [
+    "dist/**/*",
+    "dist-lib/**/*"
+  ],
+  "scripts": {
+    "build:installer": "node scripts/build-installer.js",
+    "build:lib": "bunx tsc -p tsconfig.lib.json",
+    "changelog": "node scripts/generate-changelog.js",
+    "dev": "bun run src/index.ts",
+    "build": "bun run build:npm",
+    "build:npm": "bun run changelog && bun run build:clean && bun run build:protocol && bun run build:lib && bun run build:compile && bun run build:webpack-bundle && bun run build:binary:release && bun run build:npm-dist && bun run build:launcher",
+    "build:binaries": "bun run changelog && bun run build:clean && bun run build:protocol && bun run build:compile && bun run build:webpack-bundle && bun run build:binary:release && bun run build:launcher",
+    "build:clean": "rm -rf dist dist-lib binaries temp-build packages/protocol/dist",
+    "build:protocol": "npm --prefix packages/protocol run build",
+    "build:compile": "bunx tsc --outDir temp-build --declaration false --sourceMap false",
+    "build:webpack-bundle": "node scripts/webpack-bundle.js",
+    "build:obfuscate": "node scripts/obfuscate-code.js",
+    "build:npm-dist": "mkdir -p dist && cp -r temp-build/* dist/ && mkdir -p dist/src/agent/themes && cp -r src/agent/themes/* dist/src/agent/themes/ && node scripts/copy-patched-packages.js && rm -rf temp-build",
+    "build:all": "bun run build:npm",
+    "build:binary:prepare": "node scripts/ensure-build-optional-deps.js && node scripts/patch-worker-inline.js",
+    "build:binary:release": "bun run build:binary:prepare && mkdir -p binaries && bun run build:binary:linux-x64 && bun run build:binary:linux-arm && bun run build:binary:macos-intel && bun run build:binary:macos-arm && bun run build:binary:windows && node scripts/copy-binaries-to-packages.js",
+    "build:binary:all": "bun run build:binary:prepare && mkdir -p binaries && bun run build:binary:linux-x64 && bun run build:binary:linux-arm && bun run build:binary:macos-intel && bun run build:binary:macos-arm && bun run build:binary:windows",
+    "build:binary:linux-x64": "bun build --compile --target=bun-linux-x64-baseline --outfile binaries/xyne-linux-x64 ./temp-build/src/index.js",
+    "build:binary:linux-arm": "bun build --compile --target=bun-linux-aarch64 --outfile binaries/xyne-linux-arm64 ./temp-build/src/index.js",
+    "build:binary:macos-intel": "bun build --compile --target=bun-darwin-x64-baseline --outfile binaries/xyne-macos-intel ./temp-build/src/index.js",
+    "build:binary:macos-arm": "bun build --compile --target=bun-darwin-arm64 --outfile binaries/xyne-macos-arm ./temp-build/src/index.js",
+    "build:binary:windows": "bun build --compile --target=bun-windows-x64-baseline --outfile binaries/xyne-windows.exe ./temp-build/src/index.js",
+    "build:launcher": "mkdir -p dist && node scripts/create-launcher.js",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'Tests skipped for CLI build'",
+    "lint": "bunx eslint src --ext .ts,.tsx",
+    "format": "bunx prettier --write \"src/**/*.{ts,tsx,json,md}\"",
+    "update-doc": "bun src/agent/tools/info/update-docs/index.ts",
+    "docs:check": "bun src/agent/tools/info/update-docs/check-docs-current.ts",
+    "docs:check:staged": "bun src/agent/tools/info/update-docs/check-docs-current.ts --staged",
+    "prepare": "node scripts/install-git-hooks.js",
+    "setup-hooks": "node scripts/install-git-hooks.js",
+    "setup": "bun scripts/setup.js",
+    "cli:setup": "bun run build && npm install -g .",
+    "cli:remove": "npm uninstall -g @xyne/xyne-cli",
+    "cli:update": "bun run build && npm uninstall -g @xyne/xyne-cli && npm install -g .",
+    "prepublishOnly": "bun run build:npm",
+    "release": "bun run build:npm && npm publish --access public",
+    "release:all": "bun run build:npm && node scripts/publish-all.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "@earendil-works/pi-agent-core": "0.80.2",
+    "@earendil-works/pi-ai": "0.80.2",
+    "@earendil-works/pi-coding-agent": "0.80.2",
+    "@earendil-works/pi-tui": "0.80.2",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@opentui/core": "0.1.93",
+    "@sinclair/typebox": "^0.34.48",
+    "ajv": "^8.18.0",
+    "chalk": "^5.3.0",
+    "clipboardy": "5.3.1",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.8.0",
+    "marked": "^15.0.0",
+    "marked-terminal": "^7.3.0",
+    "pdfjs-dist": "5.4.394",
+    "proper-lockfile": "4.1.2",
+    "turndown": "^7.2.2",
+    "vscode-jsonrpc": "^8.2.0",
+    "vscode-languageserver-protocol": "^3.17.5",
+    "ws": "^8.18.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-typescript": "^7.28.5",
+    "@types/node": "22.15.3",
+    "@types/turndown": "^5.0.6",
+    "@types/ws": "^8.18.1",
+    "babel-loader": "^10.1.1",
+    "javascript-obfuscator": "4.1.1",
+    "tsx": "4.6.0",
+    "typescript": "5.8.3",
+    "webpack": "5.101.3",
+    "webpack-cli": "6.0.1",
+    "webpack-node-externals": "3.0.0"
+  },
+  "keywords": [
+    "xyne",
+    "xyne-cli",
+    "ai-assistant",
+    "cli",
+    "terminal",
+    "ai",
+    "chatbot",
+    "vertex-ai",
+    "claude",
+    "gemini",
+    "litellm",
+    "file-operations",
+    "bash-mode",
+    "drag-drop",
+    "conversation",
+    "productivity"
+  ],
+  "author": "Xyne Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xyne/xyne-cli.git"
+  },
+  "homepage": "https://github.com/xyne/xyne-cli#readme",
+  "bugs": {
+    "url": "https://github.com/xyne/xyne-cli/issues"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "workspaces": [
+    ".",
+    "packages/protocol",
+    "packages/web"
+  ],
+  "bundledDependencies": [
+    "@opentui/core",
+    "@opentui/core-darwin-arm64",
+    "@opentui/core-darwin-x64",
+    "@opentui/core-linux-arm64",
+    "@opentui/core-linux-x64",
+    "@opentui/core-win32-x64"
+  ],
+  "optionalDependencies": {
+    "@opentui/core-darwin-arm64": "0.1.93",
+    "@opentui/core-darwin-x64": "0.1.93",
+    "@opentui/core-linux-arm64": "0.1.93",
+    "@opentui/core-linux-x64": "0.1.93",
+    "@opentui/core-win32-x64": "0.1.93",
+    "@xyne/xyne-cli-darwin-arm64": "0.3.1",
+    "@xyne/xyne-cli-darwin-x64": "0.3.1",
+    "@xyne/xyne-cli-linux-arm64": "0.3.1",
+    "@xyne/xyne-cli-linux-x64": "0.3.1",
+    "@xyne/xyne-cli-win32-x64": "0.3.1"
+  }
+}

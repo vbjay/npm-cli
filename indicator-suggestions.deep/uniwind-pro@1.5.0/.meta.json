@@ -1,0 +1,165 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a81cdb7d833013d0",
+    "fetchedFiles": [
+      "package.json",
+      "pre/consts.js",
+      "pre/postinstall/cache.js",
+      "pre/postinstall/checkLatestVersion.js",
+      "pre/postinstall/errors.js",
+      "pre/postinstall/index.js",
+      "pre/postinstall/install.js",
+      "pre/postinstall/integrity.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "7.5.13"
+      },
+      {
+        "name": "chalk",
+        "versionSpec": "5.6.2"
+      },
+      {
+        "name": "@zowe/secrets-for-zowe-sdk",
+        "versionSpec": "8.29.4"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@zowe/secrets-for-zowe-sdk@8.29.4",
+      "chalk@5.6.2",
+      "tar@7.5.13"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "pre/postinstall/index.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "17b5e8f0037b081259750d95fa5299eda4f8924dc1d4b9d4a4eb794d9124d4e0",
+        "sizeBytes": 4140,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "pre/consts.js",
+          "pre/postinstall/install.js",
+          "pre/postinstall/errors.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "pre/consts.js",
+        "reason": "required by ./pre/postinstall/index.js; required by ./pre/postinstall/install.js; required by ./pre/postinstall/integrity.js",
+        "sha256": "443a1219f31e63cb25455c7acb4168435cef831cd07963dd50ce3e3c34f5c7c8",
+        "sizeBytes": 410,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://uniwind.dev",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://cdn.uniwind.dev",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "pre/postinstall/install.js",
+        "reason": "required by ./pre/postinstall/index.js",
+        "sha256": "3ec2c3fe933cc12e1f5b5a0af5ce91df424cc14602ca0b6bac8c8de577e44a64",
+        "sizeBytes": 8462,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "pre/consts.js",
+          "pre/postinstall/cache.js",
+          "pre/postinstall/checkLatestVersion.js",
+          "pre/postinstall/errors.js",
+          "pre/postinstall/integrity.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "pre/postinstall/cache.js",
+        "reason": "required by ./pre/postinstall/install.js",
+        "sha256": "a3de9c27c6aeb7467f9f6f0c0b1a6d43ee4955c5cbf2ad31384d5e19b3ae1601",
+        "sizeBytes": 3342,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "pre/postinstall/integrity.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "pre/postinstall/integrity.js",
+        "reason": "required by ./pre/postinstall/cache.js; required by ./pre/postinstall/install.js",
+        "sha256": "5af6695ccb3292fceb2a6bd77271f6f512f729ba1075e6ccd61753e3cc4280e1",
+        "sizeBytes": 2502,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "pre/consts.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "pre/postinstall/checkLatestVersion.js",
+        "reason": "required by ./pre/postinstall/install.js",
+        "sha256": "5a6c2ff7f146b7eb33b6d8ce8844de7c8f33c07b7ada9e85ede0a161c102b990",
+        "sizeBytes": 592,
+        "signals": [
+          "network-access",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://registry.npmjs.org",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "pre/postinstall/errors.js",
+        "reason": "required by ./pre/postinstall/install.js; required by ./pre/postinstall/index.js",
+        "sha256": "434a875352c05c4dad5f8899754142c0d1b07023881051db911f83241a9ba9a9",
+        "sizeBytes": 2559,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:24.470Z"
+  },
+  "hash": "sha256:eb1b9204e7e7010b6e3528677b41d6016445cf66191b2ee0505cea1e5cb6dac5"
+}

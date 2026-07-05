@@ -1,0 +1,55 @@
+{
+  "name": "stratum-duckdb",
+  "version": "0.1.6",
+  "description": "Run analytical SQL queries against Parquet, CSV and JSON files on any static website. Part of the Stratum toolkit.",
+  "keywords": [
+    "duckdb",
+    "parquet",
+    "wasm",
+    "static-site",
+    "quarto",
+    "analytical-sql",
+    "stratum"
+  ],
+  "license": "MIT",
+  "author": "Takaya Saito <takaya.saito@outlook.com>",
+  "homepage": "https://github.com/stratum-toolkit/stratum-duckdb#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stratum-toolkit/stratum-duckdb.git"
+  },
+  "type": "module",
+  "main": "dist/stratum-duckdb.umd.js",
+  "module": "dist/stratum-duckdb.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/stratum-duckdb.esm.js",
+      "require": "./dist/stratum-duckdb.umd.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch",
+    "prepare": "npm run build",
+    "test": "node --test tests/unit.test.mjs",
+    "test:integration": "node --test tests/integration.test.mjs",
+    "test:all": "node --test tests/unit.test.mjs && node --test tests/integration.test.mjs"
+  },
+  "peerDependencies": {
+    "@duckdb/duckdb-wasm": ">=1.29.0"
+  },
+  "peerDependenciesMeta": {
+    "@duckdb/duckdb-wasm": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

@@ -1,0 +1,62 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'com.facebook.react'
+
+android {
+  namespace 'com.jieba'
+  compileSdk safeExtGet('compileSdkVersion', 35)
+  ndkVersion safeExtGet('ndkVersion', '27.1.12297006')
+
+  defaultConfig {
+    minSdk safeExtGet('minSdkVersion', 24)
+    targetSdk safeExtGet('targetSdkVersion', 35)
+    externalNativeBuild {
+      cmake {
+        cppFlags "-std=c++20"
+        arguments "-DANDROID_STL=c++_shared"
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += "generated/java"
+      assets.srcDirs += "$projectDir/../cpp/cppjieba/dict"
+    }
+  }
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-android'
+}

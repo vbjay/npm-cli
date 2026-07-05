@@ -1,0 +1,123 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// build.gradle — Android library module for @pyrx/synapse-react-native.
+//
+// What this builds
+// ----------------
+// A thin AAR exposing one TurboModule (`PyrxSynapseModule`) that
+// forwards JS calls into the published `tech.pyrx.synapse:synapse-core`
+// + `:synapse-push` SDKs from Maven Central. The wrapper itself does
+// NO event-pipeline / queue / network work — every call delegates.
+//
+// Dependency strategy
+// -------------------
+// We pin the SDK to the [0.2.0, 0.3.0) range (the version that added
+// the public in-app messaging surface — `Pyrx.inApp.show(...)` and
+// the two new `PyrxEvent.InAppMessage*` subtypes — landed in Phase
+// 10 PR-2b, tracked at pyrx-synapse-android#21).
+//
+// The `[0.2.0, 0.3.0)` Gradle range accepts every 0.2.x patch
+// (0.2.0, 0.2.1, ...) but EXCLUDES 0.3.x — which is what we want:
+// the in-app event taxonomy is frozen for the 0.2.x line, and a
+// 0.3.0 would carry breaking changes the RN bridge must opt into
+// explicitly. When the underlying SDK bumps to 0.3.x, this wrapper
+// bumps to 0.4.0 and tightens to "[0.3, 0.4)".
+//
+// Why 0.2.0 specifically: the PyrxSynapseModule.kt at this wrapper's
+// version invokes `Pyrx.inApp.show(...)`, `Pyrx.inApp.dismiss(...)`,
+// etc., AND switches on the two new `PyrxEvent.InAppMessage*` cases
+// when forwarding events to JS. That code would fail to compile
+// against 0.1.x (no in-app surface existed yet) — the strict floor
+// protects customers from transitive-pin surprises.
+//
+// synapse-inapp is a new sibling module landed in 0.2.0 alongside
+// synapse-core + synapse-push. We add it as an `implementation`
+// dependency below so the RN bridge can call `PyrxInApp.install(...)`
+// after `Pyrx.initialize(...)` to wire the bridge.
+//
+// Note for the New Architecture
+// -----------------------------
+// We apply the `com.facebook.react` plugin (RN 0.76+ requires it for
+// every native module) which:
+//   - Generates the C++/Kotlin bindings from src/NativePyrxSynapse.ts
+//     during the example app's build (NOT here — the codegen runs in
+//     the host app's Gradle build).
+//   - Provides the `NativePyrxSynapseSpec` abstract class our
+//     `PyrxSynapseModule.kt` extends.
+//
+// JDK 17 is required by RN 0.76+ and AGP 8.2+.
+
+buildscript {
+  ext.PyrxSynapseRN = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return PyrxSynapseRN[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.pyrx.synapse"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+
+  // Published PYRX Synapse Android SDK from Maven Central. The [0.2.0,
+  // 0.3.0) range is bound to a major-minor floor — the version that
+  // landed the public in-app messaging surface (`Pyrx.inApp.*` +
+  // PyrxEvent.InAppMessage* subtypes + the synapse-inapp sibling
+  // module). Bump the floor when this wrapper adopts a new native SDK
+  // feature.
+  implementation "tech.pyrx.synapse:synapse-core:[0.2.0,0.3.0)"
+  implementation "tech.pyrx.synapse:synapse-push:[0.2.0,0.3.0)"
+  // synapse-inapp landed alongside the other two modules in 0.2.0.
+  // Including it here means the host app does NOT need to add a
+  // separate dependency — the bridge owns the install lifecycle via
+  // `PyrxInApp.install(...)` in `PyrxSynapseModule.initialize`.
+  implementation "tech.pyrx.synapse:synapse-inapp:[0.2.0,0.3.0)"
+}

@@ -1,0 +1,63 @@
+{
+  "name": "@itpay/cli",
+  "version": "2.0.3",
+  "description": "ItPay CLI for V3 checkout, payment, order, refund, and agent-facing render flows.",
+  "type": "module",
+  "bin": {
+    "itp": "bin/itp",
+    "itpay": "bin/itp",
+    "itpay_cli": "bin/itp"
+  },
+  "main": "./dist/src/main.js",
+  "exports": {
+    ".": "./dist/src/main.js"
+  },
+  "files": [
+    "bin/",
+    "dist/src/",
+    "docs/",
+    "skills/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "itpay",
+    "agent",
+    "cli",
+    "claude-code",
+    "codex",
+    "openclaw",
+    "trae"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/qrcode": "^1.5.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/main.ts",
+    "start": "node dist/src/main.js",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist",
+    "check": "npm run lint && npm test && npm run test:package",
+    "pack:dry-run": "npm run clean && npm run build && npm pack --dry-run --ignore-scripts",
+    "test:package": "npm run clean && npm run build && node scripts/package-smoke.mjs",
+    "prepack": "npm run clean && npm run build",
+    "prepublishOnly": "npm run check",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

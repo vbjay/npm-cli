@@ -1,0 +1,132 @@
+{
+  "name": "wdio-rerun-service",
+  "version": "3.0.1",
+  "description": "A WebdriverIO service to track and stage for re-running failed or flaky Jasmine/Mocha tests or Cucumber Scenarios.",
+  "author": "Eric Saari <esaari@gmail.com>",
+  "contributors": [
+    "Mike Salvia <mike.salvia@icloud.com>"
+  ],
+  "homepage": "https://github.com/webdriverio-community/wdio-rerun-service",
+  "license": "MIT",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "./build/cjs/index.js",
+  "types": "./build/cjs/index.d.ts",
+  "module": "./build/esm/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./build/esm/index.d.ts",
+        "default": "./build/esm/index.js"
+      },
+      "require": {
+        "types": "./build/cjs/index.d.ts",
+        "default": "./build/cjs/index.js"
+      }
+    }
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "scripts": {
+    "build": "run-s clean compile",
+    "clean": "rimraf ./build",
+    "clean:all": "rimraf ./build ./results ./coverage ./node_modules rerun.sh rerun.bat",
+    "compile": "run-s compile:esm compile:cjs generate:cjs:package",
+    "compile:cjs": "tsc -p tsconfig.cjs.json",
+    "compile:esm": "tsc -p tsconfig.esm.json",
+    "generate:cjs:package": "shx echo \"{\\\"type\\\":\\\"commonjs\\\"}\" > ./build/cjs/package.json",
+    "prepare": "pnpm run build",
+    "test": "run-s test:clean test:eslint test:tsc test:unit test:e2e",
+    "test:clean": "rimraf ./results ./coverage rerun.sh rerun.bat",
+    "test:eslint": "eslint src tests",
+    "test:tsc": "tsc -p tsconfig.json --noEmit",
+    "test:tsc:e2e": "tsc -p tests/e2e/tsconfig.json --noEmit",
+    "test:unit": "vitest run --coverage",
+    "test:e2e": "pnpm --dir tests/e2e test",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": "{src,tests}/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/webdriverio-community/wdio-rerun-service.git"
+  },
+  "keywords": [
+    "automation",
+    "auto-rerun",
+    "bdd",
+    "ci",
+    "continuous-integration",
+    "cucumber",
+    "cucumberjs",
+    "flaky",
+    "flaky-tests",
+    "gherkin",
+    "jasmine",
+    "jasmine-tests",
+    "javascript",
+    "javascript-testing",
+    "mocha",
+    "mocha-tests",
+    "nodejs",
+    "parallel-testing",
+    "re-run",
+    "rerun",
+    "rerun-failures",
+    "retry",
+    "retry-failures",
+    "retry-runner",
+    "scenario",
+    "selenium",
+    "test",
+    "test-retry",
+    "tests",
+    "typescript",
+    "wdio",
+    "wdio-service",
+    "wdio-service-plugin",
+    "webdriver",
+    "webdriver.io",
+    "webdriverio",
+    "webdriverio-plugin"
+  ],
+  "bugs": {
+    "url": "https://github.com/webdriverio-community/wdio-rerun-service/issues"
+  },
+  "dependencies": {
+    "@wdio/logger": "^9.18.0",
+    "@wdio/types": "^9.20.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.4.0",
+    "@cucumber/messages": "^31.1.0",
+    "@eslint/js": "^9.39.2",
+    "@tsconfig/node16": "^16.1.8",
+    "@tsconfig/node18-strictest-esm": "^1.0.1",
+    "@types/node": "^25.0.3",
+    "@vitest/coverage-v8": "^4.0.16",
+    "@wdio/cucumber-framework": "^9.22.0",
+    "@wdio/globals": "^9.17.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "npm-run-all": "4.1.5",
+    "npm-watch": "0.13.0",
+    "prettier": "^3.7.4",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "release-it": "^19.2.0",
+    "rimraf": "^6.1.2",
+    "shx": "^0.4.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.33.1",
+    "vitest": "^4.0.16"
+  }
+}

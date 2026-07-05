@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c7d17e8938dee6b9",
+    "fetchedFiles": [
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `preinstall`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "shell-network-fetch",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://bun.sh/install",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/itlackey/akm/releases/latest/download/install.sh",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:19.846Z"
+  },
+  "hash": "sha256:8c342415ea8e3d9a1f66cfb90e92b2145de870339c856cab22a55051023b9914"
+}

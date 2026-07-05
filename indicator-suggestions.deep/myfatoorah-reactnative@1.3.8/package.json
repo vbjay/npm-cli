@@ -1,0 +1,165 @@
+{
+  "name": "myfatoorah-reactnative",
+  "version": "1.3.8",
+  "description": "MyFatoorah SDK v2 , is an enhanced and improved SDK version that will simplify the integration with MyFatoorah payment platform through simple straight forward steps.",
+  "author": "myfatoorah",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://myfatoorahsc@dev.azure.com/myfatoorahsc/MF-SDK-React-Native/_git/MF-SDK-React-Native"
+  },
+  "homepage": "https://www.myfatoorah.com",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepack": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install && yarn example pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.2.2",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@react-native/babel-preset": "^0.82.1",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.8",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.1.1",
+    "@types/react-native": "^0.73.0",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "flow-bin": "^0.291.0",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "19.1.1",
+    "react-native": "0.82.1",
+    "react-native-builder-bob": "^0.21.3",
+    "release-it": "^15.0.0",
+    "typescript": "^5.9.3"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false,
+          "endOfLine": "auto"
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "copyFlow": true
+        }
+      ],
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": "@aguacerowx/react-native",
+  "version": "0.0.61",
+  "description": "Native weather rendering for React Native",
+  "license": "MIT",
+  "author": "Michael Barletta",
+  "keywords": [
+    "react-native",
+    "android",
+    "weather",
+    "map"
+  ],
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "index.js",
+  "source": "index.js",
+  "files": [
+    "LICENSE",
+    "src",
+    "index.js",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "ios/generated",
+    "ios/compiled-shaders",
+    "android/src/main/java/com/facebook/react/viewmanagers"
+  ],
+  "scripts": {
+    "compile-shaders": "node scripts/compile-shaders.js",
+    "clean": "node -e \"require('fs').rmSync('lib', {recursive: true, force: true})\"",
+    "build": "npm run compile-shaders && npm run clean && bob build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build && node ../../scripts/minify-js-tree.mjs lib src index.js"
+  },
+  "devDependencies": {
+    "proj4": "^2.11.0",
+    "react-native-builder-bob": "^0.23.2",
+    "typescript": "^5.0.2"
+  },
+  "peerDependencies": {
+    "@rnmapbox/maps": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-device-info": ">=10.0.0"
+  },
+  "dependencies": {
+    "@aguacerowx/javascript-sdk": "^0.0.34",
+    "base64-js": "^1.5.1"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "AguaceroWxReactNativeSpec",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.aguacerowx.reactnative"
+    }
+  }
+}

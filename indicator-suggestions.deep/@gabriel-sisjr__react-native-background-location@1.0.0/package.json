@@ -1,0 +1,226 @@
+{
+  "name": "@gabriel-sisjr/react-native-background-location",
+  "version": "1.0.0",
+  "description": "React Native library for background location tracking using TurboModules. Track user location even when the app is minimized or in the background.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-background-location-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it --only-version",
+    "docs:dev": "yarn workspace website start",
+    "docs:build": "yarn workspace website build",
+    "docs:serve": "yarn workspace website serve",
+    "docs:clear": "yarn workspace website clear"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-background-location",
+    "location",
+    "gps",
+    "tracking",
+    "background-location",
+    "background-tracking",
+    "geolocation",
+    "coordinate",
+    "latitude",
+    "longitude",
+    "trip",
+    "session",
+    "turbo-module",
+    "turbomodule",
+    "new-architecture",
+    "location-service",
+    "foreground-service",
+    "android",
+    "ios",
+    "typescript",
+    "hooks",
+    "useBackgroundLocation",
+    "useLocationUpdates",
+    "real-time",
+    "event-driven",
+    "location-updates",
+    "persistent-storage",
+    "location-permissions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel-sisjr/react-native-background-location.git"
+  },
+  "author": "Gabriel Santana <gabriel.sistemasjr@gmail.com> (https://github.com/gabriel-sisjr)",
+  "license": "MIT",
+  "sideEffects": false,
+  "bugs": {
+    "url": "https://github.com/gabriel-sisjr/react-native-background-location/issues"
+  },
+  "homepage": "https://gabriel-sisjr.github.io/react-native-background-location/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@evilmartians/lefthook": "^2.1.4",
+    "@react-native-community/cli": "20.1.3",
+    "@react-native/babel-preset": "0.84.1",
+    "@react-native/eslint-config": "^0.84.1",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.2.14",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "prettier": "^3.8.1",
+    "react": "19.2.4",
+    "react-native": "0.84.1",
+    "react-native-builder-bob": "^0.40.18",
+    "react-test-renderer": "19.2.4",
+    "release-it": "^19.2.4",
+    "turbo": "^2.8.20",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-native": ">=0.73.0"
+  },
+  "workspaces": [
+    "example",
+    "website"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/__tests__/setup-minimal.ts"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/website/",
+      "<rootDir>/lib/"
+    ],
+    "testMatch": [
+      "<rootDir>/src/__tests__/**/*.test.{js,ts,tsx}"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,ts,tsx}",
+      "!src/__tests__/**",
+      "!src/**/*.d.ts"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "lcov",
+      "text"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "BackgroundLocationSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.backgroundlocation"
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "turbo-module",
+    "version": "0.54.7"
+  },
+  "resolutions": {
+    "webpack": "5.105.4"
+  }
+}

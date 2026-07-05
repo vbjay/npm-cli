@@ -1,0 +1,115 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "37e8f1bcf17902f2",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "022f17a597f1416d0c38c2a13822a622e8ad1f4b460aebd5bf029922e6d76bd2",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `npool`  -  C/C++ sources",
+            "items": [
+              "npool.cc",
+              "./source/thread.cc",
+              "./source/file_manager.cc",
+              "./source/json_utility.cc",
+              "./source/callback_queue.cc",
+              "./source/utilities.cc",
+              "./source/nrequire.cc",
+              "./source/isolate_context.cc"
+            ]
+          },
+          {
+            "label": "Target `npool`  -  include directories",
+            "items": [
+              "./threadpool",
+              "./source",
+              "./source/v8",
+              "<!(node -e \"require('nan')\")",
+              "./threadpool",
+              "./source",
+              "./node_modules/nan"
+            ]
+          },
+          {
+            "label": "Target `npool`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          },
+          {
+            "label": "Target `threadpool`  -  C/C++ sources",
+            "items": [
+              "./threadpool/synchronize.c",
+              "./threadpool/task_queue.c",
+              "./threadpool/thread_pool.c"
+            ]
+          },
+          {
+            "label": "Target `threadpool`  -  include directories",
+            "items": [
+              "./threadpool"
+            ]
+          },
+          {
+            "label": "Target `threadpool`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "2260bca713a81d4fb9840db71667df7bc2dfb3fd9bbc31fd4142891c8ead3e0b",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:18.775Z"
+  },
+  "hash": "sha256:4fd9458d86b53ba25e3bb83d770bfca1c86b55bb5354ff67f51522e41693bc0c"
+}

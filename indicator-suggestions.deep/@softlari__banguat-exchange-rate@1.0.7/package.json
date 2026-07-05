@@ -1,0 +1,51 @@
+{
+  "name": "@softlari/banguat-exchange-rate",
+  "version": "1.0.7",
+  "description": "TypeScript library for accessing Banguat (Guatemalan Central Bank) exchange rate SOAP service",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "banguat": "dist/cli/banguat.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "banguat",
+    "guatemala",
+    "exchange-rate",
+    "currency",
+    "soap",
+    "typescript",
+    "cli"
+  ],
+  "author": "SoftLari",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoftLari/banguat-exchange-rate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SoftLari/banguat-exchange-rate/issues"
+  },
+  "homepage": "https://github.com/SoftLari/banguat-exchange-rate#readme",
+  "files": [
+    "dist/**/*"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.10",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "soap": "^1.9.1"
+  }
+}

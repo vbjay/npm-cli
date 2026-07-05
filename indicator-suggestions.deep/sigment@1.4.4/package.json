@@ -1,0 +1,59 @@
+{
+  "name": "sigment",
+  "version": "1.4.4",
+  "description": "A lightweight reactive JavaScript framework built with signals and vanilla JS — no virtual DOM, no JSX, no transpilation.",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sigmentjs/basic-sigment-typescript-vite"
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./throw-on-require.js"
+   },
+   "./ssr": {
+    "types": "./types/ssr.d.ts",
+    "import": "./dist/ssr.js"
+   }
+  },
+  "type": "module",
+  "types": "./types/index.d.ts",
+  "author": "wappaa",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "types",
+    "throw-on-require.js"
+  ],
+  "scripts": {
+    "build": "esbuild index.js --bundle --format=esm --minify --keep-names --target=es2020,chrome90,firefox88,safari15 --outfile=dist/index.js",
+	"build:ssr": "esbuild ssr.js --bundle --minify --platform=node --format=esm --target=esnext --outfile=dist/ssr.js --external:vite --external:jsdom",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.2"
+  },
+  "engines": {
+    "node": ">=14.8.0"
+  },
+ "keywords": [
+    "javascript",
+    "vanilla",
+    "reactive",
+    "signals",
+    "state-management",
+    "dom-performance",
+    "no-vdom",
+    "lightweight-framework",
+    "batch-rendering",
+    "sigment",
+    "ui-engine",
+    "fast-dom"
+  ],
+  "bugs": {
+    "url": "https://github.com/sigmentjs/basic-sigment-typescript-vite/issues"
+  },
+  "homepage": "https://sigment.dev"
+}

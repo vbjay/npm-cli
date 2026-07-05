@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9db88c3ece07c3b9",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "c035edb93b8f74fb35498abb0f2f067277340e0b161388ee7f7bcb8bd75c3562",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "androidx.security:security-crypto:1.1.0",
+              "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/sync-package-docs.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:46.458Z"
+  },
+  "hash": "sha256:39ac20857d5d917d7a9dffb506e3ff8b1cc2cd3d516e8f7287e09068bf5db660"
+}

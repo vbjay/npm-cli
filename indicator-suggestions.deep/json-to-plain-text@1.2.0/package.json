@@ -1,0 +1,69 @@
+{
+  "name": "json-to-plain-text",
+  "version": "1.2.0",
+  "description": "Convert JSON or JavaScript objects into clean, human-readable plain text format.",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/esm/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && tsc && npm run build:cjs",
+    "build:cjs": "tsc --project tsconfig.cjs.json && npm run echo:type-cjs",
+    "echo:type-cjs": "echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json",
+    "test": "jest --passWithNoTests",
+    "eslint": "npx eslint .",
+    "prettier": "npx prettier --write .",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumithemmadi/json-to-plain-text.git"
+  },
+  "keywords": [
+    "json",
+    "plain text",
+    "json to text",
+    "json formatter",
+    "json pretty print",
+    "formatter",
+    "logging",
+    "debugging",
+    "cli",
+    "output",
+    "print",
+    "human readable",
+    "node",
+    "nodejs",
+    "typescript",
+    "utility"
+  ],
+  "author": "sumithemmadi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sumithemmadi/json-to-plain-text/issues"
+  },
+  "homepage": "https://github.com/sumithemmadi/json-to-plain-text#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "eslint": "^8.45.0",
+    "jest": "^29.6.1",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false
+}

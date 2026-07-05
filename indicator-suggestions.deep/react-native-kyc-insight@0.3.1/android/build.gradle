@@ -1,0 +1,99 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.KYCInsight = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+    return KYCInsight[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "ng.netapps.kycinsight.rn"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  // Dev fallback: pick up `ng.netapps:kyc-insight` from
+  // ~/.m2/repository if the developer ran
+  // `./gradlew :sdk:publishToMavenLocal` in kyc-wiget-android/ but
+  // the Maven Central publish hasn't landed yet. Safe to leave in
+  // production builds — only consulted if the artifact isn't on Central.
+  mavenLocal()
+}
+
+// Native KYC Insight SDK the bridge wraps — pinned to the EXACT version
+// declared in package.json ("nativeSdkVersions.android") so every published
+// RN version maps to one definite native release. No wildcards, no implicit
+// latest-pull: upgrading the native SDK is a deliberate package.json edit +
+// RN release. package.json is the single source of truth shared with the
+// iOS podspec, which reads "nativeSdkVersions.ios" the same way.
+def kycNativeAndroidVersion = {
+  def pkg = new groovy.json.JsonSlurper().parse(file("$projectDir/../package.json"))
+  def v = pkg.nativeSdkVersions?.android
+  if (!v) {
+    throw new GradleException(
+      "package.json is missing nativeSdkVersions.android — the RN bridge must pin an exact ng.netapps:kyc-insight version"
+    )
+  }
+  return v
+}()
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "ng.netapps:kyc-insight:${kycNativeAndroidVersion}"
+}

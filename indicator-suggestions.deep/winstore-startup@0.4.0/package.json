@@ -1,0 +1,59 @@
+{
+  "name": "winstore-startup",
+  "version": "0.4.0",
+  "description": "Windows Store startup task management using C++/WinRT",
+  "keywords": [
+    "addon",
+    "autostart",
+    "native",
+    "startup",
+    "startup-task",
+    "uwp",
+    "windows",
+    "windows-store",
+    "winrt"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Raghvendra Yadav",
+    "email": "raghvendraa.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspect-dev/winstore-startup.git"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "startup_task.cpp",
+    "binding.gyp",
+    "lib",
+    "prebuilds"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "install": "node-gyp-build",
+    "prebuild": "prebuildify --napi --strip --name node.napi",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "clean": "git clean -fx ./build ./prebuilds ./node_modules"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.7.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.42.0",
+    "oxlint": "^1.57.0",
+    "prebuildify": "^6.0.1",
+    "vitest": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "gypfile": true
+}

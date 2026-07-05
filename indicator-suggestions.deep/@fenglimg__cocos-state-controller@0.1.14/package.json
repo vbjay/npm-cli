@@ -1,0 +1,88 @@
+{
+  "name": "@fenglimg/cocos-state-controller",
+  "version": "0.1.14",
+  "description": "Cocos Creator State Controller — 状态控制器组件 + 分发/同步 CLI (csc)",
+  "license": "MIT",
+  "author": "fenglimg <fenglimg90@gmail.com>",
+  "homepage": "https://github.com/fenglimg/cocos-state-controller#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fenglimg/cocos-state-controller.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fenglimg/cocos-state-controller/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cocos",
+    "cocos-creator",
+    "state-controller",
+    "state-machine",
+    "csc",
+    "cli"
+  ],
+  "bin": {
+    "csc": "bin/csc.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "assets/script/controller/",
+    "packages/state-controller-v2-panel/",
+    "tools/migration/",
+    "tools/state-controller-sync-manifest.json",
+    "skills/cocos-state-controller/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "cocosDist": {
+    "mappings": [
+      {
+        "kind": "runtime",
+        "from": "assets/script/controller",
+        "to": "assets/script/controller"
+      },
+      {
+        "kind": "editor-package",
+        "from": "packages/state-controller-v2-panel",
+        "to": "packages/state-controller-v2-panel"
+      },
+      {
+        "kind": "skill",
+        "from": "skills/cocos-state-controller",
+        "to": "cocos-state-controller"
+      },
+      {
+        "kind": "asset",
+        "from": "tools/migration",
+        "to": ".csc/migration"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint assets/ --ext .ts,.js",
+    "lint:fix": "eslint assets/ --ext .ts,.js --fix",
+    "migrate:v1-to-v2": "node tools/migration/migrate-prefab-v1-to-v2.js",
+    "test": "cd tests && npx jest",
+    "prepare": "husky || true"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0"
+  },
+  "lint-staged": {
+    "assets/**/*.ts": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1",
+    "prompts": "^2.4.2"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "name": "@gurukumparan/react-native-android-inapp-updates",
+  "title": "React Native Android Inapp Updates",
+  "version": "2.0.2",
+  "description": "TODO",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "js/index",
+  "source": "js/index",
+  "files": [
+    "README.md",
+    "js",
+    "lib",
+    "android/src",
+    "android/build.gradle"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepack": "bob build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumparan/react-native-android-inapp-updates.git",
+    "baseUrl": "https://github.com/kumparan/react-native-android-inapp-updates"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": {
+    "name": "Agastya Darma Laksana",
+    "email": "gedeagas22@gmail.com"
+  },
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "0.70.0",
+    "add": "^2.0.6",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.0.5",
+    "react": "18.2.0",
+    "react-native": "0.71.7",
+    "react-native-builder-bob": "^0.20.0",
+    "typescript": "^4.5.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "js",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "AndroidInappUpdatesSpec",
+    "type": "modules",
+    "jsSrcsDir": "js",
+    "android": {
+      "javaPackageName": "com.agastya.androidinappupdates"
+    }
+  }
+}

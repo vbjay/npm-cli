@@ -1,0 +1,71 @@
+{
+  "name": "storybook-addon-chakra-theme",
+  "version": "0.0.2-rc3",
+  "description": "storybook addon with chakra theme",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "example": "start-storybook -p 6006",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p .",
+    "pretest": "tslint -p .",
+    "test": "rimraf dist && jest",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pyramation/storybook-addon-chakra-theme.git"
+  },
+  "author": "Dan Lynch <pyramation@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/pyramation/storybook-addon-chakra-theme/issues"
+  },
+  "homepage": "https://github.com/pyramation/storybook-addon-chakra-theme#readme",
+  "license": "MIT",
+  "dependencies": {
+    "@chakra-ui/icons": "^1.1.7",
+    "immutable": "^3.8.2",
+    "recompose": "^0.27.1"
+  },
+  "devDependencies": {
+    "@chakra-ui/react": "^1.8.6",
+    "@emotion/core": "^11",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@storybook/addons": "^4.0.0",
+    "@storybook/react": "^4.0.2",
+    "@types/enzyme": "^3.1.13",
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.3.3",
+    "@types/react": "^16.3.17",
+    "@types/recompose": "^0.26.1",
+    "@types/sinon": "^5.0.2",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7.1.5",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "enzyme-to-json": "^3.3.4",
+    "jest": "^23.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rimraf": "^2.6.2",
+    "sinon": "^6.2.0",
+    "ts-jest": "^23.1.4",
+    "tslint": "^5.11.0",
+    "typescript": "^4.6.2"
+  },
+  "peerDependencies": {
+    "@chakra-ui/react": "^1.8.6",
+    "@storybook/addons": "4.0.12",
+    "react": "^17.0.2"
+  },
+  "keywords": [
+    "storybook",
+    "chakra",
+    "addon",
+    "theme",
+    "react",
+    "typescript"
+  ]
+}

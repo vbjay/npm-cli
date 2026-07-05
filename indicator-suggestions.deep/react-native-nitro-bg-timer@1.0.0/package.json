@@ -1,0 +1,159 @@
+{
+  "name": "react-native-nitro-bg-timer",
+  "version": "1.0.0",
+  "description": "react-native-nitro-bg-timer is a react native package built with Nitro",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib",
+    "nitrogen",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "cpp",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "nitro.json",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "npm run typescript || exit 0;",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "lint-ci": "eslint \"**/*.{js,ts,tsx}\" -f @jamesacarr/github-actions",
+    "typescript": "tsc",
+    "test": "tsx --test src/__tests__/index.test.ts",
+    "specs": "npm run typescript && nitrogen --logLevel=\"debug\"",
+    "nitrogen": "nitrogen",
+    "npm:login:web": "npm login --registry https://registry.npmjs.org/ --auth-type=web",
+    "npm:whoami": "npm whoami --registry https://registry.npmjs.org/",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run typescript",
+    "release:npm": "npm run npm:login:web && npm publish --access public",
+    "release:npm:provenance": "npm publish --access public --provenance",
+    "benchmark:node": "node benchmarks/node-scheduler-benchmark.mjs",
+    "benchmark:bridge": "node benchmarks/bridge-overhead-benchmark.mjs",
+    "benchmark:core-native": "bash scripts/benchmark-native-core.sh",
+    "stress:smoke": "NITRO_BG_STRESS_ROUNDS=5 tsx benchmarks/stress-runner.ts",
+    "stress:soak": "NITRO_BG_STRESS_ROUNDS=40 NITRO_BG_STRESS_MAX_MS=2000 NITRO_BG_STRESS_MAX_HEAP_MB=64 tsx benchmarks/stress-runner.ts",
+    "benchmark:native-smoke": "bash scripts/ci-native-smoke.sh",
+    "verify:release": "npm run typecheck && npm run lint && npm run test && npm run typescript && npm run benchmark:native-smoke"
+  },
+  "keywords": [
+    "react-native",
+    "nitro",
+    "background-timer",
+    "timer",
+    "settimeout",
+    "setinterval",
+    "background-task",
+    "background-processing",
+    "native-timer",
+    "background-service",
+    "android",
+    "ios",
+    "nitro-modules",
+    "performance",
+    "native-performance"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tconns/react-native-nitro-bg-timer.git"
+  },
+  "author": "Thành Công <thanhcongns94@gmail.com> (https://github.com/tconns)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tconns/react-native-nitro-bg-timer/issues"
+  },
+  "homepage": "https://github.com/tconns/react-native-nitro-bg-timer#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@react-native/babel-preset": "0.80.2",
+    "@react-native/eslint-config": "0.80.2",
+    "@types/react": "19.1.0",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.2.6",
+    "nitrogen": "^0.35.6",
+    "prettier": "^3.5.3",
+    "react": "19.1.0",
+    "react-native": "0.80.2",
+    "react-native-builder-bob": "^0.37.0",
+    "react-native-nitro-modules": "^0.35.6",
+    "semantic-release": "^24.2.6",
+    "tsx": "^4.19.2",
+    "typescript": "5.0.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "warn",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/",
+    "nitrogen/",
+    "benchmarks/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false,
+    "semi": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "eventemitter3": "^5.0.1"
+  }
+}

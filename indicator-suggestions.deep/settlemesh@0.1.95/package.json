@@ -1,0 +1,65 @@
+{
+  "name": "settlemesh",
+  "mcpName": "io.settlemesh/cli",
+  "version": "0.1.95",
+  "description": "SettleMesh CLI + MCP server: deploy an agent-built app to a live URL with login, a managed database, usage-based billing, and end-user-pays — plus metered web search, LLMs, image/video, and a service catalog, all on one key.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://settlemesh.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StructureIntelligence/settlemesh.git"
+  },
+  "bugs": {
+    "url": "https://github.com/StructureIntelligence/settlemesh/issues"
+  },
+  "keywords": [
+    "settlemesh",
+    "cli",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "agent",
+    "agent-native",
+    "ai",
+    "ai-agents",
+    "deploy",
+    "deployment",
+    "billing",
+    "usage-based-billing",
+    "end-user-pays",
+    "monetization",
+    "tools"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "settlemesh": "bin/settle.js"
+  },
+  "scripts": {
+    "prepack": "node scripts/stage-binaries.js",
+    "postpack": "node scripts/clean-staged-binaries.js",
+    "postinstall": "node scripts/install.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "vendor/",
+    "README.md"
+  ],
+  "config": {
+    "release_base": "https://github.com/StructureIntelligence/SettleMesh/releases/download"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

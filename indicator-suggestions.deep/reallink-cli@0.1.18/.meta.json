@@ -1,0 +1,104 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f6897411f67b8bd8",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.cjs",
+      "scripts/prepare-prebuilt.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\reallink-cli@0.1.18\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4b8f6e62e94472b4591cfa806d21fc5ee60937997560f44fe33f1a14f20836a1",
+        "sizeBytes": 1572,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://real-agent.link/install.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/generate-contract.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/prepare-prebuilt.cjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "8f4ec4a4db8d68e787ae377a95828742bd446c316b5829ae806926b48f6439e3",
+        "sizeBytes": 1801,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:02.268Z"
+  },
+  "hash": "sha256:42f1d0e49e6efd2235dd75eb433861822e98011676910defe50c3acad57460ad"
+}

@@ -1,0 +1,204 @@
+{
+  "name": "@ethora/chat-component-rn",
+  "version": "26.5.21",
+  "description": "Drop-in XMPP chat component for React Native / Expo. <Chat config={...}/> and you're done.",
+  "main": "index.js",
+  "module": "lib/module/main.js",
+  "react-native": "lib/module/main.js",
+  "source": "src/main.ts",
+  "types": "lib/typescript/main.d.ts",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./lib/typescript/main.d.ts",
+        "default": "./lib/module/main.js"
+      },
+      "import": "./lib/module/main.js",
+      "require": "./lib/commonjs/main.js",
+      "types": "./lib/typescript/main.d.ts"
+    },
+    "./metro": "./metro.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "metro.js",
+    "empty-shim.js",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "exclude": "**/{__tests__,__fixtures__,__mocks__}/**",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "peerDependencies": {
+    "@react-native-async-storage/async-storage": ">=1.21.0",
+    "@react-native-community/netinfo": ">=11.0.0",
+    "expo-av": ">=15.0.0",
+    "expo-clipboard": ">=7.0.0",
+    "expo-document-picker": ">=13.0.0",
+    "expo-file-system": ">=19.0.0",
+    "expo-font": ">=11.0.0",
+    "expo-image-manipulator": ">=13.0.0",
+    "expo-image-picker": ">=16.0.0",
+    "expo-media-library": ">=17.0.0",
+    "expo-video": ">=2.0.0",
+    "react": ">=18.0.0",
+    "react-native": ">=0.73.0",
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-get-random-values": ">=1.10.0",
+    "react-native-reanimated": ">=3.0.0",
+    "react-native-svg": ">=14.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-svg": {
+      "optional": false
+    },
+    "react-native-reanimated": {
+      "optional": false
+    },
+    "@react-native-async-storage/async-storage": {
+      "optional": false
+    },
+    "react-native-get-random-values": {
+      "optional": false
+    },
+    "react-native-gesture-handler": {
+      "optional": true
+    },
+    "expo-av": {
+      "optional": true
+    },
+    "expo-clipboard": {
+      "optional": true
+    },
+    "expo-document-picker": {
+      "optional": true
+    },
+    "expo-file-system": {
+      "optional": true
+    },
+    "expo-font": {
+      "optional": true
+    },
+    "expo-image-manipulator": {
+      "optional": true
+    },
+    "expo-image-picker": {
+      "optional": true
+    },
+    "expo-media-library": {
+      "optional": true
+    },
+    "expo-video": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "prepare": "patch-package && node scripts/install-git-hooks.js",
+    "start": "expo start",
+    "android": "node scripts/ensure-emulator.js && (expo run:android; node scripts/fix-prebuild-deps.js)",
+    "ios": "expo run:ios; node scripts/fix-prebuild-deps.js",
+    "web": "expo start --web",
+    "prebuild": "expo prebuild; node scripts/fix-prebuild-deps.js",
+    "fix-prebuild-deps": "node scripts/fix-prebuild-deps.js",
+    "lint": "eslint .",
+    "test": "jest",
+    "build": "bob build",
+    "clean": "rm -rf lib",
+    "prepack": "npm run clean && npm run build",
+    "e2e": "scripts/run-e2e.sh",
+    "e2e:ios": "scripts/run-e2e.sh ios",
+    "e2e:android": "scripts/run-e2e.sh android"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "@xmpp/client": "^0.13.1",
+    "axios": "^1.7.9",
+    "js-sha256": "^0.11.0",
+    "react-native-keyboard-controller": "^1.18.5",
+    "react-native-webview": "^13.16.1",
+    "react-redux": "^9.2.0",
+    "styled-components": "^6.1.13"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/netinfo": "11.4.1",
+    "@types/jest": "^29.5.12",
+    "@types/react": "~19.1.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "babel-jest": "^29.6.3",
+    "eslint": "^8.19.0",
+    "eslint-config-expo": "~9.2.0",
+    "expo": "~54.0.0",
+    "expo-av": "~16.0.8",
+    "expo-build-properties": "^55.0.14",
+    "expo-clipboard": "~8.0.8",
+    "expo-document-picker": "~14.0.0",
+    "expo-image-manipulator": "~14.0.0",
+    "expo-image-picker": "~17.0.0",
+    "expo-media-library": "~18.2.1",
+    "expo-status-bar": "~3.0.0",
+    "expo-video": "~3.0.16",
+    "jest": "^29.6.3",
+    "jest-expo": "~54.0.0",
+    "patch-package": "^8.0.1",
+    "prettier": "2.8.8",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.41.0",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-get-random-values": "~1.11.0",
+    "react-native-reanimated": "~4.1.0",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
+    "react-native-svg": "15.12.1",
+    "react-native-worklets": "~0.5.0",
+    "react-qr-code": "^2.0.15",
+    "react-test-renderer": "19.1.0",
+    "typescript": "~5.9.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Ethora",
+  "homepage": "https://playground.chat.ethora.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dappros/ethora-chat-component-rn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dappros/ethora-chat-component-rn/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "chat",
+    "messaging",
+    "react",
+    "react-native",
+    "expo",
+    "react-component",
+    "messenger",
+    "reactjs",
+    "web3",
+    "xmpp",
+    "ethora"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

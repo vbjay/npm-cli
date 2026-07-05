@@ -1,0 +1,88 @@
+{
+  "name": "@2en/icons",
+  "version": "0.0.1",
+  "description": "Clawly's standard icon library — central-icons re-exported for both React Native and Web, plus selectively vendored @2en/openai-icons glyphs and Clawly-custom additions.",
+  "type": "module",
+  "main": "./dist/index.web.ts",
+  "types": "./dist/index.web.ts",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./dist/index.native.ts",
+        "default": "./dist/index.native.ts"
+      },
+      "default": {
+        "types": "./dist/index.web.ts",
+        "default": "./dist/index.web.ts"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "sync": "bun run scripts/sync.ts",
+    "build": "bun run scripts/build.ts",
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit",
+    "start": "bun demo/index.html",
+    "build-docs": "bun build ./demo/main.jsx --outdir=demo/dist --minify && sed 's/main.jsx/main.js/;s|</head>|<link rel=stylesheet href=main.css></head>|' demo/index.html > demo/dist/index.html",
+    "clean": "rm -rf dist demo/dist src/central-icons src/openai-icons src/custom/_native src/custom/_web src/custom/native.ts src/custom/web.ts src/index.native.ts src/index.web.ts",
+    "prepare": "bun run sync && bun run build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "prepublishOnly": "bun run sync && bun run typecheck && bun run build"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.74",
+    "react-native-svg": ">=15"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@2en/openai-icons": "^1.1.1",
+    "@central-icons-react-native/round-filled-radius-2-stroke-2": "^1.1.228",
+    "@central-icons-react-native/round-outlined-radius-3-stroke-2": "^1.1.228",
+    "@central-icons-react/round-filled-radius-2-stroke-2": "^1.1.228",
+    "@central-icons-react/round-outlined-radius-3-stroke-2": "^1.1.228"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@types/bun": "^1",
+    "@types/react": "~19.1.17",
+    "@typescript/native-preview": "^7.0.0-dev.20260421.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-svg": "^15.15.2",
+    "reiconify": "^2.11.0",
+    "typescript": "~5.9"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2enai/2en-icons.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "expo",
+    "icons",
+    "svg",
+    "ui",
+    "design-system",
+    "central-icons",
+    "clawly"
+  ],
+  "license": "UNLICENSED",
+  "author": "2en"
+}

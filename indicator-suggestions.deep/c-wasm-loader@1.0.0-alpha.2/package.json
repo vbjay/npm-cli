@@ -1,0 +1,72 @@
+{
+  "name": "c-wasm-loader",
+  "version": "1.0.0-alpha.2",
+  "description": "c to wasm loader for webpack",
+  "main": "index.js",
+  "emsdk": "1.37.34",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "lint": "eslint --ignore-path .gitignore .",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "travis:unit": "npm test -- --coverage",
+    "travis:lint": "npm run lint",
+    "appveyor:unit": "npm test -- --coverage",
+    "postinstall": "node ./postinstall.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint && npm test"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yhaiovyi/c-wasm-loader.git"
+  },
+  "keywords": [
+    "wasm",
+    "cpp",
+    "c",
+    "webassembly"
+  ],
+  "author": "Yurii Haiovyi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yhaiovyi/c-wasm-loader/issues"
+  },
+  "homepage": "https://github.com/yhaiovyi/c-wasm-loader#readme",
+  "dependencies": {
+    "loader-utils": "^1.1.0",
+    "rimraf": "^2.6.2",
+    "schema-utils": "^0.4.5",
+    "tar": "^4.4.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.0",
+    "del": "^3.0.0",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "husky": "^0.15.0-rc.8",
+    "jest": "^22.4.2",
+    "memory-fs": "^0.4.1",
+    "webpack": "^4.0.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/emsdk-portable/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/emsdk-portable/",
+      "<rootDir>/test/",
+      "<rootDir>/postinstall.js"
+    ]
+  }
+}

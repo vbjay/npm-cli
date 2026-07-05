@@ -1,0 +1,77 @@
+{
+  "name": "@quantiya/codevibe-claude-plugin",
+  "version": "1.0.52",
+  "description": "Control Claude Code from your iPhone and Android — real-time sync, approve file edits, send prompts by voice. Part of CodeVibe.",
+  "main": "dist/server.js",
+  "bin": {
+    "codevibe-claude": "./bin/codevibe-claude"
+  },
+  "files": [
+    "dist/**/*.js",
+    "bin",
+    "hooks",
+    ".claude-plugin",
+    "README.md",
+    ".env.example",
+    "node_modules"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && npm run typecheck && esbuild src/server.ts --bundle --platform=node --target=node18 --minify --packages=external --outfile=dist/server.js",
+    "prepack": "node scripts/prepare-publish.js && npm run build",
+    "postpack": "node scripts/restore-dev.js",
+    "dev": "ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "test": "jest --config jest.config.js --forceExit"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "anthropic",
+    "plugin",
+    "mobile",
+    "ios",
+    "android",
+    "codevibe",
+    "remote-control",
+    "ai",
+    "developer-tools"
+  ],
+  "author": "Quantiya <support@quantiya.ai>",
+  "license": "MIT",
+  "bugs": {
+    "email": "support@quantiya.ai"
+  },
+  "homepage": "https://quantiya.ai/codevibe",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@quantiya/codevibe-core": "^1.0.32",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "graphql": "^16.12.0",
+    "uuid": "^13.0.0",
+    "ws": "^8.18.3"
+  },
+  "bundledDependencies": [
+    "@quantiya/codevibe-core",
+    "dotenv",
+    "express",
+    "graphql",
+    "uuid",
+    "ws"
+  ],
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.18.1",
+    "esbuild": "^0.28.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "electron-native-player",
+  "version": "1.0.0",
+  "description": "High-performance cross-platform YUV video player for Electron with zero-copy SharedArrayBuffer",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "author": "ykzou",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ykzou777/electron-native-player.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ykzou777/electron-native-player/issues"
+  },
+  "homepage": "https://github.com/ykzou777/electron-native-player#readme",
+  "keywords": [
+    "electron",
+    "yuv",
+    "video",
+    "player",
+    "native",
+    "addon",
+    "zero-copy",
+    "cross-platform",
+    "sharedarraybuffer",
+    "webcodecs"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "src/",
+    "include/",
+    "lib/",
+    "types/",
+    "binding.gyp",
+    "CROSS_PLATFORM.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "rebuild": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "test": "cd example && npm test",
+    "start": "cd example && npm start"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^8.5.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^11.5.0"
+  }
+}

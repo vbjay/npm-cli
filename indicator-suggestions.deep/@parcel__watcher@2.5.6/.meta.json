@@ -1,0 +1,110 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "abfcba636e821ef3",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/build-from-source.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "2a752031866a811f7c152bcb9bdbca89e6b9b7774b6e1646d7593aa4aa25fdf2",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `watcher`  -  C/C++ sources",
+            "items": [
+              "src/binding.cc",
+              "src/Watcher.cc",
+              "src/Backend.cc",
+              "src/DirTree.cc",
+              "src/Glob.cc",
+              "src/Debounce.cc",
+              "src/watchman/BSER.cc",
+              "src/watchman/WatchmanBackend.cc",
+              "src/shared/BruteForceBackend.cc",
+              "src/unix/fts.cc",
+              "src/macos/FSEventsBackend.cc",
+              "src/kqueue/KqueueBackend.cc",
+              "src/watchman/BSER.cc",
+              "src/watchman/WatchmanBackend.cc",
+              "src/shared/BruteForceBackend.cc",
+              "src/linux/InotifyBackend.cc",
+              "src/unix/legacy.cc",
+              "src/watchman/BSER.cc",
+              "src/watchman/WatchmanBackend.cc",
+              "src/shared/BruteForceBackend.cc",
+              "src/windows/WindowsBackend.cc",
+              "src/windows/win_utils.cc",
+              "src/watchman/BSER.cc",
+              "src/watchman/WatchmanBackend.cc",
+              "src/shared/BruteForceBackend.cc",
+              "src/unix/fts.cc",
+              "src/kqueue/KqueueBackend.cc"
+            ]
+          },
+          {
+            "label": "Target `watcher`  -  include directories",
+            "items": [
+              "<!(node -p \"require('node-addon-api').include_dir\")"
+            ]
+          },
+          {
+            "label": "Target `watcher`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build-from-source.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "fc13e0ccfea1eaa75259e0f130550366a048ca9968a9d77e277c4551b632e117",
+        "sizeBytes": 398,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:40.812Z"
+  },
+  "hash": "sha256:8e99d790a5dfe004ccef371717ba1fe58391b8c8bf671ba0002884d10181703f"
+}

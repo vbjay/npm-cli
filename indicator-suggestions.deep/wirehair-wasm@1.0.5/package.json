@@ -1,0 +1,35 @@
+{
+    "name": "wirehair-wasm",
+    "version": "1.0.5",
+    "description": "Fast and portable fountain codes in C, compiled to WebAssembly.",
+    "main": "dist/wirehair.mjs",
+    "module": "dist/wirehair.mjs",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "./wasm_build.sh",
+        "prepublishOnly": "npm run build",
+        "install": "rm -rf node_modules/libwirehair; git clone --depth 1 -q https://github.com/catid/wirehair node_modules/libwirehair"
+    },
+    "files": [
+        "dist/wirehair.mjs",
+        "dist/wirehair_core.mjs",
+        "dist/index.d.ts",
+        "README.md"
+    ],
+    "keywords": [
+        "wirehair",
+        "fountain-code",
+        "erasure-code",
+        "wasm"
+    ],
+    "author": "Christopher A. Taylor (Original C library), WebAssembly port by Ilmari Heikkinen",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kig/wirehair-wasm.git"
+    },
+    "homepage": "https://github.com/kig/wirehair-wasm#readme",
+    "bugs": {
+        "url": "https://github.com/kig/wirehair-wasm/issues"
+    }
+}

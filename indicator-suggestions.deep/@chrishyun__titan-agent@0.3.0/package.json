@@ -1,0 +1,48 @@
+{
+  "name": "@chrishyun/titan-agent",
+  "version": "0.3.0",
+  "description": "Titan: Pi-based autonomous CLI agent with OpenRouter, memory, browser control, and Visual Learning.",
+  "type": "module",
+  "bin": {
+    "titan": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "node scripts/patch-pi.js && tsc --outDir dist --module NodeNext --moduleResolution NodeNext --target ES2022 --esModuleInterop --skipLibCheck src/cli.ts src/browser-tools.ts 2>/dev/null || echo skip",
+    "postinstall": "node scripts/patch-pi.js",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "prepublishOnly": "npm run build",
+    "prepare": "echo skip"
+  },
+  "keywords": [
+    "cli",
+    "agent",
+    "openrouter",
+    "playwright",
+    "coding-agent",
+    "titan",
+    "pi"
+  ],
+  "author": "chrishyun",
+  "license": "MIT",
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "latest",
+    "chalk": "^5.6.2",
+    "playwright": "^1.53.1",
+    "typebox": "^1.2.11"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

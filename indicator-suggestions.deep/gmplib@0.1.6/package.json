@@ -1,0 +1,31 @@
+{
+  "name": "gmplib",
+  "version": "0.1.6",
+  "description": "math library for c",
+  "main": "index.js",
+  "keywords": [
+    "addon",
+    "gmp",
+    "math"
+  ],
+  "dependencies": {
+    "bindings": "^1.2.1",
+    "nan": "^2.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "./scripts/preinstall.sh",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://git@github.com:chenlizan/gmp_node_addon.git"
+  },
+  "author": "chenlizan",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "os":["linux"]
+}

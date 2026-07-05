@@ -1,0 +1,58 @@
+{
+  "name": "@ioai/wasm-zstd",
+  "version": "1.1.2",
+  "description": "Vite-friendly WebAssembly bindings for facebook/zstd",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ioai-tech/wasm-zstd.git"
+  },
+  "homepage": "https://github.com/ioai-tech/wasm-zstd#readme",
+  "bugs": {
+    "url": "https://github.com/ioai-tech/wasm-zstd/issues"
+  },
+  "keywords": [
+    "zstd",
+    "zstandard",
+    "wasm",
+    "webassembly",
+    "vite",
+    "worker",
+    "browser"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./wasm-zstd.wasm": "./dist/wasm-zstd.wasm"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/wasm-zstd.js",
+    "dist/wasm-zstd.wasm",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "./docker-build.sh",
+    "build:local": "./build.sh",
+    "prepack": "npm run build",
+    "test": "node test/index.js",
+    "pack:check": "npm pack --dry-run --ignore-scripts"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}

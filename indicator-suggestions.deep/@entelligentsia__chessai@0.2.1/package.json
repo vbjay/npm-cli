@@ -1,0 +1,36 @@
+{
+  "name": "@entelligentsia/chessai",
+  "version": "0.2.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Play chess against Claude Code. Installs a /chess skill: a Node server + clickable board with a legal-move engine, where Claude plays black.",
+  "bin": {
+    "chessai": "bin/chessai.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/chessai.js --build-only || true"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "assets/",
+    "Cargo.toml",
+    "install.sh",
+    "README.md"
+  ],
+  "keywords": ["chess", "claude", "claude-code", "agent", "skill", "cli", "rust"],
+  "license": "MIT",
+  "author": "devasur",
+  "homepage": "https://github.com/devasur/claude-chess#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devasur/claude-chess.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devasur/claude-chess/issues"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

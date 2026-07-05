@@ -1,0 +1,49 @@
+{
+  "name": "@xarc/module-dev",
+  "version": "5.0.0",
+  "main": "dist/index.js",
+  "description": "Support for developing node.js modules with mocha/eslint/typescript",
+  "scripts": {
+    "build": "tsc",
+    "test": "xrun xarc/test",
+    "coverage": "xrun check",
+    "compile": "tsc",
+    "postinstall": "node install.js",
+    "docs": "xrun xarc/docs",
+    "prepublishOnly": "xrun [[build, docs], xarc/check]",
+    "postpack": "publish-util-postpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/electrode-io/module-dev.git"
+  },
+  "author": "Joel Chen",
+  "license": "Apache-2.0",
+  "files": [
+    "config",
+    "dist",
+    "install.js",
+    "src"
+  ],
+  "keywords": [
+    "node",
+    "node.js",
+    "npm",
+    "module",
+    "develop",
+    "mocha",
+    "eslint",
+    "typescript"
+  ],
+  "dependencies": {
+    "@xarc/run": "^1.0.4",
+    "filter-scan-dir": "^1.0.10",
+    "lodash": "^4.17.20",
+    "tsconfig": "^7.0.0",
+    "tslib": "^2.1.0",
+    "xsh": "^0.4.5"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}

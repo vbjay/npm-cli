@@ -1,0 +1,109 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2d3a20ecb215947a",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5d6858f47ad85bf13798617d49d3d4c3d7b828a26f1858ce9dad5def611a1b14",
+        "sizeBytes": 8034,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/${REPO}/issues",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/${REPO}/releases/tag/v${VERSION}",
+            "classification": "reference"
+          },
+          {
+            "url": "https://drengr.dev/install.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "94d1388a3596f8c7aa78a88a2d9ce348e8dbc59ba19964fd4f3ec628635f87be",
+        "sizeBytes": 952,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:39.511Z"
+  },
+  "hash": "sha256:bed418c5c28b3a1cf827f94b7ce2dc19c8e1484fac21825b582bc852ceb0e871"
+}

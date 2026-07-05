@@ -1,0 +1,76 @@
+{
+  "name": "@litert/base32",
+  "version": "2.0.0",
+  "description": "The encoding and decoding library for BASE32, in JavaScript/TypeScript/WebAssembly.",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "default": {
+        "types": "./lib/base32-wasm.d.ts",
+        "default": "./lib/base32-wasm.js"
+      }
+    },
+    "./wasm": {
+      "default": {
+        "types": "./lib/base32-wasm.d.ts",
+        "default": "./lib/base32-wasm.js"
+      }
+    },
+    "./js": {
+      "default": {
+        "types": "./lib/base32-js.d.ts",
+        "default": "./lib/base32-js.js"
+      }
+    }
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build-md-doc && npm run rebuild && npm run test",
+    "build": "echo Using TypeScript && npm run build-wasm && tsc -v && tsc -p .",
+    "build-watch": "echo Using TypeScript && tsc -v && tsc -w -p .",
+    "build-wasm": "./utils/build-wasm.sh",
+    "build-md-doc": "./utils/generate-api-docs-md.sh",
+    "build-html-doc": "./utils/generate-api-docs-html.sh",
+    "rebuild": "npm run clean && npm run lint && npm run build",
+    "test": "node --enable-source-maps --test --experimental-test-coverage lib/*.test.js",
+    "clean": "rm -rf lib examples",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "./utils/eslint.sh",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/litert/base32.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/litert/base32.js/issues"
+  },
+  "homepage": "https://github.com/litert/base32.js#readme",
+  "keywords": [
+    "litert",
+    "lrt",
+    "encodings",
+    "webassembly",
+    "wasm",
+    "base32"
+  ],
+  "author": "Angus.Fenying <fenying@litert.org> (https://fenying.net)",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "@litert/eslint-plugin-rules": "^0.3.1",
+    "@types/node": "^25.9.2",
+    "assemblyscript": "^0.28.18",
+    "husky": "^9.1.7",
+    "typedoc": "^0.28.19",
+    "typedoc-plugin-markdown": "^4.12.0",
+    "typedoc-vitepress-theme": "^1.1.3",
+    "typescript": "^6.0.3"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

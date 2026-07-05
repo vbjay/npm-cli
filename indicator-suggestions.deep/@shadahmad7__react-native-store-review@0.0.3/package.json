@@ -1,0 +1,64 @@
+{
+  "name": "@shadahmad7/react-native-store-review",
+  "version": "0.0.3",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "react-native": "dist/index.js",
+  "description": "React Native Store Review TurboModule for iOS and Android. This library provides a fully native API to trigger in-app review dialogs using Google Play In-App Review and Apple's SKStoreReviewController, without requiring Expo or additional UI. Lightweight, production-ready, and easy to integrate.",
+  "license": "MIT",
+  "author": "Shad Ahmad",
+  "homepage": "https://github.com/shadahmad7/react-native-store-review#readme",
+  "bugs": {
+    "url": "https://github.com/shadahmad7/react-native-store-review/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shadahmad7/react-native-store-review.git"
+  },
+  "scripts": {
+    "build": "tsc && mkdir -p dist/specs && cp -r src/specs/* dist/specs/",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-module",
+    "store-review",
+    "app-store",
+    "play-store",
+    "turbomodule",
+    "android",
+    "ios",
+    "typescript",
+    "shadahmad7"
+  ],
+  "files": [
+    "dist",
+    "src/specs",
+    "android",
+    "ios",
+    "react-native-store-review.podspec",
+    "README.md"
+  ],
+  "codegenConfig": {
+    "name": "NativeReactNativeStoreReview",
+    "type": "modules",
+    "jsSrcsDir": "dist/specs",
+    "android": {
+      "javaPackageName": "com.shadahmad7.reactnativestorereview"
+    },
+    "ios": {
+      "libraryName": "ReactNativeStoreReview",
+      "podspecPath": "react-native-store-review.podspec"
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.3",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.73.0"
+  }
+}

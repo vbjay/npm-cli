@@ -1,0 +1,112 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fb460f6acc97e7d9",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/nsc-utils.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "50e34f9dd087c199ba37060819f0eb465e25055531fabae8f3c011c831b2aae4",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "com.squareup.okhttp3:okhttp:4.9.1",
+              "androidx.startup:startup-runtime:1.1.1"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\react-native-ssl-manager@2.0.3\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9ccf6db030f131ec0787388ffbb1e8098be69a7864458dae4c6792649681397a",
+        "sizeBytes": 5963,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/nsc-utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/nsc-utils.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "279fcf3da32c2ea8b821a5f256a48404a7c09fa69f7ea6ddfd0a10f414989481",
+        "sizeBytes": 4529,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:55.479Z"
+  },
+  "hash": "sha256:48da4f67633a6c6b9f752eb28d74e966e5af57c9d6f0457a571cb0298fedd11e"
+}

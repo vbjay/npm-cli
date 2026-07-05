@@ -1,0 +1,33 @@
+{
+  "name": "@tianwei_wu/node-addon-napi-demo",
+  "version": "1.0.5",
+  "description": "node addon napi demo",
+  "main": "lib/index.js",
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build"
+  },
+  "keywords": [
+    "node",
+    "addon",
+    "napi",
+    "demo"
+  ],
+  "author": "",
+  "license": "Commercial",
+  "files": [
+    "src",
+    "lib/index.js",
+    "lib/index.d.ts",
+    "binding.gyp"
+  ],
+  "binary": {
+    "module_name": "addon",
+    "module_path": "./lib",
+    "host": "https://github.com/tianwei-wu-hub/node-addon-napi-demo/releases/download",
+    "remote_path": "./v{version}",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz"
+  },
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.10"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "@sprig-technologies/analytics-react-native-plugin-sprig",
+  "version": "0.7.0",
+  "description": "The hassle-free way to add Segment analytics Sprig plugin to your React-Native app.",
+  "main": "lib/commonjs/index.js",
+  "scripts": {
+    "build": "bob build",
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "clean": "rimraf lib node_modules",
+    "release": "semantic-release",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "segment",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "android",
+    "ios",
+    "cpp",
+    "segment-analytics-react-native.podspec",
+    "package.json",
+    "!src/**/*.e2e.mock.js"
+  ],
+  "author": "Sprig Technologies <dev@sprig.com> (https://sprig.com/)",
+  "license": "see LICENSE",
+  "bugs": {
+    "url": "https://github.com/UserLeap/analytics-react-native-plugin-sprig/issues"
+  },
+  "homepage": "https://github.com/UserLeap/analytics-react-native-plugin-sprig#readme",
+  "peerDependencies": {
+    "@segment/analytics-react-native": "*",
+    "react-native": ">=0.81.0",
+    "react-native-get-random-values": ">=1.11.0"
+  },
+  "dependencies": {
+    "@segment/analytics-react-native": "^2.22.0",
+    "react-native-userleap": "^3.3.0"
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "latest",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.4",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/jest": "^27.0.3",
+    "conventional-changelog-conventionalcommits": "^5.0.0",
+    "react-native-builder-bob": "^0.18.3",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^19.0.3",
+    "semantic-release-monorepo": "^7.0.5",
+    "ts-jest": "^27.0.7",
+    "typescript": "^5.3.3",
+    "react-native": "0.81.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
+}

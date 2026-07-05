@@ -1,0 +1,105 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
+group = 'expo.modules.material3theme'
+version = '0.1.0'
+
+buildscript {
+  def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+  if (expoModulesCorePlugin.exists()) {
+    apply from: expoModulesCorePlugin
+    applyKotlinExpoModulesCorePlugin()
+  }
+
+  // Simple helper that allows the root project to override versions declared by this library.
+  ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+
+  // Ensures backward compatibility
+  ext.getKotlinVersion = {
+    if (ext.has("kotlinVersion")) {
+      ext.kotlinVersion()
+    } else {
+      ext.safeExtGet("kotlinVersion", "1.9.25")
+    }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getKotlinVersion()}")
+  }
+}
+
+afterEvaluate {
+  publishing {
+    publications {
+      release(MavenPublication) {
+        from components.release
+      }
+    }
+    repositories {
+      maven {
+        url = mavenLocal().url
+      }
+    }
+  }
+}
+
+android {
+  compileSdkVersion safeExtGet("compileSdkVersion", 34)
+
+  def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+  // Get Java version from parent project or default to 17
+  def javaVersion = safeExtGet("javaVersion", 17)
+  
+  if (agpVersion.tokenize('.')[0].toInteger() < 8) {
+    compileOptions {
+      sourceCompatibility JavaVersion.valueOf("VERSION_${javaVersion}")
+      targetCompatibility JavaVersion.valueOf("VERSION_${javaVersion}")
+    }
+
+    kotlinOptions {
+      jvmTarget = "${javaVersion}"
+    }
+  } else {
+    compileOptions {
+      sourceCompatibility JavaVersion.valueOf("VERSION_${javaVersion}")
+      targetCompatibility JavaVersion.valueOf("VERSION_${javaVersion}")
+    }
+
+    kotlinOptions {
+      jvmTarget = "${javaVersion}"
+    }
+  }
+
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 23)
+    targetSdkVersion safeExtGet("targetSdkVersion", 34)
+    versionCode 1
+    versionName "0.1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+  publishing {
+   singleVariant("release") {
+     withSourcesJar()
+   }
+ }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${getKotlinVersion()}"
+}

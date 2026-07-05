@@ -1,0 +1,100 @@
+{
+    "name": "@ondc/build-tools",
+    "version": "0.0.32",
+    "description": "ONDC build toolchain — CLI for pipeline ops + library for MongoDB ingestion",
+    "type": "module",
+    "main": "./dist/lib.js",
+    "types": "./dist/lib.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/lib.d.ts",
+            "default": "./dist/lib.js"
+        },
+        "./store": {
+            "types": "./dist/store/index.d.ts",
+            "default": "./dist/store/index.js"
+        }
+    },
+    "bin": {
+        "ondc-tools": "./dist/index.js"
+    },
+    "files": [
+        "dist",
+        "scripts"
+    ],
+    "scripts": {
+        "dev": "tsx src/index.ts",
+        "build": "tsc && npm run postbuild:assets",
+        "postbuild:assets": "mkdir -p dist/polish/review/static && cp -R src/polish/review/static/. dist/polish/review/static/",
+        "start": "node dist/index.js",
+        "typecheck": "tsc --noEmit",
+        "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+        "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
+        "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "format:check": "prettier --check \"src/**/*.ts\"",
+        "prepublishOnly": "npm run test && npm run build",
+        "prepare": "npm run build",
+        "release:patch": "npm version patch && npm publish",
+        "release:minor": "npm version minor && npm publish",
+        "release:major": "npm version major && npm publish"
+    },
+    "keywords": [
+        "ondc",
+        "build",
+        "cli",
+        "mongodb",
+        "ingestion"
+    ],
+    "author": "",
+    "license": "ISC",
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@anthropic-ai/claude-agent-sdk": "^0.2.121",
+        "@anthropic-ai/sdk": "^0.90.0",
+        "@babel/parser": "^7.29.2",
+        "@babel/traverse": "^7.29.0",
+        "@babel/types": "^7.29.0",
+        "@inquirer/prompts": "^8.4.2",
+        "@ondc/automation-mock-runner": "^1.3.56",
+        "chalk": "^5.6.2",
+        "commander": "^14.0.3",
+        "dotenv": "^17.4.2",
+        "json-pointer": "^0.6.2",
+        "ollama": "^0.6.3",
+        "ondc-code-generator": "^1.0.1",
+        "openai": "^6.34.0",
+        "ora": "^9.4.0",
+        "pdf-parse": "^1.1.1",
+        "yaml": "^2.8.3",
+        "zod": "^4.3.6"
+    },
+    "peerDependencies": {
+        "mongodb": "^6.0.0"
+    },
+    "peerDependenciesMeta": {
+        "mongodb": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@jest/globals": "^30.3.0",
+        "@swc/core": "^1.15.21",
+        "@swc/jest": "^0.2.39",
+        "@types/babel__core": "^7.20.5",
+        "@types/babel__traverse": "^7.28.0",
+        "@types/json-pointer": "^1.0.34",
+        "@types/node": "^22.19.15",
+        "@types/pdf-parse": "^1.1.5",
+        "jest": "^30.3.0",
+        "mongodb": "^6.21.0",
+        "prettier": "^3.8.1",
+        "tsx": "^4.19.0",
+        "typescript": "6.0.2"
+    },
+    "engines": {
+        "node": ">=20.0.0"
+    }
+}

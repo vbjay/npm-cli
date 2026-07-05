@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "27aba9187132648d",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "b4e51fe200f5d59fcee1c4ba1e47772b19ce3bac1ac2ea8bba504b36db49ebdc",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `<(module_name)`  -  C/C++ sources",
+            "items": [
+              "cppsrc/main.cpp",
+              "cppsrc/mouse_wrap.cpp",
+              "cppsrc/macos/mouse.cpp"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:12.325Z"
+  },
+  "hash": "sha256:088cf46544c0ee19fc8e3e9c5c42773259303f112935217856b485120d3ba1e0"
+}

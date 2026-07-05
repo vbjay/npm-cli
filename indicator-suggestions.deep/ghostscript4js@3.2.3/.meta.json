@@ -1,0 +1,79 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d542799bdaff0389",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "abcd6ec771b1b3fcba4d782c31defbe921cafb20242e605fef3bd50f48bea27e",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `ghostscript4js`  -  C/C++ sources",
+            "items": [
+              "src/ghostscript4js.cc"
+            ]
+          },
+          {
+            "label": "Target `ghostscript4js`  -  libraries",
+            "items": [
+              "<(GS4JS_HOME)/<(GS4JS_LIB)",
+              "<(module_root_dir)/build/Release/<(GS4JS_LIB)",
+              "<(GS4JS_HOME)/<(GS4JS_LIB)"
+            ]
+          },
+          {
+            "label": "Target `ghostscript4js`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `ghostscript4js`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:54.350Z"
+  },
+  "hash": "sha256:8eb840e9ce65f72f92eca6b879b744261413ddb7cfd48092650d7af38702bce3"
+}

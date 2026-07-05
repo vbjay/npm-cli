@@ -1,0 +1,96 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "546437df16216acd",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "4181a920c37d7ba4e763ffb8a1c418e5756b6a12aa1eae90b4e86aa590fdc395",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `hal_addon`  -  C/C++ sources",
+            "items": [
+              "src/cpp/hal_addon.cc",
+              "src/cpp/hal_component.cc"
+            ]
+          },
+          {
+            "label": "Target `hal_addon`  -  libraries",
+            "items": [
+              "-llinuxcnchal"
+            ]
+          },
+          {
+            "label": "Target `hal_addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "./include/linuxcnc",
+              "/usr/include/linuxcnc",
+              "/usr/local/include/linuxcnc",
+              "<!(echo ${LINUXCNC_INCLUDE:-})",
+              "<(linuxcnc_rip_dir)/include",
+              "<(linuxcnc_rip_dir)/src",
+              "<(linuxcnc_rip_dir)/src/hal",
+              "<(linuxcnc_rip_dir)/src/rtapi"
+            ]
+          },
+          {
+            "label": "Target `hal_addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:24.919Z"
+  },
+  "hash": "sha256:29b6f6d2fecb8b2cbffac0826787dba3a5c3ec745f589bccbb7c10b343244f62"
+}

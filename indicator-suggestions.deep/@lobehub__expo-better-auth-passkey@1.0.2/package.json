@@ -1,0 +1,63 @@
+{
+  "name": "@lobehub/expo-better-auth-passkey",
+  "version": "1.0.2",
+  "description": "Expo native passkey support for better-auth",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "release": "pnpm run test && tsc && npm publish --access public --ignore-scripts"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-better-auth-passkey",
+    "better-auth",
+    "passkey",
+    "webauthn"
+  ],
+  "repository": "https://github.com/lobehub/expo-better-auth-passkey",
+  "bugs": {
+    "url": "https://github.com/lobehub/expo-better-auth-passkey/issues"
+  },
+  "author": "LobeHub <hello@lobehub.com> (https://lobehub.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/lobehub/expo-better-auth-passkey#readme",
+  "files": [
+    "build",
+    "android",
+    "ios",
+    "src",
+    "expo-module.config.json"
+  ],
+  "peerDependencies": {
+    "@better-auth/passkey": "^1.4.0",
+    "@simplewebauthn/browser": "^11.0.0 || ^13.0.0",
+    "better-auth": "^1.4.0",
+    "nanostores": "^1.0.0"
+  },
+  "devDependencies": {
+    "@better-auth/passkey": "^1.6.15",
+    "@simplewebauthn/browser": "^13.0.0",
+    "@simplewebauthn/types": "*",
+    "@types/react": "~19.1.10",
+    "better-auth": "^1.6.15",
+    "expo": "~54.0.6",
+    "expo-module-scripts": "^4.1.10",
+    "nanostores": "^1.0.0",
+    "react-native": "0.81.5",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,55 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  if (project == rootProject) {
+    repositories {
+      google()
+      mavenCentral()
+    }
+
+    dependencies {
+      classpath("com.android.tools.build:gradle:8.1.0")
+    }
+  }
+}
+
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace "com.reactnativethemis"
+
+  compileSdkVersion safeExtGet('Themis_compileSdkVersion', 34)
+
+  defaultConfig {
+    minSdkVersion safeExtGet('Themis_minSdkVersion', 21)
+    targetSdkVersion safeExtGet('Themis_targetSdkVersion', 34)
+
+    }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+repositories {
+  mavenLocal()
+  google()
+  mavenCentral()
+  maven { url("$rootDir/../node_modules/react-native/android") }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-native:+"
+  implementation 'com.cossacklabs.com:themis:0.15.5'
+}

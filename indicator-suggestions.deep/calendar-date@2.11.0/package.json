@@ -1,0 +1,63 @@
+{
+  "name": "calendar-date",
+  "version": "2.11.0",
+  "description": "Immutable object to represent a calendar date with zero dependencies",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf ./dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "test": "TZ=UTC jest",
+    "test:with-different-timezones": "TZ=America/New_York jest && TZ=Europe/Berlin jest && TZ=Asia/Tokyo jest",
+    "test:coverage": "jest --coverage",
+    "tsc:check": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier **/*.{ts,json} --check",
+    "format:fix": "prettier **/*.{ts,json} --write",
+    "prepare": "husky"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "moduleNameMapper": {
+      "calendar-date": "<rootDir>/src"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gastromatic/calendar-date.git"
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "date",
+    "calendar",
+    "calendar-date"
+  ],
+  "author": "Patrick Klein",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gastromatic/calendar-date/issues"
+  },
+  "homepage": "https://github.com/gastromatic/calendar-date#readme",
+  "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@types/jest": "30.0.0",
+    "@typescript-eslint/eslint-plugin": "8.39.0",
+    "@typescript-eslint/parser": "8.39.0",
+    "eslint": "9.33.0",
+    "fast-check": "4.2.0",
+    "husky": "9.1.7",
+    "jest": "30.0.5",
+    "lint-staged": "16.1.5",
+    "prettier": "3.6.2",
+    "rimraf": "6.0.1",
+    "ts-jest": "29.4.1",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.2"
+  }
+}

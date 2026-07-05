@@ -1,0 +1,47 @@
+{
+  "name": "@runecraft/summon",
+  "version": "0.17.0",
+  "description": "Interactive CLI for installing Arcanum agent skills",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "dist/summon.js",
+  "bin": {
+    "summon": "dist/summon.js"
+  },
+  "files": [
+    "dist/summon.js",
+    "scripts/",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && bun build ./src/cli.ts --target node --outfile dist/summon.js && printf '#!/usr/bin/env node\\n' | cat - dist/summon.js > dist/_tmp.js && mv dist/_tmp.js dist/summon.js && chmod +x dist/summon.js",
+    "build:verify": "node -e \"const f=require('fs').readFileSync('dist/summon.js','utf8');if(f.includes('import.meta.dir')){console.error('FATAL: import.meta.dir leaked into bundle — Node.js will break');process.exit(1)}else{console.log('Build verified: no import.meta.dir found')}\"",
+    "test": "bun test",
+    "prepublishOnly": "bun run build && bun run build:verify",
+    "dev": "bun run src/cli.ts",
+    "postinstall": "node scripts/patch-clack.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "arcanum",
+    "agent",
+    "skills",
+    "cli",
+    "installer"
+  ],
+  "dependencies": {
+    "@runecraft/spells": "0.14.0",
+    "citty": "^0.1.6",
+    "@clack/prompts": "^0.7.0",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "bun-types": "^1.3.11"
+  }
+}

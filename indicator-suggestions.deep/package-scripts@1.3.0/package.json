@@ -1,0 +1,78 @@
+{
+  "name": "package-scripts",
+  "version": "1.3.0",
+  "description": "CLI to interactively select and run package scripts using any package manager",
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "prepack": "npm run build",
+    "prebuild": "npm run ci && rimraf ./dist",
+    "build": "npm run compile",
+    "ci": "npm run check:style && npm run check:build",
+    "check:style": "npm run check:format && npm run check:lint",
+    "check:build": "npm run compile -- --noEmit",
+    "check:format": "prettier --check \"*.{js,cjs,mjs,ts,cts,mts}\" \"{src,test}/**/*.ts\"",
+    "check:lint": "eslint \"{src,test}/**/*.{js,ts}\"",
+    "style": "npm run format && npm run lint",
+    "format": "prettier --write \"*.{js,cjs,mjs,ts,cts,mts}\" \"{src,test}/**/*.ts\"",
+    "lint": "npm run check:lint -- --fix",
+    "compile": "tsc -p tsconfig.json",
+    "prepare": "husky"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "create-package-scripts": "dist/create-app/index.js"
+  },
+  "keywords": [
+    "package",
+    "script",
+    "run",
+    "interactive",
+    "package-manager",
+    "npm",
+    "pnpm",
+    "yarn"
+  ],
+  "author": "Lex Borisoff <lex@boriosoff.dev>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LexBorisoff/package-scripts.git"
+  },
+  "homepage": "https://github.com/LexBorisoff/package-scripts/tree/main#readme",
+  "bugs": {
+    "url": "https://github.com/LexBorisoff/package-scripts/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@lexjs/eslint-plugin": "^1.1.2",
+    "@types/node": "^22.10.6",
+    "@types/yargs": "^17.0.33",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "semantic-release": "^25.0.3",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "dependencies": {
+    "@lexjs/prompts": "^1.1.3",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.4.7",
+    "execa": "^9.5.2",
+    "fs-hooks": "^1.1.2",
+    "type-fest": "^4.32.0",
+    "yargs": "^17.7.2"
+  }
+}

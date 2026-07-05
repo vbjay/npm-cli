@@ -1,0 +1,156 @@
+{
+  "name": "@miaskiewicz/turbo-dom",
+  "version": "0.4.0",
+  "description": "Faster, more spec-correct DOM for test runners — native html5ever (Rust/WASM) parser + lazy copy-on-write DOM. A drop-in-style alternative to jsdom/happy-dom for vitest & jest.",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./index.js"
+    },
+    "./runtime": {
+      "types": "./src/runtime/index.d.ts",
+      "import": "./src/runtime/index.mjs"
+    },
+    "./environment/vitest": {
+      "import": "./src/environment/vitest.mjs"
+    },
+    "./environment/install": {
+      "import": "./src/environment/install.mjs"
+    },
+    "./install": {
+      "import": "./src/environment/install.mjs"
+    },
+    "./parser-wasm": {
+      "types": "./pkg-web/turbo_dom_parser.d.ts",
+      "import": "./pkg-web/turbo_dom_parser.js"
+    },
+    "./jest": {
+      "require": "./src/environment/jest.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node",
+    "pkg/turbo_dom_parser.js",
+    "pkg/turbo_dom_parser.d.ts",
+    "pkg/turbo_dom_parser_bg.wasm",
+    "pkg/turbo_dom_parser_bg.wasm.d.ts",
+    "pkg-web/turbo_dom_parser.js",
+    "pkg-web/turbo_dom_parser.d.ts",
+    "pkg-web/turbo_dom_parser_bg.wasm",
+    "pkg-web/turbo_dom_parser_bg.wasm.d.ts",
+    "src/**/*.mjs",
+    "src/**/*.cjs",
+    "src/**/*.d.ts",
+    "src/*.rs",
+    "build.rs",
+    "Cargo.toml",
+    "Cargo.lock",
+    "LICENSE",
+    "README.md"
+  ],
+  "napi": {
+    "name": "turbo-dom-parser",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-gnu",
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-apple-darwin",
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "napi build --platform --release && npm run build:wasm:pkg && npm run build:wasm:web",
+    "build:debug": "napi build --platform",
+    "build:wasm": "cargo build --release --no-default-features --features wasm-bind --target wasm32-unknown-unknown",
+    "build:wasm:pkg": "wasm-pack build --target nodejs --out-dir pkg --no-default-features --features wasm-bind",
+    "build:wasm:web": "wasm-pack build --target web --out-dir pkg-web --no-default-features --features wasm-bind",
+    "test": "node --test 'test/*.mjs'",
+    "test:cov": "node --test --experimental-test-coverage --test-coverage-include='src/runtime/**' --test-coverage-lines=99 --test-coverage-functions=95 --test-coverage-branches=95 'test/*.mjs'",
+    "test:rust": "cargo test -p turbo-dom",
+    "test:all": "npm run build && npm run test:rust && npm test",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "conformance": "node harness/conformance.mjs",
+    "conformance:delta": "node harness/delta.mjs",
+    "bench": "node bench/parse.mjs",
+    "bench:construct": "node bench/construct.mjs",
+    "bench:suite": "node bench/suite.mjs",
+    "bench:wasm": "node bench/wasm.mjs",
+    "bench:all": "node bench/parse.mjs && node bench/construct.mjs && node bench/suite.mjs && node bench/query.mjs && node bench/wasm.mjs",
+    "prepublishOnly": "napi build --platform --release && npm run build:wasm:pkg && npm run build:wasm:web",
+    "test:vitest": "vitest run -c test-vitest/vitest.config.mjs",
+    "test:jest": "jest -c test-jest/jest.config.cjs",
+    "bench:query": "node bench/query.mjs",
+    "bench:scorecard": "node bench/scorecard.mjs",
+    "conformance:rtdom": "cargo test -p turbo-dom rtdom::conformance::rtdom_html5lib_conformance_full_document -- --nocapture",
+    "build:rtdom": "cargo build -p turbo-dom --release",
+    "profile:churn": "cargo build --profile profiling --example churn_profile -p turbo-dom && echo 'built — CPU-profile with:  ./target/profiling/examples/churn_profile & sample $! 20 -file target/churn.sample.txt'",
+    "bench:compare": "node bench/dom-compare.mjs",
+    "bench:compare:all": "RTDOM_JSON=\"$(cargo test -p turbo-dom --release rtdom::bench::compare_all -- --ignored --nocapture 2>/dev/null | sed -n 's/.*RTDOM_JSON //p')\" node --expose-gc --max-old-space-size=8192 bench/compare-all.mjs"
+  },
+  "keywords": [
+    "dom",
+    "html",
+    "html5ever",
+    "parser",
+    "jsdom",
+    "happy-dom",
+    "vitest",
+    "jest",
+    "test-environment",
+    "testing",
+    "napi",
+    "wasm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miaskiewicz/turbo-dom.git"
+  },
+  "homepage": "https://github.com/miaskiewicz/turbo-dom#readme",
+  "bugs": {
+    "url": "https://github.com/miaskiewicz/turbo-dom/issues"
+  },
+  "author": "miaskiewicz",
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "jest-environment-node": ">=29",
+    "vitest": ">=1"
+  },
+  "peerDependenciesMeta": {
+    "jest-environment-node": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@headlessui/react": "^2.2.10",
+    "@napi-rs/cli": "^2.18.4",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "downshift": "^9.3.6",
+    "happy-dom": "^20.10.1",
+    "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "jsdom": "^29.1.1",
+    "parse5": "^8.0.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "vitest": "^4.1.8"
+  }
+}

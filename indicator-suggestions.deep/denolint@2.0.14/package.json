@@ -1,0 +1,83 @@
+{
+  "name": "denolint",
+  "description": "Deno lint command-line executable for Node.js",
+  "version": "2.0.14",
+  "homepage": "https://github.com/prantlf/denolint#readme",
+  "author": "Ferdinand Prantl <prantlf@gmail.com>",
+  "contributors": [
+    "LongYinan <lynweklm@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prantlf/denolint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prantlf/denolint/issues"
+  },
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/prantlf/denolint/blob/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">= 12"
+  },
+  "type": "module",
+  "files": [
+    "lib"
+  ],
+  "napi": {
+    "name": "denolint",
+    "triples": {
+      "defaults": false,
+      "additional": [
+        "x86_64-pc-windows-msvc",
+        "x86_64-apple-darwin",
+        "x86_64-unknown-linux-gnu",
+        "i686-pc-windows-msvc",
+        "armv7-unknown-linux-gnueabihf",
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-apple-darwin",
+        "x86_64-unknown-freebsd",
+        "aarch64-pc-windows-msvc"
+      ]
+    },
+    "package": {
+      "name": "@denolint/denolint"
+    }
+  },
+  "keywords": [
+    "deno-lint",
+    "deno",
+    "lint",
+    "eslint",
+    "napi-rs",
+    "napi",
+    "n-api",
+    "rust"
+  ],
+  "optionalDependencies": {
+    "@denolint/denolint-win32-x64-msvc": "2.0.14",
+    "@denolint/denolint-darwin-x64": "2.0.14",
+    "@denolint/denolint-linux-x64-gnu": "2.0.14",
+    "@denolint/denolint-win32-ia32-msvc": "2.0.14",
+    "@denolint/denolint-linux-arm-gnueabihf": "2.0.14",
+    "@denolint/denolint-linux-x64-musl": "2.0.14",
+    "@denolint/denolint-linux-arm64-gnu": "2.0.14",
+    "@denolint/denolint-darwin-arm64": "2.0.14",
+    "@denolint/denolint-freebsd-x64": "2.0.14",
+    "@denolint/denolint-win32-arm64-msvc": "2.0.14"
+  },
+  "scripts": {
+    "postinstall": "node lib/postinstall.cjs",
+    "build": "cargo build --release && strip ../../target/release/denolint && node scripts/copy-target",
+    "test:other": "./denolint -p ../../crates/shared/test/pass && ./denolint -p ../../crates/shared/test/warn || ./denolint -p ../../crates/shared/test/fail || ./denolint -h && ./denolint -V",
+    "test:win32": "denolint -p ..\\..\\crates\\shared\\test\\pass && denolint -p ..\\..\\crates\\shared\\test\\warn || denolint -p ..\\..\\crates\\shared\\test\\fail || denolint -h && denolint -V",
+    "copy:target": "node scripts/copy-target",
+    "move:artifact": "node scripts/move-artifact",
+    "version": "node scripts/set-version && npx conventional-changelog-cli -p angular -i CHANGELOG.md -s"
+  }
+}

@@ -1,0 +1,49 @@
+{
+	"name": "doesqa",
+	"version": "2.5.0",
+	"description": "The DOES.QA CLI: the bridge between the DOES.QA end-to-end web test automation platform and your terminal, CI, and AI agents. Author and run flows, trigger runs, pull results, and keep a versioned local mirror, all over a personal access token.",
+	"type": "module",
+	"license": "UNLICENSED",
+	"homepage": "https://does.qa",
+	"keywords": [
+		"doesqa",
+		"qa",
+		"testing",
+		"test-automation",
+		"end-to-end",
+		"e2e",
+		"browser-testing",
+		"agent",
+		"mcp",
+		"cli"
+	],
+	"bin": {
+		"doesqa": "./dist/cli.cjs"
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"engines": {
+		"node": ">=18"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "esbuild src/bin.ts --bundle --platform=node --format=cjs --target=node20 --outfile=dist/cli.cjs --external:@aws-sdk/* --external:@aws-crypto/* --banner:js=\"#!/usr/bin/env node\" && chmod +x dist/cli.cjs",
+		"prepack": "npm run build",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "vitest run",
+		"start": "node dist/cli.cjs"
+	},
+	"devDependencies": {
+		"@doesqa/core": "*",
+		"@types/node": "^20.16.0",
+		"esbuild": "^0.24.0",
+		"typescript": "^5.6.3",
+		"vitest": "^2.1.4",
+		"zod": "^3.23.8"
+	}
+}

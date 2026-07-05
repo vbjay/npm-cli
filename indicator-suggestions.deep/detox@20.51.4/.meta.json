@@ -1,0 +1,102 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e1e0b22232197273",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/postinstall.js",
+      "scripts/updateGradle.js",
+      "src/utils/rn-consts/rn-consts.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "react-native",
+        "versionSpec": "0.85.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "react-native@0.85.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "164898620f804c592fe43573c1d379904808f6f202edf29b85dc9b78aaf12e95",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\detox@20.51.4\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6eac8e377a67f5a24f1b9b83b42e0026bf17a20166231175971711644a32f41f",
+        "sizeBytes": 552,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/updateGradle.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/updateGradle.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "35f6a8439c069fac222c2d2c7c6fe05efc064366c32bda6d24ebf0e1b963ba5b",
+        "sizeBytes": 3735,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/utils/rn-consts/rn-consts.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/utils/rn-consts/rn-consts.js",
+        "reason": "required by ./scripts/updateGradle.js",
+        "sha256": "602fbaeb819e0f3ec170094ee2735f7b44bb314dc28a952b566ab084577d941c",
+        "sizeBytes": 561,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:37.820Z"
+  },
+  "hash": "sha256:081572071d40cdc7ce0a701db900f2dd8a9c86374be9bf1a38d4545457b6c503"
+}

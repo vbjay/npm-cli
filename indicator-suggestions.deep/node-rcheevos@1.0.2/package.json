@@ -1,0 +1,53 @@
+{
+  "name": "node-rcheevos",
+  "version": "1.0.2",
+  "description": "Node.js native bindings for RetroAchievements rcheevos library (hash generation)",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "rhash": "bin/rhash.js"
+  },
+  "files": [
+    "lib/**/*",
+    "bin/**/*",
+    "prebuilds/**/*",
+    "binding.gyp",
+    "!**/*.test.*"
+  ],
+  "scripts": {
+    "install": "node-gyp-build",
+    "build": "node-gyp rebuild",
+    "prebuild": "prebuildify --napi --strip",
+    "test": "node --test",
+    "version:patch": "npm version patch -m \"chore(release): %s\"",
+    "version:minor": "npm version minor -m \"chore(release): %s\"",
+    "version:major": "npm version major -m \"chore(release): %s\""
+  },
+  "keywords": [
+    "retroachievements",
+    "rcheevos",
+    "hash",
+    "rom",
+    "native",
+    "addon"
+  ],
+  "author": {
+    "name": "JZimz",
+    "email": "jzimz.tv@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^8.6.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "node-gyp": "^12.2.0",
+    "prebuildify": "^6.0.0"
+  },
+  "gypfile": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JZimz/node-rcheevos.git"
+  }
+}

@@ -1,0 +1,57 @@
+{
+    "name": "spawnpack",
+    "version": "0.1.11",
+    "description": "Minecraft Bedrock addon project generator — scaffold your BP+RP in seconds",
+    "author": "veedy-dev",
+    "license": "MIT",
+    "type": "module",
+    "bin": {
+        "spawnpack": "bin/spawnpack.js"
+    },
+    "files": [
+        "bin/spawnpack.js",
+        "dist/spawnpack.js",
+        "templates/CLAUDE.md",
+        "templates/AGENTS.md",
+        "templates/filters/typegen/main.js",
+        "README.md",
+        "LICENSE",
+        "package.json"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/veedy-dev/spawnpack.git"
+    },
+    "bugs": {
+        "url": "https://github.com/veedy-dev/spawnpack/issues"
+    },
+    "homepage": "https://github.com/veedy-dev/spawnpack#readme",
+    "keywords": [
+        "minecraft",
+        "bedrock",
+        "addon",
+        "generator",
+        "cli",
+        "spawnpack",
+        "regolith",
+        "rgl"
+    ],
+    "engines": {
+        "bun": ">=1.2.0"
+    },
+    "scripts": {
+        "start": "bun run src/index.ts",
+        "dev": "bun --watch src/index.ts",
+        "build": "bun build src/index.ts --outfile dist/spawnpack.js --target node",
+        "typecheck": "tsc --noEmit",
+        "prepack": "bun run typecheck && bun run build"
+    },
+    "dependencies": {
+        "@clack/prompts": "^1.2.0",
+        "picocolors": "^1.1.1"
+    },
+    "devDependencies": {
+        "@types/bun": "^1.2.0",
+        "typescript": "^5.7.0"
+    }
+}

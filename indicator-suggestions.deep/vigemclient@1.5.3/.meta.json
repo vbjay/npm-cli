@@ -1,0 +1,74 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8e6b9cd408755ff7",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "2835a54eeb2a2d8a275771cd76c07674e4bf42fef0d1b62cd52c0aa4e544d748",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `vigemclient`  -  C/C++ sources",
+            "items": [
+              "src/target.cpp",
+              "src/target_x360.cpp",
+              "src/target_ds4.cpp",
+              "src/vigemclient.cpp"
+            ]
+          },
+          {
+            "label": "Target `vigemclient`  -  libraries",
+            "items": [
+              "<(module_root_dir)/native/<(target_arch)/ViGEmClient.lib"
+            ]
+          },
+          {
+            "label": "Target `vigemclient`  -  include directories",
+            "items": [
+              "<(module_root_dir)/include",
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:26.532Z"
+  },
+  "hash": "sha256:673dded31d132eba27b70ec8ef236257759c32b72cc550cd8943a646c3d1415f"
+}

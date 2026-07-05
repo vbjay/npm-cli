@@ -1,0 +1,114 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "326c8c32fee3eee5",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "platform-name",
+        "versionSpec": "^1.0.0"
+      },
+      {
+        "name": "arch",
+        "versionSpec": "^2.1.1"
+      },
+      {
+        "name": "load-from-cwd-or-npm",
+        "versionSpec": "^3.0.1"
+      },
+      {
+        "name": "reject-unsatisfied-npm-version",
+        "versionSpec": "^1.0.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "arch@2.2.0",
+      "load-from-cwd-or-npm@3.0.4",
+      "platform-name@1.0.0",
+      "reject-unsatisfied-npm-version@1.0.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "5a217956c37b35560c9ca8ee229757e6a28c2b90212a9aac7ce15f8f5c9f2b7d",
+        "sizeBytes": 2143,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/shinnn/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "897104e04ac507a6490a15be7bedaab1e012dca8a36bbc6c3d58d1b1139bdf3c",
+        "sizeBytes": 1215,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:28.746Z"
+  },
+  "hash": "sha256:996a6cb607199e48b289fb85fa44fbbb6bfde506f0bc283dbd01f3b5e73ca680"
+}

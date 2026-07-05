@@ -1,0 +1,57 @@
+{
+  "name": "react-native-oss-license",
+  "version": "0.7.0",
+  "description": "License list generator for react-native app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:prod": "webpack --mode=production",
+    "build:dev": "webpack --mode=development",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
+    "prepare": "npm run build:prod"
+  },
+  "bin": {
+    "react-native-oss-license": "./bin/react-native-oss-license.js"
+  },
+  "author": "k-tomoyasu",
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "license"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/k-tomoyasu/react-native-oss-license"
+  },
+  "dependencies": {
+    "commander": "^4.0.0",
+    "fs-extra": "^8.1.0",
+    "glob": "^7.1.5",
+    "he": "^1.2.0",
+    "install": "^0.13.0",
+    "path": "^0.12.7",
+    "read-installed": "^4.0.3",
+    "yaml": "^1.7.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.0.1",
+    "@types/glob": "^7.1.1",
+    "@types/he": "^1.1.2",
+    "@types/node": "^12.12.5",
+    "@types/yaml": "^1.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.19.1",
+    "size-plugin": "^2.0.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2",
+    "yarn": "^1.19.1"
+  }
+}

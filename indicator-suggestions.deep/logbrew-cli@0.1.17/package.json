@@ -1,0 +1,98 @@
+{
+  "artifactDownloadUrls": [
+    "https://github.com/LogBrewCo/cli/releases/download/v0.1.17"
+  ],
+  "author": "LogBrewCo",
+  "bin": {
+    "logbrew": "run-logbrew.js"
+  },
+  "dependencies": {
+    "detect-libc": "^2.1.2"
+  },
+  "description": "Public command-line interface for LogBrew.",
+  "devDependencies": {
+    "prettier": "^3.8.3"
+  },
+  "engines": {
+    "node": ">=14.14",
+    "npm": ">=6"
+  },
+  "glibcMinimum": {
+    "major": 2,
+    "series": 39
+  },
+  "homepage": "https://logbrew.co",
+  "keywords": [
+    "command-line-utilities",
+    "development-tools",
+    "logbrew",
+    "cli",
+    "observability",
+    "logs"
+  ],
+  "license": "MIT",
+  "name": "logbrew-cli",
+  "preferUnplugged": true,
+  "repository": "https://github.com/LogBrewCo/cli",
+  "scripts": {
+    "fmt": "prettier --write **/*.js",
+    "fmt:check": "prettier --check **/*.js",
+    "postinstall": "node ./install.js"
+  },
+  "supportedPlatforms": {
+    "aarch64-apple-darwin": {
+      "artifactName": "logbrew-cli-aarch64-apple-darwin.tar.xz",
+      "bins": {
+        "logbrew": "logbrew"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "aarch64-pc-windows-msvc": {
+      "artifactName": "logbrew-cli-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "logbrew": "logbrew.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "aarch64-unknown-linux-gnu": {
+      "artifactName": "logbrew-cli-aarch64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "logbrew": "logbrew"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "x86_64-apple-darwin": {
+      "artifactName": "logbrew-cli-x86_64-apple-darwin.tar.xz",
+      "bins": {
+        "logbrew": "logbrew"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "x86_64-pc-windows-gnu": {
+      "artifactName": "logbrew-cli-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "logbrew": "logbrew.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "x86_64-pc-windows-msvc": {
+      "artifactName": "logbrew-cli-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "logbrew": "logbrew.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "x86_64-unknown-linux-gnu": {
+      "artifactName": "logbrew-cli-x86_64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "logbrew": "logbrew"
+      },
+      "zipExt": ".tar.xz"
+    }
+  },
+  "version": "0.1.17",
+  "volta": {
+    "node": "18.14.1",
+    "npm": "9.5.0"
+  }
+}

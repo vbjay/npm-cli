@@ -1,0 +1,135 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2cbe6f0a4212b3aa",
+    "fetchedFiles": [
+      "binary-install.js",
+      "binary.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "axios",
+        "versionSpec": "^1.13.5"
+      },
+      {
+        "name": "rimraf",
+        "versionSpec": "^6.1.3"
+      },
+      {
+        "name": "console.table",
+        "versionSpec": "^0.10.0"
+      },
+      {
+        "name": "detect-libc",
+        "versionSpec": "^2.1.2"
+      },
+      {
+        "name": "axios-proxy-builder",
+        "versionSpec": "^0.1.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "axios-proxy-builder@0.1.2",
+      "axios@1.18.1",
+      "console.table@0.10.0",
+      "detect-libc@2.1.2",
+      "rimraf@6.1.3"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e51af3781710f44f1183eac3aecab5df4ccc746c448c26077d39ff4459d66412",
+        "sizeBytes": 191,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "binary.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "binary.js",
+        "reason": "required by ./install.js",
+        "sha256": "d66b34eeae61d32caf9aa320647154b23edc86e99b54240e9b5b1d7220a313ba",
+        "sizeBytes": 3602,
+        "signals": [
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "binary-install.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "binary-install.js",
+        "reason": "required by ./binary.js",
+        "sha256": "42689d389769af621eba76459765997469986265bcda1d266af487387b0d5e05",
+        "sizeBytes": 6616,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://example.com/binary/download.tar.gz",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./binary.js",
+        "sha256": "e637eb479273632d57f5a31acf841a77b1832dcfb265adf8884b9b59c4de3678",
+        "sizeBytes": 3520,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:11.157Z"
+  },
+  "hash": "sha256:8c8700fbfb8389ed8e35ae589dcd1e848e10a217b03fa7d889ce7b175c19527e"
+}

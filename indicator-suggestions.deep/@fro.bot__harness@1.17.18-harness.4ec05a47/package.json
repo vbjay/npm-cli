@@ -1,0 +1,47 @@
+{
+  "name": "@fro.bot/harness",
+  "version": "1.17.18-harness.4ec05a47",
+  "description": "Published patched-OpenCode binary with orw-embedded LLM-merge integration — the default OpenCode for Fro Bot",
+  "keywords": [
+    "opencode",
+    "fro-bot",
+    "harness",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fro-bot/agent.git"
+  },
+  "license": "MIT",
+  "author": "Fro Bot <agent@fro.bot>",
+  "type": "module",
+  "bin": {
+    "harness": "./dist/cli.mjs"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist",
+    "provenance.json"
+  ],
+  "scripts": {
+    "build": "bunx tsc -p tsconfig.json --noEmit && bunx tsdown",
+    "check-types": "bunx tsc -p tsconfig.json --noEmit",
+    "fix": "bunx eslint --fix src scripts",
+    "lint": "bunx eslint src scripts",
+    "postinstall": "node dist/postinstall.mjs || true",
+    "test": "bunx vitest run --passWithNoTests src scripts"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "optionalDependencies": {
+    "@fro.bot/harness-linux-x64": "1.17.18-harness.4ec05a47",
+    "@fro.bot/harness-linux-arm64": "1.17.18-harness.4ec05a47",
+    "@fro.bot/harness-darwin-x64": "1.17.18-harness.4ec05a47",
+    "@fro.bot/harness-darwin-arm64": "1.17.18-harness.4ec05a47"
+  }
+}

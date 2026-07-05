@@ -1,0 +1,109 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "42cada0186db3f17",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/prebuild-install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "6076349dc8ae2bce9a8f726ff85eefa524e661d00634fe8187edd7b4158e80d1",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `zmq`  -  C/C++ sources",
+            "items": [
+              "binding.cc"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  libraries",
+            "items": [
+              "<(PRODUCT_DIR)/../../windows/lib/libzmq",
+              "ws2_32.lib",
+              "iphlpapi",
+              "<(PRODUCT_DIR)/../../zmq/lib/libzmq.a",
+              "<(PRODUCT_DIR)/../../zmq/lib/libzmq.a"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "windows/include",
+              "<(PRODUCT_DIR)/../../zmq/include",
+              "<(PRODUCT_DIR)/../../zmq/include"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/prebuild-install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "496cd2de07cd0db39f82cf2d4b6a0e286d1b177959a97a138eb623365bcf3cb7",
+        "sizeBytes": 664,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "native-build",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:33.402Z"
+  },
+  "hash": "sha256:c0e0d57cf7cf41d5f8492de76fe183c541e0a2d72ab01df362e070e9ec12d06a"
+}

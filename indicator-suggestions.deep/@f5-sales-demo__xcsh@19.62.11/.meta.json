@@ -1,0 +1,197 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9c805c4a86cb14ea",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/generate-api-spec-index.ts",
+      "scripts/generate-build-info.ts",
+      "scripts/generate-console-catalog.ts",
+      "scripts/generate-console-field-metadata.ts",
+      "scripts/generate-docs-index.ts",
+      "scripts/generate-terraform-index.ts"
+    ],
+    "bareFollows": [
+      {
+        "name": "bun",
+        "versionSpec": null
+      },
+      {
+        "name": "yaml",
+        "versionSpec": "2.9.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "bun@1.3.14",
+      "yaml@2.9.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/generate-docs-index.ts",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "d45de477b9ed78b4f3d4c2d63a6a2167dec48f06efbacaa4930f7f670be3450d",
+        "sizeBytes": 1427,
+        "signals": [
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/generate-api-spec-index.ts",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "0bc1727cb8f6047d61af76cd691824ff9583156a21a3d1436642ded5749daf13",
+        "sizeBytes": 23361,
+        "signals": [
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/generate-build-info.ts",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "c1b4edf2ad31fc795cca8f63a36783c3ed0e5ff4feaea20cdb807c01b17f3756",
+        "sizeBytes": 3148,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/generate-terraform-index.ts",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "3f729bbaecf4740ea9eeec29c66eccf066c214711cd81d2af247cbabf334650a",
+        "sizeBytes": 3394,
+        "signals": [
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://raw.githubusercontent.com/f5-sales-demo/terraform-provider-xcsh/main/docs/terraform-llms-index.json",
+            "classification": "reference"
+          },
+          {
+            "url": "https://your-tenant.console.ves.volterra.io",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/generate-console-catalog.ts",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "527c57b610e4b2b0a3002b5b85dee66a176154bbc1fc4c523838a4f59f8b33bb",
+        "sizeBytes": 3620,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/generate-console-field-metadata.ts",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "037096d24567ecfd8d7b411b054ab44d655eb74ec19fd098381f7c3d106850b0",
+        "sizeBytes": 3498,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:02.596Z"
+  },
+  "hash": "sha256:3f76096955beda6e110030b3c4bcc822de79e5c45425b27e86dac197f3ec642d"
+}

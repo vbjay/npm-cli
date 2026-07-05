@@ -1,0 +1,167 @@
+{
+  "name": "react-native-pytorch-core",
+  "version": "0.2.4",
+  "description": "PyTorch core library for React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cxx",
+    "react-native-pytorch-core.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!cxx/test",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "app.plugin.js"
+  ],
+  "scripts": {
+    "test": "jest",
+    "testcxx": "cd cxx/test && cmake -S. -Bbuild && cmake --build build -j8 && (cd build && ctest -j8)",
+    "typescript": "tsc --noEmit",
+    "lint": "prettier --write \"**/*.{js,ts,tsx}\" && eslint \"**/*.{js,ts,tsx}\" --fix",
+    "prepare": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "doc": "typedoc --plugin typedoc-plugin-markdown src/index.tsx"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebookresearch/playtorch.git",
+    "directory": "react-native-pytorch-core"
+  },
+  "author": "Meta Platforms, Inc.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/facebookresearch/playtorch/issues"
+  },
+  "homepage": "https://playtorch.dev/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^12.1.4",
+    "@expo/config-plugins": "^4.0.7",
+    "@react-native-community/eslint-config": "^3.0.0",
+    "@release-it/conventional-changelog": "^3.0.1",
+    "@types/jest": "^26.0.0",
+    "@types/react": "^17.0.11",
+    "@types/react-native": "0.64.10",
+    "commitlint": "^12.1.4",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^6.0.0",
+    "jest": "^27.0.6",
+    "pod-install": "^0.1.0",
+    "prettier": "2.7.1",
+    "react": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-builder-bob": "^0.18.1",
+    "release-it": "^14.10.0",
+    "typescript": "^4.3.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/",
+      "<rootDir>/example/e2e"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn lint && yarn typescript"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "bracketSpacing": false,
+          "jsxBracketSameLine": true,
+          "singleQuote": true,
+          "trailingComma": "all",
+          "arrowParens": "avoid"
+        }
+      ],
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": [
+        "error"
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "avoid"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "lightdm-js",
+  "version": "1.0.10",
+  "description": "A native node addon that lets you authenticate with LightDM without the need for node-gtk",
+  "keywords": [
+    "native",
+    "addon",
+    "node",
+    "c++",
+    "LightDM"
+  ],
+  "main": "index.js",
+  "gypfile": true,
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "prestart": "node-gyp rebuild",
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pants007/lightdm-js.git"
+  },
+  "author": "pants007 <pense007@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^6.1.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^9.3.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

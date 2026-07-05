@@ -1,0 +1,115 @@
+{
+  "name": "react-native-superconfig",
+  "version": "0.17.0",
+  "description": "react-native-superconfig - Super fast config for react native",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/superconfig.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib",
+    "nitrogen",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "app.plugin.js",
+    "nitro.json",
+    "*.podspec",
+    "cpp",
+    "scripts",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "lint-ci": "eslint \"**/*.{js,ts,tsx}\" -f @jamesacarr/github-actions",
+    "typescript": "tsc && cp src/superconfig.d.ts lib/superconfig.d.ts",
+    "specs": "bun run typescript && nitrogen --logLevel=\"debug\"",
+    "generate-config": "node scripts/generate-config.js",
+    "postinstall": "node scripts/generate-config.js",
+    "prepare": "node scripts/generate-config.js",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "nitro"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riteshshukla04/react-native-superconfig.git"
+  },
+  "author": "Ritesh Shukla <riteshshukla2381@gmail.com> (https://github.com/riteshshukla04)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/riteshshukla04/react-native-superconfig/issues"
+  },
+  "homepage": "https://github.com/riteshshukla04/react-native-superconfig#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "0.83.0",
+    "@release-it/conventional-changelog": "^10.0.4",
+    "@types/react": "^19.1.03",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "nitrogen": "^0.35.1",
+    "prettier": "^3.3.3",
+    "react": "19.2.0",
+    "react-native": "0.83.0",
+    "react-native-nitro-modules": "^0.35.1",
+    "release-it": "^19.2.4",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "warn",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false,
+    "semi": false
+  }
+}

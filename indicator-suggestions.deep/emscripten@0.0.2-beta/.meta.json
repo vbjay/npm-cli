@@ -1,0 +1,95 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "296d99176883ea10",
+    "fetchedFiles": [
+      "build.js",
+      "index.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "index.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "afc3744023b612e550f07f35c6193d48dfbbfeaf89af29c7a008062e50de777a",
+        "sizeBytes": 1135,
+        "signals": [
+          "dynamic-require",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "install.js",
+          "build.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/raphamorim/wasm",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "install.js",
+        "reason": "required by ./index.js",
+        "sha256": "c0ddc3629dd97bcdd77ecbeada94bab40f5d1d35ad74c53e278ec7bc66472130",
+        "sizeBytes": 898,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build.js",
+        "reason": "required by ./index.js",
+        "sha256": "1158946ed677e99a32bd455f277114bb328d84cf8684f600e61c93c024a34e76",
+        "sizeBytes": 625,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./index.js",
+        "sha256": "07835d8b25b2d1b0eaea483f136f6aef4efb7f147484cb4bbb240541d43b3eb4",
+        "sizeBytes": 472,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:41.710Z"
+  },
+  "hash": "sha256:9e0b36468e895fb1a32a5b988197bd0c0a8a37d7912e67ea4f5b7f93e00f6b86"
+}

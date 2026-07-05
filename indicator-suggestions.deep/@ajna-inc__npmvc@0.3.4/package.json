@@ -1,0 +1,69 @@
+{
+  "name": "@ajna-inc/npmvc",
+  "version": "0.3.4",
+  "publisher": "did:key:z6MkhJ5YBSdBLHHJbji45kiJnRdLUDPuTVi7dP84MjSuEuco",
+  "description": "Verifiable-credential supply chain compliance for npm. Sign attestations, verify dependencies, revoke compromised packages.",
+  "license": "Apache-2.0",
+  "author": "Vinay Singh <vinay@ajna.inc>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajna-inc/npmvc"
+  },
+  "homepage": "https://npmvc.com",
+  "keywords": [
+    "supply-chain",
+    "security",
+    "npm",
+    "verifiable-credentials",
+    "did",
+    "attestation",
+    "sbom",
+    "provenance",
+    "signing",
+    "verification"
+  ],
+  "type": "module",
+  "bin": {
+    "npmvc": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "schemas",
+    "examples",
+    ".npmvc"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && chmod +x dist/cli.js",
+    "dev": "tsx src/cli.ts",
+    "test": "node --test --import tsx tests/**/*.test.ts",
+    "test:unit": "node --test --import tsx tests/unit/*.test.ts",
+    "test:security": "node --test --import tsx tests/security/*.test.ts",
+    "test:e2e": "node --test --import tsx tests/e2e/*.test.ts",
+    "clean": "rm -rf dist",
+    "prepack": "npm run build && node ./dist/cli.js attest --registry https://npmvc.com"
+  },
+  "dependencies": {
+    "@cyclonedx/cyclonedx-npm": "4.2.1",
+    "@noble/ed25519": "^2.2.3",
+    "@noble/hashes": "^1.6.1",
+    "canonicalize": "^2.0.0",
+    "commander": "^12.1.0",
+    "jose": "^5.9.6",
+    "multiformats": "^13.3.1",
+    "picocolors": "^1.1.1",
+    "tar": "^7.4.3",
+    "yaml": "^2.6.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/tar": "^6.1.13",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

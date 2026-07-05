@@ -1,0 +1,63 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8c58cbe50e76f934",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "18d2d0bfbb6aa33dec5c46843326f5804c001fc2c53dcd6b4cca66b05b06547b",
+        "sizeBytes": 550,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:05.659Z"
+  },
+  "hash": "sha256:82ed05b2dbd2f75b83376896d8afc618078fc84db02f0bcd65ba71f929018d80"
+}

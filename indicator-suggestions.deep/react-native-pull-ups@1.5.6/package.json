@@ -1,0 +1,160 @@
+{
+  "name": "react-native-pull-ups",
+  "version": "1.5.6",
+  "description": "Native Bottom Sheet Implementations for iOS and Android. Toddler approved.",
+  "types": "src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-pull-ups-example",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "bottom",
+    "sheet",
+    "bottomsheet",
+    "behavior",
+    "material",
+    "coordinatorlayout",
+    "fittedsheets",
+    "hidden",
+    "collapsed",
+    "hideable",
+    "collapsible",
+    "card",
+    "modal",
+    "dialog"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meanguppy/react-native-pull-ups.git"
+  },
+  "author": "Joel Nuesch <joel@meanguppy.com> (https://github.com/meanguppy)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meanguppy/react-native-pull-ups/issues"
+  },
+  "homepage": "https://github.com/meanguppy/react-native-pull-ups#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native/eslint-config": "^0.72.2",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.2",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "0.70.0",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-plugin-ft-flow": "latest",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.0",
+    "react": "18.3.1",
+    "react-native": "0.76.7",
+    "react-native-builder-bob": "^0.23.2",
+    "release-it": "^15.0.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.0.2"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}",
+      "push": false
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native"
+    ],
+    "rules": {
+      "prettier/prettier": 0,
+      "curly": 0
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

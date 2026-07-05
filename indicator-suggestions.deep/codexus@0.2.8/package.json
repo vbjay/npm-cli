@@ -1,0 +1,165 @@
+{
+  "name": "codexus",
+  "version": "0.2.8",
+  "description": "A globally installed CLI harness for OpenAI Codex with durable ledgers, verification gates, memory, and replay-gated skills.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raeseoklee/codexus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/raeseoklee/codexus/issues"
+  },
+  "homepage": "https://github.com/raeseoklee/codexus#readme",
+  "keywords": [
+    "codex",
+    "openai-codex",
+    "agent-harness",
+    "ai-agents",
+    "cli",
+    "orchestration",
+    "verification",
+    "replay",
+    "memory"
+  ],
+  "bin": {
+    "cx": "dist/cli/main.js",
+    "codexus": "dist/cli/main.js"
+  },
+  "files": [
+    "dist",
+    "codex",
+    "schemas",
+    "fixtures/app-server",
+    "scripts/codexus-app-instance-runner.mjs",
+    "scripts/codexus-notify-hook.mjs",
+    "scripts/install-codex-skill.mjs",
+    "scripts/publish-next.mjs",
+    "scripts/postinstall.mjs",
+    "install.sh",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.ts",
+    "check:whitespace": "git diff --check && git diff-tree --check --no-commit-id -r HEAD",
+    "ci": "npm run check:whitespace && npm run typecheck && npm test",
+    "build": "node scripts/build.mjs",
+    "build:sourcemap": "node scripts/build.mjs --sourcemap",
+    "typecheck": "node scripts/check-syntax.mjs",
+    "lsp:check": "node src/cli/main.ts lsp check --gate --json",
+    "package:smoke": "node scripts/package-smoke.mjs",
+    "supply-chain:report": "node src/cli/main.ts supply-chain check --json",
+    "release:policy": "node src/cli/main.ts release policy --gate --json",
+    "release:integrity": "node src/cli/main.ts release check --gate --json",
+    "release:check": "npm run ci && npm run lsp:check && npm run package:smoke && npm run supply-chain:report && npm run release:policy && npm run release:integrity",
+    "publish:next": "node scripts/publish-next.mjs",
+    "publish:stable": "node scripts/publish-next.mjs --stable",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run release:check",
+    "postinstall": "node scripts/postinstall.mjs",
+    "doctor": "node src/cli/main.ts doctor",
+    "install:codex-skill": "node scripts/install-codex-skill.mjs",
+    "cx": "node src/cli/main.ts",
+    "codexus": "node src/cli/main.ts"
+  },
+  "codexus": {
+    "supplyChain": {
+      "runtimeDependenciesMax": 0,
+      "allowedLifecycleScripts": [
+        "postinstall",
+        "prepack",
+        "prepublishOnly"
+      ],
+      "allowedDevDependencyInstallScripts": [
+        "esbuild"
+      ],
+      "allowRuntimeNetworkImports": [
+        "node:net"
+      ],
+      "forbiddenPackageFiles": [
+        ".env",
+        ".env.*",
+        ".codexus/**",
+        ".codex-harness/**",
+        "node_modules/**",
+        "dist/**/*.map",
+        "src/**",
+        "tests/**",
+        "docs/**",
+        "fixtures/replay/**",
+        "fixtures/migrations/**"
+      ],
+      "requiredPackageFiles": [
+        "dist/cli/main.js",
+        "package.json",
+        "README.md",
+        "LICENSE",
+        "CHANGELOG.md",
+        "schemas/config.schema.json",
+        "schemas/session-state.schema.json",
+        "schemas/supply-chain-policy.schema.json",
+        "schemas/architecture-policy.schema.json",
+        "schemas/autopilot-contract.schema.json",
+        "schemas/autopilot-run-gate.schema.json",
+        "schemas/wiki-manifest.schema.json",
+        "schemas/wiki-page.schema.json",
+        "schemas/wiki-context-approval.schema.json",
+        "schemas/wiki-injection-plan.schema.json",
+        "schemas/repo-graph.schema.json",
+        "schemas/relay-session.schema.json",
+        "schemas/relay-adapter.schema.json",
+        "schemas/stage-gate-evidence.schema.json",
+        "schemas/convergence-agreement.schema.json",
+        "schemas/decision.schema.json",
+        "schemas/app-instance-descriptor.schema.json",
+        "schemas/app-instance.schema.json",
+        "schemas/observability-adapter.schema.json",
+        "schemas/lsp-adapter.schema.json",
+        "schemas/subagent-bridge-probe.schema.json",
+        "fixtures/app-server/schema.fixture.json",
+        "codex/skills/codexus/SKILL.md",
+        "codex/plugins/codexus/.codex-plugin/plugin.json",
+        "codex/plugins/codexus/skills/codexus/SKILL.md",
+        "codex/plugins/codexus/scripts/cx.mjs",
+        "scripts/codexus-app-instance-runner.mjs",
+        "scripts/postinstall.mjs",
+        "scripts/install-codex-skill.mjs",
+        "scripts/codexus-notify-hook.mjs",
+        "scripts/publish-next.mjs",
+        "install.sh"
+      ],
+      "binTargetsMustBeBuiltArtifacts": true,
+      "lockfileIntegrityRequired": true
+    },
+    "architecture": {
+      "schemaVersion": 1,
+      "type": "codexus.architecture.policy",
+      "rules": [
+        {
+          "id": "no-runtime-package-imports-in-src",
+          "kind": "forbidden-import",
+          "from": [
+            "src/**"
+          ],
+          "forbidden": [
+            "**"
+          ],
+          "allow": [
+            "node:**",
+            "./**",
+            "../**"
+          ]
+        }
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}

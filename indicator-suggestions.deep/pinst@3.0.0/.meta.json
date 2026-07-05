@@ -1,0 +1,87 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "807e1d85f827bf28",
+    "fetchedFiles": [
+      "bin",
+      "index.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `postinstall`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "bin",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "3ae2c9536905e52f71c9a3572871b67455bbfb6565059656ee52003fd3eb6ecf",
+        "sizeBytes": 625,
+        "signals": [
+          "git-hook-setup",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./bin",
+        "sha256": "01a3daad4528e88e177a3b3e186937d92c5c6016e2c91f98256a93287bd4eb3c",
+        "sizeBytes": 1321,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./bin",
+        "sha256": "556df5231acff35a1c727715adc259a0b48f166166d6e1c6f3ea250d03370cc1",
+        "sizeBytes": 1256,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:25.708Z"
+  },
+  "hash": "sha256:7e0532c1f66bc9d41d3d4f9cea67e4c627389facf80b85e82241ddf08b877f9e"
+}

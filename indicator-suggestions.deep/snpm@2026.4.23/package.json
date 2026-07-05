@@ -1,0 +1,49 @@
+{
+  "name": "snpm",
+  "version": "2026.4.23",
+  "description": "Speedy Node Package Manager - A fast, Rust-based package manager",
+  "bin": {
+    "snpm": "bin/snpm.js",
+    "spx": "bin/spx.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/binbandit/snpm.git"
+  },
+  "keywords": [
+    "package-manager",
+    "npm",
+    "pnpm",
+    "yarn",
+    "fast",
+    "rust"
+  ],
+  "author": "snpm contributors",
+  "license": "(MIT OR Apache-2.0)",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "tar": "^7.4.3",
+    "adm-zip": "^0.5.16"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "test": "node scripts/test.js"
+  }
+}

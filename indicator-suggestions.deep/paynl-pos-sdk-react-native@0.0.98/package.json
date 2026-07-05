@@ -1,0 +1,156 @@
+{
+  "name": "paynl-pos-sdk-react-native",
+  "version": "0.0.98",
+  "description": "A PayNL sdk to accept and process payments",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "access": "public",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace paynl-sdk-react-native-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paynl/pos-sdk.git"
+  },
+  "author": "bastiaan.verhaar <bastiaan.verhaar@scenius.nl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://https://github.com/paynl/pos-sdk/issues"
+  },
+  "homepage": "https://https://github.com/paynl/pos-sdk#readme",
+  "devDependencies": {
+    "@react-native-community/cli": "15.0.1",
+    "@react-native/eslint-config": "^0.73.1",
+    "@types/react": "^19.0.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "19.0.0",
+    "react-native": "0.78.0",
+    "react-native-builder-bob": "^0.37.0",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "codegen",
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json",
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNPaynlSdkSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.paynl.sdk.reactnative"
+    },
+    "includesGeneratedCode": true
+  },
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
+    "version": "0.48.3"
+  }
+}

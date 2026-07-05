@@ -1,0 +1,49 @@
+{
+  "name": "@lizard-build/cli",
+  "version": "0.3.75",
+  "description": "Lizard CLI — deploy and manage apps on Lizard",
+  "type": "module",
+  "bin": {
+    "lizard": "./dist/index.js"
+  },
+  "scripts": {
+    "gen:skills": "node scripts/gen-skills.mjs",
+    "prepare": "node scripts/gen-skills.mjs",
+    "prebuild": "node scripts/gen-skills.mjs",
+    "predev": "node scripts/gen-skills.mjs",
+    "pretest": "node scripts/gen-skills.mjs",
+    "pretest:unit": "node scripts/gen-skills.mjs",
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run test/cli.test.ts",
+    "test:unit": "vitest run test/unit"
+  },
+  "keywords": [
+    "cli",
+    "deploy",
+    "paas",
+    "lizard"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lizard-build/lizard-cli.git"
+  },
+  "author": "Lizard Build",
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "conf": "^15.1.0",
+    "open": "^10.2.0",
+    "ora": "^9.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "execa": "^9.6.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

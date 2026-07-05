@@ -1,0 +1,74 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fbfbf8173222b4b4",
+    "fetchedFiles": [
+      "lib/download.js",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "eceb8ad72042f5124c5123310dedfe27e77485950a209ea71c0edde696c86bba",
+        "sizeBytes": 820,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/download.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/download.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "57119fde343f51fd249c0b3b7649c5a9863ade8cb20cb4f58d9e25a7fb6e594d",
+        "sizeBytes": 3260,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://gtaconnected.com",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:56.574Z"
+  },
+  "hash": "sha256:0d1da49d03ea4e6810a051e973a6ceaad9df229158e028a39bb36bd865a829cc"
+}

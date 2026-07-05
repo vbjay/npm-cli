@@ -1,0 +1,109 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ec380ad6a5d95fab",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "minimist",
+        "versionSpec": "^1.2.8"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "minimist@1.2.8"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\rds-analyzer@0.5.6-alpha\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b5fc5261ece7d84501038c7390448a7c51709f3045d795ba8535e32cda2f6e31",
+        "sizeBytes": 16134,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "b9aca24675f85b8874c555d3e458a4c5e697dcaa594f28ddb79a8fa2bb7b2182",
+        "sizeBytes": 1770,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:30.302Z"
+  },
+  "hash": "sha256:9679bbf1aae4629ead7ffeebd54c6869dd7898bb91564f9b5f034436e55e43c3"
+}

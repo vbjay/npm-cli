@@ -1,0 +1,59 @@
+{
+  "name": "artshelf",
+  "version": "0.16.0",
+  "description": "Tiny CLI for accountable temporary artifact retention.",
+  "type": "module",
+  "author": "Calvin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calvinnwq/artshelf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/calvinnwq/artshelf/issues"
+  },
+  "homepage": "https://calvinnwq.github.io/artshelf/",
+  "keywords": [
+    "artifact-retention",
+    "cleanup",
+    "cli",
+    "jsonl",
+    "tmp"
+  ],
+  "bin": {
+    "artshelf": "dist/src/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/src",
+    "docs",
+    "schemas",
+    "examples",
+    "skills",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "SPEC.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "pnpm run typecheck",
+    "format:check": "git diff --check",
+    "test": "node --test dist/tests/*.test.js",
+    "check": "pnpm run build && pnpm run test",
+    "docs:serve": "python3 -m http.server 8080 --bind 127.0.0.1 --directory docs",
+    "prepack": "pnpm run build",
+    "prepublishOnly": "pnpm run build",
+    "start": "node dist/src/cli.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.33.3",
+  "license": "MIT"
+}

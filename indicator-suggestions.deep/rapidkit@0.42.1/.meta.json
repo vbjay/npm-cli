@@ -1,0 +1,130 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a3f7fbf824136b80",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/check-cli-resolution.cjs",
+      "scripts/enforce-package-manager.cjs",
+      "scripts/prepack-enterprise.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/enforce-package-manager.cjs",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "83c709b07f226792f2191a0c9e7df1ca200b48d84fde355c2db1263fed6b3178",
+        "sizeBytes": 424,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/check-cli-resolution.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "342f3c02a97c932c3fb1b9381061a6ea649ee26b026775cf15a35f7ca678d87d",
+        "sizeBytes": 2356,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/prepare-husky.mjs",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/prepack-enterprise.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "b64dc222c24e5ea8f90c9b2c7934ca24769cc99c166181325b347814ae09d62a",
+        "sizeBytes": 1336,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:29.953Z"
+  },
+  "hash": "sha256:cce953818c9c22240ee180cf56455fc40c9262ab991f29d289f2032b4c5eead3"
+}

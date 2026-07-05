@@ -1,0 +1,103 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9eb6603ffded3cac",
+    "fetchedFiles": [
+      "npm/getBinary.js",
+      "npm/install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "binary-install",
+        "versionSpec": "^1.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "binary-install@1.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b9a7337a8a02210b3c88bc6133aaef927b16422813179e481029b5a008a30317",
+        "sizeBytes": 123,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/getBinary.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/getBinary.js",
+        "reason": "required by ./npm/install.js",
+        "sha256": "abca8f84dd4a0cc004b492493e53c6312477a1361dcf1a0257c4942a6daddbe5",
+        "sizeBytes": 822,
+        "signals": [
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/skyneticist/feo/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./npm/getBinary.js",
+        "sha256": "d1477fb4db39ae133860fdffa598b3efc523c064365d65dcf5d4f93446b1004e",
+        "sizeBytes": 650,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:57.228Z"
+  },
+  "hash": "sha256:96c01af78784507b7dd31851eede43d8b7443f9d0b311dd3e737a1b98eb175b9"
+}

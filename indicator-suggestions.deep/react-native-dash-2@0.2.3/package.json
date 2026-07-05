@@ -1,0 +1,53 @@
+{
+  "name": "react-native-dash-2",
+  "version": "0.2.3",
+  "description": "Fully customizable and easy to use dash component for React Native",
+  "main": "./build/dist/Dash.js",
+  "repository": "git@github.com:WrathChaos/react-native-dash-2.git",
+  "author": "FreakyCoder <kurayogun@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://www.freakycoder.com",
+  "bugs": "https://github.com/WrathChaos/react-native-dash-2/issues",
+  "keywords": [
+    "dash-2",
+    "dash",
+    "FreakyCoder",
+    "freakycoder",
+    "kuray",
+    "Kuray",
+    "react",
+    "react-native",
+    "javascript",
+    "ui-lib",
+    "rn"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@react-native-community/eslint-config": "^3.1.0",
+    "@types/react": "^18.0.19",
+    "@types/react-native": "^0.70.0",
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "npm-post-install": "0.0.2",
+    "prettier": "^2.7.1",
+    "prettier-format": "^3.1.0",
+    "react-native-typescript-transformer": "^1.2.13",
+    "typescript": "^4.8.3"
+  },
+  "scripts": {
+    "build": "cd lib && tsc && cp ../package.json ../build/dist/ && Echo Build completed!",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "prettier": "cd lib && npx prettier --write . && git add .",
+    "prepare": "husky install",
+    "husky:setup": "npx husky-init && npm run husky:commitlint && npm run husky:prettier && npm run husky:lint",
+    "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
+    "husky:prettier": "npx husky set .husky/pre-commit 'npm run prettier'",
+    "husky:lint": "npx husky add .husky/pre-commit 'npm run lint'"
+  }
+}

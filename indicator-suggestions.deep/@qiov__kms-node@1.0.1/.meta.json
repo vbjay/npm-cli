@@ -1,0 +1,71 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5c0eaa9a61a28708",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "8d4c649ea2dc5e897ce9ce9d543736ce42e48d9aa5a008b51c343251d61d1c48",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `kms`  -  C/C++ sources",
+            "items": [
+              "src/init.cc"
+            ]
+          },
+          {
+            "label": "Target `kms`  -  libraries",
+            "items": [
+              "-lssl -lcrypto",
+              "<(module_root_dir)/src/whitebox/lib/libydwbcrypto.a"
+            ]
+          },
+          {
+            "label": "Target `kms`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:44.617Z"
+  },
+  "hash": "sha256:172d159cb0110b0179fd7ad712c437ef5752217e9c2b1a682eb0dea5eff60b88"
+}

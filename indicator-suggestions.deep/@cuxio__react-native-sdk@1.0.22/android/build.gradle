@@ -1,0 +1,70 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import java.nio.file.Paths
+buildscript {
+    ext.kotlin_version = "1.9.0"
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.1.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+static def findNodeModulePath(baseDir, packageName) {
+    def basePath = baseDir.toPath().normalize()
+    while (basePath) {
+        def candidatePath = java.nio.file.Paths.get(basePath.toString(), "node_modules", packageName)
+        if (candidatePath.toFile().exists()) {
+            return candidatePath.toString()
+        }
+        basePath = basePath.getParent()
+    }
+    return null
+}
+apply plugin: 'com.android.library'
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+apply plugin: 'kotlin-android'
+android {
+    compileSdkVersion 34
+    namespace "io.cux.rn"
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 34
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+def reactNativePath = findNodeModulePath(projectDir, "react-native")
+repositories {
+    google()
+    mavenCentral()
+    if (reactNativePath != null) {
+        maven { url "${reactNativePath}/android" }
+    }
+    maven {
+        url "https://packagecloud.io/cux/public-compose-gradle/maven2/"
+        // public repository — no credentials required
+    }
+}
+dependencies {
+    compileOnly "com.facebook.react:react-android"
+    implementation "io.cux:analytics-compose-sdk:0.0.43"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+}

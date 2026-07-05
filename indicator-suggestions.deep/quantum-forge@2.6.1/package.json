@@ -1,0 +1,69 @@
+{
+  "name": "quantum-forge",
+  "version": "2.6.1",
+  "description": "Quantum Forge WASM loader, property manager, and Vite plugin for quantum game development (Qutrit Edition d3n12 + Qubit Edition d2n20).",
+  "type": "module",
+  "exports": {
+    "./quantum": {
+      "types": "./dist/lib/quantum.d.ts",
+      "import": "./dist/lib/quantum.js"
+    },
+    "./logging": {
+      "types": "./dist/lib/logging.d.ts",
+      "import": "./dist/lib/logging.js"
+    },
+    "./vite-plugin": {
+      "types": "./dist/lib/vite-plugin.d.ts",
+      "import": "./dist/lib/vite-plugin.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "scripts/prepare.mjs",
+    "scripts/copy-quantum-forge.mjs",
+    "scripts/build-quantum-forge-variant.mjs",
+    "LICENSE.md",
+    "QUANTUM_FORGE.md"
+  ],
+  "scripts": {
+    "prepare": "node scripts/prepare.mjs",
+    "build:lib": "tsup",
+    "build:quantum-forge": "cd ../../wrappers/web && npm install && npm run build:medium && cd ../../framework/packages/core && node scripts/copy-quantum-forge.mjs",
+    "build:quantum-forge:small": "cd ../../wrappers/web && npm install && npm run build:small && cd ../../framework/packages/core && node scripts/copy-quantum-forge.mjs",
+    "build:quantum-forge:custom": "cd ../../wrappers/web && npm install && npm run build:custom -- --max-dimension 3 --max-qudits 32 && npm run build && cd ../../framework/packages/core && node scripts/copy-quantum-forge.mjs",
+    "build:quantum-forge:variant": "node scripts/build-quantum-forge-variant.mjs"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "quantum",
+    "quantum-forge",
+    "quantum-computing",
+    "wasm",
+    "webassembly",
+    "game",
+    "vite-plugin",
+    "qubit",
+    "qutrit",
+    "free"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quantum-native/quantum-forge.git"
+  },
+  "author": "Chris Cantwell",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

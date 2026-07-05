@@ -1,0 +1,136 @@
+{
+  "name": "@bounded-sh/client",
+  "version": "0.0.43",
+  "description": "Web and React Native client SDK for Bounded, the full-stack app builder and runtime for AI-built apps: hosted auth, policy-enforced data, files and search, functions, realtime subscriptions, and atomic writes.",
+  "homepage": "https://bounded.sh/docs/sdk",
+  "main": "./dist/index.js",
+  "react-native": "./dist/index.native.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./dist/index.native.d.ts",
+        "import": "./dist/index.native.mjs",
+        "require": "./dist/index.native.js",
+        "default": "./dist/index.native.js"
+      },
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf ./dist ./.rollup-tmp && tsc -p tsconfig.build.json --outDir .rollup-tmp --declarationDir .rollup-tmp --emitDeclarationOnly false && rollup -c && tsc -p tsconfig.build.json --emitDeclarationOnly --declarationDir dist && rm -rf ./.rollup-tmp",
+    "build:with-core": "cd ../tarobase-core && npm run build && cd ../js-sdk && npm run build",
+    "test": "find src -name '*.source.test.mjs' -print0 | xargs -0 -n1 node",
+    "use-local-core": "cp -r ../tarobase-core/. ./node_modules/@bounded-sh/core/",
+    "watch": "rollup -c -w",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist",
+    "REACT_NATIVE.md"
+  ],
+  "keywords": [
+    "bounded",
+    "full-stack",
+    "app-builder",
+    "app-runtime",
+    "ai-app-builder",
+    "realtime-backend",
+    "ai-apps",
+    "policy",
+    "auth",
+    "database",
+    "subscriptions",
+    "react-native",
+    "sdk"
+  ],
+  "author": "Bounded",
+  "license": "MIT",
+  "peerDependencies": {
+    "@phantom/react-sdk": ">=1",
+    "@privy-io/expo": ">=0.50",
+    "@privy-io/expo-native-extensions": ">=0.0.1",
+    "@privy-io/react-auth": ">=2",
+    "@solana-mobile/mobile-wallet-adapter-protocol-web3js": ">=2",
+    "@solana-mobile/wallet-adapter-mobile": ">=2",
+    "@solana-mobile/wallet-standard-mobile": ">=0.5",
+    "@solana/kit": ">=2",
+    "expo-crypto": ">=12",
+    "expo-web-browser": ">=12",
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
+    "react-native": ">=0.70"
+  },
+  "peerDependenciesMeta": {
+    "@phantom/react-sdk": {
+      "optional": true
+    },
+    "@privy-io/expo": {
+      "optional": true
+    },
+    "@privy-io/expo-native-extensions": {
+      "optional": true
+    },
+    "@privy-io/react-auth": {
+      "optional": true
+    },
+    "@solana-mobile/mobile-wallet-adapter-protocol-web3js": {
+      "optional": true
+    },
+    "@solana-mobile/wallet-adapter-mobile": {
+      "optional": true
+    },
+    "@solana-mobile/wallet-standard-mobile": {
+      "optional": true
+    },
+    "@solana/kit": {
+      "optional": true
+    },
+    "expo-crypto": {
+      "optional": true
+    },
+    "expo-web-browser": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@phantom/react-sdk": "1.0.2",
+    "@rollup/plugin-commonjs": "28.0.9",
+    "@rollup/plugin-json": "6.1.0",
+    "@rollup/plugin-node-resolve": "15.3.1",
+    "@solana-mobile/mobile-wallet-adapter-protocol-web3js": "2.2.8",
+    "@solana/kit": "5.0.0",
+    "@types/bs58": "4.0.4",
+    "@types/react": "19.2.9",
+    "@types/react-dom": "19.2.3",
+    "react": "19.0.1",
+    "react-dom": "19.0.1",
+    "rollup": "4.53.3",
+    "rollup-plugin-peer-deps-external": "2.2.4",
+    "rollup-plugin-typescript2": "0.36.0",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@bounded-sh/core": "0.0.42",
+    "@coral-xyz/anchor": "0.31.1",
+    "@solana/web3.js": "1.98.4",
+    "bs58": "6.0.0",
+    "buffer": "6.0.3",
+    "rpc-websockets": "9.3.9",
+    "ws": "^8.21.0"
+  },
+  "packageManager": "yarn@4.17.1+sha512.ccbfabf7d7b6b32075088be9386fb9a2e00bb6887ef07fa56effabc890a56d53da1ccc4128d62db245fcbd3961b236d75335bdf7d5320ed6eafb7588b7ad4697",
+  "publishConfig": {
+    "access": "public"
+  }
+}

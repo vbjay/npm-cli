@@ -1,0 +1,219 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a1d89c6222b306b4",
+    "fetchedFiles": [
+      "build/constants.js",
+      "build/dirs.js",
+      "build/env.js",
+      "build/findMsBuild.js",
+      "build/getLibsFactory.js",
+      "build/install.js",
+      "build/setupOpencv.js",
+      "build/utils.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "npmlog",
+        "versionSpec": "^4.1.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "npmlog@4.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "1a503e3d71fb87962405b846f940ca4ba6dc097fb6c43399e724f01db0d752fd",
+        "sizeBytes": 199,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/install.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/install.js",
+        "reason": "required by ./install.js",
+        "sha256": "fcfc84f8783d07feb5554f91e118f76a894cd1fced8ab58e9d10ce29d8f26d6a",
+        "sizeBytes": 7680,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "build/constants.js",
+          "build/dirs.js",
+          "build/env.js",
+          "build/getLibsFactory.js",
+          "build/setupOpencv.js",
+          "build/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/constants.js",
+        "reason": "required by ./build/install.js; required by ./build/setupOpencv.js",
+        "sha256": "c51d6ddd727754ae227256b87bc584ef85c08d391e73c17ef8d70beff3f9bfef",
+        "sizeBytes": 2461,
+        "signals": [
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/dirs.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/opencv/opencv_contrib/archive/3.4.6.tar.gz",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/opencv/opencv.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/opencv/opencv_contrib.git",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "build/dirs.js",
+        "reason": "required by ./build/constants.js; required by ./build/install.js; required by ./build/env.js; required by ./build/setupOpencv.js",
+        "sha256": "faedaaad43b425d7e527530994087a046d845986d252b95da017517de7cd8a40",
+        "sizeBytes": 1320,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/utils.js",
+        "reason": "required by ./build/dirs.js; required by ./build/findMsBuild.js; required by ./build/setupOpencv.js; required by ./build/install.js",
+        "sha256": "e8b7a16599a86741c8c21a80135effff53ad0683b6dc4705367151a03c38f320",
+        "sizeBytes": 8189,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/env.js",
+        "reason": "required by ./build/install.js; required by ./build/setupOpencv.js",
+        "sha256": "4b87f02ece5db0a393a6dd4f32e7a08a9babbfe7fc3fa1554ce5020b35667bcf",
+        "sizeBytes": 4764,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/dirs.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/getLibsFactory.js",
+        "reason": "required by ./build/install.js",
+        "sha256": "9b3d20427db5cacab786e37e291f49a6c823db52235ba00945cdeb51a1e760bc",
+        "sizeBytes": 1949,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/setupOpencv.js",
+        "reason": "required by ./build/install.js",
+        "sha256": "36becb662419bcea5d0c264e16b7d010c8e4c967bbb074e37499804a3501af7e",
+        "sizeBytes": 12613,
+        "signals": [
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/constants.js",
+          "build/dirs.js",
+          "build/env.js",
+          "build/findMsBuild.js",
+          "build/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/findMsBuild.js",
+        "reason": "required by ./build/setupOpencv.js",
+        "sha256": "8eb6ffc7c333afda0beab5f3cfaee9b4b107b53d06772b69b4c0a7b20a153fa4",
+        "sizeBytes": 7405,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "native-build",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/utils.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:48.166Z"
+  },
+  "hash": "sha256:3f7964ec010cf7394d1b7fd8545e4759852fb8fe25d7a92cc54e39529c341503"
+}

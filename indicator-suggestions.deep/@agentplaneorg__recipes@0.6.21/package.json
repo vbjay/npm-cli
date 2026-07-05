@@ -1,0 +1,57 @@
+{
+  "name": "@agentplaneorg/recipes",
+  "version": "0.6.21",
+  "description": "Recipe modules for repeatable Agentplane audit-layer workflows.",
+  "keywords": [
+    "agentplane",
+    "agentplane-framework",
+    "coding-agent",
+    "agent-audit",
+    "git-workflow",
+    "recipes",
+    "automation",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "Basilisk Labs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/basilisk-labs/agentplane.git"
+  },
+  "homepage": "https://agentplane.org",
+  "bugs": {
+    "url": "https://github.com/basilisk-labs/agentplane/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true}); require('node:fs').rmSync('tsconfig.tsbuildinfo',{force:true});\"",
+    "build": "node ../../scripts/checks/run-typescript-build.mjs && bun run build:bundle",
+    "build:bundle": "node ../../scripts/release/prune-package-js.mjs dist && node ../../scripts/checks/run-tsup-build.mjs && node ../../scripts/release/manifest.mjs build .",
+    "typecheck": "tsc -b",
+    "prepack": "bun run clean && bun run build && node ../../scripts/release/manifest.mjs sanitize .",
+    "postpack": "node ../../scripts/release/manifest.mjs build .",
+    "prepublishOnly": "node ../../scripts/release/enforce-github-publish.mjs && npm run prepack",
+    "test": "cd ../.. && vitest --config vitest.workspace.ts run --project recipes"
+  }
+}

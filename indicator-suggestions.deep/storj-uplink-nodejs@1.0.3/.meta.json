@@ -1,0 +1,205 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "62a700a3328a5172",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "47f66e56bba6079c6dc2f539cb7dbe32685a298e7dfdd2b17ca0bd8335b89367",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `uplink_native`  -  C/C++ sources",
+            "items": [
+              "native/src/addon.c",
+              "native/src/common/logger.c",
+              "native/src/common/handle_helpers.c",
+              "native/src/common/string_helpers.c",
+              "native/src/common/buffer_helpers.c",
+              "native/src/common/result_helpers.c",
+              "native/src/common/type_converters.c",
+              "native/src/common/library_loader.c",
+              "native/src/common/error_registry.c",
+              "native/src/common/object_converter.c",
+              "native/src/access/access_ops.c",
+              "native/src/access/access_execute.c",
+              "native/src/access/access_complete.c",
+              "native/src/project/project_ops.c",
+              "native/src/project/project_execute.c",
+              "native/src/project/project_complete.c",
+              "native/src/bucket/bucket_ops.c",
+              "native/src/bucket/bucket_execute.c",
+              "native/src/bucket/bucket_complete.c",
+              "native/src/object/object_ops.c",
+              "native/src/object/object_execute.c",
+              "native/src/object/object_complete.c",
+              "native/src/upload/upload_ops.c",
+              "native/src/upload/upload_execute.c",
+              "native/src/upload/upload_complete.c",
+              "native/src/download/download_ops.c",
+              "native/src/download/download_execute.c",
+              "native/src/download/download_complete.c",
+              "native/src/encryption/encryption_ops.c",
+              "native/src/encryption/encryption_execute.c",
+              "native/src/encryption/encryption_complete.c",
+              "native/src/multipart/multipart_ops.c",
+              "native/src/multipart/multipart_execute.c",
+              "native/src/multipart/multipart_complete.c",
+              "native/src/edge/edge_ops.c",
+              "native/src/edge/edge_execute.c",
+              "native/src/edge/edge_complete.c",
+              "native/src/debug/debug_ops.c"
+            ]
+          },
+          {
+            "label": "Target `uplink_native`  -  libraries",
+            "items": [
+              "-L<(module_root_dir)/native/prebuilds/darwin-<(target_arch)",
+              "-luplink",
+              "-Wl,-rpath,@loader_path/../../native/prebuilds/darwin-<(target_arch)",
+              "-Wl,-rpath,@loader_path",
+              "-L<(module_root_dir)/native/prebuilds/linux-<(target_arch)",
+              "-luplink",
+              "-Wl,--disable-new-dtags",
+              "-Wl,-rpath,'$$ORIGIN/../../native/prebuilds/linux-<(target_arch)'",
+              "-Wl,-rpath,'$$ORIGIN'",
+              "<(module_root_dir)/native/prebuilds/win32-<(target_arch)/uplink.lib"
+            ]
+          },
+          {
+            "label": "Target `uplink_native`  -  include directories",
+            "items": [
+              "native/include",
+              "native/src",
+              "native/src/common"
+            ]
+          },
+          {
+            "label": "Target `uplink_native`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "1e4db1817988529aac5dd355a34a6316659c9bf6ad294ff59521cd48934a981f",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "Libraries linked",
+            "items": [
+              "ib"
+            ]
+          },
+          {
+            "label": "External tools invoked",
+            "items": [
+              "node",
+              "npm",
+              "curl",
+              "python",
+              "python3"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "runtime-installer",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:14.904Z"
+  },
+  "hash": "sha256:2d9892239943694c22bce703e0d9bbfa13fd87c8ac4ac9ed65990377d7f0c018"
+}

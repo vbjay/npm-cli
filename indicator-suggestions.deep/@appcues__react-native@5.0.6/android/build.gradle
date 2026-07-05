@@ -1,0 +1,138 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['AppcuesReactNative_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:7.4.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+// Start RN version resolution
+// https://github.com/software-mansion/react-native-reanimated/blob/c288e54a248bc7f487b71243c0cbdc5e7a73a737/packages/react-native-reanimated/android/build.gradle
+
+def safeAppExtGet(prop, fallback) {
+  def appProject = rootProject.allprojects.find { it.plugins.hasPlugin('com.android.application') }
+  appProject?.ext?.has(prop) ? appProject.ext.get(prop) : fallback
+}
+
+def resolveReactNativeDirectory() {
+  def reactNativeLocation = safeAppExtGet("REACT_NATIVE_NODE_MODULES_DIR", null)
+  if (reactNativeLocation != null) {
+    return file(reactNativeLocation)
+  }
+
+  // Fallback to node resolver for custom directory structures like monorepos.
+  def reactNativePackage = file(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim())
+  if(reactNativePackage.exists()) {
+    return reactNativePackage.parentFile
+  }
+
+  throw new GradleException(
+    "[Appcues] Unable to resolve react-native location in node_modules. You should project extension property (in `app/build.gradle`) `REACT_NATIVE_NODE_MODULES_DIR` with path to react-native."
+  )
+}
+
+def reactNativeRootDir = resolveReactNativeDirectory()
+
+def reactProperties = new Properties()
+file("$reactNativeRootDir/ReactAndroid/gradle.properties").withInputStream { reactProperties.load(it) }
+
+def REACT_NATIVE_VERSION = reactProperties.getProperty("VERSION_NAME")
+def REACT_NATIVE_MINOR_VERSION = REACT_NATIVE_VERSION.startsWith("0.0.0-") ? 1000 : REACT_NATIVE_VERSION.split("\\.")[1].toInteger()
+
+// End RN version resolution
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["AppcuesReactNative_" + name]).toInteger()
+}
+
+android {
+  namespace "com.appcuesreactnative"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        isNewArchitectureEnabled() ? "src/newarch" : "src/oldarch",
+        // Support for RN 0.73 which needs TurboReactPackage
+        REACT_NATIVE_MINOR_VERSION <= 73 ? "src/package/73" : "src/package/latest"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+  mavenLocal()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  // noinspection GradleDynamicVersion
+  api 'com.facebook.react:react-native:+'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2"
+
+  // Appcues
+  api "com.appcues:appcues:5.0.3"
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "AppcuesReactNative"
+    codegenJavaPackageName = "com.appcuesreactnative"
+  }
+}

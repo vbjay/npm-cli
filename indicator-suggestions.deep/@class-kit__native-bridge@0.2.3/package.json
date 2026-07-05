@@ -1,0 +1,59 @@
+{
+  "name": "@class-kit/native-bridge",
+  "version": "0.2.3",
+  "description": "A universal H5 bridge SDK for exposing native shell capabilities to bundled web apps.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Class Kit",
+  "homepage": "https://github.com/class-kit/native-bridge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/class-kit/native-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/class-kit/native-bridge/issues"
+  },
+  "keywords": [
+    "tauri",
+    "tauri2",
+    "h5",
+    "desktop",
+    "bridge",
+    "webview",
+    "native"
+  ],
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "examples",
+    "tauri-native-bridge.js",
+    "README.md",
+    "CHANGELOG.md",
+    "COMPATIBILITY.md",
+    "PUBLISHING.md",
+    "TAURI_COMMANDS.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

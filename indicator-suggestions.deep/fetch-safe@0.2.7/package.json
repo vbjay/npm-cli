@@ -1,0 +1,68 @@
+{
+  "name": "fetch-safe",
+  "version": "0.2.7",
+  "description": "HTTP client with explicit Result-based error handling for TypeScript",
+  "keywords": [
+    "error-handling",
+    "fetch",
+    "golang",
+    "http",
+    "result",
+    "rust",
+    "tuple",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kodi/fetch-safe.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "check": "vp check",
+    "lint": "vp lint",
+    "fmt": "vp fmt --write src tests perf",
+    "fmt:check": "vp fmt --check src tests perf",
+    "test": "vp test run",
+    "test:watch": "vp test",
+    "preperf": "vp run build",
+    "perf": "node --import tsx perf/bench.ts",
+    "preperf:memory": "vp run build",
+    "perf:memory": "node --expose-gc --import tsx perf/memory.ts",
+    "preperf:soak": "vp run build",
+    "perf:soak": "node --expose-gc --import tsx perf/soak.ts",
+    "prepack": "vp run build",
+    "prepare": "vp config"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@typescript/native-preview": "latest",
+    "cli-table3": "^0.6.5",
+    "tinybench": "^6.0.2",
+    "tsx": "^4.23.0",
+    "typescript": "latest",
+    "vite": "catalog:",
+    "vite-plus": "catalog:",
+    "zod": "^4.4.3"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.10.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.10.0"
+}

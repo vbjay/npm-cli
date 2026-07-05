@@ -1,0 +1,77 @@
+{
+  "name": "@fastify/pre-commit",
+  "version": "2.2.1",
+  "description": "Automatically install pre-commit hooks for your npm modules.",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "example-fail": "echo \"This is the example hook, I exit with 1\" && exit 1",
+    "example-pass": "echo \"This is the example hook, I exit with 0\" && exit 0",
+    "install": "node install.js",
+    "unit": "c8 node --test",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "test": "npm run unit",
+    "uninstall": "node uninstall.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fastify/pre-commit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fastify/pre-commit/issues"
+  },
+  "keywords": [
+    "git",
+    "hooks",
+    "npm",
+    "pre-commit",
+    "precommit",
+    "run",
+    "test",
+    "development"
+  ],
+  "author": "Arnout Kazemier <opensource@observe.it>",
+  "contributors": [
+    {
+      "name": "Matteo Collina",
+      "email": "hello@matteocollina.com"
+    },
+    {
+      "name": "Aras Abbasi",
+      "email": "aras.abbasi@gmail.com"
+    },
+    {
+      "name": "James Sumners",
+      "url": "https://james.sumners.info"
+    },
+    {
+      "name": "Frazer Smith",
+      "email": "frazer.dev@icloud.com",
+      "url": "https://github.com/fdawgs"
+    }
+  ],
+  "homepage": "https://github.com/fastify/pre-commit",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/fastify"
+    },
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/fastify"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "cross-spawn": "^7.0.3",
+    "which": "^5.0.0"
+  },
+  "devDependencies": {
+    "c8": "^10.1.2",
+    "eslint": "^9.17.0",
+    "neostandard": "^0.12.0",
+    "pre-commit": "git+https://git@github.com/fastify/pre-commit.git",
+    "proxyquire": "^2.1.3"
+  }
+}

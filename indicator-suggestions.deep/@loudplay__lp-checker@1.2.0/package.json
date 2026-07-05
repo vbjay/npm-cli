@@ -1,0 +1,46 @@
+{
+  "name": "@loudplay/lp-checker",
+  "version": "1.2.0",
+  "description": "A library to fetch OS and device characteristics and capabilities.",
+  "main": "index.js",
+  "binary": {
+    "module_name": "checker",
+    "module_path": "./binding/napi-v{napi_build_version}",
+    "host": "https://github.com",
+    "remote_path": "./loudplay/lp-checker-js/releases/download/v{version}/",
+    "package_name": "{module_name}-v{version}-napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
+    "napi_versions": [
+      3
+    ]
+  },
+  "scripts": {
+    "install": "echo",
+    "build": "node tools/build.js",
+    "clean": "rm -rf binding"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/loudplay/lp-checker.git"
+  },
+  "keywords": [
+    "probe",
+    "addon",
+    "os",
+    "hardware"
+  ],
+  "author": "Loudplay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loudplay/lp-checker/issues"
+  },
+  "homepage": "https://github.com/loudplay/lp-checker#readme",
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.7",
+    "node-addon-api": "^3.2.1"
+  },
+  "types": "types/index.d.ts",
+  "gypfile": "true",
+  "engines": {
+    "node": ">= 8"
+  }
+}

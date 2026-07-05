@@ -1,0 +1,145 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// android/build.gradle
+
+apply plugin: 'com.android.library'
+apply plugin: "kotlin-android"
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: 'com.facebook.react'
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "SmartechNudges"
+    codegenJavaPackageName = "io.hansel.react"
+  }
+}
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+buildscript {
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+        }
+        ext {
+            kotlin_version = "1.8.20"
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:8.1.2'
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+// Matches values in recent template from React Native 0.59 / 0.60
+// https://github.com/facebook/react-native/blob/0.59-stable/template/android/build.gradle#L5-L9
+// https://github.com/facebook/react-native/blob/0.60-stable/template/android/build.gradle#L5-L9
+def DEFAULT_COMPILE_SDK_VERSION = 33
+//def DEFAULT_BUILD_TOOLS_VERSION = ""
+def DEFAULT_MIN_SDK_VERSION = 19
+def DEFAULT_TARGET_SDK_VERSION = 33
+def sdkFlavor = "prod"
+def hanselV = "10.2.11"
+def sdkMaven = "prod"
+
+android {
+     namespace = "io.hansel.react"
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+   // buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+              println "Using NEW architecture source set"
+                java.srcDirs += ['src/newarch']
+                kotlin.srcDirs += ['src/newarch']
+            } else {
+              println "Using OLD architecture source set"
+                java.srcDirs += ['src/oldarch']
+                 kotlin.srcDirs += ['src/oldarch']
+            }
+        }
+    }
+
+    buildTypes {
+        prod {
+
+        }
+        stage {
+
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+       jvmTarget = "17"
+    }
+    buildFeatures {
+      buildConfig true
+    }
+}
+
+repositories {
+    if ("${sdkMaven}" == "${"local"}") {
+        mavenLocal()
+    }
+    else {
+        maven{
+            url "https://artifacts.netcore.co.in/artifactory/android"
+        }
+    }
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url "$rootDir/../node_modules/react-native/android"
+    }
+    maven {
+        // Android JSC is installed from npm
+        url "$rootDir/../node_modules/jsc-android/dist"
+    }
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    compileOnly "com.facebook.react:react-native:+"
+    compileOnly "com.facebook.react:react-android:+"
+    implementation 'com.facebook.react:react-native:+'
+    if ("${sdkFlavor}" == "${"prod"}") {
+        api 'com.netcore.android:smartech-nudges:' + "${hanselV}"
+        //implementation 'com.netcore.android:smartech-sdk:' + "${smartechV}"
+    } else {
+        api 'com.netcore.android:smartech-nudgesstage:' + "${hanselV}"
+        //implementation 'com.netcore.android:smartech-sdkstage:' + "${smartechV}"
+    }
+}

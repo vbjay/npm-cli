@@ -1,0 +1,46 @@
+{
+  "name": "@eric-gitta-moore/storybook-addon-deep-controls",
+  "version": "0.6.2-beta.0",
+  "description": "A Storybook addon that extends @storybook/addon-controls and provides an alternative to interacting with object arguments",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliasm307/storybook-addon-deep-controls.git"
+  },
+  "keywords": [
+    "storybook",
+    "addon",
+    "controls"
+  ],
+  "author": "Elias Mangoro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eliasm307/storybook-addon-deep-controls/issues"
+  },
+  "homepage": "https://github.com/eliasm307/storybook-addon-deep-controls#readme",
+  "files": [
+    "dist/utils/",
+    "dist/preview.js",
+    "preset.js",
+    "register.js",
+    "index.d.ts"
+  ],
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc -p tsconfig.build.json",
+    "buildw": "tsc -p tsconfig.build.json -w",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "@storybook/addon-controls": "7.x.x || 8.x.x",
+    "storybook": "7.x.x || 8.x.x"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^1.5.0",
+    "react": "18.2.0",
+    "vitest": "^1.5.0"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6585d0363dccf4b8",
+    "fetchedFiles": [
+      "bin/native.js",
+      "package.json",
+      "scripts/install-binary.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-binary.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f280573f5bdcdb2410a89b9a982a7e67e2f8df56d9336ad50e95d314110b5c05",
+        "sizeBytes": 6424,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/native.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/native.js",
+        "reason": "required by ./scripts/install-binary.js",
+        "sha256": "73dcb7616d2394cda138c4353182224a58ff203460af1007b9abb39934bea1f7",
+        "sizeBytes": 3975,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/lpm-dev/rust-client",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:26.501Z"
+  },
+  "hash": "sha256:b87d0bbff67682defecdc6dcbd93f43c152219ffa4270cb97322b73d268c5c14"
+}

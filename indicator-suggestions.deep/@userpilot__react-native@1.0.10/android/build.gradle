@@ -1,0 +1,196 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['UserpilotReactNative_' + name]
+  }
+
+  repositories {
+    mavenLocal()
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+
+// Start RN version resolution
+// https://github.com/software-mansion/react-native-reanimated/blob/c288e54a248bc7f487b71243c0cbdc5e7a73a737/packages/react-native-reanimated/android/build.gradle
+
+def safeAppExtGet(prop, fallback) {
+  def appProject = rootProject.allprojects.find { it.plugins.hasPlugin('com.android.application') }
+  appProject?.ext?.has(prop) ? appProject.ext.get(prop) : fallback
+}
+
+def resolveReactNativeDirectory() {
+  def reactNativeLocation = safeAppExtGet("REACT_NATIVE_NODE_MODULES_DIR", null)
+  if (reactNativeLocation != null) {
+    return file(reactNativeLocation)
+  }
+
+  // Fallback to node resolver for custom directory structures like monorepos.
+  def reactNativePackage = file(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim())
+  if(reactNativePackage.exists()) {
+    return reactNativePackage.parentFile
+  }
+
+  throw new GradleException(
+    "[Userpilot] Unable to resolve react-native location in node_modules. You should project extension property (in `app/build.gradle`) `REACT_NATIVE_NODE_MODULES_DIR` with path to react-native."
+  )
+}
+
+def reactNativeRootDir = resolveReactNativeDirectory()
+
+def reactProperties = new Properties()
+file("$reactNativeRootDir/ReactAndroid/gradle.properties").withInputStream { reactProperties.load(it) }
+
+def REACT_NATIVE_VERSION = reactProperties.getProperty("VERSION_NAME")
+def REACT_NATIVE_MINOR_VERSION = REACT_NATIVE_VERSION.startsWith("0.0.0-") ? 1000 : REACT_NATIVE_VERSION.split("\\.")[1].toInteger()
+
+// End RN version resolution
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["UserpilotReactNative_" + name]).toInteger()
+}
+
+def supportsNamespace() {
+  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+  def major = parsed[0].toInteger()
+  def minor = parsed[1].toInteger()
+
+  // Namespace support was added in 7.3.0
+  return (major == 7 && minor >= 3) || major >= 8
+}
+
+allprojects {
+  repositories {
+    mavenLocal()
+    google()
+    mavenCentral()
+  }
+}
+
+android {
+  if (supportsNamespace()) {
+    namespace "com.userpilot.reactnative"
+
+    sourceSets {
+      main {
+        manifest.srcFile "src/main/AndroidManifestNew.xml"
+      }
+    }
+  }
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+
+    // if (isNewArchitectureEnabled()) {
+    //   externalNativeBuild {
+    //     cmake {
+    //       cppFlags "-O2 -frtti -fexceptions -Wall -Wno-unused-variable -fstack-protector-all"
+    //       abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+    //       arguments "-DANDROID_STL=c++_shared"
+    //     }
+    //   }
+    // }
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  // if (isNewArchitectureEnabled()) {
+  //   externalNativeBuild {
+  //     cmake {
+  //       path "CMakeLists.txt"
+  //     }
+  //   }
+  // }
+
+  // packagingOptions {
+  //   pickFirst '**/libc++_shared.so'
+  // }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+//  sourceSets {
+//    main {
+//      if (isNewArchitectureEnabled()) {
+//          java.srcDirs += [
+//            "generated/java",
+//            "generated/jni"
+//          ]
+//      }
+//    }
+//  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        isNewArchitectureEnabled() ? "src/newarch" : "src/oldarch",
+        // Support for RN 0.73 which needs TurboReactPackage
+        REACT_NATIVE_MINOR_VERSION <= 73 ? "src/package/73" : "src/package/latest"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Userpilot
+  api "com.userpilot:userpilot-android:1.0.14"
+  // local Userpilot SDK
+  // implementation("com.userpilot:userpilot:1.0.2")
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "UserpilotReactNative"
+    codegenJavaPackageName = "com.userpilot.reactnative"
+  }
+}

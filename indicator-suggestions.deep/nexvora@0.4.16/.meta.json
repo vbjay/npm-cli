@@ -1,0 +1,92 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "34ca60467e2dddb5",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "1918cfa668ee8ac63033813114820f256766f8c8db15a7eb251ffbdb724450b9",
+        "sizeBytes": 6627,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://registry.npmjs.org/",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:15.400Z"
+  },
+  "hash": "sha256:158177c4d3512ff4834ffcc851ec49e87fc0ba080d8ee30acdb6bbf1fb7ae35b"
+}

@@ -1,0 +1,118 @@
+{
+  "name": "eslint-config-vaadin",
+  "version": "1.0.0-beta.6",
+  "description": "Vaadin base JS/TS ESLint config",
+  "type": "module",
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "config",
+    "vaadin",
+    "javascript",
+    "typescript",
+    "react",
+    "styleguide",
+    "es2015",
+    "es2016",
+    "es2017",
+    "es2018",
+    "es2019",
+    "es2020",
+    "es2021",
+    "es2022"
+  ],
+  "homepage": "https://github.com/vaadin/eslint-config-vaadin#readme",
+  "bugs": {
+    "url": "https://github.com/vaadin/eslint-config-vaadin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaadin/eslint-config-vaadin.git"
+  },
+  "license": "Apache-2.0",
+  "contributors": [
+    "Sergey Vinogradov <mr.vursen@gmail.com> (https://github.com/vursen)",
+    "Serhii Kulykov <iamkulykov@gmail.com> (https://github.com/web-padawan)",
+    "Vlad Rindevich <github.aqwb5@mail.ausginer.com> (https://github.com/Lodin)"
+  ],
+  "exports": {
+    ".": "./javascript.js",
+    "./javascript": "./javascript.js",
+    "./imports": "./imports.js",
+    "./imports-typescript": "./imports-typescript.js",
+    "./lit": "./lit.js",
+    "./prettier": "./prettier.js",
+    "./react": "./react.js",
+    "./react-perf": "./react-perf.js",
+    "./sort": "./sort.js",
+    "./testing": "./testing.js",
+    "./typescript": "./typescript.js",
+    "./typescript-requiring-type-checking": "./typescript-requiring-type-checking.js"
+  },
+  "main": "javascript.js",
+  "files": [
+    "./imports.{js,d.ts,js.map}",
+    "./imports-typescript.{js,d.ts,js.map}",
+    "./javascript.{js,d.ts,js.map}",
+    "./lit.{js,d.ts,js.map}",
+    "./prettier.{js,d.ts,js.map}",
+    "./react.{js,d.ts,js.map}",
+    "./react-perf.{js,d.ts,js.map}",
+    "./rules",
+    "./sort.{js,d.ts,js.map}",
+    "./testing.{js,d.ts,js.map}",
+    "./tsconfig.recommended.json",
+    "./typescript-requiring-type-checking.{js,d.ts,js.map}",
+    "./typescript.{js,d.ts,js.map}",
+    "./utils.{js,d.ts,js.map}"
+  ],
+  "scripts": {
+    "clear": "git clean -fx . -e node_modules -e .idea -e .vscode",
+    "build": "concurrently npm:build:sources npm:build:copy",
+    "build:sources": "tsc -p tsconfig.build.json",
+    "build:copy": "tsx scripts/copy.ts",
+    "check": "tsx tools/missing-rule-checker/index.ts",
+    "format": "prettier . --write",
+    "prepack": "npm run build",
+    "sort": "tsx tools/sorter/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "grab": "tsx tools/grab.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@babel/core": "7.29.0",
+    "@babel/eslint-parser": "7.28.6",
+    "@types/eslint": "9.6.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-import-resolver-typescript": "4.4.4",
+    "eslint-plugin-chai-friendly": "1.2.0",
+    "eslint-plugin-import-x": "4.16.2",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-lit": "2.2.1",
+    "eslint-plugin-perfectionist": "5.9.0",
+    "eslint-plugin-prettier": "5.5.5",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-perf": "3.3.3",
+    "typescript-eslint": "8.59.1"
+  },
+  "devDependencies": {
+    "@types/eslint-config-prettier": "6.11.3",
+    "@types/node": "25.6.0",
+    "concurrently": "9.2.1",
+    "prettier-plugin-packagejson": "3.0.2",
+    "puppeteer-core": "24.42.0",
+    "tsc-template": "0.2.3",
+    "tsx": "4.21.0",
+    "typescript": "6.0.3"
+  },
+  "peerDependencies": {
+    "eslint": "^9",
+    "prettier": "^3"
+  },
+  "overrides": {
+    "tsc-template": {
+      "typescript": "$typescript"
+    }
+  }
+}

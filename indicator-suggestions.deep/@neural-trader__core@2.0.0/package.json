@@ -1,0 +1,80 @@
+{
+  "name": "@neural-trader/core",
+  "version": "2.0.0",
+  "description": "Ultra-low latency neural trading engine with Rust + Node.js bindings",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neural-trader/neural-trader-rust.git"
+  },
+  "keywords": [
+    "trading",
+    "algorithmic-trading",
+    "crypto",
+    "ai",
+    "machine-learning",
+    "rust",
+    "napi-rs",
+    "neural-network",
+    "high-frequency-trading"
+  ],
+  "author": "Neural Trader Team",
+  "license": "MIT",
+  "napi": {
+    "name": "neural-trader",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-gnu",
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin",
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-musl"
+      ]
+    }
+  },
+  "bin": {
+    "neural-trader": "./bin/cli.js"
+  },
+  "scripts": {
+    "build": "cargo build --package nt-napi-bindings --release && napi build --platform --release --cargo-cwd crates/napi-bindings",
+    "build:debug": "cargo build --package nt-napi-bindings && napi build --platform --cargo-cwd crates/napi-bindings",
+    "build:all": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cli": "node tests/cli-test.js",
+    "test:sdk": "node tests/sdk-test.js",
+    "test:mcp": "node tests/mcp-test.js",
+    "test:all": "npm run test:cli && npm run test:sdk && npm run test:mcp",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  },
+  "optionalDependencies": {
+    "@neural-trader/linux-x64-gnu": "0.1.0",
+    "@neural-trader/darwin-x64": "0.1.0",
+    "@neural-trader/darwin-arm64": "0.1.0",
+    "@neural-trader/win32-x64-msvc": "0.1.0",
+    "@neural-trader/linux-x64-musl": "0.1.0"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node",
+    "bin/",
+    "scripts/postinstall.js",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

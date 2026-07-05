@@ -1,0 +1,53 @@
+{
+  "name": "bbop-core",
+  "version": "0.1.0",
+  "description": "A set of useful and common JavaScript functions to supplement other more basic utility libraries.",
+  "keywords": [
+    "Berkeley BOP",
+    "GO",
+    "Gene Ontology",
+    "bbop",
+    "client",
+    "general",
+    "node",
+    "npm",
+    "server",
+    "utilities",
+    "utility"
+  ],
+  "homepage": "https://berkeleybop.org/",
+  "bugs": {
+    "url": "https://github.com/berkeleybop/bbop-js-monorepo/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "SJC <sjcarbon@lbl.gov>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/berkeleybop/bbop-js-monorepo.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/core.mjs",
+      "require": "./dist/core.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsdown --format esm --format cjs src/core.js",
+    "prepack": "npm run build",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "underscore": "^1.13.8"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2"
+  },
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "gitHead": "e16f9cba2ad153ec303cbea697fb3003a909040a"
+}

@@ -1,0 +1,141 @@
+{
+    "name": "react-native-reanimated-table",
+    "version": "0.0.2",
+    "description": "📊 A React Native table component using react-native-reanimated and react-native-gesture-handler.",
+    "main": "lib/commonjs/index",
+    "react-native": "src/index.tsx",
+    "types": "lib/typescript/index.d.ts",
+    "source": "src/index",
+    "files": [
+        "lib",
+        "src"
+    ],
+    "scripts": {
+        "test": "jest run src/**/*",
+        "test:dev": "jest dev src/**/*",
+        "typescript": "tsc --noEmit",
+        "lint": "eslint 'src/**/*.{js,ts,tsx}'",
+        "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix",
+        "dev": "yarn watch 'yarn prepare' ./src",
+        "prepare": "bob build",
+        "release": "yarn prepare && dotenv release-it --no-git.requireUpstream",
+        "preRelease": "yarn prepare && dotenv release-it --no-git.requireUpstream --preRelease=beta",
+        "ios": "yarn --cwd exampleExpo ios",
+        "ios:pretty": "yarn --cwd exampleExpo ios:pretty",
+        "web": "yarn --cwd exampleExpo web",
+        "web:pretty": "yarn --cwd exampleExpo web:pretty",
+        "android": "yarn --cwd exampleExpo android",
+        "android:pretty": "yarn --cwd exampleExpo android:pretty",
+        "pods": "cd exampleExpo && pod-install --quiet",
+        "bootstrap": "yarn && yarn pods",
+        "deploy": "cd exampleExpo && yarn deploy",
+        "publish": "yarn run prepare && changeset publish",
+        "version": "changeset version"
+    },
+    "keywords": [
+        "react-native",
+        "ios",
+        "android"
+    ],
+    "repository": "https://github.com/dohooo/react-native-reanimated-table",
+    "author": "Caspian <caspian.zhao@outlook.com> (https://github.com/dohooo)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dohooo/react-native-reanimated-table/issues"
+    },
+    "homepage": "https://github.com/dohooo/react-native-reanimated-table#readme",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "devDependencies": {
+        "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+        "@dohooo/eslint-config": "^0.0.7",
+        "@types/react": "^18.2.0",
+        "@types/react-native": "^0.71.6",
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.10.0",
+        "eslint-plugin-react": "^7.11.1",
+        "eslint-plugin-react-native": "^3.5.0",
+        "metro-react-native-babel-preset": "^0.76.3",
+        "prettier": "^1.15.3",
+        "react-native-builder-bob": "^0.18.1"
+    },
+    "peerDependencies": {
+        "react": ">=16.8.0",
+        "react-native": ">=0.6.0"
+    },
+    "jest": {
+        "preset": "react-native",
+        "modulePathIgnorePatterns": [
+            "<rootDir>/exampleExpo/node_modules",
+            "<rootDir>/exampleBare/node_modules",
+            "<rootDir>/lib/"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+            "pre-commit": "yarn test && yarn lint && yarn typescript"
+        }
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "release-it": {
+        "git": {
+            "commitMessage": "chore: release ${version}",
+            "tagName": "v${version}"
+        },
+        "npm": {
+            "publish": true
+        },
+        "github": {
+            "release": true
+        },
+        "plugins": {
+            "@release-it/conventional-changelog": {
+                "preset": {
+                    "name": "angular",
+                    "types": [
+                        {
+                            "type": "feat",
+                            "section": "Features"
+                        },
+                        {
+                            "type": "fix",
+                            "section": "Bug Fixes"
+                        },
+                        {}
+                    ]
+                },
+                "infile": "CHANGELOG.md"
+            }
+        }
+    },
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            [
+                "commonjs",
+                {
+                    "configFile": "./babel.config.js"
+                }
+            ],
+            "module",
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.build.json"
+                }
+            ]
+        ]
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
+}

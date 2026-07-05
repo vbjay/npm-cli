@@ -1,0 +1,101 @@
+{
+  "name": "@react-native-documents/picker",
+  "version": "12.0.1",
+  "description": "A react native interface to access documents from dropbox, google drive, iCloud...",
+  "funding": "https://github.com/react-native-documents/document-picker?sponsor=1",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "windows",
+    "cpp",
+    "LICENSE.md",
+    "react-native-document-picker.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "jest/build"
+  ],
+  "scripts": {
+    "build:mock": "tsc --build jest",
+    "prepare": "bob build && yarn build:mock"
+  },
+  "codegenConfig": {
+    "name": "rndocumentpickerCGen",
+    "type": "modules",
+    "jsSrcsDir": "src/spec",
+    "android": {
+      "javaPackageName": "com.reactnativedocumentpicker"
+    }
+  },
+  "keywords": [
+    "react-native",
+    "document",
+    "picker",
+    "uidocumentmenuviewcontroller",
+    "dropbox",
+    "google-drive",
+    "icloud"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-native-documents/document-picker.git"
+  },
+  "author": "Vojtech Novak (hello@react-native-training.eu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-native-documents/document-picker/issues"
+  },
+  "homepage": "https://github.com/react-native-documents/document-picker#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.4",
+    "react-native-builder-bob": "^0.40.13",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.79.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

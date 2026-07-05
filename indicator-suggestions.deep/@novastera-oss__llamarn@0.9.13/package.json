@@ -1,0 +1,215 @@
+{
+  "name": "@novastera-oss/llamarn",
+  "version": "0.9.13",
+  "description": "React Native library for on-device LLM inference using llama.cpp. Part of Novastera CRM/ERP platform ecosystem.",
+  "source": "./src/index.tsx",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "RNLlamaCpp.podspec",
+    "LICENSE",
+    "README.md",
+    "BREAKING.md",
+    "INTERFACE.md",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "!cpp/llama.cpp/examples",
+    "!cpp/llama.cpp/tools/CMakeLists.txt",
+    "!cpp/llama.cpp/tools/batched-bench",
+    "!cpp/llama.cpp/tools/cli",
+    "!cpp/llama.cpp/tools/completion",
+    "!cpp/llama.cpp/tools/cvector-generator",
+    "!cpp/llama.cpp/tools/export-lora",
+    "!cpp/llama.cpp/tools/fit-params",
+    "!cpp/llama.cpp/tools/gguf-split",
+    "!cpp/llama.cpp/tools/imatrix",
+    "!cpp/llama.cpp/tools/llama-bench",
+    "!cpp/llama.cpp/tools/parser",
+    "!cpp/llama.cpp/tools/perplexity",
+    "!cpp/llama.cpp/tools/quantize",
+    "!cpp/llama.cpp/tools/results",
+    "!cpp/llama.cpp/tools/rpc",
+    "!cpp/llama.cpp/tools/server",
+    "!cpp/llama.cpp/tools/tokenize",
+    "!cpp/llama.cpp/tools/tts",
+    "!cpp/llama.cpp/.devops",
+    "!cpp/llama.cpp/.github",
+    "!cpp/llama.cpp/.git",
+    "!cpp/llama.cpp/.gitignore",
+    "!cpp/llama.cpp/.gitmodules",
+    "!cpp/llama.cpp/ci",
+    "!cpp/llama.cpp/docs",
+    "!cpp/llama.cpp/scripts",
+    "!cpp/llama.cpp/tests",
+    "!cpp/llama.cpp/models",
+    "!cpp/llama.cpp/benches"
+  ],
+  "scripts": {
+    "example": "npm --workspace=example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "clean": "rm -rf android/build example/android/build example/android/app/build example/ios/build lib",
+    "clean-llama": "node scripts/setup-llama-cpp.js clean",
+    "clean-android": "rm -rf android/.cxx android/build android/src/main/jniLibs/x86 android/src/main/jniLibs/armeabi-v7a && find android/src/main/jniLibs -name '*.dylib' -delete 2>/dev/null || true",
+    "clean-prebuilt": "rm -rf prebuilt/build-android prebuilt/gpu",
+    "prepare": "bob build",
+    "release": "release-it",
+    "setup-llama-cpp": "node scripts/setup-llama-cpp.js",
+    "llama-status": "node scripts/setup-llama-cpp.js check",
+    "llama-init": "node scripts/setup-llama-cpp.js init",
+    "llama-tags": "bash scripts/llama_cpp_source.sh list-tags",
+    "llama-from-source": "LLAMACPPRN_BUILD_FROM_SOURCE=true node scripts/setup-llama-cpp.js",
+    "build-android": "npm run clean-android && bash scripts/build_android_gpu_backend.sh && bash scripts/build_android_external.sh",
+    "build-android-gpu": "bash scripts/build_android_gpu_backend.sh",
+    "build-android-external": "bash scripts/build_android_external.sh",
+    "build-android-clean": "bash scripts/build_android_external.sh --clean-prebuilt",
+    "build-android-macos": "npm run clean-android && npm run clean-prebuilt && bash scripts/build_android_gpu_backend.sh --no-vulkan --no-opencl --clean && bash scripts/build_android_external.sh --no-vulkan --no-opencl --clean",
+    "pack:verify": "bash scripts/verify-pack-contents.sh"
+  },
+  "keywords": [
+    "react-native",
+    "ai",
+    "artificial-intelligence",
+    "llm",
+    "large-language-model",
+    "llama",
+    "llama.cpp",
+    "llama-cpp",
+    "llama-cpp-turbo-module-library",
+    "on-device-ai",
+    "mobile-ai",
+    "crm",
+    "erp",
+    "novastera",
+    "machine-learning",
+    "ml",
+    "inference",
+    "embeddings",
+    "chat-completion",
+    "tool-calling",
+    "reasoning",
+    "thinking-models",
+    "ios",
+    "android",
+    "mobile",
+    "turbo-module",
+    "cpp",
+    "native-module"
+  ],
+  "author": {
+    "name": "Hassan",
+    "email": "hassan@novastera.com"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://novastera.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DarkSorrow/llamarn"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/gradle-plugin": "0.85.3",
+    "@react-native/jest-preset": "0.85.3",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.1",
+    "del-cli": "^6.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.0.3",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-builder-bob": "^0.41.0",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/",
+      "<rootDir>/cpp/llama.cpp/tools/server/webui/",
+      "<rootDir>/cpp/llama.cpp/tools/ui/"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/cpp/llama.cpp/tools/server/webui/",
+      "<rootDir>/cpp/llama.cpp/tools/ui/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "codegen",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNLlamaCppSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.novastera.llamarn"
+    },
+    "includesGeneratedCode": true
+  },
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "cpp",
+    "version": "0.49.8"
+  }
+}

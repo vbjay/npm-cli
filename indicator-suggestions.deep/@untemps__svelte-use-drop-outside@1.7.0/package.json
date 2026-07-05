@@ -1,0 +1,107 @@
+{
+	"name": "@untemps/svelte-use-drop-outside",
+	"version": "1.7.0",
+	"author": "Vincent Le Badezet <v.lebadezet@untemps.net>",
+	"license": "MIT",
+	"description": "Svelte action to drop an element outside an area",
+	"keywords": ["drag", "drop", "dragndrop", "svelte", "svelte-action", "action", "javascript"],
+	"private": false,
+	"type": "module",
+	"repository": "https://github.com/untemps/svelte-use-drop-outside.git",
+	"bugs": "https://github.com/untemps/svelte-use-drop-outside/issues",
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "dist/index.cjs",
+	"module": "dist/index.es.js",
+	"svelte": "dist/index.es.js",
+	"exports": {
+		".": {
+			"svelte": "./dist/index.es.js",
+			"import": "./dist/index.es.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"files": ["dist"],
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"dependencies": {
+		"@untemps/dom-observer": "^2.0.0",
+		"@untemps/utils": "3"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "20",
+		"@commitlint/config-conventional": "20",
+		"@semantic-release/changelog": "^6.0.1",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "12",
+		"@sveltejs/vite-plugin-svelte": "^7.0.0",
+		"@testing-library/jest-dom": "^6.0.0",
+		"@testing-library/svelte": "^5.0.0",
+		"@vitest/coverage-v8": "^4.0.0",
+		"husky": "9",
+		"jsdom": "^29.0.0",
+		"prettier": "^3.0.0",
+		"prettier-plugin-svelte": "^3.0.0",
+		"semantic-release": "25",
+		"svelte": "^5.0.0",
+		"vite": "^8.0.0",
+		"vite-plugin-css-injected-by-js": "^4.0.0",
+		"vitest": "^4.0.0"
+	},
+	"scripts": {
+		"dev": "cd dev && yarn && yarn dev",
+		"build": "vite build",
+		"test": "vitest --coverage",
+		"test:ci": "vitest run --coverage",
+		"prettier": "prettier \"**/*.{js,svelte,json}\" --ignore-path ./.prettierignore --write && git add . && git status",
+		"prepare": "husky"
+	},
+	"release": {
+		"branches": [
+			"main",
+			{
+				"name": "beta",
+				"prerelease": true
+			}
+		],
+		"plugins": [
+			[
+				"@semantic-release/commit-analyzer",
+				{
+					"releaseRules": [
+						{
+							"type": "chore",
+							"scope": "force",
+							"release": "patch"
+						}
+					]
+				}
+			],
+			"@semantic-release/release-notes-generator",
+			"@semantic-release/changelog",
+			"@semantic-release/npm",
+			"@semantic-release/git",
+			[
+				"@semantic-release/github",
+				{
+					"assets": [
+						{
+							"path": "dist/index.cjs",
+							"label": "CJS distribution"
+						},
+						{
+							"path": "dist/index.es.js",
+							"label": "ES distribution"
+						},
+						{
+							"path": "dist/index.umd.js",
+							"label": "UMD distribution"
+						}
+					]
+				}
+			]
+		]
+	}
+}

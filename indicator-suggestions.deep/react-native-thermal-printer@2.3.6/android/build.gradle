@@ -1,0 +1,64 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            jcenter()
+        }
+
+        dependencies {
+            classpath("com.android.tools.build:gradle:7.3.1")
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    compileSdkVersion safeExtGet('ThermalPrinter_compileSdkVersion', 33)
+    buildToolsVersion safeExtGet('ThermalPrinter_buildToolsVersion', '33.0.0')
+    defaultConfig {
+        minSdkVersion safeExtGet('ThermalPrinter_minSdkVersion', 21)
+        targetSdkVersion safeExtGet('ThermalPrinter_targetSdkVersion', 33)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    google()
+    jcenter()
+    maven { url 'https://www.jitpack.io' }
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.github.DantSu:ESCPOS-ThermalPrinter-Android:3.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+}

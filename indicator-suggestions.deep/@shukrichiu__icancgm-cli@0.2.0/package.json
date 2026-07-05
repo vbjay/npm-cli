@@ -1,0 +1,49 @@
+{
+  "name": "@shukrichiu/icancgm-cli",
+  "version": "0.2.0",
+  "description": "CLI wrapper for querying SINO CGM production data through the icancgm Rust binary.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "homepage": "https://github.com/ShukriChiu/icancgm-cli#readme",
+  "bugs": {
+    "url": "https://github.com/ShukriChiu/icancgm-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShukriChiu/icancgm-cli.git",
+    "directory": "packages/sino-cli"
+  },
+  "keywords": [
+    "sinocare",
+    "cgm",
+    "glucose",
+    "cli",
+    "rust"
+  ],
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "config": {
+    "releaseRepo": "ShukriChiu/icancgm-cli"
+  },
+  "bin": {
+    "sino": "dist/bin/sino.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "type-check": "tsc --noEmit -p tsconfig.json",
+    "prepare": "npm run build",
+    "postinstall": "node dist/install.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  }
+}

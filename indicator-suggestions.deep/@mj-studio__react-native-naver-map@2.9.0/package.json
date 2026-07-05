@@ -1,0 +1,181 @@
+{
+  "name": "@mj-studio/react-native-naver-map",
+  "version": "2.9.0",
+  "description": "Naver Map Component for React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/commonjs/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "app.plugin.js",
+    "expo-config-plugin/build/index.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "pnpm run t",
+    "t": "pnpm lefthook run check",
+    "format": "pnpm lefthook run format",
+    "release": "./script/release.sh",
+    "codegen:android": "zx ./script/codegen.mjs android",
+    "codegen:ios": "zx ./script/codegen.mjs ios",
+    "codegen": "zx ./script/codegen.mjs",
+    "studio": "studio $(pwd)/example/android",
+    "xcode": "open $(pwd)/example/ios/example.xcworkspace",
+    "pod": "cd example/ios && npx -y pod-install",
+    "pod:update": "cd example/ios && bundle && bundle exec pod update",
+    "build": "pnpm build:expo-config-plugin && pnpm build:docs && bob build",
+    "prepack": "pnpm build",
+    "build:expo-config-plugin": "tsc --project ./expo-config-plugin",
+    "build:docs": "cd docs && pnpm build",
+    "ci:ios": "cd example/ios && xcodebuild -workspace example.xcworkspace -scheme example -configuration Debug -sdk iphonesimulator -quiet CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO ONLY_ACTIVE_ARCH=YES",
+    "ci:android": "cd example/android && ./gradlew assembleDebug",
+    "turbo:android": "pnpm turbo ci:android --single-package --cache-dir=\".turbo/android\"",
+    "turbo:ios": "pnpm turbo ci:ios --single-package --cache-dir=\".turbo/ios\"",
+    "ios": "cd example && pnpm ios",
+    "android": "cd example && pnpm android",
+    "dev": "cd example && pnpm start",
+    "docs:dev": "cd docs && pnpm dev"
+  },
+  "keywords": [
+    "react-native",
+    "naver-map",
+    "naver",
+    "react-native-naver-map"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mym0404/react-native-naver-map.git"
+  },
+  "author": "MJ Studio <mym0404@gmail.com> (https://mjstudio.net)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mym0404/react-native-naver-map/issues"
+  },
+  "homepage": "https://github.com/mym0404/react-native-naver-map#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@babel/core": "catalog:",
+    "@babel/runtime": "catalog:",
+    "@biomejs/biome": "catalog:",
+    "@commitlint/config-conventional": "17.0.2",
+    "@expo/config-plugins": "10.0.3",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/fs-extra": "^11",
+    "@types/object-hash": "^3",
+    "@types/react": "catalog:",
+    "commitlint": "17.0.2",
+    "fs-extra": "^11.3.1",
+    "lefthook": "^1.12.3",
+    "react": "catalog:",
+    "react-native": "catalog:",
+    "react-native-builder-bob": "^0.40.15",
+    "release-it": "19.0.3",
+    "turbo": "^2.5.6",
+    "typescript": "catalog:",
+    "zx": "^8.8.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./src/index.tsx"
+      },
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json",
+    "./app.plugin.js": "./app.plugin.js"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version} [skip ci]",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": false
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNCNaverMapSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "ios": {
+      "componentProvider": {
+        "RNCNaverMapView": "RNCNaverMapView",
+        "RNCNaverMapArrowheadPath": "RNCNaverMapArrowheadPath",
+        "RNCNaverMapCircle": "RNCNaverMapCircle",
+        "RNCNaverMapGround": "RNCNaverMapGround",
+        "RNCNaverMapMarker": "RNCNaverMapMarker",
+        "RNCNaverMapMultiPath": "RNCNaverMapMultiPath",
+        "RNCNaverMapPath": "RNCNaverMapPath",
+        "RNCNaverMapPolygon": "RNCNaverMapPolygon",
+        "RNCNaverMapPolyline": "RNCNaverMapPolyline"
+      }
+    }
+  },
+  "dependencies": {
+    "object-hash": "^3.0.0"
+  },
+  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67"
+}

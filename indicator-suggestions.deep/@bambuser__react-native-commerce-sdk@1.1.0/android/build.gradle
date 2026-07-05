@@ -1,0 +1,62 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+}
+
+def getExtOrDefault(prop, defaultValue) {
+  return rootProject.ext.has(prop) ? rootProject.ext.get(prop) : defaultValue
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "org.jetbrains.kotlin.plugin.compose"
+
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.bambuser.reactnativecommercesdk"
+
+  compileSdk getExtOrDefault("compileSdkVersion", 36) as int
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion", 26) as int
+    targetSdkVersion getExtOrDefault("targetSdkVersion", 36) as int
+  }
+
+  buildFeatures {
+    buildConfig true
+    compose true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+
+  // Bambuser Commerce SDK
+  implementation "com.bambuser:commerce-sdk:3.2.0"
+
+  // Compose (required by BambuserVideoReactView)
+  implementation platform("androidx.compose:compose-bom:2026.03.00")
+  implementation "androidx.compose.ui:ui"
+  implementation "androidx.compose.foundation:foundation"
+  implementation "androidx.compose.runtime:runtime"
+}

@@ -1,0 +1,52 @@
+{
+	"name": "plot-ai",
+	"version": "0.1.26",
+	"type": "module",
+	"license": "MIT",
+	"description": "Plot agent session CLI",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/igorsheg/plot.git"
+	},
+	"homepage": "https://github.com/igorsheg/plot",
+	"bugs": {
+		"url": "https://github.com/igorsheg/plot/issues"
+	},
+	"keywords": [
+		"agents",
+		"ai",
+		"automation",
+		"cli"
+	],
+	"engines": {
+		"node": ">=18"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"bin": {
+		"plot": "bin/plot"
+	},
+	"files": [
+		"bin",
+		"docs",
+		"lib",
+		"postinstall.mjs",
+		"README.md"
+	],
+	"exports": {
+		"./sdk": {
+			"types": "./lib/sdk.d.ts",
+			"default": "./lib/sdk.js"
+		}
+	},
+	"scripts": {
+		"postinstall": "node ./postinstall.mjs"
+	},
+	"optionalDependencies": {
+		"@plot-ai/darwin-arm64": "0.1.26",
+		"@plot-ai/darwin-x64": "0.1.26",
+		"@plot-ai/linux-arm64-gnu": "0.1.26",
+		"@plot-ai/linux-x64-gnu": "0.1.26"
+	}
+}

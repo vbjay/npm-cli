@@ -1,0 +1,304 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5d486e5dcaec3f60",
+    "fetchedFiles": [
+      "bin/fm-bench.js",
+      "package.json",
+      "src/ansi.js",
+      "src/bench.js",
+      "src/cli.js",
+      "src/compare.js",
+      "src/export.js",
+      "src/fm.js",
+      "src/history.js",
+      "src/process.js",
+      "src/progress.js",
+      "src/prompts.js",
+      "src/report.js",
+      "src/schema.js",
+      "src/stats.js",
+      "src/system.js",
+      "src/table.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/fm-bench.js",
+        "reason": "referenced by lifecycle script: `lint`",
+        "sha256": "79274e7bd1112e90bb1de3bd390468f17cc6183dd0440e7115ef3563258a81d6",
+        "sizeBytes": 398,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/cli.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/cli.js",
+        "reason": "required by ./bin/fm-bench.js",
+        "sha256": "6ee6a048223dc340af472347a1f70cea3df069051e29c65ff78007f5be866b85",
+        "sizeBytes": 25930,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "src/bench.js",
+          "src/compare.js",
+          "src/export.js",
+          "src/schema.js",
+          "src/history.js",
+          "src/process.js",
+          "src/progress.js",
+          "src/report.js",
+          "src/system.js",
+          "src/table.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./src/cli.js",
+        "sha256": "f5324d422dd16a80eeeb415d0262afb5b4944c4abdce6d4920dd7a48ee25f5c8",
+        "sizeBytes": 1294,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/bench.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "00b5ce2f7fcb8ed04f49eef5b21ef3de12d888106b3067abcc946ac756e37319",
+        "sizeBytes": 14024,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/fm.js",
+          "src/prompts.js",
+          "src/schema.js",
+          "src/stats.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/fm.js",
+        "reason": "required by ./src/bench.js",
+        "sha256": "511495212863f2e25b9f6608064a5b3096f99a043859eca767e66c8641a8c8fa",
+        "sizeBytes": 7715,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/ansi.js",
+          "src/process.js",
+          "src/system.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/ansi.js",
+        "reason": "required by ./src/fm.js; required by ./src/table.js",
+        "sha256": "ccf7c61791eeb8f094a03ff64cff2371a3f2fafdd8f1617e227f2607f06bb461",
+        "sizeBytes": 203,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/process.js",
+        "reason": "required by ./src/fm.js; required by ./src/cli.js",
+        "sha256": "346d796cf4bebe212275056a14c6243b1c9bfd3e2a13a58f14af6879d4bcf41a",
+        "sizeBytes": 2703,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/system.js",
+        "reason": "required by ./src/fm.js; required by ./src/cli.js",
+        "sha256": "6d7cdddd65dc4ba4fbcc9092441072f2d7d79cb53ae6579935412ec7c935f346",
+        "sizeBytes": 2129,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/prompts.js",
+        "reason": "required by ./src/bench.js",
+        "sha256": "c96e9d6ba996c40f621304480b7ba0e169300f3cc486ae37811895ecc89c4068",
+        "sizeBytes": 10326,
+        "signals": [
+          "network-access"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/schema.js",
+        "reason": "required by ./src/bench.js; required by ./src/compare.js; required by ./src/export.js; required by ./src/cli.js",
+        "sha256": "803343a9516d2768036594c23413834128dd8a07ce27ee43185cdfe5f52b52e2",
+        "sizeBytes": 5777,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/stats.js",
+        "reason": "required by ./src/bench.js",
+        "sha256": "cd369d65f8f66cfcdd1b55483f222030d4f8c45869982d91d71d861a2c5ac60a",
+        "sizeBytes": 7543,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compare.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "6da94765b3bb80c16690d30d2458e2dff8bc290962c30236ee38f07d84d92cff",
+        "sizeBytes": 10445,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/schema.js",
+          "src/table.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/table.js",
+        "reason": "required by ./src/compare.js; required by ./src/history.js; required by ./src/progress.js; required by ./src/cli.js",
+        "sha256": "08590919ad1b95246c5d185544490f6d0248b91b47e2041b06ad351cd56ff103",
+        "sizeBytes": 31640,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/ansi.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/export.js",
+        "reason": "required by ./src/cli.js; required by ./src/report.js",
+        "sha256": "47adc163c310c44c52a613d1cda6c3e60298ce78254ebbbd67f0d65ed6221f46",
+        "sizeBytes": 5534,
+        "signals": [
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/schema.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/devinoldenburg/fm-bench",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "src/history.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "4b73564484131306533917a002f0ed93cd1d3a8ed5d0591127b74e69c48eafba",
+        "sizeBytes": 3685,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/table.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/progress.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "cc0375c6033e3347e3e0115abc70c9189e64c04b970e97e9efb97ddd9ca93a1c",
+        "sizeBytes": 6535,
+        "signals": [
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/table.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/report.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "37e3aec24f1236b1a83a217495978a5a1020d3c53b4943b388972602a20f7dd5",
+        "sizeBytes": 2422,
+        "signals": [
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/export.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:52.513Z"
+  },
+  "hash": "sha256:1d5e11481e4aa3ae56d82bc194b130feb7ef90fae9685191571d882aa360d601"
+}

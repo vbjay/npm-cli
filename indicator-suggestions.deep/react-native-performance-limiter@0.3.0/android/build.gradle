@@ -1,0 +1,139 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["PerfKiller_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:7.2.1"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["PerfKiller_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["PerfKiller_" + name]).toInteger()
+}
+
+android {
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += [
+          "src/newarch",
+          // This is needed to build Kotlin project with NewArch enabled
+          "${project.buildDir}/generated/source/codegen/java"
+        ]
+      } else {
+        java.srcDirs += ["src/oldarch"]
+      }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+def resolveReactNativeDirectory() {
+  def reactNativeLocation = rootProject.hasProperty("reactNativeDir") ? rootProject.getProperty("reactNativeDir") : null
+
+  if (reactNativeLocation != null) {
+    return file(reactNativeLocation)
+  }
+
+  try {
+    // Resolve React Native location with Node
+    // This will make sure that we get installation location correctly in monorepos
+    def reactNativePackageJsonPathStdout = new ByteArrayOutputStream()
+
+    exec {
+      commandLine("node", "-p", "require.resolve('react-native/package.json')")
+      ignoreExitValue true
+      standardOutput = reactNativePackageJsonPathStdout
+    }
+
+    def reactNativeFromProjectNodeModules = file(reactNativePackageJsonPathStdout.toString().trim()).getParentFile();
+
+    if (reactNativeFromProjectNodeModules.exists()) {
+      return reactNativeFromProjectNodeModules
+    }
+  } catch (e) {
+    // Ignore
+  }
+
+  throw new Exception(
+    "${project.name}: Failed to resolve 'react-native' in the project. " +
+    "Altenatively, you can specify 'reactNativeDir' with the path to 'react-native' in your 'gradle.properties' file."
+  )
+}
+
+def reactNativeRootDir = resolveReactNativeDirectory()
+def reactProperties = new Properties()
+file("$reactNativeRootDir/ReactAndroid/gradle.properties").withInputStream { reactProperties.load(it) }
+
+def reactNativeVersion = reactProperties.getProperty("VERSION_NAME")
+def (reactNativeMajorVersion, reactNativeMinorVersion) = reactNativeVersion.split("\\.").collect { it.isInteger() ? it.toInteger() : it }
+
+dependencies {
+  if (reactNativeMajorVersion == 0 && reactNativeMinorVersion < 71) {
+    // noinspection GradleDynamicVersion
+    api 'com.facebook.react:react-native:+'
+  } else {
+    api "com.facebook.react:react-android"
+  }
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "PerfKiller"
+    codegenJavaPackageName = "com.perfkiller"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "@edulib-france/expo-yawl",
+  "version": "1.0.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Yawl for React Native",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "build:ci": "export EXPO_NONINTERACTIVE=1 && expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "vitest",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "publish:npm": "npm run clean && npm run build:ci && npm publish",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "@edulib-france/expo-yawl",
+    "Yawl"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edulib-france/expo-yawl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edulib-france/expo-yawl/issues"
+  },
+  "author": "Edulib <felix.salazar@edulib.fr> (https://github.com/edulib-france)",
+  "license": "MIT",
+  "homepage": "https://github.com/edulib-france/expo-yawl#readme",
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "3.1.1",
+    "expo": "~55.0.0",
+    "expo-application": "~55.0.16",
+    "expo-crypto": "~55.0.16",
+    "expo-device": "~55.0.18",
+    "expo-network": "~55.0.15",
+    "react-native-queue": "git+https://github.com/edulib-france/react-native-queue-asyncstorage.git#005bb418d27f1a93f4372ba6764292a71d954b6e",
+    "wretch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.0",
+    "eslint": "^9.39.4",
+    "eslint-config-expo": "^55.0.1",
+    "expo": "~55.0.0",
+    "expo-module-scripts": "^55.0.2",
+    "react-native": "0.86.0",
+    "vitest": "^4.0.0"
+  },
+  "peerDependencies": {
+    "expo": "~55.0.0",
+    "react": "*",
+    "react-native": "*"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

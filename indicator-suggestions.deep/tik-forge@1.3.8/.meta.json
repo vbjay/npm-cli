@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6a1516caa9f42738",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/build.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "82eb3f9b9d79c390a7c0cacee9adf461c341a65fecb3b97f5f940c5ac5fdfcae",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `tik-forge`  -  C/C++ sources",
+            "items": [
+              "src/lib.zig"
+            ]
+          },
+          {
+            "label": "Target `tik-forge`  -  libraries",
+            "items": [
+              "-Wl,-rpath,@loader_path",
+              "-Wl,-rpath,@loader_path/prebuilds",
+              "-Wl,-rpath,'$$ORIGIN'",
+              "-Wl,-rpath,'$$ORIGIN/prebuilds'"
+            ]
+          },
+          {
+            "label": "Target `tik-forge`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<!(node -p \"require('node-api-headers').include_dir\")"
+            ]
+          },
+          {
+            "label": "Target `tik-forge`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "4da6d7dee62f0c96b52e862ecb74ccdd080b5fd45bd54e68495fc9bdc3c86198",
+        "sizeBytes": 2245,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:19.966Z"
+  },
+  "hash": "sha256:02f5774ba6007024bdc3557006521ba9641d7cc227b24897e208ba0dd2af6210"
+}

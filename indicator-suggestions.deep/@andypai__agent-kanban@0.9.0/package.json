@@ -1,0 +1,106 @@
+{
+  "name": "@andypai/agent-kanban",
+  "version": "0.9.0",
+  "description": "Agent-friendly kanban board CLI. Manage tasks via bash commands, parse structured JSON output.",
+  "homepage": "https://github.com/abpai/agent-kanban#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abpai/agent-kanban.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abpai/agent-kanban/issues"
+  },
+  "keywords": [
+    "agent",
+    "kanban",
+    "cli",
+    "bun",
+    "sqlite",
+    "linear",
+    "automation"
+  ],
+  "bin": {
+    "kanban": "src/index.ts"
+  },
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts",
+    "./providers/types": "./src/providers/types.ts",
+    "./provider-runtime": "./src/provider-runtime.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "ui/dist"
+  ],
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "packageManager": "bun@1.3.3",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "bootstrap": "bun install && cd ui && bun install",
+    "smoke": "bun src/index.ts --help",
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "build": "bun build ./src/index.ts --target bun --outdir ./dist",
+    "link": "bun link",
+    "lint": "bunx eslint .",
+    "format": "bunx prettier --write .",
+    "typecheck": "bunx tsc --noEmit",
+    "ui:typecheck": "cd ui && bunx tsc --noEmit",
+    "check": "bun run lint && bun run typecheck && bun run ui:typecheck",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "knip": "knip",
+    "test:pg": "DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:${KANBAN_PG_PORT:-5432}/kanban_test} bun test",
+    "pg:up": "docker compose -f docker-compose.postgres.yml up -d --wait",
+    "pg:down": "docker compose -f docker-compose.postgres.yml down -v",
+    "seed:test": "bun --env-file=.env.test scripts/seed-test-db.ts",
+    "serve": "bun src/index.ts serve",
+    "ui:dev": "cd ui && bun run dev",
+    "ui:build": "cd ui && bun run build",
+    "dev:ui": "bun scripts/dev.ts",
+    "build:ui": "bun run ui:build",
+    "prepare": "if [ \"${HUSKY:-1}\" != \"0\" ] && command -v husky >/dev/null 2>&1; then husky install; fi",
+    "prepack": "cd ui && bun install --frozen-lockfile && bun run build",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "postgres": "^3.4.4"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
+    "@eslint/js": "^9.39.1",
+    "@types/bun": "^1.1.22",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^8.0.3",
+    "knip": "^6.24.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.7.4",
+    "typescript": "^5.7.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,html,json,md,scss,yaml,yml}": [
+      "prettier --write"
+    ]
+  }
+}

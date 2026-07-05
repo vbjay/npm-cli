@@ -1,0 +1,140 @@
+{
+  "name": "react-native-linear-gradient-text",
+  "version": "1.2.12",
+  "description": "Component to display text with linear gradient.",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-linear-gradient-text-example",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "linear-gradient",
+    "gradient",
+    "text",
+    "text-gradient",
+    "text-gradient-color"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HMDarkFir3/react-native-linear-gradient-text.git"
+  },
+  "author": "Henrique Marques <hmdarkfire.dev@gmail.com> (https://github.com/HMDarkFir3)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HMDarkFir3/react-native-linear-gradient-text/issues"
+  },
+  "homepage": "https://github.com/HMDarkFir3/react-native-linear-gradient-text#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@commitlint/types": "^19.5.0",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-masked-view/masked-view": "^0.3.0",
+    "@react-native/eslint-config": "^0.72.2",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react-native": "^12.4.0",
+    "@types/jest": "^28.1.2",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "0.70.0",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "18.2.0",
+    "react-native": "0.72.5",
+    "react-native-builder-bob": "^0.20.0",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-test-renderer": "^18.2.0",
+    "release-it": "^15.0.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.0.2"
+  },
+  "peerDependencies": {
+    "@react-native-masked-view/masked-view": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-linear-gradient": "*"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

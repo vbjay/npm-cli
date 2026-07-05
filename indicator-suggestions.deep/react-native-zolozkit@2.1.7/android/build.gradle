@@ -1,0 +1,80 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:3.5.3'
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+    def a = rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+
+    if (a instanceof String &&  !a.startsWith("2")) {
+        project.logger.error("this version of plugin only support zoloz sdk version of 2.+")
+    }
+
+    return a
+}
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace "com.zoloz.react"
+    }
+
+    compileSdkVersion safeExtGet('Zolozkit_compileSdkVersion', 35)
+    defaultConfig {
+        minSdkVersion safeExtGet('Zolozkit_minSdkVersion', 16)
+        targetSdkVersion safeExtGet('Zolozkit_targetSdkVersion', 35)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    // zoloz library
+    implementation "com.zoloz.android.build:zolozcore:${safeExtGet('Zolozkit_zolozVersion', '2.1.7.260423163215')}"
+    implementation "com.zoloz.android.build:doc:${safeExtGet('Zolozkit_zolozVersion', '2.1.7.260423163215')}"
+    implementation "com.zoloz.android.build:face:${safeExtGet('Zolozkit_zolozVersion', '2.1.7.260423163215')}"
+    implementation "com.zoloz.android.build:xnn:${safeExtGet('Zolozkit_zolozVersion', '2.1.7.260423163215')}"
+    implementation "com.zoloz.android.build:faceguard:${safeExtGet('Zolozkit_zolozVersion', '2.1.7.260423163215')}"
+    implementation "com.zoloz.android.build:apsecurity:${safeExtGet('Zolozkit_zolozVersion', '2.1.7.260423163215')}"
+    implementation 'com.squareup.okio:okio:1.17.4@jar'
+    implementation 'com.alibaba:fastjson:1.2.83'
+    implementation 'com.airbnb.android:lottie:2.7.0'
+
+}

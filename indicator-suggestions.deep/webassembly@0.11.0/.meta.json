@@ -1,0 +1,139 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "bbcd24ca14f77915",
+    "fetchedFiles": [
+      "cli/util.js",
+      "package.json",
+      "scripts/setup"
+    ],
+    "bareFollows": [
+      {
+        "name": "chalk",
+        "versionSpec": "^1.1.3"
+      },
+      {
+        "name": "follow-redirects",
+        "versionSpec": "^1.2.3"
+      },
+      {
+        "name": "tmp",
+        "versionSpec": "0.0.31"
+      },
+      {
+        "name": "tar.gz",
+        "versionSpec": "^1.0.5"
+      },
+      {
+        "name": "extract-zip",
+        "versionSpec": "^1.6.5"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chalk@1.1.3",
+      "extract-zip@1.7.0",
+      "follow-redirects@1.16.0",
+      "tar.gz@1.0.7",
+      "tmp@0.0.31"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/setup",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ab5544ea3c76a142b51942f1257d19aed48aa9273d815b5be8a82b374a75719a",
+        "sizeBytes": 2771,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "cli/util.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/dcodeIO/webassembly/releases/download/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "cli/util.js",
+        "reason": "required by ./scripts/setup",
+        "sha256": "761fe32cb975f123d9d34902b5b010bbc5c34c755e16058ae139f5a6a94b530a",
+        "sizeBytes": 2713,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./cli/util.js; required by ./scripts/setup",
+        "sha256": "07e80e45d5ac318d76add12446ce5849ee0b544d8fde5d14383095b25b727f27",
+        "sizeBytes": 1615,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:29.450Z"
+  },
+  "hash": "sha256:1e3359d45ec33471e79f6ddf4c0aff974ff08c43aaa69c1adce2d22b01bdec84"
+}

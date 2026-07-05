@@ -1,0 +1,52 @@
+{
+    "name": "@maustec/mt-runtimes",
+    "version": "0.1.0",
+    "description": "Runtime packs for Maus-Tec hardware products",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./wasm": {
+            "types": "./wasm/mtp-core.d.ts",
+            "import": "./wasm/mtp-core.js"
+        },
+        "./wasm/types": "./wasm/interfaces/mtp-core-types.d.ts",
+        "./wasm/bridge": "./wasm/interfaces/mtp-core-bridge.d.ts",
+        "./wasm/host-callbacks": "./wasm/interfaces/mtp-core-host-callbacks.d.ts"
+    },
+    "files": [
+        "dist",
+        "api",
+        "wasm",
+        "schema"
+    ],
+    "scripts": {
+        "codegen": "node --experimental-strip-types scripts/generate-api-bundle.ts",
+        "build": "npm run codegen && tsc",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit",
+        "prepack": "npm run build"
+    },
+    "keywords": [
+        "maustec",
+        "runtime",
+        "wasm",
+        "iot"
+    ],
+    "author": "Maus-Tec LLC",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/maustec/mt-runtimes.git"
+    },
+    "engines": {
+        "node": ">=20"
+    },
+    "devDependencies": {
+        "@types/node": "^25.6.0",
+        "typescript": "^6.0.2",
+        "vitest": "^4.1.2"
+    }
+}

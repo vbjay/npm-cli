@@ -1,0 +1,134 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "cdb4832da01be926",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/download-binaries.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^7.4.3"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "tar@7.5.19"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "c4b0d4261947610222c3fbfb87e6e94e5b55e1d6d26ce961665f6acd49a24504",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())",
+              "\"arm64-v8a\", \"armeabi-v7a\""
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "net.java.dev.jna:jna:5.17.0@aar"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/download-binaries.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7ef29a26e41cbcfde4c0c42c8021ea8058d1771c141cb5e2f2ec7ba762db5a92",
+        "sizeBytes": 2515,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/download-binaries.js",
+        "sha256": "ee3538539762be9e93cc05fc731f3f468cf4618a0c8848fe7c86f6ace6f74760",
+        "sizeBytes": 7198,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:08.674Z"
+  },
+  "hash": "sha256:e1d16dc4e528b2e93fd9426c0d337cbd53cfd4149c1be5b90281df0faaa2db51"
+}

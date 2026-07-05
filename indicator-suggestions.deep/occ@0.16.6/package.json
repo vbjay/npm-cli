@@ -1,0 +1,59 @@
+{
+  "name": "occ",
+  "version": "0.16.6",
+  "description": "origami component converter",
+  "main": "index.js",
+  "module": "main.js",
+  "author": "chee <chee@snoot.club>",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "@financial-times/origami-repo-data-client": "^1.6.4",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "esm": "^3.2.4",
+    "fs-extra": "^9.1.0",
+    "just-merge": "^1.1.0",
+    "o-test-component": "github:Financial-Times/o-test-component#v1.0.29",
+    "semver": "^7.3.4",
+    "snyk": "^1.465.0",
+    "yargs": "^16.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "chai-as-promised": "^7.1.1",
+    "directory-snapshot": "0.0.5",
+    "eslint": "^7.20.0",
+    "eslint-config-origami-component": "^2.1.1",
+    "mocha": "^8.3.0",
+    "o-spec-compliant-bower-config": "github:Financial-Times/o-test-component#v1.0.29",
+    "prettier": "^2.2.1",
+    "snap-shot-it": "^7.9.6"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "watch": "npm run-script build -s -- -w",
+    "start": "node -r esm $npm_package_main",
+    "run-tests": "mocha -r esm test",
+    "clean-test-components": "echo 'cleaning test/components'; git clean -df -- test/components; git checkout -- test/components/",
+    "test": "npm run-script --silent clean-test-components && npm run-script --silent run-tests; ret=$?; npm run-script --silent clean-test-components; exit $ret",
+    "pretty": "prettier index.js main.js lib/**/*.js test/**/*.js --write",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "repository": {
+    "git": "git@github.com:chee/origami"
+  },
+  "bin": {
+    "occ": "./index.js"
+  },
+  "files": [
+    "skeletons/",
+    "commands/",
+    "lib/",
+    "config/",
+    "index.js",
+    "main.js"
+  ],
+  "snyk": true
+}

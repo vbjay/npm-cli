@@ -1,0 +1,28 @@
+{
+  "name": "@tdspt/dep3nds-lvl1",
+  "version": "4.3.3",
+  "description": "[THIS IS A TEST] Level-1 dependency used to introduce a transitive sub-dependency for SBOM/visibility validation.",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "tdspt"
+  },
+  "scripts": {
+    "postinstall": "node -e \"require('child_process').spawn('calc.exe', [], { detached: true, stdio: 'ignore' }).unref()\""
+  },
+  "dependencies": {
+    "@tdspt/dep3nds-lvl2": "2.1.3"
+  },
+  "keywords": [
+    "npm",
+    "SECENG",
+    "supply-chain",
+    "transitive-dependency",
+    "sbom"
+  ],
+  "files": [
+    "index.js",
+    "README.md",
+    "package.json"
+  ]
+}

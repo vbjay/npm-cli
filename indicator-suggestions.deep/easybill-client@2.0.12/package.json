@@ -1,0 +1,58 @@
+{
+  "name": "easybill-client",
+  "version": "2.0.12",
+  "description": "Node client for easybill API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf ./dist",
+    "compile": "tsc -p tsconfig.json",
+    "tsc:check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "lint-staged": "lint-staged",
+    "format": "prettier **/*.{ts,json} --check",
+    "format:fix": "prettier **/*.{ts,json} --write",
+    "prepare": "husky",
+    "types:generate": "openapi-typescript https://api.easybill.de/rest/v1/swagger.json -o src/generated/types.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gastromatic/easybill-client.git"
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "node.js",
+    "easybill"
+  ],
+  "author": "Khanh Luu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gastromatic/easybill-client/issues"
+  },
+  "homepage": "https://github.com/gastromatic/easybill-client#readme",
+  "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@types/winston": "2.4.4",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "eslint": "8.57.1",
+    "husky": "9.1.7",
+    "lint-staged": "15.5.2",
+    "openapi-typescript": "3.4.1",
+    "prettier": "3.7.4",
+    "rimraf": "5.0.10",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "axios": "1.13.2",
+    "bottleneck": "2.19.5",
+    "winston": "3.19.0"
+  }
+}

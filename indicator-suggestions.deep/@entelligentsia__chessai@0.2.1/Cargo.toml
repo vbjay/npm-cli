@@ -1,0 +1,22 @@
+[package]
+name = "chessai"
+version = "0.2.1"
+edition = "2021"
+description = "Installer/distribution vehicle for the Claude Code chess skill (/chess) — no marketplace required"
+license = "MIT"
+repository = "https://github.com/devasur/claude-chess"
+default-run = "chessai"
+
+[[bin]]
+name = "chessai"
+path = "src/main.rs"
+
+# No dependencies: the binary only writes embedded skill files. The game itself
+# (server, board logic, UI) is the Node-based skill it installs.
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true
+codegen-units = 1
+panic = "abort"

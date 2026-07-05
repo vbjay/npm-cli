@@ -1,0 +1,107 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "88d506504d49b18b",
+    "fetchedFiles": [
+      "npm/postinstall.cjs",
+      "npm/shared.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ec70fced5412e912853f3db1a0e0bfef76d218fda18b13c1526487924a0749b7",
+        "sizeBytes": 5973,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-outside-package",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/shared.cjs",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/shared.cjs",
+        "reason": "required by ./npm/postinstall.cjs",
+        "sha256": "37799d368f1df8adbb36404fe1a7bc2948062bdeb08be9259b3887d0721bf210",
+        "sizeBytes": 2767,
+        "signals": [
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./npm/postinstall.cjs",
+        "sha256": "7d8b716c15d3ecf8b0f5f19603bfc269b7534c84658e42d991fc43c497285b1d",
+        "sizeBytes": 804,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:17.094Z"
+  },
+  "hash": "sha256:f4baee54d7ed465dd78ef37c728febfb34e8a0cffc98bf75063f820ff68036a9"
+}

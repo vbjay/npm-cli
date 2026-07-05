@@ -1,0 +1,47 @@
+{
+  "name": "ssniff",
+  "version": "1.0.1",
+  "description": "ssniff is a module that helps investigate incoming client requests with their correlating response.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "tsc && node-gyp configure build",
+    "test": "sudo node --max-old-space-size=16480 ./node_modules/mocha/bin/_mocha -r ts-node/register test/**/*.test.ts --parallel --bail --exit"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "*",
+    "fastify": "^4.9.2"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bindings": "^1.5.1",
+    "@types/chai": "^4.3.3",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.11.0",
+    "axios": "^1.1.3",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/firezenn/ssniff.git"
+  },
+  "keywords": [
+    "nodejs",
+    "n-api",
+    "napi",
+    "addon",
+    "native",
+    "sniffing",
+    "c",
+    "c++"
+  ],
+  "files": [
+    "dist/",
+    "out/"
+  ]
+}

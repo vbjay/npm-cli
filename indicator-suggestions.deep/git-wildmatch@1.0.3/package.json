@@ -1,0 +1,74 @@
+{
+  "name": "git-wildmatch",
+  "version": "1.0.3",
+  "description": "Native NAPI implementation of git's wildmatch pattern matching",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kakulukian/wildmatch.git"
+  },
+  "homepage": "https://github.com/Kakulukian/wildmatch#readme",
+  "bugs": {
+    "url": "https://github.com/Kakulukian/wildmatch/issues"
+  },
+  "keywords": [
+    "git",
+    "wildmatch",
+    "gitignore",
+    "gitattributes",
+    "pathspec",
+    "glob",
+    "pattern",
+    "match",
+    "napi",
+    "native"
+  ],
+  "files": [
+    "dist",
+    "binding.gyp",
+    "src",
+    "prebuilds"
+  ],
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "dependencies": {
+    "node-addon-api": "*",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "bench-node": "^0.14.0",
+    "esbuild": "^0.24.2",
+    "node-gyp": "^11.0.0",
+    "npm-run-all": "^4.1.5",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "prebuildify": "^6.0.1",
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "build": "run-p --print-label build:ts build:esm build:cjs",
+    "build:ts": "tsc --emitDeclarationOnly",
+    "build:esm": "esbuild --platform=node --target=node20 --format=esm --bundle --packages=external --banner:js=\"import{createRequire as _cr}from'node:module';import{fileURLToPath as _f}from'node:url';import{dirname as _d}from'node:path';const require=_cr(import.meta.url);const __filename=_f(import.meta.url);const __dirname=_d(__filename);\" src/index.ts --outfile=dist/index.mjs",
+    "build:cjs": "esbuild --platform=node --target=node20 --format=cjs --bundle --packages=external src/index.ts --outfile=dist/index.cjs",
+    "build:native": "node-gyp build",
+    "build:debug": "node-gyp build --debug",
+    "clean": "node-gyp clean",
+    "rebuild": "node-gyp rebuild",
+    "prebuild": "prebuildify --napi --strip",
+    "test": "vitest run",
+    "format": "oxfmt",
+    "lint": "oxlint src/*.ts src/**/*.ts bench/*.mjs",
+    "bench": "node --allow-natives-syntax bench/wildmatch.bench.mjs"
+  }
+}

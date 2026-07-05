@@ -1,0 +1,72 @@
+{
+  "name": "@ano-chat/cli",
+  "version": "2.31.1",
+  "description": "CLI for Ano — team communication for humans and agents",
+  "keywords": [
+    "ano",
+    "cli",
+    "team-chat",
+    "agents",
+    "claude",
+    "codex"
+  ],
+  "homepage": "https://github.com/ano-chat/ano-cli#readme",
+  "type": "module",
+  "bin": {
+    "ano": "dist/index.js",
+    "ano-bridge": "dist/bridge-entry.js"
+  },
+  "files": [
+    "dist",
+    "scripts/postinstall.mjs"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:native": "node scripts/build-native.mjs",
+    "postinstall": "node scripts/postinstall.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:keepalive": "node tests/scripts/keepalive-bench.mjs",
+    "test:cache": "node tests/scripts/cache-bench.mjs",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "skill:check": "node scripts/check-agent-skill-policy.mjs",
+    "surface:update": "tsx snapshots/update-surface.ts",
+    "surface:check": "tsx snapshots/update-surface.ts --check",
+    "ci": "npm run typecheck && npm run skill:check && npm run test && npm run test:keepalive && npm run test:cache && npm run build",
+    "smoke:staging": "node dist/index.js dev smoke --expect-endpoint https://api-staging.ano.dev",
+    "smoke:local": "node dist/index.js dev smoke --expect-endpoint http://127.0.0.1:3001 --no-write"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@ano-chat/skills": ">=0.3.1",
+    "@rocicorp/zero": "^1.5.0",
+    "better-sqlite3": "^11.10.0",
+    "commander": "^13.1.0",
+    "undici": "^7.26.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.15.17",
+    "prettier": "^3.5.3",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ano-chat/ano-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ano-chat/ano-cli/issues"
+  }
+}

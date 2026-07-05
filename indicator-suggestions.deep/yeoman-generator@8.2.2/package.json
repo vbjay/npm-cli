@@ -1,0 +1,114 @@
+{
+  "name": "yeoman-generator",
+  "version": "8.2.2",
+  "description": "Rails-inspired generator system that provides scaffolding for your apps",
+  "keywords": [
+    "development",
+    "dev",
+    "build",
+    "tool",
+    "cli",
+    "scaffold",
+    "scaffolding",
+    "generate",
+    "generator",
+    "yeoman",
+    "app"
+  ],
+  "homepage": "http://yeoman.io",
+  "repository": "yeoman/generator",
+  "license": "BSD-2-Clause",
+  "author": "Yeoman",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.js",
+      "default": "./dist/index.js"
+    },
+    "./typed": {
+      "types": "./dist/index.d.js",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && npm run copy-types",
+    "copy-types": "cpy --cwd=src \"**/*.d.(|c|m)ts\" ../dist/",
+    "coverage": "c8 report --reporter=text-lcov | coveralls",
+    "doc": "npm run doc:generate && npm run doc:fix && npm run doc:prettier",
+    "doc:fix": "sed -i -e 's:^[[:space:]]*<!--[[:space:]]*$::g' -e 's:^[[:space:]]*-->[[:space:]]*$::g' $npm_package_config_doc_path$DOC_FOLDER/global.html || true",
+    "doc:generate": "jsdoc -c jsdoc.json -d $npm_package_config_doc_path$DOC_FOLDER",
+    "doc:prettier": "prettier $npm_package_config_doc_path$DOC_FOLDER --write --ignore-path .prettierignore-doc",
+    "fix": "eslint . --fix && prettier . --write",
+    "prepare": "npm run build",
+    "pretest": "eslint . && prettier . --check && npm run build && tsc -p tsconfig.spec.json",
+    "test": "vitest run --coverage"
+  },
+  "config": {
+    "doc_path": "../yeoman-generator-doc/"
+  },
+  "dependencies": {
+    "@types/debug": "^4.1.13",
+    "@types/lodash-es": "^4.17.12",
+    "@yeoman/namespace": "^2.1.0",
+    "chalk": "^5.6.2",
+    "debug": "^4.4.3",
+    "execa": "^9.6.1",
+    "latest-version": "^9.0.0",
+    "lodash-es": "^4.18.1",
+    "mem-fs-editor": "^12.0.4",
+    "minimist": "^1.2.8",
+    "read-package-up": "^12.0.0",
+    "semver": "^7.7.4",
+    "simple-git": "^3.36.0",
+    "sort-keys": "^6.0.0",
+    "text-table": "^0.2.0",
+    "type-fest": "^5.6.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^24.12.2",
+    "@types/picomatch": "^4.0.3",
+    "@types/semver": "^7.7.1",
+    "@types/text-table": "^0.2.5",
+    "@typescript-eslint/parser": "^8.59.1",
+    "@vitest/coverage-v8": "^4.1.5",
+    "@yeoman/adapter": "^4.0.2",
+    "@yeoman/eslint": "1.1.0",
+    "@yeoman/transform": "^2.1.1",
+    "@yeoman/types": "^1.11.0",
+    "cpy-cli": "^7.0.0",
+    "ejs": "^5.0.2",
+    "eslint": "10.2.1",
+    "jsdoc": "^4.0.5",
+    "prettier": "3.8.3",
+    "prettier-plugin-packagejson": "3.0.2",
+    "typescript": "6.0.3",
+    "vitest": "^4.1.5",
+    "yeoman-environment": "^6.0.1",
+    "yeoman-test": "^11.3.1"
+  },
+  "peerDependencies": {
+    "@types/node": ">=20.19.35",
+    "@yeoman/types": "^1.1.1",
+    "mem-fs": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": "^20.17.0 || >=22.9.0"
+  },
+  "overrides": {
+    "yeoman-test": {
+      "yeoman-generator": "file:."
+    }
+  }
+}

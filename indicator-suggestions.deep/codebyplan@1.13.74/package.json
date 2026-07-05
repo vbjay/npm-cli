@@ -1,0 +1,77 @@
+{
+  "name": "codebyplan",
+  "version": "1.13.74",
+  "description": "CLI for CodeByPlan — AI-powered development planning and tracking",
+  "type": "module",
+  "bin": {
+    "codebyplan": "dist/cli.js"
+  },
+  "exports": {
+    ".": null,
+    "./ci": {
+      "types": "./dist/ci-public.d.ts",
+      "default": "./dist/ci.js"
+    }
+  },
+  "files": [
+    "dist/cli.js",
+    "dist/ci.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "templates/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && node esbuild.npm.mjs",
+    "build:npm": "node esbuild.npm.mjs",
+    "prepare": "node -e \"const v=process.env.CI;process.exit(v&&v!=='false'&&v!=='0'?0:1)\" || node esbuild.npm.mjs",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "codebyplan",
+    "cli",
+    "development-planning",
+    "ai-tools",
+    "claude-code"
+  ],
+  "homepage": "https://codebyplan.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/midevyou/codebyplan.git",
+    "directory": "packages/codebyplan-package"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@napi-rs/keyring": "^1.1.6",
+    "@supabase/supabase-js": "^2.106.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22",
+    "@vitest/eslint-plugin": "^1.1.44",
+    "esbuild": "^0.28.1",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-no-secrets": "^2.2.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "eslint-plugin-security": "^3.0.1",
+    "globals": "^17.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "^5",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^4.1.8"
+  }
+}

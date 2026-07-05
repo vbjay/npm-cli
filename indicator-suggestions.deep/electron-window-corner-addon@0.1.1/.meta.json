@@ -1,0 +1,113 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "33463c7fd83729e1",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "51fcbc9380a31300ca858310f29ea9e4e647a388bd6ba2a5f6a3e6fc8d9d4c49",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `window_corner_native`  -  C/C++ sources",
+            "items": [
+              "src/window_corner_bridge.cpp"
+            ]
+          },
+          {
+            "label": "Target `window_corner_native`  -  libraries",
+            "items": [
+              "-framework Foundation",
+              "-framework Cocoa",
+              "-L<(module_root_dir)/swift/.build/release",
+              "-lWindowCorner"
+            ]
+          },
+          {
+            "label": "Target `window_corner_native`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "swift/Sources/WindowCorner/include"
+            ]
+          },
+          {
+            "label": "Target `window_corner_native`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build:native`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "uses-child-process",
+          "native-build",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:41.270Z"
+  },
+  "hash": "sha256:b94dfa26d91a77da9c8a34ea3dd75aff9a8b3e272bc8e8123e407d87508d1e76"
+}

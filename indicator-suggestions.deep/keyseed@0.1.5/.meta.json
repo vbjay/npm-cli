@@ -1,0 +1,127 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0264c4cd830a69a4",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "package.json",
+      "scripts/common.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "4098f60b27da9054568f334a95d9dd43cd717c72e17e935c15451ff9c537c67d",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "keyseed"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.5"
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "fc8dcd06579c7d0da2946715158caa69b09901a9d5bcda5d797d5345a1895010",
+        "sizeBytes": 316,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/common.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/common.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "d58579d5ec200fbb764b4cd899ce30b0cb5026fc303c489346e957f2ea99f466",
+        "sizeBytes": 7114,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/efekurucay/keyseed/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:04.609Z"
+  },
+  "hash": "sha256:a7931088e83a47a149ac4aec82bae5c43aeaf2e0eeb9c05f3521ffd6307598b5"
+}

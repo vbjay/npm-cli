@@ -1,0 +1,85 @@
+{
+  "name": "idle-timeout",
+  "version": "2.4.0",
+  "description": "The minimal idle state detector.",
+  "keywords": [
+    "idle",
+    "timeout",
+    "idle-timeout",
+    "idle-detection",
+    "inactivity",
+    "user-activity",
+    "activity-tracker",
+    "session-timeout",
+    "auto-logout",
+    "browser",
+    "javascript",
+    "typescript"
+  ],
+  "repository": "jacobmllr95/idle-timeout",
+  "packageManager": "pnpm@10.34.1",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "index": "src/index.ts",
+  "main": "./dist/idle-timeout.cjs.js",
+  "module": "./dist/idle-timeout.esm.mjs",
+  "types": "./dist/idle-timeout.esm.d.mts",
+  "unpkg": "./dist/idle-timeout.min.umd.js",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/idle-timeout.esm.d.mts",
+      "import": "./dist/idle-timeout.esm.mjs",
+      "require": "./dist/idle-timeout.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "Jacob Müller",
+      "email": "jacob.mueller.elz@gmail.com"
+    }
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "watch": "tsdown --watch",
+    "lint": "eslint 'src/**/*.ts'",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "prettify": "prettier --write '**/*.{md,ts}'",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.0",
+    "@types/node": "^25.9.3",
+    "@vitest/coverage-v8": "^4.1.9",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.8.4",
+    "pretty-quick": "^4.2.2",
+    "tsdown": "0.22.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^4.1.9"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}

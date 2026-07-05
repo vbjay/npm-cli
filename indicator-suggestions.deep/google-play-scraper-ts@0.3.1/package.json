@@ -1,0 +1,87 @@
+{
+  "name": "google-play-scraper-ts",
+  "version": "0.3.1",
+  "description": "TypeScript rewrite of google-play-scraper with throttling, retries, and strong typing.",
+  "keywords": [
+    "google-play",
+    "play-store",
+    "android",
+    "scraper",
+    "reviews",
+    "categories",
+    "permissions",
+    "datasafety",
+    "typescript"
+  ],
+  "homepage": "https://github.com/Guiguito/google-play-scraper-ts#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guiguito/google-play-scraper-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Guiguito/google-play-scraper-ts/issues"
+  },
+  "author": "Guiguito",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "commonjs",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/esm/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:esm": "node node_modules/typescript/bin/tsc -p tsconfig.esm.json",
+    "build:cjs": "node node_modules/typescript/bin/tsc -p tsconfig.cjs.json",
+    "build": "npm run clean && npm run build:esm && node scripts/postbuild-esm.js && npm run build:cjs",
+    "prepack": "npm run build",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write .",
+    "test": "npm run build && node node_modules/mocha/bin/mocha --require tests/setup.js \"tests/*.spec.js\" \"tests/**/*.spec.js\" \"tests/**/*.spec.ts\"",
+    "test:coverage": "npm run build:cjs && node node_modules/nyc/bin/nyc.js node node_modules/mocha/bin/mocha --require tests/setup.js \"tests/*.spec.js\" \"tests/**/*.spec.js\" \"tests/**/*.spec.ts\"",
+    "verify:types": "node node_modules/typescript/bin/tsc --module ES2020 --moduleResolution node --lib es2020,dom --types node --noEmit tests/types/usage.ts",
+    "docs": "typedoc",
+    "prepublishOnly": "npm run lint && npm test && npm run build",
+    "release:preflight": "npm run lint && npm test && npm run verify:types",
+    "release:patch": "npm run release:preflight && npm version patch -m \"chore(release): %s\" && npm publish --access public",
+    "release:minor": "npm run release:preflight && npm version minor -m \"chore(release): %s\" && npm publish --access public",
+    "release:major": "npm run release:preflight && npm version major -m \"chore(release): %s\" && npm publish --access public"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^22.7.4",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "chai": "^4.4.1",
+    "eslint": "^9.34.0",
+    "mocha": "^10.7.0",
+    "nock": "^13.5.0",
+    "nyc": "^15.1.0",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.26.6",
+    "typescript": "^5.5.4",
+    "undici": "^6.19.8"
+  }
+}

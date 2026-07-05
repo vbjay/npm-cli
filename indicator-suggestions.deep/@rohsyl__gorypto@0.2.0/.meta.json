@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "259b70f560b5d366",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "489318dfa66112fc0c2e4a417deb8d068781223b3b658c9c6d1a023188baf118",
+        "sizeBytes": 4377,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://api-repo-x.rohs.dev",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "95974c4934a4da0ddb7133e902bb8d8ea33dd77d850790e1e5516d605bbd0f7c",
+        "sizeBytes": 712,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:52.083Z"
+  },
+  "hash": "sha256:116529ec8fc8e3e00b65bc3baa0fdad64b485709a3a4ee7da5fc17ff92364c0a"
+}

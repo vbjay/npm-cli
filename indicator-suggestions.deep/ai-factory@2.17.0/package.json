@@ -1,0 +1,96 @@
+{
+  "name": "ai-factory",
+  "version": "2.17.0",
+  "type": "module",
+  "description": "CLI tool for automating AI agent context setup in projects",
+  "main": "dist/cli/index.js",
+  "types": "dist/cli/index.d.ts",
+  "bin": {
+    "ai-factory": "./bin/ai-factory.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "node scripts/run-bash-test.mjs scripts/test-skills.sh",
+    "test:init": "node scripts/run-bash-test.mjs scripts/test-init.sh",
+    "test:update": "node scripts/run-bash-test.mjs scripts/test-update.sh",
+    "test:extension-schema": "node scripts/test-extension-schema.mjs",
+    "test:extensions": "node scripts/run-bash-test.mjs scripts/test-extensions.sh",
+    "test:cleanup-helper": "node scripts/run-bash-test.mjs scripts/test-cleanup-helper.sh",
+    "lint:unused": "tsc --noEmit --noUnusedLocals --noUnusedParameters",
+    "lint:dead": "knip --reporter compact",
+    "lint": "npm run lint:unused && npm run lint:dead",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
+    "link": "npm run build && npm link"
+  },
+  "keywords": [
+    "claude",
+    "cursor",
+    "codex",
+    "codex-app",
+    "opencode",
+    "kilocode",
+    "windsurf",
+    "warp",
+    "zencoder",
+    "junie",
+    "qwen",
+    "qwen-code",
+    "gemini",
+    "copilot",
+    "roocode",
+    "antigravity",
+    "claude-code",
+    "ai",
+    "skills",
+    "automation",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "dist",
+    "skills",
+    "!skills/**/tests",
+    "!skills/**/tests/**",
+    "schemas",
+    "subagents",
+    "mcp"
+  ],
+  "knip": {
+    "ignoreExportsUsedInFile": true,
+    "exclude": [
+      "types"
+    ],
+    "ignore": [
+      "examples/**",
+      "skills/aif/references/update-config.mjs"
+    ],
+    "ignoreDependencies": [
+      "@cutcode/ai-tester"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.2.15",
+    "semver": "^7.7.4"
+  },
+  "devDependencies": {
+    "@cutcode/ai-tester": "^0.2.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.11.0",
+    "@types/semver": "^7.7.1",
+    "ajv": "^8.20.0",
+    "knip": "^5.85.0",
+    "typescript": "^5.3.3"
+  }
+}

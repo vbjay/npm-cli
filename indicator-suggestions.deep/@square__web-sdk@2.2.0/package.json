@@ -1,0 +1,110 @@
+{
+  "name": "@square/web-sdk",
+  "version": "2.2.0",
+  "description": "Square Web SDK",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "scripts": {
+    "build": "npm-run-all --serial build:*",
+    "build:package": "esbuild src/index.ts src/load.ts src/payments.ts --bundle --minify --target=es2015 --outdir=dist --format=esm",
+    "build:types": "tsc --project tsconfig.types.json",
+    "clean": "rm -rf .eslintcache coverage/ dist/",
+    "lint": "npm-run-all --serial lint:*",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --ignore-path .gitignore --check .",
+    "lint:prettier:fix": "prettier --ignore-path .gitignore --write .",
+    "test": "npm-run-all --serial lint test:* build",
+    "test:unit": "jest",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/square/web-sdk.git"
+  },
+  "keywords": [
+    "sdk",
+    "square",
+    "javascript",
+    "typescript",
+    "payments"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/square/web-sdk/issues"
+  },
+  "homepage": "https://github.com/square/web-sdk#readme",
+  "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.2",
+    "babel-jest": "^30.0.0",
+    "codecov": "^3.8.3",
+    "conventional-changelog-conventionalcommits": "^9.0.0",
+    "esbuild": "^0.27.0",
+    "esbuild-loader": "^4.3.0",
+    "eslint": "^9.20.1",
+    "eslint-plugin-jest": "^29.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "husky": "^9.1.7",
+    "jest": "^30.0.0",
+    "lint-staged": "^16.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.3",
+    "semantic-release": "^25.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.{json,md,yml}": "prettier --write"
+  },
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "beta",
+        "prerelease": true
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "tarballDir": "dist"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": "dist/*.tgz",
+          "addReleases": "bottom"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "@square/web-payments-sdk-types": "^1.83.1"
+  }
+}

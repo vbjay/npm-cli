@@ -1,0 +1,67 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+group = 'expo.modules.imagetosvg'
+version = '3.4.4'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+  useDefaultAndroidSdkVersions()
+} else {
+  buildscript {
+    ext.safeExtGet = { prop, fallback ->
+      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+  }
+  project.android {
+    compileSdkVersion safeExtGet("compileSdkVersion", 36)
+    defaultConfig {
+      minSdkVersion safeExtGet("minSdkVersion", 24)
+      targetSdkVersion safeExtGet("targetSdkVersion", 36)
+    }
+  }
+}
+
+android {
+  namespace "expo.modules.imagetosvg"
+
+  buildFeatures {
+    prefab true   // CRITICAL: this is what makes find_package(ReactAndroid) work
+  }
+
+  defaultConfig {
+    externalNativeBuild {
+      cmake {
+        cppFlags "-std=c++17 -O3 -fexceptions -frtti"
+        arguments "-DANDROID_STL=c++_shared"
+        // No need for -DREACT_NATIVE_DIR when using Prefab
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  packagingOptions {
+    pickFirst '**/libc++_shared.so'
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  // No version pin — matches the working project exactly
+  implementation "com.facebook.react:react-android"
+}

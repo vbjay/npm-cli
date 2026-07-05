@@ -1,0 +1,100 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+buildscript {
+  ext.safeExtGet = {prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+  repositories {
+    google()
+    gradlePluginPortal()
+  }
+  dependencies {
+    classpath("com.android.tools.build:gradle:7.3.1")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.22")
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: "com.facebook.react"
+}
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', 36)
+  namespace "com.mattermost.pasteinputtext"
+  
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 24)
+    targetSdkVersion safeExtGet('targetSdkVersion', 36)
+    buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", "true")
+  }
+
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        // java.srcDirs += ['src/newarch']
+      }
+    }
+  }    
+}
+
+repositories {
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url "$projectDir/../node_modules/react-native/android"
+  }
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native:+'
+}
+
+if (isNewArchitectureEnabled()) {
+  // The codegen generates a thin typedef for PasteTextInputShadowNode that lacks
+  // MeasurableYogaNode, so Yoga never calls measureContent() and multiline auto-resize
+  // never works. After codegen runs we overwrite the generated files with our versions
+  // from src/codegen-patch/, which wire up the full AndroidTextInput shadow node
+  // machinery (MeasurableYogaNode traits + TextLayoutManager injection via adopt()).
+  afterEvaluate {
+    def patchTask = tasks.register("patchPasteTextInputCodegen") {
+      def patchSrcDir = file("src/codegen-patch/react/renderer/components/PasteTextInputSpecs")
+      def codegenDir = layout.buildDirectory.dir(
+          "generated/source/codegen/jni/react/renderer/components/PasteTextInputSpecs"
+      ).get().asFile
+
+      inputs.dir(patchSrcDir)
+      inputs.dir(codegenDir).optional()
+      outputs.upToDateWhen { false }
+
+      doLast {
+        if (!codegenDir.exists()) {
+          logger.warn("[PasteInput] codegen dir not found – skipping patch")
+          return
+        }
+
+        ["ShadowNodes.h", "ShadowNodes.cpp", "ComponentDescriptors.h", "ComponentDescriptors.cpp"].each { name ->
+          def src = new File(patchSrcDir, name)
+          def dst = new File(codegenDir, name)
+          dst.text = src.text
+        }
+
+        logger.lifecycle("[PasteInput] Patched ShadowNodes.h/.cpp and ComponentDescriptors.h/.cpp")
+      }
+    }
+
+    tasks.configureEach { task ->
+      if (task.name == "generateCodegenArtifactsFromSchema") {
+        task.finalizedBy(patchTask)
+      }
+    }
+  }
+}

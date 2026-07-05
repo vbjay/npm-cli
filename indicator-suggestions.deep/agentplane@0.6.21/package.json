@@ -1,0 +1,85 @@
+{
+  "name": "agentplane",
+  "version": "0.6.21",
+  "description": "CLI-first operational workflows and traces for AI agents.",
+  "keywords": [
+    "agentplane",
+    "agentplane-framework",
+    "coding-agent",
+    "agent-audit",
+    "git-workflow",
+    "agentic-coding",
+    "cli",
+    "tasks",
+    "workflow",
+    "recipes",
+    "automation",
+    "orchestration"
+  ],
+  "license": "MIT",
+  "author": "basilisk-labs",
+  "maintainers": [
+    "basilisk-labs"
+  ],
+  "contributors": [
+    "basilisk-labs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basilisk-labs/agentplane.git"
+  },
+  "homepage": "https://agentplane.org",
+  "bugs": {
+    "url": "https://github.com/basilisk-labs/agentplane/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "ap": "bin/ap.js",
+    "agentplane": "bin/agentplane.js"
+  },
+  "files": [
+    "bin/ap.js",
+    "bin/agentplane.js",
+    "bin/dist-guard.js",
+    "bin/framework-dev-contract.js",
+    "bin/runtime-context.js",
+    "bin/runtime-watch.js",
+    "bin/stale-dist-policy.js",
+    "dist/.build-manifest.json",
+    "dist/cli.d.ts",
+    "dist/cli.js",
+    "assets",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true}); require('node:fs').rmSync('tsconfig.tsbuildinfo',{force:true});\"",
+    "build": "npm run clean && node ../../scripts/checks/run-typescript-build.mjs --force && npm run build:bundle",
+    "build:bundle": "node ../../scripts/release/prune-package-js.mjs dist && node ../../scripts/checks/run-tsup-build.mjs && node ../../scripts/release/manifest.mjs build .",
+    "typecheck": "tsc -b",
+    "test": "cd ../.. && vitest --config vitest.workspace.ts run --project agentplane",
+    "prepack": "npm run clean && npm run build && node ../../scripts/release/manifest.mjs sanitize .",
+    "postpack": "node ../../scripts/release/manifest.mjs build .",
+    "prepublishOnly": "node ../../scripts/release/enforce-github-publish.mjs && npm run prepack"
+  },
+  "dependencies": {
+    "@agentplaneorg/core": "0.6.21",
+    "@agentplaneorg/recipes": "0.6.21",
+    "@clack/prompts": "^1.5.1",
+    "yaml": "^2.7.1",
+    "yauzl": "^3.4.0",
+    "zod": "^4.4.3",
+    "zod-validation-error": "^5.0.0"
+  },
+  "devDependencies": {
+    "@agentplane/testkit": "0.0.0",
+    "@types/yauzl": "^3.4.0"
+  }
+}

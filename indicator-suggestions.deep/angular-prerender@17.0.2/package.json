@@ -1,0 +1,110 @@
+{
+    "author": "Christoph Guttandin",
+    "bin": {
+        "angular-prerender": "./build/node/app.js"
+    },
+    "bugs": {
+        "url": "https://github.com/chrisguttandin/angular-prerender/issues"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
+    },
+    "contributors": [
+        {
+            "email": "sam.vloeberghs@gmail.com",
+            "name": "Sam Vloeberghs"
+        },
+        {
+            "email": "ville.harjunen@frantic.com",
+            "name": "Ville Harjunen"
+        }
+    ],
+    "dependencies": {
+        "@schematics/angular": "^17.3.7",
+        "chalk": "^5.6.2",
+        "domino": "^2.1.7",
+        "guess-parser": "^0.4.22",
+        "tslib": "^2.8.1",
+        "type-fest": "^5.7.0",
+        "typescript": "^5.9.3",
+        "yargs": "^18.0.0"
+    },
+    "description": "A command line tool to prerender Angular Apps.",
+    "devDependencies": {
+        "@angular/animations": "^17.3.8",
+        "@angular/common": "^17.3.8",
+        "@angular/compiler": "^17.3.8",
+        "@angular/core": "^17.3.8",
+        "@angular/platform-browser": "^17.3.8",
+        "@angular/platform-browser-dynamic": "^17.3.8",
+        "@angular/platform-server": "^17.3.8",
+        "@babel/cli": "^7.29.7",
+        "@babel/core": "^7.29.7",
+        "@babel/preset-env": "^7.29.7",
+        "@babel/register": "^7.29.7",
+        "@commitlint/cli": "^21.1.0",
+        "@commitlint/config-angular": "^21.1.0",
+        "@types/yargs": "^17.0.35",
+        "chai": "^6.2.2",
+        "commitizen": "^4.3.2",
+        "cz-conventional-changelog": "^3.3.0",
+        "eslint": "^9.39.4",
+        "eslint-config-holy-grail": "^63.0.5",
+        "globals": "^17.7.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^17.0.8",
+        "mocha": "^11.7.6",
+        "prettier": "^3.8.5",
+        "rimraf": "^6.1.3",
+        "rxjs": "^7.8.2",
+        "sinon": "^22.0.0",
+        "sinon-chai": "^4.0.1",
+        "tsconfig-holy-grail": "^16.0.0",
+        "zone.js": "^0.14.10"
+    },
+    "engines": {
+        "node": ">=22.21.0"
+    },
+    "files": [
+        "build/es2020/",
+        "build/node/",
+        "src/"
+    ],
+    "homepage": "https://github.com/chrisguttandin/angular-prerender",
+    "keywords": [
+        "Angular",
+        "cli",
+        "command line",
+        "ngx",
+        "server side rendering",
+        "static site generator"
+    ],
+    "license": "MIT",
+    "name": "angular-prerender",
+    "peerDependencies": {
+        "@angular/core": "^17.0.0",
+        "@angular/platform-server": "^17.0.0",
+        "zone.js": "^0.14.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chrisguttandin/angular-prerender.git"
+    },
+    "scripts": {
+        "build": "rimraf build/* && tsc --project src/tsconfig.json && babel ./build/es2020 --config-file ./config/babel/build.json --out-dir ./build/node",
+        "lint": "npm run lint:config && npm run lint:src && npm run lint:test",
+        "lint:config": "eslint --config config/eslint/config.mjs --ext .cjs --ext .js --ext .mjs --report-unused-disable-directives config/",
+        "lint:src": "eslint --config config/eslint/src.mjs --ext .ts --report-unused-disable-directives src/",
+        "lint:test": "eslint --config config/eslint/test.mjs --ext .js --report-unused-disable-directives test/",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "start": "node build/node/app.js",
+        "test": "npm run build && npm run test:integration && npm run test:unit",
+        "test:integration": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"integration\" ]; then mocha --bail --parallel --recursive --require config/mocha/config-integration.js test/integration; fi",
+        "test:unit": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ]; then mocha --bail --parallel --recursive --require config/mocha/config-unit.js test/unit; fi"
+    },
+    "type": "module",
+    "version": "17.0.2"
+}

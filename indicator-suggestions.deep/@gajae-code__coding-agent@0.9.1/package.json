@@ -1,0 +1,541 @@
+{
+	"type": "module",
+	"name": "@gajae-code/coding-agent",
+	"version": "0.9.1",
+	"description": "Gajae Code CLI with read, bash, edit, write tools and session management",
+	"homepage": "https://gajae-code.com",
+	"author": "Yeachan-Heo and Gajae Code Contributors",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Yeachan-Heo/gajae-code.git",
+		"directory": "packages/coding-agent"
+	},
+	"bugs": {
+		"url": "https://github.com/Yeachan-Heo/gajae-code/issues"
+	},
+	"keywords": [
+		"coding-agent",
+		"ai",
+		"llm",
+		"cli",
+		"tui",
+		"agent"
+	],
+	"main": "./src/index.ts",
+	"types": "./dist/types/index.d.ts",
+	"bin": {
+		"gjc": "bin/gjc.js"
+	},
+	"scripts": {
+		"build": "bun scripts/build-binary.ts",
+		"check": "biome check . && bun run check:types",
+		"check:types": "tsgo -p tsconfig.json --noEmit",
+		"lint": "biome lint .",
+		"test": "bun test",
+		"bench:context": "bun run bench/context-optimization.bench.ts",
+		"generate-schemas": "bun ../../scripts/generate-json-schemas.ts",
+		"check:schemas": "bun ../../scripts/generate-json-schemas.ts --check",
+		"fix": "biome check --write --unsafe . && bun run format-prompts && bun run generate-docs-index",
+		"fmt": "biome format --write . && bun run format-prompts",
+		"format-prompts": "bun scripts/format-prompts.ts",
+		"generate-docs-index": "bun scripts/generate-docs-index.ts",
+		"prepack": "bun scripts/generate-docs-index.ts",
+		"generate-template": "bun scripts/generate-template.ts",
+		"install:defaults": "bun src/cli.ts setup defaults",
+		"verify:insane-vendor": "bun scripts/verify-insane-vendor.ts"
+	},
+	"dependencies": {
+		"@agentclientprotocol/sdk": "0.21.0",
+		"@babel/parser": "^7.29.3",
+		"@mozilla/readability": "^0.6.0",
+		"@gajae-code/stats": "0.9.1",
+		"@gajae-code/agent-core": "0.9.1",
+		"@gajae-code/ai": "0.9.1",
+		"@gajae-code/natives": "0.9.1",
+		"@gajae-code/tui": "0.9.1",
+		"@gajae-code/utils": "0.9.1",
+		"@puppeteer/browsers": "^2.13.0",
+		"@types/turndown": "5.0.6",
+		"@xterm/headless": "^6.0.0",
+		"chalk": "^5.6.2",
+		"diff": "^9.0.0",
+		"fflate": "0.8.2",
+		"handlebars": "^4.7.9",
+		"linkedom": "^0.18.12",
+		"lru-cache": "11.3.6",
+		"markit-ai": "0.5.3",
+		"puppeteer-core": "^24.42.0",
+		"turndown": "7.2.4",
+		"turndown-plugin-gfm": "1.0.2",
+		"zod": "4.4.3"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.3.14",
+		"@types/ws": "^8.5.13"
+	},
+	"engines": {
+		"bun": ">=1.3.14"
+	},
+	"files": [
+		"src",
+		"bin",
+		"scripts",
+		"examples",
+		"README.md",
+		"CHANGELOG.md",
+		"vendor",
+		"dist/types"
+	],
+	"exports": {
+		"./cli": {
+			"types": "./dist/types/cli.d.ts",
+			"import": "./src/cli.ts"
+		},
+		".": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./src/index.ts"
+		},
+		"./mcp": null,
+		"./mcp/*": null,
+		"./runtime-mcp": null,
+		"./runtime-mcp/*": null,
+		"./commands/gjc-runtime-bridge": null,
+		"./capability/mcp": null,
+		"./config/mcp-schema": null,
+		"./discovery/mcp-json": null,
+		"./exa": null,
+		"./exa/*": null,
+		"./exa/mcp-client": null,
+		"./internal-urls/mcp-protocol": null,
+		"./modes/components/runtime-mcp-add-wizard": null,
+		"./modes/controllers/runtime-mcp-command-controller": null,
+		"./slash-commands/helpers/mcp": null,
+		"./*": {
+			"types": "./dist/types/*.d.ts",
+			"import": "./src/*.ts"
+		},
+		"./async": {
+			"types": "./dist/types/async/index.d.ts",
+			"import": "./src/async/index.ts"
+		},
+		"./async/*": {
+			"types": "./dist/types/async/*.d.ts",
+			"import": "./src/async/*.ts"
+		},
+		"./capability": {
+			"types": "./dist/types/capability/index.d.ts",
+			"import": "./src/capability/index.ts"
+		},
+		"./capability/*": {
+			"types": "./dist/types/capability/*.d.ts",
+			"import": "./src/capability/*.ts"
+		},
+		"./cli/*": {
+			"types": "./dist/types/cli/*.d.ts",
+			"import": "./src/cli/*.ts"
+		},
+		"./cli/commands/*": {
+			"types": "./dist/types/cli/commands/*.d.ts",
+			"import": "./src/cli/commands/*.ts"
+		},
+		"./autoresearch": null,
+		"./autoresearch/*": null,
+		"./autoresearch/tools/*": null,
+		"./commands/autoresearch": null,
+		"./commands/ralph": null,
+		"./commands/ultraqa": null,
+		"./commands/ultrawork": null,
+		"./commands/performance-goal": null,
+		"./commands/*": {
+			"types": "./dist/types/commands/*.d.ts",
+			"import": "./src/commands/*.ts"
+		},
+		"./commit": {
+			"types": "./dist/types/commit/index.d.ts",
+			"import": "./src/commit/index.ts"
+		},
+		"./commit/*": {
+			"types": "./dist/types/commit/*.d.ts",
+			"import": "./src/commit/*.ts"
+		},
+		"./commit/agentic": {
+			"types": "./dist/types/commit/agentic/index.d.ts",
+			"import": "./src/commit/agentic/index.ts"
+		},
+		"./commit/agentic/*": {
+			"types": "./dist/types/commit/agentic/*.d.ts",
+			"import": "./src/commit/agentic/*.ts"
+		},
+		"./commit/agentic/tools": {
+			"types": "./dist/types/commit/agentic/tools/index.d.ts",
+			"import": "./src/commit/agentic/tools/index.ts"
+		},
+		"./commit/agentic/tools/*": {
+			"types": "./dist/types/commit/agentic/tools/*.d.ts",
+			"import": "./src/commit/agentic/tools/*.ts"
+		},
+		"./commit/analysis": {
+			"types": "./dist/types/commit/analysis/index.d.ts",
+			"import": "./src/commit/analysis/index.ts"
+		},
+		"./commit/analysis/*": {
+			"types": "./dist/types/commit/analysis/*.d.ts",
+			"import": "./src/commit/analysis/*.ts"
+		},
+		"./commit/changelog": {
+			"types": "./dist/types/commit/changelog/index.d.ts",
+			"import": "./src/commit/changelog/index.ts"
+		},
+		"./commit/changelog/*": {
+			"types": "./dist/types/commit/changelog/*.d.ts",
+			"import": "./src/commit/changelog/*.ts"
+		},
+		"./commit/git/*": {
+			"types": "./dist/types/commit/git/*.d.ts",
+			"import": "./src/commit/git/*.ts"
+		},
+		"./commit/map-reduce": {
+			"types": "./dist/types/commit/map-reduce/index.d.ts",
+			"import": "./src/commit/map-reduce/index.ts"
+		},
+		"./commit/map-reduce/*": {
+			"types": "./dist/types/commit/map-reduce/*.d.ts",
+			"import": "./src/commit/map-reduce/*.ts"
+		},
+		"./commit/utils/*": {
+			"types": "./dist/types/commit/utils/*.d.ts",
+			"import": "./src/commit/utils/*.ts"
+		},
+		"./config/*": {
+			"types": "./dist/types/config/*.d.ts",
+			"import": "./src/config/*.ts"
+		},
+		"./dap": {
+			"types": "./dist/types/dap/index.d.ts",
+			"import": "./src/dap/index.ts"
+		},
+		"./dap/*": {
+			"types": "./dist/types/dap/*.d.ts",
+			"import": "./src/dap/*.ts"
+		},
+		"./debug": {
+			"types": "./dist/types/debug/index.d.ts",
+			"import": "./src/debug/index.ts"
+		},
+		"./debug/*": {
+			"types": "./dist/types/debug/*.d.ts",
+			"import": "./src/debug/*.ts"
+		},
+		"./discovery": {
+			"types": "./dist/types/discovery/index.d.ts",
+			"import": "./src/discovery/index.ts"
+		},
+		"./discovery/*": {
+			"types": "./dist/types/discovery/*.d.ts",
+			"import": "./src/discovery/*.ts"
+		},
+		"./edit": {
+			"types": "./dist/types/edit/index.d.ts",
+			"import": "./src/edit/index.ts"
+		},
+		"./edit/*": {
+			"types": "./dist/types/edit/*.d.ts",
+			"import": "./src/edit/*.ts"
+		},
+		"./edit/modes/*": {
+			"types": "./dist/types/edit/modes/*.d.ts",
+			"import": "./src/edit/modes/*.ts"
+		},
+		"./hashline": {
+			"types": "./dist/types/hashline/index.d.ts",
+			"import": "./src/hashline/index.ts"
+		},
+		"./hashline/*": {
+			"types": "./dist/types/hashline/*.d.ts",
+			"import": "./src/hashline/*.ts"
+		},
+		"./exec/*": {
+			"types": "./dist/types/exec/*.d.ts",
+			"import": "./src/exec/*.ts"
+		},
+		"./export/*": {
+			"types": "./dist/types/export/*.d.ts",
+			"import": "./src/export/*.ts"
+		},
+		"./export/html": {
+			"types": "./dist/types/export/html/index.d.ts",
+			"import": "./src/export/html/index.ts"
+		},
+		"./export/html/*": {
+			"types": "./dist/types/export/html/*.d.ts",
+			"import": "./src/export/html/*.ts"
+		},
+		"./extensibility/*": {
+			"types": "./dist/types/extensibility/*.d.ts",
+			"import": "./src/extensibility/*.ts"
+		},
+		"./extensibility/custom-commands": {
+			"types": "./dist/types/extensibility/custom-commands/index.d.ts",
+			"import": "./src/extensibility/custom-commands/index.ts"
+		},
+		"./extensibility/custom-commands/*": {
+			"types": "./dist/types/extensibility/custom-commands/*.d.ts",
+			"import": "./src/extensibility/custom-commands/*.ts"
+		},
+		"./extensibility/custom-commands/bundled/ci-green": {
+			"types": "./dist/types/extensibility/custom-commands/bundled/ci-green/index.d.ts",
+			"import": "./src/extensibility/custom-commands/bundled/ci-green/index.ts"
+		},
+		"./extensibility/custom-commands/bundled/review": {
+			"types": "./dist/types/extensibility/custom-commands/bundled/review/index.d.ts",
+			"import": "./src/extensibility/custom-commands/bundled/review/index.ts"
+		},
+		"./extensibility/custom-tools": {
+			"types": "./dist/types/extensibility/custom-tools/index.d.ts",
+			"import": "./src/extensibility/custom-tools/index.ts"
+		},
+		"./extensibility/custom-tools/*": {
+			"types": "./dist/types/extensibility/custom-tools/*.d.ts",
+			"import": "./src/extensibility/custom-tools/*.ts"
+		},
+		"./extensibility/extensions": {
+			"types": "./dist/types/extensibility/extensions/index.d.ts",
+			"import": "./src/extensibility/extensions/index.ts"
+		},
+		"./extensibility/extensions/*": {
+			"types": "./dist/types/extensibility/extensions/*.d.ts",
+			"import": "./src/extensibility/extensions/*.ts"
+		},
+		"./extensibility/hooks": {
+			"types": "./dist/types/extensibility/hooks/index.d.ts",
+			"import": "./src/extensibility/hooks/index.ts"
+		},
+		"./extensibility/hooks/*": {
+			"types": "./dist/types/extensibility/hooks/*.d.ts",
+			"import": "./src/extensibility/hooks/*.ts"
+		},
+		"./extensibility/plugins": {
+			"types": "./dist/types/extensibility/plugins/index.d.ts",
+			"import": "./src/extensibility/plugins/index.ts"
+		},
+		"./extensibility/plugins/*": {
+			"types": "./dist/types/extensibility/plugins/*.d.ts",
+			"import": "./src/extensibility/plugins/*.ts"
+		},
+		"./extensibility/plugins/marketplace": {
+			"types": "./dist/types/extensibility/plugins/marketplace/index.d.ts",
+			"import": "./src/extensibility/plugins/marketplace/index.ts"
+		},
+		"./extensibility/plugins/marketplace/*": {
+			"types": "./dist/types/extensibility/plugins/marketplace/*.d.ts",
+			"import": "./src/extensibility/plugins/marketplace/*.ts"
+		},
+		"./internal-urls": {
+			"types": "./dist/types/internal-urls/index.d.ts",
+			"import": "./src/internal-urls/index.ts"
+		},
+		"./internal-urls/*": {
+			"types": "./dist/types/internal-urls/*.d.ts",
+			"import": "./src/internal-urls/*.ts"
+		},
+		"./eval": {
+			"types": "./dist/types/eval/index.d.ts",
+			"import": "./src/eval/index.ts"
+		},
+		"./eval/js/*": {
+			"types": "./dist/types/eval/js/*.d.ts",
+			"import": "./src/eval/js/*.ts"
+		},
+		"./eval/py/*": {
+			"types": "./dist/types/eval/py/*.d.ts",
+			"import": "./src/eval/py/*.ts"
+		},
+		"./lsp": {
+			"types": "./dist/types/lsp/index.d.ts",
+			"import": "./src/lsp/index.ts"
+		},
+		"./lsp/*": {
+			"types": "./dist/types/lsp/*.d.ts",
+			"import": "./src/lsp/*.ts"
+		},
+		"./lsp/clients": {
+			"types": "./dist/types/lsp/clients/index.d.ts",
+			"import": "./src/lsp/clients/index.ts"
+		},
+		"./lsp/clients/*": {
+			"types": "./dist/types/lsp/clients/*.d.ts",
+			"import": "./src/lsp/clients/*.ts"
+		},
+		"./memories": {
+			"types": "./dist/types/memories/index.d.ts",
+			"import": "./src/memories/index.ts"
+		},
+		"./memories/*": {
+			"types": "./dist/types/memories/*.d.ts",
+			"import": "./src/memories/*.ts"
+		},
+		"./memory-backend": {
+			"types": "./dist/types/memory-backend/index.d.ts",
+			"import": "./src/memory-backend/index.ts"
+		},
+		"./memory-backend/*": {
+			"types": "./dist/types/memory-backend/*.d.ts",
+			"import": "./src/memory-backend/*.ts"
+		},
+		"./hindsight": {
+			"types": "./dist/types/hindsight/index.d.ts",
+			"import": "./src/hindsight/index.ts"
+		},
+		"./hindsight/*": {
+			"types": "./dist/types/hindsight/*.d.ts",
+			"import": "./src/hindsight/*.ts"
+		},
+		"./modes": {
+			"types": "./dist/types/modes/index.d.ts",
+			"import": "./src/modes/index.ts"
+		},
+		"./modes/*": {
+			"types": "./dist/types/modes/*.d.ts",
+			"import": "./src/modes/*.ts"
+		},
+		"./modes/acp": {
+			"types": "./dist/types/modes/acp/index.d.ts",
+			"import": "./src/modes/acp/index.ts"
+		},
+		"./modes/acp/*": {
+			"types": "./dist/types/modes/acp/*.d.ts",
+			"import": "./src/modes/acp/*.ts"
+		},
+		"./modes/components": {
+			"types": "./dist/types/modes/components/index.d.ts",
+			"import": "./src/modes/components/index.ts"
+		},
+		"./modes/components/*": {
+			"types": "./dist/types/modes/components/*.d.ts",
+			"import": "./src/modes/components/*.ts"
+		},
+		"./modes/components/extensions": {
+			"types": "./dist/types/modes/components/extensions/index.d.ts",
+			"import": "./src/modes/components/extensions/index.ts"
+		},
+		"./modes/components/extensions/*": {
+			"types": "./dist/types/modes/components/extensions/*.d.ts",
+			"import": "./src/modes/components/extensions/*.ts"
+		},
+		"./modes/components/status-line": {
+			"types": "./dist/types/modes/components/status-line/index.d.ts",
+			"import": "./src/modes/components/status-line/index.ts"
+		},
+		"./modes/components/status-line/*": {
+			"types": "./dist/types/modes/components/status-line/*.d.ts",
+			"import": "./src/modes/components/status-line/*.ts"
+		},
+		"./modes/controllers/*": {
+			"types": "./dist/types/modes/controllers/*.d.ts",
+			"import": "./src/modes/controllers/*.ts"
+		},
+		"./modes/rpc/*": {
+			"types": "./dist/types/modes/rpc/*.d.ts",
+			"import": "./src/modes/rpc/*.ts"
+		},
+		"./modes/theme/*": {
+			"types": "./dist/types/modes/theme/*.d.ts",
+			"import": "./src/modes/theme/*.ts"
+		},
+		"./modes/theme/defaults": {
+			"types": "./dist/types/modes/theme/defaults/index.d.ts",
+			"import": "./src/modes/theme/defaults/index.ts"
+		},
+		"./modes/utils/*": {
+			"types": "./dist/types/modes/utils/*.d.ts",
+			"import": "./src/modes/utils/*.ts"
+		},
+		"./plan-mode/*": {
+			"types": "./dist/types/plan-mode/*.d.ts",
+			"import": "./src/plan-mode/*.ts"
+		},
+		"./prompts/*": "./src/prompts/*.md",
+		"./secrets": {
+			"types": "./dist/types/secrets/index.d.ts",
+			"import": "./src/secrets/index.ts"
+		},
+		"./secrets/*": {
+			"types": "./dist/types/secrets/*.d.ts",
+			"import": "./src/secrets/*.ts"
+		},
+		"./session/*": {
+			"types": "./dist/types/session/*.d.ts",
+			"import": "./src/session/*.ts"
+		},
+		"./slash-commands/*": {
+			"types": "./dist/types/slash-commands/*.d.ts",
+			"import": "./src/slash-commands/*.ts"
+		},
+		"./ssh/*": {
+			"types": "./dist/types/ssh/*.d.ts",
+			"import": "./src/ssh/*.ts"
+		},
+		"./stt": {
+			"types": "./dist/types/stt/index.d.ts",
+			"import": "./src/stt/index.ts"
+		},
+		"./stt/*": {
+			"types": "./dist/types/stt/*.d.ts",
+			"import": "./src/stt/*.ts"
+		},
+		"./task": {
+			"types": "./dist/types/task/index.d.ts",
+			"import": "./src/task/index.ts"
+		},
+		"./task/*": {
+			"types": "./dist/types/task/*.d.ts",
+			"import": "./src/task/*.ts"
+		},
+		"./tools": {
+			"types": "./dist/types/tools/index.d.ts",
+			"import": "./src/tools/index.ts"
+		},
+		"./tools/*": {
+			"types": "./dist/types/tools/*.d.ts",
+			"import": "./src/tools/*.ts"
+		},
+		"./tui": {
+			"types": "./dist/types/tui/index.d.ts",
+			"import": "./src/tui/index.ts"
+		},
+		"./tui/*": {
+			"types": "./dist/types/tui/*.d.ts",
+			"import": "./src/tui/*.ts"
+		},
+		"./utils/*": {
+			"types": "./dist/types/utils/*.d.ts",
+			"import": "./src/utils/*.ts"
+		},
+		"./web/*": {
+			"types": "./dist/types/web/*.d.ts",
+			"import": "./src/web/*.ts"
+		},
+		"./web/scrapers": {
+			"types": "./dist/types/web/scrapers/index.d.ts",
+			"import": "./src/web/scrapers/index.ts"
+		},
+		"./web/scrapers/*": {
+			"types": "./dist/types/web/scrapers/*.d.ts",
+			"import": "./src/web/scrapers/*.ts"
+		},
+		"./web/search": {
+			"types": "./dist/types/web/search/index.d.ts",
+			"import": "./src/web/search/index.ts"
+		},
+		"./web/search/*": {
+			"types": "./dist/types/web/search/*.d.ts",
+			"import": "./src/web/search/*.ts"
+		},
+		"./web/search/providers/*": {
+			"types": "./dist/types/web/search/providers/*.d.ts",
+			"import": "./src/web/search/providers/*.ts"
+		},
+		"./*.js": "./src/*.ts"
+	}
+}

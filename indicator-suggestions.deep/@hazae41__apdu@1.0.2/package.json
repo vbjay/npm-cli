@@ -1,0 +1,63 @@
+{
+  "type": "module",
+  "name": "@hazae41/apdu",
+  "version": "1.0.2",
+  "description": "Rust-like APDU protocol for TypeScript",
+  "homepage": "https://github.com/hazae41/apdu",
+  "repository": "github:hazae41/apdu",
+  "author": "hazae41",
+  "license": "MIT",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/types/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "./dist/esm",
+    "./dist/cjs",
+    "./dist/types"
+  ],
+  "scripts": {
+    "build": "rimraf dist && rollup -c",
+    "test": "node ./dist/test/index.test.mjs",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@hazae41/phobos": "^1.0.10",
+    "@hazae41/rimraf": "^1.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@types/node": "^24.2.1",
+    "rollup": "^4.46.2",
+    "rollup-plugin-dts": "^6.2.1",
+    "rollup-plugin-node-externals": "^8.0.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "keywords": [
+    "apdu",
+    "result",
+    "rust",
+    "data",
+    "error",
+    "catching",
+    "ok",
+    "err",
+    "unwrap",
+    "wrap",
+    "typescript",
+    "esmodules",
+    "tested",
+    "unit-tested"
+  ],
+  "dependencies": {
+    "@hazae41/binary": "^1.3.9",
+    "@hazae41/cursor": "^2.0.6",
+    "@hazae41/result": "^1.3.3"
+  }
+}

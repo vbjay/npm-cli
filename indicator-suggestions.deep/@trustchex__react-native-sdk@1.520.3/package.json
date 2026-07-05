@@ -1,0 +1,315 @@
+{
+  "name": "@trustchex/react-native-sdk",
+  "version": "1.520.3",
+  "description": "Trustchex mobile app react native SDK for android or ios devices",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "homepage": "https://docs.trustchex.com/docs/React%20Native%20SDK/intro",
+  "bugs": {
+    "url": "https://github.com/trustchex/trustchex/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trustchex/trustchex.git",
+    "directory": "react-native-sdk"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Trustchex <support@trustchex.com> (https://trustchex.com)",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "workspaces": [
+    "example",
+    "example-expo"
+  ],
+  "resolutions": {
+    "@react-navigation/core": "7.12.4",
+    "@react-navigation/native": "7.1.18",
+    "@react-navigation/native-stack": "7.3.27",
+    "@react-navigation/elements": "2.6.5",
+    "lodash": "4.18.0",
+    "brace-expansion": "1.1.13",
+    "minimatch": "3.1.4",
+    "qs": "6.15.2",
+    "ip-address": "10.1.1",
+    "uuid": "11.1.1",
+    "yaml": "2.8.3",
+    "fast-uri": "3.1.2",
+    "flatted": "3.4.2",
+    "react-native-screens": "4.18.0",
+    "shell-quote": "1.8.4",
+    "handlebars": "4.7.9",
+    "node-forge": "1.4.0",
+    "@xmldom/xmldom": "0.8.13",
+    "basic-ftp": "5.3.1",
+    "tmp": "0.2.6",
+    "ws": "8.20.1",
+    "picomatch": "2.3.2",
+    "fast-xml-parser": "5.7.0"
+  },
+  "scripts": {
+    "example": "yarn workspace @trustchex/react-native-sdk-example",
+    "example:android": "yarn example android",
+    "example:ios": "yarn example ios",
+    "example:start": "yarn example start",
+    "example-expo": "yarn workspace @trustchex/react-native-sdk-example-expo",
+    "example-expo:android": "yarn example-expo android",
+    "example-expo:ios": "yarn example-expo ios",
+    "example-expo:start": "yarn example-expo start",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib && npm run clean -w example",
+    "prepare": "bob build",
+    "release": "release-it --only-version",
+    "npm:publish": "npm publish --access public"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@react-native-community/cli": "18.0.1",
+    "@react-native/babel-preset": "0.79.7",
+    "@react-native/eslint-config": "^0.78.0",
+    "@react-navigation/native": "^7.1.16",
+    "@react-navigation/native-stack": "^7.3.23",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/elliptic": "^6.4.18",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.0.0",
+    "commitlint": "^19.6.1",
+    "del-cli": "^5.1.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^29.7.0",
+    "lottie-react-native": "^7.2.4",
+    "prettier": "^3.0.3",
+    "react": "19.0.0",
+    "react-native": "0.79.7",
+    "react-native-builder-bob": "^0.40.13",
+    "react-native-compressor": "^1.12.0",
+    "react-native-device-info": "^13.0.0",
+    "react-native-fs": "^2.20.0",
+    "react-native-get-random-values": "^1.11.0",
+    "react-native-incall-manager": "^4.2.0",
+    "react-native-nfc-manager": "^3.16.2",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-screens": "^4.18.0",
+    "react-native-sse": "^1.1.0",
+    "react-native-svg": "^15.12.0",
+    "react-native-tts": "^4.1.1",
+    "react-native-video": "^6.16.1",
+    "react-native-webrtc": "^124.0.0",
+    "react-native-webview": "^13.15.0",
+    "release-it": "^17.10.0",
+    "turbo": "^2.9.14",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@noble/ciphers": "^1.3.0",
+    "@noble/curves": "^1.9.4",
+    "@noble/hashes": "^1.8.0",
+    "buffer": "^6.0.3",
+    "crypto-js": "^4.2.0",
+    "elliptic": "^6.6.1",
+    "hash.js": "^1.1.7",
+    "i18next": "^25.3.2",
+    "jpeg2000": "^1.1.1",
+    "mrz": "^5.0.1",
+    "react-i18next": "^15.6.0",
+    "uuid": "^11.0.3"
+  },
+  "peerDependencies": {
+    "@react-navigation/native": ">=7.1.14",
+    "@react-navigation/native-stack": ">=7.3.21",
+    "lottie-react-native": ">=7.2.4",
+    "react": ">=19.0.0",
+    "react-native": ">=0.79.5",
+    "react-native-compressor": ">=1.12.0",
+    "react-native-device-info": ">=13.0.0",
+    "react-native-fs": ">=2.20.0",
+    "react-native-get-random-values": ">=1.11.0",
+    "react-native-incall-manager": ">=4.2.0",
+    "react-native-nfc-manager": ">=3.16.2",
+    "react-native-safe-area-context": ">=5.5.2",
+    "react-native-screens": ">=4.18.0",
+    "react-native-sse": ">=1.1.0",
+    "react-native-svg": ">=15.12.0",
+    "react-native-tts": ">=4.1.1",
+    "react-native-video": ">=6.16.1",
+    "react-native-webrtc": ">=124.0.0",
+    "react-native-webview": ">=13.15.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-navigation/native": {
+      "optional": false
+    },
+    "@react-navigation/native-stack": {
+      "optional": false
+    },
+    "lottie-react-native": {
+      "optional": false
+    },
+    "react": {
+      "optional": false
+    },
+    "react-native": {
+      "optional": false
+    },
+    "react-native-compressor": {
+      "optional": false
+    },
+    "react-native-device-info": {
+      "optional": false
+    },
+    "react-native-fs": {
+      "optional": false
+    },
+    "react-native-get-random-values": {
+      "optional": false
+    },
+    "react-native-incall-manager": {
+      "optional": false
+    },
+    "react-native-nfc-manager": {
+      "optional": false
+    },
+    "react-native-safe-area-context": {
+      "optional": false
+    },
+    "react-native-screens": {
+      "optional": false
+    },
+    "react-native-sse": {
+      "optional": false
+    },
+    "react-native-svg": {
+      "optional": false
+    },
+    "react-native-tts": {
+      "optional": false
+    },
+    "react-native-video": {
+      "optional": false
+    },
+    "react-native-webrtc": {
+      "optional": false
+    },
+    "react-native-webview": {
+      "optional": false
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(uuid|mrz|react-native|@react-native|react-native-device-info|react-native-get-random-values|react-native-fs)/)"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true,
+          "sourceMaps": false
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "TrustchexSDKSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.trustchex.reactnativesdk"
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "turbo-module",
+    "version": "0.52.0"
+  }
+}

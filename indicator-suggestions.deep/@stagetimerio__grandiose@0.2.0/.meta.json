@@ -1,0 +1,185 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "16f45c07386baf91",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/dist.js",
+      "scripts/ndi.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "shelljs",
+        "versionSpec": "0.10.0"
+      },
+      {
+        "name": "execa",
+        "versionSpec": "9.6.1"
+      },
+      {
+        "name": "cross-zip",
+        "versionSpec": "4.0.1"
+      },
+      {
+        "name": "got",
+        "versionSpec": "14.6.6"
+      },
+      {
+        "name": "mkdirp",
+        "versionSpec": "3.0.1"
+      },
+      {
+        "name": "tmp",
+        "versionSpec": "0.2.5"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "cross-zip@4.0.1",
+      "execa@9.6.1",
+      "got@14.6.6",
+      "mkdirp@3.0.1",
+      "shelljs@0.10.0",
+      "tmp@0.2.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "1f8db8a8cbed46431bd018f6c4ad4e57cc80da5b8533ac5a715f74bde533b445",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `grandiose`  -  C/C++ sources",
+            "items": [
+              "src/grandiose_util.cc",
+              "src/grandiose_find.cc",
+              "src/grandiose_send.cc",
+              "src/grandiose_receive.cc",
+              "src/grandiose_routing.cc",
+              "src/grandiose.cc"
+            ]
+          },
+          {
+            "label": "Target `grandiose`  -  include directories",
+            "items": [
+              "ndi/include"
+            ]
+          },
+          {
+            "label": "Target `grandiose`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/ndi.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "d5b552d71965b597f2c3af6c0916c5708b73c520dc0065d5f5443f3297f61cb1",
+        "sizeBytes": 7421,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://constexpr.org/innoextract/files/innoextract-1.9-windows.zip",
+            "classification": "download"
+          },
+          {
+            "url": "https://downloads.ndi.tv/SDK/NDI_SDK/NDI%206%20SDK.exe",
+            "classification": "download"
+          },
+          {
+            "url": "https://downloads.ndi.tv/SDK/NDI_SDK_Mac/Install_NDI_SDK_v6_Apple.pkg",
+            "classification": "download"
+          },
+          {
+            "url": "https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v6_Linux.tar.gz",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/dist.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "72423217b5f7a07c685c7d0ac626189dce55d83187f6f0f2d97ba8f18a4269f3",
+        "sizeBytes": 1781,
+        "signals": [
+          "writes-file",
+          "dynamic-require",
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:00.481Z"
+  },
+  "hash": "sha256:d2c5bd14c873b1dbbc23fd2fc100e895b163672334f059c650f7e92cdbe8ef4c"
+}

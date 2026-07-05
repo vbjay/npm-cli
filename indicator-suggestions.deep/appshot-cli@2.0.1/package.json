@@ -1,0 +1,71 @@
+{
+  "name": "appshot-cli",
+  "version": "2.0.1",
+  "description": "Generate App Store–ready screenshots with frames, gradients, and captions",
+  "bin": {
+    "appshot": "bin/appshot.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run --exclude '**/integration/**' --exclude '**/visual/**'",
+    "test:integration": "vitest run tests/integration",
+    "test:visual": "vitest run tests/visual",
+    "prepare": "npm run build",
+    "clean": "rm -rf final/",
+    "clean:all": "rm -rf final/ dist/ .appshot/",
+    "samples": "bash template-samples/scripts/generate-all.sh"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.8.3",
+    "@modelcontextprotocol/sdk": "^1.25.2",
+    "commander": "^12.0.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^12.0.0",
+    "inquirer-autocomplete-standalone": "^0.8.1",
+    "openai": "^6.16.0",
+    "picocolors": "^1.0.0",
+    "sharp": "^0.33.5",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
+    "eslint": "^9.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "frames",
+    "fonts",
+    "skill"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/chrisvanbuskirk/appshot",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/chrisvanbuskirk/appshot.git"
+  },
+  "keywords": [
+    "app-store",
+    "screenshots",
+    "ios",
+    "android",
+    "cli",
+    "frames",
+    "marketing"
+  ],
+  "author": "Chris Van Buskirk"
+}

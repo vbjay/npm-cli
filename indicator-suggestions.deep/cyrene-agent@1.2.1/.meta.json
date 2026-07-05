@@ -1,0 +1,151 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9bb632cdf9f87f42",
+    "fetchedFiles": [
+      "lib/install.js",
+      "lib/platform.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c6f7a822bedf5caa5d0d340a324e9572d6e2048476c735fd30a50d80e2b79e60",
+        "sizeBytes": 5082,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://raw.githubusercontent.com/${platform.REPO}/master/install.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/${platform.REPO}/master/install.ps1",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/${platform.REPO}#build-from-source\\n\\n",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/platform.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "435c6b02215ce23baf5e7562e9e18140c87d274066d198e049dd594f5dccc339",
+        "sizeBytes": 2848,
+        "signals": [
+          "uses-child-process",
+          "obfuscation-pattern",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/${REPO}#build-from-source",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./lib/install.js",
+        "sha256": "fc008f3dbdadce1870f49201758d126ec91dbdde67d5a287210d6a00cd44181a",
+        "sizeBytes": 1247,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:36.116Z"
+  },
+  "hash": "sha256:000f61f69c70e00b39f448777a9ac87c6794226b9622ddca13b96815ee4944f5"
+}

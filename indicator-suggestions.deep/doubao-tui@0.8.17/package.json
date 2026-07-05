@@ -1,0 +1,50 @@
+{
+  "name": "doubao-tui",
+  "version": "0.8.17",
+  "doubaoBinaryVersion": "0.8.17",
+  "description": "Install and run doubao and doubao-tui binaries from GitHub release artifacts.",
+  "author": "freestylefly",
+  "license": "MIT",
+  "homepage": "https://github.com/freestylefly/Doubao-TUI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freestylefly/Doubao-TUI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/freestylefly/Doubao-TUI/issues"
+  },
+  "keywords": [
+    "doubao",
+    "cli",
+    "tui",
+    "rust",
+    "binary",
+    "terminal"
+  ],
+  "type": "commonjs",
+  "bin": {
+    "doubao": "bin/doubao.js",
+    "doubao-tui": "bin/doubao-tui.js"
+  },
+  "scripts": {
+    "release:check": "node scripts/verify-release-assets.js",
+    "postinstall": "node scripts/install.js",
+    "prepublishOnly": "node scripts/verify-release-assets.js",
+    "prepack": "node scripts/install.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "preferGlobal": true,
+  "files": [
+    "bin/*.js",
+    "scripts/*.js",
+    "test/*.js",
+    "README.md",
+    "package.json"
+  ]
+}

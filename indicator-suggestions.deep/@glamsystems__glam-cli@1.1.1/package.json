@@ -1,0 +1,54 @@
+{
+  "name": "@glamsystems/glam-cli",
+  "version": "1.1.1",
+  "description": "CLI for interacting with the GLAM Protocol",
+  "main": "./main.js",
+  "bin": {
+    "glam-cli": "./main.js"
+  },
+  "homepage": "https://www.glam.systems",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glamsystems/glam-cli.git"
+  },
+  "keywords": [
+    "glam",
+    "cli",
+    "solana"
+  ],
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "clean": "node scripts/clean.mjs",
+    "prepack": "npm run build",
+    "pack:dry-run": "npm pack --dry-run --json"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "main.js",
+    "templates/**/*.json"
+  ],
+  "dependencies": {
+    "@glamsystems/glam-sdk": "1.1.0",
+    "commander": "^11.1.0",
+    "decimal.js": "^10.6.0",
+    "inquirer": "^8.2.6"
+  },
+  "optionalDependencies": {
+    "@ledgerhq/hw-app-solana": "^7.10.1",
+    "@ledgerhq/hw-transport-node-hid": "^6.33.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.30",
+    "@types/inquirer": "^8.2.10",
+    "esbuild": "^0.25.2",
+    "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,149 @@
+{
+	"name": "dotenv-mono",
+	"version": "1.5.1",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"description": "This package permit to have a centralized dotenv on a monorepo. It also includes some extra features such as manipulation and saving of changes to the dotenv file, a default centralized file, and a file loader with ordering and priorities.",
+	"author": "Marco Cesarato <cesarato.developer@gmail.com>",
+	"bin": {
+		"dotenv": "./dist/cli.js",
+		"dotenv-mono": "./dist/cli.js"
+	},
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./load": "./dist/load.js",
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"bugs": {
+		"url": "https://github.com/marcocesarato/dotenv-mono/issues"
+	},
+	"homepage": "https://github.com/marcocesarato/dotenv-mono",
+	"license": "BSD-2-Clause",
+	"scripts": {
+		"release": "standard-version",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"format": "prettier --write .",
+		"build": "tsc",
+		"tsc": "tsc",
+		"prepare": "tsc",
+		"test": "jest",
+		"coverage": "jest --coverage && start coverage/index.html"
+	},
+	"dependencies": {
+		"cross-spawn": "^7.0.6",
+		"dotenv": "^17.2.0",
+		"dotenv-expand": "^12.0.2",
+		"minimist": "^1.2.8"
+	},
+	"devDependencies": {
+		"@types/cross-spawn": "^6.0.6",
+		"@types/jest": "^30.0.0",
+		"@types/minimist": "^1.2.5",
+		"@types/mock-fs": "^4.13.4",
+		"@types/node": "^24.0.14",
+		"@typescript-eslint/eslint-plugin": "^8.37.0",
+		"@typescript-eslint/parser": "^8.37.0",
+		"eslint": "^9.31.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-plugin-jest": "^29.0.1",
+		"eslint-plugin-jest-extended": "^3.0.0",
+		"eslint-plugin-prettier": "^5.5.1",
+		"eslint-plugin-simple-import-sort": "^12.1.1",
+		"globals": "^16.3.0",
+		"husky": "^9.1.7",
+		"jest": "^30.0.4",
+		"jest-extended": "^6.0.0",
+		"lint-staged": "^16.1.2",
+		"mock-fs": "^5.5.0",
+		"prettier": "^3.6.2",
+		"standard-version": "^9.5.0",
+		"ts-jest": "^29.4.0",
+		"typescript": "^5.8.3"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": "eslint --fix",
+		"*.{json,md}": "prettier --write"
+	},
+	"standard-version": {
+		"scripts": {
+			"postchangelog": "prettier -w CHANGELOG.md"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/marcocesarato/dotenv-mono.git"
+	},
+	"keywords": [
+		"dotenv",
+		"dotenv-mono",
+		"dotenv-expand",
+		"monorepo",
+		"env",
+		"environment",
+		"environment variables",
+		"env loader",
+		"env manager",
+		"env file",
+		".env",
+		".env.local",
+		".env.development",
+		".env.production",
+		"centralized",
+		"config",
+		"configuration",
+		"variables",
+		"vars",
+		"loader",
+		"load",
+		"edit",
+		"save",
+		"manipulate",
+		"priorities",
+		"default",
+		"defaults",
+		"shared",
+		"share",
+		"single",
+		"one",
+		"repo",
+		"apps",
+		"packages",
+		"nextjs",
+		"next.js",
+		"react",
+		"angular",
+		"turbo",
+		"turborepo",
+		"storybook",
+		"cli",
+		"console",
+		"node",
+		"typescript",
+		"js",
+		"javascript",
+		"test",
+		"production",
+		"development",
+		"prod",
+		"dev",
+		"preload",
+		"changes"
+	]
+}

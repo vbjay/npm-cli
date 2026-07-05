@@ -1,0 +1,51 @@
+{
+  "name": "responsive-breakpoints",
+  "version": "0.1.6",
+  "type": "module",
+  "description": "Responsive breakpoint utilities for React and React Native",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "exports": {
+    ".": "./build/index.js",
+    "./build/*.js": "./build/*.js"
+  },
+  "keywords": [
+    "breakpoints",
+    "react",
+    "react-native",
+    "responsive"
+  ],
+  "author": "kaspernj <kasper@diestoeckels.de> (github.com/kaspernj)",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --outDir build",
+    "lint": "eslint .",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "release:patch": "node scripts/release-patch.js",
+    "test": "jasmine",
+    "typecheck": "tsc --ignoreConfig --noEmit --allowJs --checkJs --declaration false --rootDir . --skipLibCheck --types jasmine,node src/*.js scripts/*.js spec/*.cjs"
+  },
+  "dependencies": {
+    "diggerize": ">= 1.0.10",
+    "env-sense": ">= 1.0.2",
+    "inflection": ">= 1.12.0",
+    "set-state-compare": ">= 1.0.69"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.1",
+    "@types/jasmine": "^5.1.12",
+    "@types/node": "^24.6.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "jasmine": "^6.2.0",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.3.0",
+    "react-native": "*"
+  }
+}

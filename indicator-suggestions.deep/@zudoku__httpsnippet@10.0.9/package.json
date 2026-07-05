@@ -1,0 +1,105 @@
+{
+  "name": "@zudoku/httpsnippet",
+  "version": "10.0.9",
+  "description": "HTTP Request snippet generator for *most* languages",
+  "homepage": "https://github.com/zuplo/httpsnippet",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./helpers/code-builder": {
+      "require": "./dist/helpers/code-builder.cjs",
+      "import": "./dist/helpers/code-builder.js"
+    },
+    "./helpers/reducer": {
+      "require": "./dist/helpers/reducer.cjs",
+      "import": "./dist/helpers/reducer.js"
+    },
+    "./targets": {
+      "require": "./dist/targets/index.cjs",
+      "import": "./dist/targets/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.cts",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "api",
+    "clojure",
+    "csharp",
+    "curl",
+    "go",
+    "har",
+    "http",
+    "httpie",
+    "httr",
+    "java",
+    "javascript",
+    "jquery",
+    "kotlin",
+    "objc",
+    "objective-c",
+    "ocaml",
+    "php",
+    "python",
+    "request",
+    "requests",
+    "ruby",
+    "shell",
+    "snippet",
+    "swift",
+    "swift",
+    "unirest",
+    "xhr",
+    "xmlhttprequest"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zuplo/httpsnippet.git"
+  },
+  "scripts": {
+    "attw": "attw --pack --format table-flipped",
+    "build": "tsup",
+    "clean": "rm -rf dist/",
+    "lint": "eslint . --ext .js,.cjs,.ts",
+    "prebuild": "npm run clean",
+    "prepack": "npm run build",
+    "pretest": "npm run lint && npm run prettier",
+    "prettier": "prettier --list-different --write .",
+    "test": "vitest run --coverage"
+  },
+  "dependencies": {
+    "qs": "^6.11.2",
+    "stringify-object": "^3.3.0",
+    "url": "^0.11.3"
+  },
+  "devDependencies": {
+    "@readme/eslint-config": "^14.0.0",
+    "@types/eslint": "^8.44.7",
+    "@types/har-format": "^1.2.15",
+    "@types/node": "^20.12.5",
+    "@types/qs": "^6.9.10",
+    "@types/stringify-object": "^4.0.5",
+    "@vitest/coverage-v8": "^1.1.1",
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.0.3",
+    "require-directory": "^2.1.1",
+    "tsup": "^8.0.1",
+    "type-fest": "^4.15.0",
+    "typescript": "^5.4.4",
+    "vitest": "^1.1.1"
+  },
+  "prettier": "@readme/eslint-config/prettier"
+}

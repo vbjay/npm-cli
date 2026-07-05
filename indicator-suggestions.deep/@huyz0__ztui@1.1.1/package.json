@@ -1,0 +1,165 @@
+{
+  "name": "@huyz0/ztui",
+  "version": "1.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Declarative, React-based TUI framework for TypeScript and Bun — one widget tree, terminal and browser-canvas backends.",
+  "license": "MIT",
+  "author": "Huy Nguyen",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huyz0/ztui.git"
+  },
+  "homepage": "https://huyz0.github.io/ztui",
+  "bugs": {
+    "url": "https://github.com/huyz0/ztui/issues"
+  },
+  "keywords": [
+    "tui",
+    "terminal",
+    "cli",
+    "react",
+    "react-reconciler",
+    "ink",
+    "textual",
+    "ansi",
+    "canvas",
+    "bun",
+    "widgets"
+  ],
+  "engines": {
+    "bun": ">=1.0.0",
+    "node": ">=20"
+  },
+  "main": "./dist/core.js",
+  "module": "./dist/core.js",
+  "types": "./dist/core.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/core.d.ts",
+      "bun": "./src/core.ts",
+      "import": "./dist/core.js",
+      "default": "./dist/core.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "bun": "./src/react.ts",
+      "import": "./dist/react.js",
+      "default": "./dist/react.js"
+    },
+    "./markdown": {
+      "types": "./dist/markdown.d.ts",
+      "bun": "./src/markdown.ts",
+      "import": "./dist/markdown.js",
+      "default": "./dist/markdown.js"
+    },
+    "./syntax": {
+      "types": "./dist/syntax.d.ts",
+      "bun": "./src/syntax.ts",
+      "import": "./dist/syntax.js",
+      "default": "./dist/syntax.js"
+    },
+    "./mermaid": {
+      "types": "./dist/mermaid.d.ts",
+      "bun": "./src/mermaid.ts",
+      "import": "./dist/mermaid.js",
+      "default": "./dist/mermaid.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "bun": "./src/testing.ts",
+      "import": "./dist/testing.js",
+      "default": "./dist/testing.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "resources",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "!src/test",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "bun run examples/gallery/run.tsx",
+    "demo": "bun run examples/gallery/run.tsx",
+    "demo:web": "bun run examples/gallery/run.tsx --web",
+    "demo:list": "bun run examples/gallery/run.tsx --list",
+    "web:debug": "bun run scripts/web-debug.ts",
+    "mouse:hover:benchmark": "bun run scripts/mouse-hover-benchmark.ts",
+    "docs:screenshots": "bun run scripts/docs-screenshots.ts",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "test:e2e": "vitest run --config vitest.config.e2e.ts",
+    "perf": "vitest run --config vitest.config.perf.ts",
+    "bench": "vitest bench --run --config vitest.config.perf.ts",
+    "profile": "bun run scripts/frame-profile.ts",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
+    "prepublishOnly": "bun run build",
+    "review": "bun run scripts/code-review.ts"
+  },
+  "dependencies": {
+    "heroicons": "^2.2.0",
+    "jpeg-js": "^0.4.4",
+    "omggif": "^1.0.10",
+    "pngjs": "^7.0.0",
+    "remend": "^1.3.0",
+    "string-width": "^8.2.1"
+  },
+  "peerDependencies": {
+    "beautiful-mermaid": "^1.1.3",
+    "marked": "^17.0.1",
+    "opentype.js": "^2.0.0",
+    "prismjs": "^1.30.0",
+    "react": "^19.0.0",
+    "react-reconciler": "^0.33.0",
+    "sharp": "^0.34.0"
+  },
+  "peerDependenciesMeta": {
+    "beautiful-mermaid": {
+      "optional": true
+    },
+    "marked": {
+      "optional": true
+    },
+    "opentype.js": {
+      "optional": true
+    },
+    "prismjs": {
+      "optional": true
+    },
+    "sharp": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.15",
+    "@types/bun": "latest",
+    "@types/node": "25.9.0",
+    "@types/opentype.js": "^1.3.10",
+    "@types/pngjs": "^6.0.5",
+    "@types/prismjs": "1.26.6",
+    "@types/react": "19.2.15",
+    "@types/react-reconciler": "0.33.0",
+    "@vitest/coverage-v8": "4.1.7",
+    "@xterm/headless": "^6.0.0",
+    "beautiful-mermaid": "^1.1.3",
+    "marked": "^17.0.1",
+    "opentype.js": "^2.0.0",
+    "playwright": "^1.60.0",
+    "prismjs": "1.30.0",
+    "react": "19.2.6",
+    "react-reconciler": "0.33.0",
+    "sharp": "^0.34.5",
+    "typescript": "^6.0.3",
+    "vitest": "4.1.7"
+  }
+}

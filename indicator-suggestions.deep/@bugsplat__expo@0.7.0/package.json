@@ -1,0 +1,90 @@
+{
+  "name": "@bugsplat/expo",
+  "version": "0.7.0",
+  "description": "BugSplat crash and error reporting for Expo apps across iOS, Android, and Web",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "build:plugin": "tsc --project plugin/tsconfig.json",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "jest",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "bugsplat",
+    "crash-reporting",
+    "error-reporting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BugSplat-Git/bugsplat-expo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BugSplat-Git/bugsplat-expo/issues"
+  },
+  "author": "BugSplat <support@bugsplat.com> (https://bugsplat.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/BugSplat-Git/bugsplat-expo#readme",
+  "dependencies": {
+    "@bugsplat/react": "^2.1.1",
+    "expo-blob": "^55.0.13"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.1",
+    "expo": "~55.0.8",
+    "expo-module-scripts": "^55.0.2",
+    "jest-expo": "^55.0.11",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-native": "0.83.2",
+    "ts-jest": "^29.4.6"
+  },
+  "peerDependencies": {
+    "@bugsplat/symbol-upload": "*",
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "@bugsplat/symbol-upload": {
+      "optional": true
+    }
+  },
+  "overrides": {
+    "postcss": "^8.5.10",
+    "http-proxy-agent": "^7.0.2",
+    "@tootallnate/once": "^3.0.1"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.test.json"
+        }
+      ]
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/build/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  }
+}

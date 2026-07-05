@@ -1,0 +1,217 @@
+{
+  "name": "react-native-transformer-text-input",
+  "version": "0.4.1",
+  "description": "TextInput component that allows transforming text synchronously with a worklet",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./formatters/phone-number": {
+      "source": "./src/formatters/phone-number.ts",
+      "types": "./lib/typescript/src/formatters/phone-number.d.ts",
+      "default": "./lib/module/formatters/phone-number.js"
+    },
+    "./formatters/pattern": {
+      "source": "./src/formatters/pattern.ts",
+      "types": "./lib/typescript/src/formatters/pattern.d.ts",
+      "default": "./lib/module/formatters/pattern.js"
+    },
+    "./formatters/currency": {
+      "source": "./src/formatters/currency.ts",
+      "types": "./lib/typescript/src/formatters/currency.d.ts",
+      "default": "./lib/module/formatters/currency.js"
+    },
+    "./formatters/phone-data": {
+      "source": "./src/formatters/phone-data.ts",
+      "types": "./lib/typescript/src/formatters/phone-data.d.ts",
+      "default": "./lib/module/formatters/phone-data.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-transformer-text-input-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "generate:phone-data": "tsx scripts/generate-phone-data.ts",
+    "test": "jest",
+    "lint": "yarn lint:eslint && yarn lint:ts",
+    "lint:ts": "tsc",
+    "lint:eslint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:android": "cd example/android && RNTTI_WARNINGS_AS_ERRORS=true ./gradlew :react-native-transformer-text-input:lint --rerun-tasks",
+    "release": "release-it --only-version",
+    "format:prettier:check": "prettier \"src/**/*.{js,ts,tsx}\" \"example/**/*.{js,ts,tsx}\" --check",
+    "format:prettier:write": "yarn format:prettier:check --write",
+    "format:android:check": "cd android && ./gradlew spotlessCheck",
+    "format:android:write": "cd android && ./gradlew spotlessApply",
+    "format:clang:check": "clang-format --dry-run --Werror --glob='{ios,android/src,cpp}/**/*.{h,cpp,m,mm}'",
+    "format:clang:write": "clang-format -i --glob='{ios,android/src,cpp}/**/*.{h,hpp,cpp,m,mm}'",
+    "format:spotless:check": "cd android && ./gradlew spotlessCheck",
+    "format:spotless:write": "cd android && ./gradlew spotlessApply",
+    "format:check": "yarn format:prettier:check && yarn format:clang:check && yarn format:spotless:check",
+    "format:write": "yarn format:prettier:write && yarn format:clang:write && yarn format:spotless:write"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AppAndFlow/react-native-transformer-text-input.git"
+  },
+  "author": "Janic Duplessis <janic@appandflow.com> (https://appandflow.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AppAndFlow/react-native-transformer-text-input/issues"
+  },
+  "homepage": "https://github.com/AppAndFlow/react-native-transformer-text-input#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/compat": "^1.3.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
+    "@react-native/babel-preset": "0.83.0",
+    "@react-native/eslint-config": "0.83.0",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.2.0",
+    "clang-format": "^1.8.0",
+    "commitlint": "^19.8.1",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^30.2.0",
+    "lefthook": "^2.0.3",
+    "libphonenumber-js": "^1.12.38",
+    "prettier": "^2.8.8",
+    "react": "19.2.0",
+    "react-native": "0.83.0",
+    "react-native-builder-bob": "^0.40.17",
+    "react-native-worklets": "^0.7.1",
+    "react-test-renderer": "19.2.0",
+    "release-it": "^19.0.4",
+    "tsx": "^4.21.0",
+    "turbo": "^2.5.6",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-worklets": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "rntti",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.appandflow.transformertextinput"
+    },
+    "ios": {
+      "modulesProvider": {
+        "TransformerTextInputModule": "TransformerTextInputModule"
+      },
+      "componentProvider": {
+        "TransformerTextInputDecoratorView": "TransformerTextInputDecoratorView"
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "create-react-native-library": {
+    "type": "fabric-view",
+    "languages": "kotlin-objc",
+    "tools": [
+      "eslint",
+      "jest",
+      "lefthook",
+      "release-it"
+    ],
+    "version": "0.56.0"
+  }
+}

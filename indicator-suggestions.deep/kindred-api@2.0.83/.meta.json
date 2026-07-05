@@ -1,0 +1,174 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a91b6bec181dfc4d",
+    "fetchedFiles": [
+      "make",
+      "package.json",
+      "tasks/_utils.js",
+      "tasks/build.js",
+      "tasks/eslint.js",
+      "tasks/minify.js",
+      "tasks/watch.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "rollup",
+        "versionSpec": "^0.41.1"
+      },
+      {
+        "name": "mkdirp",
+        "versionSpec": "^0.5.1"
+      },
+      {
+        "name": "babel-core",
+        "versionSpec": "^6.21.0"
+      },
+      {
+        "name": "rollup-plugin-flow",
+        "versionSpec": "^1.1.1"
+      },
+      {
+        "name": "uglify-js",
+        "versionSpec": "^2.7.5"
+      },
+      {
+        "name": "chokidar",
+        "versionSpec": "^1.6.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "babel-core@6.26.3",
+      "chokidar@1.7.0",
+      "mkdirp@0.5.6",
+      "rollup-plugin-flow@1.1.1",
+      "rollup@0.41.6",
+      "uglify-js@2.8.29"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\kindred-api@2.0.83\\Makefile'",
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "make",
+        "reason": "referenced by lifecycle script: `minify`",
+        "sha256": "64193a28b30647c308b67ad62cb63822379b8633b72d1849f26d90be9a8d2997",
+        "sizeBytes": 625,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "tasks/_utils.js",
+          "tasks/eslint.js",
+          "tasks/minify.js",
+          "tasks/build.js",
+          "tasks/watch.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "tasks/_utils.js",
+        "reason": "required by ./make; required by ./tasks/eslint.js; required by ./tasks/minify.js; required by ./tasks/build.js; required by ./tasks/watch.js",
+        "sha256": "93db4e1e011277c0fec8ae0e9bae1ee1e98c54a2e3bdeacf98d5fdd127cd6ad1",
+        "sizeBytes": 4151,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "tasks/eslint.js",
+        "reason": "required by ./make; required by ./tasks/watch.js",
+        "sha256": "f72d8770a45f136c88148ff6b7a59e8d61c1ee51472a2978778cdee8b59ad351",
+        "sizeBytes": 372,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "tasks/_utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "tasks/minify.js",
+        "reason": "required by ./make",
+        "sha256": "a0c88e2c3c8ff81f319d8594a4b9a0de910dea4eeeec4d1fb92287f74abb5cd1",
+        "sizeBytes": 937,
+        "signals": [
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "tasks/_utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "tasks/build.js",
+        "reason": "required by ./make; required by ./tasks/watch.js",
+        "sha256": "df54c363cf3a3ba1f3c8d122a2231a7a6e9592b72306c488ce6678c297d0c43c",
+        "sizeBytes": 1394,
+        "signals": [
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "tasks/_utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "tasks/watch.js",
+        "reason": "required by ./make",
+        "sha256": "e161ff8c69b6ed966842829a297c152e396cfb0698e9a007e990ca3569babab1",
+        "sizeBytes": 1131,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "tasks/_utils.js",
+          "tasks/eslint.js",
+          "tasks/build.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:04.703Z"
+  },
+  "hash": "sha256:54ded9c2e17a6a3be95d6923a51e2026018695d03ad3c9a7b99e9f45ae2660a7"
+}

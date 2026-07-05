@@ -1,0 +1,56 @@
+{
+  "name": "tura-ai",
+  "version": "0.1.30",
+  "description": "Local AI coding system with Rust services, command packages, TUI, and GUI workspaces.",
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "author": "Tura",
+  "keywords": [
+    "ai-agent",
+    "coding-agent",
+    "cli",
+    "tui",
+    "tauri",
+    "rust"
+  ],
+  "homepage": "https://turaai.net/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tura-AI/tura.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Tura-AI/tura/issues"
+  },
+  "bin": {
+    "tura": "npm/tura.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "files": [
+    "LICENSE",
+    "README.md",
+    "npm/tura.mjs",
+    "scripts/npm/cli-path.mjs",
+    "scripts/npm/install-release.mjs",
+    "scripts/npm/release-artifacts.mjs"
+  ],
+  "scripts": {
+    "postinstall": "node ./scripts/npm/install-release.mjs"
+  },
+  "optionalDependencies": {
+    "tura-darwin-arm64": "0.1.30",
+    "tura-darwin-x64": "0.1.30",
+    "tura-linux-x64": "0.1.30",
+    "tura-win32-x64": "0.1.30"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

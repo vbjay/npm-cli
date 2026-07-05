@@ -1,0 +1,115 @@
+{
+  "name": "tanstack-effect",
+  "description": "React + Tanstack Query + Effect Fullstack e2e queries with validation",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./client": {
+      "require": "./dist/cjs/client/index.js",
+      "import": "./dist/esm/client/index.js",
+      "types": "./dist/types/client/index.d.ts"
+    },
+    "./ai": {
+      "require": "./dist/cjs/ai/index.js",
+      "import": "./dist/esm/ai/index.js",
+      "types": "./dist/types/ai/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "watch": "tsgo --pretty -w",
+    "type-check": "tsgo --pretty",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "lint": "eslint .",
+    "fill-placeholders": "sh ./script/fill-placeholders.sh",
+    "build": "bun build:cjs && bun build:esm && bun build:types",
+    "build:cjs": "tsc --project ./tsconfig.cjs.json && tsc-alias --outDir ./dist/cjs && ts-add-js-extension --dir=dist/cjs --showprogress=false",
+    "build:esm": "tsc --project ./tsconfig.esm.json && tsc-alias --outDir ./dist/esm && ts-add-js-extension --dir=dist/esm --showprogress=false",
+    "build:types": "tsc --project ./tsconfig.types.json && tsc-alias --outDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo node_modules bun.lockb",
+    "postinstall": "husky || true",
+    "prepack": "pinst --disable",
+    "package": "bun run build && npm pack",
+    "postpack": "pinst --enable",
+    "release": "standard-version -a",
+    "release:alpha": "standard-version -a --prerelease alpha --skip.changelog",
+    "release:beta": "standard-version -a --prerelease beta --skip.changelog",
+    "release:pub": "git push --follow-tags origin $(git rev-parse --abbrev-ref HEAD)"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx,mjs,cjs,json,md,css}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "resolutions": {
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "debug": "^4.4.1",
+    "lodash-es": "^4.17.22",
+    "type-fest-4": "npm:type-fest@^4"
+  },
+  "peerDependencies": {
+    "@effect/platform": "^0.94.0",
+    "@tanstack/react-query": "^5.89.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "optionalDependencies": {
+    "ai": "^6.0.0",
+    "@ai-sdk/google": "^3.0.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@ai-sdk/google": "^3.0.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@effect/platform": "^0.94.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@tanstack/react-query": "^5.89.0",
+    "@types/bun": "^1.2.22",
+    "@types/debug": "^4.1.12",
+    "@types/lodash-es": "^4.17.12",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "ai": "^6.0.0",
+    "effect": "^3.19.0",
+    "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "pinst": "^3.0.0",
+    "prettier": "^3.6.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "standard-version": "^9.5.0",
+    "ts-add-js-extension": "^1.6.6",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.44.0",
+    "zod": "^3.24.0"
+  },
+  "homepage": "https://github.com/mguleryuz/tanstack-effect",
+  "repository": "mguleryuz/tanstack-effect",
+  "authors": [
+    "mguleryuz"
+  ],
+  "keywords": [
+    "npm",
+    "contracts",
+    "web3",
+    "ethereum",
+    "solidity",
+    "evm"
+  ]
+}

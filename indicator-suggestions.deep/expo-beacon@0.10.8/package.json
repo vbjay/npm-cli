@@ -1,0 +1,73 @@
+{
+  "name": "expo-beacon",
+  "version": "0.10.8",
+  "description": "Expo module for scanning, pairing, and monitoring iBeacons on Android and iOS",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./build/index.js",
+      "require": "./build/index.js",
+      "types": "./build/index.d.ts"
+    },
+    "./app.plugin": "./app.plugin.js",
+    "./app.plugin.js": "./app.plugin.js"
+  },
+  "files": [
+    "build/",
+    "plugin/build/",
+    "app.plugin.js",
+    "ios/",
+    "android/src/",
+    "android/build.gradle",
+    "expo-module.config.json",
+    "src/"
+  ],
+  "scripts": {
+    "build": "expo-module build",
+    "build:plugin": "tsc -p plugin/tsconfig.json",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare && npm run build:plugin",
+    "prepublishOnly": "expo-module prepublishOnly && npm run build:plugin",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "ibeacon",
+    "beacon",
+    "ble",
+    "bluetooth",
+    "ranging",
+    "monitoring",
+    "expo-beacon",
+    "ExpoBeacon"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martinmikesCCS/expo-beacon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/martinmikesCCS/expo-beacon/issues"
+  },
+  "author": "mikes <martin.mikes@ccs.cz> (https://github.com/martinmikesCCS)",
+  "license": "MIT",
+  "homepage": "https://github.com/martinmikesCCS/expo-beacon#readme",
+  "devDependencies": {
+    "@types/react": "~19.1.1",
+    "expo": "~55.0.8",
+    "expo-module-scripts": "^55.0.2",
+    "react": "19.2.0",
+    "react-native": "0.83.2"
+  },
+  "peerDependencies": {
+    "@expo/config-plugins": "*",
+    "expo": ">=51.0.0",
+    "react": "*",
+    "react-native": "*"
+  }
+}

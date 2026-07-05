@@ -1,0 +1,99 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "46896905e7a599cc",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/fetch-beekonkit.sh"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "ad72db78496b1d25fb0273c22dc286e40ab2675de11dca89cfacc869a0d7d3f1",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android",
+              "io.github.beekonlabs:beekon:0.4.0",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/fetch-beekonkit.sh",
+        "reason": "referenced by lifecycle script: `fetch-beekonkit`",
+        "sha256": "46c641b3d57257d92b8f30a9b40273146962888b2860e1318651cd2d9f3bf669",
+        "sizeBytes": 2339,
+        "signals": [
+          "binary-download",
+          "shell-network-fetch",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/beekonlabs/beekon-ios-binary/releases/download/v${VERSION}/BeekonKit.xcframework.zip",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:11.236Z"
+  },
+  "hash": "sha256:ab6a261d70fb8fe2dec94ddb443b14b40e7f07c0b80bc063def7d1594b88e955"
+}

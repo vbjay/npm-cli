@@ -1,0 +1,123 @@
+{
+  "name": "@hewliyang/xlsx-preview",
+  "version": "0.1.0",
+  "description": "Workbook preview/rendering library for XLSX, CSV, and Parquet in browser, React, and Node.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hewliyang/xlcore.git",
+    "directory": "packages/xlsx-preview"
+  },
+  "homepage": "https://github.com/hewliyang/xlcore#readme",
+  "bugs": "https://github.com/hewliyang/xlcore/issues",
+  "license": "MIT",
+  "author": "hewliyang",
+  "keywords": [
+    "xlsx",
+    "csv",
+    "parquet",
+    "excel",
+    "spreadsheet",
+    "preview",
+    "canvas",
+    "react",
+    "wasm"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bin": {
+    "xlsx-preview": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "pnpm run build:ts",
+    "build:ts": "node scripts/clean-dist.mjs && tsc -p tsconfig.build.json && node scripts/build.mjs",
+    "build:presets": "node scripts/build-preset-shapes.mjs",
+    "build:wasm": "cd ../.. && wasm-pack build crates/xlcore-wasm --target web --out-dir pkg --profile wasm-size --no-opt",
+    "build:release": "pnpm run build:wasm && pnpm run build:ts",
+    "prepack": "pnpm run build:release",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run check:loc && pnpm run knip && pnpm run check:schema && pnpm run check:api",
+    "check:loc": "tsx scripts/check-loc.ts",
+    "dev": "esbuild src/browser.ts --outfile=dist/browser.js --target=es2022 --platform=browser --format=iife --bundle --watch",
+    "preview": "pnpm run build:ts && node scripts/preview.mjs",
+    "smoke:api": "pnpm run build:ts && node scripts/smoke-api.mjs",
+    "smoke:csv": "pnpm run build:ts && node scripts/smoke-csv.mjs",
+    "smoke:parquet": "pnpm run build:ts && node scripts/smoke-parquet.mjs",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "knip": "knip",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "test": "node scripts/check-wasm-fresh.mjs && pnpm run build:ts && node scripts/check-dist-imports.mjs && vitest run",
+    "typecheck": "tsc --noEmit",
+    "check:schema": "python3 ../../scripts/schema_diff.py --check",
+    "check:api": "python3 ../../scripts/api_manifest.py --check"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./previewer": {
+      "import": "./dist/previewer.js",
+      "types": "./dist/previewer.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/browserLoader.js",
+      "types": "./dist/browserLoader.d.ts"
+    },
+    "./node": {
+      "import": "./dist/node.js",
+      "types": "./dist/node.d.ts"
+    },
+    "./api": {
+      "import": "./dist/api.js",
+      "types": "./dist/api.d.ts"
+    },
+    "./worker": {
+      "import": "./dist/worker.js",
+      "types": "./dist/worker.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react.js",
+      "types": "./dist/react.d.ts"
+    },
+    "./cdn": {
+      "import": "./dist/cdn.js",
+      "types": "./dist/cdn.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "skia-canvas": "^3.0.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.14",
+    "esbuild": "^0.25.0",
+    "jsdom": "^29.1.1",
+    "knip": "^6.12.2",
+    "react": "^19.2.6",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
+    "vitest": "^3.0.0",
+    "xlcore-wasm": "file:../../crates/xlcore-wasm/pkg"
+  },
+  "trustedDependencies": [
+    "skia-canvas"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "config-dug",
+  "version": "1.10.0",
+  "description": "Config loader with support for AWS Secrets Manager",
+  "author": "Neo Financial Engineering <engineering@neofinancial.com>",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "license": "MIT",
+  "homepage": "https://github.com/neofinancial/config-dug",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neofinancial/config-dug.git"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "watch": "tsc --watch -p tsconfig.build.json",
+    "clean": "rimraf build",
+    "test": "jest",
+    "lint": "eslint \"**/*.{ts,js}\"",
+    "format": "prettier --write \"**/*.{ts,js,json,graphql,md}\"",
+    "format:check": "prettier --debug-check \"**/*.{ts,js,json,graphql,md}\"",
+    "prepublishOnly": "rimraf build && tsc -p tsconfig.build.json",
+    "pre-commit": "lint-staged",
+    "prepare": "husky"
+  },
+  "files": [
+    "/build/**/*.js",
+    "/build/**/*.d.ts"
+  ],
+  "keywords": [
+    "config",
+    "configuration",
+    "typescript",
+    "javascript",
+    "node"
+  ],
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --max-warnings 100"
+    ],
+    "*.{ts,js,json,md,yml}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.635.0",
+    "@aws-sdk/node-http-handler": "^3.374.0",
+    "debug": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.4",
+    "@types/debug": "^4.1.12",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.5.0",
+    "eslint": "^8.34.0",
+    "eslint-config-neo": "^0.11.1",
+    "husky": "^9.1.5",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "rimraf": "^5.0.9",
+    "ts-jest": "^29.2.4",
+    "typescript": "~5.5.4"
+  }
+}

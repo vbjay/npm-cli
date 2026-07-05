@@ -1,0 +1,74 @@
+{
+  "name": "@phake/lanework",
+  "version": "0.3.5",
+  "type": "module",
+  "description": "Run the lanework Kanban board locally against any repo's .agents/reviews folder — no Cloudflare, no auth, no network.",
+  "license": "MIT",
+  "author": "fuongz <hi@phuongphung.com>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/fuongz/lanework#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fuongz/lanework.git",
+    "directory": "apps/local"
+  },
+  "keywords": [
+    "kanban",
+    "agents",
+    "code-review",
+    "cli",
+    "local"
+  ],
+  "bin": {
+    "lanework": "cli.mjs",
+    "lw": "cli.mjs"
+  },
+  "files": [
+    "cli.mjs",
+    "server.mjs",
+    "mcp.mjs",
+    "agent-runner.mjs",
+    "dist-local",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "vite build -c vite.config.local.ts && bun build ../../packages/shared/src/lib/local-fs.ts --target=node --format=esm --outfile=dist-local/reviews-lib.mjs",
+    "start": "node cli.mjs",
+    "mcp": "node cli.mjs mcp",
+    "prepack": "bun run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.6.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@hugeicons/core-free-icons": "^4.2.1",
+    "@hugeicons/react": "^1.1.7",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@shikijs/rehype": "^4.2.0",
+    "@tanstack/react-router": "^1.170.16",
+    "@tanstack/react-start": "^1.168.26",
+    "better-auth": "^1.6.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.4.0",
+    "drizzle-orm": "^0.45.2",
+    "motion": "^12.40.0",
+    "react": "^19.2.7",
+    "react-day-picker": "^10.0.1",
+    "react-dom": "^19.2.7",
+    "react-markdown": "^10.1.0",
+    "recharts": "3.8.1",
+    "remark-gfm": "^4.0.1",
+    "shiki": "^4.2.0",
+    "srvx": "^0.11.17",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.14"
+  }
+}

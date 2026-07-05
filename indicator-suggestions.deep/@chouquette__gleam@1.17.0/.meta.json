@@ -1,0 +1,138 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2653f3c2607f25f1",
+    "fetchedFiles": [
+      "package.json",
+      "src/environment.mjs",
+      "src/environment/cachedir.mjs",
+      "src/gleam.mjs",
+      "src/gleam/compiler.mjs",
+      "src/installer.mjs",
+      "src/main.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^7.5.13"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "tar@7.5.19"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/main.mjs",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "f761f222888459de417d246d26541e6f3e99d0277a10ecf5bf3246ffccaa3d23",
+        "sizeBytes": 124,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/installer.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/installer.mjs",
+        "reason": "required by ./src/main.mjs",
+        "sha256": "16aa692c3c722b286fb007edabb7587ab89ab04d437066cc82365e7d85af114f",
+        "sizeBytes": 2325,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/environment.mjs",
+          "src/gleam.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/environment.mjs",
+        "reason": "required by ./src/installer.mjs",
+        "sha256": "acdada3d245daa50f32a4351cf3722910e20f4c8d1b71620436423c8e5cd0a5f",
+        "sizeBytes": 1299,
+        "signals": [
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/environment/cachedir.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/environment/cachedir.mjs",
+        "reason": "required by ./src/environment.mjs",
+        "sha256": "e73acc4483ef292128b22df2539692d8aadb242d7bf195be9e21e758e19aa3dd",
+        "sizeBytes": 994,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/gleam.mjs",
+        "reason": "required by ./src/installer.mjs",
+        "sha256": "a07f4d9def689703cd6b123f1c7b6fca620cc22f955e69480f3081dbe4ec5795",
+        "sizeBytes": 107,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/gleam/compiler.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/gleam/compiler.mjs",
+        "reason": "required by ./src/gleam.mjs",
+        "sha256": "be1a66a6da279e1e614de9b21793ef25eb1a95da383eba9b8b59f532f743b74d",
+        "sizeBytes": 787,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/gleam-lang/gleam/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:51.185Z"
+  },
+  "hash": "sha256:ea7809d1af074cd678686b52f1ded70f2033f4a37ae59e9206e06cf1ac556bd8"
+}

@@ -1,0 +1,102 @@
+{
+  "name": "codeam-cli",
+  "version": "2.60.17",
+  "description": "Workflow-continuity bridge for AI coding agents. Wrap Claude Code or Codex in a PTY and supervise, approve, and redirect the session from any device — async. The terminal companion for CodeAgent Mobile.",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "bin": {
+    "codeam": "dist/index.js"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/postinstall.js",
+    "dist/vendor",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup && node scripts/vendor-node-pty.js",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node dist/postinstall.js || true",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "ai-agent",
+    "ai-coding",
+    "ai-workflow",
+    "ai-workflow-continuity",
+    "async-ai-productivity",
+    "remote-ai-supervision",
+    "cli",
+    "developer-tools",
+    "devtools",
+    "codeagent",
+    "codeam",
+    "anthropic",
+    "openai-codex",
+    "cursor",
+    "copilot",
+    "jetbrains",
+    "vscode",
+    "windsurf",
+    "mcp",
+    "remote-development",
+    "agent-control",
+    "agent-operations"
+  ],
+  "homepage": "https://codeagent-mobile.com",
+  "bugs": {
+    "url": "https://github.com/edgar-durand/codeagent-mobile-clients/issues"
+  },
+  "author": "Edgar Durand",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edgar-durand/codeagent-mobile-clients.git"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/edgar-durand"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@agentclientprotocol/claude-agent-acp": "^0.47.0",
+    "@agentclientprotocol/codex-acp": "^0.0.46",
+    "@agentclientprotocol/sdk": "^0.25.0",
+    "@clack/prompts": "^1.2.0",
+    "chokidar": "^3.6.0",
+    "ignore": "^5.3.2",
+    "picocolors": "^1.1.0",
+    "qrcode-terminal": "^0.12.0",
+    "which": "^6.0.0",
+    "ws": "^8.18.0",
+    "zod": "^4.3.6"
+  },
+  "optionalDependencies": {
+    "@beads/bd": "1.0.5"
+  },
+  "devDependencies": {
+    "@codeam/shared": "*",
+    "@types/node": "^22.0.0",
+    "@types/qrcode-terminal": "^0.12.0",
+    "@types/which": "^3.0.4",
+    "@types/ws": "^8.5.0",
+    "@vitest/coverage-v8": "^4.1.7",
+    "node-pty": "^1.1.0",
+    "tsup": "^8.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

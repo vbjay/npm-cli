@@ -1,0 +1,109 @@
+{
+  "name": "audit-tools",
+  "version": "0.32.44",
+  "private": false,
+  "license": "ISC",
+  "description": "Portable hybrid code auditing + remediation orchestrators for arbitrary repositories.",
+  "type": "module",
+  "bin": {
+    "audit-code": "audit-code.mjs",
+    "remediate-code": "remediate-code.mjs"
+  },
+  "exports": {
+    "./shared": {
+      "types": "./dist/shared/index.d.ts",
+      "default": "./dist/shared/index.js"
+    },
+    "./shared/*": {
+      "types": "./dist/shared/*.d.ts",
+      "default": "./dist/shared/*.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**",
+    "audit-code.mjs",
+    "wrapper/**",
+    "remediate-code.mjs",
+    "dispatch/**",
+    "schemas/**",
+    "skills/**",
+    "scripts/postinstall.mjs",
+    "scripts/audit/postinstall.mjs",
+    "scripts/remediate/postinstall.mjs",
+    "opencode.json",
+    "README.md",
+    "docs/audit-pkg/**"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs",
+    "build": "tsc -p tsconfig.json && node scripts/shared/copy-data-assets.mjs",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test:doc-contract": "vitest run tests/audit/release-contract.test.mjs tests/audit/file-lock-doc-sync.test.mjs tests/audit/host-asset-renderer-drift.test.mjs",
+    "test": "npm run build && vitest run",
+    "test:single": "npm run build && vitest run",
+    "verify:guards": "vitest run --exclude \"**/audit-code-completion.test.mjs\" --exclude \"**/audit-code-wrapper.test.mjs\" --exclude \"**/audit/next-step.test.mjs\" --exclude \"**/seam-host-only-next-step.test.mjs\" --exclude \"**/*-e2e.test.*\" --exclude \"**/next-step-implement-dispatch.test.ts\" --exclude \"**/next-step-pipeline-dispatch.test.ts\"",
+    "verify:checks": "node scripts/shared/profile-run.mjs verify-checks check:deadcode check:doc-manifest build verify:hosts verify:remediate-hosts smoke:packaged-audit-code smoke:packaged-remediate-code",
+    "verify:release": "npm run verify:checks && vitest run",
+    "check:deadcode": "knip --no-config-hints",
+    "check:doc-manifest": "node scripts/check-doc-manifest.mjs",
+    "verify:hosts": "node scripts/audit/verify-hosts.mjs",
+    "verify:remediate-hosts": "node scripts/remediate/verify-hosts.mjs",
+    "smoke:linked-audit-code": "node scripts/audit/smoke-linked-audit-code.mjs",
+    "smoke:packaged-audit-code": "node scripts/audit/smoke-packaged-audit-code.mjs",
+    "smoke:linked-remediate-code": "node scripts/remediate/smoke-linked-remediate-code.mjs",
+    "smoke:packaged-remediate-code": "node scripts/remediate/smoke-packaged-remediate-code.mjs",
+    "update-languages": "node scripts/audit/update-languages.mjs",
+    "update-models": "node scripts/shared/update-models.mjs",
+    "generate-schemas": "node scripts/audit/generate-schemas.mjs",
+    "fixtures:auditor-contract": "node scripts/remediate/generate-auditor-contract-fixture.mjs",
+    "release:patch:publish": "node scripts/release-and-publish.mjs patch",
+    "release:minor:publish": "node scripts/release-and-publish.mjs minor",
+    "release:major:publish": "node scripts/release-and-publish.mjs major",
+    "release:patch": "node scripts/release-and-publish.mjs patch --bump-only",
+    "release:minor": "node scripts/release-and-publish.mjs minor --bump-only",
+    "release:major": "node scripts/release-and-publish.mjs major --bump-only",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run verify:release"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^13.0.0",
+    "smol-toml": "^1.6.1",
+    "yaml": "^2.9.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.24.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "knip": "^6.23.0",
+    "linguist-languages": "^9.3.2",
+    "tree-sitter-wasms": "^0.1.13",
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.0.0",
+    "web-tree-sitter": "^0.25.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OhOkThisIsFine/audit-tools.git"
+  },
+  "homepage": "https://github.com/OhOkThisIsFine/audit-tools#readme",
+  "bugs": {
+    "url": "https://github.com/OhOkThisIsFine/audit-tools/issues"
+  },
+  "keywords": [
+    "audit",
+    "remediation",
+    "cli",
+    "code-audit",
+    "static-analysis",
+    "orchestration",
+    "agents"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

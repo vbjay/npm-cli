@@ -1,0 +1,43 @@
+{
+  "name": "nudgekit-react-native",
+  "version": "0.1.12",
+  "description": "Server-driven home cards & conditional widgets for React Native, powered by NudgeKit.",
+  "keywords": [
+    "react-native",
+    "expo",
+    "nudgekit",
+    "server-driven-ui",
+    "feature-flags",
+    "personalization"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.68.0",
+    "react-native-webview": ">=11.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "react": "^18.2.0",
+    "react-native": "^0.74.0",
+    "react-native-webview": "^13.8.0",
+    "typescript": "^5.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

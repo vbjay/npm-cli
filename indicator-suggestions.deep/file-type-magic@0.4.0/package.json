@@ -1,0 +1,73 @@
+{
+  "name": "file-type-magic",
+  "version": "0.4.0",
+  "description": "Rust + WebAssembly file type checker for npm",
+  "license": "MIT",
+  "main": "./dist/node.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.mjs",
+      "node": {
+        "import": "./dist/node.mjs",
+        "require": "./dist/node.cjs"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/node.cjs",
+      "default": "./dist/index.mjs"
+    },
+    "./browser": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.mjs",
+      "require": "./dist/node.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "setup:wasm": "rustup target add wasm32-unknown-unknown",
+    "build": "npm run clean:artifacts && npm run build:wasm:browser && npm run build:lib:browser && npm run build:wasm:node && npm run build:lib:node && npm run build:types",
+    "build:dev": "npm run clean:artifacts && npm run build:wasm:browser:dev && npm run build:lib:browser && npm run build:wasm:node:dev && npm run build:lib:node && npm run build:types",
+    "build:lib:browser": "vite build",
+    "build:lib:node": "LIB_TARGET=node vite build",
+    "build:types": "tsc -p tsconfig.json",
+    "build:wasm:browser": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH wasm-pack build --target bundler --out-dir pkg/browser --release",
+    "build:wasm:browser:dev": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH wasm-pack build --target bundler --out-dir pkg/browser --dev",
+    "build:wasm:node": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH wasm-pack build --target nodejs --out-dir dist/node-runtime --release && rm -f dist/node-runtime/.gitignore dist/node-runtime/README.md dist/node-runtime/package.json dist/node-runtime/file_type_magic.d.ts dist/node-runtime/file_type_magic_bg.wasm.d.ts",
+    "build:wasm:node:dev": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH wasm-pack build --target nodejs --out-dir dist/node-runtime --dev && rm -f dist/node-runtime/.gitignore dist/node-runtime/README.md dist/node-runtime/package.json dist/node-runtime/file_type_magic.d.ts dist/node-runtime/file_type_magic_bg.wasm.d.ts",
+    "check": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH cargo check",
+    "check:wasm": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH cargo check --target wasm32-unknown-unknown",
+    "test": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH cargo test",
+    "clean": "PATH=$(dirname $(rustup which cargo --toolchain stable)):$PATH cargo clean && npm run clean:artifacts",
+    "clean:artifacts": "rm -rf dist pkg pkg-web",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "rust",
+    "wasm",
+    "npm",
+    "file",
+    "file-type",
+    "magic-number"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "file-type": "^22.0.1",
+    "file-type-checker": "^1.1.6",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.8",
+    "vite-plugin-wasm": "^3.6.0"
+  }
+}

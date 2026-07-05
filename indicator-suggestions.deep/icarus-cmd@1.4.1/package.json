@@ -1,0 +1,50 @@
+{
+  "name": "icarus-cmd",
+  "version": "1.4.1",
+  "description": "Icarus — plateforme de pentest tout-en-un : nmap, nuclei, sqlmap, ZAP, ffuf, katana & co regroupés. CLI + TUI + interface web locale, analyse de code (SAST), base de résultats commune et rapports.",
+  "type": "module",
+  "bin": {
+    "icarus": "src/index.js"
+  },
+  "files": [
+    "src",
+    "wordlists",
+    "tools/resolvers.txt",
+    "scripts/postinstall.mjs",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node src/index.js",
+    "setup": "node src/index.js setup",
+    "web": "node src/index.js web",
+    "doctor": "node src/index.js doctor",
+    "postinstall": "node scripts/postinstall.mjs || true"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "pentest",
+    "security",
+    "sast",
+    "nuclei",
+    "nmap",
+    "sqlmap",
+    "ffuf",
+    "recon",
+    "vulnerability-scanner",
+    "cli",
+    "infosec"
+  ],
+  "author": "Icarus",
+  "license": "MIT",
+  "dependencies": {
+    "@inquirer/prompts": "^7.2.1",
+    "chalk": "^5.4.1",
+    "cli-table3": "^0.6.5"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1",
+    "pngjs": "^7.0.0"
+  }
+}

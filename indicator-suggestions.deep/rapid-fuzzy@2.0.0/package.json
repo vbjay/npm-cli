@@ -1,0 +1,197 @@
+{
+  "name": "rapid-fuzzy",
+  "version": "2.0.0",
+  "description": "Rust-powered fuzzy search and string distance for JavaScript/TypeScript. Up to 15,000x faster than fuse.js with indexed mode.",
+  "license": "MIT",
+  "author": "derodero24",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derodero24/rapid-fuzzy.git"
+  },
+  "homepage": "https://github.com/derodero24/rapid-fuzzy",
+  "bugs": {
+    "url": "https://github.com/derodero24/rapid-fuzzy/issues"
+  },
+  "keywords": [
+    "fuzzy",
+    "fuzzy-search",
+    "fuzzy-matching",
+    "string-distance",
+    "string-similarity",
+    "levenshtein",
+    "jaro-winkler",
+    "hamming",
+    "damerau-levenshtein",
+    "rust",
+    "napi-rs",
+    "wasm",
+    "typescript",
+    "search",
+    "fuse"
+  ],
+  "sideEffects": false,
+  "type": "commonjs",
+  "main": "index.js",
+  "module": "index.mjs",
+  "browser": "browser.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "browser": "./browser.js"
+    },
+    "./highlight": {
+      "import": {
+        "types": "./highlight.d.mts",
+        "default": "./highlight.mjs"
+      },
+      "require": {
+        "types": "./highlight.d.ts",
+        "default": "./highlight.js"
+      }
+    },
+    "./objects": {
+      "import": {
+        "types": "./objects.d.mts",
+        "default": "./objects.mjs"
+      },
+      "require": {
+        "types": "./objects.d.ts",
+        "default": "./objects.js"
+      }
+    }
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "objects.js",
+    "objects.mjs",
+    "objects.d.ts",
+    "browser.js",
+    "highlight.js",
+    "highlight.mjs",
+    "highlight.d.ts",
+    "highlight.d.mts",
+    "objects.d.mts",
+    "rapid-fuzzy-wasm-bindgen.js",
+    "rapid-fuzzy-wasm-bindgen_bg.js",
+    "rapid-fuzzy-wasm-bindgen_bg.wasm",
+    "rapid-fuzzy-wasm-bindgen.d.ts",
+    "rapid-fuzzy-wasm-bindgen_bg.wasm.d.ts"
+  ],
+  "napi": {
+    "binaryName": "rapid-fuzzy",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-gnu",
+      "aarch64-unknown-linux-musl",
+      "x86_64-pc-windows-msvc",
+      "aarch64-pc-windows-msvc",
+      "wasm32-wasip1-threads"
+    ]
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "build": "napi build --manifest-path crates/core/Cargo.toml --platform --release --js index.js --dts index.d.ts --output-dir .",
+    "postbuild": "node scripts/patch-binding.js",
+    "build:debug": "napi build --manifest-path crates/core/Cargo.toml --platform --js index.js --dts index.d.ts --output-dir .",
+    "build:wasm": "napi build --manifest-path crates/core/Cargo.toml --platform --release --js index.js --dts index.d.ts --output-dir . --target wasm32-wasip1-threads",
+    "postbuild:wasm": "node scripts/optimize-wasm.js",
+    "build:wasm-bindgen": "node scripts/build-wasm-bindgen.js",
+    "postbuild:wasm-bindgen": "node scripts/optimize-wasm.js",
+    "optimize:wasm": "node scripts/optimize-wasm.js",
+    "artifacts": "napi artifacts",
+    "prepublishOnly": "napi prepublish -t npm",
+    "version": "napi version",
+    "changeset:version": "pnpm changeset version && node scripts/sync-cargo-version.js && napi version && pnpm run build && pnpm exec biome format --write npm/",
+    "check": "biome ci",
+    "format": "biome format --write",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:wasm": "vitest run __test__/wasm.spec.ts",
+    "test:browser": "playwright test",
+    "test:bun": "bun test e2e/wasm-bun.test.ts",
+    "test:deno": "deno test --allow-read --allow-env --allow-net --node-modules-dir=auto e2e/wasm-deno.test.ts",
+    "test:watch": "vitest watch",
+    "bench": "vitest bench",
+    "bench:ci": "vitest bench __test__/distance.bench.ts __test__/similarity.bench.ts __test__/ratio.bench.ts __test__/batch.bench.ts __test__/search.bench.ts",
+    "bench:readme": "npx tsx scripts/update-bench-readme.ts",
+    "bench:charts": "npx tsx scripts/generate-bench-charts.ts",
+    "publint": "publint",
+    "bench:rust": "cargo bench -p rapid-fuzzy-bench",
+    "verify": "pnpm run check && cargo clippy -- -W clippy::all && cargo test && pnpm run build && pnpm run typecheck && pnpm test",
+    "clean": "rm -rf target coverage *.node *.wasm",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.8",
+    "@changesets/cli": "^2.30.0",
+    "@codspeed/vitest-plugin": "^5.2.0",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@emnapi/core": "^1.10.0",
+    "@emnapi/runtime": "^1.10.0",
+    "@leeoniya/ufuzzy": "^1.0.19",
+    "@napi-rs/cli": "^3.5.1",
+    "@napi-rs/wasm-runtime": "^1.1.1",
+    "@playwright/test": "^1.58.2",
+    "@tybys/wasm-util": "^0.10.1",
+    "@types/node": "^24.0.0",
+    "@types/string-similarity": "^4.0.2",
+    "@vitest/coverage-v8": "^4.1.0",
+    "fastest-levenshtein": "^1.0.16",
+    "flexsearch": "^0.8.212",
+    "fuse.js": "^7.1.0",
+    "fuzzball": "^2.2.3",
+    "fuzzysort": "^3.1.0",
+    "lefthook": "^2.1.4",
+    "leven": "^4.1.0",
+    "minisearch": "^7.2.0",
+    "publint": "^0.3.18",
+    "string-similarity": "^4.0.4",
+    "typescript": "^6.0.0",
+    "vite": "^8.0.0",
+    "vitest": "^4.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "lefthook"
+    ],
+    "overrides": {
+      "axios": ">=1.15.0"
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "@codspeed/vitest-plugin>vite": "8"
+      }
+    }
+  },
+  "optionalDependencies": {
+    "rapid-fuzzy-darwin-x64": "2.0.0",
+    "rapid-fuzzy-darwin-arm64": "2.0.0",
+    "rapid-fuzzy-linux-x64-gnu": "2.0.0",
+    "rapid-fuzzy-linux-x64-musl": "2.0.0",
+    "rapid-fuzzy-linux-arm64-gnu": "2.0.0",
+    "rapid-fuzzy-linux-arm64-musl": "2.0.0",
+    "rapid-fuzzy-win32-x64-msvc": "2.0.0",
+    "rapid-fuzzy-win32-arm64-msvc": "2.0.0",
+    "rapid-fuzzy-wasm32-wasi": "2.0.0"
+  }
+}

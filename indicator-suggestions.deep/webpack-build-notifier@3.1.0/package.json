@@ -1,0 +1,67 @@
+{
+  "name": "webpack-build-notifier",
+  "version": "3.1.0",
+  "description": "A Webpack plugin that generates OS notifications for build steps using node-notifier.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsup && npm run build:types && copyfiles -f src/icons/* dist/icons/",
+    "build:types": "tsup --dts --format esm",
+    "clean": "rimraf dist tests/assets",
+    "lint": "npx eslint src --ext .ts",
+    "lint:fix": "npm run lint -- --fix",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm t",
+    "test": "jest",
+    "test:ci": "jest --coverage && coveralls < coverage/lcov.info",
+    "test-watch": "jest --runInBand --watch"
+  },
+  "keywords": [
+    "webpack",
+    "notification",
+    "notify",
+    "node-notifier",
+    "alert",
+    "build",
+    "compilation",
+    "compile"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RoccoC/webpack-build-notifier.git"
+  },
+  "author": "Rocco Cataldo <roccocataldo@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-notifier": "10.0.1",
+    "strip-ansi": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@types/node-notifier": "8.0.3",
+    "@types/strip-ansi": "^5.2.1",
+    "@types/webpack": "^5.28.3",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "babel-jest": "^29.7.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^8.52.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "tsup": "^8.0.2",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0"
+  },
+  "peerDependencies": {
+    "webpack": "^5.0.0"
+  }
+}

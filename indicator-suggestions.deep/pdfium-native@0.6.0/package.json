@@ -1,0 +1,111 @@
+{
+  "name": "pdfium-native",
+  "version": "0.6.0",
+  "description": "Native Node.js bindings for PDFium",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "npm@11.17.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "pdf",
+    "pdfium",
+    "native",
+    "render",
+    "text-extraction",
+    "node-addon",
+    "napi",
+    "pdf-parser",
+    "pdf-reader",
+    "pdf-to-text",
+    "pdf-to-image",
+    "pdf-render",
+    "extract-text",
+    "search",
+    "annotations",
+    "bookmarks",
+    "chromium"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "lib",
+    "scripts",
+    "binding.gyp",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xonaman/nodejs-pdfium-native.git"
+  },
+  "homepage": "https://github.com/xonaman/nodejs-pdfium-native#readme",
+  "bugs": {
+    "url": "https://github.com/xonaman/nodejs-pdfium-native/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64",
+    "arm",
+    "ppc64"
+  ],
+  "scripts": {
+    "install": "node scripts/install.mjs",
+    "build": "node-gyp rebuild && node scripts/bundle-lib.mjs",
+    "build:ts": "tsc",
+    "prepublishOnly": "tsc",
+    "download": "node scripts/download-pdfium.mjs",
+    "verify:checksums": "node scripts/verify-checksums.mjs",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --fix .",
+    "lint:check": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky && tsc"
+  },
+  "lint-staged": {
+    "*.{ts,js,mjs,cjs,json,md,yaml,yml}": "prettier --write",
+    "*.{ts,js,mjs,cjs}": "eslint --max-warnings 0"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.0.0",
+    "p-limit": "^7.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.5.0",
+    "@vitest/coverage-v8": "^4.1.2",
+    "eslint": "^10.1.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "node-gyp": "^13.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2",
+    "vitest": "^4.1.2"
+  }
+}

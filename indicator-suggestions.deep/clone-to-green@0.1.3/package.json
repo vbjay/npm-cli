@@ -1,0 +1,75 @@
+{
+  "name": "clone-to-green",
+  "version": "0.1.3",
+  "description": "Clean clone reproducibility checker for developer projects.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Clone To Green contributors",
+  "homepage": "https://github.com/iDogRoag/clone-to-green#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iDogRoag/clone-to-green.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iDogRoag/clone-to-green/issues"
+  },
+  "engines": {
+    "node": "^24.0.0"
+  },
+  "bin": {
+    "clone-to-green": "dist/cli.js",
+    "ctg": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "docs",
+    "examples"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "developer-tools",
+    "testing",
+    "ci",
+    "automation",
+    "onboarding",
+    "reproducibility",
+    "fresh-clone",
+    "smoke-test",
+    "oss",
+    "nodejs",
+    "python",
+    "go",
+    "rust",
+    "github-actions"
+  ],
+  "dependencies": {
+    "commander": "^12.1.0",
+    "execa": "^9.6.0",
+    "fast-glob": "^3.3.3",
+    "picocolors": "^1.1.1",
+    "strip-ansi": "^7.1.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.4",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.8"
+  }
+}

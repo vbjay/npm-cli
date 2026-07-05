@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "01d3f5decf7929dc",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "94f98eca6d2490e991fb3ddcd8f66b15596641ec9e6908af7e1406a624c5af3d",
+        "sizeBytes": 4529,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://raw.githubusercontent.com/cdm-lang/cdm/main/cli-releases.json",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "makes-executable"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:49.427Z"
+  },
+  "hash": "sha256:3532a4ccb64288660a3b19a430aa28c09353af89d0567975ec69c35254db2808"
+}

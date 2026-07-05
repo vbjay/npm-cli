@@ -1,0 +1,72 @@
+{
+  "name": "electron-window-corner-addon",
+  "version": "0.1.1",
+  "description": "Native macOS window corner radius addon for Electron",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./addon": {
+      "require": "./build/Release/window_corner_native.node",
+      "import": "./build/Release/window_corner_native.node"
+    }
+  },
+  "files": [
+    "dist",
+    "binding.gyp",
+    "swift",
+    "dist",
+    "src",
+    "!swift/.build"
+  ],
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^8.0.0"
+  },
+  "peerDependencies": {
+    "electron": ">=35.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "electron": "^37.3.1",
+    "node-gyp": "^10.0.0",
+    "tsdown": "0.14.1",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [
+    "napi",
+    "swift",
+    "native",
+    "electron",
+    "macos",
+    "window",
+    "corner-radius"
+  ],
+  "author": "Innei",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "scripts": {
+    "build:ts": "tsc",
+    "build:native": "node -e \"if (process.platform === 'darwin') { require('child_process').execSync('npm run build:swift && node-gyp rebuild', { stdio: 'inherit' }); } else { console.log('Skipping native build on non-macOS platform'); }\"",
+    "build": "npm run build:ts && npm run build:native",
+    "build:swift": "cd swift && swift build -c release",
+    "build:debug": "node -e \"if (process.platform === 'darwin') { require('child_process').execSync('npm run build:swift && node-gyp rebuild --debug', { stdio: 'inherit' }); } else { console.log('Skipping debug build on non-macOS platform'); }\"",
+    "clean": "node -e \"if (process.platform === 'darwin') { require('child_process').execSync('node-gyp clean && cd swift && swift package clean', { stdio: 'inherit' }); }\" && rm -rf dist",
+    "dev": "tsc --watch",
+    "install": "npm run build:native",
+    "test": "electron test-window-corner.js"
+  }
+}

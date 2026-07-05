@@ -1,0 +1,62 @@
+{
+  "name": "@kesha-antonov/react-native-action-cable",
+  "version": "2.0.0",
+  "description": "Connect React Native apps to Rails ActionCable for real-time bidirectional communication.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "bump": "npm version patch",
+    "publish": "npm publish",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kesha-antonov/react-native-action-cable.git"
+  },
+  "keywords": [
+    "react-native",
+    "actioncable",
+    "action-cable",
+    "rails",
+    "websocket",
+    "realtime",
+    "real-time",
+    "channels",
+    "subscriptions",
+    "typescript"
+  ],
+  "author": "Zach Schneider <zach@schneid.io>, Kesha Antonov <innokenty.longway@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "index.ts",
+    "lib/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "bugs": {
+    "url": "https://github.com/kesha-antonov/react-native-action-cable/issues"
+  },
+  "homepage": "https://github.com/kesha-antonov/react-native-action-cable#readme",
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
+    "eslint": "^9.27.0",
+    "husky": "^9.1.0",
+    "lint-staged": "^15.5.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "eventemitter3": "5.0.4"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "type": "commonjs",
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --fix"
+  }
+}

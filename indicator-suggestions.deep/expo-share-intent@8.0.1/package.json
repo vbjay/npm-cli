@@ -1,0 +1,93 @@
+{
+  "name": "expo-share-intent",
+  "version": "8.0.1",
+  "description": "use native share intent for ios and android with expo",
+  "homepage": "https://github.com/achorein/expo-share-intent/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achorein/expo-share-intent.git"
+  },
+  "author": "achorein (https://github.com/achorein)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/achorein/expo-share-intent/issues"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/achorein"
+    },
+    "https://www.buymeacoffee.com/achorein"
+  ],
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-share-extension",
+    "react-native-share-extension",
+    "react-native-share-intent",
+    "expo-config-plugin",
+    "share-share-intent",
+    "share-intent",
+    "ios-custom-view",
+    "ios-context-menu"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "app.plugin.js",
+    "plugin/build",
+    "build",
+    "expo-module.config.json",
+    "ios",
+    "android",
+    "!android/build/"
+  ],
+  "scripts": {
+    "release": "dotenv release-it",
+    "build": "EXPO_NONINTERACTIVE=1 expo-module build",
+    "build:dev": "expo-module build",
+    "build:plugin": "EXPO_NONINTERACTIVE=1 expo-module build plugin",
+    "build:plugin:dev": "expo-module build plugin",
+    "copy:plugin-swift": "mkdir -p plugin/build/ios && cp plugin/src/ios/*.swift plugin/build/ios/",
+    "build:all": "yarn build && yarn build:plugin && yarn copy:plugin-swift",
+    "clean": "expo-module clean && rm -fr plugin/build",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "chmod +x node_modules/expo-module-scripts/bin/* && expo-module configure && yarn build:all",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "dependencies": {
+    "@expo/config-plugins": "~57.0.2",
+    "expo-constants": "~57.0.3",
+    "expo-linking": "~57.0.1"
+  },
+  "resolutions": {
+    "string-width": "^4",
+    "strip-ansi": "^4",
+    "wrap-ansi": "^7"
+  },
+  "peerDependencies": {
+    "expo": "^57",
+    "expo-constants": ">=57.0.3",
+    "expo-linking": ">=57.0.1",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^11.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "~19.2.10",
+    "@types/react-native": "^0.73.0",
+    "dotenv-cli": "^7.4.2",
+    "eslint": "^8.57.1",
+    "expo-module-scripts": "^56.0.3",
+    "expo-modules-core": "^57.0.2",
+    "prettier": "^3.2.5",
+    "release-it": "^20.0.1",
+    "typescript": "~6.0.3"
+  }
+}

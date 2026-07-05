@@ -1,0 +1,77 @@
+{
+  "name": "bungee-pitch-shift",
+  "version": "1.0.8",
+  "description": "High-quality, low-latency pitch shifting and time stretching for Web Audio API using WebAssembly",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.js"
+    },
+    "./worker": {
+      "types": "./dist/worker/index.d.ts",
+      "import": "./dist/worker/index.js",
+      "require": "./dist/worker/index.js"
+    },
+    "./processor": "./dist/bungee-processor-bundled.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run build:tsc && npm run build:processor && npm run build:worker",
+    "build:tsc": "tsc",
+    "build:processor": "node scripts/build-processor.js",
+    "build:worker": "node scripts/build-worker.js",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "audio",
+    "pitch-shift",
+    "time-stretch",
+    "web-audio",
+    "wasm",
+    "audio-worklet",
+    "phase-vocoder",
+    "music",
+    "sound",
+    "web-worker",
+    "offline-processing",
+    "waveform",
+    "audio-visualization"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "esbuild": "^0.25.11",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}

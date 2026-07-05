@@ -1,0 +1,96 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "69ba03e2fcddf438",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/compile-babel.js",
+      "scripts/compile-tsc.js",
+      "scripts/prepare.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "shelljs",
+        "versionSpec": "^0.8.3"
+      },
+      {
+        "name": "chalk",
+        "versionSpec": "^3.0.0"
+      },
+      {
+        "name": "npmlog",
+        "versionSpec": "^4.1.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chalk@3.0.0",
+      "npmlog@4.1.2",
+      "shelljs@0.8.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/prepare.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "a812ae9f4559ce940dfd88174eeff6c0e504f09cb47c4e0e15f9767cd53f4472",
+        "sizeBytes": 1958,
+        "signals": [
+          "dynamic-require",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/compile-babel.js",
+          "scripts/compile-tsc.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/compile-babel.js",
+        "reason": "required by ./scripts/prepare.js",
+        "sha256": "f505fd0e23c97f982f5c9f37e22e1a255ece6ef96b76d6f2b3abbfe7e7a3e50d",
+        "sizeBytes": 1642,
+        "signals": [
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/compile-tsc.js",
+        "reason": "required by ./scripts/prepare.js",
+        "sha256": "b593070b9cd762d4e2da205aec216c871483435f7f89060e13f75631357eab7d",
+        "sizeBytes": 1851,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:15.743Z"
+  },
+  "hash": "sha256:96c77a051cd651a449eb96ffd1ed8bf90ac981da7ecc2684a3b2aaefa6243d62"
+}

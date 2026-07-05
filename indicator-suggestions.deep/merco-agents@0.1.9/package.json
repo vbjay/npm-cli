@@ -1,0 +1,78 @@
+{
+  "name": "merco-agents",
+  "version": "0.1.9",
+  "description": "A powerful Rust library for building intelligent AI agents with Node.js bindings",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./native": {
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib",
+    "*.node",
+    "README.md",
+    "LICENSE"
+  ],
+  "napi": {
+    "binaryName": "merco-agents",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-pc-windows-msvc",
+      "aarch64-pc-windows-msvc"
+    ]
+  },
+  "scripts": {
+    "build": "napi build --release --features napi && node scripts/distribute.js",
+    "build:platform": "napi build --platform --release --features napi && node scripts/distribute.js",
+    "build:debug": "napi build --platform --features napi",
+    "build:only": "napi build --release --features napi",
+    "build:all": "napi build --release --features napi",
+    "distribute": "node scripts/distribute.js",
+    "prepublishOnly": "npm run build:all && node scripts/ensure-index.js",
+    "prepack": "npm run build:all && node scripts/ensure-index.js",
+    "publish:public": "npm publish --access public",
+    "version:bump": "node scripts/bump-version.js",
+    "collect:binaries": "node scripts/collect-platform-binaries.js",
+    "test": "node test/test.js",
+    "test:ts": "tsx test/test.ts",
+    "test:streaming": "tsx test/test-streaming.ts"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "llm",
+    "openai",
+    "anthropic",
+    "rust",
+    "napi"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.5.0",
+    "@types/node": "^25.0.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">= 20"
+  }
+}

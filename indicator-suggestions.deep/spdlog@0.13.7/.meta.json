@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e0ff9fc7fce3266a",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "e271436455abc1ecc6baaebae7486177431a64d17f55d9752032b30c10fead82",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `spdlog`  -  C/C++ sources",
+            "items": [
+              "src/main.cc",
+              "src/logger.cc"
+            ]
+          },
+          {
+            "label": "Target `spdlog`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "deps/spdlog/include"
+            ]
+          },
+          {
+            "label": "Target `spdlog`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:13.212Z"
+  },
+  "hash": "sha256:9617bc5e375102e168f36ae56be59f0f4cf6e905bbf12d3faf285a8df9f006b1"
+}

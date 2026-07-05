@@ -1,0 +1,105 @@
+{
+	"name": "@sunasteriskrnd/takumi",
+	"version": "0.11.0",
+	"description": "CLI tool for bootstrapping and managing Takumi projects",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sun-asterisk-internal/takumi-cli.git"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"bin": {
+		"tkm": "bin/tkm.js"
+	},
+	"files": [
+		"bin/tkm.js",
+		"dist/index.js"
+	],
+	"scripts": {
+		"tkm": "bun scripts/run-cli.ts --",
+		"dev": "bun scripts/run-cli.ts --config src/lib/build-config/dev.json --",
+		"build": "bun scripts/build-cli.ts",
+		"build:dev": "bun scripts/build-cli.ts --config src/lib/build-config/dev.json",
+		"compile": "bun scripts/build-cli.ts --compile",
+		"compile:dev": "bun scripts/build-cli.ts --compile --config src/lib/build-config/dev.json",
+		"verify:package": "node scripts/prepublish-check.js",
+		"test": "bun test",
+		"test:ci": "NON_INTERACTIVE=true CI_SAFE_MODE=true bun test",
+		"test:integration": "CK_RUN_CLI_INTEGRATION=1 bun test tests/integration/cli.test.ts",
+		"test:watch": "bun test --watch",
+		"test:quick": "./scripts/dev-quick-start.sh test",
+		"lint": "biome check .",
+		"lint:fix": "biome check --fix .",
+		"lint:fix-unsafe": "biome check --fix --unsafe .",
+		"format": "biome format --write .",
+		"typecheck": "tsc --noEmit",
+		"dev:quick": "./scripts/dev-quick-start.sh",
+		"dev:all": "./scripts/dev-quick-start.sh all",
+		"metrics": "bun run scripts/workflow-metrics.ts",
+		"validate": "bun run typecheck && bun run lint && bun test && bun run build",
+		"install:hooks": "./.githooks/install.sh",
+		"prepare": "node -e \"try{require('child_process').execSync('git rev-parse --git-dir',{stdio:'ignore'});require('child_process').execSync('bash .githooks/install.sh',{stdio:'inherit'})}catch(e){console.warn('[i] Hook install skipped:',e.message)}\""
+	},
+	"keywords": [
+		"cli",
+		"takumi",
+		"boilerplate",
+		"bootstrap",
+		"template"
+	],
+	"author": "Takumi",
+	"license": "MIT",
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"dependencies": {
+		"@clack/prompts": "^0.7.0",
+		"@octokit/rest": "^22.0.0",
+		"@supabase/supabase-js": "^2.106.1",
+		"better-sqlite3": "^12.6.2",
+		"cac": "^6.7.14",
+		"cli-progress": "^3.12.0",
+		"compare-versions": "^6.1.1",
+		"diff": "^8.0.3",
+		"fs-extra": "^11.2.0",
+		"gray-matter": "^4.0.3",
+		"ignore": "^5.3.2",
+		"minimatch": "^10.1.1",
+		"open": "^10.1.0",
+		"ora": "^8.0.0",
+		"p-limit": "^7.2.0",
+		"picocolors": "^1.1.1",
+		"picomatch": "^4.0.3",
+		"proper-lockfile": "^4.1.2",
+		"semver": "^7.7.3",
+		"shell-quote": "^1.9.0",
+		"tar": "^7.4.3",
+		"tmp": "^0.2.3",
+		"yauzl-promise": "^4.0.0",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/git": "^10.0.1",
+		"@types/better-sqlite3": "^7.6.13",
+		"@types/bun": "latest",
+		"@types/cli-progress": "^3.11.6",
+		"@types/diff": "^8.0.0",
+		"@types/fs-extra": "^11.0.4",
+		"@types/node": "^22.19.7",
+		"@types/picomatch": "^4.0.2",
+		"@types/proper-lockfile": "^4.1.4",
+		"@types/semver": "^7.7.1",
+		"@types/shell-quote": "^1.7.5",
+		"@types/tar": "^6.1.13",
+		"@types/tmp": "^0.2.6",
+		"@types/yauzl-promise": "^4.0.1",
+		"conventional-changelog-conventionalcommits": "^9.1.0",
+		"semantic-release": "^25.0.0",
+		"typescript": "^5.7.2"
+	}
+}

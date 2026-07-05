@@ -1,0 +1,54 @@
+{
+  "name": "@pulseengine/timedate-mcp-server",
+  "version": "0.4.0",
+  "description": "TimeDate MCP Server - A Model Context Protocol server for time and date operations with timezone support",
+  "main": "index.js",
+  "bin": {
+    "timedate-mcp-server": "./run.js",
+    "timedate-mcp": "./run.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js",
+    "preuninstall": "node uninstall.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "time",
+    "date",
+    "timezone",
+    "rust",
+    "cli"
+  ],
+  "author": "PulseEngine",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pulseengine/timedate-mcp.git"
+  },
+  "homepage": "https://github.com/pulseengine/timedate-mcp",
+  "bugs": {
+    "url": "https://github.com/pulseengine/timedate-mcp/issues"
+  },
+  "optionalDependencies": {
+    "@pulseengine/timedate-mcp-server-darwin-arm64": "0.4.0",
+    "@pulseengine/timedate-mcp-server-darwin-x64": "0.4.0",
+    "@pulseengine/timedate-mcp-server-linux-x64": "0.4.0",
+    "@pulseengine/timedate-mcp-server-win32-x64": "0.4.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

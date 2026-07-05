@@ -1,0 +1,133 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d730a66576a0ec5e",
+    "fetchedFiles": [
+      "CMakeLists.txt",
+      "lib/load-addon.js",
+      "package.json",
+      "script/install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "cmake-ts",
+        "versionSpec": "1.0.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "cmake-ts@1.0.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "CMakeLists.txt",
+        "label": "CMake build descriptor",
+        "sha256": "41464f108ca15a981c08ee2a01891bbf39c5fa3c50d367cfd132b2bb9428b3e3",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Native libraries",
+            "items": [
+              "addon"
+            ]
+          },
+          {
+            "label": "Linked libraries",
+            "items": [
+              "project_warnings"
+            ]
+          },
+          {
+            "label": "CMake packages required",
+            "items": [
+              "ZeroMQ"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "CMakePresets.json",
+        "label": "CMake build presets",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\zeromq@6.5.0\\CMakePresets.json'",
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "script/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "552b14a22bef1fe388a0381834f3f5b92a999afd578468bc0ac5a1e37a341efa",
+        "sizeBytes": 1345,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "native-build",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/load-addon.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/load-addon.js",
+        "reason": "required by ./script/install.js",
+        "sha256": "e7dc2113276806317d5c96731c0e7d9c90668e178d1d0a21168a2eec4c380ce4",
+        "sizeBytes": 526,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:33.410Z"
+  },
+  "hash": "sha256:2f95011bba6d4de9fc72800ba26708ec4631a5787ab0214b5ab48b64e36f7c7a"
+}

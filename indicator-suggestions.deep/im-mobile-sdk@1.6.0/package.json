@@ -1,0 +1,167 @@
+{
+  "name": "im-mobile-sdk",
+  "version": "1.6.0",
+  "description": "React Native components",
+  "main": "lib/commonjs/index.js",
+  "author": "pratap ghowra <pratap@zkteco.in>",
+  "license": "MIT",
+  "homepage": "https://192.168.11.11:10443/miverraiot-platform/poc-test/im-mobile-sdk/",
+  "keywords": [
+    "im-service",
+    "sdk",
+    "iot-sdk",
+    "react-native",
+    "react-component",
+    "react-native-component",
+    "react",
+    "react native",
+    "mobile",
+    "ios",
+    "android",
+    "im-service-ui"
+  ],
+  "scripts": {
+    "android": "yarn run prestorybook && react-native run-android",
+    "ios": "yarn run prestorybook && react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint .",
+    "prestorybook": "rnstl",
+    "storybook": "start-storybook -p 6006",
+    "build-react": "webpack --mode production",
+    "start-react": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "start-storybook-web": "./node_modules/@storybook/react/bin/index.js",
+    "build-storybook-web": "./node_modules/@storybook/react/bin/build.js",
+    "storybook-web": "yarn run start-storybook-web",
+    "build:storybook-web": "yarn run build-storybook-web",
+    "android-windows": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "prepare": "bob build"
+  },
+  "config": {
+    "react-native-storybook-loader": {
+      "searchDir": [
+        "./src/components"
+      ],
+      "pattern": "**/*.stories.js",
+      "outputFile": "./storybook/storyLoader.js"
+    }
+  },
+  "dependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "react-native-app-auth": "^6.2.0",
+    "react-native-confirmation-code-input": "^1.0.4",
+    "react-native-countdown-component": "^2.7.1",
+    "react-native-elements": "^3.4.2",
+    "react-native-modal": "^11.10.0",
+    "react-native-phone-number-input": "^2.1.0",
+    "react-native-web": "^0.13.4",
+    "react-redux": "^7.2.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-community/bob": "^0.17.1",
+    "@react-native-community/datetimepicker": "^3.4.7",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/bottom-tabs": "^5.11.8",
+    "@react-navigation/drawer": "^5.12.4",
+    "@react-navigation/native": "^5.9.3",
+    "@react-navigation/stack": "^5.14.3",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addon-notes": "^5.3.19",
+    "@storybook/addon-ondevice-actions": "^5.3.19",
+    "@storybook/addon-ondevice-knobs": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/react": "^5.3.19",
+    "@storybook/react-native": "^5.3.19",
+    "@storybook/react-native-server": "^5.3.19",
+    "@storybook/storybook-deployer": "^2.8.7",
+    "axios": "^0.21.1",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.5.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-react-native": "^3.8.1",
+    "html-webpack-plugin": "^4.3.0",
+    "jest": "^25.1.0",
+    "jwt-decode": "^3.1.2",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "moment": "^2.29.1",
+    "native-base": "^2.15.2",
+    "prettier": "^2.0.5",
+    "react-dom": "^16.13.1",
+    "react-native-builder-bob": "^0.18.1",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-paper": "^4.7.2",
+    "react-native-reanimated": "^1.13.3",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^2.18.1",
+    "react-native-storybook-loader": "^2.0.2",
+    "react-native-vector-icons": "^8.1.0",
+    "react-stomp": "^5.1.0",
+    "react-test-renderer": "16.13.1",
+    "styled-components": "^5.1.1",
+    "symbol-observable": "^4.0.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://192.168.33.11:10443/miverraiot-platform/poc-test/im-mobile-sdk.git"
+  },
+  "bugs": {
+    "url": "https://192.168.33.11:10443/miverraiot-platform/poc-test/im-mobile-sdk/issues"
+  },
+  "react-native": "src/index.js",
+  "module": "lib/module/index.js",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module"
+    ]
+  },
+  "directories": {
+    "lib": "lib"
+  }
+}

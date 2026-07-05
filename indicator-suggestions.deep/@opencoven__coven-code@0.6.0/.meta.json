@@ -1,0 +1,113 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "85d3066298a25195",
+    "fetchedFiles": [
+      "checksums.json",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7674945544e71b7e518ab394686a186a192c68f7886de3f008f85983563a09fa",
+        "sizeBytes": 5253,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "checksums.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/${REPO}/releases/tag/v${VERSION}",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/${REPO}/releases/tag/v${VERSION}\\n",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "3fd236bd66aa822f4c841fe8e27c33b21707839df8fc438e3bd4051185a9aefa",
+        "sizeBytes": 892,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "checksums.json",
+        "reason": "required by ./install.js",
+        "sha256": "5d9e72887c321334735cf902664dc6ac8e1e978128fc5ae9f44505ca67cd49e7",
+        "sizeBytes": 624,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:38.200Z"
+  },
+  "hash": "sha256:5abc70e646e948a3a29ff8d91e80cfd2947031cae47d4dc63943afc6dfa74512"
+}

@@ -1,0 +1,111 @@
+{
+  "name": "githits",
+  "description": "Version-aware open-source context for agentic software development",
+  "version": "0.6.2",
+  "mcpName": "com.githits/githits",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "files": [
+    "dist",
+    "LICENSE",
+    ".plugin",
+    ".claude-plugin",
+    ".mcp.json",
+    "server.json",
+    "gemini-extension.json",
+    "GEMINI.md",
+    "plugins",
+    "skills",
+    "commands"
+  ],
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "githits": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "bunup && bun -e \"import { chmodSync } from 'node:fs'; chmodSync('dist/cli.js', 0o755);\"",
+    "dev": "bun run ./src/cli.ts",
+    "inspector": "npx @modelcontextprotocol/inspector bun run dev mcp",
+    "smoke:cli": "bun run scripts/cli-smoke.ts",
+    "smoke:mcp": "bun run scripts/mcp-smoke.ts",
+    "validate:packages": "bun run scripts/validate-public-packages.ts",
+    "validate:packages:mcp-publish": "bun run scripts/validate-public-packages.ts --mcp-publish-dry-run",
+    "sync:claude-skills": "bun run scripts/sync-claude-skill-assets.ts",
+    "audit:pkg-ecosystems": "bun run scripts/pkg-ecosystem-audit.ts",
+    "agent:e2e": "bun run scripts/agent-eval.ts",
+    "agent:e2e:report": "bun run scripts/agent-eval-report.ts",
+    "agent:session": "bun run scripts/agent-session.ts",
+    "eval": "bun run eval/run.ts",
+    "test": "bun test",
+    "typecheck": "tsc",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "prepare": "husky",
+    "prepack": "bun run scripts/sync-claude-skill-assets.ts",
+    "postpack": "bun run scripts/sync-claude-skill-assets.ts --clean",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "githits",
+    "code-examples",
+    "search",
+    "cli",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "llm"
+  ],
+  "author": "GitHits",
+  "license": "Apache-2.0",
+  "homepage": "https://githits.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/githits-com/githits-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/githits-com/githits-cli/issues"
+  },
+  "engines": {
+    "node": "^20.12.0 || >=22.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@inquirer/checkbox": "5.1.5",
+    "@inquirer/confirm": "6.0.13",
+    "@inquirer/core": "11.1.10",
+    "@inquirer/select": "5.1.5",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@napi-rs/keyring": "^1.3.0",
+    "commander": "15.0.0",
+    "jsonc-parser": "^3.3.1",
+    "open": "^11.0.0",
+    "semver": "7.8.5",
+    "smol-toml": "^1.6.1",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.1",
+    "@types/bun": "latest",
+    "@types/semver": "^7.7.1",
+    "bunup": "^0.16.31",
+    "husky": "^9.1.7",
+    "lint-staged": "17.0.8",
+    "typescript": "^6.0.3"
+  }
+}

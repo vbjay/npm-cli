@@ -1,0 +1,77 @@
+{
+  "name": "memlab",
+  "version": "2.0.4",
+  "license": "MIT",
+  "description": "memlab is a framework that analyzes memory and finds memory leaks in JavaScript applications.",
+  "author": "Liang Gong <lgong@meta.com>",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "bin",
+    "LICENSE"
+  ],
+  "bin": {
+    "memlab": "bin/memlab"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "facebook",
+    "memlab",
+    "javascript",
+    "memory",
+    "leak",
+    "detector",
+    "heap",
+    "snapshot"
+  ],
+  "dependencies": {
+    "@memlab/api": "^2.0.4",
+    "@memlab/cli": "^2.0.4",
+    "@memlab/core": "^2.0.4",
+    "@memlab/e2e": "^2.0.4",
+    "@memlab/heap-analysis": "^2.0.4",
+    "@memlab/lens": "^2.0.4",
+    "ansi": "^0.3.1",
+    "babar": "^0.2.0",
+    "chalk": "^4.0.0",
+    "fs-extra": "^4.0.2",
+    "minimist": "^1.2.8",
+    "puppeteer": "24.31.0",
+    "puppeteer-core": "24.31.0",
+    "string-width": "^4.2.0",
+    "util.promisify": "^1.1.1",
+    "xvfb": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.3",
+    "@types/jest": "^27.4.1",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^25.0.0",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "preinstall": "node bin/preinstall",
+    "build-pkg": "tsc",
+    "publish-patch": "echo 'require manual publish: run npm publish in packages/memlab'",
+    "clean-pkg": "rm -rf ./dist && rm -rf ./node_modules && rm -f ./tsconfig.tsbuildinfo"
+  },
+  "workspaces": [
+    "./packages/core",
+    "./packages/e2e",
+    "./packages/heap-analysis",
+    "./packages/api",
+    "./packages/cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facebook/memlab.git"
+  },
+  "bugs": {
+    "url": "https://github.com/facebook/memlab/issues"
+  },
+  "homepage": "https://facebook.github.io/memlab/"
+}

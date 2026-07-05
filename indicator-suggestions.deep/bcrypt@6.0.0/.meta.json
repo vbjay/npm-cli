@@ -1,0 +1,85 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c78f3f203dd0a5ae",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "1f500ee8d6ffd2afaa77796885eee76172281d6f15bfca44a6405d1e7b052e18",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `bcrypt_lib`  -  C/C++ sources",
+            "items": [
+              "src/blowfish.cc",
+              "src/bcrypt.cc",
+              "src/bcrypt_node.cc"
+            ]
+          },
+          {
+            "label": "Target `bcrypt_lib`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "b1f4882a3e0ce600e27deeb32982165df4d9474e149fce4ba09377d6aca78489",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked",
+            "items": [
+              "npm"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:24.152Z"
+  },
+  "hash": "sha256:7e951555b1c69e205505b5920d6fba2e110f228a0b30b5ea3b09244c038a0511"
+}

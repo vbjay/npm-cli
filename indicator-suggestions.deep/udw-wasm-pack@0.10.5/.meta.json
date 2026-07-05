@@ -1,0 +1,102 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e3583fb0936db273",
+    "fetchedFiles": [
+      "binary.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "binary-install",
+        "versionSpec": "^1.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "binary-install@1.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "263e0eee2881180970590a6454fa53c90fde48bc486f5b591bea8116c8bf6444",
+        "sizeBytes": 186,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "binary.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "binary.js",
+        "reason": "required by ./install.js",
+        "sha256": "884ec69d1c83565c13fd92a21d9013eb69970c8ec5604e8a2f225f11210e8ade",
+        "sizeBytes": 1241,
+        "signals": [
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./binary.js",
+        "sha256": "4d52bd234b47d99d522d48c1ef3baf9cb0a830adcfbbf3461621ef586e2bb0d6",
+        "sizeBytes": 753,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:22.750Z"
+  },
+  "hash": "sha256:48be851c9ff9c1f510ba82398b33ea6219a1e86db595a3233648616d43bc7837"
+}

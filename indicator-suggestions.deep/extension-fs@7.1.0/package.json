@@ -1,0 +1,36 @@
+{
+    "name": "extension-fs",
+    "version": "7.1.0",
+    "description": "Extensions to nodejs's fs",
+    "main": "./build/Release/extension-fs",
+    "gypfile": true,
+    "scripts": {
+        "start": "node dev/index.js",
+        "debug": "node --nolazy --inspect-brk=9229 dev/index.js",
+        "build:dev": "node-gyp build --debug",
+        "build": "node-gyp build",
+        "rebuild:dev": "node-gyp rebuild --debug",
+        "rebuild": "node-gyp rebuild",
+        "clean": "node-gyp clean"
+    },
+    "types": "extension-fs.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/uriegel/ext-fs.git"
+    },
+    "keywords": [
+        "cpp",
+        "addon"
+    ],
+    "author": "Uwe Riegel",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/uriegel/ext-fs/issues"
+    },
+    "homepage": "https://github.com/uriegel/ext-fs#readme",
+    "dependencies": {
+        "bindings": "*",
+        "event-source-base": "^1.1.0",
+        "node-addon-api": "1.7.1"
+    }
+}

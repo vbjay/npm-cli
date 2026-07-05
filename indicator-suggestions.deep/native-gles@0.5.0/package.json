@@ -1,0 +1,47 @@
+{
+  "version": "0.5.0",
+  "name": "native-gles",
+  "description": "OpenGL ES 3.0 bindings for Node.js via EGL — native on Linux/ARM, ANGLE on macOS/Windows",
+  "keywords": [
+    "opengl",
+    "gles",
+    "gles3",
+    "egl",
+    "gpu",
+    "rendering",
+    "webgl",
+    "native",
+    "graphics",
+    "angle"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/monteslu/native-gles.git"
+  },
+  "author": "Luis Montes <monteslu>",
+  "main": "./index.js",
+  "gypfile": true,
+  "scripts": {
+    "install": "cd scripts && node install.mjs",
+    "build": "cd scripts && node build.mjs",
+    "download-release": "cd scripts && node download-release.mjs",
+    "download-angle": "cd scripts && node download-angle.mjs",
+    "upload-release": "cd scripts && node upload-release.mjs",
+    "test": "node test/test_context.js && node test/test_triangle.js && node test/test_shader.js",
+    "clean": "cd scripts && node clean.mjs"
+  },
+  "dependencies": {
+    "tar": "^7.4.3"
+  },
+  "devDependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp": "^11.2.0"
+  },
+  "config": {
+    "angle": {
+      "kivy_tag": "chromium-7151_rev1",
+      "mmozeiko_tag": "2026-03-01"
+    }
+  }
+}

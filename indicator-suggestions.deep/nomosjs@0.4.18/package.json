@@ -1,0 +1,80 @@
+{
+  "name": "nomosjs",
+  "version": "0.4.18",
+  "description": "Nomos SDK for cosmos based multisigs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "keywords": [
+    "daos",
+    "cosmos",
+    "sdk",
+    "rust"
+  ],
+  "author": "Rafael Contreras",
+  "license": "ISC",
+  "private": false,
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json",
+    "format": "prettier --write \"./**/*.ts\"",
+    "lint": "tslint -p ./tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "test": "jest --no-silent"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    },
+    "./constants": {
+      "import": "./lib/constants/index.js",
+      "default": "./lib/constants/index.js"
+    },
+    "./utils": {
+      "import": "./lib/utils/index.js",
+      "default": "./lib/utils/index.js"
+    },
+    "./types": {
+      "import": "./lib/types/index.js",
+      "default": "./lib/types/index.js"
+    },
+    "./nomos": {
+      "import": "./lib/nomos/index.js",
+      "default": "./lib/nomos/index.js"
+    }
+  },
+  "dependencies": {
+    "@archwayhq/arch3-proto": "^0.7.0",
+    "@archwayhq/arch3.js": "^0.4.0",
+    "@cosmjs/amino": "^0.31.3",
+    "@cosmjs/cosmwasm-stargate": "^0.31.1",
+    "@cosmjs/crypto": "^0.32.3",
+    "@cosmjs/encoding": "^0.31.1",
+    "@cosmjs/math": "^0.31.1",
+    "@cosmjs/proto-signing": "^0.31.1",
+    "@cosmjs/stargate": "^0.31.1",
+    "@cosmjs/tendermint-rpc": "^0.31.1",
+    "@types/lodash": "^4.14.200",
+    "cosmjs-types": "^0.8.0",
+    "dotenv": "^16.3.1",
+    "lodash": "^4.17.21",
+    "long": "^5.2.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.1.4",
+    "jest": "^29.6.2",
+    "prettier": "^2.8.8",
+    "ts-jest": "^29.1.1",
+    "tsconfig-paths": "^4.2.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typechain": "^8.2.0",
+    "typescript": "^5.1.6"
+  }
+}

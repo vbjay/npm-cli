@@ -1,0 +1,125 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "eff5cbe21116241d",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/node/bridge-mcp-wiring.cjs",
+      "scripts/node/consumer-gitignore.cjs",
+      "scripts/node/install-bridges.cjs",
+      "scripts/node/postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/node/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a2637a1945f88580991b465f865f627e858634652d5baf340b3a9f19f275e271",
+        "sizeBytes": 2837,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/node/install-bridges.cjs",
+          "scripts/node/consumer-gitignore.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/node/install-bridges.cjs",
+        "reason": "required by ./scripts/node/postinstall.cjs",
+        "sha256": "eaf9df7fbb14bb53f1fc36668b7946bafebe800f3bf33828c8bacf83823f288a",
+        "sizeBytes": 19013,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/node/bridge-mcp-wiring.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/node/bridge-mcp-wiring.cjs",
+        "reason": "required by ./scripts/node/install-bridges.cjs",
+        "sha256": "17cd645d7ae9e9c6f7a784e87e49e85fce04c4c570cb6f996692344487ef9724",
+        "sizeBytes": 10552,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://opencode.ai/config.json",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/node/consumer-gitignore.cjs",
+        "reason": "required by ./scripts/node/postinstall.cjs",
+        "sha256": "37d422d8eb13212fe5ec3ed8011484eba319a77c8bc6f274be098df3725ff6d7",
+        "sizeBytes": 2900,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:34.418Z"
+  },
+  "hash": "sha256:516808a63e75a0d056bcca5099769321956ceac3aa6fc664f0c7cfcf14cc3b4f"
+}

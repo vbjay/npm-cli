@@ -1,0 +1,42 @@
+{
+  "name": "@pythonicit/p4-core-sdk",
+  "version": "0.2.7",
+  "description": "Node.js SDK for the P4 Rust core C ABI",
+  "main": "p4_core.js",
+  "types": "p4_core.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "p4",
+    "point-to-point",
+    "ffi",
+    "rust"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Masterjx9/p4.git",
+    "directory": "bindings/javascript"
+  },
+  "engines": {
+    "node": ">=18 <=22"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "dependencies": {
+    "ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "README.md",
+    "package.json",
+    "p4_core.js",
+    "p4_core.d.ts",
+    "scripts/postinstall.js",
+    "native/**/*",
+    "onionrelay/**/*"
+  ]
+}

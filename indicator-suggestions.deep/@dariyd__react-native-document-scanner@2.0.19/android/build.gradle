@@ -1,0 +1,188 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// android/build.gradle
+
+// based on:
+//
+// * https://github.com/facebook/react-native/blob/0.60-stable/template/android/build.gradle
+//   previous location:
+//   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/build.gradle
+//
+// * https://github.com/facebook/react-native/blob/0.60-stable/template/android/app/build.gradle
+//   previous location:
+//   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
+
+// These defaults should reflect the SDK versions used by
+// the minimum React Native version supported.
+def DEFAULT_COMPILE_SDK_VERSION = 35
+def DEFAULT_BUILD_TOOLS_VERSION = '35.0.0'
+def DEFAULT_MIN_SDK_VERSION = 21
+def DEFAULT_TARGET_SDK_VERSION = 35
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+// Needed so RN Gradle plugin can run codegen for this library when newArchEnabled=true in the app
+apply plugin: 'com.facebook.react'
+
+buildscript {
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    // ref: https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:build_script_external_dependencies
+    if (project == rootProject) {
+        repositories {
+            google()
+        }
+        dependencies {
+            // This should reflect the Gradle plugin version used by
+            // the minimum React Native version supported.
+            classpath 'com.android.tools.build:gradle:3.4.1'
+        }
+    }
+}
+
+android {
+    namespace "com.docscanner"
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", (findProperty("newArchEnabled") ?: "false")
+    }
+    
+    lintOptions {
+        abortOnError false
+    }
+}
+
+// Configure React Native codegen for this library
+react {
+    libraryName = "RNDocumentScannerSpec"
+    codegenJavaPackageName = "com.docscanner"
+}
+
+repositories {
+    // ref: https://www.baeldung.com/maven-local-repository
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url "$rootDir/../node_modules/react-native/android"
+    }
+    maven {
+        // Android JSC is installed from npm
+        url "$rootDir/../node_modules/jsc-android/dist"
+    }
+    google()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation 'com.facebook.react:react-native:+'  // From node_modules
+    implementation 'com.google.android.gms:play-services-mlkit-document-scanner:16.0.0'
+    implementation 'androidx.exifinterface:exifinterface:1.3.7'
+    implementation 'com.google.android.gms:play-services-location:21.1.0'
+}
+
+afterEvaluate { project ->
+    // some Gradle build hooks ref:
+    // https://www.oreilly.com/library/view/gradle-beyond-the/9781449373801/ch03.html
+    task androidJavadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += files(android.bootClasspath)
+        // Use a resolvable configuration when available; on some AGP setups
+        // (when this library is consumed from node_modules), a top-level
+        // 'compileClasspath' config may not exist. In that case, skip adding it.
+        def cc = project.configurations.findByName('compileClasspath')
+        if (cc != null) {
+            classpath += files(cc.asList())
+        } else {
+            logger.lifecycle("react-native-document-scanner: 'compileClasspath' not found; skipping extra Javadoc classpath setup.")
+        }
+        include '**/*.java'
+        
+        // Suppress warnings for missing documentation
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+
+    task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
+        archiveClassifier.set('javadoc')
+        def javadocOut = androidJavadoc.hasProperty('destinationDirectory') ? androidJavadoc.destinationDirectory : androidJavadoc.destinationDir
+        from javadocOut
+    }
+
+    task androidSourcesJar(type: Jar) {
+        archiveClassifier.set('sources')
+        from android.sourceSets.main.java.srcDirs
+        include '**/*.java'
+    }
+
+    android.libraryVariants.all { variant ->
+        def name = variant.name.capitalize()
+        def javaCompileTask = variant.javaCompileProvider.get()
+
+        task "jar${name}"(type: Jar, dependsOn: javaCompileTask) {
+            def classesOut = javaCompileTask.hasProperty('destinationDirectory') ? javaCompileTask.destinationDirectory : javaCompileTask.destinationDir
+            from classesOut
+        }
+    }
+}
+
+// Modern maven-publish plugin configuration
+def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
+
+afterEvaluate {
+    // Only configure publishing if the Android components expose a 'release' variant
+    def releaseComponent = components.findByName("release")
+    if (releaseComponent != null) {
+        publishing {
+            publications {
+                release(MavenPublication) {
+                    from releaseComponent
+                    
+                    groupId = 'com.docscanner'
+                    artifactId = packageJson.name
+                    version = packageJson.version
+                    
+                    artifact androidSourcesJar
+                    artifact androidJavadocJar
+                    
+                    pom {
+                        name = packageJson.title
+                        description = packageJson.description
+                        url = packageJson.repository.baseUrl
+                        
+                        licenses {
+                            license {
+                                name = packageJson.license
+                                url = packageJson.repository.baseUrl + '/blob/master/' + packageJson.licenseFilename
+                                distribution = 'repo'
+                            }
+                        }
+                        
+                        developers {
+                            developer {
+                                id = packageJson.author.name
+                                name = packageJson.author.name
+                            }
+                        }
+                    }
+                }
+            }
+            repositories {
+                maven {
+                    // Deploy to react-native-document-scanner/android/maven, ready to publish to npm
+                    url = uri("file://${projectDir}/../android/maven")
+                }
+            }
+        }
+    } else {
+        logger.lifecycle("react-native-document-scanner: Skipping maven-publish because no 'release' component is available (AGP too old or not applied).")
+    }
+}

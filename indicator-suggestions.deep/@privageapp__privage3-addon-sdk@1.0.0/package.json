@@ -1,0 +1,45 @@
+{
+  "name": "@privageapp/privage3-addon-sdk",
+  "version": "1.0.0",
+  "description": "Shared client SDK for Privage add-ons — session bootstrap, persistence, and OAuth callback coordination.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "jest",
+    "prepare": "npm run build",
+    "release": "npm publish"
+  },
+  "keywords": [
+    "privage",
+    "addon",
+    "iframe",
+    "oauth"
+  ],
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.5"
+  }
+}

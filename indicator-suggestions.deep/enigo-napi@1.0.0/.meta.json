@@ -1,0 +1,124 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "22dc130c5d3f0ab3",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "build.rs",
+      "package.json",
+      "scripts/download-binary.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "download",
+        "versionSpec": "^8.0.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "download@8.0.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "08cd579b5506e0b2636ffc2df10a817ed4f56278ad556652dd896f72b83a26c0",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "node-enigo"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.0"
+            ]
+          },
+          {
+            "label": "Crate output type",
+            "items": [
+              "\"cdylib\""
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.rs",
+        "label": "Rust build script",
+        "sha256": "302288f0377725ea5bfcad04aeb09c1719dfdf0715cd53c8417d9098feeeb2af",
+        "parseError": null,
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/download-binary.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "53fbac77c43f9eba206eb20940b0dc53385f626f46e0360ce2680a1276e15289",
+        "sizeBytes": 1920,
+        "signals": [
+          "writes-outside-package",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/download-binary.js",
+        "sha256": "8fffead7d38cfe66688853715a3583b4c07c382520cef9f20bf592f8c15ef3b0",
+        "sizeBytes": 1312,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:07.087Z"
+  },
+  "hash": "sha256:3be68185c02a25664748cedd081cb10bb31068d84393309a3d4c05972fabfba4"
+}

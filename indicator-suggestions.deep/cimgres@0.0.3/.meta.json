@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "354b10f88a08679e",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "e8cc0340bd5c6bf4f0f8c3c50741bb440cc904c7b11e028c9a1c2d1c4b5e62db",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `cimgres`  -  C/C++ sources",
+            "items": [
+              "src/binding.cpp"
+            ]
+          },
+          {
+            "label": "Target `cimgres`  -  libraries",
+            "items": [
+              "-Wl,-rpath,/usr/lib/x86_64-linux-gnu",
+              "<!(pkg-config --libs vips-cpp glib-2.0)"
+            ]
+          },
+          {
+            "label": "Target `cimgres`  -  include directories",
+            "items": [
+              "<(module_root_dir)/<!(node -p \"require('node-addon-api').include_dir\")",
+              " <!(pkg-config --cflags vips glib-2.0)"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:29.682Z"
+  },
+  "hash": "sha256:cce9d962814d491ce7b0592095e98657f3e8ea21136d569330b620e3bb1d249e"
+}

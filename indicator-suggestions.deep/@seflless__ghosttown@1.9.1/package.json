@@ -1,0 +1,107 @@
+{
+  "name": "@seflless/ghosttown",
+  "version": "1.9.1",
+  "description": "Web-based terminal emulator using Ghostty's VT100 parser via WebAssembly",
+  "type": "module",
+  "main": "./dist/ghostty-web.umd.cjs",
+  "module": "./dist/ghostty-web.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "ghosttown": "./bin/ghosttown.js",
+    "gt": "./bin/gt.js",
+    "ght": "./bin/ght.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/ghostty-web.js",
+      "require": "./dist/ghostty-web.umd.cjs"
+    },
+    "./ghostty-vt.wasm": "./ghostty-vt.wasm"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "scripts",
+    "src",
+    "ghostty-vt.wasm",
+    "README.md"
+  ],
+  "keywords": [
+    "terminal",
+    "terminal-emulator",
+    "ghostty",
+    "web",
+    "xterm",
+    "vt100",
+    "wasm",
+    "webassembly",
+    "ansi",
+    "tty"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coder/ghostty-web.git"
+  },
+  "bugs": "https://github.com/coder/ghostty-web/issues",
+  "homepage": "https://github.com/coder/ghostty-web#readme",
+  "license": "MIT",
+  "author": "Coder",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "gt": "npx tsx ./bin/ghosttown.js",
+    "postinstall": "node ./scripts/postinstall.js",
+    "dev": "vite --port 8000",
+    "demo": "node demo/bin/demo.js",
+    "demo:dev": "node demo/bin/demo.js --dev",
+    "demo:blocks": "bun demo/cli/run-demo.ts blocks",
+    "demo:box-drawing": "bun demo/cli/run-demo.ts box-drawing",
+    "demo:progress": "bun demo/cli/run-demo.ts progress",
+    "demo:shades": "bun demo/cli/run-demo.ts shades",
+    "demo:tui": "bun demo/cli/run-demo.ts tui",
+    "demo:all": "bun demo/cli/run-demo.ts all",
+    "test:visual": "bun test-harness/run.ts box-drawing",
+    "test:cleanup": "bun test-harness/run.ts cleanup",
+    "prebuild": "bun install",
+    "build": "bun run clean && bun run build:wasm && bun run build:lib && bun run build:wasm-copy",
+    "build:wasm": "./scripts/build-wasm.sh",
+    "build:lib": "vite build",
+    "build:cli": "tsc -p tsconfig.cli.json",
+    "build:wasm-copy": "cp ghostty-vt.wasm dist/",
+    "clean": "rm -rf dist",
+    "preview": "vite preview",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "fmt": "prettier --check .",
+    "fmt:fix": "prettier --write --cache .",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "prepublishOnly": "bun run build && bun run build:cli",
+    "cli:publish": "node scripts/cli-publish.js",
+    "kill:8080": "kill -9 $(lsof -ti :8080)"
+  },
+  "dependencies": {
+    "@lydell/node-pty": "^1.0.1",
+    "pngjs": "^7.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@happy-dom/global-registrator": "^15.11.0",
+    "@types/bun": "^1.3.2",
+    "@xterm/headless": "^5.5.0",
+    "@xterm/xterm": "^5.5.0",
+    "mitata": "^1.0.34",
+    "@playwright/test": "^1.49.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

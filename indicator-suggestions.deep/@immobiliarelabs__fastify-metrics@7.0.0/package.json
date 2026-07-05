@@ -1,0 +1,89 @@
+{
+    "name": "@immobiliarelabs/fastify-metrics",
+    "version": "7.0.0",
+    "description": "A minimalistic and opinionated Fastify plugin that collects metrics and dispatches them to statsd",
+    "main": "index.js",
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [
+        "nodejs",
+        "javascript",
+        "npm",
+        "metrics",
+        "grafana",
+        "statsd",
+        "fastify",
+        "gauge",
+        "timing",
+        "stats",
+        "counter"
+    ],
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "util.js",
+        "lib"
+    ],
+    "scripts": {
+        "lint": "eslint --fix --ignore-path .gitignore .",
+        "test": "tsd && tap",
+        "bench": "npm run bench:base && npm run bench:static && npm run bench:dynamic",
+        "bench:base": "concurrently -k -s first \"node benchmarks/fixtures/base.js\" \"node -e 'setTimeout(() => {}, 1000)' && npx autocannon -T 'Base server' -c 100 -d 30 http://localhost:3000\"",
+        "bench:static": "concurrently -k -s first \"node benchmarks/fixtures/withStaticModeMetrics.js\" \"node benchmarks/fixtures/statsd.js\" \"node -e 'setTimeout(() => {}, 1000)' && npx autocannon -T 'Plugin in static mode' -c 100 -d 30 http://localhost:3001\"",
+        "bench:dynamic": "concurrently -k -s first \"node benchmarks/fixtures/withDynamicModeMetrics.js\" \"node benchmarks/fixtures/statsd.js\" \"node -e 'setTimeout(() => {}, 1000)' && npx autocannon -T 'Plugin in dynamic mode' -c 100 -d 30 http://localhost:3002\"",
+        "toc": "markdown-toc -i README.md",
+        "prepare": "node prepare.js || echo 'Skipping prepare script'"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/immobiliare/fastify-metrics.git"
+    },
+    "homepage": "https://github.com/immobiliare/fastify-metrics",
+    "bugs": {
+        "url": "https://github.com/immobiliare/fastify-metrics/issues"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=20"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^18.4.3",
+        "@commitlint/config-conventional": "^18.4.3",
+        "@semantic-release/changelog": "^6.0.0",
+        "@semantic-release/commit-analyzer": "^11.1.0",
+        "@semantic-release/git": "^10.0.0",
+        "@semantic-release/github": "^9.0.3",
+        "@semantic-release/npm": "^11.0.2",
+        "@semantic-release/release-notes-generator": "^12.1.0",
+        "@tapjs/sinon": "^1.1.17",
+        "@types/node": "^20.4.1",
+        "@typescript-eslint/eslint-plugin": "^6.1.0",
+        "@typescript-eslint/parser": "^6.0.0",
+        "autocannon": "^7.0.0",
+        "concurrently": "^8.0.1",
+        "eslint": "^8.0.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^5.0.0-alpha.2",
+        "fastify": "^5.1.0",
+        "husky": "^8.0.0",
+        "is-ci": "^3.0.0",
+        "lint-staged": "^15.2.0",
+        "markdown-toc": "^1.2.0",
+        "nyc": "^15.1.0",
+        "prettier": "^3.0.0",
+        "tap": "^19.0.2",
+        "tsd": "^0.30.0",
+        "typescript": "^5.0.4"
+    },
+    "dependencies": {
+        "@dnlup/doc": "^5.0.3",
+        "@dnlup/hrtime-utils": "^1.0.1",
+        "@immobiliarelabs/dats": "^5.1.0",
+        "fastify-plugin": "^5.0.1"
+    },
+    "volta": {
+        "node": "20.18.1"
+    }
+}

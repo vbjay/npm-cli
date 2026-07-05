@@ -1,0 +1,75 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "abde033b6ab52a36",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "415ce9598b2c165a56142c6412f8de9c6d8b4c59072b5e7f6ada5fac84e68f98",
+        "sizeBytes": 1456,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.mjs",
+        "sha256": "5e346edfda0d227621c62e485d461ffccdcdc3ec77e6b2318f3b13119420401b",
+        "sizeBytes": 895,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:43.735Z"
+  },
+  "hash": "sha256:8cc0abec137a8497d7873b7c20930e59fc3f71dc77cbdea83e085f88c852be57"
+}

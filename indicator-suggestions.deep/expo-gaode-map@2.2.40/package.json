@@ -1,0 +1,93 @@
+{
+  "name": "expo-gaode-map",
+  "version": "2.2.40",
+  "description": "Expo Modules AMap (Gaode Map) stack for Expo/React Native: Config Plugin, New Architecture support, maps, location, search, offline maps, and react-native-amap3d migration guidance.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "android",
+    "ios",
+    "shared",
+    "scripts",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "plugin/build"
+  ],
+  "scripts": {
+    "build": "expo-module build && yarn build:plugin",
+    "build:plugin": "tsc --project plugin/tsconfig.json",
+    "clean": "expo-module clean && rm -rf plugin/build",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "test": "npx jest --no-watchman --config jest.config.js --runInBand",
+    "prepare": "expo-module prepare && yarn build:plugin",
+    "postinstall": "node scripts/check-expo-modules.js",
+    "prepublishOnly": "echo 'Skipping proofread check' && exit 0",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "publish:next": "npm publish --tag next",
+    "publish:latest": "npm publish --tag latest"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-gaode-map",
+    "ExpoGaodeMap",
+    "expo-amap",
+    "expo-map",
+    "react-native-amap",
+    "react-native-amap3d",
+    "react-native-amap3d-alternative",
+    "react-native-gaode-map",
+    "rn-amap",
+    "rn-gaode-map",
+    "expo-gaode",
+    "eas-build",
+    "fabric",
+    "gaode-map",
+    "gaode",
+    "amap",
+    "amap3d",
+    "china-map",
+    "高德地图",
+    "地图",
+    "mapview",
+    "location",
+    "offline-map",
+    "AMap"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TomWq/expo-gaode-map",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/TomWq/expo-gaode-map/issues"
+  },
+  "author": "TomWq <582752848@qq.com> (https://github.com/TomWq)",
+  "license": "MIT",
+  "homepage": "https://tomwq.github.io/expo-gaode-map/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.25.7",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.18.0",
+    "@types/react": "~19.2.10",
+    "eslint": "^9.25.1",
+    "expo": "^57.0.1",
+    "expo-module-scripts": "^56.0.3",
+    "jest": "~29.7.0",
+    "jest-expo": "~57.0.0",
+    "react-native": "0.86.0",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

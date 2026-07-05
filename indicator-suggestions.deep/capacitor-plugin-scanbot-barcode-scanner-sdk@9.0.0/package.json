@@ -1,0 +1,86 @@
+{
+  "name": "capacitor-plugin-scanbot-barcode-scanner-sdk",
+  "version": "9.0.0",
+  "description": "Scanbot Barcode Scanner SDK for Capacitor",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "Libraries.txt",
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "ios/Sources/",
+    "CapacitorPluginScanbotBarcodeScannerSdk.podspec",
+    "Package.swift"
+  ],
+  "author": "Scanbot SDK",
+  "license": "Commercial",
+  "readmeFilename": "README.md",
+  "homepage": "https://scanbot.io/developer/capacitor-barcode-scanner-sdk/",
+  "contributors": [
+    {
+      "name": "Scanbot",
+      "email": "sdk@scanbot.io",
+      "url": "https://scanbot.io"
+    }
+  ],
+  "keywords": [
+    "scanbot sdk",
+    "barcode",
+    "scanner",
+    "scanning",
+    "reader",
+    "capacitor",
+    "ionic",
+    "angular",
+    "react",
+    "vue.js",
+    "native",
+    "plugin",
+    "android",
+    "app",
+    "ios",
+    "mobile scanner",
+    "qr-code",
+    "data",
+    "matrix",
+    "pdf-417"
+  ],
+  "scripts": {
+    "lint": "npm run format && npm run eslint",
+    "eslint": "eslint src --fix --ext .ts",
+    "format": "prettier src --write ",
+    "docgen": "rimraf ./api-docs && rimraf ./dist-api-docs && cp -r ./dist/ ./dist-api-docs/ && typedoc",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
+    "clean": "rimraf ./dist && rimraf ./api-docs && rimraf ./dist-api-docs",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0",
+    "@ionic/eslint-config": "^0.4.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "rimraf": "^6.1.0",
+    "rollup": "^4.53.2",
+    "typedoc": "0.28.15",
+    "typedoc-plugin-rename-defaults": "^0.7.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=6.0.0"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  }
+}

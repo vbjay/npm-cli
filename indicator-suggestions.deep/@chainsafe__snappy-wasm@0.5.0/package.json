@@ -1,0 +1,29 @@
+{
+  "name": "@chainsafe/snappy-wasm",
+  "version": "0.5.0",
+  "description": "snappy compression/decompression for Node.js, powered by WebAssembly",
+  "type":"commonjs",
+  "exports": "./pkg/snappy.js",
+  "types": "./pkg/snappy.d.ts",
+  "files": [
+    "pkg"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "build": "RUSTFLAGS=\"-C target-feature=+simd128\" wasm-pack build --target nodejs --release",
+    "prepack": "rm -f pkg/{.gitignore,package.json,README.md,LICENSE}",
+    "test": "wasm-pack test --firefox --headless"
+  },
+  "keywords": [
+    "snappy",
+    "browser",
+    "node",
+    "webassembly",
+    "wasm",
+    "compression"
+  ],
+  "author": "Nick Frasser <nick@nfrasser.com>",
+  "license": "MIT",
+  "packageManager": "yarn@1.22.22+sha256.c17d3797fb9a9115bf375e31bfd30058cac6bc9c3b8807a3d8cb2094794b51ca"
+}

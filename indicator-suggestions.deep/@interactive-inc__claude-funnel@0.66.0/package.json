@@ -1,0 +1,141 @@
+{
+  "name": "@interactive-inc/claude-funnel",
+  "version": "0.66.0",
+  "description": "Hub CLI that routes external events (Slack / GitHub / Discord) to Claude Code agents through subscription channels over MCP.",
+  "keywords": [
+    "bun",
+    "claude",
+    "claude-code",
+    "cli",
+    "discord",
+    "github",
+    "mcp",
+    "slack"
+  ],
+  "homepage": "https://github.com/interactive-inc/open-claude-funnel#readme",
+  "bugs": {
+    "url": "https://github.com/interactive-inc/open-claude-funnel/issues"
+  },
+  "license": "MIT",
+  "author": "Interactive Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/interactive-inc/open-claude-funnel.git"
+  },
+  "bin": {
+    "fnl": "./dist/bin.js",
+    "funnel": "./dist/bin.js"
+  },
+  "files": [
+    "dist/**/*",
+    "funnel.schema.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./claude": {
+      "types": "./dist/claude.d.ts",
+      "import": "./dist/claude.js",
+      "default": "./dist/claude.js"
+    },
+    "./gateway": {
+      "types": "./dist/gateway.d.ts",
+      "import": "./dist/gateway.js",
+      "default": "./dist/gateway.js"
+    },
+    "./profiles": {
+      "types": "./dist/profiles.d.ts",
+      "import": "./dist/profiles.js",
+      "default": "./dist/profiles.js"
+    },
+    "./local-config": {
+      "types": "./dist/local-config.d.ts",
+      "import": "./dist/local-config.js",
+      "default": "./dist/local-config.js"
+    },
+    "./diagnostics": {
+      "types": "./dist/diagnostics.d.ts",
+      "import": "./dist/diagnostics.js",
+      "default": "./dist/diagnostics.js"
+    },
+    "./recovery": {
+      "types": "./dist/recovery.d.ts",
+      "import": "./dist/recovery.js",
+      "default": "./dist/recovery.js"
+    },
+    "./doctor": {
+      "types": "./dist/doctor.d.ts",
+      "import": "./dist/doctor.js",
+      "default": "./dist/doctor.js"
+    },
+    "./docs": {
+      "types": "./dist/docs.d.ts",
+      "import": "./dist/docs.js",
+      "default": "./dist/docs.js"
+    },
+    "./connectors/slack": {
+      "types": "./dist/connectors/slack.d.ts",
+      "import": "./dist/connectors/slack.js",
+      "default": "./dist/connectors/slack.js"
+    },
+    "./connectors/discord": {
+      "types": "./dist/connectors/discord.d.ts",
+      "import": "./dist/connectors/discord.js",
+      "default": "./dist/connectors/discord.js"
+    },
+    "./connectors/gh": {
+      "types": "./dist/connectors/gh.d.ts",
+      "import": "./dist/connectors/gh.js",
+      "default": "./dist/connectors/gh.js"
+    },
+    "./connectors/schedule": {
+      "types": "./dist/connectors/schedule.d.ts",
+      "import": "./dist/connectors/schedule.js",
+      "default": "./dist/connectors/schedule.js"
+    },
+    "./logger": {
+      "types": "./dist/logger.d.ts",
+      "import": "./dist/logger.js",
+      "default": "./dist/logger.js"
+    },
+    "./channel": {
+      "types": "./dist/channel.d.ts",
+      "import": "./dist/channel.js",
+      "default": "./dist/channel.js"
+    },
+    "./bin": "./dist/bin.js",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepack": "make build"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "0.8.0",
+    "@interactive-inc/flume": "^0.10.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "hono": "^4.12.19",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.14",
+    "@typescript/native-preview": "^7.0.0-dev.20260516.1",
+    "vite-plus": "^0.1.21",
+    "vitest": "^4.1.8"
+  },
+  "engines": {
+    "bun": ">=1.3.0"
+  }
+}

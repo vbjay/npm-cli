@@ -1,0 +1,120 @@
+{
+  "name": "@lexmata/micropdf",
+  "version": "0.10.0",
+  "description": "Node.js bindings for the MicroPDF library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./easy": {
+      "import": "./dist/easy.js",
+      "types": "./dist/easy.d.ts"
+    },
+    "./simple": {
+      "import": "./dist/simple.js",
+      "types": "./dist/simple.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "native",
+    "prebuilds",
+    "binding.gyp",
+    "scripts"
+  ],
+  "keywords": [
+    "pdf",
+    "micropdf",
+    "document",
+    "parser",
+    "native",
+    "rust"
+  ],
+  "author": "Lexmata",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/lexmata/micropdf.git"
+  },
+  "bugs": {
+    "url": "https://bitbucket.org/lexmata/micropdf/issues"
+  },
+  "homepage": "https://bitbucket.org/lexmata/micropdf",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "optionalDependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.3",
+    "@jazzer.js/core": "^2.1.0",
+    "@types/node": "^25.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^9.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^62.7.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-security": "^4.0.0",
+    "eslint-plugin-sonarjs": "^4.0.0",
+    "eslint-plugin-unicorn": "^63.0.0",
+    "node-gyp": "^12.2.0",
+    "prebuildify": "^6.0.1",
+    "prettier": "^3.8.1",
+    "tinybench": "^6.0.0",
+    "typedoc": "^0.28.17",
+    "typedoc-plugin-markdown": "^4.10.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "binary": {
+    "module_name": "micropdf",
+    "module_path": "./prebuilds/{platform}-{arch}",
+    "host": "https://bitbucket.org/lexmata/micropdf/downloads/",
+    "remote_path": "v{version}",
+    "package_name": "micropdf-{platform}-{arch}.tar.gz"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js || true",
+    "build": "npm run build:ts",
+    "build:native": "node-gyp rebuild",
+    "build:full": "npm run build:native && npm run build:ts",
+    "build:ts": "tsc",
+    "build:from-rust": "node scripts/build-from-rust.js && npm run build:native",
+    "prebuild": "prebuildify --napi --strip",
+    "prebuild:all": "prebuildify --napi --strip --target 20.0.0 --target 22.0.0 --target 24.0.0",
+    "docs": "typedoc",
+    "docs:serve": "cd ../docs/api/nodejs && python3 -m http.server 8080",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run test/integration",
+    "test:integration:watch": "vitest test/integration",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "quality": "npm run lint && npm run format:check && npm run build:ts && npm run test",
+    "clean": "node-gyp clean && rm -rf dist",
+    "bench": "tsx bench/run.ts",
+    "bench:buffer": "tsx -e \"import('./bench/buffer.bench.js').then(m => m.bench.run().then(() => console.table(m.bench.table())))\"",
+    "bench:geometry": "tsx -e \"import('./bench/geometry.bench.js').then(m => m.bench.run().then(() => console.table(m.bench.table())))\"",
+    "fuzz": "npm run fuzz:pdf && npm run fuzz:buffer && npm run fuzz:geometry",
+    "fuzz:pdf": "jazzer fuzz/targets/pdf-parse.fuzz.ts --sync -t 300",
+    "fuzz:buffer": "jazzer fuzz/targets/buffer.fuzz.ts --sync -t 300",
+    "fuzz:geometry": "jazzer fuzz/targets/geometry.fuzz.ts --sync -t 300",
+    "fuzz:quick": "jazzer fuzz/targets/pdf-parse.fuzz.ts --sync -t 60 && jazzer fuzz/targets/buffer.fuzz.ts --sync -t 60 && jazzer fuzz/targets/geometry.fuzz.ts --sync -t 60",
+    "fuzz:extended": "jazzer fuzz/targets/pdf-parse.fuzz.ts --sync -t 3600 && jazzer fuzz/targets/buffer.fuzz.ts --sync -t 3600 && jazzer fuzz/targets/geometry.fuzz.ts --sync -t 3600",
+    "fuzz:deep": "jazzer fuzz/targets/pdf-parse.fuzz.ts --sync -t 86400"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "@chipallen2/snazi",
+  "version": "0.6.4",
+  "description": "On-demand local gate for your messages. Reveals WHO contacted you; only reveals WHAT for approved senders. iMessage today, pluggable channels next.",
+  "license": "MIT",
+  "homepage": "https://snazi.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chipallen2/snazi.git",
+    "directory": "packages/snazi"
+  },
+  "bugs": {
+    "url": "https://github.com/chipallen2/snazi/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "commonjs",
+  "bin": {
+    "snazi": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "com.soup-nazi.snazi-serve.plist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "imessage",
+    "cli",
+    "ai-agent",
+    "prompt-injection",
+    "gate",
+    "macos"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "prepare": "npm run build",
+    "test": "npm run build && node test/address.test.cjs && node test/cache.test.cjs && node test/both-sides.test.cjs && node test/serve-names.test.cjs && node test/channels.test.cjs && node test/send.test.cjs && node test/contacts.test.cjs && node test/serve-contacts.test.cjs && node test/gmail.test.cjs && node test/outlook.test.cjs && node test/outlook-calendar.test.cjs && node test/serve-send.test.cjs && node test/filters.test.cjs && node test/serve-filters.test.cjs && node test/serve-calendar.test.cjs && node test/service.test.cjs",
+    "release:patch": "bash scripts/release.sh patch",
+    "release:minor": "bash scripts/release.sh minor",
+    "release:major": "bash scripts/release.sh major"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^11.3.0"
+  },
+  "allowScripts": {
+    "better-sqlite3": true
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.3"
+  }
+}

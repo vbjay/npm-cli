@@ -1,0 +1,59 @@
+{
+  "name": "storybook-addon-react-context",
+  "version": "1.1.2",
+  "description": "storybook addon for react context",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint ./src/*.*",
+    "lint:fix": "eslint ./src/*.* --fix",
+    "example": "start-storybook -p 6006",
+    "clean": "rimraf dist",
+    "build": "yarn clean && tsc -p .",
+    "dev": "tsc -p . -w",
+    "pretest": "tslint -p .",
+    "test": "rimraf dist && jest",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntnbrtnkv/storybook-addon-react-context.git"
+  },
+  "author": "Anton Bortnikov <6088046+ntnbrtnkv@users.noreply.github.com>",
+  "homepage": "https://github.com/ntnbrtnkv/storybook-addon-react-context#readme",
+  "license": "MIT",
+  "dependencies": {
+    "recompose": "^0.30.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "4.1.18",
+    "@types/node": "^11.10.4",
+    "@types/react": "^16.8.6",
+    "@types/recompose": "^0.30.5",
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
+    "@typescript-eslint/parser": "^1.4.2",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7.1.5",
+    "eslint": "^5.15.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.16.4",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "rimraf": "^2.6.3",
+    "typescript": "^3.3.3333"
+  },
+  "peerDependencies": {
+    "@storybook/addons": "^4.0.0",
+    "react": "^16.0.0"
+  },
+  "keywords": [
+    "storybook",
+    "addon",
+    "context",
+    "react",
+    "typescript",
+    "storybook-addon"
+  ]
+}

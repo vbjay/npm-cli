@@ -1,0 +1,166 @@
+{
+  "name": "react-native-test-app",
+  "version": "5.4.4",
+  "description": "react-native-test-app provides a test app for all supported platforms as a package",
+  "keywords": [
+    "android",
+    "app",
+    "ios",
+    "macos",
+    "react",
+    "react-native",
+    "test",
+    "test-app",
+    "testing",
+    "windows"
+  ],
+  "homepage": "https://github.com/microsoft/react-native-test-app",
+  "license": "MIT",
+  "author": {
+    "name": "Microsoft Open Source",
+    "email": "microsoftopensource@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-test-app.git",
+    "directory": "packages/app"
+  },
+  "bin": {
+    "init": "scripts/init.mjs",
+    "init-test-app": "scripts/init.mjs",
+    "configure-test-app": "scripts/configure.mjs",
+    "install-windows-test-app": "windows/app.mjs"
+  },
+  "files": [
+    "*.md",
+    "ReactTestApp-DevSupport.podspec",
+    "android/**/*.gradle",
+    "android/android-manifest.js",
+    "android/app/lint.xml",
+    "android/app/src",
+    "!android/app/src/test",
+    "android/autolink.mjs",
+    "android/gradle-wrapper.js",
+    "android/support/src",
+    "android/template.config.mjs",
+    "common",
+    "example/_gitignore",
+    "example/android/gradle",
+    "example/android/gradle.properties",
+    "example/android/gradlew*",
+    "example/windows/_gitignore",
+    "example/{metro,react-native}.config.js",
+    "ios",
+    "macos",
+    "plugins",
+    "react-native.config.js",
+    "schema.json",
+    "scripts/*.js",
+    "scripts/*.mjs",
+    "scripts/config-plugins",
+    "scripts/embed-manifest",
+    "scripts/utils",
+    "test-app.gradle",
+    "test_app.rb",
+    "visionos",
+    "windows",
+    "!.clang-format"
+  ],
+  "main": "scripts/configure-projects.js",
+  "scripts": {
+    "format:c": "clang-format -i $(git ls-files '*.cpp' '*.h' '*.m' '*.mm')",
+    "format:swift": "swiftformat $(git ls-files '*.swift')",
+    "generate:code": "node scripts/internal/generate-manifest.mts",
+    "generate:docs": "node scripts/internal/generate-manifest-docs.mts",
+    "generate:schema": "node scripts/internal/generate-schema.mts",
+    "lint:js": "oxlint -c ../../oxlint.config.ts $(git ls-files '*.[cm][jt]s' '*.[jt]s' '*.tsx' ':!:*.config.js') && tsc && tsc --project tsconfig.cjs.json",
+    "lint:kt": "ktlint --relative 'android/app/src/**/*.kt'",
+    "lint:rb": "bundle exec rubocop",
+    "lint:swift": "swiftlint",
+    "prepack": "node scripts/internal/pack.mts pre",
+    "postpack": "node scripts/internal/pack.mts post",
+    "set-react-version": "node scripts/internal/set-react-version.mts",
+    "test": "node scripts/internal/test.mts",
+    "test:js": "node --no-warnings --test $(git ls-files '*.test.mts')",
+    "test:matrix": "node scripts/testing/test-matrix.mts",
+    "test:rb": "bundle exec ruby -Ilib:test -e \"Dir.glob('./test/test_*.rb').each { |file| require(file) }\""
+  },
+  "dependencies": {
+    "@isaacs/cliui": "^9.0.0",
+    "@rnx-kit/react-native-host": "^0.5.19",
+    "@rnx-kit/tools-react-native": "^2.1.0",
+    "ajv": "^8.0.0",
+    "fast-xml-builder": "^1.2.0",
+    "fast-xml-parser": "^5.8.0",
+    "prompts": "^2.4.0",
+    "semver": "^7.5.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@expo/config-plugins": "^55.0.0",
+    "@expo/json-file": "~10.0.13",
+    "@react-native-community/cli": "^20.1.0",
+    "@react-native-community/cli-types": "^20.1.0",
+    "@react-native-community/template": "^0.85.0",
+    "@rnx-kit/tsconfig": "^3.0.1",
+    "@types/mustache": "^4.0.0",
+    "@types/node": "^24.0.0",
+    "@types/prompts": "~2.4.0",
+    "@types/react": "~19.2.0",
+    "@types/semver": "^7.3.6",
+    "memfs": "^4.0.0",
+    "oxlint": "^1.51.0",
+    "react": "19.2.3",
+    "react-native": "^0.85.0",
+    "suggestion-bot": "^4.0.0",
+    "typescript": "^7.0.1-0"
+  },
+  "peerDependencies": {
+    "@callstack/react-native-visionos": "0.76 - 0.79",
+    "@expo/config-plugins": ">=5.0",
+    "react": "18.2 - 19.2",
+    "react-native": "0.76 - 0.86 || >=0.86.0-0 <0.87.0",
+    "react-native-macos": "^0.0.0-0 || 0.76 - 0.81",
+    "react-native-windows": "^0.0.0-0 || 0.76 - 0.83"
+  },
+  "peerDependenciesMeta": {
+    "@callstack/react-native-visionos": {
+      "optional": true
+    },
+    "@expo/config-plugins": {
+      "optional": true
+    },
+    "react-native-macos": {
+      "optional": true
+    },
+    "react-native-windows": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20.19.4"
+  },
+  "defaultPlatformPackages": {
+    "android": {
+      "id": "react-native",
+      "template": "./android/template.config.mjs"
+    },
+    "ios": {
+      "id": "react-native",
+      "template": "./ios/template.config.mjs"
+    },
+    "macos": {
+      "id": "react-native-macos",
+      "template": "./macos/template.config.mjs"
+    },
+    "visionos": {
+      "id": "@callstack/react-native-visionos",
+      "template": "./visionos/template.config.mjs"
+    },
+    "windows": {
+      "id": "react-native-windows",
+      "template": "./windows/template.config.mjs"
+    }
+  }
+}

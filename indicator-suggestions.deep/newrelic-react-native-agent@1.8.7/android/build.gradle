@@ -1,0 +1,132 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import com.android.Version
+import io.invertase.gradle.common.PackageJson
+
+
+buildscript {
+
+    if (project == rootProject) {
+        repositories {
+            mavenCentral()
+            google()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:8.12.0'
+
+        }
+    }
+
+}
+
+plugins {
+  id "io.invertase.gradle.build" version "1.5"
+}
+
+
+
+def packageJson = PackageJson.getForProject(project)
+def newrelicVersion = packageJson['sdkVersions']['android']['newrelic']
+def ndkVersion = packageJson['sdkVersions']['android']['ndk']
+
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+
+project.ext {
+  set('react-native', [
+    versions: [
+
+      newrelic          : [
+        android: newrelicVersion,
+        ndk:ndkVersion
+      ],
+    ],
+  ])
+}
+
+apply plugin: 'com.android.library'
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+if (isNewArchitectureEnabled()) {
+    react {
+        jsRootDir = file("../new-relic/spec")
+        libraryName = "newrelic-react-native-agent"
+        codegenJavaPackageName = "com.NewRelic"
+    }
+}
+
+def appProject
+if (findProject(':@newrelic-react-native-agent')) {
+  appProject = project(':@newrelic-react-native-agent')
+}
+
+
+
+android {
+    def agpVersion = Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
+    if (agpVersion >= 7) {
+        namespace "com.NewRelic"
+    }
+
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 34
+        versionCode 1
+        versionName version
+        buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
+
+    }
+
+    lintOptions {
+        abortOnError true
+    }
+
+    if (agpVersion < 8) {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_11
+            targetCompatibility JavaVersion.VERSION_11
+        }
+    }
+
+    // enable for better logging on these warnings:
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+
+   sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/newarch/java']
+            } else {
+                java.srcDirs += ['src/oldarch/java']
+            }
+        }
+   }
+}
+
+repositories {
+    mavenCentral()
+    google()
+    maven { url "https://oss.sonatype.org/content/repositories/comnewrelic-2914"}
+
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    compileOnly 'com.facebook.react:react-native:+'
+    implementation "com.newrelic.agent.android:android-agent:${ReactNative.ext.getVersion("newrelic", "android")}"
+    implementation "com.newrelic.agent.android:agent-ndk:${ReactNative.ext.getVersion("newrelic", "ndk")}"
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
+}
+
+ReactNative.shared.applyPackageVersion()
+ReactNative.shared.applyDefaultExcludes()
+//ReactNative.module.applyReactNativeDependency("api")

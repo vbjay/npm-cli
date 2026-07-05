@@ -1,0 +1,84 @@
+{
+  "name": "dwf-ai-connector",
+  "version": "0.3.0",
+  "description": "DWF AI Connector - AI Agent console for DWF low-code platform",
+  "license": "MIT",
+  "author": "DWF Team",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitee.com/tsinghua-nercbds/dwf-ai-connector.git"
+  },
+  "homepage": "https://gitee.com/tsinghua-nercbds/dwf-ai-connector#readme",
+  "bugs": {
+    "url": "https://gitee.com/tsinghua-nercbds/dwf-ai-connector/issues"
+  },
+  "keywords": [
+    "dwf",
+    "ai-agent",
+    "mcp",
+    "low-code",
+    "model-context-protocol",
+    "agent",
+    "cli"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "bin": {
+    "dwf-ai-connector": "./bin/dwf-ai-connector.js",
+    "dwf-cli": "./bin/dwf-cli.js"
+  },
+  "files": [
+    "bin/",
+    "apps/web/dist/",
+    "packages/shared/package.json",
+    "packages/shared/dist/",
+    "services/agent-gateway/dist/",
+    "services/agent-runtime/dist/",
+    "services/agent-runtime/skills/builtin/",
+    "services/dwf-backend/dist/",
+    "services/dwf-backend/config/",
+    "services/dwf-cli/dist/",
+    "services/dwf-cli/config/",
+    "services/dwf-mcp-server/package.json",
+    "services/dwf-mcp-server/dist/",
+    "services/dwf-mcp-server/config/",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n backend,runtime,web,gateway -c yellow,magenta,blue,green \"npm run dev -w @dwf/dwf-backend\" \"npm run dev -w @dwf/agent-runtime\" \"npm run dev -w @dwf/web\" \"npm run dev -w @dwf/agent-gateway\"",
+    "build": "npm run build -w @dwf/shared && npm run build -w @dwf/dwf-mcp-server && npm run build -w @dwf/agent-runtime && npm run build -w @dwf/agent-gateway && npm run build -w @dwf/dwf-backend && npm run build -w @dwf/dwf-cli && npm run build -w @dwf/web",
+    "start": "npm run start -w @dwf/agent-gateway",
+    "prepack": "npm run build",
+    "postinstall": "node bin/postinstall.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.0",
+    "@mariozechner/pi-coding-agent": "^0.70.2",
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "@sinclair/typebox": "^0.34.41",
+    "commander": "^14.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.44.5",
+    "express": "^5.1.0",
+    "extract-zip": "^2.0.1",
+    "open": "^10.2.0",
+    "pino": "^9.9.0",
+    "zod": "^3.25.76"
+  },
+  "optionalDependencies": {
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

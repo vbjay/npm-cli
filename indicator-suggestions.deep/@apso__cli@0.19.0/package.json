@@ -1,0 +1,151 @@
+{
+  "name": "@apso/cli",
+  "version": "0.19.0",
+  "mcpName": "io.github.apsoai/apso",
+  "description": "Apso CLI",
+  "author": "Apso by Mavric - @mavric",
+  "bin": {
+    "apso": "bin/run"
+  },
+  "homepage": "https://github.com/apsoai/cli",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apsoai/cli.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.17",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@oclif/core": "^2",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^3",
+    "@oclif/plugin-warn-if-update-available": "^2.1.1",
+    "debug": "^4.3.4",
+    "eta": "^2.0.0",
+    "inquirer": "^8.2.7",
+    "ora": "^5.4.1",
+    "pluralize": "^8.0.0",
+    "rc": "^1.2.8",
+    "shelljs": "^0.8.5",
+    "typeorm": "^0.3.20",
+    "typeorm-pglite": "^0.3.4",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "@oclif/test": "^2.4.7",
+    "@types/chai": "^4",
+    "@types/inquirer": "^8.2.12",
+    "@types/mocha": "^10",
+    "@types/node": "^20",
+    "@types/pluralize": "^0.0.29",
+    "@types/rc": "^1.2.1",
+    "@types/shelljs": "^0.8.15",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "chai": "^4",
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^4",
+    "eslint-config-oclif-typescript": "^1.0.3",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-unicorn": "^40.1.0",
+    "mocha": "^10",
+    "oclif": "^3",
+    "prettier": "^2.8.4",
+    "shx": "^0.3.3",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.0",
+    "typedoc": "^0.28.3",
+    "typescript": "^5"
+  },
+  "oclif": {
+    "bin": "apso",
+    "dirname": "apso",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins",
+      "@oclif/plugin-warn-if-update-available"
+    ],
+    "warn-if-update-available": {
+      "timeoutInDays": 1,
+      "registry": "https://registry.npmjs.org",
+      "message": "<%= config.name %> update available: <%= chalk.dim(config.version) %> → <%= chalk.greenBright(latest) %>. Run <%= chalk.cyan('npm i -g @apso/cli') %> to update."
+    },
+    "topicSeparator": " ",
+    "topics": {
+      "server": {
+        "description": "Server commands (deprecated - use top-level commands)"
+      },
+      "schema": {
+        "description": "Manage service schema (validate, push, pull, diff)"
+      },
+      "mcp": {
+        "description": "MCP server for AI coding agents"
+      }
+    },
+    "update": {
+      "node": {
+        "version": "18.20.4",
+        "targets": [
+          "darwin-x64",
+          "darwin-arm64",
+          "linux-x64"
+        ]
+      }
+    }
+  },
+  "scripts": {
+    "post-build": "copyfiles -u 1 src/**/*.eta dist/",
+    "build": "shx rm -rf dist && tsc -b && npm run post-build",
+    "lint": "eslint . --ext .ts --config .eslintrc",
+    "format": "prettier \"{src,test}/**/*.ts\" --write",
+    "pre-build": "npm run format && npm run lint",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "pack": "oclif pack tarballs",
+    "posttest": "npm run lint",
+    "prepack": "npm run build && oclif manifest && oclif readme",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "docs:generate": "typedoc src/lib/index.ts --out docs",
+    "version": "oclif readme && git add README.md"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bugs": "https://github.com/apsoai/cli/issues",
+  "keywords": [
+    "apso",
+    "apsoai",
+    "apso-cli",
+    "cli",
+    "oclif",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "ai-coding",
+    "backend-generator",
+    "api-generator",
+    "nestjs",
+    "code-generation",
+    "schema-to-api",
+    "rest-api",
+    "scaffolding",
+    "typeorm",
+    "fastapi",
+    "golang"
+  ],
+  "types": "dist/index.d.ts"
+}

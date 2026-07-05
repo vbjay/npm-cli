@@ -1,0 +1,85 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1c3d9b6be2eed472",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/set-language.js",
+      "scripts/utils.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/set-language.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "84ad797af04e5ad6633eba88939f64963ae483d5ab35d71be30ee26a3e64949f",
+        "sizeBytes": 6519,
+        "signals": [
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/utils.js",
+        "reason": "required by ./scripts/set-language.js",
+        "sha256": "60f40b236ba4d9c3aba26d62329541a30962ffb7abfc581cd6ba84ddc6d39d7e",
+        "sizeBytes": 1745,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:34.764Z"
+  },
+  "hash": "sha256:a01a3913594a98619b2934748ccdd7d7bb633e771be6d4b1e8e51d8b91a7cf29"
+}

@@ -1,0 +1,61 @@
+{
+  "name": "react-native-airship",
+  "version": "0.3.0",
+  "private": false,
+  "description": "Flexible toolkit for building modals & alerts",
+  "keywords": [
+    "react native",
+    "modal",
+    "alert",
+    "toast"
+  ],
+  "repository": "git@github.com:EdgeApp/react-native-airship",
+  "license": "MIT",
+  "author": "William Swanson <swansontec@gmail.com>",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "/CHANGELOG.md",
+    "/lib/*",
+    "/package.json",
+    "/README.md"
+  ],
+  "scripts": {
+    "build.flow": "flow",
+    "build.lib": "tsc && cp src/index.flow.js lib/index.js.flow",
+    "clean": "rimraf lib",
+    "fix": "npm run lint -- --fix",
+    "lint": "eslint .",
+    "precommit": "lint-staged && run-p build.* && (cd AirshipDemo; tsc)",
+    "prepare": "husky install && npm-run-all clean -p build.*"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint"
+  },
+  "dependencies": {
+    "yavent": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.43",
+    "@types/react-native": "^0.67.3",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.14.0",
+    "eslint-config-standard-kit": "0.15.1",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^6.0.1",
+    "flow-bin": "^0.132.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^10.5.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.5"
+  }
+}

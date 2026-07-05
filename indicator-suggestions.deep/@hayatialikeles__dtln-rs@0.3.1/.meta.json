@@ -1,0 +1,115 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0d14b7e945b909d3",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "build.rs",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "85dc33cf980ecd825bea81b5eb0463e191188494ff3c4e76b1b40afa63d0e4ba",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "dtln-rs"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.0"
+            ]
+          },
+          {
+            "label": "Crate output type",
+            "items": [
+              "\"lib\", \"cdylib\""
+            ]
+          },
+          {
+            "label": "Native build toolchain crates (C/C++ compilation)",
+            "items": [
+              "cmake",
+              "cc",
+              "cxx-build"
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.rs",
+        "label": "Rust build script",
+        "sha256": "8a8f12f4b37a0019f6cc3fc9351e22cd3f7fa0c06bb44bc53d1e9b62fc7b40a5",
+        "parseError": null,
+        "signals": [],
+        "groups": [
+          {
+            "label": "Libraries linked",
+            "items": [
+              "static"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "aceed8b2cbe12e958dfd5342291aacfd049a48a31e9a20e87e7a0c2565c4caf1",
+        "sizeBytes": 3239,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:12.443Z"
+  },
+  "hash": "sha256:59a8c1f4f4a8748eb1a707c9c92d3b94dda7478b02f18d9864c9fa8e1fb94dd6"
+}

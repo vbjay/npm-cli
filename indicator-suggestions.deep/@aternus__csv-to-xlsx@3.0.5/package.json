@@ -1,0 +1,97 @@
+{
+  "name": "@aternus/csv-to-xlsx",
+  "version": "3.0.5",
+  "description": "Convert CSV files to XLSX (Excel 2007+ XML Format) files via Node.js CLI or API.",
+  "keywords": [
+    "convert",
+    "csv",
+    "xlsx",
+    "excel",
+    "xml",
+    "utf8",
+    "multilingual",
+    "batch",
+    "cli",
+    "api",
+    "windows",
+    "linux",
+    "macos"
+  ],
+  "type": "commonjs",
+  "main": "dist/src/convertCsvToXlsx.js",
+  "types": "dist/src/convertCsvToXlsx.d.ts",
+  "exports": {
+    ".": "./dist/src/convertCsvToXlsx.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "csv-to-xlsx": "dist/cli/csv-to-xlsx.js"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "clean": "npx rimraf ./dist ./bin",
+    "build:dist": "npx tsc --build",
+    "build:dist:watch": "npx tsc --build --watch",
+    "prebuild:bin": "npm run build:dist",
+    "build:bin": "npx pkg . --compress brotli",
+    "lint:prettier": "npx prettier --check .",
+    "lint:eslint": "npx eslint .",
+    "test:api": "npx jest",
+    "test:cli": "npx csv-to-xlsx --help",
+    "test:bin": "node ./platform.tester.js",
+    "prestart:cli": "npm run build:dist",
+    "start:cli": "npx csv-to-xlsx",
+    "start": "npm run start:cli"
+  },
+  "author": {
+    "name": "Kiril Reznik"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Aternus/csv-to-xlsx",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aternus/csv-to-xlsx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aternus/csv-to-xlsx/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@ianvs/prettier-plugin-sort-imports": "4.7.0",
+    "@jest/globals": "30.2.0",
+    "@openai/codex": "^0.47.0",
+    "@tsconfig/node22": "^22.0.2",
+    "@types/node": "^22.17.2",
+    "@yao-pkg/pkg": "6.9.0",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest": "^29.0.1",
+    "globals": "^16.3.0",
+    "husky": "^9.0.11",
+    "jest": "30.2.0",
+    "prettier": "3.6.2",
+    "ts-jest": "29.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.1"
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "csv-parse": "^6.1.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "pkg": {
+    "outputPath": "bin",
+    "targets": [
+      "node22-linux-x64",
+      "node22-macos-x64",
+      "node22-win-x64"
+    ]
+  }
+}

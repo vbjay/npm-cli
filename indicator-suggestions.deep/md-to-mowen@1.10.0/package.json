@@ -1,0 +1,80 @@
+{
+  "name": "md-to-mowen",
+  "version": "1.10.0",
+  "type": "module",
+  "description": "将 Markdown（GFM）转换为墨问笔记的 CLI 工具",
+  "main": "./dist/publish/index.js",
+  "types": "./dist/publish/index.d.ts",
+  "bin": {
+    "md-to-mowen": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    ".claude-plugin",
+    "skills"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/cli/index.js",
+    "dev": "tsc --watch",
+    "lint": "eslint src tests --ext .ts",
+    "lint:fix": "eslint src tests --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "release": "semantic-release",
+    "prepare": "husky",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/momolibrary/md-to-mowen.git"
+  },
+  "keywords": [
+    "markdown",
+    "mowen",
+    "墨问",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/momolibrary/md-to-mowen/issues"
+  },
+  "homepage": "https://github.com/momolibrary/md-to-mowen#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@fontsource/noto-sans-sc": "^5.2.9",
+    "@resvg/resvg-js": "^2.6.2",
+    "commander": "^12.0.0",
+    "dotenv": "^16.0.0",
+    "hast-util-to-string": "^3.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.0.0",
+    "satori": "^0.26.0",
+    "unified": "^11.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.6",
+    "@semantic-release/npm": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^14.1.0",
+    "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "eslint": "^9.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.0.0",
+    "semantic-release": "^24.0.0",
+    "typescript": "^5.3.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^1.0.0"
+  }
+}

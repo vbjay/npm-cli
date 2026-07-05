@@ -1,0 +1,62 @@
+{
+  "name": "lapjv-js",
+  "version": "1.0.6",
+  "license": "ISC",
+  "author": "Usama Imdad Sian",
+  "description": "A JS/TS implementation of LAPJV algorithm (ported from Python's LAP).",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "scripts": {
+    "build:wasm": "node build.wasm.js",
+    "build": "rollup -c",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@rollup/plugin-wasm": "^6.2.2",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.5",
+    "rollup": "^4.45.1",
+    "rollup-plugin-dts": "^6.2.1",
+    "terser": "^5.43.1",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [
+    "lapjv",
+    "LAP",
+    "assignment-problem",
+    "hungarian-algorithm",
+    "wasm",
+    "javascript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usamaimdadsian/lapjv-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/usamaimdadsian/lapjv-js/issues"
+  },
+  "homepage": "https://github.com/usamaimdadsian/lapjv-js#readme",
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "files": [
+    "dist/index.d.ts",
+    "dist/esm/index.js",
+    "dist/esm/wasm/lapjv.js",
+    "dist/esm/wasm/lapjv.wasm",
+    "dist/cjs/index.js",
+    "dist/cjs/wasm/lapjv.cjs.js",
+    "dist/cjs/wasm/lapjv.cjs.wasm"
+  ]
+}

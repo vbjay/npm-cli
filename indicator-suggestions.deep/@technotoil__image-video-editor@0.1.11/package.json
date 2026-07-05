@@ -1,0 +1,107 @@
+{
+  "name": "@technotoil/image-video-editor",
+  "version": "0.1.11",
+  "description": "A high-performance React Native image and video editor featuring video trimming, filters, photo overlay frames, and camera/gallery integration.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @technotoil/image-video-editor-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build && tsc --project tsconfig.build.json",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "build": "bob build && tsc --project tsconfig.build.json"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "video-editor",
+    "image-editor",
+    "trim",
+    "filters"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/worktechnotoil/image-video-editor.git"
+  },
+  "author": "worktechnotoil <work.technotoil@gmail.com> (https://github.com/worktechnotoil)",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@react-native/babel-preset": "0.84.0",
+    "@types/react": "^19.2.0",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "react-native-builder-bob": "^0.39.1",
+    "react-native-image-crop-picker": "^0.51.1",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-video": "6.19.1",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0",
+    "react-native-image-crop-picker": "^0.51.1",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-video": ">=6.0.0"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "react-native-fs": "^2.20.0"
+  }
+}

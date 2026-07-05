@@ -1,0 +1,78 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "29439f885e811477",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "57d0ac8674a203197be1ccd3158aaa28869ee276da7af0a4a67fcd08b979348a",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `gtk-utils`  -  C/C++ sources",
+            "items": [
+              "addon.cpp",
+              "dummy.cpp"
+            ]
+          },
+          {
+            "label": "Target `gtk-utils`  -  libraries",
+            "items": [
+              "<!@(pkg-config --libs gio-2.0)"
+            ]
+          },
+          {
+            "label": "Target `gtk-utils`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `gtk-utils`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:56.570Z"
+  },
+  "hash": "sha256:57a2dc466740ffa7c7fed959bb7f5b26594a87ac7c58dd79e6cd5105e37afc3a"
+}

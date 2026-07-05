@@ -1,0 +1,107 @@
+{
+  "name": "@followthecode/cli",
+  "version": "3.1.5",
+  "description": "CLI tool for Git repository analysis and data collection",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "ftc": "bin/ftc.js",
+    "ftc-linux": "bin/ftc"
+  },
+  "scripts": {
+    "build": "npm run sync-version && npm run build:all && npm run setup",
+    "build:all": "npm run build:win && npm run build:mac && npm run build:linux",
+    "build:win": "dotnet publish ftc.collect.cli.csproj -c Release -r win-x64 -o ./bin/win-x64",
+    "build:mac": "dotnet publish ftc.collect.cli.csproj -c Release -r osx-x64 -o ./bin/osx-x64",
+    "build:linux": "dotnet publish ftc.collect.cli.csproj -c Release -r linux-x64 -o ./bin/linux-x64",
+    "setup": "npm run copy-config && npm run copy-wrapper && npm run set-permissions",
+    "sync-version": "node scripts/sync-version.js",
+    "copy-config": "node scripts/copy-config.js",
+    "set-permissions": "node scripts/set-permissions.js",
+    "copy-wrapper": "node scripts/copy-wrapper",
+    "postinstall": "node scripts/post-install.js",
+    "test": "dotnet test",
+    "test:install": "npm run test:install:win",
+    "test:install:win": "powershell -ExecutionPolicy Bypass -File scripts/test-simple.ps1",
+    "test:install:linux": "bash scripts/test-installation.sh",
+    "test:install:wsl": "wsl bash scripts/test-installation.sh",
+    "clean": "dotnet clean",
+    "publish": "node scripts/publish.js",
+    "publish:patch": "node scripts/publish.js --patch",
+    "publish:minor": "node scripts/publish.js --minor",
+    "publish:major": "node scripts/publish.js --major",
+    "promote": "node scripts/promote.js"
+  },
+  "keywords": [
+    "git",
+    "analysis",
+    "repository",
+    "cli",
+    "follow-the-code",
+    "metrics",
+    "csv",
+    "json",
+    "s3"
+  ],
+  "author": "Follow The Code Team",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/follow-the-code.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/follow-the-code/issues"
+  },
+  "homepage": "https://github.com/your-org/follow-the-code#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin/ftc.js",
+    "bin/ftc",
+    "bin/win-x64/ftc.collect.cli.exe",
+    "bin/win-x64/appsettings.json",
+    "bin/win-x64/git2-3f4182d.dll",
+    "bin/osx-x64/ftc.collect.cli",
+    "bin/osx-x64/appsettings.json",
+    "bin/osx-x64/libgit2-3f4182d.dylib",
+    "bin/linux-x64/ftc.collect.cli",
+    "bin/linux-x64/appsettings.json",
+    "bin/linux-x64/libgit2-3f4182d.so",
+    "appsettings.json",
+    "scripts/sync-version.js",
+    "scripts/copy-config.js",
+    "scripts/set-permissions.js",
+    "scripts/install-wrapper.js",
+    "scripts/post-install.js",
+    "scripts/README.md",
+    "README.md",
+    "LICENSE",
+    "TESTING_INSTALLATION.md"
+  ],
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  },
+  "overrides": {
+    "node-domexception": {
+      "node-domexception": "npm:undici@^5.0.0"
+    }
+  },
+  "resolutions": {
+    "node-domexception": "npm:undici@^5.0.0"
+  }
+}

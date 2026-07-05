@@ -1,0 +1,98 @@
+{
+  "name": "@hasna/testers",
+  "version": "0.0.89",
+  "description": "AI-powered QA testing CLI — spawns cheap AI agents to test web apps with headless browsers",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "testers": "dist/cli/index.js",
+    "testers-mcp": "dist/mcp/index.js",
+    "testers-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/sdk/client.d.ts",
+      "import": "./dist/sdk/client.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "dashboard/dist/",
+    "skills/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun run build:dashboard && bun run build:cli && bun run build:mcp && bun run build:server && bun run build:lib && bun run build:sdk && bun run build:types",
+    "build:sdk": "bun build src/sdk/client.ts --outdir dist/sdk --target bun",
+    "generate:sdk": "bun run scripts/generate-sdk.ts",
+    "generate:migrations": "bun run scripts/gen-migrations.ts",
+    "build:cli": "bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk --external @anthropic-ai/sdk --external playwright --external @hasna/browser --external @hasna/projects --external @hasna/sandboxes --external @e2b/code-interpreter",
+    "build:mcp": "bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk --external @anthropic-ai/sdk --external playwright --external @hasna/browser --external @hasna/projects --external @hasna/sandboxes --external @e2b/code-interpreter",
+    "build:server": "bun build src/server/index.ts --outdir dist/server --target bun --external @anthropic-ai/sdk --external playwright --external @hasna/browser --external @hasna/projects --external @hasna/sandboxes --external @e2b/code-interpreter",
+    "build:lib": "bun build src/index.ts --outdir dist --target bun --external playwright --external @anthropic-ai/sdk --external @modelcontextprotocol/sdk --external @hasna/browser --external @hasna/projects --external @hasna/sandboxes --external @e2b/code-interpreter",
+    "build:types": "NODE_OPTIONS='--max-old-space-size=8192' tsc --emitDeclarationOnly --outDir dist --skipLibCheck || true",
+    "build:dashboard": "cd dashboard && bun run build",
+    "build:ext": "cd extension && bun run build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "prepublishOnly": "bun run build",
+    "postinstall": "mkdir -p $HOME/.hasna/testers/screenshots $HOME/.hasna/testers/browser/profiles 2>/dev/null || true"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
+    "@e2b/code-interpreter": "^1.5.1",
+    "@hasna/browser": "^0.5.2",
+    "@hasna/contracts": "^0.4.1",
+    "@hasna/events": "^0.1.13",
+    "@hasna/projects": "^0.1.67",
+    "@hasna/sandboxes": "^0.1.40",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "ai": "^6.0.175",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "pg": "8.21.0",
+    "playwright": "1.60.0",
+    "react": "^18.3.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/chrome": "^0.0.268",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^18.3.18",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/testers.git"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "testing",
+    "qa",
+    "ai",
+    "playwright",
+    "browser",
+    "screenshot",
+    "automation",
+    "cli",
+    "mcp"
+  ]
+}

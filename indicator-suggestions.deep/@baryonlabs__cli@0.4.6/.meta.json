@@ -1,0 +1,263 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ba624dc0d3ed0547",
+    "fetchedFiles": [
+      "bin/baryon.js",
+      "package.json",
+      "src/api.js",
+      "src/commands.js",
+      "src/config.js",
+      "src/constants.js",
+      "src/i18n.js",
+      "src/pi.js",
+      "src/ui.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "vars",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/baryon.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6f42d5f32cb70bfe4cefc627354485f3305d163bd03beb746c1cf9ce04e1ec83",
+        "sizeBytes": 5248,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "src/commands.js",
+          "src/config.js",
+          "src/constants.js",
+          "src/pi.js",
+          "src/api.js",
+          "src/ui.js",
+          "src/i18n.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./bin/baryon.js",
+        "sha256": "c21a21d12ae9c2e28484125acc33c93a35415817843aa1c4e8cebaa1f82ec762",
+        "sizeBytes": 1275,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/commands.js",
+        "reason": "required by ./bin/baryon.js",
+        "sha256": "45999ccfb785e9d80e63759c9594df69fc96019b64ed139a5366be7647227005",
+        "sizeBytes": 21058,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/api.js",
+          "src/config.js",
+          "src/constants.js",
+          "src/pi.js",
+          "src/ui.js",
+          "src/i18n.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/api.js",
+        "reason": "required by ./src/commands.js; required by ./bin/baryon.js",
+        "sha256": "b2b76374017b1ab25e89b92389bae26e3bcb5381fb12c5c550463acc37c42300",
+        "sizeBytes": 4051,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/constants.js"
+        ],
+        "urls": [
+          {
+            "url": "https://registry.npmjs.org/@baryonlabs/cli/latest",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "src/constants.js",
+        "reason": "required by ./src/api.js; required by ./src/config.js; required by ./src/commands.js; required by ./src/pi.js; required by ./src/i18n.js; required by ./bin/baryon.js",
+        "sha256": "b61879e47338abca13784828ce2ca9a9a0188ab21790e1d391174ae28d38d84e",
+        "sizeBytes": 9835,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://api.baryon.ai/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://github.com/jyaunches/pi-canvas",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/nicobailon/pi-interactive-shell",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/baryonlabs/pi-agent-harness",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/baryonlabs/pi-terminal-math",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/georgebashi/pi-web-fetch",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/buddingnewinsights/pi-search",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/nicobailon/pi-subagents",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/nicobailon/pi-web-access",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/philipp-spiess/pi-parallel-web-search",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/anthropics/skills",
+            "classification": "reference"
+          },
+          {
+            "url": "https://cli.baryon.ai",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://vibecamp.us/dashboard",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "src/config.js",
+        "reason": "required by ./src/commands.js; required by ./src/pi.js; required by ./bin/baryon.js",
+        "sha256": "b19c557203d13f967b3c8c43f52e21cfb64f2945bcbf744d4eee1a546ede1fbc",
+        "sizeBytes": 6540,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/constants.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/pi.js",
+        "reason": "required by ./src/commands.js; required by ./bin/baryon.js",
+        "sha256": "c04e878f46de0f9d95fdd7ce01592305d186f534af8e43498419c76b5e5d30bb",
+        "sizeBytes": 4066,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/constants.js",
+          "src/config.js",
+          "src/i18n.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/i18n.js",
+        "reason": "required by ./src/pi.js; required by ./src/i18n.js; required by ./src/commands.js; required by ./bin/baryon.js",
+        "sha256": "1290307585b72002e1e88de9d4a98b360e8bae7deb67e30c372be7f6536795b8",
+        "sizeBytes": 23455,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/i18n.js",
+          "src/constants.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/ui.js",
+        "reason": "required by ./src/commands.js; required by ./bin/baryon.js",
+        "sha256": "7af937ecb61725dc6f51641c6df92c05d45b99790c235cf02e886e5a07aacba6",
+        "sizeBytes": 2752,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:44.800Z"
+  },
+  "hash": "sha256:80b062a0aa41556d5bbff28134efde9470444c3dccb85b48114928c2f88292ba"
+}

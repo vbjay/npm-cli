@@ -1,0 +1,52 @@
+{
+  "name": "univer-cli",
+  "version": "0.3.1",
+  "description": "Command-line tools for local Univer workbook automation.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dream-num/univer.git"
+  },
+  "homepage": "https://github.com/dream-num/univer#readme",
+  "bugs": {
+    "url": "https://github.com/dream-num/univer/issues"
+  },
+  "keywords": [
+    "automation",
+    "cli",
+    "spreadsheet",
+    "univer",
+    "univer-cli",
+    "workbook",
+    "xlsx"
+  ],
+  "type": "module",
+  "bin": {
+    "univer": "./bin/univer.js"
+  },
+  "scripts": {
+    "postinstall": "node ./internal/product-telemetry.js postinstall"
+  },
+  "files": [
+    "bin",
+    "internal",
+    "chunks",
+    "api-index.json",
+    "lookup-knowledge",
+    "sac-help",
+    "sac-types",
+    "view",
+    "README.md"
+  ],
+  "dependencies": {
+    "@puppeteer/browsers": "^3.0.6",
+    "@univerjs-pro/doc-typst-native-binding": "1.0.0-insiders.20260710-effe993",
+    "@univerjs-pro/engine-formula-rust-binding": "1.0.0-insiders.20260703-c9ab378",
+    "@univerjs-pro/uexcli": "0.2.0-alpha.3",
+    "libsql": "^0.5.29",
+    "puppeteer-core": "^25.3.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

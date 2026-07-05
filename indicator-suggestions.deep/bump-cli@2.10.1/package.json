@@ -1,0 +1,108 @@
+{
+  "name": "bump-cli",
+  "description": "The Bump CLI is used to interact with your API documentation hosted on Bump.sh by using the APIs of developers.bump.sh",
+  "version": "2.10.1",
+  "author": "Paul Bonaud <paulr@bump.sh>",
+  "bin": {
+    "bump": "./bin/run.js"
+  },
+  "bugs": "https://github.com/bump-sh/cli/issues",
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^5",
+    "@types/debug": "^4.1.12",
+    "@types/jsonpath": "^0.2.4",
+    "@types/mocha": "^10",
+    "@types/node": "^25",
+    "@types/sinon": "^21.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
+    "chai": "^6.2.2",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "mocha": "^11",
+    "mock-stdin": "^1.0.0",
+    "nock": "^14.0.0-beta.16",
+    "np": "^11.0.2",
+    "nyc": "^17.1.0",
+    "oclif": "^4",
+    "shx": "^0.4.0",
+    "sinon": "^21.0.1",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://bump.sh",
+  "keywords": [
+    "api",
+    "documentation",
+    "openapi",
+    "asyncapi",
+    "bump",
+    "cli"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "bump",
+    "dirname": "bump",
+    "commands": {
+      "strategy": "explicit",
+      "target": "./dist/index.js",
+      "identifier": "COMMANDS"
+    },
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-warn-if-update-available"
+    ],
+    "warn-if-update-available": {
+      "timeoutInDays": 30,
+      "message": "<%= config.name %> update available from <%= chalk.greenBright(config.version) %> to <%= chalk.greenBright(latest) %>. Please upgrade with <%= chalk.underline.dim(`npm update ${config.name}`) %>."
+    }
+  },
+  "repository": "bump-sh/cli",
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "clean": "rm -rf dist/ oclif.manifest.json",
+    "lint": "eslint . --ext .ts",
+    "fmt": "eslint --fix . --ext .ts",
+    "pack": "oclif pack tarballs",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "npm run clean && npm run build && oclif manifest && oclif readme",
+    "pretest": "npm run clean && npm run build",
+    "release": "np --no-release-draft",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "test-coverage": "nyc npm run test",
+    "test-integration": "node ./test/integration.cjs",
+    "version": "oclif readme && git add README.md"
+  },
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^11.7.2",
+    "@asyncapi/specs": "^6.8.0",
+    "@clack/prompts": "^1.0.0",
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-warn-if-update-available": "^3.1.20",
+    "@stoplight/yaml": "^4.3.0",
+    "async-mutex": "^0.5.0",
+    "axios": "^1.7.7",
+    "chalk": "^5.3.0",
+    "debug": "^4.3.7",
+    "jsonpathly": "^3.0.0",
+    "mergician": "^2.0.2",
+    "open": "^11.0.0"
+  }
+}

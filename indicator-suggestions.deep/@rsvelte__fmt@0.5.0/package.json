@@ -1,0 +1,54 @@
+{
+  "name": "@rsvelte/fmt",
+  "version": "0.5.0",
+  "description": "Rust-powered Svelte + JS/TS/CSS formatter CLI — formats .svelte in-process and dispatches everything else to oxfmt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baseballyama/rsvelte.git",
+    "directory": "apps/npm/fmt"
+  },
+  "homepage": "https://github.com/baseballyama/rsvelte/tree/main/apps/npm/fmt#readme",
+  "bugs": {
+    "url": "https://github.com/baseballyama/rsvelte/issues"
+  },
+  "keywords": [
+    "svelte",
+    "formatter",
+    "format",
+    "prettier",
+    "oxfmt",
+    "cli",
+    "rust"
+  ],
+  "bin": {
+    "rsvelte-fmt": "bin/rsvelte-fmt"
+  },
+  "files": [
+    "bin/rsvelte-fmt",
+    "install.js",
+    "lib/resolve.cjs",
+    "daemon/daemon.mjs"
+  ],
+  "optionalDependencies": {
+    "@rsvelte/fmt-darwin-arm64": "^0.5.0",
+    "@rsvelte/fmt-darwin-x64": "^0.5.0",
+    "@rsvelte/fmt-linux-arm64-gnu": "^0.5.0",
+    "@rsvelte/fmt-linux-x64-gnu": "^0.5.0",
+    "@rsvelte/fmt-win32-x64-msvc": "^0.5.0"
+  },
+  "peerDependencies": {
+    "oxfmt": "*"
+  },
+  "peerDependenciesMeta": {
+    "oxfmt": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  }
+}

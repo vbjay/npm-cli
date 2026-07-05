@@ -1,0 +1,83 @@
+{
+  "name": "json-placeholder-replacer",
+  "version": "2.1.2",
+  "description": "Javascript/Typescript library/cli to replace placeholders in an javascript object",
+  "main": "dist/library.js",
+  "types": "dist/library.d.ts",
+  "scripts": {
+    "test": "node_modules/.bin/jest",
+    "test:performance": "node_modules/.bin/jest src/performance.test.ts",
+    "codeCoverage": "node_modules/.bin/jest --silent --coverage",
+    "lint": "npx prettier . --write",
+    "build": "tsc --project tsconfig.build.json",
+    "all": "npm run lint && npm run build && npm run codeCoverage && npm run test && npm run test:performance",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/virgs/jsonPlaceholderReplacer.git"
+  },
+  "keywords": [
+    "json",
+    "replacer",
+    "substitution",
+    "placeholder",
+    "cli",
+    "library",
+    "typescript",
+    "javascript",
+    "javascript-library"
+  ],
+  "author": "Virgs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/virgs/jsonPlaceholderReplacer/issues"
+  },
+  "lint-staged": {
+    "*": "npm run lint"
+  },
+  "homepage": "https://github.com/virgs/jsonPlaceholderReplacer#readme",
+  "bin": {
+    "json-placeholder-replacer": "dist/index.js",
+    "jpr": "dist/index.js"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "src/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 90,
+        "branches": 90,
+        "functions": 90,
+        "lines": 90
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": ".*\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.4",
+    "@types/lodash": "^4.17.17",
+    "@types/node": "^24.0.1",
+    "husky": "^9.0.10",
+    "jest": "^29.6.4",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

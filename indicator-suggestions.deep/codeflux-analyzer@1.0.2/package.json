@@ -1,0 +1,52 @@
+{
+  "name": "codeflux-analyzer",
+  "version": "1.0.2",
+  "description": "A CLI and library tool to scan JavaScript/TypeScript projects and detect unused files or components.",
+  "main": "dist/index.js",
+  "bin": {
+    "codeflux": "./dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run build",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "cli",
+    "code-analysis",
+    "dependency-graph",
+    "unused-files",
+    "typescript",
+    "javascript",
+    "project-analyzer",
+    "react"
+  ],
+  "author": "Varad Samudre",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/varad-cli/codeFlux"
+  },
+  "bugs": {
+    "url": "https://github.com/varad-cli/codeFlux/issues"
+  },
+  "homepage": "https://github.com/varad-cli/codeFlux",
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
+    "@babel/types": "^7.28.5",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.1",
+    "fast-glob": "^3.3.3",
+    "ora": "^9.0.0"
+  }
+}

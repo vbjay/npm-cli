@@ -1,0 +1,74 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "78f50904237d20b4",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "2f76edffee245854630147b85fa48bb5cb3f047c7112252e0ef50e41f27ca6f0",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `AbletonLinkAddon`  -  C/C++ sources",
+            "items": [
+              "./src/myLink.cpp",
+              "./src/index.cpp"
+            ]
+          },
+          {
+            "label": "Target `AbletonLinkAddon`  -  include directories",
+            "items": [
+              "./link/include",
+              "./link/modules/asio-standalone/asio/include",
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `AbletonLinkAddon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:16.561Z"
+  },
+  "hash": "sha256:bb791aaa90a8df6847c5551d9456829b2d47f8fc67cb0a6bf3b33626e3774540"
+}

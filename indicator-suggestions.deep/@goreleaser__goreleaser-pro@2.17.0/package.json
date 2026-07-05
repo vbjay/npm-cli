@@ -1,0 +1,112 @@
+{
+  "name": "@goreleaser/goreleaser-pro",
+  "type": "module",
+  "version": "2.17.0",
+  "description": "Release engineering, simplified.",
+  "scripts": {
+    "postinstall": "node install.js",
+    "run": "node run-goreleaser.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goreleaser/goreleaser-pro.git"
+  },
+  "keywords": [
+    "release",
+    "golang",
+    "go",
+    "rust",
+    "zig",
+    "bun",
+    "deno",
+    "docker"
+  ],
+  "author": "Carlos Alexandro Becker \u003ccarlos@becker.software\u003e",
+  "license": "Copyright Becker Software LTDA",
+  "bugs": {
+    "url": "https://github.com/goreleaser/goreleaser/issues"
+  },
+  "homepage": "https://goreleaser.com",
+  "bin": {
+    "goreleaser": "run-goreleaser.js"
+  },
+  "dependencies": {
+    "jszip": "3.10.1",
+    "proxy-agent": "8.0.2",
+    "tar": "7.5.19"
+  },
+  "archives": {
+    "darwin-arm64": {
+      "name": "goreleaser-pro_Darwin_arm64.tar.gz",
+      "url": "https://github.com/goreleaser/goreleaser-pro/releases/download/v2.17.0/goreleaser-pro_Darwin_arm64.tar.gz",
+      "bins": [
+        "goreleaser"
+      ],
+      "format": "tar.gz",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "9edd62121f5985060434ce3e487798a90f763540375feb87aafc53c6a6b58fa9"
+      }
+    },
+    "darwin-x64": {
+      "name": "goreleaser-pro_Darwin_x86_64.tar.gz",
+      "url": "https://github.com/goreleaser/goreleaser-pro/releases/download/v2.17.0/goreleaser-pro_Darwin_x86_64.tar.gz",
+      "bins": [
+        "goreleaser"
+      ],
+      "format": "tar.gz",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "030c5dadacafcc25629cf16060c715cf66f848c4158af5123bb67402e90534b4"
+      }
+    },
+    "linux-arm64": {
+      "name": "goreleaser-pro_Linux_arm64.tar.gz",
+      "url": "https://github.com/goreleaser/goreleaser-pro/releases/download/v2.17.0/goreleaser-pro_Linux_arm64.tar.gz",
+      "bins": [
+        "goreleaser"
+      ],
+      "format": "tar.gz",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "fbe0db8c12d2ff2e76b4361b20f3e06e1220f9dfb2684f760655fb2ce2ca21b4"
+      }
+    },
+    "linux-x64": {
+      "name": "goreleaser-pro_Linux_x86_64.tar.gz",
+      "url": "https://github.com/goreleaser/goreleaser-pro/releases/download/v2.17.0/goreleaser-pro_Linux_x86_64.tar.gz",
+      "bins": [
+        "goreleaser"
+      ],
+      "format": "tar.gz",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "32423890034ca3dd20f6a38d75c1b22726d7167bd6198cc1e32e0e5520fca566"
+      }
+    },
+    "win32-arm64": {
+      "name": "goreleaser-pro_Windows_arm64.zip",
+      "url": "https://github.com/goreleaser/goreleaser-pro/releases/download/v2.17.0/goreleaser-pro_Windows_arm64.zip",
+      "bins": [
+        "goreleaser.exe"
+      ],
+      "format": "zip",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "2744de4dc62b21a37f2efb84f6e7856643f72f85991e09a46f33a8ce741ab9ed"
+      }
+    },
+    "win32-x64": {
+      "name": "goreleaser-pro_Windows_x86_64.zip",
+      "url": "https://github.com/goreleaser/goreleaser-pro/releases/download/v2.17.0/goreleaser-pro_Windows_x86_64.zip",
+      "bins": [
+        "goreleaser.exe"
+      ],
+      "format": "zip",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "e65fa87fdfe1b6b4185049b891383ea73dd081dd36a4c84073a7c40a7bebc741"
+      }
+    }
+  }
+}

@@ -1,0 +1,204 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// Prebuilt versions (sherpa-onnx, FFmpeg, libarchive) from prebuilt-versions.gradle.
+// Resolution: env --> ANDROID_RELEASE_TAG files --> project property --> default.
+apply from: file("${project.projectDir}/prebuilt-versions.gradle")
+
+// Used by dependencies below and by prebuilt-download.gradle (extractSherpaOnnxClasses, downloadNativeLibsIfNeeded).
+def sherpaOnnxClassesDir = file("${buildDir}/sherpa-onnx-classes")
+
+buildscript {
+  ext.SherpaOnnx = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return SherpaOnnx[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://plugins.gradle.org/m2/' }
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+    // Node Gradle plugin for running node/npx reliably from Gradle
+    classpath "com.github.node-gradle:gradle-node-plugin:7.1.0"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.sherpaonnx"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  // Native .so and headers: prebuilt-download.gradle (local jniLibs, Maven AAR, or GitHub release); npm package may ship jniLibs.
+
+  // When true, FFmpeg is not linked; convertAudioToWav16k/convertAudioToFormat/decode (non-WAV) will fail at runtime. See docs/disable-ffmpeg.md.
+  def sherpaOnnxDisableFfmpeg = (project.findProperty("sherpaOnnxDisableFfmpeg") ?: "false").toString().toLowerCase() in ["true", "1"]
+  // When true, libarchive is not linked; extractTarBz2/cancelExtractTarBz2 will fail at runtime. See docs/disable-libarchive.md.
+  def sherpaOnnxDisableLibarchive = (project.findProperty("sherpaOnnxDisableLibarchive") ?: "false").toString().toLowerCase() in ["true", "1"]
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+
+    // ProGuard rules to preserve classes/methods called from JNI
+    consumerProguardFiles 'proguard-rules.pro'
+
+    // NDK configuration
+    ndkVersion getExtOrDefault("ndkVersion")
+    externalNativeBuild {
+      cmake {
+        cppFlags "-std=c++17", "-Wall", "-Wextra", "-fvisibility=hidden"
+        def cmakeArgList = ["-DANDROID_STL=c++_shared"]
+        if (sherpaOnnxDisableFfmpeg) cmakeArgList.add("-DSHERPA_ONNX_DISABLE_FFMPEG=ON")
+        if (sherpaOnnxDisableLibarchive) cmakeArgList.add("-DSHERPA_ONNX_DISABLE_LIBARCHIVE=ON")
+        arguments(*cmakeArgList)
+      }
+    }
+
+    // Supported ABIs
+    ndk {
+      abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
+    }
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  // CMake configuration
+  externalNativeBuild {
+    cmake {
+      path "src/main/cpp/CMakeLists.txt"
+      version "3.22.1"
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  // When FFmpeg is disabled, exclude FFmpeg .so from our output to avoid merge conflicts with other libs (e.g. react-native-audio-api).
+  if (sherpaOnnxDisableFfmpeg) {
+    packaging {
+      jniLibs {
+        excludes += [
+          "**/libavcodec.so", "**/libavformat.so", "**/libavutil.so",
+          "**/libavfilter.so", "**/libswresample.so", "**/libshine.so", "**/libopus.so"
+        ]
+      }
+    }
+  }
+
+  // When libarchive is disabled, exclude libarchive.so from our output to avoid merge conflicts.
+  if (sherpaOnnxDisableLibarchive) {
+    packaging {
+      jniLibs {
+        excludes += ["**/libarchive.so"]
+      }
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+}
+
+// Resolve com.xdcobra.sherpa only from this repo (never from JitPack or other app repos).
+repositories {
+  exclusiveContent {
+    forRepository { maven { url "https://xdcobra.github.io/maven" } }
+    filter {
+      includeGroup "com.xdcobra.sherpa"
+    }
+  }
+  mavenCentral()
+  google()
+}
+
+// Configurations used by prebuilt-download.gradle: downloadNativeLibsIfNeeded (AAR --> jniLibs + headers),
+// extractSherpaOnnxClasses (sherpa-onnx classes.jar), extractOnnxruntimeClasses (onnxruntime classes.jar).
+configurations { sherpaOnnxAar; ffmpegAar; libarchiveAar; onnxruntimeAar }
+
+// Registers downloadNativeLibsIfNeeded, checkJniLibs, extractSherpaOnnxClasses, extractOnnxruntimeClasses; wires preBuild.dependsOn checkJniLibs.
+apply from: file("${project.projectDir}/prebuilt-download.gradle")
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  // React Native dependency: explicit version for IDE (VS Code Kotlin LSP). When consumed by a React Native app,
+  // Gradle's dependency resolution picks the app's react-android version (typically higher).
+  implementation "com.facebook.react:react-android:0.83.0"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Versions from prebuilt-versions.gradle; AARs used by prebuilt-download.gradle tasks.
+  sherpaOnnxAar "com.xdcobra.sherpa:sherpa-onnx:${sherpaOnnxVersion}@aar"
+  ffmpegAar "com.xdcobra.sherpa:ffmpeg:${ffmpegVersion}@aar"
+  libarchiveAar "com.xdcobra.sherpa:libarchive:${libarchiveVersion}@aar"
+  onnxruntimeAar "com.xdcobra.sherpa:onnxruntime:${ortVersion}@aar"
+
+  // sherpa-onnx Java API: extractSherpaOnnxClasses (in prebuilt-download.gradle) fills sherpaOnnxClassesDir.
+  // Source: local third_party | Maven AAR | GitHub release. Native .so from same prebuilt pipeline.
+  implementation fileTree(dir: sherpaOnnxClassesDir, include: '*.jar').builtBy(tasks.named('extractSherpaOnnxClasses'))
+
+  // ORT Java API (OrtEnvironment, OrtSession, OrtProvider) for getAvailableProviders/getQnnSupport/etc.
+  // Extracted classes.jar from onnxruntime AAR (no compileOnly needed; bundled directly in the SDK).
+  // libonnxruntime4j_jni.so is also extracted to jniLibs so the Java bridge works at runtime.
+  def onnxruntimeClassesDir = file("${buildDir}/onnxruntime-classes")
+  implementation fileTree(dir: onnxruntimeClassesDir, include: '*.jar').builtBy(tasks.named('extractOnnxruntimeClasses'))
+
+  // Play Asset Delivery: optional for getAssetPackPath (returns null if not used)
+  implementation "com.google.android.play:asset-delivery:2.3.0"
+
+  // MMKV required by @kesha-antonov/react-native-background-downloader on Android.
+  // Kept in SDK so it is merged into this library AAR instead of adding a new app-level package;
+  // adding it only in the app can shift resource package IDs and cause "No package ID 6a found" / white screen.
+  implementation "com.tencent:mmkv-shared:1.3.16"
+}
+
+// Wire prebuilt tasks: extractSherpaOnnxClasses --> downloadNativeLibsIfNeeded;
+// CMake/compile tasks depend on extractSherpaOnnxClasses and checkJniLibs.
+afterEvaluate {
+  if (tasks.findByName("downloadNativeLibsIfNeeded") != null) {
+    tasks.named("extractSherpaOnnxClasses").configure { dependsOn tasks.named("downloadNativeLibsIfNeeded") }
+    tasks.named("extractOnnxruntimeClasses").configure { dependsOn tasks.named("downloadNativeLibsIfNeeded") }
+  }
+  tasks.matching { it.name.contains("configureCMake") || it.name.contains("externalNativeBuild") }.configureEach {
+    dependsOn tasks.named("extractSherpaOnnxClasses")
+    dependsOn tasks.named("extractOnnxruntimeClasses")
+    dependsOn tasks.named("checkJniLibs")
+  }
+  tasks.matching { it.name == "compileReleaseKotlin" || it.name == "compileDebugKotlin" }.configureEach {
+    dependsOn tasks.named("extractSherpaOnnxClasses")
+    dependsOn tasks.named("extractOnnxruntimeClasses")
+  }
+}

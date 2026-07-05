@@ -1,0 +1,109 @@
+{
+  "name": "react-native-persona",
+  "title": "React Native Persona",
+  "version": "2.47.0",
+  "description": "Launch a mobile native implementation of the Persona inquiry flow from React Native.",
+  "homepage": "https://docs.withpersona.com/docs/react-native-sdk-integration",
+  "bugs": "https://github.com/persona-id/persona-inquiry-sdk-public",
+  "author": {
+    "name": "Persona Identities, Inc.",
+    "email": "support@withpersona.com"
+  },
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "scripts": {
+    "test": "echo test",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "update-sdks": "ruby scripts/update_sdks.rb && cd example/ios && pod update --repo-update"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "bin",
+    "RNPersonaInquiry2.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "keywords": [
+    "react-native",
+    "persona",
+    "idv"
+  ],
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "PUBLIC.md",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@react-native-community/eslint-config": "^3.0.0",
+    "@types/cli-table": "^0.3.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/jest": "^27.0.0",
+    "@types/node": "^13.13.4",
+    "@types/object-path": "^0.11.0",
+    "@types/react-native": "^0.62.0",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.3.2",
+    "react": "16.14.0",
+    "react-native": "^0.72.4",
+    "react-native-builder-bob": "^0.18.2",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {},
+  "resolutions": {
+    "fast-xml-parser": "^4.5.4",
+    "flatted": "^3.4.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

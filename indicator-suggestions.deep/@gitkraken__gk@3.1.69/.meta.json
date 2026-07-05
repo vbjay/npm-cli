@@ -1,0 +1,99 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ff161f38985dffc8",
+    "fetchedFiles": [
+      "install.js",
+      "lib.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "jszip",
+        "versionSpec": "3.10.1"
+      },
+      {
+        "name": "tar",
+        "versionSpec": "7.5.15"
+      },
+      {
+        "name": "proxy-agent",
+        "versionSpec": "8.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "jszip@3.10.1",
+      "proxy-agent@8.0.1",
+      "tar@7.5.15"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4a342f058fa094a1a23d44faab002e40d9b53c47e50314c04ac542bbfa9a9e40",
+        "sizeBytes": 237,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib.js",
+        "reason": "required by ./install.js",
+        "sha256": "164c9c9740c2b5597e8380ba92cd6ec3c7dcc1b4c8439cbcb60029d2754e3dc0",
+        "sizeBytes": 6375,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./lib.js",
+        "sha256": "cf7757ba4094462ef2d248fe48fabdf47fdf304d6046407733384adfd7bd1d77",
+        "sizeBytes": 3496,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:07.686Z"
+  },
+  "hash": "sha256:7f3665ba27849369aea90027cc8ea123db972068cb8baa5cba34b487d0579554"
+}

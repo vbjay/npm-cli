@@ -1,0 +1,73 @@
+{
+  "name": "@central-icons-react-native/round-outlined-radius-3-stroke-1.5",
+  "version": "1.1.294",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://iconists.co/central",
+  "bugs": {
+    "url": "https://github.com/Iconists/central-icons-react/issues",
+    "email": "info@iconists.co"
+  },
+  "sideEffects": false,
+  "main": "./index.js",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js"
+    },
+    "./*": {
+      "types": "./*/index.d.ts",
+      "import": "./*/index.mjs",
+      "require": "./*/index.js"
+    }
+  },
+  "files": [
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.map",
+    "**/*.d.ts",
+    "**/*.md",
+    "**/*.json"
+  ],
+  "scripts": {
+    "preinstall": "node ./license-check.js",
+    "build": "bun build.ts",
+    "prepublishOnly": "npm run build",
+    "dev": "bun --watch build.ts",
+    "lint": "biome format --write ."
+  },
+  "dependencies": {
+    "react-native-svg": "^15"
+  },
+  "peerDependencies": {
+    "react": ">=14.0.0 <= 19",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@biomejs/biome": "^2",
+    "typescript": "^5"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "expo",
+    "icons",
+    "svg",
+    "ui",
+    "design-system",
+    "sharp",
+    "round",
+    "filled",
+    "outlined",
+    "stroke",
+    "radius",
+    "central-icons",
+    "icon-library",
+    "icon-pack"
+  ],
+  "author": "Iconists"
+}

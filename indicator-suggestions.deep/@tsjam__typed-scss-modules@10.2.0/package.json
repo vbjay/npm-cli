@@ -1,0 +1,116 @@
+{
+  "name": "@tsjam/typed-scss-modules",
+  "version": "10.2.0",
+  "description": "TypeScript type definition generator for SCSS CSS Modules",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/lib/index.d.ts",
+      "import": "./dist/lib/index.js",
+      "require": "./dist/lib/index.js",
+      "default": "./dist/lib/index.js"
+    }
+  },
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "author": "am0wa <am0wa.it@gmail.com>",
+  "contributors": [
+    {
+      "name": "Spencer Miskoviak",
+      "email": "smiskoviak@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.19",
+    "npm": ">=10.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/am0wa/tsjam-typed-scss-modules.git"
+  },
+  "homepage": "https://github.com/am0wa/tsjam-typed-scss-modules#readme",
+  "keywords": [
+    "scss",
+    "css modules",
+    "cli",
+    "typescript",
+    "type generator",
+    "scss modules"
+  ],
+  "files": [
+    "dist/lib"
+  ],
+  "bin": {
+    "typed-scss-modules": "./dist/lib/cli.js"
+  },
+  "scripts": {
+    "test": "jest --silent",
+    "test:watch": "jest --watch",
+    "typed-scss-modules": "node ./dist/lib/cli.js",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && tsc && chmod +x dist/lib/cli.js",
+    "check:types": "tsc --noEmit",
+    "check:formatting": "prettier --check '**/*.{js,json,css,md,scss,tsx,ts}'",
+    "check:linting": "eslint .",
+    "commit": "commit",
+    "prepare": "npm run build && husky",
+    "prepublishOnly": "[ \"$CI\" = \"true\" ] || (npm run build && npm test)",
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@commitlint/prompt-cli": "^20.2.0",
+    "@swc/core": "^1.15.8",
+    "@swc/jest": "^0.2.39",
+    "@tsjam/eslint-config-recommended": "^0.2.4",
+    "@tsjam/swc-jest-config-recommended": "^0.1.4",
+    "@types/node": "^17.0.18",
+    "@types/reserved-words": "^0.1.0",
+    "@types/yargs": "^17.0.35",
+    "eslint": "^9.34.0",
+    "eslint-plugin-jest": "^29.11.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "sass": "^1.97.1",
+    "sass-embedded": "^1.97.1",
+    "semantic-release": "^25.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "sass": "^1.97.1",
+    "sass-embedded": "^1.97.1"
+  },
+  "peerDependenciesMeta": {
+    "sass": {
+      "optional": true
+    },
+    "sass-embeded": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "bundle-require": "^5.1.0",
+    "chalk": "4.1.2",
+    "change-case": "^4.1.2",
+    "chokidar": "^3.6.0",
+    "esbuild": "^0.27.2",
+    "glob": "^13.0.0",
+    "joycon": "^3.1.1",
+    "postcss": "^8.4.49",
+    "postcss-modules": "^6.0.1",
+    "reserved-words": "^0.1.2",
+    "slash": "^3.0.0",
+    "yargs": "^17.7.2"
+  },
+  "lint-staged": {
+    "*.{js,json,css,md,scss,tsx,ts}": [
+      "prettier --write"
+    ]
+  }
+}

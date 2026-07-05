@@ -1,0 +1,163 @@
+{
+  "name": "react-native-halo-menu",
+  "version": "0.3.1",
+  "description": "Pinterest-style hold menu for React Native: long-press, drag, release. A radial action menu powered by Reanimated 4 and Gesture Handler, zero native code.",
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "react-native": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./lib/typescript/src/index.d.ts",
+      "react-native": "./lib/module/index.js",
+      "default": "./lib/module/index.js"
+    },
+    "./expo": {
+      "source": "./src/expo/index.tsx",
+      "types": "./lib/typescript/src/expo/index.d.ts",
+      "react-native": "./lib/module/expo/index.js",
+      "default": "./lib/module/expo/index.js"
+    },
+    "./mock": {
+      "types": "./mock.d.ts",
+      "default": "./mock.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "mock.js",
+    "mock.d.ts",
+    "llms.txt",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "packageManager": "pnpm@10.33.2",
+  "pnpm": {
+    "overrides": {
+      "xcode>uuid": "11.1.1"
+    }
+  },
+  "scripts": {
+    "build": "bob build",
+    "clean": "del-cli lib",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "lint": "eslint src",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "package:files:check": "node scripts/check-package-files.cjs",
+    "package:check": "pnpm run build && publint && attw --pack . --profile esm-only && pnpm run package:files:check",
+    "example:check": "pnpm --dir example exec expo install --check && pnpm --dir example typecheck && pnpm --dir example bundle:check",
+    "worklet:check": "grep -rqE \"['\\\"]worklet['\\\"]\" lib/module --include=\"*.js\" || (echo \"No worklet directives in build output\" && exit 1)",
+    "quality": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run format:check && pnpm run package:check",
+    "ci": "pnpm run quality && pnpm run example:check && pnpm run worklet:check",
+    "prepare": "bob build",
+    "prepublishOnly": "pnpm run ci",
+    "release": "release-it",
+    "example": "pnpm --dir example"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "radial-menu",
+    "hold-menu",
+    "context-menu",
+    "quick-actions",
+    "long-press",
+    "drag-to-select",
+    "reanimated",
+    "gesture-handler",
+    "ios",
+    "android"
+  ],
+  "author": "Adrian Gruber",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thegruber/react-native-halo-menu.git"
+  },
+  "homepage": "https://github.com/thegruber/react-native-halo-menu#readme",
+  "bugs": {
+    "url": "https://github.com/thegruber/react-native-halo-menu/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "expo-blur": "*",
+    "react": "*",
+    "react-native": ">=0.81.0",
+    "react-native-gesture-handler": ">=2.16.0 <3.0.0",
+    "react-native-reanimated": ">=4.0.0",
+    "react-native-safe-area-context": ">=4.0.0",
+    "react-native-worklets": "*"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.3",
+    "@react-native/babel-preset": "0.86.0",
+    "@release-it/conventional-changelog": "^11.0.1",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.15",
+    "del-cli": "^7.0.0",
+    "eslint": "^10.5.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "expo-blur": "~56.0.3",
+    "jest": "^30.4.2",
+    "prettier": "^3.8.3",
+    "publint": "^0.3.21",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-builder-bob": "^0.42.1",
+    "react-native-gesture-handler": "2.31.2",
+    "react-native-reanimated": "4.3.1",
+    "react-native-safe-area-context": "5.7.0",
+    "react-native-worklets": "0.8.3",
+    "release-it": "^20.2.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.46.4"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "commonjs",
+  "workspaces": [
+    "example"
+  ],
+  "peerDependenciesMeta": {
+    "expo-blur": {
+      "optional": true
+    }
+  }
+}

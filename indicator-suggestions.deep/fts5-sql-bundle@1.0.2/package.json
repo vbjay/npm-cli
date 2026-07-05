@@ -1,0 +1,62 @@
+{
+  "name": "fts5-sql-bundle",
+  "version": "1.0.2",
+  "description": "SQL.js with FTS5 full-text search support - a custom build optimized for Node.js and browser environments",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./dist/sql-wasm.wasm": "./dist/sql-wasm.wasm",
+    "./dist/sql-wasm.js": "./dist/sql-wasm.js"
+  },
+  "scripts": {
+    "build": "npm run build:sql && npm run build:ts && npm run build:package",
+    "build:sql": "docker run --rm -v $(pwd):/workspace -w /workspace/sql.js emscripten/emsdk:3.1.28 make optimized",
+    "build:ts": "tsc",
+    "build:package": "node scripts/build-package.js",
+    "build:dev": "npm run build:ts && npm run build:package",
+    "prepare": "npm run build:dev || npm run build",
+    "test": "node test/test.js",
+    "test:ts": "npm run build:ts && node dist/test/typescript-test.js",
+    "clean": "rm -rf dist/ sql.js/dist/ sql.js/out/",
+    "type-check": "tsc --noEmit",
+    "dev": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimRl/fts5-sql-bundle.git"
+  },
+  "keywords": [
+    "sqlite",
+    "sql.js",
+    "fts5",
+    "full-text-search",
+    "wasm",
+    "database",
+    "search",
+    "indexing"
+  ],
+  "author": "TimRl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TimRl/fts5-sql-bundle/issues"
+  },
+  "homepage": "https://github.com/TimRl/fts5-sql-bundle#readme",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

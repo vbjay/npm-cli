@@ -1,0 +1,117 @@
+{
+  "name": "grepmax",
+  "version": "0.24.0",
+  "author": "Robert Owens <78518764+reowens@users.noreply.github.com>",
+  "homepage": "https://github.com/reowens/grepmax",
+  "bugs": {
+    "url": "https://github.com/reowens/grepmax/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reowens/grepmax.git"
+  },
+  "main": "dist/index.js",
+  "bin": {
+    "gmax": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "prebuild": "rm -rf dist tsconfig.tsbuildinfo && mkdir -p dist",
+    "build": "tsc",
+    "postbuild": "chmod +x dist/index.js",
+    "dev": "npx tsc && node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "bench:recall": "npx tsx src/eval.ts",
+    "bench:recall:json": "GMAX_EVAL_JSON=1 npx tsx src/eval.ts",
+    "bench:oss": "npx tsx src/eval-oss.ts all",
+    "bench:oss:json": "GMAX_EVAL_JSON=1 npx tsx src/eval-oss.ts all",
+    "bench:tokens": "npx tsx src/eval-tokens.ts",
+    "bench:tokens:json": "GMAX_EVAL_JSON=1 npx tsx src/eval-tokens.ts",
+    "bench:surprises": "npx tsx src/eval-surprising-connections.ts",
+    "bench:surprises:json": "GMAX_EVAL_JSON=1 npx tsx src/eval-surprising-connections.ts",
+    "format": "biome format --write .",
+    "format:check": "biome check .",
+    "lint": "biome lint .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build",
+    "preversion": "pnpm test && pnpm typecheck && pnpm run format:check",
+    "version": "bash scripts/sync-versions.sh && git add -A",
+    "postversion": "bash scripts/postrelease.sh"
+  },
+  "keywords": [
+    "grepmax",
+    "grep",
+    "search",
+    "semantic-search",
+    "code-search",
+    "code-intelligence",
+    "embeddings",
+    "vector-search",
+    "rag",
+    "mcp",
+    "claude-code",
+    "coding-agent",
+    "ai-agent",
+    "llm",
+    "call-graph",
+    "tree-sitter",
+    "lancedb",
+    "cli"
+  ],
+  "files": [
+    "dist",
+    ".claude-plugin",
+    "plugins",
+    "scripts/postinstall.js",
+    "mlx-embed-server",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "license": "Apache-2.0",
+  "description": "Semantic code search for coding agents. Local embeddings, LLM summaries, call graph tracing.",
+  "dependencies": {
+    "@clack/prompts": "^1.6.0",
+    "@huggingface/transformers": "^4.2.0",
+    "@lancedb/lancedb": "^0.30.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@parcel/watcher": "^2.5.6",
+    "apache-arrow": "^18.1.0",
+    "chalk": "^5.6.2",
+    "cli-highlight": "^2.1.11",
+    "commander": "^15.0.0",
+    "dotenv": "^17.4.2",
+    "fast-glob": "^3.3.3",
+    "ignore": "^7.0.5",
+    "lmdb": "^3.5.6",
+    "onnxruntime-node": "1.24.3",
+    "openai": "^6.45.0",
+    "ora": "^9.4.1",
+    "proper-lockfile": "^4.1.2",
+    "simsimd": "^6.5.5",
+    "uuid": "^14.0.1",
+    "web-tree-sitter": "^0.26.9",
+    "zod": "^4.4.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "mathjs": "15.2.0"
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.10",
+    "@types/node": "^26.0.1",
+    "@types/proper-lockfile": "^4.1.4",
+    "node-gyp": "^13.0.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.0",
+    "vitest": "^4.1.9"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "93d1dc3abf7ca048",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/apply-pi-natives-patch.js",
+      "scripts/fetch-binary.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/fetch-binary.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "697ea562b6bc2d4f04b86ddfeb1641f3bb901977a7203eb2fba168d13bbfd238",
+        "sizeBytes": 8964,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/${REPO}#from-source",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/apply-pi-natives-patch.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "cc3b15c28d9bbafe771dd667535ba78c33621ce0bb367f448af2a8f9f81bf10b",
+        "sizeBytes": 5047,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:57.729Z"
+  },
+  "hash": "sha256:39cfd947686cb11833e22ab5a96c886af9e412d1cf276a51ed220e3f1fb10261"
+}

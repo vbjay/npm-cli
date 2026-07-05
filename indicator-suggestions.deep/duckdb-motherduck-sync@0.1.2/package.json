@@ -1,0 +1,93 @@
+{
+  "name": "duckdb-motherduck-sync",
+  "version": "0.1.2",
+  "description": "Sync middleware for DuckDB WASM and MotherDuck cloud storage",
+  "type": "module",
+  "main": "./src/index-simple.js",
+  "module": "./src/index-simple.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./src/index-simple.js",
+      "require": "./dist/index.cjs"
+    },
+    "./worker": "./public/duckdb-sync-worker.js",
+    "./typescript": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "public",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "docs": "typedoc",
+    "docs:watch": "typedoc --watch",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "duckdb",
+    "motherduck",
+    "sync",
+    "wasm",
+    "offline-first",
+    "database"
+  ],
+  "author": "DuckDB Sync Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/northprint/duckdb-motherduck-sync.git"
+  },
+  "bugs": {
+    "url": "https://github.com/northprint/duckdb-motherduck-sync/issues"
+  },
+  "homepage": "https://github.com/northprint/duckdb-motherduck-sync#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/pako": "^2.0.4",
+    "@types/uuid": "^10.0.0",
+    "@types/web": "^0.0.263",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.34.0",
+    "fake-indexeddb": "^6.1.0",
+    "happy-dom": "^18.0.1",
+    "jsdom": "^26.1.0",
+    "msw": "^2.10.5",
+    "prettier": "^3.6.2",
+    "typedoc": "^0.28.10",
+    "typedoc-plugin-markdown": "^4.8.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.30.0",
+    "@motherduck/wasm-client": "^0.6.6",
+    "duckdb": "^1.3.2",
+    "fp-ts": "^2.16.11",
+    "io-ts": "^2.2.22",
+    "pako": "^2.1.0",
+    "rxjs": "^7.8.2",
+    "uuid": "^11.1.0"
+  }
+}

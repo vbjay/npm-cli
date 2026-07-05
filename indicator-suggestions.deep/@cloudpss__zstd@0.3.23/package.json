@@ -1,0 +1,88 @@
+{
+  "name": "@cloudpss/zstd",
+  "version": "0.3.23",
+  "description": "Zstd n-api addon for node.js & wasm for browsers.",
+  "author": "OpportunityLiu <opportunity@live.in>",
+  "license": "MIT",
+  "packageManager": "pnpm@10.27.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CloudPSS/zstd.git"
+  },
+  "keywords": [
+    "zstd",
+    "zstandard",
+    "n-api",
+    "wasm",
+    "compression",
+    "decompression",
+    "compress",
+    "decompress"
+  ],
+  "engines": {
+    "node": ">= 20"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "browser": "dist/wasm/index.js",
+  "exports": {
+    ".": {
+      "browser": "./dist/wasm/index.js",
+      "default": "./dist/index.js"
+    },
+    "./wasm": "./dist/wasm/index.js",
+    "./napi": "./dist/napi.js",
+    "./config": "./dist/config.js",
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#packageJson": "./package.json"
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "clean": "rimraf dist",
+    "clean:gyp": "rimraf build prebuilds/*/*.node",
+    "clean:wasm": "rimraf prebuilds/zstd.js",
+    "build": "pnpm clean && tsc",
+    "build:deps": "pwsh lib/build.ps1",
+    "build:gyp": "prebuildify --napi --strip",
+    "build:gyp-cross": "prebuildify-cross --napi --strip",
+    "build:wasm": "pwsh lib/build-wasm.ps1",
+    "watch": "pnpm clean && tsc --watch",
+    "test": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --experimental-vm-modules\" node --expose-gc node_modules/jest/bin/jest.js",
+    "benchmark": "node --enable-source-maps ./benchmark/index.js",
+    "prepare": "husky || echo Failed to initialize husky",
+    "format": "prettier --cache --cache-strategy content --ignore-path .gitignore --write .",
+    "lint": "eslint --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content"
+  },
+  "prettier": "@cloudpss/prettier-config",
+  "commitlint": {
+    "extends": "@cloudpss"
+  },
+  "devDependencies": {
+    "@cloudpss/commitlint-config": "^3.0.36",
+    "@cloudpss/eslint-config": "^3.0.36",
+    "@cloudpss/lint-staged-config": "^3.0.36",
+    "@cloudpss/prettier-config": "^3.0.36",
+    "@cloudpss/tsconfig": "^3.0.36",
+    "@jest/globals": "^30.2.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.3",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "prebuildify": "^6.0.1",
+    "prebuildify-cross": "^5.1.1",
+    "pretty-bytes": "^7.1.0",
+    "rimraf": "^6.1.2",
+    "ts-jest": "29.4.6",
+    "type-fest": "^5.3.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "@cloudpss/worker": "^0.1.1",
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
+  }
+}

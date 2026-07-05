@@ -1,0 +1,95 @@
+{
+  "name": "@rely-ai/caliber",
+  "version": "1.49.6",
+  "description": "AI context infrastructure for coding agents — keeps CLAUDE.md, Cursor rules, and skills in sync as your codebase evolves",
+  "type": "module",
+  "bin": {
+    "caliber": "./dist/bin.js"
+  },
+  "scripts": {
+    "prebuild": "npm run build:skills:check",
+    "build": "tsup",
+    "build:skills": "node scripts/generate-skills.mjs",
+    "build:skills:check": "node scripts/generate-skills.mjs --check",
+    "dev": "tsup --watch",
+    "dev:install": "npm run build && npm link",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@anthropic-ai/vertex-sdk": "^0.14.4",
+    "@inquirer/checkbox": "^5.1.0",
+    "@inquirer/confirm": "^6.0.8",
+    "@inquirer/input": "^5.0.11",
+    "@inquirer/select": "^5.1.0",
+    "chalk": "^5.4.0",
+    "commander": "^13.0.0",
+    "diff": "^8.0.3",
+    "glob": "^13.0.6",
+    "google-auth-library": "^9.0.0",
+    "openai": "^6.29.0",
+    "ora": "^8.1.0",
+    "p-limit": "^5.0.0",
+    "posthog-node": "^5.28.2"
+  },
+  "files": [
+    "dist/**/*.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "author": "Rely AI",
+  "keywords": [
+    "ai-agent",
+    "claude-code",
+    "claude-md",
+    "cursor",
+    "cursorrules",
+    "coding-agent",
+    "developer-tools",
+    "ai-config",
+    "skills",
+    "cli",
+    "open-source"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caliber-ai-org/ai-setup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caliber-ai-org/ai-setup/issues"
+  },
+  "homepage": "https://github.com/caliber-ai-org/ai-setup#readme",
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/diff": "^7.0.2",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^10.1.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "memfs": "^4.56.10",
+    "prettier": "^3.8.1",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.57.2",
+    "vitest": "^4.0.18"
+  }
+}

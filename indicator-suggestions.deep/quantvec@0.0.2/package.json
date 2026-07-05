@@ -1,0 +1,110 @@
+{
+  "name": "quantvec",
+  "version": "0.0.2",
+  "description": "Data-oblivious, zero-training vector quantization and nearest-neighbor search for TypeScript — a clean-room implementation of Google Research's TurboQuant. Runs in Node, browsers, Bun, and edge/serverless runtimes.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Ahmed Tokyo",
+    "email": "tokyo@ahmedtokyo.com",
+    "url": "https://www.ahmedtokyo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-tokyo/quantvec.git"
+  },
+  "homepage": "https://quantvec.ahmedtokyo.com",
+  "bugs": {
+    "url": "https://github.com/a-tokyo/quantvec/issues"
+  },
+  "keywords": [
+    "vector",
+    "vector-search",
+    "vector-database",
+    "quantization",
+    "turboquant",
+    "rabitq",
+    "embeddings",
+    "approximate-nearest-neighbor",
+    "ann",
+    "similarity-search",
+    "rag",
+    "wasm",
+    "simd",
+    "typescript",
+    "isomorphic",
+    "edge"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js",
+      "require": "./dist/node.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:wasm": "asc assembly/index.ts --config asconfig.json --target release && node scripts/inline-wasm.mjs",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.build.json --noEmit",
+    "test": "vitest run --test-timeout=30000",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage --test-timeout=30000",
+    "bench": "vitest bench --run",
+    "bench:flat": "npx tsx benchmarks/flat.ts",
+    "bench:ivf": "npx tsx benchmarks/ivf.ts",
+    "bench:real": "node benchmarks/download-siftsmall.mjs && npx tsx benchmarks/real.ts",
+    "bench:glove": "node benchmarks/download-glove.mjs && npx tsx benchmarks/glove.ts",
+    "bench:openai": "node benchmarks/download-openai.mjs && npx tsx benchmarks/openai.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky",
+    "prepublishOnly": "bun run build"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix --no-warn-ignored",
+      "prettier --write"
+    ],
+    "*.{js,cjs,mjs,json,md,yml,yaml}": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.9.2",
+    "@vitest/coverage-v8": "^4.1.8",
+    "assemblyscript": "^0.28.18",
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "^10.1.8",
+    "h5wasm": "^0.10.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.3",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.1.8"
+  }
+}

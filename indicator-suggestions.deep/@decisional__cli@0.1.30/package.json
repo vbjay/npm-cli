@@ -1,0 +1,55 @@
+{
+  "name": "@decisional/cli",
+  "version": "0.1.30",
+  "description": "CLI for building, testing, running, and managing Decisional agents",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decisional/autodex.git",
+    "directory": "cli"
+  },
+  "homepage": "https://github.com/decisional/autodex/tree/main/cli",
+  "bugs": {
+    "url": "https://github.com/decisional/autodex/issues"
+  },
+  "keywords": [
+    "decisional",
+    "cli",
+    "agents",
+    "automation"
+  ],
+  "bin": {
+    "decisional": "./build/index.cjs"
+  },
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test src/*.test.ts src/**/*.test.ts",
+    "lint": "npm run typecheck",
+    "dev": "tsx watch src/index.ts",
+    "start": "node build/index.cjs",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run lint && npm run build"
+  },
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "tsup": "^8.5.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

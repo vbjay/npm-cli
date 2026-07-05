@@ -1,0 +1,47 @@
+{
+  "name": "reallink-cli",
+  "version": "0.1.18",
+  "description": "Rust-based CLI for Reallink auth and API operations",
+  "bin": {
+    "reallink": "bin/reallink.cjs"
+  },
+  "files": [
+    "bin/reallink.cjs",
+    "prebuilt",
+    "scripts/postinstall.cjs",
+    "scripts/prepare-prebuilt.cjs",
+    "rust/Cargo.toml",
+    "rust/Cargo.lock",
+    "rust/src",
+    "README.md"
+  ],
+  "scripts": {
+    "contract:codegen": "node ./scripts/generate-contract.mjs",
+    "prepack": "node ./scripts/generate-contract.mjs && node ./scripts/prepare-prebuilt.cjs",
+    "postinstall": "node ./scripts/postinstall.cjs",
+    "build": "node ./scripts/generate-contract.mjs && cargo build --manifest-path ./rust/Cargo.toml --release",
+    "dev": "node ./bin/reallink.cjs --help",
+    "pack:local": "npm pack --json",
+    "smoke:install": "node ./scripts/smoke-install.cjs",
+    "smoke:websocket-binary": "node ./scripts/smoke-websocket-binary.cjs"
+  },
+  "keywords": [
+    "reallink",
+    "cli",
+    "rust",
+    "oauth"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/real-link-tech/ReallinkOS.git",
+    "directory": "packages/reallink-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/real-link-tech/ReallinkOS/issues"
+  },
+  "homepage": "https://github.com/real-link-tech/ReallinkOS/tree/main/packages/reallink-cli",
+  "publishConfig": {
+    "access": "public"
+  }
+}

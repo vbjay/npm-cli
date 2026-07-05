@@ -1,0 +1,38 @@
+{
+	"name"   : "@essamonline/nodecpp-rational",
+	"version": "1.0.0-pre-release-0",
+	"description": "A Node.js native C++ addon that defines a JavaScript class Rational for representing and manipulating rational numbers.",
+	"main"   : "lib/index.js",
+	"gypfile": true,
+	"scripts": {
+		"test"        : "node --test test/rational.test.js",
+		"testCover"   : "node --experimental-test-coverage --test test/rational.test.js",
+		"testReport"  : "node --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=docs/coverage/js/lcov.info --test test/rational.test.js",
+		"devGenhtml"  : "genhtml -o docs/coverage/js/html --config-file .lcovrc docs/coverage/js/lcov.info",
+		"devDoc"      : "rm -fr docs/src/js/* && jsdoc lib/*.js test/*.js -d docs/src/js",
+		"devCoveralls": "coveralls < docs/coverage/js/lcov.info",
+		"addonBuild"  : "node-gyp configure build",
+		"addonClean"  : "node-gyp clean",
+		"cppDoc"      : "doxygen .Doxyfile",
+		"cppBuild"    : "make -C test build",
+		"cppTest"     : "npm run cppBuild && test/rational.test.out",
+		"cppCover"    : "npm run cppTest && make -C test lcov-report && make -C test clean-int"
+	},
+	"type"    : "commonjs",
+	"keywords": ["node.js", "C++", "addon", "rational"],
+	"author"  : {
+		"name" : "Essam A. El-Sherif",
+		"email": "esm.elsh@gmail.com",
+		"url"  : "https://essamatefelsherif.github.io/whoami"
+	},
+	"homepage": "https://github.com/essamatefelsherif/nodecpp-rational#readme",
+	"repository": {
+		"type": "git",
+		"url" : "git+https://github.com/essamatefelsherif/nodecpp-rational.git"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"coveralls-next": "^4.2.1",
+		"jsdoc": "^4.0.4"
+	}
+}

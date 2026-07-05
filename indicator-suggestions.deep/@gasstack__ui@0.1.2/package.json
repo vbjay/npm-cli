@@ -1,0 +1,56 @@
+{
+  "name": "@gasstack/ui",
+  "version": "0.1.2",
+  "description": "Google Apps Script ui support for UI and Card services.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./jsx-runtime": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gasstack/gasstack.git"
+  },
+  "scripts": {
+    "build": "vite build -c vite.config.ts",
+    "build-e2e": "vite build -c vite.config.e2e.ts",
+    "build-docs": "typedoc --plugin typedoc-plugin-markdown --out docs ./index.ts",
+    "test": "vitest run",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "gas",
+    "google",
+    "apps",
+    "script",
+    "google apps script",
+    "jsx",
+    "ui",
+    "addon",
+    "form"
+  ],
+  "author": "Gianmaria Canossa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gasstack/gasstack/issues"
+  },
+  "homepage": "https://github.com/gasstack/gasstack#readme",
+  "devDependencies": {
+    "@types/google-apps-script": "^1.0.83",
+    "typedoc": "^0.25.13",
+    "typedoc-plugin-markdown": "^3.17.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.9",
+    "vite-plugin-dts": "^3.8.3",
+    "vitest": "^1.5.0"
+  }
+}

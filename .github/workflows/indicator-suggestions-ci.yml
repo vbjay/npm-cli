@@ -1,0 +1,144 @@
+name: indicator-suggestions pipeline check
+
+on:
+  pull_request:
+    paths:
+      - scripts/build-indicator-suggestions.js
+      - scripts/build-indicator/**
+      - lib/utils/indicator-definitions.js
+      - lib/utils/indicator-scanner.js
+      - lib/utils/script-risk-scanner.js
+      - indicator-suggestions.json
+  push:
+    branches:
+      - main
+      - copilot/**
+    paths:
+      - scripts/build-indicator-suggestions.js
+      - scripts/build-indicator/**
+      - lib/utils/indicator-definitions.js
+      - lib/utils/indicator-scanner.js
+      - lib/utils/script-risk-scanner.js
+      - indicator-suggestions.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pipeline-check:
+    name: Verify deep-scan pipeline (top 1)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Reset workspace deps
+        run: node scripts/resetdeps.js
+
+      - name: Run deep scan (top 1)
+        id: scan
+        run: |
+          set +e
+          node scripts/build-indicator-suggestions.js --deep --top 1 \
+            2>&1 | tee scan-output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+        timeout-minutes: 5
+
+      - name: Upload scan artifacts
+        id: artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: indicator-suggestions-ci
+          path: |
+            scan-output.txt
+            indicator-suggestions.json
+            indicator-suggestions.packages.json
+          if-no-files-found: warn
+
+      - name: Post scan result as PR comment
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v9
+        env:
+          EXIT_CODE: ${{ steps.scan.outputs.exit_code }}
+          ARTIFACT_URL: ${{ steps.artifacts.outputs.artifact-url }}
+        with:
+          script: |
+            const fs = require('fs')
+
+            const exitCode = process.env.EXIT_CODE || '0'
+            const success = exitCode === '0'
+            const badge = success ? '✅ PASSED' : `❌ FAILED (exit ${exitCode})`
+            const artifactUrl = process.env.ARTIFACT_URL || ''
+
+            let scanOutput = ''
+            try {
+              scanOutput = fs.readFileSync('scan-output.txt', 'utf8')
+            } catch (e) {
+              scanOutput = `(could not read scan-output.txt: ${e.message})`
+            }
+
+            let summary = ''
+            try {
+              const json = JSON.parse(fs.readFileSync('indicator-suggestions.json', 'utf8'))
+              const u = json?.data?.uncategorizedPackages?.data?.length ?? '?'
+              const g = json?.data?.commandPatternGaps?.data?.length ?? '?'
+              summary = `uncategorized: **${u}** | gaps: **${g}**`
+            } catch { summary = '(could not parse indicator-suggestions.json)' }
+
+            const body = [
+              `## ${badge} — indicator-suggestions pipeline check`,
+              '',
+              `**Command:** \`node scripts/build-indicator-suggestions.js --deep --top 1\``,
+              '',
+              summary,
+              '',
+              artifactUrl ? `[Download artifacts](${artifactUrl})` : '',
+              '',
+              '<details>',
+              '<summary>Scan output</summary>',
+              '',
+              '```',
+              scanOutput.slice(0, 50000),
+              scanOutput.length > 50000
+                ? `\n…(truncated — see artifact for full output)`
+                : '',
+              '```',
+              '</details>',
+            ].join('\n')
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+            const marker = '<!-- indicator-suggestions-ci -->'
+            const existing = comments.find(c => c.body.includes(marker))
+
+            const fullBody = marker + '\n' + body
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: fullBody,
+              })
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: fullBody,
+              })
+            }
+
+      - name: Fail if scan exited non-zero
+        if: steps.scan.outputs.exit_code != '0'
+        run: exit ${{ steps.scan.outputs.exit_code }}

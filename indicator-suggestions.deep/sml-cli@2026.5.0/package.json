@@ -1,0 +1,39 @@
+{
+  "name": "sml-cli",
+  "description": "Semantic Modeling Language CLI",
+  "version": "2026.5.0",
+  "bin": {
+    "sml-cli": "./bin/run.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "./bin/run.js",
+    "./dist",
+    "./oclif.manifest.json",
+    "./.oclifrc.js"
+  ],
+  "homepage": "https://github.com/semanticdatalayer/SML",
+  "keywords": [
+    "sml",
+    "semantic modeling language",
+    "semantic layer",
+    "atscale",
+    "cli"
+  ],
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/semanticdatalayer/SML",
+  "scripts": {
+    "build": "shx rm -rf dist && node bin/bundle.mjs",
+    "clear-build": "shx rm -rf dist",
+    "lint": "eslint --ext ts src",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "prepack": "oclif manifest && oclif readme && shx cp package.json package.json.bak && node bin/remove-deps.mjs",
+    "version": "oclif readme && git add README.md"
+  },
+  "types": "dist/index.d.ts"
+}

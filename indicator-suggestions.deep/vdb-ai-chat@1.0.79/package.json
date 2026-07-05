@@ -1,0 +1,107 @@
+{
+  "name": "vdb-ai-chat",
+  "version": "1.0.79",
+  "description": "Cross-platform AI chat widget for React Native and Web",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.native.tsx",
+  "source": "src/index.native.tsx",
+  "files": [
+    "src",
+    "lib",
+    "dist",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "start:web": "webpack serve --config webpack.config.js --mode development",
+    "build:web": "webpack --config webpack.config.js --mode production",
+    "build:lib": "bob build",
+    "build": "npm run build:lib && npm run build:web",
+    "type-check": "tsc --noEmit",
+    "prepare": "npm run build:lib",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "react",
+    "chat",
+    "widget",
+    "ai",
+    "chatbot",
+    "cross-platform"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "peerDependencies": {
+    "@segment/analytics-next": ">=1.0.0",
+    "@segment/analytics-react-native": ">=2.0.0",
+    "expo-image": ">=1.0.0",
+    "react": ">=17.0.0",
+    "react-native": ">=0.64.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    },
+    "expo-image": {
+      "optional": true
+    },
+    "@segment/analytics-next": {
+      "optional": true
+    },
+    "@segment/analytics-react-native": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@types/styled-components": "^5.1.36",
+    "@types/styled-components-react-native": "^5.2.5",
+    "expo-device": "^8.0.10",
+    "i18next": "^23.16.4",
+    "react-i18next": "^15.1.3",
+    "react-native-web": "^0.19.13",
+    "react-responsive": "^10.0.1",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@segment/analytics-next": "^1.81.1",
+    "@segment/analytics-react-native": "^2.21.4",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.2.15",
+    "axios": "^1.13.2",
+    "babel-loader": "^9.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-native": "0.76.0",
+    "react-native-builder-bob": "^0.23.2",
+    "typescript": "^5.6.3",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

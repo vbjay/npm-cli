@@ -1,0 +1,88 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8d12327e0aad8976",
+    "fetchedFiles": [
+      "package.json",
+      "src/cursorRestartNotice.js",
+      "src/ensureBin.js",
+      "src/postinstall.js",
+      "src/setupHooks.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7096b8b309c591d690861c3e5fca8f49f254230ab9f5edb0f7c4bbe5c7d6e794",
+        "sizeBytes": 1432,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/ensureBin.js",
+          "src/setupHooks.js",
+          "src/cursorRestartNotice.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/ensureBin.js",
+        "reason": "required by ./src/postinstall.js",
+        "sha256": "3e654c25e1385b415d08de8e9e503bf96cb263a6406feb19db0f94eb42bea285",
+        "sizeBytes": 3511,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "makes-executable"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/setupHooks.js",
+        "reason": "required by ./src/postinstall.js",
+        "sha256": "dac1a83098d390b109e69c039d1119ce908554971886dfa5f106a45872da609b",
+        "sizeBytes": 3086,
+        "signals": [
+          "writes-file",
+          "makes-executable",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/cursorRestartNotice.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/cursorRestartNotice.js",
+        "reason": "required by ./src/setupHooks.js; required by ./src/postinstall.js",
+        "sha256": "0e1f24de0b1308d304420cc7f442005f908c4041fac176152edf9b6e35396d56",
+        "sizeBytes": 2308,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:32.532Z"
+  },
+  "hash": "sha256:8df1864f88fdcd7214f6c95aa6990e0fba83ca10c299f157f6b53538ef54b62c"
+}

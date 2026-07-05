@@ -1,0 +1,82 @@
+{
+  "name": "expo-quick-actions",
+  "version": "6.0.2",
+  "description": "use native quick actions and custom app icons",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "react-native": "./build/index.js",
+      "default": "./build/index.web.js"
+    },
+    "./hooks": {
+      "types": "./build/hooks.d.ts",
+      "default": "./build/hooks.js"
+    },
+    "./router": {
+      "types": "./build/router.d.ts",
+      "default": "./build/router.js"
+    },
+    "./icon": {
+      "types": "./build/icon.d.ts",
+      "default": "./build/icon.js"
+    },
+    "./expo-module.config.json": "./expo-module.config.json",
+    "./icon/plugin": "./plugin/build/withAppIcon.js",
+    "./app.plugin": "./app.plugin.js",
+    "./app.plugin.js": "./app.plugin.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "files": [
+    "build",
+    "plugin/build",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "ios",
+    "android",
+    "!android/build/"
+  ],
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-quick-actions",
+    "ExpoQuickActions",
+    "app-icon",
+    "dynamic-app-icon"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evanbacon/expo-quick-actions.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evanbacon/expo-quick-actions/issues"
+  },
+  "author": "Evan Bacon",
+  "license": "MIT",
+  "homepage": "https://github.com/evanbacon/expo-quick-actions/",
+  "dependencies": {
+    "@expo/image-utils": "^0.8.7",
+    "schema-utils": "^4.3.2",
+    "sf-symbols-typescript": "^2.1.0"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^56.0.8",
+    "expo-module-scripts": "^56.0.2",
+    "expo-modules-core": "^56.0.13",
+    "expo-router": "~56.2.7",
+    "react": "^19.2.3",
+    "@types/react": "~19.2.0",
+    "typescript": "~6.0.3"
+  },
+  "peerDependencies": {
+    "expo": "*"
+  }
+}

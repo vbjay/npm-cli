@@ -1,0 +1,62 @@
+{
+  "name": "typeit-react",
+  "version": "2.7.8",
+  "description": "React component for the most versatile JavaScript animated typing utility on the planet.",
+  "homepage": "https://typeitjs.com",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "vite build && tsc",
+    "tsc": "tsc",
+    "start": "vite serve examples",
+    "prettier": "prettier --write \"**/*.{md,js}\"",
+    "test": "vitest run src",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "package-lock.json"
+  ],
+  "bugs": {
+    "url": "https://github.com/alexmacarthur/typeit-react/issues"
+  },
+  "keywords": [
+    "javascript",
+    "animated",
+    "typing effect",
+    "typewriter effect",
+    "type effect",
+    "text effects",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexmacarthur/typeit-react.git"
+  },
+  "author": "Alex MacArthur <alex@macarthur.me> (https://macarthur.me)",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@types/react-dom": "^19.0.2",
+    "typeit": "^8.8.7"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.26.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/react": "^19.0.3",
+    "jsdom": "^25.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "terser": "^5.37.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8",
+    "vitest-dom": "^0.1.1"
+  }
+}

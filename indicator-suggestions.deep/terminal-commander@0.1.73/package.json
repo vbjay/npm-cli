@@ -1,0 +1,57 @@
+{
+  "name": "terminal-commander",
+  "version": "0.1.73",
+  "description": "Terminal Commander: local MCP-operated terminal/file signal channel with native Linux, Windows, and macOS packages.",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "author": "special-place-ai-heaven",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/special-place-ai-heaven/terminal-commander.git"
+  },
+  "homepage": "https://github.com/special-place-ai-heaven/terminal-commander#readme",
+  "bugs": {
+    "url": "https://github.com/special-place-ai-heaven/terminal-commander/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "terminal",
+    "signal-channel",
+    "claude-code",
+    "codex",
+    "cursor",
+    "rust"
+  ],
+  "bin": {
+    "terminal-commanderd": "bin/terminal-commanderd.js",
+    "terminal-commander-mcp": "bin/terminal-commander-mcp.js",
+    "terminal-commander": "bin/terminal-commander.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "optionalDependencies": {
+    "@terminal-commander/linux-x64": "0.1.73",
+    "@terminal-commander/linux-arm64": "0.1.73",
+    "@terminal-commander/windows-x64": "0.1.73",
+    "@terminal-commander/mac-x64": "0.1.73",
+    "@terminal-commander/mac-arm64": "0.1.73"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
+  },
+  "os": [
+    "linux",
+    "win32",
+    "darwin"
+  ]
+}

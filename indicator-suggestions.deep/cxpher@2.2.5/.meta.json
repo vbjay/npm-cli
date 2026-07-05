@@ -1,0 +1,86 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1d5147978b53e018",
+    "fetchedFiles": [
+      "install.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\cxpher@2.2.5\\Makefile'",
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4e7dadb2cc7cafb5ff2f298dcecf615c135d648ad15b769a12e6592e2f2357b9",
+        "sizeBytes": 3879,
+        "signals": [
+          "uses-child-process",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.cjs",
+        "sha256": "8ea68a17f495d78a03b009b7b04afedc404c88a2230f26d898b7f1ec0ba7502a",
+        "sizeBytes": 1662,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:35.933Z"
+  },
+  "hash": "sha256:a5280fc16dd4bc4aa0c83efd6108d37d202c8d106dca2015cbab7ac8f1c72853"
+}

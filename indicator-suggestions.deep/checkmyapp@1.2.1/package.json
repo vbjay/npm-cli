@@ -1,0 +1,42 @@
+{
+  "name": "checkmyapp",
+  "version": "1.2.1",
+  "description": "CLI client for checkmyapp — ngrok alternative, auto-detect dev server port and tunnel to checkmyapp server",
+  "type": "module",
+  "bin": "./bin/checkmyapp.js",
+  "main": "./src/index.js",
+  "files": [
+    "bin/",
+    "src/",
+    "scripts/",
+    "tests/"
+  ],
+  "scripts": {
+    "start": "node bin/checkmyapp.js",
+    "test": "node --test tests/*.test.js",
+    "prepublishOnly": "node --test tests/*.test.js",
+    "postinstall": "node scripts/postinstall.js",
+    "preuninstall": "node scripts/preuninstall.js"
+  },
+  "dependencies": {
+    "conf": "^13.0.0",
+    "open": "^10.1.0",
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "tunnel",
+    "ngrok alternative",
+    "localhost",
+    "localhost tunnel",
+    "dev-server",
+    "checkmyapp",
+    "webhook testing",
+    "cli",
+    "dev-tool",
+    "port forwarding"
+  ],
+  "license": "MIT"
+}

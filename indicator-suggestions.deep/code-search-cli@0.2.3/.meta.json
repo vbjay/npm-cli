@@ -1,0 +1,88 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b2f61cf958840fdc",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "axios",
+        "versionSpec": "^1.6.0"
+      },
+      {
+        "name": "tar",
+        "versionSpec": "^6.2.0"
+      },
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.10"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18",
+      "axios@1.18.1",
+      "tar@6.2.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f7857e0c1170f8675202e07b2ad4a9850f35eccc32567bc574444dc2040430ea",
+        "sizeBytes": 2097,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/weima/code-search/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:32.242Z"
+  },
+  "hash": "sha256:40fdd06e18f737ccb5375441cc04280fd4f59b6a07edad7a9dce45dcdf026262"
+}

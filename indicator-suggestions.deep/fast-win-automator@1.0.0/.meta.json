@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5b1dd64526a490e6",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "aa61beb5cfd33d7edec38f1697f3d3f8fb3888d27311579e7a75096b6d360484",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `win_automation_native`  -  C/C++ sources",
+            "items": [
+              "src_native/automation.cc"
+            ]
+          },
+          {
+            "label": "Target `win_automation_native`  -  libraries",
+            "items": [
+              "-lole32.lib",
+              "-loleaut32.lib"
+            ]
+          },
+          {
+            "label": "Target `win_automation_native`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:50.819Z"
+  },
+  "hash": "sha256:6ee58d676109b973b7fc8ce6af66feef3aecdeca1c83469bdeb0e947700a5b04"
+}

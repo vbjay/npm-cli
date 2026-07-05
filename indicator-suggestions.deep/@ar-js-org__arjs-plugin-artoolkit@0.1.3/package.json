@@ -1,0 +1,57 @@
+{
+  "name": "@ar-js-org/arjs-plugin-artoolkit",
+  "version": "0.1.3",
+  "description": "ARToolKit detection plugin for AR.js core (ECS plugin)",
+  "type": "module",
+  "main": "dist/arjs-plugin-artoolkit.es.js",
+  "module": "dist/arjs-plugin-artoolkit.es.js",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/arjs-plugin-artoolkit.es.js",
+      "require": "./dist/arjs-plugin-artoolkit.es.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "build:types": "tsc --emitDeclarationOnly",
+    "prepublishOnly": "npm run build && npm run build:types",
+    "coverage": "vitest run --coverage",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest",
+    "lint": "eslint . --ext .js",
+    "prepare": "husky",
+    "smoke:node": "node dev/smoke-node.js",
+    "smoke:browser": "npx http-server -p 8080"
+  },
+  "keywords": [
+    "arjs",
+    "artoolkit",
+    "artoolkit5",
+    "augmented-reality",
+    "esmodule",
+    "marker",
+    "marker-detection",
+    "plugin",
+    "tracking",
+    "wasm",
+    "webworker",
+    "worker"
+  ],
+  "author": "Walter Perdan @kalwalt https://github.com/kalwalt",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.14",
+    "eslint": "^9.39.1",
+    "husky": "^9.1.7",
+    "jsdom": "^27.2.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4",
+    "vitest": "^4.0.14"
+  },
+  "dependencies": {
+    "@ar-js-org/artoolkit5-js": "^0.3.2"
+  }
+}

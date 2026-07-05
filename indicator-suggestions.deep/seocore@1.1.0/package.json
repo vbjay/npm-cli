@@ -1,0 +1,59 @@
+{
+  "name": "seocore",
+  "version": "1.1.0",
+  "description": "Enterprise-grade SEO crawler and auditing CLI.",
+  "type": "module",
+  "bin": {
+    "seocore": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "prepack": "node ./scripts/sync-readme.mjs && npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codepurse/SEOCORE.git"
+  },
+  "homepage": "https://github.com/codepurse/SEOCORE#readme",
+  "bugs": {
+    "url": "https://github.com/codepurse/SEOCORE/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "seo",
+    "crawler",
+    "audit",
+    "cli",
+    "performance"
+  ],
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^12.1.0",
+    "inquirer": "^13.4.3",
+    "node-fetch": "^3.3.2",
+    "sharp": "^0.33.5",
+    "axios": "^1.7.2",
+    "bottleneck": "^2.19.5",
+    "cheerio": "^1.0.0-rc.12",
+    "lighthouse": "^12.8.2",
+    "p-queue": "^9.3.0",
+    "picocolors": "^1.0.1",
+    "playwright": "^1.60.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.9",
+    "@types/node-fetch": "^2.6.13",
+    "esbuild": "^0.28.0"
+  }
+}

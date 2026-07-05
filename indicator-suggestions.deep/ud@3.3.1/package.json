@@ -1,0 +1,61 @@
+{
+  "name": "ud",
+  "version": "3.3.1",
+  "description": "Utilities for updating code live with hot module replacement",
+  "main": "js/index.js",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "prepare": "rimraf js/ && babel -s inline -d js/ src/ && flow-copy-source -v src js && mv -v js/noop.js* ./",
+    "test": "yarn run lint && yarn run flow_check && mocha && tsc",
+    "flow_check": "flow check",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Macil/ud.git"
+  },
+  "keywords": [
+    "hmr",
+    "reload",
+    "hot",
+    "edit",
+    "live",
+    "livereload"
+  ],
+  "author": "Chris Cowan <agentme49@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Macil/ud/issues"
+  },
+  "homepage": "https://github.com/Macil/ud#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "@types/node": "^18.11.18",
+    "array-range": "^1.0.1",
+    "zip-object": "^0.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.0",
+    "eslint": "^6.0.0",
+    "eslint-plugin-flowtype": "^4.0.0",
+    "flow-bin": "^0.100.0",
+    "flow-copy-source": "^2.0.0",
+    "mocha": "^7.0.1",
+    "rimraf": "^4.1.1",
+    "sinon": "^7.2.6",
+    "typescript": "^4.9.4"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "flow-bin"
+    ]
+  }
+}

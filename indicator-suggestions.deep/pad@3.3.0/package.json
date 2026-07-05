@@ -1,0 +1,99 @@
+{
+  "name": "pad",
+  "description": "Left and right string padding",
+  "version": "3.3.0",
+  "author": "David Worms <david@adaltas.com> (https://www.adaltas.com)",
+  "contributors": [],
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint/core": "^0.6.0",
+    "@eslint/js": "^9.11.1",
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@types/eslint__js": "^8.42.3",
+    "@types/mocha": "^10.0.8",
+    "@types/node": "^22.7.4",
+    "@types/should": "^13.0.0",
+    "coffeescript": "^2.7.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-mocha": "^10.5.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "mocha": "^10.7.3",
+    "prettier": "^3.3.3",
+    "rollup": "^4.22.5",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-delete": "^2.1.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "should": "^13.2.3",
+    "standard-version": "^9.5.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.7.0"
+  },
+  "dependencies": {
+    "wcwidth": "^1.0.1"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
+  },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "homepage": "https://github.com/adaltas/node-pad",
+  "keywords": [
+    "pad",
+    "string"
+  ],
+  "files": [
+    "/dist"
+  ],
+  "license": "BSD-3-Clause",
+  "lint-staged": {
+    "*.js": "npm run lint:fix",
+    "*.md": "prettier -w"
+  },
+  "mocha": {
+    "inline-diffs": true,
+    "loader": "ts-node/esm",
+    "recursive": true,
+    "reporter": "spec",
+    "require": [
+      "should"
+    ],
+    "throw-deprecation": false,
+    "timeout": 40000
+  },
+  "module": "dist/pad.esm.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adaltas/node-pad.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "lint:check": "eslint",
+    "lint:fix": "eslint --fix",
+    "lint:staged": "npx lint-staged",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:major": "standard-version --release-as major",
+    "postrelease": "git push --follow-tags origin master",
+    "test": "mocha test/*.{js,ts}",
+    "prepare": "husky install"
+  },
+  "type": "module"
+}

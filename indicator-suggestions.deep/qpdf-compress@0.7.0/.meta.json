@@ -1,0 +1,205 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5a06b39cddbe6dfd",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/install.mjs",
+      "scripts/lib/integrity.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "0490fd439a8a74393f353bdd283a4e5a0fe4eccaae033d1a8919dddee4d9eb61",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `qpdf_compress`  -  C/C++ sources",
+            "items": [
+              "src/qpdf_addon.cc",
+              "src/jpeg.cc",
+              "src/images.cc",
+              "src/fonts.cc",
+              "src/content.cc",
+              "src/strip.cc",
+              "src/structure.cc",
+              "src/font_subset.cc"
+            ]
+          },
+          {
+            "label": "Target `qpdf_compress`  -  libraries",
+            "items": [
+              "<(module_root_dir)/deps/qpdf/lib/libqpdf.a",
+              "<(module_root_dir)/deps/harfbuzz/lib/libharfbuzz-subset.a",
+              "<(module_root_dir)/deps/harfbuzz/lib/libharfbuzz.a",
+              "-lz",
+              "<(module_root_dir)/deps/mozjpeg/lib/libjpeg.a",
+              "-static-libstdc++",
+              "-flto",
+              "-Wl,--allow-multiple-definition",
+              "-Wl,--gc-sections",
+              "-Wl,-S",
+              "-lpthread",
+              "-ldl",
+              "<(module_root_dir)/deps/qpdf/lib/qpdf.lib",
+              "<(module_root_dir)/deps/qpdf/lib/zlib.lib",
+              "<(module_root_dir)/deps/mozjpeg/lib/jpeg-static.lib",
+              "<(module_root_dir)/deps/harfbuzz/lib/harfbuzz-subset.lib",
+              "<(module_root_dir)/deps/harfbuzz/lib/harfbuzz.lib"
+            ]
+          },
+          {
+            "label": "Target `qpdf_compress`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "deps/qpdf/include",
+              "deps/mozjpeg/include",
+              "deps/harfbuzz/include/harfbuzz",
+              "src",
+              "/opt/homebrew/include",
+              "/usr/local/include",
+              "<(module_root_dir)/deps/mozjpeg/include"
+            ]
+          },
+          {
+            "label": "Target `qpdf_compress`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.mjs",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "03ecb9e6190a31d6d40e2bff711033302adb291c7100c9e8320441eefac3a6f5",
+        "sizeBytes": 4111,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "native-build",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/integrity.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/lib/integrity.mjs",
+        "reason": "required by ./scripts/install.mjs",
+        "sha256": "e608c0842effcf89bf95f2816d277e1f018dab21c668e62db3066cb72a2e62fa",
+        "sizeBytes": 4327,
+        "signals": [
+          "uses-child-process",
+          "network-access"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:29.096Z"
+  },
+  "hash": "sha256:126feff7747a38eea7e18bbc24afd1af339b426af4292f2749e768dcb8c76b00"
+}

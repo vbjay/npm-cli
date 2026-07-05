@@ -1,0 +1,42 @@
+{
+  "name": "nepomuk",
+  "version": "0.0.0-alpha.1",
+  "description": "Native module for transit directions on gtfs feeds",
+  "url": "https://github.com/mapbox/nepomuk",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mapbox/nepomuk.git"
+  },
+  "keywords": [
+    "addon",
+    "native",
+    "module",
+	"gtfs",
+	"transit"
+  ],
+  "author": "Moritz Kobitzsch",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "scripts": {
+    "prepublish": "npm ls",
+    "install": "node-pre-gyp install --fallback-to-build=false || make -C /Users/mokob/git/nepomuk/build/Release",
+    "clean": "node-pre-gyp clean",
+    "test": "tap -Rspec test/*.js"
+  },
+  "dependencies": {
+    "nan": "^2.6",
+    "node-pre-gyp": "^0.6.34"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.50.0",
+    "tap": "^10.3"
+  },
+  "bundledDependencies": ["node-pre-gyp"],
+  "binary": {
+    "module_name": "nepomuk",
+    "module_path": "./binding/",
+    "host": "https://mapbox-node-binary.s3.amazonaws.com",
+    "remote_path": "./{name}/v{version}/{configuration}/",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
+  }
+}

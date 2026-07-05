@@ -1,0 +1,63 @@
+{
+  "name": "@fabasoad/sarif-to-slack",
+  "version": "1.4.2",
+  "description": "TypeScript library to send results of SARIF file to Slack webhook URL.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "private": false,
+  "packageManager": "pnpm@11.11.0",
+  "scripts": {
+    "lint": "biome lint --write src",
+    "test": "vitest run --reporter=json --outputFile=vitest-report.json --coverage --testNamePattern=unit",
+    "test:integration": "vitest run --testNamePattern=integration",
+    "clean": "rm -rf coverage && rm -rf temp",
+    "clean:unsafe": "rm -f pnpm-lock.yaml && rm -rf node_modules && rm -rf dist && rm -rf lib",
+    "prebuild": "./scripts/save-metadata.sh",
+    "build": "./scripts/build.sh",
+    "prepublishOnly": "pnpm run build",
+    "preinstall": "./scripts/save-metadata.sh",
+    "version:patch": "pnpm version patch --commit-hooks --git-tag-version --message 'chore: bump to version %s'",
+    "version:minor": "pnpm version minor --commit-hooks --git-tag-version --message 'chore: bump to version %s'",
+    "version:major": "pnpm version major --commit-hooks --git-tag-version --message 'chore: bump to version %s'",
+    "preversion": "pnpm test",
+    "version": "pnpm run build && git add package.json pnpm-lock.yaml",
+    "postversion": "git push && git push --tags && pnpm run clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabasoad/sarif-to-slack.git"
+  },
+  "keywords": [
+    "npm",
+    "sarif",
+    "slack"
+  ],
+  "author": "Yevhen Fabizhevskyi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fabasoad/sarif-to-slack/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/fabasoad/sarif-to-slack#readme",
+  "dependencies": {
+    "@logtape/logtape": "~2.2.4",
+    "@slack/types": "~2.22.0",
+    "@slack/webhook": "~7.2.0",
+    "@types/sarif": "~2.1.7",
+    "stacktrace-parser": "~0.1.11",
+    "zod": "~4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "~2.5.3",
+    "@microsoft/api-documenter": "~7.30.7",
+    "@microsoft/api-extractor": "~7.58.9",
+    "@types/node": "~26.1.1",
+    "@vitest/coverage-v8": "~4.1.10",
+    "tsup": "~8.5.1",
+    "typescript": "~7.0.2",
+    "vitest": "~4.1.10"
+  }
+}

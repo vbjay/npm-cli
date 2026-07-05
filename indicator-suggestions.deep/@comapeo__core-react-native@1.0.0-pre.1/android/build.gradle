@@ -1,0 +1,214 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.0.21' // ✅ serialization plugin
+}
+
+apply plugin: 'com.android.library'
+
+group = 'com.comapeo.core'
+version = '0.1.0'
+
+// Three ABIs this library ships prebuilt .so files for. Must stay in
+// sync with ANDROID_ARCHS in scripts/build-backend.ts.
+def supportedAbis = ['armeabi-v7a', 'arm64-v8a', 'x86_64']
+
+// Canonical RN convention: read the `reactNativeArchitectures` gradle
+// property (set by the consuming app's android/gradle.properties or
+// `-PreactNativeArchitectures=...`) so consumers can ship a narrower
+// set without forking. Two deviations from the standard helper:
+//   (a) fallback is our 3-ABI prebuilt set instead of all 4 — we don't
+//       fetch x86 prebuilds, so defaulting to it would produce a broken
+//       APK,
+//   (b) we intersect the requested set with `supportedAbis` because the
+//       same x86 caveat applies to consumer-supplied lists.
+def comapeoAbiFilters = {
+    def value = rootProject.findProperty('reactNativeArchitectures')
+    if (!value) return supportedAbis
+    def asked = value.toString().split(',').collect { it.trim() }.findAll { it }
+    def effective = asked.findAll { supportedAbis.contains(it) }
+    if (effective.isEmpty()) {
+        throw new GradleException(
+            "reactNativeArchitectures=${value} has no overlap with the ABIs " +
+            "comapeo-core-react-native ships prebuilds for (${supportedAbis.join(', ')})."
+        )
+    }
+    def dropped = asked - effective
+    if (!dropped.isEmpty()) {
+        logger.warn(
+            "comapeo-core-react-native: dropping unsupported ABIs " +
+            "${dropped.join(', ')} from reactNativeArchitectures; " +
+            "building ${effective.join(', ')}."
+        )
+    }
+    return effective
+}()
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+// If you want to use the managed Android SDK versions from expo-modules-core, set this to true.
+// The Android SDK versions will be bumped from time to time in SDK releases and may introduce breaking changes in your module code.
+// Most of the time, you may like to manage the Android SDK versions yourself.
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+    useDefaultAndroidSdkVersions()
+} else {
+    buildscript {
+        // Simple helper that allows the root project to override versions declared by this library.
+        ext.safeExtGet = { prop, fallback ->
+            rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+        }
+    }
+    project.android {
+        compileSdkVersion safeExtGet("compileSdkVersion", 35)
+        defaultConfig {
+            minSdkVersion safeExtGet("minSdkVersion", 24)
+            targetSdkVersion safeExtGet("targetSdkVersion", 35)
+        }
+    }
+}
+
+android {
+    namespace "com.comapeo.core"
+    defaultConfig {
+        versionCode 1
+        versionName "0.1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+                arguments "-DANDROID_STL=c++_shared",
+                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+            }
+        }
+        ndk {
+            abiFilters(*comapeoAbiFilters)
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets {
+        main {
+            // `libnode/bin/` holds the prebuilt nodejs-mobile libnode.so per ABI.
+            // `src/main/jniLibs/` holds per-addon .so files emitted by
+            // `scripts/build-backend.ts` (one `lib<name>__<version>.so` per
+            // native module instance × ABI). Both directories ship into the
+            // same APK `lib/<abi>/` segment.
+            jniLibs.srcDirs 'libnode/bin/', 'src/main/jniLibs/'
+            assets {
+                srcDirs 'src/main/assets'
+            }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path file('CMakeLists.txt')
+            version '3.22.1'
+        }
+    }
+    buildFeatures {
+        prefab true
+    }
+    packagingOptions {
+        excludes += [
+        "**/libc++_shared.so",
+        "**/libfbjni.so",
+        ]
+        // Filter prebuilt jniLibs to the requested ABIs. AGP does *not*
+        // apply `defaultConfig.ndk.abiFilters` to prebuilt content from
+        // `jniLibs.srcDirs` in library modules, so without explicit
+        // excludes here the AAR ships all three supported ABIs even
+        // when the consumer requested a narrower set via
+        // `reactNativeArchitectures`.
+        (supportedAbis - comapeoAbiFilters).each { abi ->
+            excludes += "lib/${abi}/**".toString()
+        }
+        // Keep `.so` files uncompressed and aligned in the APK so
+        // Bionic's per-app linker namespace can mmap them in place
+        // when the manifest sets `extractNativeLibs="false"`. Without
+        // this pair, AGP either reverts to the legacy "extract on
+        // install" behaviour or rejects the manifest at build time.
+        // The bundled `__loadAddon` helper does bare-name dlopen
+        // (`process.dlopen('lib<name>__<version>.so')`), which only
+        // resolves against the APK mmap region — `nativeLibraryDir`
+        // contains nothing under this configuration.
+        jniLibs {
+            useLegacyPackaging false
+        }
+    }
+    ndkVersion '27.0.12077973'
+}
+
+dependencies {
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-process:2.9.0'
+
+    // For the kotlinx-serialization-json dependency, it's best to match it with the Kotlin version
+    // Here's a mapping of compatible versions:
+    def getSerializationVersion = { kotlinVersion ->
+        def serializationVersionMap = [
+            "1.9.0": "1.6.0",
+            "1.9.10": "1.6.0",
+            "1.9.20": "1.6.0",
+            "1.9.21": "1.6.1",
+            "1.9.22": "1.6.2",
+            "1.9.23": "1.6.2",
+            "1.9.24": "1.6.3",
+            "2.0.0": "1.6.2",
+            "2.0.10": "1.6.2",
+            "2.0.20": "1.6.3",
+            "2.0.21": "1.6.3",
+        ]
+        return serializationVersionMap[kotlinVersion] ?: "1.6.3" // Default to latest stable
+    }
+
+    // Use the kotlinVersion() function that's defined by the Expo plugin
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:${getSerializationVersion(project.ext.kotlinVersion())}"
+
+    implementation "androidx.core:core-ktx:1.16.0"
+    compileOnly "com.facebook.fbjni:fbjni:0.3.0"
+
+    // Sentry Android SDK. `@sentry/react-native` is a non-optional
+    // peer dep of this module, so sentry-android is guaranteed on
+    // the consumer's runtime classpath; declaring `implementation`
+    // here lets the verifier resolve `io.sentry.*` directly without
+    // relying on the transitive bring-in from `@sentry/react-native`.
+    // Gradle dedupes against the version `@sentry/react-native@8.x`
+    // pulls in.
+    //
+    // Pin matches what @sentry/react-native@8.x ships
+    // (sentry-android 8.44.x — has the structured-log API used by
+    // `SentryFgsBridge.log` and the Application Metrics API used by
+    // `ExitReasonsCollector`). Bump in lock-step with the
+    // @sentry/react-native peer-dep range.
+    implementation "io.sentry:sentry-android-core:8.44.0"
+    // Test classpath needs the runtime classes so JVM unit tests
+    // can exercise the bridge directly. Robolectric isn't on the
+    // test classpath, so tests that need a real Context use a fake.
+    testImplementation "io.sentry:sentry-android-core:8.44.0"
+
+    // JVM unit test dependencies
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0'
+    // `org.json` ships with the Android framework, but the JVM
+    // unit-test classpath gets a stub where every method throws
+    // "Method ... not mocked" at runtime. Pulling the standalone
+    // org.json:json library onto the test classpath replaces the
+    // stub with a real implementation so production code that uses
+    // `JSONObject` (ControlFrame, RootKeyStore) is unit-testable on
+    // the JVM without instrumentation. Same package + API; no
+    // production code change needed.
+    testImplementation 'org.json:json:20240303'
+
+    // Instrumented test dependencies
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.3.0'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0'
+}

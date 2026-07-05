@@ -1,0 +1,59 @@
+{
+  "name": "@slack/radar-mcp",
+  "version": "1.10.0",
+  "description": "MCP server and web dashboard for on-device debugging of the Slack Android app via ADB",
+  "type": "module",
+  "main": "dist/mcp/index.js",
+  "bin": {
+    "radar-mcp": "dist/mcp/index.js",
+    "slack-radar-mcp": "dist/mcp/index.js",
+    "slack-radar": "dist/mcp/index.js",
+    "slack-radar-web": "dist/web/bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "copy-vendor": "node scripts/copy-vendor.mjs",
+    "build:web": "tsc -p tsconfig.web.json",
+    "build": "tsc && npm run build:web && node scripts/copy-public.mjs && npm run copy-vendor && chmod +x dist/mcp/index.js dist/web/bin.js",
+    "start": "node dist/mcp/index.js",
+    "start:web": "node dist/web/bin.js",
+    "watch": "tsc --watch",
+    "test": "npm run build && node tests/run.mjs",
+    "test:tap": "npm run build && node --test --test-force-exit tests/*.test.mjs",
+    "test:smoke": "npm run build && bash tests/smoke.sh",
+    "test:all": "npm run test && npm run test:smoke",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "slack",
+    "android",
+    "debugging",
+    "adb"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://slack-github.com/slack/slack-radar-mcp"
+  },
+  "bugs": {
+    "url": "https://slack-github.com/slack/slack-radar-mcp/issues"
+  },
+  "homepage": "https://slack-github.com/slack/slack-radar-mcp#readme",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "htm": "^3.1.1",
+    "preact": "^10.29.3",
+    "typescript": "^5.7.2"
+  }
+}

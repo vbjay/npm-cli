@@ -1,0 +1,49 @@
+{
+  "name": "@moss-dev/moss-web",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Moss browser SDK — in-browser semantic search powered by WASM",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.txt"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepack": "npm run clean && npm run build",
+    "samples": "npx vite"
+  },
+  "dependencies": {
+    "@moss-dev/moss-wasm": "0.10.0",
+    "onnxruntime-web": "^1.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vite": "^8.0.8",
+    "@moss-dev/moss-wasm": "0.10.0"
+  },
+  "keywords": [
+    "moss",
+    "semantic-search",
+    "wasm",
+    "browser",
+    "embeddings",
+    "vector"
+  ],
+  "author": "InferEdge Inc.",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usemoss/moss"
+  }
+}

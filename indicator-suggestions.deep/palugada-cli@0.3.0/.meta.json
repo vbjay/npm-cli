@@ -1,0 +1,128 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "492303923bfdcd20",
+    "fetchedFiles": [
+      "install.js",
+      "lib/download.js",
+      "lib/resolve.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "8112961b6bb8483a6e098c6163a984916d5d42ea646b8c0c09cc5b918051de69",
+        "sizeBytes": 1088,
+        "signals": [
+          "reads-process-env",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/download.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/yudistirosaputro/palugada-cli/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/download.js",
+        "reason": "required by ./install.js",
+        "sha256": "c7a5c18541b2b59cceab17d24b65f4111eef28d744147db37107cf0c8119a8ef",
+        "sizeBytes": 4001,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "dynamic-require",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/resolve.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/${OWNER_REPO}/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/resolve.js",
+        "reason": "required by ./lib/download.js",
+        "sha256": "cecf230bf507d3472a6393946fe26ebc6ee43ce105b399e63a86f09f29d9055f",
+        "sizeBytes": 1175,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/${OWNER_REPO}/releases",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:23.865Z"
+  },
+  "hash": "sha256:d9d95e9159d34509575946159a4c89a739d15d1d48d9c8af2495d3a170a7794e"
+}

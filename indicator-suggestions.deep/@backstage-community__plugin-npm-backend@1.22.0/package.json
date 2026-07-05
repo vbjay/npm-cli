@@ -1,0 +1,79 @@
+{
+  "name": "@backstage-community/plugin-npm-backend",
+  "version": "1.22.0",
+  "main": "dist/index.cjs.js",
+  "types": "dist/index.d.ts",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.cjs.js",
+    "types": "dist/index.d.ts"
+  },
+  "backstage": {
+    "role": "backend-plugin",
+    "supported-versions": "1.28.0",
+    "pluginId": "npm",
+    "pluginPackage": "@backstage-community/plugin-npm-backend",
+    "pluginPackages": [
+      "@backstage-community/plugin-npm",
+      "@backstage-community/plugin-npm-backend",
+      "@backstage-community/plugin-npm-common"
+    ],
+    "features": {
+      ".": "@backstage/BackendFeature"
+    }
+  },
+  "scripts": {
+    "start": "backstage-cli package start",
+    "start:alpha": "backstage-cli package start",
+    "build": "backstage-cli package build",
+    "lint": "backstage-cli package lint",
+    "test": "backstage-cli package test",
+    "clean": "backstage-cli package clean",
+    "prepack": "backstage-cli package prepack",
+    "postpack": "backstage-cli package postpack"
+  },
+  "dependencies": {
+    "@backstage-community/plugin-npm-common": "^1.22.0",
+    "@backstage/backend-defaults": "^0.17.1",
+    "@backstage/backend-plugin-api": "^1.9.1",
+    "@backstage/errors": "^1.3.1",
+    "@backstage/plugin-catalog-node": "^2.2.1",
+    "express": "^4.17.1",
+    "express-promise-router": "^4.1.0"
+  },
+  "devDependencies": {
+    "@backstage/backend-test-utils": "^1.11.3",
+    "@backstage/cli": "^0.36.2",
+    "@types/express": "^4.17.1"
+  },
+  "files": [
+    "config.d.ts",
+    "dist"
+  ],
+  "configSchema": "config.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/backstage/community-plugins",
+    "directory": "workspaces/npm/plugins/npm-backend"
+  },
+  "keywords": [
+    "backstage",
+    "plugin",
+    "npm"
+  ],
+  "homepage": "https://github.com/backstage/community-plugins/tree/main/workspaces/npm/plugins/npm-backend",
+  "bugs": "https://github.com/backstage/community-plugins/issues",
+  "maintainers": [
+    "jerolimov",
+    "karthikjeeyar"
+  ],
+  "author": "Christoph Jerolimov",
+  "typesVersions": {
+    "*": {
+      "package.json": [
+        "package.json"
+      ]
+    }
+  }
+}

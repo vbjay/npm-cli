@@ -1,0 +1,218 @@
+{
+  "name": "teads-react-native",
+  "version": "6.2.0",
+  "description": "Easily embed Teads Widgets in your React Native app!",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "react-native": "src/index.tsx",
+  "types": "./lib/typescript/module/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/generated",
+    "!android/app",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "preinstall": "node -e \"const [major, minor, patch] = process.versions.node.split('.').map(Number); if (major < 20 || (major === 20 && minor < 19)) { console.error('❌ Node 20.19.0+ required'); process.exit(1); }\"",
+    "example": "yarn workspace teads-react-native-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "release:clean": "del-cli android/generated android/build android/app lib",
+    "release:verify": "node scripts/verify-tarball.js",
+    "prepare": "bob build",
+    "prepublishOnly": "npm run release:clean && npm run prepare && npm run release:verify",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teads"
+  },
+  "author": "Teads Development Team",
+  "license": "Copyright © 2025 Teads. All rights reserved.",
+  "bugs": {
+    "url": "https://github.com/teads"
+  },
+  "homepage": "https://developers.teads.com",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.6.0",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-community/cli": "16.0.0",
+    "@react-native/eslint-config": "^0.83.0",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.0.0",
+    "commitlint": "^19.6.1",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "19.2.0",
+    "react-native": "0.83.4",
+    "react-native-builder-bob": "^0.40.12",
+    "react-native-codegen": "^0.70.7",
+    "react-native-safe-area-context": "^5.4.0",
+    "release-it": "^17.10.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/",
+    "**/build/",
+    "**/Pods/",
+    "**/.gradle/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "codegen",
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "codegenConfig": {
+    "name": "RNTeadsReactNativeViewSpec",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "tv.teads.reactnative"
+    },
+    "ios": {
+      "componentProvider": {
+        "TeadsAdPlacementFeed": "RCTTeadsAdPlacementFeed",
+        "TeadsAdPlacementMedia": "RCTTeadsAdPlacementMedia"
+      }
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "version": "0.49.8"
+  }
+}

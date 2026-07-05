@@ -1,0 +1,87 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8b5f170b21945079",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "da6da633db63723c731acdbf3535b7e56c4b3506754c1b406be8b2a483813276",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `addon`  -  C/C++ sources",
+            "items": [
+              "src/addon.cc",
+              "src/utils.cc",
+              "src/global.cc",
+              "src/baliseprocess.cc"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  libraries",
+            "items": [
+              "-L<!@(echo $BALISE_LIBDIR)",
+              "-luxbal",
+              "-L<!@(echo $BALISE_LIBDIR)",
+              "-luxbal",
+              "<(PRODUCT_DIR)/../../sdk/lib/_windows_x64/libuxbal.lib"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  include directories",
+            "items": [
+              "sdk/include",
+              "sdk/include/_darwin_x64",
+              "sdk/include/_linux_x64",
+              "sdk/include/_windows_x64"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:23.809Z"
+  },
+  "hash": "sha256:d1e5536a40a1596c21c6791b3e262fdc18046280757f959bb112f92c257d6561"
+}

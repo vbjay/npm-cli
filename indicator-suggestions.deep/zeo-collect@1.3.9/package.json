@@ -1,0 +1,95 @@
+{
+  "name": "zeo-collect",
+  "version": "1.3.9",
+  "description": "test",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.tsx",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "!**/__fixtures__",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!ios/Pods",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/.*"
+  ],
+  "scripts": {
+    "prepack": "bob build",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install && yarn example pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeotap/zeo-collect-rn.git"
+  },
+  "author": "Karthik <apple.dev@zeotap.com> (https://github.com/zeotap)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zeotap/zeo-collect-rn/issues"
+  },
+  "homepage": "https://github.com/zeotap/zeo-collect-rn#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "packageManager": "yarn@4.1.1+sha256.f3cc0eda8e5560e529c7147565b30faa43b4e472d90e8634d7134a37c7f59781",
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "devDependencies": {
+    "react-native-builder-bob": "^0.20.4",
+    "typescript": "^4.5.2"
+  },
+  "codegenConfig": {
+    "name": "NativeZeoCollectSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios",
+      "android": "android"
+    },
+    "android": {
+      "javaPackageName": "com.zeocollect"
+    }
+  }
+}

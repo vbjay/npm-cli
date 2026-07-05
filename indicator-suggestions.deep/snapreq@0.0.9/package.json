@@ -1,0 +1,54 @@
+{
+  "name": "snapreq",
+  "version": "0.0.9",
+  "description": "Cross-platform HTTP and WebSocket client with one API across Node, web, Expo and React Native",
+  "type": "module",
+  "main": "./build/snap-req.js",
+  "types": "./build/snap-req.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/snap-req.d.ts",
+      "default": "./build/snap-req.js"
+    },
+    "./*": {
+      "types": "./build/*.d.ts",
+      "default": "./build/*.js"
+    }
+  },
+  "files": [
+    "build/**"
+  ],
+  "scripts": {
+    "all-checks": "npm run typecheck && npm run lint && npm run test",
+    "build": "rm -rf build && tsc",
+    "lint": "npm run eslint && npm run typecheck",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "release:patch": "release-patch",
+    "test": "npm run build && node --test \"spec/**/*-spec.js\"",
+    "typecheck": "tsc --noEmit",
+    "eslint": "eslint src spec"
+  },
+  "keywords": [
+    "http",
+    "fetch",
+    "websocket",
+    "client",
+    "expo",
+    "react-native",
+    "cross-platform"
+  ],
+  "author": "kasper@diestoeckels.de",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.9.1",
+    "@types/ws": "^8.18.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-jsdoc": "^63.0.0",
+    "globals": "^17.6.0",
+    "release-patch": "^1.0.0",
+    "typescript": "^6.0.3",
+    "ws": "^8.21.0"
+  }
+}

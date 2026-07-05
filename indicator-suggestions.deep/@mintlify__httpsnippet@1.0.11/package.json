@@ -1,0 +1,101 @@
+{
+  "name": "@mintlify/httpsnippet",
+  "version": "1.0.11",
+  "description": "Fork of @readmeio/httpsnippet that doesn't rely on node.js",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./helpers/code-builder": {
+      "types": "./dist/helpers/code-builder.d.ts",
+      "default": "./dist/helpers/code-builder.js"
+    },
+    "./helpers/reducer": {
+      "types": "./dist/helpers/reducer.d.ts",
+      "default": "./dist/helpers/reducer.js"
+    },
+    "./targets": {
+      "types": "./dist/targets/index.d.ts",
+      "default": "./dist/targets/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "api",
+    "clojure",
+    "csharp",
+    "curl",
+    "go",
+    "har",
+    "http",
+    "httpie",
+    "httr",
+    "java",
+    "javascript",
+    "jquery",
+    "kotlin",
+    "objc",
+    "objective-c",
+    "ocaml",
+    "php",
+    "python",
+    "requests",
+    "ruby",
+    "shell",
+    "snippet",
+    "swift",
+    "swift",
+    "xhr",
+    "xmlhttprequest"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mintlify/mint",
+    "directory": "packages/httpsnippet"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc --project tsconfig.build.json",
+    "clean:build": "rimraf dist",
+    "clean:all": "rimraf node_modules .eslintcache && yarn clean:build",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint .",
+    "prebuild": "npm run clean:build",
+    "test": "vitest run --coverage",
+    "type": "tsc --noEmit"
+  },
+  "dependencies": {
+    "qs": "6.14.2",
+    "stringify-object": "3.3.0",
+    "type-fest": "5.2.0"
+  },
+  "devDependencies": {
+    "@types/har-format": "1.2.16",
+    "@types/node": "24.10.1",
+    "@types/qs": "6.14.0",
+    "@vitest/coverage-v8": "4.0.13",
+    "axios": "1.15.0",
+    "oxfmt": "^0.51.0",
+    "oxlint": "1.66.0",
+    "oxlint-tsgolint": "^0.23.0",
+    "require-directory": "2.1.1",
+    "rimraf": "5.0.1",
+    "typescript": "5.9.3",
+    "vitest": "4.0.13"
+  },
+  "gitHead": "514287307ea46bfa939a3fe4fd222036ca545ad7"
+}

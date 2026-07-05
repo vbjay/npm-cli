@@ -1,0 +1,110 @@
+{
+  "name": "@agentbridges-ai/onlyoffice-browser",
+  "version": "0.3.22",
+  "packageManager": "pnpm@11.4.0",
+  "description": "A local web-based document editor based on OnlyOffice, allowing you to edit documents directly in your browser without server-side processing, ensuring your privacy and security.",
+  "type": "module",
+  "main": "./dist/npm/public-api.js",
+  "module": "./dist/npm/public-api.js",
+  "types": "./dist/npm/public-api.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/npm/public-api.d.ts",
+      "import": "./dist/npm/public-api.js"
+    }
+  },
+  "bin": {
+    "onlyoffice-browser-generate-font-assets": "scripts/generate-onlyoffice-font-assets.mjs",
+    "onlyoffice-browser-build-runtime-assets": "scripts/build-onlyoffice-runtime-assets.mjs",
+    "onlyoffice-browser-verify-font-assets": "scripts/verify-onlyoffice-font-assets.mjs"
+  },
+  "files": [
+    "dist/npm",
+    "scripts/build-onlyoffice-runtime-assets.mjs",
+    "scripts/generate-onlyoffice-font-assets.mjs",
+    "scripts/verify-onlyoffice-font-assets.mjs",
+    "docs/fonts.md",
+    "docs/fonts.zh.md",
+    "docs/integration.md",
+    "docs/integration.zh.md",
+    "readme.md",
+    "readme.zh.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite --host --force",
+    "dev:fonts": "ONLYOFFICE_BROWSER_FONT_ASSETS_DIR=.onlyoffice-font-assets vite --host --force",
+    "build": "sh ./bin/build.sh",
+    "build:lib": "node -e \"require('node:fs').rmSync('dist/npm', { recursive: true, force: true })\" && tsc -p tsconfig.lib.json && vite build -c vite.lib.config.ts",
+    "prepack": "npm run build:lib",
+    "pack:dry": "npm pack --dry-run",
+    "preview": "vite preview",
+    "preview:fonts": "ONLYOFFICE_BROWSER_FONT_ASSETS_DIR=.onlyoffice-font-assets vite preview",
+    "tsc": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:download-as": "playwright test test/e2e/download-as.spec.ts",
+    "test:e2e:print": "playwright test test/e2e/print.spec.ts",
+    "test:e2e:save": "playwright test test/e2e/save.spec.ts",
+    "test:e2e:ui": "playwright test --ui",
+    "fonts:generate": "node scripts/generate-onlyoffice-font-assets.mjs",
+    "fonts:verify": "node scripts/verify-onlyoffice-font-assets.mjs",
+    "assets:build": "node scripts/build-onlyoffice-runtime-assets.mjs --input public --output .onlyoffice-runtime-assets --split-output .onlyoffice-runtime-asset-packs",
+    "assets:optimize:dist": "node scripts/build-onlyoffice-runtime-assets.mjs --input dist --prune-root --split-output .onlyoffice-runtime-asset-packs",
+    "memory:chrome-cdp": "node scripts/chrome-cdp-memory-stress.mjs",
+    "test:real-load": "node scripts/chrome-cdp-memory-stress.mjs --host-url=http://host.localhost:5173/office-host.html --require-real-files --modes=edit,readonly,preview --batch-size=3 --iterations=60 --stay-ms=2000 --home-dwell-ms=0 --final-settle-ms=30000 --close-mode=app",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint:ts": "oxlint && tsc --noEmit",
+    "lint": "oxlint && tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "keywords": [
+    "onlyoffice",
+    "document-editor",
+    "privacy",
+    "web-based",
+    "docx",
+    "xlsx",
+    "pptx",
+    "csv",
+    "wasm",
+    "webassembly",
+    "local-editor",
+    "browser-editor",
+    "document-converter",
+    "office-suite"
+  ],
+  "author": "agentbridges-ai",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agentbridges-ai/onlyoffice-browser.git"
+  },
+  "homepage": "https://github.com/agentbridges-ai/onlyoffice-browser#readme",
+  "bugs": {
+    "url": "https://github.com/agentbridges-ai/onlyoffice-browser/issues"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/node": "^25.9.1",
+    "@vitest/coverage-v8": "^4.1.7",
+    "jsdom": "^29.1.1",
+    "oxlint": "^1.67.0",
+    "postcss": "^8.5.15",
+    "prettier": "^3.8.3",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7"
+  },
+  "dependencies": {}
+}

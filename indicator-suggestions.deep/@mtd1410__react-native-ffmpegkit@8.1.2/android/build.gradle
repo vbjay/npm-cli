@@ -1,0 +1,93 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // The default FFmpegKit native version tracks this package's own version
+  // (package.json), so an app picks the FFmpeg build that matches the installed
+  // @mtd1410/react-native-ffmpegkit release unless it explicitly overrides it.
+  def ffmpegKitDefaultVersion = new groovy.json.JsonSlurper()
+    .parseText(new File(projectDir, "../package.json").text)
+    .version
+
+  ext.Ffmpegkit = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    // FFmpegKit native binary variant + version. Override per-app via
+    // ext { ffmpegKitPackage = "full" } in your project's android/build.gradle,
+    // or via -PffmpegKitPackage / -PffmpegKitVersion on the gradle command line.
+    // Available variants: min, https, audio, video, full.
+    // ffmpegKitVersion defaults to this package's version (see above) but can be
+    // overridden to pin any other published native version.
+    ffmpegKitPackage: "https",
+    ffmpegKitVersion: ffmpegKitDefaultVersion
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return Ffmpegkit[prop]
+  }
+
+  // Resolve a property from (in order): -P<prop> command-line/gradle.properties,
+  // rootProject.ext.<prop>, then the Ffmpegkit defaults above.
+  ext.resolveFFmpegKitProp = { prop ->
+    if (project.hasProperty(prop)) {
+      return project.property(prop)
+    }
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return Ffmpegkit[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.ffmpegkit"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+
+  // FFmpegKit prebuilt native binaries, published to Maven Central under
+  // io.github.maitrungduc1410. The variant + version are resolved from the
+  // ffmpegKitPackage / ffmpegKitVersion properties (see buildscript ext above).
+  def ffmpegKitPackage = resolveFFmpegKitProp("ffmpegKitPackage")
+  def ffmpegKitVersion = resolveFFmpegKitProp("ffmpegKitVersion")
+  implementation "io.github.maitrungduc1410:ffmpeg-kit-${ffmpegKitPackage}:${ffmpegKitVersion}"
+}

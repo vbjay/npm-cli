@@ -1,0 +1,52 @@
+{
+  "name": "sloppycode",
+  "description": "Alias for slopcode, the open source AI slopcoding agent.",
+  "homepage": "https://slopcode.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teamslop/slopcode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/teamslop/slopcode/issues"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "coding",
+    "cli",
+    "terminal",
+    "tui",
+    "developer-tools",
+    "llm"
+  ],
+  "funding": {
+    "url": "https://github.com/sponsors/teamslop"
+  },
+  "bin": {
+    "sloppycode": "./bin/slopcode"
+  },
+  "files": [
+    "bin",
+    "postinstall.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "bun ./postinstall.mjs || node ./postinstall.mjs"
+  },
+  "version": "0.2.187",
+  "license": "MIT",
+  "optionalDependencies": {
+    "slopcode-bin-linux-arm64": "0.2.187",
+    "slopcode-bin-linux-x64-baseline-musl": "0.2.187",
+    "slopcode-bin-darwin-x64-baseline": "0.2.187",
+    "slopcode-bin-linux-x64-musl": "0.2.187",
+    "slopcode-bin-linux-x64": "0.2.187",
+    "slopcode-bin-darwin-x64": "0.2.187",
+    "slopcode-bin-linux-arm64-musl": "0.2.187",
+    "slopcode-bin-darwin-arm64": "0.2.187",
+    "slopcode-bin-windows-x64": "0.2.187",
+    "slopcode-bin-windows-x64-baseline": "0.2.187",
+    "slopcode-bin-linux-x64-baseline": "0.2.187"
+  }
+}

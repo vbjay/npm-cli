@@ -1,0 +1,92 @@
+{
+  "name": "oauth2-mock-server",
+  "version": "9.1.0",
+  "description": "Configurable OAuth2/OpenID Connect server for automated testing and development purposes",
+  "type": "module",
+  "keywords": [
+    "oauth",
+    "oauth2",
+    "oauth 2",
+    "mock",
+    "fake",
+    "stub",
+    "server",
+    "cli",
+    "jwt",
+    "oidc",
+    "openid",
+    "connect"
+  ],
+  "author": {
+    "name": "Jorge Poveda",
+    "email": "jorge.poveda@axa-assistance.es"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "^22.12 || ^24 || ^26"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/oauth2-mock-server.git"
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "bin": {
+    "oauth2-mock-server": "dist/oauth2-mock-server.mjs"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "MIGRATION.md",
+    "LICENSE.md",
+    "README.md",
+    "dist/**/*.*"
+  ],
+  "scripts": {
+    "build": "npx tsdown",
+    "prelint": "tsc --noEmit",
+    "lint": "eslint --cache --cache-location .cache/ src test --max-warnings 0",
+    "prepack": "npm run build",
+    "pretest": "npm run lint",
+    "test": "vitest --run --coverage",
+    "test:watch": "vitest --watch"
+  },
+  "dependencies": {
+    "basic-auth": "^2.0.1",
+    "is-plain-obj": "^4.1.0",
+    "jose": "^6.2.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/basic-auth": "^1.1.8",
+    "@types/node": "^22.20.0",
+    "@types/supertest": "^7.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/eslint-plugin": "^1.6.20",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-jsdoc": "^63.0.7",
+    "eslint-plugin-prettier": "^5.5.6",
+    "prettier": "^3.8.4",
+    "supertest": "^7.2.2",
+    "tsdown": "^0.22.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^4.1.9"
+  },
+  "overrides": {
+    "@types/node": "$@types/node"
+  },
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
+  }
+}

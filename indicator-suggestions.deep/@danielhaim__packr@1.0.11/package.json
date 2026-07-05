@@ -1,0 +1,76 @@
+{
+  "name": "@danielhaim/packr",
+  "version": "1.0.11",
+  "description": "Fast asset pipeline built in Rust for processing JavaScript and SCSS",
+  "homepage": "https://github.com/danielhaim1/packr#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielhaim1/packr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/danielhaim1/packr/issues"
+  },
+  "author": "Daniel Haim",
+  "license": "Apache-2.0",
+  "keywords": [
+    "rust",
+    "pipeline",
+    "compiler",
+    "scss",
+    "javascript",
+    "asset",
+    "build",
+    "css",
+    "minify",
+    "bundler"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "packr": "./bin/packr.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "prepare": "bash scripts/build.sh && npm run chmod",
+    "postinstall": "node -v | grep -q 'v1[0-7]' && echo 'Warning: Node.js v18+ required' || npm install -g esbuild",
+    "test": "bash scripts/test.sh",
+    "test:env": "bash scripts/test.sh 'Default Packr Configuration'",
+    "test:config": "bash scripts/test.sh 'Custom Config File'",
+    "test:esm": "bash scripts/test.sh 'ESM Format'",
+    "test:sourcemap": "bash scripts/test.sh 'No Sourcemaps'",
+    "test:minify": "bash scripts/test.sh 'Minification'",
+    "test:eslint": "bash scripts/test.sh 'ESLint'",
+    "test:clean": "node __tests__/clean.js",
+    "dev": "node index.js __tests__/packr.json --watch",
+    "release": "bash scripts/release.sh && git add . && git commit -m 'Prepare release' || true",
+    "release:patch": "npm run release && npm version patch && git push && git push --tags",
+    "release:minor": "npm run release && npm version minor && git push && git push --tags",
+    "release:major": "npm run release && npm version major && git push && git push --tags",
+    "prepublishOnly": "npm run build",
+    "clean": "bash scripts/clean.sh",
+    "clean:all": "bash scripts/clean.sh full",
+    "chmod": "chmod +x bin/packr.js"
+  },
+  "dependencies": {
+    "esbuild": "0.25.2",
+    "ev-emitter": "^2.1.2"
+  },
+  "files": [
+    "bin/",
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/danielhaim1"
+  },
+  "devDependencies": {
+    "eslint": "8.56.0"
+  }
+}

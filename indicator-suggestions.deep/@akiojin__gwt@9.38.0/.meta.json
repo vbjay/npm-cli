@@ -1,0 +1,130 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "15741fba75391a90",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.cjs",
+      "scripts/release-assets.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@akiojin__gwt@9.38.0\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f49abdb101ab0fc0db0f431eaaf207b38da28aa25a5e24eab4ca032bd07d89cd",
+        "sizeBytes": 1449,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/release-assets.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/release-assets.cjs",
+        "reason": "required by ./scripts/postinstall.cjs",
+        "sha256": "9c1fd080096e3434c01d5d78fa3e6b58f7506c65a836ee818f50bed71418ce76",
+        "sizeBytes": 5780,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:37.896Z"
+  },
+  "hash": "sha256:0d9d45d14c765a02e5b1bb91ef29647943c733edfc541f71eb836eb3c4838968"
+}

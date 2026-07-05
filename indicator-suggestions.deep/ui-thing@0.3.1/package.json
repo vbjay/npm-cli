@@ -1,0 +1,97 @@
+{
+  "name": "ui-thing",
+  "version": "0.3.1",
+  "description": "CLI used to add Nuxt components to a project",
+  "keywords": [
+    "cli",
+    "ui",
+    "thing",
+    "nuxt",
+    "reka-ui",
+    "tailwindcss",
+    "nuxtui",
+    "shadcn-ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BayBreezy/ui-thing-cli.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Behon Baker",
+    "email": "behon.baker@yahoo.com",
+    "url": "https://behonbaker.com/"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "ui-thing": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist coverage node_modules bun.lock package-lock.json && bun install",
+    "coverage": "vitest run --coverage",
+    "dev": "tsup --watch",
+    "format": "npx prettier --write .",
+    "knip": "knip",
+    "knip:fix": "knip --fix",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "lint-staged": "lint-staged",
+    "prepare": "husky",
+    "release": "bun run build && npx changelogen@latest --release && npm publish && git push --follow-tags",
+    "start": "node dist/index.js",
+    "test": "vitest"
+  },
+  "lint-staged": {
+    "**/*.{ts,js}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "boxen": "^8.0.1",
+    "c12": "^3.3.4",
+    "commander": "^15.0.0",
+    "consola": "^3.4.2",
+    "dotenv": "^17.4.2",
+    "es-toolkit": "^1.48.1",
+    "execa": "^9.6.1",
+    "figlet": "^1.11.0",
+    "fs-extra": "^11.3.5",
+    "kleur": "^4.1.5",
+    "lodash": "^4.18.1",
+    "magicast": "^0.5.3",
+    "ora": "^9.4.1",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "@types/fs-extra": "^11.0.4",
+    "@types/lodash": "^4.17.24",
+    "@types/node": "^26.0.0",
+    "@types/prompts": "^2.4.9",
+    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/ui": "^4.1.9",
+    "axios-mock-adapter": "^2.1.0",
+    "eslint": "^10.5.0",
+    "globals": "^17.7.0",
+    "husky": "^9.1.7",
+    "jiti": "^2.7.0",
+    "knip": "^6.18.0",
+    "lint-staged": "^17.0.8",
+    "prettier": "^3.8.4",
+    "prettier-plugin-packagejson": "^3.0.2",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.0",
+    "vitest": "^4.1.9"
+  },
+  "packageManager": "bun@1.3.14",
+  "publishConfig": {
+    "access": "public"
+  }
+}

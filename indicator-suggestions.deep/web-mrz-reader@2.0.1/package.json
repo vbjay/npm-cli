@@ -1,0 +1,62 @@
+{
+  "name": "web-mrz-reader",
+  "version": "2.0.1",
+  "description": "Browser-based MRZ reader supporting TD1, TD2, and TD3 formats. Client-side OCR with custom Tesseract model — no server, no CDN.",
+  "type": "module",
+  "main": "./dist/web-mrz-reader.js",
+  "module": "./dist/web-mrz-reader.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/web-mrz-reader.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "postinstall": "node copy-tesseract-files.js",
+    "dev": "vite",
+    "build": "tsc --emitDeclarationOnly && vite build --emptyOutDir false",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mrz",
+    "ocr",
+    "passport",
+    "id-card",
+    "tesseract",
+    "machine-readable-zone",
+    "td1",
+    "td2",
+    "td3",
+    "icao",
+    "browser",
+    "wasm"
+  ],
+  "author": "ilhan negis",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eringen/web-mrz-reader.git"
+  },
+  "homepage": "https://eringen.com/workbench/web-mrz-reader/",
+  "bugs": {
+    "url": "https://github.com/eringen/web-mrz-reader/issues"
+  },
+  "files": [
+    "dist/",
+    "public/model/",
+    "public/tesseract/",
+    "copy-tesseract-files.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "tesseract.js": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "typescript": "^5.7.3",
+    "vite": "^7.3.1"
+  }
+}

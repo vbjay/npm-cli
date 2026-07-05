@@ -1,0 +1,115 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ed724016f3aa65f7",
+    "fetchedFiles": [
+      "bin/merr.js",
+      "package.json",
+      "src/config.js",
+      "src/instant.js",
+      "src/runner.js",
+      "src/sound.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "play-sound",
+        "versionSpec": "^1.1.6"
+      },
+      {
+        "name": "commander",
+        "versionSpec": "^12.1.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "commander@12.1.0",
+      "play-sound@1.1.6"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/merr.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "07b8b49cf492dac06e481a162131028b543b39de840a9877a97c6ae4968617a8",
+        "sizeBytes": 6227,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "modifies-shell-config",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/runner.js",
+          "src/sound.js",
+          "src/config.js",
+          "src/instant.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/runner.js",
+        "reason": "required by ./bin/merr.js",
+        "sha256": "7c97e673ad8ffa5bc79a3e9027e6480c153cf7835f81b7587d668ba7cbfd877c",
+        "sizeBytes": 655,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/sound.js",
+        "reason": "required by ./bin/merr.js",
+        "sha256": "c83ae82838d91e73ef87a55960e1fd80557a3e5ccc7e312675bd795a134f8240",
+        "sizeBytes": 3134,
+        "signals": [
+          "network-access",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/config.js",
+        "reason": "required by ./src/sound.js; required by ./bin/merr.js; required by ./src/instant.js",
+        "sha256": "0be6b36e9e345e3d63e574af7cc21f549b38cb43aaf901b135939efa982ef738",
+        "sizeBytes": 1522,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/instant.js",
+        "reason": "required by ./bin/merr.js",
+        "sha256": "e0e937f4f42d85633423d12569978e4c2db3a450294c3fa101c152a988775383",
+        "sizeBytes": 1711,
+        "signals": [
+          "network-access",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/config.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:21.411Z"
+  },
+  "hash": "sha256:74ba2c03ea142cbb06075ff0c842dccf2c0d9857e176344cb0df5de2a81f1432"
+}

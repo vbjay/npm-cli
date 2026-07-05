@@ -1,0 +1,58 @@
+{
+  "name": "build-esm",
+  "version": "4.2.2",
+  "description": "Compile an ES Module for release on npm",
+  "keywords": [
+    "babel",
+    "esm",
+    "npm"
+  ],
+  "homepage": "https://github.com/vinsonchuong/build-esm",
+  "bugs": "https://github.com/vinsonchuong/build-esm/issues",
+  "license": "MIT",
+  "author": "Vinson Chuong <vinsonchuong@gmail.com>",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "src"
+  ],
+  "bin": {
+    "build-esm": "src/bin/build-esm.js"
+  },
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vinsonchuong/build-esm"
+  },
+  "scripts": {
+    "test": "if [ -n \"$CI\" ]; then standard -v && flow check && ava -v; else standard -v --fix && flow && ava -v; fi",
+    "build": "node -r overdub/register src/bin/build-esm.js",
+    "release": "semantic-release",
+    "prepack": "node -r overdub/register src/bin/build-esm.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.5.5",
+    "mkdirp": "^0.5.1",
+    "npm-packlist": "^1.4.4",
+    "overdub": "^2.5.1",
+    "rimraf": "^3.0.0"
+  },
+  "devDependencies": {
+    "ava": "^2.3.0",
+    "flow-bin": "^0.106.3",
+    "semantic-release": "^15.13.24",
+    "standard-esnext": "^5.3.3"
+  },
+  "ava": {
+    "helpers": [
+      "**/fixtures/**",
+      "**/helpers/**"
+    ],
+    "require": "overdub/register",
+    "babel": {
+      "testOptions": {
+        "extends": "overdub/babel"
+      }
+    }
+  }
+}

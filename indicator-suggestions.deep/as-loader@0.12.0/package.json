@@ -1,0 +1,77 @@
+{
+  "name": "as-loader",
+  "version": "0.12.0",
+  "description": "AssemblyScript loader for webpack",
+  "main": "loader/index.js",
+  "repository": "git@github.com:piotr-oles/as-loader.git",
+  "author": "Piotr Oleś <piotrek.oles@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "assemblyscript",
+    "webpack",
+    "webassembly",
+    "wasm",
+    "loader"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src test",
+    "test": "jest",
+    "release": "auto shipit",
+    "prepare": "husky install"
+  },
+  "files": [
+    "loader/*",
+    "runtime/*"
+  ],
+  "peerDependencies": {
+    "assemblyscript": "^0.19.0",
+    "webpack": "^5.0.0"
+  },
+  "dependencies": {
+    "@assemblyscript/loader": "^0.19.0",
+    "as-bind": "^0.8.0",
+    "loader-utils": "^2.0.0",
+    "schema-utils": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/loader-utils": "^2.0.3",
+    "@types/webpack": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "assemblyscript": "^0.19.0",
+    "auto": "^10.30.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.0",
+    "jest": "^27.0.6",
+    "karton": "^0.4.1",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5",
+    "webpack": "^5.0.0"
+  },
+  "auto": {
+    "plugins": [
+      "npm",
+      "released"
+    ],
+    "shipit": {
+      "noChangelog": true
+    }
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

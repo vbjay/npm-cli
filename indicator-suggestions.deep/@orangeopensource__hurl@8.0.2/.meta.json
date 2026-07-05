@@ -1,0 +1,119 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4a8afaee716309bd",
+    "fetchedFiles": [
+      "archive.js",
+      "install.js",
+      "package.json",
+      "platform.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "7.5.16"
+      },
+      {
+        "name": "extract-zip",
+        "versionSpec": "2.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "extract-zip@2.0.1",
+      "tar@7.5.16"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "abf6401f7d347d6ba90fefdd1c94e5d1c0c1cc266c835417f9d242a7fc11280c",
+        "sizeBytes": 1297,
+        "signals": [
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "archive.js",
+          "package.json",
+          "platform.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Orange-OpenSource/hurl/releases/download/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "archive.js",
+        "reason": "required by ./install.js",
+        "sha256": "a3b7b1da8bcbb7fc17959b8640067d236b10b7ec78936b7f736ac7294a7b6f3b",
+        "sizeBytes": 3828,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "43cb95d42923ae260fbd2374c64085530782bd75418349210c18bd11839ec778",
+        "sizeBytes": 1006,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "platform.json",
+        "reason": "required by ./install.js",
+        "sha256": "d476b5abee05cea62a6a1d01c74e8a0622be04d0e2ecf574e68999a7745df425",
+        "sizeBytes": 1254,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:38.710Z"
+  },
+  "hash": "sha256:a1a985525adfd76cf60a6098c805f416e63ec2b7bcf493fbc0d9f3db929f7512"
+}

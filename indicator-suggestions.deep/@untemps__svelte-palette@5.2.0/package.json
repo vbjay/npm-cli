@@ -1,0 +1,130 @@
+{
+	"name": "@untemps/svelte-palette",
+	"version": "5.2.0",
+	"author": "Vincent Le Badezet <v.lebadezet@untemps.net>",
+	"license": "MIT",
+	"homepage": "https://svelte-palette.vercel.app",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/untemps/svelte-palette.git"
+	},
+	"bugs": "https://github.com/untemps/svelte-palette/issues",
+	"description": "Svelte component to display a customisable color picker",
+	"keywords": [
+		"palette",
+		"color",
+		"color-picker",
+		"svelte",
+		"svelte-component",
+		"component",
+		"javascript"
+	],
+	"private": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"files": [
+		"dist",
+		"!dist/**/*.test.*"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"engines": {
+		"node": "20.x"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.3.0",
+		"@commitlint/config-conventional": "^19.2.2",
+		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/exec": "^7.1.0",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^12.0.6",
+		"@sveltejs/adapter-auto": "^3.2.2",
+		"@sveltejs/kit": "^2.5.16",
+		"@sveltejs/package": "^2.3.2",
+		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@testing-library/jest-dom": "^6.4.6",
+		"@testing-library/svelte": "^5.3.1",
+		"@testing-library/user-event": "^14.5.2",
+		"@vitest/coverage-v8": "^2.0.0",
+		"carbon-components-svelte": "^0.85.0",
+		"carbon-icons-svelte": "^12.9.0",
+		"cross-env": "^7.0.3",
+		"font-color-contrast": "^11.1.0",
+		"husky": "^9.0.11",
+		"jsdom": "^24.1.0",
+		"prettier": "^3.3.2",
+		"prettier-plugin-svelte": "^3.5.1",
+		"publint": "^0.2.8",
+		"semantic-release": "^25.0.3",
+		"svelte": "^5.53.5",
+		"tslib": "^2.6.3",
+		"typescript": "^5.4.5",
+		"vite": "^5.3.1",
+		"vitest": "^2.0.0"
+	},
+	"dependencies": {
+		"@untemps/svelte-use-drop-outside": "^1.6.0",
+		"@untemps/svelte-use-tooltip": "^2.8.0",
+		"@untemps/utils": "^3.0.0"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"release": {
+		"branches": [
+			"main",
+			{
+				"name": "beta",
+				"prerelease": true
+			}
+		],
+		"plugins": [
+			[
+				"@semantic-release/commit-analyzer",
+				{
+					"releaseRules": [
+						{
+							"scope": "force",
+							"release": "patch"
+						}
+					]
+				}
+			],
+			"@semantic-release/release-notes-generator",
+			"@semantic-release/changelog",
+			"@semantic-release/npm",
+			"@semantic-release/git",
+			[
+				"@semantic-release/github",
+				{
+					"assets": [
+						{
+							"path": "dist/index.js"
+						}
+					]
+				}
+			]
+		]
+	},
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && yarn package",
+		"preview": "vite preview",
+		"package": "svelte-kit sync && svelte-package && publint",
+		"prepublishOnly": "yarn package",
+		"pretest": "svelte-kit sync",
+		"test": "vitest watch --coverage",
+		"test:ci": "vitest run --coverage",
+		"lint": "prettier --check .",
+		"format": "prettier --write . && git add . && git status",
+		"prepare": "husky install"
+	}
+}

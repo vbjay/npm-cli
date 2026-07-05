@@ -1,0 +1,43 @@
+{
+  "name": "@dhruv2mars/gunmetal",
+  "version": "0.1.15",
+  "description": "Alpha local-first AI access as one OpenAI-compatible local API",
+  "type": "module",
+  "bin": {
+    "gunmetal": "bin/gunmetal.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "gunmetal": "node bin/gunmetal.js",
+    "postinstall": "node bin/install.js",
+    "build": "node -e \"process.exit(0)\"",
+    "check": "node --check bin/gunmetal.js && node --check bin/gunmetal-lib.js && node --check bin/install.js && node --check bin/install-lib.js && node --test test/*.test.js",
+    "test": "node --test test/*.test.js"
+  },
+  "homepage": "https://github.com/Dhruv2mars/gunmetal#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dhruv2mars/gunmetal.git",
+    "directory": "packages/npm"
+  },
+  "bugs": {
+    "url": "https://github.com/Dhruv2mars/gunmetal/issues"
+  },
+  "keywords": [
+    "ai",
+    "openai-compatible",
+    "local-api",
+    "cli",
+    "rust"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "preferGlobal": true,
+  "license": "MIT"
+}

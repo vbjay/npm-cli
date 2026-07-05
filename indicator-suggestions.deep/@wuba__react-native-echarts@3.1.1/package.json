@@ -1,0 +1,193 @@
+{
+  "name": "@wuba/react-native-echarts",
+  "version": "3.1.1",
+  "description": "Echarts for React Native.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./skiaChart": {
+      "source": "./src/skia/skiaChart.tsx",
+      "types": "./lib/typescript/src/skia/skiaChart.d.ts",
+      "browser": "./lib/module/skia/skiaChart.web.js",
+      "default": "./lib/module/skia/skiaChart.js"
+    },
+    "./svgChart": {
+      "source": "./src/svg/svgChart.tsx",
+      "types": "./lib/typescript/src/svg/svgChart.d.ts",
+      "browser": "./lib/module/svg/svgChart.web.js",
+      "default": "./lib/module/svg/svgChart.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "skiaChart.*",
+    "svgChart.*",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @wuba/react-native-echarts-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "release": "release-it --only-version"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+http://github.com/wuba/react-native-echarts.git"
+  },
+  "author": "wuba <chenzhiqing01@58.com> (http://github.com/wuba/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "http://github.com/wuba/react-native-echarts/issues"
+  },
+  "homepage": "http://github.com/wuba/react-native-echarts#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^9.39.4",
+    "@evilmartians/lefthook": "^2.1.4",
+    "@react-native/babel-preset": "0.83.2",
+    "@react-native/eslint-config": "^0.83.2",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@shopify/react-native-skia": "2.4.18",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-test-renderer": "19.1.0",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "echarts": "^6.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "jest-image-snapshot": "^6.5.2",
+    "prettier": "^3.8.1",
+    "react": "19.2.0",
+    "react-native": "0.83.2",
+    "react-native-builder-bob": "^0.40.18",
+    "react-native-gesture-handler": "~2.30.0",
+    "react-native-svg": "15.15.3",
+    "react-test-renderer": "19.2.0",
+    "release-it": "^19.2.4",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.2",
+    "zrender": "^6.0.0"
+  },
+  "peerDependencies": {
+    "@shopify/react-native-skia": "*",
+    "echarts": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-svg": "*",
+    "zrender": "*"
+  },
+  "peerDependenciesMeta": {
+    "@shopify/react-native-skia": {
+      "optional": true
+    },
+    "react-native-gesture-handler": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
+  },
+  "resolutions": {
+    "tslib": "^2.8.1"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.54.3"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.11"
+  }
+}

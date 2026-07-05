@@ -1,0 +1,112 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "539ae82391d5d20b",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "plist",
+        "versionSpec": "^3.0.1"
+      },
+      {
+        "name": "ncp",
+        "versionSpec": "^2.0.0"
+      },
+      {
+        "name": "xml2js",
+        "versionSpec": "^0.4.19"
+      },
+      {
+        "name": "chalk",
+        "versionSpec": "^2.4.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chalk@2.4.2",
+      "ncp@2.0.0",
+      "plist@3.1.1",
+      "xml2js@0.4.23"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "904dca1c0f687089e4c9a8ebc28832fee730008f1abe15bea23201b9e64c4cc4",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.google.android.gms:play-services-base:18.3.0",
+              "com.google.firebase:firebase-messaging:22.0.0",
+              "androidx.core:core:1.8.0",
+              "io.github.go-acoustic:acoustic-mobile-push-android-sdk:$campaignSDKVersion",
+              "io.github.go-acoustic:acoustic-mobile-push-android-inapp:$campaignSDKVersion",
+              "io.github.go-acoustic:acoustic-mobile-push-android-inbox:$campaignSDKVersion",
+              "androidx.security:security-crypto:1.1.0-alpha06"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "3b1fd0677474d5844f7b2cc93d57ab008b6ab0c9ba296997339717143a7528ed",
+        "sizeBytes": 21795,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "runtime-installer",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "http://schemas.android.com/tools",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://s01.oss.sonatype.org/content/groups/staging",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:31.351Z"
+  },
+  "hash": "sha256:4b93051e4f21255c3531faed8c503dd3a3a1c69904f3f35a7b4c3af9a7c79575"
+}

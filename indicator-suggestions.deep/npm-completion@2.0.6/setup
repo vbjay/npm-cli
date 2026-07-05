@@ -1,0 +1,34 @@
+#!/usr/bin/env false  # DEFANGED: static-analysis cache — do not execute
+# DEFANGED: static-analysis cache — do not execute
+exit 1
+NPM_PATH=$(cd $(dirname $0) && pwd)/$(basename $0)
+while [ -h $NPM_PATH ]; do
+  NPM_PATH=$(dirname "$NPM_PATH")/$(ls -ld -- "$NPM_PATH" | awk '{print $11}')
+done
+NPM_PATH=$( dirname "$NPM_PATH" )
+
+SOURCE_FILES=$( $NPM_PATH/get-source-files.sh )
+for SOURCE_FILE in $SOURCE_FILES; do
+  END_WITH_NEW_LINE=false
+  for LINE in "# added for npm-completion https://github.com/Jephuff/npm-bash-completion" "PATH_TO_NPM_COMPLETION=\"$NPM_PATH\"" "source \$PATH_TO_NPM_COMPLETION/npm-completion.sh"; do
+    grep -F "$LINE" $SOURCE_FILE > /dev/null
+    if [ $? != 0 ]; then
+      printf "\n$LINE" >> $SOURCE_FILE
+      END_WITH_NEW_LINE=true
+    fi
+  done
+  if [[ $END_WITH_NEW_LINE = true ]]; then
+    printf "\n\n" >> $SOURCE_FILE
+  fi
+done
+
+(cd $NPM_PATH && git clone --depth 1 https://github.com/Jephuff/npm-package-names)
+
+# echo messages
+if [ ! -z "$SOURCE_FILES" ]; then
+  printf "\nadd this line to a cron job or startup script\n"
+  printf "    PATH=\$PATH:\"$(dirname "$(which node)")\":\"$(dirname "$(which npm)")\":\"$(dirname "$(which git)")\" && cd $NPM_PATH && ./update && cd -\n"
+  printf "\nrestart terminal to start using\n\n"
+else
+  printf "\ncouldn't find source file. Please create ~/.bashrc, ~/.bash_profile or ~/.zshrc and run\n    npm-completion-setup\n\n"
+fi

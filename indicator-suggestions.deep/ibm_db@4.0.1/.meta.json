@@ -1,0 +1,176 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f8f028b3d8405cdc",
+    "fetchedFiles": [
+      "binding.gyp",
+      "installer/driverInstall.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "axios",
+        "versionSpec": "^1.16.1"
+      },
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.16"
+      },
+      {
+        "name": "targz",
+        "versionSpec": "^1.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18",
+      "axios@1.18.1",
+      "targz@1.0.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "56d3a52166309b65f6b807e7889923b5abf5a243a318b60ab155089697b442aa",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `odbc_bindings`  -  C/C++ sources",
+            "items": [
+              "src/odbc.cpp",
+              "src/odbc_connection.cpp",
+              "src/odbc_statement.cpp",
+              "src/odbc_result.cpp",
+              "src/strptime.c",
+              "src/odbc.cpp",
+              "src/strptime.c",
+              "src/odbc.cpp"
+            ]
+          },
+          {
+            "label": "Target `odbc_bindings`  -  libraries",
+            "items": [
+              "-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib32 ",
+              "-ldb2",
+              "-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib64 ",
+              "-ldb2",
+              "dsnao64c.x",
+              "-L$(IBM_DB_HOME)/lib ",
+              "-ldb2",
+              "$(IBM_DB_HOME)/lib/db2app.lib",
+              "$(IBM_DB_HOME)/lib/db2app64.lib",
+              "-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib32 ",
+              "-ldb2",
+              "-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib64 ",
+              "-ldb2"
+            ]
+          },
+          {
+            "label": "Target `odbc_bindings`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "$(IBM_DB_HOME)/include",
+              "$(IBM_DB_HOME)/include",
+              "build/include",
+              "$(IBM_DB_HOME)/include",
+              "$(IBM_DB_HOME)/include",
+              "$(IBM_DB_HOME)/include",
+              "$(IBM_DB_HOME)/include",
+              "$(IBM_DB_HOME)/include"
+            ]
+          },
+          {
+            "label": "Target `odbc_bindings`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "installer/driverInstall.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "6af2cde4e77a6ef21699a35820e475f787629dd317011404029fd96bdb97fdf3",
+        "sizeBytes": 39345,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "native-build",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://public.dhe.ibm.com/ibmdl/export/pub/software/data/db2/drivers/odbc_cli",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/ibmdb/db2drivers/raw/main/clidriver/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/ibmdb/node-ibm_db. \\n",
+            "classification": "reference"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/ibmdb/ibmdb-binaries/refs/heads/main/",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:59.736Z"
+  },
+  "hash": "sha256:04419d54d832d8283606b0591a6128b303f8f01cc73a4ad4c7371587d15bd71c"
+}

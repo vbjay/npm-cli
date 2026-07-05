@@ -1,0 +1,131 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["Compressor_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:9.2.1"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+// Nitrogen: registers the generated Kotlin sources with this Gradle project.
+apply from: '../nitrogen/generated/android/NitroCompressor+autolinking.gradle'
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["Compressor_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Compressor_" + name]).toInteger()
+}
+
+android {
+  namespace "com.reactnativecompressor"
+
+  ndkVersion getExtOrDefault("ndkVersion")
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  sourceSets {
+    main {
+      manifest.srcFile "src/main/AndroidManifestNew.xml"
+    }
+  }
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+    externalNativeBuild {
+      cmake {
+        cppFlags "-frtti -fexceptions -Wall -Wextra -fstack-protector-all -std=c++20"
+        arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+        abiFilters(*reactNativeArchitectures())
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  buildFeatures {
+    prefab true
+  }
+
+  packagingOptions {
+    excludes = [
+      "META-INF",
+      "META-INF/**",
+      "**/libc++_shared.so",
+      "**/libfbjni.so",
+      "**/libjsi.so",
+      "**/libfolly_json.so",
+      "**/libfolly_runtime.so",
+      "**/libglog.so",
+      "**/libhermes.so",
+      "**/libhermes-executor-debug.so",
+      "**/libhermes_executor.so",
+      "**/libreactnative.so",
+      "**/libreactnativejni.so",
+      "**/libturbomodulejsijni.so",
+      "**/libreact_nativemodule_core.so",
+      "**/libjscexecutor.so"
+    ]
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+  maven { url "https://jitpack.io" }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  // For < 0.71, this will be from the local maven repo
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  // Nitro core (provided as a Gradle subproject by autolinking).
+  implementation project(":react-native-nitro-modules")
+
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+  implementation 'org.mp4parser:isoparser:1.9.56'
+  implementation 'com.github.kaushik-naik:TAndroidLame:277c2ab4b0'
+  implementation 'javazoom:jlayer:1.0.1'
+}

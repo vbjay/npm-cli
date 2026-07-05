@@ -1,0 +1,104 @@
+{
+  "name": "package-version-git-tag",
+  "version": "3.0.0",
+  "description": "Add Git tag corresponding to the version field of package.json",
+  "keywords": [
+    "cli",
+    "git",
+    "git-tag",
+    "package",
+    "tag",
+    "version"
+  ],
+  "homepage": "https://github.com/sounisi5011/package-version-git-tag#readme",
+  "bugs": {
+    "url": "https://github.com/sounisi5011/package-version-git-tag/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sounisi5011/package-version-git-tag.git"
+  },
+  "license": "MIT",
+  "author": "sounisi5011",
+  "main": "dist/index",
+  "types": "dist/index.d.ts",
+  "bin": "dist/bin.js",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:readme": "readme-generator --template ./.template/readme.njk",
+    "clean": "del ./dist/ ./test/fixtures/{node_modules/,package-lock.json} ./test/tmp/",
+    "fmt-js": "eslint --ext .js --fix ./",
+    "fmt-pkg": "run-s fmt-pkg:prettier fmt-pkg:sort",
+    "fmt-pkg:prettier": "prettier-package-json --write ./package.json",
+    "fmt-pkg:sort": "sort-package-json ./package.json",
+    "fmt-ts": "eslint --ext .ts --fix ./",
+    "lint": "run-p lint:*",
+    "lint:eslint": "eslint --ext .ts,.js ./",
+    "lint:tsc-src": "tsc --noEmit",
+    "lint:tsc-test": "tsc -p ./test/ --noEmit",
+    "prepare": "patch-package",
+    "release": "run-s release:validation release:build release:publish",
+    "release:build": "run-s clean build",
+    "release:publish": "run-s release:publish:git release:publish:npm",
+    "release:publish:git": "node ./dist/bin.js --push --verbose",
+    "release:publish:npm": "npm publish --access=public",
+    "release:validation": "npm-run-all release:validation:publishable -p 'release:validation:!(publishable)' test",
+    "release:validation:git-branch": "git-branch-is master",
+    "release:validation:git-work-dir": "is-git-status-clean",
+    "release:validation:publishable": "can-npm-publish --verbose",
+    "test": "run-s test:other-than-unit-test test:unit-test",
+    "test:other-than-unit-test": "run-s test:readme test:peer-deps lint",
+    "test:peer-deps": "check-peer-deps",
+    "test:readme": "run-s 'build:readme -- --test'",
+    "test:unit-test": "ava"
+  },
+  "dependencies": {
+    "cac": "^6.5.8",
+    "command-join": "^3.0.0",
+    "cross-spawn": "^7.0.2"
+  },
+  "devDependencies": {
+    "@sounisi5011/readme-generator": "github:sounisi5011/readme-generator#semver:0.0.2",
+    "@types/cross-spawn": "6.0.2",
+    "@types/node": "12.x",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
+    "ava": "2.4.0",
+    "can-npm-publish": "1.3.2",
+    "check-peer-deps": "1.1.3",
+    "del": "5.1.0",
+    "del-cli": "3.0.1",
+    "escape-string-regexp": "2.0.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "3.1.3",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-simple-import-sort": "5.0.3",
+    "eslint-plugin-standard": "4.0.1",
+    "git-branch-is": "3.1.0",
+    "husky": "4.2.5",
+    "is-git-status-clean": "1.0.0",
+    "lint-staged": "10.2.7",
+    "make-dir": "3.1.0",
+    "node-git-server": "0.6.1",
+    "npm-run-all": "4.1.5",
+    "patch-package": "6.2.2",
+    "prettier": "2.0.5",
+    "prettier-package-json": "2.1.3",
+    "sort-package-json": "1.44.0",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.3"
+  },
+  "engines": {
+    "node": "10.x || 12.x || 14.x"
+  }
+}

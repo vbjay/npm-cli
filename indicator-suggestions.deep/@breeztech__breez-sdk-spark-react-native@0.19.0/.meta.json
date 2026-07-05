@@ -1,0 +1,132 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2c2507e9acb5ac0f",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/postinstall.sh"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "f8fdb5c91235ab1d929bcc267ec7e1a87946fb2408a6d4ba428021d24d179b1b",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())",
+              "\"arm64-v8a\", \"armeabi-v7a\", \"x86\", \"x86_64\""
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@breeztech__breez-sdk-spark-react-native@0.19.0\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.sh",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "20453958b81567a13c5acc04be4c2904b4c4790b3d6ea25724decbdf391a5d6b",
+        "sizeBytes": 1721,
+        "signals": [
+          "native-build",
+          "binary-download",
+          "shell-network-fetch",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/breez/breez-sdk-spark-react-native",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:46.836Z"
+  },
+  "hash": "sha256:0a478728b210d1c3fc307aacf67bf0def82accee200f36ec598799e74216e028"
+}

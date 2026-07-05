@@ -1,0 +1,44 @@
+{
+  "name": "vramancer",
+  "version": "1.2.0",
+  "description": "Can my machine run this model? Estimate VRAM/RAM, tok/s, and TTFT.",
+  "bin": {
+    "vramancer": "./bin/vramancer-wrapper.js",
+    "modelfit": "./bin/vramancer-wrapper.js"
+  },
+  "scripts": {
+    "install": "node install.js",
+    "build": "cargo build --release --locked",
+    "test": "cargo test --locked",
+    "prepublishOnly": "npm test"
+  },
+  "author": "Jules",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/09Catho/VRAMancer.git"
+  },
+  "homepage": "https://github.com/09Catho/VRAMancer#readme",
+  "bugs": {
+    "url": "https://github.com/09Catho/VRAMancer/issues"
+  },
+  "keywords": [
+    "llm",
+    "vram",
+    "tui",
+    "cli",
+    "rust"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/vramancer-wrapper.js",
+    "src",
+    "Cargo.toml",
+    "Cargo.lock",
+    "install.js",
+    "README.md",
+    "LICENSE"
+  ]
+}

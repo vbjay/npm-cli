@@ -1,0 +1,113 @@
+{
+  "name": "framepayments-react-native",
+  "version": "4.1.0",
+  "description": "React Native SDK for Frame Payments — standalone, with networking via the framepayments Node SDK.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest",
+    "typedoc": "typedoc",
+    "typedoc:json": "typedoc --json dist-docs/frame-react-native-types.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "frame",
+    "payments",
+    "framepayments"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Frame-Payments/frame-react-native.git"
+  },
+  "author": "Frame Payments <engineering@framepayments.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Frame-Payments/frame-react-native/issues"
+  },
+  "homepage": "https://github.com/Frame-Payments/frame-react-native#readme",
+  "peerDependencies": {
+    "@evervault/evervault-react-native": ">=1.4.0",
+    "@expo/config-plugins": ">=8.0.0",
+    "@fingerprintjs/fingerprintjs-pro-react-native": ">=3.0.0",
+    "expo": ">=51.0.0",
+    "expo-location": ">=17.0.0",
+    "react": "*",
+    "react-native": ">=0.81.0",
+    "react-native-plaid-link-sdk": ">=11.0.0",
+    "react-native-svg": ">=15.0.0",
+    "react-native-vision-camera": ">=4.0.0 <6.0.0",
+    "sift-react-native": ">=1.0.1"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    },
+    "@expo/config-plugins": {
+      "optional": true
+    },
+    "expo-location": {
+      "optional": true
+    },
+    "react-native-plaid-link-sdk": {
+      "optional": true
+    },
+    "react-native-vision-camera": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@evervault/evervault-react-native": "^1.4.2",
+    "@expo/config-plugins": "^8.0.0",
+    "@fingerprintjs/fingerprintjs-pro-react-native": "^3.14.0",
+    "@react-native/babel-preset": "^0.85.3",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.0",
+    "@types/react": "^19.1.1",
+    "@types/react-native": "^0.73.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.1",
+    "@typescript-eslint/parser": "^8.59.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "expo-location": "^19.0.4",
+    "jest": "^29.7.0",
+    "prettier": "^3.8.3",
+    "react": "19.1.1",
+    "react-native": "^0.82.1",
+    "react-native-plaid-link-sdk": "^12.8.0",
+    "react-native-svg": "^15.15.5",
+    "react-native-vision-camera": "^5.0.10",
+    "react-test-renderer": "^19.1.1",
+    "sift-react-native": "^1.0.1",
+    "ts-jest": "^29.1.0",
+    "typedoc": "^0.28.19",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "lib",
+    "ios",
+    "android/build.gradle",
+    "android/consumer-rules.pro",
+    "android/src/",
+    "plugin",
+    "app.plugin.js",
+    "FrameReactNative.podspec",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.28.6",
+    "framepayments": "^2.4.0",
+    "js-sha256": "^0.11.1",
+    "libphonenumber-js": "^1.13.3"
+  }
+}

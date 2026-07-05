@@ -1,0 +1,97 @@
+{
+  "name": "react-native-aria-description",
+  "version": "0.5.0",
+  "main": "./dist/commonjs/index.js",
+  "author": "Sam Wall <oss@samuelwall.co.uk>",
+  "license": "MIT",
+  "description": "React Native Higher-Order Component to map aria-description to accessibilityHint",
+  "homepage": "https://github.com/sjwall/react-native-aria-description/#readme",
+  "bugs": "https://github.com/sjwall/react-native-aria-description/issues",
+  "keywords": [
+    "react-native",
+    "ui",
+    "aria",
+    "aria-description",
+    "aria-describedby",
+    "a11y",
+    "react",
+    "jsx",
+    "hoc",
+    "higher-order component"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjwall/react-native-aria-description.git"
+  },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-native": "^0.76.6",
+    "react-native-builder-bob": "^0.32.0",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.44.1"
+  },
+  "source": "./src/index.ts",
+  "react-native": "./src/index.ts",
+  "module": "./dist/module/index.js",
+  "types": "./dist/typescript/commonjs/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "react-native": "./src/index.ts",
+        "types": "./dist/typescript/module/src/index.d.ts",
+        "default": "./dist/module/index.js"
+      },
+      "require": {
+        "react-native": "./src/index.ts",
+        "types": "./dist/typescript/commonjs/src/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "prepare": "cp ../README.md ../LICENSE ./ && bob build"
+  },
+  "files": [
+    "src",
+    "dist",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ]
+}

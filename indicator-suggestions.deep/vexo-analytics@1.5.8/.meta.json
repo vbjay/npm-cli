@@ -1,0 +1,72 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c895e417d3079f73",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "959221fe8594cbef5aefa231e00443409c523e37013fb84a757d3dfb35129951",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "co.vexo:vexoanalytics:0.11.1",
+              "com.facebook.react:react-native:${safeExtGet(",
+              "com.android.installreferrer:installreferrer:${safeExtGet(",
+              "com.google.firebase:firebase-iid",
+              "com.google.firebase:firebase-iid:${firebaseIidVersion}",
+              "com.google.android.gms:play-services-iid:$iidVersion"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "node_modules/.bin/webpack",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:26.027Z"
+  },
+  "hash": "sha256:938a09569cff13bd6dbe8e93586f551fb9ec374d9c817f486fc8f1b064046ea3"
+}

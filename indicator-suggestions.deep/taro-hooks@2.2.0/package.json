@@ -1,0 +1,75 @@
+{
+  "name": "taro-hooks",
+  "version": "2.2.0",
+  "description": "为 Taro 而设计的 Hooks Library",
+  "keywords": [
+    "taro-hooks",
+    "hooks",
+    "taro",
+    "tarojs",
+    "tarojs-hooks",
+    "react",
+    "react-hooks",
+    "vue",
+    "composition-api",
+    "javascript",
+    "lerna",
+    "monorepo",
+    "wechat",
+    "miniprograme",
+    "typescript",
+    "helpers",
+    "web",
+    "h5",
+    "rn",
+    "react-native"
+  ],
+  "typedocMain": "src/index.ts",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": false,
+  "author": "innocces<jiangjiangjiangxi@gmail.com>(https://github.com/innocces)",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": "https://github.com/innocces/taro-hooks",
+  "homepage": "https://next-version-taro-hooks.vercel.app/site",
+  "files": [
+    "lib",
+    "es",
+    "metadata.json",
+    "package.json",
+    "README.md",
+    "postinstall.js"
+  ],
+  "dependencies": {
+    "lodash-wechat": "^1.0.0",
+    "querystring": "^0.2.1",
+    "@taro-hooks/ahooks": "^2.2.0",
+    "@taro-hooks/shared": "2.2.0",
+    "@taro-hooks/use-request": "2.2.0",
+    "@taro-hooks/compressorjs": "2.2.0"
+  },
+  "devDependencies": {
+    "@tarojs/taro": "^3.6.11",
+    "@tarojs/taro-h5": "^3.6.11",
+    "@types/node": "^18.15.12"
+  },
+  "peerDependencies": {
+    "@tarojs/taro": ">=3.4.x",
+    "@tarojs/taro-h5": ">=3.4.x"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "license": "MIT",
+  "gitHead": "628c69db9aed1a7c258f75dcf095449ec99023e0",
+  "scripts": {
+    "build": "gulp --isolatedModules true",
+    "dev": "gulp --w true --isolatedModules true",
+    "dev:ts": "gulp --w true --skip true --isolatedModules true",
+    "postinstall": "node -e \"try{require('./postinstall')}catch(e){}\""
+  }
+}

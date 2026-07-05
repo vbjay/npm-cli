@@ -1,0 +1,107 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4deb9554399db965",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "axios",
+        "versionSpec": "^1.13.6"
+      },
+      {
+        "name": "tar",
+        "versionSpec": "^7.5.9"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "axios@1.18.1",
+      "tar@7.5.19"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "df93aed6ff4f8314bb91de2f9b76b6b35a1bdf2932a6bdddf5d82cc5e6bd341e",
+        "sizeBytes": 8619,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "f49edf45207aac2be861b3e04d8236850af1e8736c1b1b23a45e82f32aa70f75",
+        "sizeBytes": 1096,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:34.069Z"
+  },
+  "hash": "sha256:2542b40554217fe4cc0c52ad79dc028c34ee1395ce85f3747218413eebd8c11f"
+}

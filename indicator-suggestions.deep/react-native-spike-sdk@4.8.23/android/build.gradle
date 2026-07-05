@@ -1,0 +1,95 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["SpikeSdk_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenLocal()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.13.0"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["SpikeSdk_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["SpikeSdk_" + name]).toInteger()
+}
+
+android {
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+  google()
+  maven {
+    url 'https://gitlab.com/api/v4/projects/43396247/packages/maven'
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  // For < 0.71, this will be from the local maven repo
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-android:0.71.3"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'com.spikeapi.sdk:spike-sdk:4.8.22'
+  implementation 'androidx.core:core-ktx:1.9.0'
+  implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+  implementation 'com.google.code.gson:gson:2.10.1'
+  implementation 'com.squareup.moshi:moshi:1.15.0'
+  implementation 'com.squareup.moshi:moshi-kotlin:1.15.0'
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "SpikeSdk"
+    codegenJavaPackageName = "com.spikesdk"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "name": "@exodus/react-native-image-picker",
+  "version": "8.2.1-exodus-4",
+  "description": "A React Native module that allows you to use native UI to select media from the device library or directly from the camera",
+  "react-native": "lib/commonjs/index.js",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "files": [
+    "/android",
+    "!/android/build",
+    "/ios",
+    "/*.podspec",
+    "/src",
+    "/lib"
+  ],
+  "author": "Johan du Toit (Johan-dutoit)",
+  "homepage": "https://github.com/ExodusMovement/react-native-image-picker",
+  "license": "MIT",
+  "scripts": {
+    "start": "react-native start",
+    "example": "yarn --cwd example",
+    "prepare": "bob build",
+    "ci:publish": "yarn semantic-release"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-image-picker",
+    "react",
+    "native",
+    "image",
+    "picker"
+  ],
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ExodusMovement/react-native-image-picker.git"
+  },
+  "devDependencies": {
+    "@react-native-community/bob": "0.17.1",
+    "@semantic-release/git": "10.0.1",
+    "@types/react": "18.2.13",
+    "@types/react-native": "0.72.2",
+    "semantic-release": "21.0.5",
+    "typescript": "5.2.2"
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNImagePickerSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.imagepicker"
+    }
+  }
+}

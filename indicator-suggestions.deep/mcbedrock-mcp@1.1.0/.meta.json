@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c6f23a196b6a27a8",
+    "fetchedFiles": [
+      "dist/scripts/indexDocs.js",
+      "dist/src/db.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "better-sqlite3",
+        "versionSpec": "^12.9.0"
+      },
+      {
+        "name": "node-fetch",
+        "versionSpec": "^2.7.0"
+      },
+      {
+        "name": "cheerio",
+        "versionSpec": "^1.1.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "better-sqlite3@12.11.1",
+      "cheerio@1.2.0",
+      "node-fetch@2.7.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/scripts/indexDocs.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "cb758b837b37a860bf069256827d3c770db4ac835bcdb9f3f1495386fb4f4b19",
+        "sizeBytes": 4983,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/src/db.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/src/db.js",
+        "reason": "required by ./dist/scripts/indexDocs.js",
+        "sha256": "53d157a04067a2d53ba89e99dd33ee87ffccb4e4e03cf0622a8bb1faf97baaa0",
+        "sizeBytes": 3096,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:09.072Z"
+  },
+  "hash": "sha256:6e8491f2695b4eb4662919e3c06f41bff3fedf4bf60c941877491317d57b9728"
+}

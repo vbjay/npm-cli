@@ -1,0 +1,45 @@
+{
+    "name": "canlang",
+    "version": "0.2.6",
+    "description": "Rust + napi-rs interpreter for the 깡/통 esolang",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "bin": {
+        "can": "bin/can.js"
+    },
+    "scripts": {
+        "build": "napi build --release",
+        "build:debug": "napi build",
+        "prebuild": "node scripts/prebuild.js",
+        "prepare": "npm run build",
+        "prepack": "npm run build"
+    },
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "bin/",
+        "rust/",
+        "Cargo.toml",
+        "build.rs",
+        "README.md",
+        "LICENSE",
+        "prebuilds/"
+    ],
+    "keywords": [
+        "hron",
+        "esolang",
+        "interpreter",
+        "napi-rs",
+        "rust"
+    ],
+    "license": "MIT",
+    "engines": {
+        "node": ">=18"
+    },
+    "dependencies": {
+        "@napi-rs/cli": "^2.17.0"
+    },
+    "napi": {
+        "name": "canlang"
+    }
+}

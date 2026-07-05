@@ -1,0 +1,88 @@
+{
+  "name": "@hasna/prompts",
+  "version": "0.3.32",
+  "description": "Reusable prompt library for AI agents — CLI + MCP server + REST API + web dashboard",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "prompts": "dist/cli/index.js",
+    "prompts-mcp": "dist/mcp/index.js",
+    "prompts-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "dashboard/dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist dashboard/dist",
+    "build": "bun run clean && cd dashboard && bun run build && cd .. && bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun && bun build src/index.ts --outdir dist --target bun && tsc --emitDeclarationOnly --outDir dist",
+    "build:cli": "bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk",
+    "build:mcp": "bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk",
+    "build:server": "bun build src/server/index.ts --outdir dist/server --target bun",
+    "build:lib": "bun build src/index.ts --outdir dist --target bun && tsc --emitDeclarationOnly --outDir dist",
+    "build:dashboard": "cd dashboard && bun run build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "no-cloud:source": "bun test src/no-cloud-boundary.test.ts",
+    "no-cloud:pack": "bun run build && bun scripts/no-cloud-artifact-scan.mjs",
+    "prepack": "bun run build && bun scripts/no-cloud-artifact-scan.mjs",
+    "prepublishOnly": "bun test && bun run build && bun scripts/no-cloud-artifact-scan.mjs",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "postinstall": "mkdir -p $HOME/.hasna/prompts 2>/dev/null || true"
+  },
+  "keywords": [
+    "prompts",
+    "templates",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "claude",
+    "codex",
+    "gemini",
+    "tui",
+    "cli",
+    "dashboard"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/prompts.git"
+  },
+  "homepage": "https://github.com/hasna/prompts",
+  "bugs": {
+    "url": "https://github.com/hasna/prompts/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/events": "^0.1.11",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "react": "^18.3.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/react": "^18.3.18",
+    "typescript": "^5.7.3"
+  }
+}

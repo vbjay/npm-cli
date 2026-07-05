@@ -1,0 +1,145 @@
+{
+  "name": "react-native-modalfy",
+  "version": "3.7.0",
+  "description": "Modal citizen of React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__"
+  ],
+  "scripts": {
+    "test": "jest --updateSnapshot --verbose",
+    "type": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "pre-commit": "yarn lint && yarn type && yarn test",
+    "prepare": "bob build && husky install",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods"
+  },
+  "keywords": [
+    "react",
+    "react native",
+    "react-native",
+    "modal",
+    "modals",
+    "mobile",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colorfy-software/react-native-modalfy.git"
+  },
+  "author": "Charles Mangwa <charles.m@hey.com> (https://github.com/CharlesMangwa)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/colorfy-software/react-native-modalfy/issues"
+  },
+  "homepage": "https://colorfy-software.gitbook.io/react-native-modalfy",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "hoist-non-react-statics": "^3.3.2",
+    "react-is": "^17.0.2",
+    "use-memo-one": "^1.1.2"
+  },
+  "devDependencies": {
+    "@colorfy-software/eslint-config": "^0.4.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@release-it/conventional-changelog": "^2.0.0",
+    "@testing-library/jest-native": "^4.0.4",
+    "@types/hoist-non-react-statics": "^3.3.1",
+    "@types/jest": "^27.4.0",
+    "@types/react": "^17.0.3",
+    "@types/react-is": "^17.0.3",
+    "@types/react-native": "0.66.15",
+    "commitlint": "^11.0.0",
+    "eslint": ">=8 <9",
+    "husky": "^7.0.0",
+    "jest": "^27.4.7",
+    "pod-install": "^0.1.0",
+    "prettier": ">=2 <3",
+    "react": "17.0.2",
+    "react-native": "0.66.4",
+    "react-native-builder-bob": "^0.18.2",
+    "react-native-gesture-handler": "^2.24.0",
+    "release-it": "^14.2.2",
+    "typescript": "^4.5.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.3",
+    "react-native": ">=0.59.0",
+    "react-native-gesture-handler": ">=2.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn pre-commit"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "extends": "@colorfy-software",
+    "rules": {
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "bracketSameLine": true,
+    "printWidth": 120,
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "semi": false,
+    "tabWidth": 2,
+    "arrowParens": "avoid",
+    "trailingComma": "all",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

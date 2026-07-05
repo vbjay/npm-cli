@@ -1,0 +1,47 @@
+{
+	"name": "@droidxrx/memoryjs",
+	"version": "3.3.1",
+	"description": "Node add-on for memory reading and writing!",
+	"author": "DroidXrX <droidxrx@gmail.com> (https://github.com/droidxrx)",
+	"homepage": "https://github.com/droidxrx/memoryjs#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/droidxrx/memoryjs.git"
+	},
+	"license": "MIT",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"keywords": [
+		"memory",
+		"reading",
+		"writing",
+		"management",
+		"addon"
+	],
+	"scripts": {
+		"install": "node-gyp rebuild --arch=x64 --release"
+	},
+	"gypfile": true,
+	"dependencies": {
+		"bindings": "^1.5.0",
+		"node-addon-api": "^4.3.0"
+	},
+	"engines": {
+		"node": ">=16.14.0"
+	},
+	"os": [
+		"win32"
+	],
+	"cpu": [
+		"x64"
+	]
+}
+

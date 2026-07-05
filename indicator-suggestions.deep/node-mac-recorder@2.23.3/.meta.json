@@ -1,0 +1,97 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "422daf286b51c233",
+    "fetchedFiles": [
+      "binding.gyp",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "a2feb67aefa47204308b05850841468b241d9152e88841d5cd524b96a90c6e51",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `mac_recorder`  -  C/C++ sources",
+            "items": [
+              "src/mac_recorder.mm",
+              "src/screen_capture_kit.mm",
+              "src/avfoundation_recorder.mm",
+              "src/camera_recorder.mm",
+              "src/sync_timeline.mm",
+              "src/audio_recorder.mm",
+              "src/audio_mixer.mm",
+              "src/cursor_tracker.mm",
+              "src/window_selector.mm"
+            ]
+          },
+          {
+            "label": "Target `mac_recorder`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "3c2c2748d6affd6ccf6f4039c83ded66591bf0cc8fbda0951a56141ad34e52ec",
+        "sizeBytes": 2069,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "native-build",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:16.802Z"
+  },
+  "hash": "sha256:564b85a220d0e5a5701631f7d7714c800cd6ff90bb1ea7214f4a439768966a29"
+}

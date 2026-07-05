@@ -1,0 +1,105 @@
+{
+  "name": "@proofofwork-agency/contextrelay",
+  "version": "3.10.0",
+  "description": "ContextRelay: local multi-agent coding orchestration for Claude Code and Codex",
+  "type": "module",
+  "bin": {
+    "contextrelay": "dist/cli.js",
+    "ctxrelay": "dist/cli.js",
+    "context-relay": "dist/cli.js"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "files": [
+    "dist/",
+    "plugins/",
+    ".claude-plugin/",
+    "docs/README.md",
+    "docs/CONTEXTRELAY_V1.md",
+    "docs/ROADMAP.md",
+    "docs/RUNBOOK.md",
+    "docs/SESSION-LIFECYCLE.md",
+    "docs/THREAT_MODEL.md",
+    "docs/assets/",
+    "examples/",
+    "scripts/*.cjs",
+    "scripts/check-plugin-versions.js",
+    "CHANGELOG.md",
+    "README.md",
+    "docs/REFERENCE.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "bun run src/bridge.ts",
+    "build:cli": "mkdir -p dist && bun build src/cli.ts --outfile dist/cli.js --target bun && node scripts/strip-generated-whitespace.cjs dist/cli.js && chmod +x dist/cli.js",
+    "build:plugin": "mkdir -p plugins/contextrelay/server && bun build src/bridge.ts --outfile plugins/contextrelay/server/bridge-server.js --target bun && bun build src/daemon.ts --outfile plugins/contextrelay/server/daemon.js --target bun && node scripts/strip-generated-whitespace.cjs plugins/contextrelay/server/bridge-server.js plugins/contextrelay/server/daemon.js",
+    "check:bun": "node scripts/check-bun.cjs",
+    "verify:cli-sync": "node scripts/verify-cli-sync.cjs",
+    "verify:plugin-sync": "node scripts/verify-plugin-sync.cjs",
+    "verify:docs-sync": "node scripts/verify-docs-sync.cjs",
+    "verify:instructions": "node scripts/verify-instructions.cjs",
+    "verify:package": "node scripts/verify-package.cjs",
+    "postinstall": "node scripts/postinstall.cjs",
+    "preuninstall": "node scripts/preuninstall.cjs",
+    "prepublishOnly": "npm run check:bun && CONTEXTRELAY_VERIFY_INSTRUCTIONS_SOURCE=tracked bun run check && bun run build:cli && bun run build:plugin && CONTEXTRELAY_VERIFY_INSTRUCTIONS_SOURCE=tracked bun run check && node scripts/build-info.cjs && bun run verify:package",
+    "validate:plugin": "node scripts/validate-plugin.cjs",
+    "test": "bun test src",
+    "test:smoke": "CONTEXTRELAY_SMOKE=1 bun test src/unit-test/smoke",
+    "test:examples": "bun test ./examples/shopping-basket/basket.test.js",
+    "typecheck": "tsc --noEmit",
+    "validate:plugin-versions": "bun scripts/check-plugin-versions.js",
+    "check": "tsc --noEmit && bun test src && bun run test:examples && bun run verify:cli-sync && bun run verify:plugin-sync && bun run verify:docs-sync && bun run verify:instructions && bun run validate:plugin && bun scripts/check-plugin-versions.js && node scripts/check-lockfile.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/proofofwork-agency/contextrelay.git"
+  },
+  "homepage": "https://github.com/proofofwork-agency/contextrelay#readme",
+  "bugs": {
+    "url": "https://github.com/proofofwork-agency/contextrelay/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "codex",
+    "openai-codex",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "agent",
+    "ai-agents",
+    "bridge",
+    "multi-agent",
+    "agent-orchestration",
+    "agent-collaboration",
+    "llm-tools",
+    "local-first",
+    "audit-log",
+    "developer-tools",
+    "anthropic",
+    "openai",
+    "cli",
+    "channels"
+  ],
+  "author": "ProofOfWork / Danillo Felixdaal <danillo@proofofwork.agency>",
+  "license": "MIT",
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "@types/bun": "1.3.13",
+    "@types/react": "19.2.14",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "ink": "7.0.3",
+    "react": "19.2.6",
+    "react-devtools-core": "7.0.1"
+  },
+  "overrides": {
+    "shell-quote": "1.8.4",
+    "ws": "^8.21.0",
+    "hono": "^4.12.25"
+  }
+}

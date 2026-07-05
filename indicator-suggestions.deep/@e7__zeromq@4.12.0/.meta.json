@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "64e606dd142d7cab",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "6a5f05a69370473ff5e845ba7fc0c1503a813dc6b0d36b67b98de00c4d7a6201",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `zmq`  -  C/C++ sources",
+            "items": [
+              "binding.cc"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  libraries",
+            "items": [
+              "<(PRODUCT_DIR)/../../windows/lib/libzmq.lib",
+              "ws2_32.lib",
+              "iphlpapi",
+              "<(PRODUCT_DIR)/../../zmq/lib/libzmq.a",
+              "<!(pkg-config libzmq --libs 2>/dev/null || echo \"\")"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "windows/include",
+              "<(PRODUCT_DIR)/../../zmq/include"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:59.899Z"
+  },
+  "hash": "sha256:2e6acf5f3af7fae7ee8ca2fb67feec5e9224fb95205e04bc836838e9f7f72da8"
+}

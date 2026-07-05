@@ -1,0 +1,72 @@
+{
+  "name": "@offline-protocol/mesh-sdk",
+  "version": "0.11.0",
+  "description": "Offline-first mesh networking SDK with intelligent transport switching for React Native",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/",
+    "ios/Generated/",
+    "ios/libs/",
+    "ios/ble/",
+    "ios/mesh/",
+    "ios/*.swift",
+    "ios/*.m",
+    "ios/*.podspec",
+    "android/build.gradle",
+    "android/consumer-rules.pro",
+    "android/src/main/",
+    "src/",
+    "scripts/",
+    "react-native.config.js",
+    "README.md",
+    "LICENSE",
+    "LICENSE-COMMERCIAL.md"
+  ],
+  "scripts": {
+    "prepare": "tsc",
+    "build": "tsc",
+    "build:ios": "bash scripts/build-ios.sh",
+    "build:android": "bash scripts/build-android.sh",
+    "build:all": "bash scripts/build-all.sh",
+    "build:uniffi:ios": "bash scripts/build-uniffi-ios.sh",
+    "build:uniffi:android": "bash scripts/build-uniffi-android.sh",
+    "build:uniffi:all": "bash scripts/build-uniffi-all.sh",
+    "generate:bindings": "bash scripts/generate-bindings.sh",
+    "prepublishOnly": "npm run build && bash scripts/prepare-npm.sh",
+    "clean": "rm -rf lib/"
+  },
+  "keywords": [
+    "react-native",
+    "offline",
+    "messaging",
+    "p2p",
+    "mesh",
+    "ble",
+    "wifi-direct",
+    "dors",
+    "relay",
+    "offline-first"
+  ],
+  "author": "Offline Protocol Team",
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Offline-Protocol/offline-protocol-sdk",
+    "directory": "bindings/react-native"
+  },
+  "homepage": "https://github.com/Offline-Protocol/offline-protocol-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/Offline-Protocol/offline-protocol-sdk/issues"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.70.0"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.72.8",
+    "react-native": "^0.82.0",
+    "typescript": "^5.0.0"
+  },
+  "react-native": "src/index.ts"
+}

@@ -1,0 +1,80 @@
+{
+  "name": "occt-gltf-addon",
+  "version": "0.1.15",
+  "description": "STEP (.step/.stp) to glTF (GLB) converter using OpenCascade (OCCT) via a Node.js N-API addon",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Open-Cascade-SAS/OCCT.git",
+    "directory": "occt-gltf-addon"
+  },
+  "bugs": {
+    "url": "https://github.com/Open-Cascade-SAS/OCCT/issues"
+  },
+  "homepage": "https://github.com/Open-Cascade-SAS/OCCT/tree/master/occt-gltf-addon",
+  "keywords": [
+    "occt",
+    "opencascade",
+    "step",
+    "stp",
+    "gltf",
+    "glb",
+    "cad",
+    "napi",
+    "node-addon-api",
+    "addon"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "LICENSE_LGPL_21.txt",
+    "OCCT_LGPL_EXCEPTION.txt",
+    "CMakeLists.txt",
+    "src/**",
+    "scripts/**",
+    "example.js",
+    "smoke_test.js",
+    "quick_test.js"
+  ],
+  "scripts": {
+    "install": "node scripts/install.js",
+    "build": "cmake-js compile -O build",
+    "clean": "rm -rf build",
+    "rebuild": "npm run clean && npm run build",
+    "example": "node example.js",
+    "smoke": "node smoke_test.js",
+    "test": "node -e \"console.log('no tests')\"",
+    "docker:build:linux-amd64": "bash docker/build-linux-amd64.sh",
+    "docker:image:linux-amd64": "docker buildx build --platform linux/amd64 -f docker/Dockerfile.linux-amd64 -t occt-addon-build:linux-amd64 ../..",
+    "docker:image:linux-amd64:nocache": "docker buildx build --no-cache --platform linux/amd64 -f docker/Dockerfile.linux-amd64 -t occt-addon-build:linux-amd64 ../..",
+    "bundle:macos-arm64": "bash scripts/bundle-macos-arm64.sh",
+    "bundle:all": "OCCT_ROOT=/Users/miles/Test/OCCT/build-occt bash scripts/bundle-all.sh",
+    "publish:prebuilt": "node scripts/upload-prebuilt.js",
+    "prepublishOnly": "npm run publish:prebuilt"
+  },
+  "dependencies": {
+    "cmake-js": "^7.3.1",
+    "gltf-pipeline": "^4.3.0",
+    "node-addon-api": "^7.1.0",
+    "tar": "^7.4.0"
+  },
+  "devDependencies": {
+    "cos-nodejs-sdk-v5": "^2.14.4"
+  }
+}

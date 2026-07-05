@@ -1,0 +1,90 @@
+{
+  "name": "vegas-chat",
+  "version": "2.11.0",
+  "description": "AI CLI Agent with built-in 9Router — REPL, multi-LLM, auto-fix loop, AI Router + Dashboard",
+  "keywords": [
+    "ai",
+    "cli",
+    "agent",
+    "llm",
+    "repl",
+    "chat",
+    "terminal",
+    "tui",
+    "cyberpunk"
+  ],
+  "homepage": "https://github.com/web-kamikaze/vegas-chat#readme",
+  "bugs": {
+    "url": "https://github.com/web-kamikaze/vegas-chat/issues"
+  },
+  "license": "MIT",
+  "author": "web-kamikaze",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web-kamikaze/vegas-chat.git"
+  },
+  "bin": {
+    "vegas": "dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:dashboard && npm run build:bundle",
+    "build:dashboard": "cd src/router/dashboard && npm install --silent && npx vite build --config ../../../vite.config.ts 2>&1 | tail -5",
+    "build:ts": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "router": "node -e \"require('./dist/router/use9router.js').start9Router(20128).then(() => console.log('9Router started on port 20128')).catch(e => console.error(e))\"",
+    "lint": "eslint src/ --max-warnings 100",
+    "prepublishOnly": "npm run build",
+    "preinstall": "node -e \"process.exit(process.version.slice(1).split('.')[0] < 18 ? 1 : 0)\" || echo \"vegas requires Node.js >= 18\"",
+    "postinstall": "node -e \"try{require('fs').chmodSync('dist/index.js',0o755)}catch(e){}\"",
+    "build:bundle": "node scripts/build-bundle.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/cyberpunk-theme.css",
+    "dist/pintar-instructions.md",
+    "dist/router/cyberpunk-theme.css",
+    "dist/dashboard",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@types/diff": "^7.0.2",
+    "@types/google.maps": "^3.65.2",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.2.17",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
+    "@typescript-eslint/parser": "^8.62.1",
+    "@vitejs/plugin-react": "^6.0.3",
+    "eslint": "^10.6.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0",
+    "typescript-eslint": "^8.62.1",
+    "vite": "^8.1.3"
+  },
+  "dependencies": {
+    "@types/react-dom": "^19.2.3",
+    "9router": "^0.5.20",
+    "axios": "^1.18.1",
+    "cheerio": "^1.2.0",
+    "diff": "^9.0.0",
+    "google-auth-library": "^10.9.0",
+    "ink": "^7.1.0",
+    "ink-spinner": "^5.0.0",
+    "playwright": "^1.61.1",
+    "playwright-core": "^1.61.1",
+    "puppeteer-core": "^25.3.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sql.js": "^1.14.1",
+    "winston": "^3.19.0",
+    "zod": "^4.4.3"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
+  }
+}

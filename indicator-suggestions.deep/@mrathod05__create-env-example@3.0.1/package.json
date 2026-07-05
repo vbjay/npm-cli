@@ -1,0 +1,38 @@
+{
+  "name": "@mrathod05/create-env-example",
+  "version": "3.0.1",
+  "description": "Generate env.example from .env.<env> files",
+  "bin": {
+    "create-env-example": "./dist/index.js"
+  },
+  "author": "mrathod05",
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "chmod +x ./dist/index.js",
+    "prepare": "npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "env",
+    "cli",
+    "dotenv",
+    "example",
+    "rust"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrathod05/create-env-example.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrathod05/create-env-example/issues"
+  },
+  "homepage": "https://github.com/mrathod05/create-env-example#readme",
+  "dependencies": {
+    "chalk": "4",
+    "inquirer": "8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
+  }
+}

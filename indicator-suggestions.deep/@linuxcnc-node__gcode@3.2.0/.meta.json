@@ -1,0 +1,117 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8e79be0cdfbb663e",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "c0ca4eabc44a6eb263fa709795730dba7453aba6d3e3856c2011ed6253fbe757",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `gcode_addon`  -  C/C++ sources",
+            "items": [
+              "src/cpp/gcode_addon.cc",
+              "src/cpp/gcode_parser.cc",
+              "src/cpp/canon_preview.cc",
+              "src/cpp/parse_worker.cc"
+            ]
+          },
+          {
+            "label": "Target `gcode_addon`  -  libraries",
+            "items": [
+              "-lrs274",
+              "-llinuxcncini",
+              "-lnml",
+              "-ltooldata"
+            ]
+          },
+          {
+            "label": "Target `gcode_addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<!(python3 -c \"import sysconfig; print(sysconfig.get_path('include'))\")",
+              "<(linuxcnc_rip_dir)/src/emc/ini",
+              "<(linuxcnc_rip_dir)/src/emc/rs274ngc",
+              "<(linuxcnc_rip_dir)/src/emc/nml_intf",
+              "<(linuxcnc_rip_dir)/src/emc/tooldata",
+              "<(linuxcnc_rip_dir)/src/emc/motion",
+              "<(linuxcnc_rip_dir)/src/emc/sai",
+              "<(linuxcnc_rip_dir)/src/emc",
+              "<(linuxcnc_rip_dir)/src",
+              "<(linuxcnc_rip_dir)/src/libnml/buffer",
+              "<(linuxcnc_rip_dir)/src/libnml/cms",
+              "<(linuxcnc_rip_dir)/src/libnml/linklist",
+              "<(linuxcnc_rip_dir)/src/libnml/nml",
+              "<(linuxcnc_rip_dir)/src/libnml/os_intf",
+              "<(linuxcnc_rip_dir)/src/libnml/posemath",
+              "<(linuxcnc_rip_dir)/src/libnml/rcs",
+              "<(linuxcnc_rip_dir)/src/rtapi",
+              "<(linuxcnc_rip_dir)/include",
+              "<!(echo ${LINUXCNC_INCLUDE:-/usr/include/linuxcnc})",
+              "/usr/include/linuxcnc",
+              "/usr/local/include/linuxcnc",
+              "<!(echo ${LINUXCNC_INCLUDE:-/usr/include/linuxcnc})",
+              "/usr/include/linuxcnc",
+              "/usr/local/include/linuxcnc"
+            ]
+          },
+          {
+            "label": "Target `gcode_addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:24.917Z"
+  },
+  "hash": "sha256:33e50deca08c7f0e5c9631817219fd902bd133b7dac2f15d25627dd2c58fe2c9"
+}

@@ -1,0 +1,72 @@
+{
+  "name": "vscroll",
+  "version": "1.8.3",
+  "description": "Virtual scroll engine",
+  "main": "dist/bundles/vscroll.umd.js",
+  "module": "dist/bundles/vscroll.esm5.js",
+  "esm5": "dist/esm5/index.js",
+  "esm2015": "dist/esm2015/index.js",
+  "fesm5": "dist/bundles/vscroll.esm5.js",
+  "fesm2015": "dist/bundles/vscroll.esm6.js",
+  "types": "dist/typings/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "author": "Denis Hilt <dhilt.public@gmail.com>",
+  "homepage": "https://github.com/dhilt/vscroll",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhilt/vscroll.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dhilt/vscroll/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint .",
+    "build": "node build",
+    "test": "npm run lint && cd tests && npm test",
+    "test:unit": "cd tests && npm run test:unit",
+    "test:e2e": "cd tests && npm run test:e2e",
+    "test:e2e:ui": "cd tests && npm run test:e2e:ui",
+    "test:e2e:debug": "cd tests && npm run test:e2e:debug",
+    "prepack": "npm run build",
+    "checkGit": "sh ./uncommited.sh",
+    "prepublishOnly": "npm run checkGit && npm run build && npm run test && npm run checkGit"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "chalk": "^5.6.2",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.1",
+    "rollup": "^4.53.3",
+    "rollup-plugin-license": "^3.6.0",
+    "rollup-plugin-sourcemaps2": "^0.5.4",
+    "shelljs": "^0.10.0",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "vscroll",
+    "lazy-loading",
+    "virtual",
+    "virtualizing",
+    "virtualization",
+    "virtual-scroll",
+    "infinite-scroll",
+    "scroll",
+    "scrolling",
+    "scroller",
+    "javascript",
+    "typescript"
+  ]
+}

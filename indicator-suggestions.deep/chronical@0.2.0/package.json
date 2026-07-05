@@ -1,0 +1,74 @@
+{
+  "name": "chronical",
+  "version": "0.2.0",
+  "description": "An implementation of RRule as defined in iCalendar (RFC 5545) using Temporal API written in Rust",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/himura467/chronical.git"
+  },
+  "main": "dist/index.js",
+  "browser": "dist/browser.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "icalendar",
+    "rrule",
+    "temporal",
+    "rust",
+    "rs"
+  ],
+  "author": {
+    "name": "Akito Shitara",
+    "email": "akitoshitara@gmail.com"
+  },
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "temporal-polyfill": "^0.3.0"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.5.0",
+    "@typescript/native-preview": "7.0.0-dev.20251223.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "napi": {
+    "binaryName": "chronical",
+    "targets": [
+      "aarch64-apple-darwin",
+      "aarch64-pc-windows-msvc",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-apple-darwin",
+      "x86_64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu",
+      "wasm32-wasip1-threads"
+    ],
+    "wasm": {
+      "browser": {
+        "asyncInit": true,
+        "fs": false
+      }
+    }
+  },
+  "engines": {
+    "node": ">= 20"
+  },
+  "optionalDependencies": {
+    "chronical-darwin-arm64": "0.2.0",
+    "chronical-win32-arm64-msvc": "0.2.0",
+    "chronical-linux-arm64-gnu": "0.2.0",
+    "chronical-darwin-x64": "0.2.0",
+    "chronical-win32-x64-msvc": "0.2.0",
+    "chronical-linux-x64-gnu": "0.2.0",
+    "chronical-wasm32-wasi": "0.2.0"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "artifacts": "napi artifacts",
+    "build": "pnpm build:rust && pnpm build:ts",
+    "build:rust": "napi build --no-const-enum --platform --release --esm --output-dir src-js/generated",
+    "build:rust:debug": "napi build --no-const-enum --platform --esm --output-dir src-js/generated",
+    "build:ts": "tsgo",
+    "version": "napi version"
+  }
+}

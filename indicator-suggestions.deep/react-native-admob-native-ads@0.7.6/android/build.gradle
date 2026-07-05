@@ -1,0 +1,36 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def DEFAULT_COMPILE_SDK_VERSION = 34
+def DEFAULT_BUILD_TOOLS_VERSION = '34.0.0'
+def DEFAULT_MIN_SDK_VERSION = 23
+def DEFAULT_TARGET_SDK_VERSION = 34
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+repositories {
+  mavenCentral()
+  maven {
+   url 'https://maven.google.com'
+  }
+  maven { url "https://jitpack.io" }
+  google()
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+'
+    implementation "com.google.android.gms:play-services-ads:${safeExtGet('googlePlayServicesAdsVersion', '23.+')}"
+}

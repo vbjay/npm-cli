@@ -1,0 +1,120 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "034ab7000bd7eaf0",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "05955b079152d48f15bd926e3416f700cae37d534509dcfa34ad8070569debdf",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `node_darts`  -  C/C++ sources",
+            "items": [
+              "src/native/bindings.cpp",
+              "src/native/dictionary.cpp",
+              "src/native/builder.cpp",
+              "src/native/backend_factory.cpp",
+              "src/native/backend_darts.cpp",
+              "src/native/backend_clone.cpp",
+              "src/native/third_party/darts/darts.cpp"
+            ]
+          },
+          {
+            "label": "Target `node_darts`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "include",
+              "src/native"
+            ]
+          },
+          {
+            "label": "Target `node_darts`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build:addon-with-tools`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/install-build-tools.js",
+        "reason": "referenced by lifecycle script: `build:addon-with-tools`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:16.142Z"
+  },
+  "hash": "sha256:9dd0de5aa92b8ee7458e8c0f064dbb49383b7680a1e108b9252f7a03acbe23cd"
+}

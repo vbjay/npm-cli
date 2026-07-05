@@ -1,0 +1,152 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["SmkitUiLibrary_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.6.1"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-kapt'
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["SmkitUiLibrary_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["SmkitUiLibrary_" + name]).toInteger()
+}
+
+def supportsNamespace() {
+  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+  def major = parsed[0].toInteger()
+  def minor = parsed[1].toInteger()
+
+  // Namespace support was added in 7.3.0
+  return (major == 7 && minor >= 3) || major >= 8
+}
+
+android {
+  if (supportsNamespace()) {
+    namespace "com.smkituilibrary"
+
+    sourceSets {
+      main {
+        manifest.srcFile "src/main/AndroidManifestNew.xml"
+      }
+    }
+  }
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+// repositories {
+//   mavenCentral()
+//   google()
+//   maven {
+//     url "https://artifacts.sency.ai/artifactory/release"
+//   }
+// }
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+def aligned_fbjni_version = "0.7.0"
+
+// RN 0.76 can package its own 4 KB libfbjni.so first. Replace only that file after merge.
+rootProject.subprojects { appProject ->
+  appProject.plugins.withId("com.android.application") {
+    def alignedFbjni = appProject.configurations.detachedConfiguration(
+      appProject.dependencies.create("com.facebook.fbjni:fbjni:${aligned_fbjni_version}@aar")
+    )
+    alignedFbjni.transitive = false
+
+    appProject.tasks.matching { task ->
+      task.name.startsWith("merge") && task.name.endsWith("NativeLibs")
+    }.configureEach { task ->
+      def variantName = task.name.substring("merge".length(), task.name.length() - "NativeLibs".length())
+      def variantDir = variantName[0].toLowerCase() + variantName.substring(1)
+      def mergedNativeLibsDir = appProject.layout.buildDirectory.dir(
+        "intermediates/merged_native_libs/${variantDir}/${task.name}/out/lib"
+      )
+
+      task.doLast {
+        appProject.copy {
+          from(appProject.zipTree(alignedFbjni.singleFile)) {
+            include "jni/**/libfbjni.so"
+            eachFile { details ->
+              details.path = details.path.replaceFirst("^jni/", "")
+            }
+            includeEmptyDirs = false
+          }
+          into(mergedNativeLibsDir)
+        }
+      }
+    }
+  }
+}
+
+dependencies {
+  // For < 0.71, this will be from the local maven repo
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-android"
+  api "com.facebook.fbjni:fbjni:${aligned_fbjni_version}"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  implementation("com.sency.smkitui:smkitui:1.7.0") {
+    exclude group: 'com.facebook.fbjni', module: 'fbjni-java-only'
+    // // Don't exclude native libraries
+    // exclude group: 'com.facebook.react', module: 'react-native'
+  }
+  implementation "com.sency.smkit:smkit:1.7.0"
+  implementation "com.sency.smbase.nativeclient:smbase-native-client:1.7.0"
+
+  // Gson
+  implementation 'com.google.code.gson:gson:2.9.0'
+
+  // Moshi JSON library
+  def moshi = "1.15.0"
+  implementation "com.squareup.moshi:moshi:$moshi"
+  implementation "com.squareup.moshi:moshi-adapters:$moshi"
+  implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+  kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+}

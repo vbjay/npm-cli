@@ -1,0 +1,115 @@
+{
+  "name": "bitmask-wallet.js",
+  "version": "0.6.0-beta.0",
+  "description": "JS/TS wrapper containing all the functionality needed to access the BitMask wallet core",
+  "exports": {
+    ".": {
+      "types": "./lib/cjs/index.d.ts",
+      "import": "./lib/esm/index.mjs",
+      "require": "./lib/cjs/index.js"
+    },
+    "./constants": {
+      "types": "./lib/cjs/constants.d.ts",
+      "import": "./lib/esm/constants.mjs",
+      "require": "./lib/cjs/constants.js"
+    },
+    "./bitcoin": {
+      "types": "./lib/cjs/bitcoin.d.ts",
+      "import": "./lib/esm/bitcoin.mjs",
+      "require": "./lib/cjs/bitcoin.js"
+    },
+    "./rgb": {
+      "types": "./lib/cjs/rgb.d.ts",
+      "import": "./lib/esm/rgb.mjs",
+      "require": "./lib/cjs/rgb.js"
+    },
+    "./lightning": {
+      "types": "./lib/cjs/lightning.d.ts",
+      "import": "./lib/esm/lightning.mjs",
+      "require": "./lib/cjs/lightning.js"
+    },
+    "./carbonado": {
+      "types": "./lib/cjs/carbonado.d.ts",
+      "import": "./lib/esm/carbonado.mjs",
+      "require": "./lib/cjs/carbonado.js"
+    }
+  },
+  "types": "./index.d.ts",
+  "main": "./index.js",
+  "files": [
+    "lib/**/*",
+    "/*.js",
+    "/*.mjs",
+    "/*.d.ts",
+    "/*.d.ts.map"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && npm run rename:esm",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "rename:esm": "mv lib/esm/index.js index.mjs && mv lib/esm/constants.js constants.mjs && mv lib/esm/bitcoin.js bitcoin.mjs && mv lib/esm/rgb.js rgb.mjs && mv lib/esm/lightning.js lightning.mjs && mv lib/esm/carbonado.js carbonado.mjs",
+    "test": "echo 'mocha is a terrible testing framework'",
+    "semantic-release": "semantic-release",
+    "prepack": "npm run build"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diba-io/bitmask.js.git"
+  },
+  "keywords": [
+    "bitmask",
+    "bitcoin",
+    "wallet",
+    "crypto",
+    "web3",
+    "diba",
+    "bitmask.js",
+    "bitmaskjs",
+    "wasm",
+    "rust",
+    "typescript",
+    "lightning",
+    "network",
+    "rgb",
+    "tokens",
+    "contracts",
+    "nft",
+    "protocol",
+    "satoshi",
+    "nakamoto",
+    "carbonado"
+  ],
+  "author": "Trevor O'Farrell <trevor@diba.io>",
+  "contributors": [
+    "Trevor O'Farrell <trevor@diba.io>",
+    "Jose Diego Robles <jose@diba.io>",
+    "Hunter Trujillo <hunter@diba.io>",
+    "Francisco Calderón <francisco@diba.io>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diba-io/bitmask.js/issues"
+  },
+  "homepage": "https://github.com/diba-io/bitmask.js#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "semantic-release": "^21.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "bitmask-core": "^0.6.0-beta.5"
+  }
+}

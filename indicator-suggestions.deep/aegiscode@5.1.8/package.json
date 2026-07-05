@@ -1,0 +1,98 @@
+{
+  "name": "aegiscode",
+  "version": "5.1.8",
+  "description": "AEGIS CLI — AI-powered coding assistant",
+  "type": "module",
+  "bin": {
+    "aegis": "bin/cli.js",
+    "aegis-cli": "bin/cli.js",
+    "aegiscli": "bin/cli.js",
+    "aegiscode": "bin/cli.js"
+  },
+  "scripts": {
+    "preinstall": "node scripts/ensure-node-version.mjs",
+    "build": "node esbuild.mjs",
+    "build:publish": "npm run build && node scripts/make-bin.mjs",
+    "dev": "NODE_NO_WARNINGS=1 tsx src/main.tsx",
+    "start": "node --no-deprecation dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "test:prompts": "tsx src/prompts/test.ts",
+    "test:tools": "tsx src/tools/test.ts",
+    "test:pipeline": "tsx src/tools/execution/test.ts",
+    "test:context": "tsx src/context/test.ts",
+    "test:mcp": "tsx src/mcp/test.ts",
+    "test:store": "tsx src/store/test.ts"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "coding-agent",
+    "llm",
+    "openai",
+    "gpt",
+    "claude",
+    "copilot",
+    "assistant",
+    "terminal",
+    "developer-tools"
+  ],
+  "author": "Niklas Borneklint",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aegisinfo/aegiscode.git"
+  },
+  "homepage": "https://github.com/aegisinfo/aegiscode#readme",
+  "bugs": {
+    "url": "https://github.com/aegisinfo/aegiscode/issues"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
+    "@modelcontextprotocol/sdk": "^1.25.3",
+    "chalk": "^5.4.1",
+    "dotenv": "^17.4.2",
+    "fuse.js": "^7.4.1",
+    "glob": "^13.0.0",
+    "ink": "^7.0.5",
+    "ink-text-input": "^6.0.0",
+    "js-tiktoken": "^1.0.21",
+    "lowlight": "^3.3.0",
+    "minimatch": "^10.1.1",
+    "nanoid": "^5.1.6",
+    "openai": "^4.77.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sql.js": "^1.14.1",
+    "string-width": "^7.2.0",
+    "uuid": "^14.0.0",
+    "yaml": "^2.8.2",
+    "yargs": "^17.7.2",
+    "zod": "^3.24.2",
+    "zod-to-json-schema": "^3.25.1",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.19",
+    "@types/react": "^19.2.17",
+    "@types/sql.js": "^1.4.11",
+    "@types/yargs": "^17.0.35",
+    "esbuild": "^0.28.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "string-width": "^7.2.0",
+    "slice-ansi": "^7.1.2",
+    "cli-truncate": "^4.0.0",
+    "cli-boxes": "^3.0.0"
+  }
+}

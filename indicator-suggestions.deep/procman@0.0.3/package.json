@@ -1,0 +1,36 @@
+{
+  "name": "procman",
+  "version": "0.0.3",
+  "description": "A native node addon to query and manipulate running processes",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha",
+    "install": "node-gyp rebuild",
+    "list-published": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samvv/node-procman.git"
+  },
+  "keywords": [
+    "os",
+    "process",
+    "native",
+    "addon",
+    "process-management"
+  ],
+  "author": "Sam Vervaeck <vervaeck.sam@skynet.be>",
+  "license": "MIT",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/samvv/node-procman/issues"
+  },
+  "homepage": "https://github.com/samvv/node-procman#readme",
+  "dependencies": {
+    "bindings": "^1.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  }
+}

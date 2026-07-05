@@ -1,0 +1,88 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7ef06b36deae31f1",
+    "fetchedFiles": [
+      "bin/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b67bab2716b4338650ba0bad80a6bad00d9a34d9128811ccff6c5ced2acd4fbb",
+        "sizeBytes": 17586,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-outside-package",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/astral-sh/python-build-standalone/releases/download",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://npmmirror.com/mirrors/python-standalone",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./bin/postinstall.js",
+        "sha256": "f412e132500c53f6ec0ea6bd6d02a94da2e3b670e808f226b565eb536f544dec",
+        "sizeBytes": 595,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:51.175Z"
+  },
+  "hash": "sha256:65b87253cb64f44c8fdad37da056e42c8d15bb965681e8518aeeaf6d2ecc29b1"
+}

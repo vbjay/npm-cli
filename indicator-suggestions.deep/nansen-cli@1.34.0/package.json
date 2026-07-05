@@ -1,0 +1,80 @@
+{
+  "name": "nansen-cli",
+  "version": "1.34.0",
+  "description": "AI-agent CLI for Nansen API analytics, DEX swaps, and cross-chain trading",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "nansen": "./src/index.js"
+  },
+  "files": [
+    "src/**/*.js",
+    "src/**/*.json",
+    "!src/__tests__/**",
+    "skills/**",
+    "scripts/postinstall.js",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "start": "node src/index.js",
+    "pretest": "node scripts/check-changeset.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:live": "NANSEN_LIVE_TEST=1 vitest run",
+    "test:trade": "vitest run --config vitest.e2e.config.js src/__tests__/trade.e2e.test.js",
+    "test:send": "vitest run --config vitest.e2e.config.js src/__tests__/send.e2e.test.js",
+    "test:privy": "vitest run --config vitest.e2e.config.js src/__tests__/privy.e2e.test.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "changeset": "changeset",
+    "changeset:version": "changeset version && npm install --package-lock-only",
+    "changeset:publish": "changeset publish"
+  },
+  "keywords": [
+    "nansen",
+    "crypto",
+    "blockchain",
+    "api",
+    "cli",
+    "ai-agent",
+    "smart-money",
+    "onchain",
+    "defi",
+    "trading",
+    "dex",
+    "swaps",
+    "solana",
+    "ethereum"
+  ],
+  "author": "Nansen <dev@nansen.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nansen-ai/nansen-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nansen-ai/nansen-cli/issues"
+  },
+  "homepage": "https://github.com/nansen-ai/nansen-cli#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.4",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "clawhub": "^0.9.0",
+    "eslint": "^10.0.2",
+    "globals": "^17.4.0",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@ethereumjs/rlp": "^10.1.1",
+    "@noble/curves": "^2.0.1",
+    "@noble/hashes": "^2.0.1",
+    "@scure/base": "^2.0.0"
+  }
+}

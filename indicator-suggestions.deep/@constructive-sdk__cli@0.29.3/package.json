@@ -1,0 +1,66 @@
+{
+  "name": "@constructive-sdk/cli",
+  "version": "0.29.3",
+  "author": "Constructive <developers@constructive.io>",
+  "description": "Constructive CLI SDK - Auto-generated GraphQL CLI with ORM client, context management, and interactive prompts",
+  "main": "index.js",
+  "module": "esm/index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "csdk": "cli.js"
+  },
+  "homepage": "https://github.com/constructive-io/constructive",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/constructive-io/constructive"
+  },
+  "bugs": {
+    "url": "https://github.com/constructive-io/constructive/issues"
+  },
+  "scripts": {
+    "clean": "makage clean",
+    "prepack": "npm run build",
+    "build": "makage build",
+    "build:dev": "makage build --dev",
+    "generate": "rimraf src/index.ts && tsx scripts/generate-sdk.ts",
+    "lint": "eslint . --fix",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "cli",
+    "sdk",
+    "graphql",
+    "orm",
+    "constructive",
+    "postgraphile",
+    "schema-dir",
+    "command-line",
+    "interactive"
+  ],
+  "dependencies": {
+    "@0no-co/graphql.web": "^1.1.2",
+    "@agentic-kit/ollama": "2.2.0",
+    "@constructive-io/graphql-query": "^3.31.3",
+    "@constructive-io/graphql-types": "^3.13.1",
+    "appstash": "^0.7.0",
+    "gql-ast": "^3.12.0",
+    "graphql": "16.13.0",
+    "inquirerer": "^4.9.1",
+    "nested-obj": "^0.2.2",
+    "yanse": "^0.2.1"
+  },
+  "devDependencies": {
+    "@constructive-io/graphql-codegen": "^4.51.3",
+    "@types/node": "^22.19.11",
+    "makage": "^0.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.3"
+  },
+  "gitHead": "5a7e92e9849aa715367a33fa78a23c5f9adaefa0"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@pugi/cli",
+  "version": "1.0.0-alpha.94",
+  "description": "Pugi CLI - terminal-native software execution system",
+  "license": "MIT",
+  "homepage": "https://pugi.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pugi-io/pugi.git"
+  },
+  "keywords": [
+    "pugi",
+    "cli",
+    "ai",
+    "agents",
+    "engineering",
+    "orchestrator"
+  ],
+  "bin": {
+    "pugi": "./bin/pugi"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ],
+  "optionalDependencies": {
+    "@pugi/cli-darwin-arm64": "1.0.0-alpha.94",
+    "@pugi/cli-darwin-x64": "1.0.0-alpha.94",
+    "@pugi/cli-linux-arm64": "1.0.0-alpha.94",
+    "@pugi/cli-linux-x64": "1.0.0-alpha.94",
+    "@pugi/cli-windows-arm64": "1.0.0-alpha.94",
+    "@pugi/cli-windows-x64": "1.0.0-alpha.94"
+  },
+  "scripts": {
+    "postinstall": "node ./postinstall.mjs"
+  }
+}

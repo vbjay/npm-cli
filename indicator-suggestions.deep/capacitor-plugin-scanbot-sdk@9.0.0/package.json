@@ -1,0 +1,93 @@
+{
+  "name": "capacitor-plugin-scanbot-sdk",
+  "version": "9.0.0",
+  "description": "Scanbot Document and Barcode Scanner SDK for Capacitor",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "Libraries.txt",
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "ios/Sources",
+    "Package.swift",
+    "CapacitorPluginScanbotSdk.podspec"
+  ],
+  "scripts": {
+    "tscheck": "tsc --noEmit",
+    "lint": "npm run format && npm run eslint",
+    "eslint": "eslint src --fix --ext .ts",
+    "format": "prettier src --write ",
+    "docgen": "rimraf ./api-docs && rimraf ./dist-api-docs && cp -r ./dist/ ./dist-api-docs/ && typedoc",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
+    "clean": "rimraf ./dist && rimraf ./api-docs && rimraf ./dist-api-docs",
+    "prepack": "npm run build"
+  },
+  "author": "Scanbot SDK",
+  "license": "Commercial",
+  "readmeFilename": "README.md",
+  "homepage": "https://scanbot.io/developer/capacitor-document-scanner-sdk/",
+  "contributors": [
+    {
+      "name": "Scanbot",
+      "email": "sdk@scanbot.io",
+      "url": "https://scanbot.io"
+    }
+  ],
+  "keywords": [
+    "android",
+    "app",
+    "document-scanner",
+    "document-scanning",
+    "document-reader",
+    "document-detection",
+    "mobile-scanner",
+    "mobile-scanning",
+    "pdf",
+    "scanner",
+    "scanning",
+    "scan",
+    "scanbot",
+    "sdk",
+    "jpg",
+    "tiff",
+    "image-detection",
+    "mrz",
+    "ocr",
+    "capacitor",
+    "plugin",
+    "native",
+    "machine-readable zone",
+    "optical character recognition",
+    "edge detection"
+  ],
+  "devDependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0",
+    "@ionic/eslint-config": "^0.4.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "eslint": "^8.57.1",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.53.2",
+    "typedoc": "0.28.15",
+    "typedoc-plugin-rename-defaults": "^0.7.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=6.0.0"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  }
+}

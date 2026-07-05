@@ -1,0 +1,66 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.1.0"
+    // Plugin Kotlin — le bridge Android devient Kotlin (prompt 3)
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10"
+  }
+}
+
+/**
+ * safeExtGet : lit une propriété depuis rootProject.ext si définie,
+ * sinon utilise la valeur de fallback.
+ *
+ * Usage dans l'app hôte (android/build.gradle) :
+ *   ext {
+ *     compileSdkVersion = 35
+ *     minSdkVersion = 24
+ *     targetSdkVersion = 35
+ *   }
+ */
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', 34)
+  namespace "io.appsynk.reactnative"
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 21)
+    targetSdkVersion safeExtGet('targetSdkVersion', 34)
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android:+"
+  // SDK natif Android AppSynk — publié sur Maven Central (section 7).
+  // Apporte en transitif tout ce que le bridge déléguait auparavant :
+  // install referrer, GAID (play-services-ads-identifier), collecte device,
+  // Meta install referrer, AdServices, SKAN, fraud detection.
+  // → on ne déclare donc plus installreferrer / play-services-ads-identifier ici.
+  implementation "io.appsynk:sdk:1.0.0"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.10"
+}

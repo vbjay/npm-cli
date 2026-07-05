@@ -1,0 +1,44 @@
+{
+  "name": "nodejs_dev_environment_test",
+  "version": "0.0.27",
+  "engine": "node >= 10.0.0",
+  "enabled": 1,
+  "description": "The module helps you to check that your environment is ready to build a native Node.js module and install minimal prerequisites for your platform if not.",
+  "license": "MIT",
+  "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
+  "gypfile": true,
+  "contributors": [
+    "Kostiantyn Wandalen <wandalen@obox.systems>",
+    "Volodymyr M. <volodymyr.migdal@gmail.com>",
+    "Dmytro Kryvoruchko <dm.vict.kr@gmail.com>"
+  ],
+  "main": "js/EnvCheck.js",
+  "files": [
+    "js",
+    "cpp",
+    "out"
+  ],
+  "scripts": {
+    "rebuild": "node-gyp rebuild",
+    "quick-test": "node js/QuickTest.js",
+    "test": "node js/EnvCheck.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wNodejsDevEnv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/wNodejsDevEnv/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "native",
+    "addon",
+    "module",
+    "c",
+    "c++",
+    "bindings",
+    "gyp"
+  ]
+}

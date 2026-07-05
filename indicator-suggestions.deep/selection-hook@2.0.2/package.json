@@ -1,0 +1,78 @@
+{
+  "name": "selection-hook",
+  "version": "2.0.2",
+  "description": "The first open-source library for cross-application text selection monitoring and global input event hooks. Works with Node.js and Electron.",
+  "author": "0xfullex",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xfullex/selection-hook.git"
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "require": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "rebuild": "node-gyp rebuild",
+    "prebuild": "npm run prebuild:win && npm run prebuild:mac && npm run prebuild:linux",
+    "prebuild:win": "npm run prebuild:win:x64 && npm run prebuild:win:arm64",
+    "prebuild:win:x64": "prebuildify --napi --platform=win32 --arch=x64",
+    "prebuild:win:arm64": "prebuildify --napi --platform=win32 --arch=arm64",
+    "prebuild:mac": "npm run prebuild:mac:x64 && npm run prebuild:mac:arm64",
+    "prebuild:mac:x64": "prebuildify --napi --platform=darwin --arch=x64",
+    "prebuild:mac:arm64": "prebuildify --napi --platform=darwin --arch=arm64",
+    "prebuild:linux": "npm run prebuild:linux:x64 && npm run prebuild:linux:arm64",
+    "prebuild:linux:x64": "prebuildify --napi --platform=linux --arch=x64",
+    "prebuild:linux:arm64": "prebuildify --napi --platform=linux --arch=arm64",
+    "demo": "node --trace-deprecation --force-node-api-uncaught-exceptions-policy=true examples/node-demo.js",
+    "typecheck": "tsc --noEmit",
+    "format": "find src -name '*.cc' -o -name '*.mm' -o -name '*.h' | xargs clang-format -i"
+  },
+  "keywords": [
+    "node",
+    "electron",
+    "text-selection",
+    "selected-text",
+    "selection",
+    "accessibility",
+    "cross-platform",
+    "napi",
+    "native",
+    "node-addon",
+    "mouse",
+    "keyboard",
+    "clipboard",
+    "input-events",
+    "input-hook",
+    "global-keyboard",
+    "global-mouse",
+    "keyboard-hook",
+    "mouse-hook",
+    "ui-automation",
+    "wayland",
+    "x11",
+    "windows",
+    "macos",
+    "linux"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^8.4.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "node-gyp": "^12.1.0",
+    "prebuildify": "^6.0.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "gypfile": true
+}

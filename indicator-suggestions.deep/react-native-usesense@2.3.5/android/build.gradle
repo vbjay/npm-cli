@@ -1,0 +1,52 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.safeExtGet = {prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace "com.usesense.reactnative"
+    compileSdkVersion safeExtGet('compileSdkVersion', 34)
+
+    defaultConfig {
+        // 28, matching the native ai.usesense:sdk requirement (minSdk 28 since
+        // SDK v4.1). A lower value fails a consuming app's release manifest merge
+        // against the SDK's own minSdk. Consuming apps must set minSdkVersion 28.
+        minSdkVersion safeExtGet('minSdkVersion', 28)
+        targetSdkVersion safeExtGet('targetSdkVersion', 34)
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    google()
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+
+    // UseSense Android SDK — published to Maven Central at
+    // central.sonatype.com/artifact/ai.usesense/sdk. Pinned to 4.3.0,
+    // the release that adds the V4 capture API + Flows runner (matches
+    // the iOS SDK 4.3.0 the plugin's podspec depends on). mavenCentral()
+    // is already in the `repositories` block above, so no custom
+    // repository declaration is needed.
+    implementation "ai.usesense:sdk:4.6.4"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${safeExtGet('kotlinVersion', '2.0.0')}"
+}

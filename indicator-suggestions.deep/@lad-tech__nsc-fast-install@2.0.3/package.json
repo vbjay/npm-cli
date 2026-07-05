@@ -1,0 +1,74 @@
+{
+  "name": "@lad-tech/nsc-fast-install",
+  "version": "2.0.3",
+  "description": "Fast dependencies install for builds docker images of monorepo",
+  "files": [
+    "README.md",
+    "CHANGELOG.md",
+    "dist/package.json",
+    "dist/src/**/*",
+    "dist/types/**/*"
+  ],
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc --pretty false && node scripts/normalize-dist-package.js && chmod +x dist/src/bin/cli.js",
+    "test": "npm run build && node --test test/helpers.test.js test/cli.test.js && node --test test/pack-smoke.test.js",
+    "prepack": "npm run build",
+    "fastInstall": "cd monorepo && npx ts-node ../src/bin/cli.ts --entryPoint services/ExampleService/start.ts  ",
+    "fastInstall2": "cd monorepo && npx ts-node ../src/bin/cli.ts --service services/ExampleService --verbose ",
+    "fastInstall3": "cd monorepo && npx ts-node ../src/bin/cli.ts --service services/ExampleService --exclude ExampleService",
+    "fastInstall-version": "npx ts-node ./src/bin/cli.ts --version",
+    "semantic-release": "semantic-release"
+  },
+  "bin": {
+    "fast-deps-install": "./dist/src/bin/cli.js",
+    "nsc-fast-install": "./dist/src/bin/cli.js"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@semantic-release/changelog": "^6.0.2",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.0",
+    "@types/filing-cabinet": "^2.5.3",
+    "@types/node": "^22.19.17",
+    "lefthook": "^1.2.0",
+    "prettier": "^2.6.1",
+    "semantic-release": "^25.0.3",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "filing-cabinet": "^5.4.2",
+    "jsonc-parser": "^3.3.1",
+    "precinct": "^12.3.2"
+  },
+  "author": "DevHive crew",
+  "license": "MIT",
+  "keywords": [
+    "@lad-tech/nsc-fast-install",
+    "nsc-toolkit",
+    "cli",
+    "nats",
+    "service",
+    "monorepo",
+    "dependencies"
+  ],
+  "bugs": {
+    "url": "https://github.com/lad-tech/nsc-fast-install/issues"
+  },
+  "homepage": "https://github.com/lad-tech/nsc-fast-install#readme"
+}

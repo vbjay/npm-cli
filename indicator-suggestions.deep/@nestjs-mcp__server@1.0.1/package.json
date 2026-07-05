@@ -1,0 +1,148 @@
+{
+  "name": "@nestjs-mcp/server",
+  "version": "1.0.1",
+  "description": "Modular library for building scalable MCP servers with NestJS, providing decorators and integration patterns as a wrapper for the official MCP TypeScript SDK.",
+  "author": "Adrián Darío Hidalgo Flores",
+  "license": "MIT",
+  "packageManager": "pnpm@11.5.0",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=11"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adrian-d-hidalgo/nestjs-mcp-server.git"
+  },
+  "homepage": "https://github.com/adrian-d-hidalgo/nestjs-mcp-server#readme",
+  "bugs": {
+    "url": "https://github.com/adrian-d-hidalgo/nestjs-mcp-server/issues"
+  },
+  "keywords": [
+    "decorators",
+    "integration",
+    "large-language-models",
+    "llm",
+    "mcp",
+    "model-context-protocol",
+    "module",
+    "nestjs",
+    "npm",
+    "pnpm",
+    "sdk",
+    "server",
+    "typescript",
+    "yarn"
+  ],
+  "scripts": {
+    "build": "nest build",
+    "prepare": "is-ci || husky",
+    "start:example": "npx -y ts-node-dev --respawn examples/$EXAMPLE/main.ts",
+    "start:inspector": "npx -y @modelcontextprotocol/inspector",
+    "lint:check": "eslint \"{src,test,examples}/**/*.ts\"",
+    "lint:fix": "eslint \"{src,test,examples}/**/*.ts\" --fix",
+    "format:check": "prettier --check \"{src,test,examples}/**/*.ts\"",
+    "format:fix": "prettier --write \"{src,test,examples}/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "quality:check": "pnpm lint:check && pnpm format:check && pnpm typecheck",
+    "quality:fix": "pnpm lint:fix && pnpm format:fix",
+    "knip": "knip",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.1.18",
+    "@nestjs/core": "^11.1.18",
+    "@nestjs/platform-express": "^11.1.18",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "@commitlint/types": "^21.0.1",
+    "@eslint/js": "^10.0.1",
+    "@nestjs/cli": "^11.0.21",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/schematics": "^11.1.0",
+    "@nestjs/testing": "^11.1.24",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.8",
+    "@swc/cli": "^0.8.1",
+    "@swc/core": "^1.15.40",
+    "@swc/jest": "^0.2.39",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.9.1",
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "is-ci": "^4.1.0",
+    "jest": "^30.4.2",
+    "knip": "^6.15.0",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.3",
+    "semantic-release": "^25.0.3",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "8.60.0"
+  },
+  "lint-staged": {
+    "{src,test,examples}/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": [
+        "@swc/jest"
+      ]
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "coverageThreshold": {
+      "global": {
+        "statements": 80,
+        "branches": 55,
+        "functions": 70,
+        "lines": 85
+      }
+    },
+    "coveragePathIgnorePatterns": [
+      "/index\\.ts$",
+      "\\.interface\\.ts$",
+      "\\.types\\.ts$"
+    ]
+  }
+}

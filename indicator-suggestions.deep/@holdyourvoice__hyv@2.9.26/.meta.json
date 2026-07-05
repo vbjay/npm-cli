@@ -1,0 +1,105 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5a6115479dba9b95",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall-lib.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5adc74b3b97ca20650e5db85c0807d86fd8721256ca8c5b2203f825faec21ab2",
+        "sizeBytes": 1307,
+        "signals": [
+          "reads-process-env",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/postinstall-lib.js"
+        ],
+        "urls": [
+          {
+            "url": "https://holdyourvoice.com/install.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/postinstall-lib.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "8a68a7ce933bd68daf28e08b02a8d7fc9dc6a309ba8a7b3583d3234adca747f3",
+        "sizeBytes": 28357,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://holdyourvoice.com/mcp",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://holdyourvoice.com/app/api/mcp",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://holdyourvoice.com/wiki/use-hyv-in-chatgpt",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://chatgpt.com/#settings/Connectors",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:14.932Z"
+  },
+  "hash": "sha256:fde921cb4b0f5d9f6f5e8a40f4dfb097d807eb614ae81794ac3015e73e3e8b60"
+}

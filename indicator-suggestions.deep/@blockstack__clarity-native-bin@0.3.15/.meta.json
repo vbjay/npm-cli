@@ -1,0 +1,105 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "db06826231f0e4b0",
+    "fetchedFiles": [
+      "lib/directInstall.js",
+      "package.json",
+      "postInstallScript.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "semver",
+        "versionSpec": "^6.1.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "semver@6.3.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postInstallScript.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0d6abb3b3a2e1a7ab6c4961a42a48c43ce6242b53b95e93bd896f616f73c2df0",
+        "sizeBytes": 2159,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "dynamic-require",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/directInstall.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/directInstall.js",
+        "reason": "required by ./postInstallScript.js",
+        "sha256": "4e7e213890400e9a098fc151d4a3b4a06fc845f2eff35377c836ed1dd2fdff83",
+        "sizeBytes": 796,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postInstallScript.js",
+        "sha256": "9f262e484d76f496bb94969b4f8ca8a2f6f6cd937180536f6788ee8f445df541",
+        "sizeBytes": 2015,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:46.135Z"
+  },
+  "hash": "sha256:3b3d6d01d326a31884d1175f1efc0002e5eed71a49b75da12aeb8c6a8cb7c4d7"
+}

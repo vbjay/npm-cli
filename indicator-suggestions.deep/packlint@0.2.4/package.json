@@ -1,0 +1,56 @@
+{
+  "name": "packlint",
+  "version": "0.2.4",
+  "keywords": [
+    "cli",
+    "monorepo",
+    "multi-package",
+    "npm",
+    "package",
+    "package-json",
+    "package.json",
+    "packages",
+    "workspace",
+    "lint",
+    "eslint",
+    "format",
+    "organize"
+  ],
+  "homepage": "https://github.com/toss/packlint#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toss/packlint.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "bin": "./bin/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsup ./src/index.ts --format esm --dts",
+    "dev": "yarn run build --watch",
+    "prepack": "yarn build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@packlint/command": "^0.2.0",
+    "@packlint/core": "^0.2.0",
+    "clipanion": "^3.2.0-rc.13"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "tsup": "^6.5.0",
+    "typescript": "4.8.3",
+    "vite": "^4.0.2",
+    "vitest": "^0.26.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "3f23d72ce754b5a4912375147ac92f026ed74b32"
+}

@@ -1,0 +1,61 @@
+{
+  "name": "ratex-react-native",
+  "version": "0.1.13",
+  "description": "Native LaTeX rendering for React Native (no WebView)",
+  "main": "lib/index.js",
+  "react-native": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "ios",
+    "android",
+    "ratex-react-native.podspec",
+    "react-native.config.js"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "prepack": "rm -f ios/Fonts/*.ttf && cp -L ../../fonts/*.ttf ios/Fonts/",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erweixin/RaTeX.git",
+    "directory": "platforms/react-native"
+  },
+  "homepage": "https://github.com/erweixin/RaTeX",
+  "codegenConfig": {
+    "name": "RNRaTeXSpec",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "ios": {
+      "componentProvider": {
+        "RaTeXView": "RaTeXViewComponentView",
+        "RaTeXInlineView": "RaTeXInlineViewComponentView"
+      }
+    },
+    "android": {
+      "javaPackageName": "io.ratex"
+    }
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "react": "18.3.1",
+    "react-native": "0.76.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "react-native",
+    "latex",
+    "math",
+    "rendering",
+    "katex"
+  ],
+  "license": "MIT"
+}

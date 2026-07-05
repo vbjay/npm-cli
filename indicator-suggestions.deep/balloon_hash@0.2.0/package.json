@@ -1,0 +1,44 @@
+{
+  "name": "balloon_hash",
+  "version": "0.2.0",
+  "description": "A secure WebAssembly-based implementation of Balloon Hashing (RFC 9197)",
+  "main": "dist/balloon_hash.js",
+  "types": "dist/balloon_hash.d.ts",
+  "files": [
+    "dist",
+    "pkg"
+  ],
+  "scripts": {
+    "build": "npm run build:wasm && npm run build:ts",
+    "build:wasm": "wasm-pack build --target nodejs",
+    "build:ts": "tsc",
+    "test": "wasm-pack test --node",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "balloon-hash",
+    "password-hashing",
+    "cryptography",
+    "wasm",
+    "webassembly",
+    "rust"
+  ],
+  "author": "woojoo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leessang10/balloon_hash.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/leessang10/balloon_hash/issues"
+  },
+  "homepage": "https://github.com/leessang10/balloon_hash#readme",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "@namewta/speculo",
+  "version": "0.2.1",
+  "description": "Workflow-packaged specification-driven development assets with install, update, and migration tooling.",
+  "type": "module",
+  "bin": {
+    "speculo": "./dist/src/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test dist/test/*.test.js",
+    "pretest": "pnpm build",
+    "validate-assets": "node scripts/validate-framework-assets.mjs && node scripts/check-template-links.mjs",
+    "check": "pnpm test && pnpm validate-assets",
+    "verify-bin": "node scripts/verify-bin.mjs",
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm test && pnpm validate-assets"
+  },
+  "files": [
+    "dist/src",
+    "template"
+  ],
+  "keywords": [
+    "speculo",
+    "sdd",
+    "spec-driven-development",
+    "ai-coding",
+    "workflows",
+    "skills",
+    "cli",
+    "scaffolding"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NAMEWTA/Speculo.git"
+  },
+  "homepage": "https://github.com/NAMEWTA/Speculo#readme",
+  "bugs": {
+    "url": "https://github.com/NAMEWTA/Speculo/issues"
+  },
+  "license": "MIT",
+  "author": "wta",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "packageManager": "pnpm@11.1.3",
+  "engines": {
+    "node": "22.22.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "fast-xml-parser": "^5.9.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.5.2"
+  }
+}

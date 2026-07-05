@@ -1,0 +1,63 @@
+{
+  "name": "octopus-deploy",
+  "version": "6.3.1",
+  "description": "Node scripts to package up applications, create releases, and deploy with Octopus Deploy. This package leverages the Octopus Deploy REST API in order to deploy from Windows and non-Windows machines.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix",
+    "prepare": "husky install",
+    "test": "mocha",
+    "test:ci": "nyc --reporter text npm run test -- --reporter tap",
+    "test:cover": "nyc npm run test",
+    "test:watch": "npm run test -- --watch"
+  },
+  "bin": {
+    "octopus-deploy": "./bin/octopus-deploy.js"
+  },
+  "engines": {
+    "node": ">=10.13"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/parkerholladay/node-octopus-deploy.git"
+  },
+  "keywords": [
+    "octo",
+    "octopus",
+    "deploy",
+    "package",
+    "octopack",
+    "pack",
+    "cli"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/parkerholladay/node-octopus-deploy/issues"
+  },
+  "homepage": "https://github.com/parkerholladay/node-octopus-deploy",
+  "dependencies": {
+    "archiver": "5.3.1",
+    "glob-stream": "7.0.0",
+    "json-casing": "1.2.10",
+    "request": "2.88.2",
+    "request-promise-native": "1.0.9",
+    "yargs": "16.2.0"
+  },
+  "devDependencies": {
+    "chai": "4.3.7",
+    "eslint": "7.32.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-chai-friendly": "0.7.2",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-mocha": "10.1.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-standard": "5.0.0",
+    "husky": "8.0.3",
+    "mocha": "9.2.2",
+    "nyc": "15.1.0",
+    "sinon": "15.0.1",
+    "sinon-chai": "3.7.0"
+  }
+}

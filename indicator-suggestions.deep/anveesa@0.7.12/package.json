@@ -1,0 +1,49 @@
+{
+  "name": "anveesa",
+  "version": "0.7.12",
+  "description": "Multi-provider terminal AI assistant — TUI, web UI, and one-shot mode backed by any OpenAI-compatible API",
+  "main": "bin/anveesa.js",
+  "bin": {
+    "anveesa": "bin/anveesa.js"
+  },
+  "scripts": {
+    "build": "cargo build --release",
+    "postinstall": "node scripts/install.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "bin/anveesa.js",
+    "scripts/install.js",
+    "Cargo.toml",
+    "Cargo.lock",
+    "src/",
+    "README.md"
+  ],
+  "keywords": [
+    "ai",
+    "cli",
+    "terminal",
+    "rust",
+    "openai",
+    "agent",
+    "copilot",
+    "tui",
+    "llm",
+    "deepseek",
+    "groq",
+    "anthropic"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandhuwibowo/anveesa-cli.git"
+  },
+  "homepage": "https://github.com/pandhuwibowo/anveesa-cli",
+  "bugs": {
+    "url": "https://github.com/pandhuwibowo/anveesa-cli/issues"
+  },
+  "author": "Anveesa"
+}

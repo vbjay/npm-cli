@@ -1,0 +1,111 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "88fe0def047ed1e6",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "220b8375cc36a2ca271dddb44d8ac16958e6b2c027e4b6808b9f4e15d7053b4f",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `ctp`  -  C/C++ sources",
+            "items": [
+              "src/addon.cc",
+              "src/native/risk.cc",
+              "src/native/arm.cc",
+              "src/native/channel.cc",
+              "src/native/gbk.cc",
+              "src/native/mdspi.cc",
+              "src/native/mdapi.cc",
+              "src/native/traderapi.cc",
+              "src/generated/layout.gen.cc",
+              "src/generated/traderspi.gen.cc",
+              "src/generated/traderreq.gen.cc"
+            ]
+          },
+          {
+            "label": "Target `ctp`  -  libraries",
+            "items": [
+              "thostmduserapi_se.lib",
+              "thosttraderapi_se.lib",
+              "<(module_root_dir)/ctpsdk/linux/thostmduserapi_se.so",
+              "<(module_root_dir)/ctpsdk/linux/thosttraderapi_se.so",
+              "-Wl,-rpath,'$$ORIGIN'",
+              "-Wl,-rpath,<(module_root_dir)/ctpsdk/linux",
+              "-F<(module_root_dir)/ctpsdk/macos",
+              "-framework thostmduserapi_se",
+              "-framework thosttraderapi_se",
+              "-liconv",
+              "-Wl,-rpath,@loader_path",
+              "-Wl,-rpath,<(module_root_dir)/ctpsdk/macos"
+            ]
+          },
+          {
+            "label": "Target `ctp`  -  include directories",
+            "items": [
+              "<!(node -p \"require('node-addon-api').include_dir\")",
+              "ctpsdk",
+              "<(module_root_dir)/ctpsdk/macos/thostmduserapi_se.framework/Versions/A/Headers",
+              "<(module_root_dir)/ctpsdk/macos/thosttraderapi_se.framework/Versions/A/Headers"
+            ]
+          },
+          {
+            "label": "Target `ctp`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:14.063Z"
+  },
+  "hash": "sha256:27535f36fce34540793b7a93694a74b354b2dee654c04624e20c668d53ef9709"
+}

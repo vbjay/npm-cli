@@ -1,0 +1,100 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c5117fe97dc6e75d",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/build.cjs",
+      "scripts/postinstall.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "react-reconciler",
+        "versionSpec": "^0.33.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "react-reconciler@0.33.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7eb93f1294dce7d4a09ba12577c53810c7344be3f59437960b2e225fb87ca6b8",
+        "sizeBytes": 4415,
+        "signals": [
+          "uses-child-process",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://bun.sh/install",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/build.cjs",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "ce4c6949b3af75fc3e0c3b22123df85fc809132b00ec8e09442bddf836b45df7",
+        "sizeBytes": 450,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:22.976Z"
+  },
+  "hash": "sha256:c6cc22514485563a3db527e522943e8eab78f1e8c6be22660a41a43ce5d969ee"
+}

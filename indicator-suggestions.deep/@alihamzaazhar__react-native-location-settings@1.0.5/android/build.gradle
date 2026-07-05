@@ -1,0 +1,39 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.3.2'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.25'
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'com.facebook.react'
+
+android {
+  compileSdk 34
+  namespace 'com.locationsettings'
+
+  defaultConfig {
+    minSdkVersion 24
+  }
+
+  buildFeatures {
+    buildConfig false
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation("com.facebook.react:react-android")
+  implementation 'com.google.android.gms:play-services-location:21.3.0'
+}

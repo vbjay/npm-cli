@@ -1,0 +1,49 @@
+{
+  "name": "@kxrk0/global-brain",
+  "version": "0.5.0",
+  "description": "Cross-project persistent memory (\"global brain\") for Claude Code — a local SQLite brain that auto-ingests transcripts and renders a bounded digest loaded into every session.",
+  "keywords": [
+    "claude-code",
+    "claude",
+    "memory",
+    "knowledge-base",
+    "sqlite",
+    "cli",
+    "ai",
+    "agent"
+  ],
+  "license": "MIT",
+  "author": "kxrk0 <irealfrex@gmail.com>",
+  "homepage": "https://github.com/kxrk0/global-brain#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kxrk0/global-brain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kxrk0/global-brain/issues"
+  },
+  "type": "commonjs",
+  "bin": {
+    "global-brain": "bin/cli.js"
+  },
+  "scripts": {
+    "postinstall": "node install/postinstall.js",
+    "test": "node test/update-check.test.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "install/",
+    "config.json",
+    "SKILL.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

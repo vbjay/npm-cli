@@ -1,0 +1,230 @@
+{
+  "name": "@duffel/react-native-components",
+  "version": "7.0.2",
+  "description": "UI components to support selling travel with the Duffel API",
+  "source": "./src/index.ts",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "./index.d.ts",
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "release": "release-it",
+    "release-canary": "release-it --preRelease=canary",
+    "prettier-fix": "prettier --write --log-level=warn .",
+    "check-types": "tsc --noEmit --project tsconfig.json"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duffelhq/react-native-components.git"
+  },
+  "author": "hello@duffel.com <hello@duffel.com> (https://duffel.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/duffelhq/react-native-components/issues"
+  },
+  "homepage": "https://github.com/duffelhq/react-native-components#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "17.8.1",
+    "@duffel/api": "4.2.2",
+    "@eslint/compat": "2.0.3",
+    "@evervault/react-native": "2.3.0",
+    "@evilmartians/lefthook": "1.7.14",
+    "@react-native-picker/picker": "2.11.4",
+    "@react-native/eslint-config": "0.84.1",
+    "@release-it/conventional-changelog": "10.0.6",
+    "@testing-library/react-native": "12.6.1",
+    "@types/jest": "29.5.12",
+    "@types/react": "18.3.4",
+    "commitlint": "17.8.1",
+    "conventional-changelog-conventionalcommits": "^9.3.0",
+    "del-cli": "5.1.0",
+    "eslint": "9.39.4",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-jest": "26.9.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-testing-library": "6.3.0",
+    "jest": "29.7.0",
+    "nock": "13.5.5",
+    "prettier": "3.3.3",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "react-native-builder-bob": "0.30.0",
+    "react-native-mask-input": "1.2.3",
+    "react-native-picker-select": "9.3.1",
+    "react-native-svg": "15.9.0",
+    "react-native-webview": "13.8.6",
+    "react-test-renderer": "18.3.1",
+    "release-it": "19.2.4",
+    "typescript": "5.5.4"
+  },
+  "resolutions": {
+    "@types/react": "18.2.44",
+    "form-data": "4.0.4",
+    "send": "0.19.0",
+    "tar@^7": "7.5.11",
+    "undici": "6.24.0",
+    "unicorn-magic": "0.3.0"
+  },
+  "peerDependencies": {
+    "@duffel/api": "4.2.1",
+    "@evervault/react-native": "2.3.0",
+    "@react-native-picker/picker": ">=2.11.4",
+    "react": "*",
+    "react-native": "*",
+    "react-native-mask-input": ">=1.2.3",
+    "react-native-picker-select": ">=9.3.1",
+    "react-native-svg": "*",
+    "react-native-webview": "*"
+  },
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/!(@react-native)"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "conventionalcommits"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/**/*.[jt]s?(x)",
+          "**/?(*.)+(spec|test).[jt]s?(x)"
+        ],
+        "extends": [
+          "plugin:testing-library/react"
+        ]
+      }
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "type": "library",
+    "version": "0.41.0"
+  },
+  "dependencies": {
+    "@duffel/react-native-components-ancillaries": "0.4.0",
+    "@duffel/react-native-components-assistant": "0.5.1"
+  }
+}

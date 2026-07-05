@@ -1,0 +1,47 @@
+{
+  "name": "trycase",
+  "version": "0.1.21",
+  "description": "CLI for TryCase disposable test environments.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://www.trycase.dev/docs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bencsn/auto-tester.git",
+    "directory": "apps/cli"
+  },
+  "keywords": [
+    "trycase",
+    "testing",
+    "cli",
+    "coding-agent",
+    "browser-automation",
+    "artifacts"
+  ],
+  "bin": {
+    "trycase": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --target node --outdir dist",
+    "prepack": "bun run build",
+    "pack:dry-run": "npm pack --dry-run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ignore": "^5.3.2"
+  },
+  "devDependencies": {
+    "commander": "^14.0.0"
+  }
+}

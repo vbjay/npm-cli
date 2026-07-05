@@ -1,0 +1,80 @@
+{
+  "name": "react-native-qa-logger",
+  "version": "1.1.1",
+  "description": "In-app QA logging and debugging package for React Native with debug console, universal network logging, and error tracking",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsc",
+    "upload": "npm publish",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "publish:git": "git push origin HEAD --follow-tags",
+    "publish:npm": "npm publish --access public",
+    "release": "npm run build && npm publish --access public && git push origin HEAD --follow-tags"
+  },
+  "keywords": [
+    "react-native",
+    "logging",
+    "debugging",
+    "qa",
+    "dev-tools",
+    "debug-console",
+    "network-logger",
+    "error-tracking",
+    "fetch-logger",
+    "xhr-logger",
+    "axios-logger",
+    "in-app-debugging"
+  ],
+  "author": "Shubhanshu Barnwal <connect@shubhanshubb.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shubhanshubb/react-native-qa-logger.git"
+  },
+  "homepage": "https://github.com/shubhanshubb/react-native-qa-logger#readme",
+  "bugs": {
+    "url": "https://github.com/shubhanshubb/react-native-qa-logger/issues"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://buymeacoffee.com/shubhanshubb"
+  },
+  "maintainers": [
+    {
+      "name": "Shubhanshu Barnwal",
+      "email": "connect@shubhanshubb.dev",
+      "url": "https://shubhanshubb.dev"
+    }
+  ],
+  "dependencies": {
+    "@react-native-clipboard/clipboard": "^1.16.0"
+  },
+  "peerDependencies": {
+    "axios": ">=1.0.0",
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0"
+  },
+  "peerDependenciesMeta": {
+    "axios": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-native": "^0.72.8",
+    "axios": "^1.7.0",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e39e4207d44730ef",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "package.json",
+      "postinstall.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "node-fetch",
+        "versionSpec": "^3.3.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "node-fetch@3.3.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "4a0710604b2c4ff7b43866e98b741cdd0bc75553f8de2836181747071c5b3ead",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ae1ca29a99045fe17532fdeb7e4b9f0277c34ba0ab2baf207f53780f0e21ce35",
+        "sizeBytes": 2747,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/w-kuipers/alphadb/releases/download/v1.0.0-beta.38",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:10.883Z"
+  },
+  "hash": "sha256:d62846a59b26d6640a819c7544729b1e1f79f5714c0169479eb8d1995b8b30b9"
+}

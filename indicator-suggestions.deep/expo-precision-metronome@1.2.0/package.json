@@ -1,0 +1,84 @@
+{
+  "name": "expo-precision-metronome",
+  "version": "1.2.0",
+  "description": "High-precision metronome engine for Expo and React Native with native audio scheduling support.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "lint:kt": "cd example/android && ./gradlew :expo-precision-metronome:ktlintCheck --no-daemon",
+    "lint:swift": "swiftlint lint --strict",
+    "test:swift": "swift test --package-path ios",
+    "test:android": "cd example/android && ./gradlew :expo-precision-metronome:test --no-daemon",
+    "test:android:connected": "cd example/android && ./gradlew :expo-precision-metronome:connectedAndroidTest --no-daemon",
+    "lint:android": "cd example/android && ./gradlew :expo-precision-metronome:lint --no-daemon",
+    "type:check": "expo-module typecheck",
+    "test": "expo-module test",
+    "check": "npm run lint && npm run type:check && npm run test",
+    "prepare": "expo-module prepare && husky",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-module",
+    "metronome",
+    "audio",
+    "bpm",
+    "timing",
+    "music",
+    "native",
+    "ios",
+    "android",
+    "expo-precision-metronome"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guitar0-net/expo-precision-metronome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guitar0-net/expo-precision-metronome/issues"
+  },
+  "author": "Andrey Kotlyar <kotlyar562@gmail.com> (kotlyar-andrey)",
+  "license": "MIT",
+  "homepage": "https://github.com/guitar0-net/expo-precision-metronome#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,mjs,json,md}": [
+      "prettier --write"
+    ],
+    "android/src/**/*.{kt,kts}": [
+      "ktlint --format"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@types/react": "~19.1.1",
+    "eslint-config-universe": "^15.0.3",
+    "expo": "^55.0.24",
+    "expo-module-scripts": "^55.0.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "react-native": "0.82.1"
+  },
+  "peerDependencies": {
+    "expo": ">=55.0.0",
+    "react": ">=19.0.0",
+    "react-native": ">=0.82.0"
+  }
+}

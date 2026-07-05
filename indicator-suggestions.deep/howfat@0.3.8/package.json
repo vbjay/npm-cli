@@ -1,0 +1,49 @@
+{
+  "name": "howfat",
+  "version": "0.3.8",
+  "description": "Shows how fat is a package",
+  "bin": "src/index.js",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "humile src",
+    "test:e2e": "humile e2e",
+    "test:full": "npm test && npm run lint && npm run test:e2e",
+    "lint": "eslint src",
+    "postversion": "npm run test:full && git push && git push --tags",
+    "prepack": "npm run test:full"
+  },
+  "typings": "src/index.d.ts",
+  "repository": "megahertz/howfat",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.ts",
+    "!**/__specs__/*"
+  ],
+  "keywords": [
+    "npm",
+    "package",
+    "size",
+    "dependencies",
+    "fat"
+  ],
+  "author": "Alexey Prokhorov",
+  "license": "MIT",
+  "bugs": "https://github.com/megahertz/howfat/issues",
+  "homepage": "https://github.com/megahertz/howfat#readme",
+  "engines": {
+    "node": ">=14"
+  },
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "humile": "^0.5.0"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "npm-package-arg": "^10.0.0",
+    "package-options": "^0.1.4",
+    "semver": "^7.3.8",
+    "tar": "^6.1.12"
+  }
+}

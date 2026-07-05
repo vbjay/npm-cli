@@ -1,0 +1,64 @@
+{
+  "name": "@lotus-gui/core",
+  "version": "0.3.4",
+
+  "main": "lotus.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1Jamie/project-lotus.git"
+  },
+  "keywords": [
+    "gui",
+    "framework",
+    "desktop",
+    "electron-alternative",
+    "rust",
+    "servo",
+    "html",
+    "css",
+    "js",
+    "napi-rs",
+    "runtime",
+    "engine"
+  ],
+  "files": [
+    "README.md",
+    "lotus.js",
+    "index.js",
+    "index.d.ts",
+    "package.json",
+    "*.node",
+    "resources/",
+    "scripts/",
+    "windows/"
+  ],
+  "napi": {
+    "name": "lotus",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-gnu",
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-freebsd"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "napi build --platform --release && node scripts/extract_angle_dlls.js",
+    "build:debug": "napi build --platform && node scripts/extract_angle_dlls.js",
+    "clean": "node scripts/clean.js",
+    "artifacts": "echo 'Artifacts moved by CI workflow'",
+    "test": "npm run test:base",
+    "test:base": "GLIBC_TUNABLES=glibc.rtld.optional_static_tls=4096 node example.js",
+    "postinstall": "node scripts/install.js",
+    "start": "RUST_LOG=info LOTUS_DEV_REQ=../ node test_app/main.js",
+    "benchmark": "RUST_LOG=info LOTUS_DEV_REQ=../ node ipc-benchmark/main.js",
+    "test-app": "RUST_LOG=debug LOTUS_DEV_REQ=../ node test_app/main.js"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.16.0"
+  },
+  "dependencies": {
+    "msgpackr": "^1.11.8"
+  }
+}

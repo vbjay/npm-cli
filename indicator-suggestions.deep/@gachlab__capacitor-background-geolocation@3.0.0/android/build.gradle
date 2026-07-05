@@ -1,0 +1,93 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:9.2.1'
+        // Kotlin compiler en classpath para que AGP 9.x compile archivos .kt
+        // NO aplicamos kotlin-android explicitamente — AGP 9.x tiene Kotlin integrado
+        // y aplicarlo causaria "Cannot add extension 'kotlin' already registered"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23'
+    }
+}
+
+ext {
+    junitVersion = project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13.2'
+    junitJupiterVersion = '5.10.2'
+    robolectricVersion = '4.13'
+    mockitoVersion = '5.11.0'
+    androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.7.0'
+    androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.2.1'
+    androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.6.1'
+    androidxLocalbroadcastmanagerVersion = project.hasProperty('androidxLocalbroadcastmanagerVersion') ? rootProject.ext.androidxLocalbroadcastmanagerVersion : '1.1.0'
+    androidxWorkRuntimeVersion = project.hasProperty('androidxWorkRuntimeVersion') ? rootProject.ext.androidxWorkRuntimeVersion : '2.9.1'
+    playServicesLocationVersion = project.hasProperty('playServicesLocationVersion') ? rootProject.ext.playServicesLocationVersion : '21.3.0'
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    namespace = "com.gachlab.capacitor.backgroundgeolocation"
+    compileSdk = project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 36
+    defaultConfig {
+        minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 23
+        targetSdkVersion project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 35
+        versionCode 2
+        versionName "1.1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    lint {
+        abortOnError false
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+            all {
+                useJUnitPlatform()
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':capacitor-android')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:$androidxLocalbroadcastmanagerVersion"
+    implementation "androidx.work:work-runtime:$androidxWorkRuntimeVersion"
+    implementation "com.google.android.gms:play-services-location:$playServicesLocationVersion"
+    testImplementation "org.json:json:20250107"
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    // Vintage engine runs JUnit4 tests (Robolectric @RunWith) under the JUnit5
+    // platform alongside the Jupiter tests — needed for the LocationService / hub
+    // integration tests that require a Robolectric Android runtime.
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.2"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+}

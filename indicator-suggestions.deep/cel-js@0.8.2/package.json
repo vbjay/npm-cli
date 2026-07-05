@@ -1,0 +1,61 @@
+{
+  "name": "cel-js",
+  "version": "0.8.2",
+  "description": "Common Expression Language (CEL) evaluator for JavaScript",
+  "keywords": [
+    "Common Expression Language",
+    "CEL",
+    "evaluator",
+    "javascript",
+    "typescript"
+  ],
+  "homepage": "https://github.com/ChromeGG/cel-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChromeGG/cel-js.git"
+  },
+  "license": "MIT",
+  "author": "Adam Tkaczyk",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run clean && tsc",
+    "clean": "rm -rf ./dist",
+    "generate": "tsx ./ts-signatures-generator",
+    "lint": "eslint --ext .ts src",
+    "prepack": "pnpm run build",
+    "test": "vitest ./src --run",
+    "test:watch": "vitest ./src",
+    "type-check": "tsc --noEmit -p tsconfig.json",
+    "release": "release-it"
+  },
+  "dependencies": {
+    "chevrotain": "11.0.3",
+    "ramda": "0.30.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.23.0",
+    "@types/node": "22.13.4",
+    "@types/ramda": "0.30.1",
+    "esbuild": "0.25.0",
+    "eslint": "9.23.0",
+    "eslint-plugin-sonarjs": "3.0.2",
+    "eslint-plugin-vitest": "0.5.4",
+    "prettier": "3.5.1",
+    "release-it": "18.1.2",
+    "tsx": "4.19.3",
+    "typescript": "5.7.3",
+    "typescript-eslint": "8.27.0",
+    "vitest": "3.0.6"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

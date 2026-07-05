@@ -1,0 +1,78 @@
+{
+  "name": "nnrm",
+  "type": "module",
+  "version": "0.4.4",
+  "packageManager": "pnpm@8.14.3",
+  "description": "New npm registry manager.",
+  "author": {
+    "email": "me@yunyoujun.cn",
+    "name": "YunYouJun",
+    "url": "https://www.yunyoujun.cn"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YunYouJun/nnrm"
+  },
+  "keywords": [
+    "npm",
+    "registry",
+    "toggle",
+    "manager"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "bin": {
+    "nnrm": "dist/index.js",
+    "nrm": "dist/index.js",
+    "nyrm": "dist/yrm.js",
+    "prm": "dist/prm.js",
+    "yrm": "dist/yrm.js"
+  },
+  "files": [
+    "dist",
+    "registries.json"
+  ],
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.6.3",
+    "@types/node": "^20.11.7",
+    "@vitest/coverage-c8": "^0.33.0",
+    "bumpp": "^9.3.0",
+    "cac": "^6.7.14",
+    "eslint": "^8.56.0",
+    "execa": "^8.0.1",
+    "lint-staged": "^15.2.0",
+    "node-fetch": "^3.3.2",
+    "picocolors": "^1.0.0",
+    "simple-git-hooks": "^2.9.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  },
+  "scripts": {
+    "build": "tsup",
+    "coverage": "vitest run --coverage",
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "ls": "node dist/index.js ls",
+    "play": "node dist/index.js",
+    "test": "npm run ls && npm run test:add && npm run test:remove && npm run test:use && npm run test:test",
+    "test:add": "node dist/index.js add yyj https://www.yunyoujun.cn",
+    "test:remove": "node dist/index.js remove yyj",
+    "test:test": "node dist/index.js test",
+    "test:use": "node dist/index.js use 0x3f && node dist/index.js use taobao",
+    "test:unit": "vitest",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "echo '`\\x1b[33mnnrm -h\\x1b[0m` to see usage \n`\\x1b[33mnnrm ls\\x1b[0m` to see registries'",
+    "release": "bumpp --commit --push --tag"
+  }
+}

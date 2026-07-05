@@ -1,0 +1,140 @@
+{
+  "name": "@modyo/cli",
+  "version": "3.6.2",
+  "description": "Modyo CLI Command line to expose local development tools",
+  "keywords": [
+    "modyo",
+    "widgets",
+    "cli",
+    "spa",
+    "oclif"
+  ],
+  "homepage": "https://github.com/modyo/modyo-cli/",
+  "bugs": "https://github.com/modyo/modyo-cli/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/modyo/modyo-cli.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": {
+    "name": "Modyo Team",
+    "email": "support@modyo.com",
+    "url": "https://modyo.com"
+  },
+  "contributors": [
+    {
+      "name": "Pablo Ortega",
+      "email": "portega@modyo.com",
+      "url": "https://modyo.com"
+    },
+    {
+      "name": "Jorge Saud",
+      "email": "jsaud@modyo.com",
+      "url": "https://modyo.com"
+    },
+    {
+      "name": "Roberto Rivera",
+      "email": "rrivera@modyo.com",
+      "url": "https://modyo.com"
+    },
+    {
+      "name": "Abraham José González Barboza",
+      "email": "agonzalez@modyo.com",
+      "url": "https://modyo.com"
+    },
+    {
+      "name": "Eduard Fabián Barón Gutiérrez",
+      "email": "ebaron@modyo.com",
+      "url": "https://modyo.com"
+    },
+    {
+      "name": "Johann Felipe Rojas Pineda",
+      "email": "jrojas@modyo.com",
+      "url": "https://modyo.com"
+    }
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "modyo-cli": "./bin/run"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/oclif.config.mjs"
+  ],
+  "scripts": {
+    "build": "shx rm -rf lib && tsc -p tsconfig.json",
+    "coverage": "nyc --extension .ts mocha --config .mocharc.js",
+    "commitlint": "commitlint --edit",
+    "lint-staged": "lint-staged",
+    "lint": "eslint .",
+    "prepack": "npm run build && oclif manifest",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "prepare": "husky",
+    "test": "mocha --config .mocharc.js",
+    "version": "oclif readme",
+    "readme": "npm run build && oclif readme"
+  },
+  "dependencies": {
+    "@inquirer/confirm": "^5.1.13",
+    "@oclif/core": "^4.4.1",
+    "@oclif/plugin-autocomplete": "^3.2.31",
+    "@oclif/plugin-help": "^6.2.29",
+    "@oclif/plugin-version": "^2.2.30",
+    "@types/fs-extra": "^11.0.1",
+    "adm-zip": "^0.5.9",
+    "archiver": "^5.3.1",
+    "axios": "^1.10.0",
+    "cheerio": "1.0.0-rc.12",
+    "debug": "^4.3.4",
+    "dotenv": "^9.0.2",
+    "emoji-regex": "^9.2.2",
+    "form-data": "^4.0.0",
+    "fs-extra": "^11.1.1",
+    "mock-spawn": "^0.2.6",
+    "open": "^10.2.0",
+    "stream": "^0.0.2",
+    "tmp-promise": "^3.0.3",
+    "tslib": "^2.5.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.10.0",
+    "@oclif/test": "^4.1.13",
+    "@types/adm-zip": "^0.4.34",
+    "@types/archiver": "^5.3.2",
+    "@types/chai": "^4.3.3",
+    "@types/cheerio": "^0.22.31",
+    "@types/debug": "^4.1.8",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^20.0.0",
+    "@types/sinon": "^10.0.13",
+    "@types/tmp": "^0.2.3",
+    "chai": "^4.3.6",
+    "eslint": "^10.0.0",
+    "fancy-test": "^2.0.15",
+    "globals": "^15.9.0",
+    "globby": "^11.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "mocha": "^10.2.0",
+    "mocha-suppress-logs": "^0.3.1",
+    "mock-spawn": "^0.2.6",
+    "nock": "^14.0.5",
+    "nyc": "^17.1.0",
+    "oclif": "^4.20.1",
+    "shx": "^0.4.0",
+    "sinon": "^21.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.5.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "preferGlobal": true
+}

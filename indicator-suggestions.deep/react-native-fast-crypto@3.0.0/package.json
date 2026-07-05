@@ -1,0 +1,64 @@
+{
+  "name": "react-native-fast-crypto",
+  "version": "3.0.0",
+  "description": "Native C/C++ implemented crypto libraries for React Native apps",
+  "keywords": [
+    "react-native",
+    "scrypt",
+    "fast",
+    "native"
+  ],
+  "homepage": "https://github.com/EdgeApp/react-native-fast-crypto",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:EdgeApp/react-native-fast-crypto.git"
+  },
+  "license": "MIT",
+  "author": "Edge",
+  "contributors": [
+    "Paul Puey <paul@edge.app>",
+    "William Swanson <william@edge.app>"
+  ],
+  "main": "lib/index.js",
+  "files": [
+    "/android/build.gradle",
+    "/android/src/*",
+    "/CHANGELOG.md",
+    "/ios/*",
+    "/lib/index.js",
+    "/package.json",
+    "/react-native-fast-crypto.podspec",
+    "/src/native-crypto.h",
+    "/README.md"
+  ],
+  "scripts": {
+    "build-js": "sucrase -d lib/ --transforms typescript src/",
+    "build-native": "ZERO_AR_DATE=1 node -r sucrase/register ./scripts/build-native.ts",
+    "fix-android": "(cd android; ./format-java.sh)",
+    "fix": "eslint --fix .",
+    "lint": "eslint .",
+    "precommit": "lint-staged && tsc && npm run build-js",
+    "prepare": "husky && npm run build-js && npm run build-native",
+    "update-tests": "./scripts/update-tests.sh"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint"
+  },
+  "dependencies": {
+    "buffer": "^5.0.8",
+    "rfc4648": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.7",
+    "eslint": "^9.31.0",
+    "eslint-config-standard-kit": "^1.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.8.8",
+    "sucrase": "^3.16.0",
+    "typescript": "5.0.4"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.47.0 <1.0.0"
+  }
+}

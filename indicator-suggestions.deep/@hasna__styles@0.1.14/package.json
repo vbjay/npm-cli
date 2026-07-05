@@ -1,0 +1,88 @@
+{
+  "name": "@hasna/styles",
+  "version": "0.1.14",
+  "description": "Style management platform for AI coding agents — profiles, preferences, health checks, and design system enforcement",
+  "type": "module",
+  "bin": {
+    "styles": "bin/index.js",
+    "styles-mcp": "bin/mcp.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "styles/",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf bin/ dist/",
+    "build": "bun run clean && bun build ./src/cli/index.tsx --outdir ./bin --target bun --external ink --external react --external chalk --external playwright && bun build ./src/mcp/index.ts --outfile ./bin/mcp.js --target bun --external playwright --external ink --external react --external react-devtools-core && bun build ./src/index.ts --outdir ./dist --target bun --external playwright && tsc --emitDeclarationOnly --declaration --outDir dist && for f in ./bin/index.js ./bin/mcp.js; do if [ -f \"$f\" ] && ! head -1 \"$f\" | grep -q '^#!'; then printf '#!/usr/bin/env bun\\n' | cat - \"$f\" > \"$f.tmp\" && mv \"$f.tmp\" \"$f\" && chmod +x \"$f\"; fi; done",
+    "test": "bun test",
+    "dev": "bun run ./src/cli/index.tsx",
+    "dev:mcp": "bun --watch run ./src/mcp/index.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run typecheck && bun run test && bun run build",
+    "postinstall": "mkdir -p $HOME/.hasna/styles 2>/dev/null || true",
+    "dashboard:dev": "cd dashboard && bun run dev",
+    "dashboard:build": "cd dashboard && bun install && bun run build",
+    "server": "bun run src/server/serve.ts",
+    "server:dev": "bun --watch run src/server/serve.ts"
+  },
+  "keywords": [
+    "styles",
+    "design",
+    "ai",
+    "agent",
+    "cli",
+    "typescript",
+    "bun",
+    "claude",
+    "mcp",
+    "design-system",
+    "health-check",
+    "open-source"
+  ],
+  "author": "Andrei Hasna",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^18.2.0",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "ink": "^5.0.1",
+    "ink-select-input": "^6.0.0",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^6.0.0",
+    "playwright": "^1.58.2",
+    "react": "^18.2.0",
+    "zod": "^4.3.6"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/styles.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hasna/styles/issues"
+  },
+  "homepage": "https://github.com/hasna/styles#readme"
+}

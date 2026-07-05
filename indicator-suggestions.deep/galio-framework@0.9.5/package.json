@@ -1,0 +1,92 @@
+{
+  "name": "galio-framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "version": "0.9.5",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/galio-org/galio.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/galio-org/galio/issues"
+  },
+  "homepage": "https://galio.io/",
+  "keywords": [
+    "android",
+    "ios",
+    "react native",
+    "component library",
+    "ui kit",
+    "bootstrap",
+    "typescript",
+    "mobile apps"
+  ],
+  "scripts": {
+    "precommit": "yarn lint",
+    "lint": "eslint src/**/*.{js,ts,tsx}",
+    "lint:fix": "eslint src/**/*.{js,ts,tsx} --fix",
+    "test": "jest",
+    "build": "tsc && cp -r src/fonts dist/",
+    "type-check": "tsc --noEmit",
+    "postinstall": "opencollective-postinstall"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@react-native-vector-icons/fontisto": "^12.3.0",
+    "opencollective-postinstall": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "eslint": "^9.37.0",
+    "eslint-config-universe": "^15.0.3",
+    "prettier": "^3.6.2",
+    "prop-types": "^15.8.1",
+    "react": "^19.2.0",
+    "react-native": "^0.82.0",
+    "react-native-safe-area-context": "^5.6.1",
+    "typescript": "~5.9.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.59.0",
+    "react-native-safe-area-context": ">=4.0.0"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/galio"
+  },
+  "eslintConfig": {
+    "extends": [
+      "universe/native",
+      "universe/shared/typescript-analysis"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.ts",
+          "*.tsx",
+          "*.d.ts"
+        ],
+        "parserOptions": {
+          "project": "./tsconfig.json"
+        }
+      }
+    ],
+    "ignorePatterns": [
+      "node_modules/",
+      "dist/",
+      "build/"
+    ]
+  },
+  "overrides": {
+    "glob": "^10.4.5"
+  }
+}

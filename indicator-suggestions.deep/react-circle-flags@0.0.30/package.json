@@ -1,0 +1,81 @@
+{
+  "name": "react-circle-flags",
+  "version": "0.0.30",
+  "description": "A React component with a collection of 300+ minimal circular SVG country flags",
+  "author": "Tomás Novau(tnovau@ontheedge.cloud)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/on-the-edge-cloud/react-circle-flags.git"
+  },
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "source": "src/index.jsx",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "ci": "npm run lint && npm run build:test",
+    "build": "vite build && shx cp index.d.ts dist/index.d.ts",
+    "build:test": "npm run build",
+    "start": "vite build --watch",
+    "prepare": "npm run build",
+    "test": "CI=1 jest --env=jsdom --coverage",
+    "test:watch": "jest --env=jsdom",
+    "lint": "eslint"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0 || 17.x || 18.x || 19.x"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-react": "^7.28.5",
+    "@eslint/js": "^9.39.4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "babel-jest": "^30.3.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-testing-library": "^7.16.2",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "prettier": "^3.8.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "shx": "^0.4.0",
+    "vite": "^8.0.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "javascript",
+    "npm",
+    "component",
+    "reactjs",
+    "react-component",
+    "react-components",
+    "javascript-library",
+    "flags",
+    "countries",
+    "react-component-library"
+  ],
+  "volta": {
+    "node": "24.15.0"
+  }
+}

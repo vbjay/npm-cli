@@ -1,0 +1,98 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.diffplug.spotless:spotless-plugin-gradle:6.25.0"
+  }
+}
+
+if (project == rootProject) {
+  apply from: "spotless.gradle"
+  return
+}
+
+def reactNativeArchitectures() {
+  def value = project.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["TransformerInput_" + name]).toInteger()
+}
+
+def getExtOrDefault(name, defaultValue) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["TransformerInput_" + name] ?: defaultValue)
+}
+
+def kotlinVersion = getExtOrDefault("kotlinVersion", "2.0.21")
+
+android {
+  namespace "com.appandflow.transformertextinput"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+    ndk {
+      abiFilters (*reactNativeArchitectures())
+    }
+  }
+
+  buildFeatures {
+    buildConfig true
+    prefab true
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+    textReport true
+    textOutput 'stdout'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    allWarningsAsErrors = System.getenv("RNTTI_WARNINGS_AS_ERRORS") == "true"
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+  if (rootProject.subprojects.find { it.name == "react-native-worklets" }) {
+    implementation project(":react-native-worklets")
+  } else {
+    throw new GradleException("[rntti] `react-native-worklets` library not found. Please install it as a dependency in your project.")
+  }
+}
+
+evaluationDependsOn(":react-native-worklets")
+
+// afterEvaluate {
+//     tasks.named("externalNativeBuildDebug").configure {
+//         dependsOn(findProject(":react-native-worklets").tasks.named("externalNativeBuildDebug"))
+//     }
+//     tasks.named("externalNativeBuildRelease").configure {
+//         dependsOn(findProject(":react-native-worklets").tasks.named("externalNativeBuildRelease"))
+//     }
+// }

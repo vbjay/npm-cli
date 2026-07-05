@@ -1,0 +1,103 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "84b8f9e7ed1fc3c4",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "2639b1a07f8b55e68c4d06618be8248f56d6a6a74d0c42dae9e126a4fcae02d5",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `netlinksocket`  -  C/C++ sources",
+            "items": [
+              "src/netlinksocket.cc",
+              "src/netlinkwrapper.cc",
+              "src/netlink/core.cc",
+              "src/netlink/smart_buffer.cc",
+              "src/netlink/socket.cc",
+              "src/netlink/socket_group.cc",
+              "src/netlink/util.cc"
+            ]
+          },
+          {
+            "label": "Target `netlinksocket`  -  libraries",
+            "items": [
+              "ws2_32.lib"
+            ]
+          },
+          {
+            "label": "Target `netlinksocket`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")"
+            ]
+          },
+          {
+            "label": "Target `netlinksocket`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:14.895Z"
+  },
+  "hash": "sha256:f3db99d5abc5ef07175b972e495f30588e1ea96c30676cc46023045620c4dacc"
+}

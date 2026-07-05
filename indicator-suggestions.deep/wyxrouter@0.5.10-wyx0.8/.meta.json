@@ -1,0 +1,169 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ed83a7b8006f2008",
+    "fetchedFiles": [
+      "hooks/automationRuntime.js",
+      "hooks/camoufoxRuntime.js",
+      "hooks/playwrightRuntime.js",
+      "hooks/postinstall.js",
+      "hooks/sqliteRuntime.js",
+      "hooks/trayRuntime.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "hooks/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f2c45dda887232766c28598c4f782df3a3ab12dee80d611a6aabdfd5efb37b68",
+        "sizeBytes": 1721,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "hooks/sqliteRuntime.js",
+          "hooks/trayRuntime.js",
+          "hooks/playwrightRuntime.js",
+          "hooks/camoufoxRuntime.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "hooks/sqliteRuntime.js",
+        "reason": "required by ./hooks/postinstall.js; required by ./hooks/trayRuntime.js; required by ./hooks/playwrightRuntime.js; required by ./hooks/automationRuntime.js; required by ./hooks/camoufoxRuntime.js",
+        "sha256": "8553f4f07877140d5bbd6511817cc8f724938968270964e80ebf064f77b0eafd",
+        "sizeBytes": 6831,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "hooks/trayRuntime.js",
+        "reason": "required by ./hooks/postinstall.js",
+        "sha256": "63cf60410867637cdb9fd3cfd74b6bfc31a0982ab29e9b7e966e3e07bf1bdedb",
+        "sizeBytes": 4362,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "hooks/sqliteRuntime.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "hooks/playwrightRuntime.js",
+        "reason": "required by ./hooks/postinstall.js",
+        "sha256": "218f77453e40b99e5ab072c5e17ab0d695cb2752e95ad91da84fff39536252cd",
+        "sizeBytes": 10792,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "dynamic-require",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "hooks/sqliteRuntime.js",
+          "hooks/automationRuntime.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "hooks/automationRuntime.js",
+        "reason": "required by ./hooks/playwrightRuntime.js; required by ./hooks/camoufoxRuntime.js",
+        "sha256": "7005e51748c21bd1dcba6fabcc7f57f90f8530689258f73f9de85290e6c7321a",
+        "sizeBytes": 3041,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "hooks/sqliteRuntime.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "hooks/camoufoxRuntime.js",
+        "reason": "required by ./hooks/postinstall.js",
+        "sha256": "b8d0166733b958f7fcede2fc9b4c26f5cce13264ac8d455dea6a5df611dab32b",
+        "sizeBytes": 9666,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "dynamic-require",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "hooks/sqliteRuntime.js",
+          "hooks/automationRuntime.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:31.387Z"
+  },
+  "hash": "sha256:a530c61c4d56cd8df2b11662178c9eaa2ed257feba7579e7b424a8377e2fba67"
+}

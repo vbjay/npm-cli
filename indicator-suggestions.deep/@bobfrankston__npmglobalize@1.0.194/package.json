@@ -1,0 +1,74 @@
+{
+  "name": "@bobfrankston/npmglobalize",
+  "version": "1.0.194",
+  "description": "Transform file: dependencies to npm versions for publishing",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "npmglobalize": "cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prepare": "npm run build",
+    "check-links": "node check-links.js"
+  },
+  "keywords": [
+    "npm",
+    "publish",
+    "dependencies",
+    "release"
+  ],
+  "author": "Bob Frankston",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "@types/npm-package-arg": "^6.1.4",
+    "@types/pacote": "^11.1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BobFrankston/npmglobalize.git"
+  },
+  "dependencies": {
+    "@bobfrankston/freezepak": "^0.1.9",
+    "@bobfrankston/importgen": "^0.1.38",
+    "@bobfrankston/themecolors": "^0.1.8",
+    "@bobfrankston/userconfig": "^1.0.10",
+    "@npmcli/package-json": "^7.0.4",
+    "json5": "^2.2.3",
+    "libnpmversion": "^8.0.3",
+    "npm-registry-fetch": "^19.1.1",
+    "pacote": "^21.0.4",
+    "simple-git": "^3.30.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  ".dependencies": {
+    "@bobfrankston/freezepak": "file:../freezepak",
+    "@bobfrankston/importgen": "file:../importgen",
+    "@bobfrankston/themecolors": "file:../themecolors",
+    "@bobfrankston/userconfig": "file:../userconfig",
+    "@npmcli/package-json": "^7.0.4",
+    "json5": "^2.2.3",
+    "libnpmversion": "^8.0.3",
+    "npm-registry-fetch": "^19.1.1",
+    "pacote": "^21.0.4",
+    "simple-git": "^3.30.0"
+  },
+  ".transformedSnapshot": {
+    "dependencies": {
+      "@bobfrankston/freezepak": "^0.1.9",
+      "@bobfrankston/importgen": "^0.1.38",
+      "@bobfrankston/themecolors": "^0.1.8",
+      "@bobfrankston/userconfig": "^1.0.10",
+      "@npmcli/package-json": "^7.0.4",
+      "json5": "^2.2.3",
+      "libnpmversion": "^8.0.3",
+      "npm-registry-fetch": "^19.1.1",
+      "pacote": "^21.0.4",
+      "simple-git": "^3.30.0"
+    }
+  }
+}

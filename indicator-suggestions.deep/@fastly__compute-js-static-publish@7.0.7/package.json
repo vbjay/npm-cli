@@ -1,0 +1,68 @@
+{
+  "name": "@fastly/compute-js-static-publish",
+  "type": "module",
+  "version": "7.0.7",
+  "description": "Static Publisher for Fastly Compute JavaScript",
+  "main": "build/index.js",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf build",
+    "prepack": "npm run build",
+    "build": "npm run clean && npm run compile",
+    "compile": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "cp README.short.md README.md"
+  },
+  "bin": {
+    "compute-js-static-publish": "./build/cli/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastly/compute-js-static-publish.git"
+  },
+  "keywords": [
+    "compute-js",
+    "javascript",
+    "static",
+    "serve"
+  ],
+  "author": "Katsuyuki Omuro <komuro@fastly.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fastly/compute-js-static-publish/issues"
+  },
+  "homepage": "https://github.com/fastly/compute-js-static-publish#readme",
+  "dependencies": {
+    "@fastly/cli": "^15.2.0",
+    "command-line-args": "^5.2.1",
+    "glob-to-regexp": "^0.4.1",
+    "toml": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@fastly/js-compute": "^3.33.2"
+  },
+  "devDependencies": {
+    "@fastly/js-compute": "^3.33.2",
+    "@types/command-line-args": "^5.2.0",
+    "@types/glob-to-regexp": "^0.4.1",
+    "@types/node": "^20.11.0",
+    "rimraf": "^4.3.0",
+    "typescript": "^5.8.0"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "files": [
+    "build",
+    "resources",
+    "LICENSE",
+    "package.json",
+    "README.md",
+    "SECURITY.md"
+  ]
+}

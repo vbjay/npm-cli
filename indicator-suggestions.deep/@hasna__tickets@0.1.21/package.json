@@ -1,0 +1,89 @@
+{
+  "name": "@hasna/tickets",
+  "version": "0.1.21",
+  "description": "Open-source MCP-native ticketing system — bugs, features, incidents for any product, service, or app. CLI + MCP server + REST API + Web Dashboard + SDK.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "tickets": "dist/cli/index.js",
+    "tickets-mcp": "dist/mcp/index.js",
+    "tickets-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "dashboard/dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && cd dashboard && bun run build && cd .. && bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun && bun build src/index.ts --outdir dist --target bun && (tsc --emitDeclarationOnly --outDir dist || true)",
+    "build:dashboard": "cd dashboard && bun run build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "prepublishOnly": "bun test && bun run build",
+    "postinstall": "mkdir -p $HOME/.hasna/tickets/training 2>/dev/null || true"
+  },
+  "keywords": [
+    "tickets",
+    "issues",
+    "bug-tracker",
+    "helpdesk",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "claude",
+    "codex",
+    "gemini",
+    "cli",
+    "dashboard"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/tickets.git"
+  },
+  "homepage": "https://github.com/hasna/tickets",
+  "bugs": {
+    "url": "https://github.com/hasna/tickets/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.700.0",
+    "@aws-sdk/client-sesv2": "^3.700.0",
+    "@hasna/events": "0.1.11",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "hono": "^4.6.0",
+    "ink": "^5.2.0",
+    "mailparser": "^3.7.1",
+    "nodemailer": "^6.9.16",
+    "react": "^18.3.1",
+    "resend": "^4.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/mailparser": "^3.4.4",
+    "@types/nodemailer": "^6.4.17",
+    "@types/react": "^18.3.18",
+    "typescript": "^5.7.3"
+  }
+}

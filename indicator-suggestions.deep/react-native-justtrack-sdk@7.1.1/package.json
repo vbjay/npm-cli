@@ -1,0 +1,87 @@
+{
+  "name": "react-native-justtrack-sdk",
+  "version": "7.1.1",
+  "description": "justtrack is AppLike Group's next level attribution & UA automation platform - built by app publishers for app publishers.",
+  "license": "MIT",
+  "homepage": "https://justtrack.io/",
+  "author": {
+    "name": "justtrack GmbH",
+    "email": "support@justtrack.io",
+    "url": "https://justtrack.io/contact/"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "source": "src/index",
+  "files": [
+    "dist",
+    "types",
+    "src",
+    "android",
+    "ios",
+    "JustTrackReactNativeSDK.podspec",
+    "!android/build",
+    "!android/.gradle",
+    "!android/.idea",
+    "!android/local.properties",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "keywords": [
+    "react-native",
+    "android",
+    "ios",
+    "justtrack",
+    "attribution",
+    "tracking"
+  ],
+  "scripts": {
+    "lint": "eslint src/",
+    "lint:fix": "yarn lint --fix",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "prepack": "tsc -p tsconfig.build.json",
+    "build": "yarn prepack"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.22.0",
+    "@justtrack/react-native-config": "workspace:*",
+    "@react-native/babel-preset": "0.76.9",
+    "@react-native/eslint-config": "0.76.9",
+    "@react-native/metro-config": "0.76.9",
+    "@react-native/typescript-config": "0.76.9",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^18.2.6",
+    "babel-jest": "^30.2.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsdoc": "^57.0.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^15.0.0",
+    "jest": "^30.2.0",
+    "prettier": "2.8.8",
+    "react": "18.3.1",
+    "react-native": "0.76.9",
+    "typedoc": "^0.28.2",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "JustTrackSdkInternalSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "includesGeneratedCode": false,
+    "android": {
+      "javaPackageName": "io.justtrack.reactnative"
+    }
+  },
+  "prettier": "@justtrack/react-native-config/prettier"
+}

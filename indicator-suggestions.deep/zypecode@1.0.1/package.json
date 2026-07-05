@@ -1,0 +1,56 @@
+{
+  "name": "zypecode",
+  "version": "1.0.1",
+  "description": "ZypeCode — A terminal-native coding assistant powered by free AI APIs",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": {
+    "zype": "./bin/zype.js",
+    "zypecode": "./bin/zype.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "copilot",
+    "cli",
+    "coding-assistant",
+    "agent",
+    "gemini",
+    "groq",
+    "terminal",
+    "tui",
+    "ink",
+    "free-ai"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@iarna/toml": "^3.0.0",
+    "chalk": "^5.3.0",
+    "cli-highlight": "^2.1.11",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "execa": "^9.2.0",
+    "glob": "^10.4.2",
+    "ink": "^4.4.1",
+    "ink-text-input": "^5.0.1",
+    "picomatch": "^4.0.2",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/picomatch": "^3.0.1",
+    "@types/react": "^18.2.0",
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.2"
+  }
+}

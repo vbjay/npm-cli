@@ -1,0 +1,420 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "58cd9d12cee88e9e",
+    "fetchedFiles": [
+      "cli.mjs",
+      "package.json",
+      "scripts/cli-branch.mjs",
+      "scripts/cli-codex-backup.mjs",
+      "scripts/cli-codex-config.mjs",
+      "scripts/cli-codex-hooks-state.mjs",
+      "scripts/cli-codex.mjs",
+      "scripts/cli-config.mjs",
+      "scripts/cli-cursor.mjs",
+      "scripts/cli-doctor-codex.mjs",
+      "scripts/cli-doctor-render.mjs",
+      "scripts/cli-doctor.mjs",
+      "scripts/cli-grok.mjs",
+      "scripts/cli-host-detect.mjs",
+      "scripts/cli-hosts.mjs",
+      "scripts/cli-lifecycle-hosts.mjs",
+      "scripts/cli-lifecycle.mjs",
+      "scripts/cli-messages.mjs",
+      "scripts/cli-process.mjs",
+      "scripts/cli-runtime-carrier.mjs",
+      "scripts/cli-runtime-root.mjs",
+      "scripts/cli-toml-values.mjs",
+      "scripts/cli-toml.mjs",
+      "scripts/cli-utils.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "cli.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "cd8fecfb8d648b054bff337b01ad68b128c10cfc6b2808ac994277060f568396",
+        "sizeBytes": 7533,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-config.mjs",
+          "scripts/cli-utils.mjs",
+          "scripts/cli-lifecycle.mjs",
+          "scripts/cli-doctor.mjs",
+          "scripts/cli-branch.mjs",
+          "scripts/cli-messages.mjs",
+          "scripts/cli-runtime-root.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-config.mjs",
+        "reason": "required by ./cli.mjs; required by ./scripts/cli-lifecycle.mjs; required by ./scripts/cli-doctor.mjs",
+        "sha256": "ee2e9c17c32e8e73b7f998822efc18ce34a3e49b3dbaa1169eff66e15f845a44",
+        "sizeBytes": 1638,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-utils.mjs",
+        "reason": "required by ./cli.mjs; required by ./scripts/cli-codex.mjs; required by ./scripts/cli-codex-backup.mjs; required by ./scripts/cli-codex-hooks-state.mjs; required by ./scripts/cli-runtime-carrier.mjs; required by ./scripts/cli-runtime-root.mjs; required by ./scripts/cli-host-detect.mjs; required by ./scripts/cli-hosts.mjs; required by ./scripts/cli-cursor.mjs; required by ./scripts/cli-grok.mjs; required by ./scripts/cli-lifecycle-hosts.mjs; required by ./scripts/cli-lifecycle.mjs; required by ./scripts/cli-doctor-codex.mjs; required by ./scripts/cli-doctor.mjs",
+        "sha256": "0e4165428737f9b2351109beb9552f0169e64ae006405edcf2fcf8f911bca4b1",
+        "sizeBytes": 8482,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-lifecycle.mjs",
+        "reason": "required by ./cli.mjs; required by ./scripts/cli-branch.mjs",
+        "sha256": "cc58ef93eeb5e5ce483b97914bcd7d42681c6f700d742b35dc97e6e8a64e6ec0",
+        "sizeBytes": 10540,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-config.mjs",
+          "scripts/cli-host-detect.mjs",
+          "scripts/cli-lifecycle-hosts.mjs",
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-host-detect.mjs",
+        "reason": "required by ./scripts/cli-lifecycle.mjs; required by ./scripts/cli-lifecycle-hosts.mjs",
+        "sha256": "5a0c4f0c1fda2d5b761f5a0a01ab7a963f054d2156eb0550f60e2b9af2b4bd2c",
+        "sizeBytes": 6819,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-codex.mjs",
+          "scripts/cli-runtime-root.mjs",
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-codex.mjs",
+        "reason": "required by ./scripts/cli-host-detect.mjs; required by ./scripts/cli-lifecycle-hosts.mjs; required by ./scripts/cli-doctor-codex.mjs",
+        "sha256": "621fdf8529c0f9df64c4e2f77a579c994dbc8d6dbf4c27cfa76fffc1e85fa670",
+        "sizeBytes": 12245,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-utils.mjs",
+          "scripts/cli-codex-backup.mjs",
+          "scripts/cli-codex-config.mjs",
+          "scripts/cli-codex-hooks-state.mjs",
+          "scripts/cli-toml.mjs",
+          "scripts/cli-runtime-carrier.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-codex-backup.mjs",
+        "reason": "required by ./scripts/cli-codex.mjs",
+        "sha256": "289af772ac37ecd857976b31cc4229f90e0c6a359929e59c5cffa3c7b8f95f14",
+        "sizeBytes": 2405,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-codex-config.mjs",
+        "reason": "required by ./scripts/cli-codex.mjs; required by ./scripts/cli-doctor-codex.mjs",
+        "sha256": "769534d818277741a23470c1c37e6b26e195ceebb59f3a046424f8017ea6f4c2",
+        "sizeBytes": 12543,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-toml.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-toml.mjs",
+        "reason": "required by ./scripts/cli-codex-config.mjs; required by ./scripts/cli-codex-hooks-state.mjs; required by ./scripts/cli-codex.mjs; required by ./scripts/cli-doctor-codex.mjs",
+        "sha256": "6dc5521d1829948f45940bde7e6c204afbe8c71260f6f98dbf3fbbc25588a9e0",
+        "sizeBytes": 6927,
+        "signals": [
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-toml-values.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-toml-values.mjs",
+        "reason": "required by ./scripts/cli-toml.mjs",
+        "sha256": "0b821305a00c400de0c95122078a82c9b7072827caee0d3b7d2cf99d101eae4c",
+        "sizeBytes": 528,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-codex-hooks-state.mjs",
+        "reason": "required by ./scripts/cli-codex.mjs; required by ./scripts/cli-doctor-codex.mjs",
+        "sha256": "f92457b028672a78ba9ce1d4402f0bb56b43feb467d31577c28656db87f9e26f",
+        "sizeBytes": 8745,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-toml.mjs",
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-runtime-carrier.mjs",
+        "reason": "required by ./scripts/cli-codex.mjs; required by ./scripts/cli-hosts.mjs; required by ./scripts/cli-grok.mjs; required by ./scripts/cli-doctor-codex.mjs; required by ./scripts/cli-doctor.mjs",
+        "sha256": "b5ceffc9c5744ac70692373350edd4a91e893c70c7d06f2a914ce101bd3dbaf6",
+        "sizeBytes": 530,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-runtime-root.mjs",
+        "reason": "required by ./scripts/cli-host-detect.mjs; required by ./scripts/cli-lifecycle-hosts.mjs; required by ./scripts/cli-doctor-codex.mjs; required by ./scripts/cli-doctor.mjs; required by ./scripts/cli-messages.mjs; required by ./cli.mjs",
+        "sha256": "b6cd4c9fcb813be48d632d2271dc879840a0434df38401bdd70aacfb963aeb53",
+        "sizeBytes": 12830,
+        "signals": [
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-lifecycle-hosts.mjs",
+        "reason": "required by ./scripts/cli-lifecycle.mjs",
+        "sha256": "87b74e5c0ab61c59b4d9650e97056c533123e30b2c22e52b9a57cbe4042cf908",
+        "sizeBytes": 21746,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-hosts.mjs",
+          "scripts/cli-codex.mjs",
+          "scripts/cli-process.mjs",
+          "scripts/cli-host-detect.mjs",
+          "scripts/cli-runtime-root.mjs",
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-hosts.mjs",
+        "reason": "required by ./scripts/cli-lifecycle-hosts.mjs",
+        "sha256": "b99892fc29a551f5e18c84dd842acd75655ae468f11d0598abf6c134c3ef31fb",
+        "sizeBytes": 2745,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-utils.mjs",
+          "scripts/cli-runtime-carrier.mjs",
+          "scripts/cli-cursor.mjs",
+          "scripts/cli-grok.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-cursor.mjs",
+        "reason": "required by ./scripts/cli-hosts.mjs",
+        "sha256": "cf49b6415faf28cb5ce7d7fee250b0cb801d50f18e728e75831560f47d6f67d8",
+        "sizeBytes": 1112,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-grok.mjs",
+        "reason": "required by ./scripts/cli-hosts.mjs",
+        "sha256": "4c3a9e913e43f254c1e9870ffb169f9048480c2dddfdcb2faec2fcceb7e5ad39",
+        "sizeBytes": 1578,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-utils.mjs",
+          "scripts/cli-runtime-carrier.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-process.mjs",
+        "reason": "required by ./scripts/cli-lifecycle-hosts.mjs; required by ./scripts/cli-doctor-codex.mjs; required by ./scripts/cli-branch.mjs",
+        "sha256": "76417e141d0af988fef0e43f1bbb80aa27a9fa36fbc5682005bfbcb1ca5629dd",
+        "sizeBytes": 757,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-doctor.mjs",
+        "reason": "required by ./cli.mjs",
+        "sha256": "53124ea28d01f0784b2135f31723150de1851f173485f443beb10b77fb29e6b2",
+        "sizeBytes": 29813,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-config.mjs",
+          "scripts/cli-doctor-codex.mjs",
+          "scripts/cli-doctor-render.mjs",
+          "scripts/cli-runtime-carrier.mjs",
+          "scripts/cli-runtime-root.mjs",
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-doctor-codex.mjs",
+        "reason": "required by ./scripts/cli-doctor.mjs",
+        "sha256": "2d4cef16b39c3b3e9b112174248780ae8da51b34ecd2fbe492b3822e257bdddb",
+        "sizeBytes": 24913,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-codex.mjs",
+          "scripts/cli-codex-config.mjs",
+          "scripts/cli-codex-hooks-state.mjs",
+          "scripts/cli-runtime-root.mjs",
+          "scripts/cli-runtime-carrier.mjs",
+          "scripts/cli-toml.mjs",
+          "scripts/cli-process.mjs",
+          "scripts/cli-utils.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-doctor-render.mjs",
+        "reason": "required by ./scripts/cli-doctor.mjs",
+        "sha256": "c370f22216acb771bcc38d5084e73c138ce37ae3585a8d7dd587454ce7502701",
+        "sizeBytes": 3041,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/cli-branch.mjs",
+        "reason": "required by ./cli.mjs",
+        "sha256": "161e6933d95cd836f974210ae7814f832a32de68ab36e333ca10fb18f4775bcc",
+        "sizeBytes": 3211,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-lifecycle.mjs",
+          "scripts/cli-process.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/hellowind777/helloagents/archive/refs/heads",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/cli-messages.mjs",
+        "reason": "required by ./cli.mjs",
+        "sha256": "a8d3b3b33d14fb93e709c0f8964394a1e5c3dcd91d84d958093a877ce248901d",
+        "sizeBytes": 11288,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/cli-runtime-root.mjs"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:57.800Z"
+  },
+  "hash": "sha256:515d4917143d5683f92789db5eb8809ef148a405c383527ec75a05273227b6f2"
+}

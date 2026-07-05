@@ -1,0 +1,71 @@
+{
+  "name": "haya-select",
+  "version": "1.0.120",
+  "description": "Just another select component for React Native + Web.",
+  "files": [
+    "build/**"
+  ],
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "EXPO_NONINTERACTIVE=1 expo-module build",
+    "build:example:dist": "npm run build && EXPO_NONINTERACTIVE=1 cd example && npx expo export --platform web --output-dir ../dist",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "node scripts/velocious-test.js",
+    "test:dist": "npm run build:example:dist && SYSTEM_TEST_HOST=dist npm test",
+    "prepare": "expo-module prepare && npm run build",
+    "release:patch": "release-patch",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "haya-select",
+    "HayaSelect"
+  ],
+  "repository": "https://github.com/kaspernj/haya-select",
+  "bugs": {
+    "url": "https://github.com/kaspernj/haya-select/issues"
+  },
+  "author": "kaspernj <kasper@diestoeckels.de> (https://github.com/kaspernj)",
+  "license": "MIT",
+  "homepage": "https://github.com/kaspernj/haya-select#readme",
+  "dependencies": {
+    "awaitery": "^1.0.13",
+    "classnames": "^2.3.1",
+    "debounce": "^3.0.0",
+    "diggerize": "^1.0.4",
+    "fetching-object": "^1.0.1",
+    "react-native-render-html": "^6.3.4",
+    "ya-use-event-listener": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "~18.3.12",
+    "eslint-plugin-jsdoc": "^63.0.0",
+    "expo": "~52.0.49",
+    "expo-module-scripts": "^4.0.2",
+    "react": "18.3.1",
+    "react-native": "0.76.9",
+    "release-patch": "^1.0.0",
+    "scoundrel-remote-eval": "1.0.34",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1",
+    "system-testing": "1.0.107",
+    "velocious": "^1.0.343"
+  },
+  "peerDependencies": {
+    "@kaspernj/api-maker": ">= 1.0.2100",
+    "conjointment": "^0.1.11",
+    "expo": "*",
+    "outside-eye": "*",
+    "prop-types": "*",
+    "react": "*",
+    "react-native": "*",
+    "set-state-compare": ">= 1.0.84"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

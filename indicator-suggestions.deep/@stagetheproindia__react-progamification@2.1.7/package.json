@@ -1,0 +1,71 @@
+{
+    "name": "@stagetheproindia/react-progamification",
+    "version": "2.1.7",
+    "description": "Ultimate Gamification for your React app.",
+    "workspaces": [
+        "package",
+        "demo"
+    ],
+    "type": "module",
+    "sideEffects": [
+        "*.css",
+        "*.scss"
+    ],
+    "main": "./dist/cjs/progamification.js",
+    "module": "./dist/esm/progamification.js",
+    "source": "./src/progamification.ts",
+    "types": "./dist/cjs/progamification.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/progamification.js",
+            "require": "./dist/cjs/progamification.js"
+        }
+    },
+    "scripts": {
+        "build": "npm run clean && npm run build-js",
+        "copy-package-json": "copyfiles package.json ./dist/esm && copyfiles package.json ./dist/cjs",
+        "build-js": "npm run copy-package-json && npm run build-js-esm && npm run build-js-cjs",
+        "build-js-esm": "npm run copy-images && tsc --project tsconfig.build.json --outDir ./dist/esm --module esnext",
+        "build-js-cjs": "npm run copy-images && tsc --project tsconfig.build.json --outDir ./dist/cjs --module commonjs",
+        "clean": "rimraf ../dist",
+        "copy-images": "echo Copying images...  && copyfiles -f  ./src/**/**/*.{png,jpg,svg} ./dist/esm/common/images && copyfiles -f ./src/**/**/*.{png,jpg,svg} ./dist/cjs/common/images && echo Images copied.",
+        "prepack": "npm run clean && npm run build",
+        "tsc": "tsc --noEmit",
+        "watch": "npm run build-js-esm -- --watch"
+    },
+    "keywords": [
+        "react",
+        "npm",
+        "pro-gamification"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "@ramonak/react-progress-bar": "^5.0.3",
+        "axios": "^0.27.2",
+        "jwt-decode": "^3.1.2",
+        "moment": "^2.29.4",
+        "react-hook-form": "^7.45.4",
+        "styled-components": "^6.0.7",
+        "rimraf": "^3.0.0",
+        "copyfiles": "^2.4.1",
+        "typescript": "^5.0.0",
+        "@types/node": "*",
+        "@types/react": "*",
+        "nodemon": "^3.0.0",
+        "@react-rxjs/core": "^0.10.7",
+        "@react-rxjs/utils": "^0.9.7",
+        "rxjs": "^7.8.1",
+        "uuid": "^9.0.1",
+        "prop-types": "^15.8.1"
+    },
+    "files": [
+        "dist",
+        "LICENSE",
+        "README.md",
+        "package.json"
+    ],
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    }
+}

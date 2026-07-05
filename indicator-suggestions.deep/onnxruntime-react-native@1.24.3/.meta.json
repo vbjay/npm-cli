@@ -1,0 +1,72 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0845ff3cea1ee0fd",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "cb5068ce59ae53053bfca8f77dd12b95710fd09fd2a44a3db73a0065ca4ee0b9",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android:",
+              "org.mockito:mockito-core:2.28.2",
+              "junit:junit:4.12",
+              "com.microsoft.onnxruntime:onnxruntime-extensions-android:latest.integration@aar"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/prepack",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:21.363Z"
+  },
+  "hash": "sha256:188207489b4edab8c0b9e4ec13db38e7a14f2b2c68cd736ca6c3f63457ed216f"
+}

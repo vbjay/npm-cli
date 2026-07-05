@@ -1,0 +1,136 @@
+{
+  "name": "@ui-perf/critical-path",
+  "version": "2.0.0",
+  "description": "A critical path assertion library powered by rust",
+  "keywords": [
+    "ci",
+    "cli",
+    "critical-path",
+    "frontend",
+    "performance",
+    "rust"
+  ],
+  "homepage": "https://github.com/alexfigliolia/critical-path-check#readme",
+  "bugs": {
+    "url": "https://github.com/alexfigliolia/critical-path-check/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexfigliolia/critical-path-check.git"
+  },
+  "files": [
+    "index.*"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "artifacts": "pnpm artifacts:js && pnpm artifacts:native",
+    "artifacts:js": "for f in dist/index*; do mv -f $f ${f##*/}; done",
+    "artifacts:native": "napi artifacts",
+    "build": "pnpm build:debug --release",
+    "build:cli": "pnpm build:rust && pnpm install:rust",
+    "build:debug": "cargo clean && rm -rf dist && napi build --platform -o dist --package bindings",
+    "build:rust": "cargo build --release --package critical-path-check",
+    "build:rust:dev": "cargo build --package critical-path-check",
+    "format:toml": "taplo lint && taplo format",
+    "install:rust": "cargo install --path .",
+    "lint:all": "pnpm lint:rust && pnpm lint:ts",
+    "lint:rust": "cargo clippy --fix --allow-dirty && pnpm format:toml",
+    "lint:rust:ci": "cargo clippy --fix",
+    "lint:ts": "pnpm oxlint --type-aware --report-unused-disable-directives --fix && pnpm oxfmt",
+    "prepare": "husky",
+    "prepublishOnly": "napi prepublish -t npm",
+    "release": "tsx ./release/run.ts",
+    "run:dev": "cargo run --package critical-path-check --bin critical-path-check",
+    "test": "pnpm build && ava",
+    "test:ci": "ava",
+    "version": "napi version"
+  },
+  "devDependencies": {
+    "@emnapi/core": "^1.5.0",
+    "@emnapi/runtime": "^1.5.0",
+    "@figliolia/child-process": "^1.0.4",
+    "@figliolia/semver": "^1.0.0",
+    "@napi-rs/cli": "^3.2.0",
+    "@oxc-node/core": "^0.1.0",
+    "@taplo/cli": "^0.7.0",
+    "@tsconfig/node20": "^20.1.9",
+    "@types/node": "^25.6.0",
+    "ava": "^8.0.0",
+    "emnapi": "^1.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
+    "oxfmt": "^0.55.0",
+    "oxlint": "^1.14.0",
+    "oxlint-tsgolint": "^0.23.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.0"
+  },
+  "lint-staged": {
+    "*.@(js|ts|tsx|yml|yaml|md|json)": [
+      "pnpm lint:ts"
+    ],
+    "*.toml": [
+      "pnpm format:toml"
+    ],
+    "*.rs": [
+      "pnpm lint:rust"
+    ]
+  },
+  "napi": {
+    "binaryName": "critical-path",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-pc-windows-msvc",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-gnu",
+      "i686-pc-windows-msvc",
+      "armv7-unknown-linux-gnueabihf",
+      "aarch64-linux-android",
+      "x86_64-unknown-freebsd",
+      "aarch64-unknown-linux-musl",
+      "aarch64-pc-windows-msvc",
+      "armv7-linux-androideabi"
+    ]
+  },
+  "ava": {
+    "environmentVariables": {
+      "TS_NODE_PROJECT": "./tsconfig.json"
+    },
+    "extensions": [
+      "ts"
+    ],
+    "nodeArguments": [
+      "--import",
+      "@oxc-node/core/register"
+    ],
+    "timeout": "2m",
+    "workerThreads": false
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "optionalDependencies": {
+    "@ui-perf/critical-path-darwin-x64": "2.0.0",
+    "@ui-perf/critical-path-darwin-arm64": "2.0.0",
+    "@ui-perf/critical-path-linux-x64-gnu": "2.0.0",
+    "@ui-perf/critical-path-win32-x64-msvc": "2.0.0",
+    "@ui-perf/critical-path-linux-x64-musl": "2.0.0",
+    "@ui-perf/critical-path-linux-arm64-gnu": "2.0.0",
+    "@ui-perf/critical-path-win32-ia32-msvc": "2.0.0",
+    "@ui-perf/critical-path-linux-arm-gnueabihf": "2.0.0",
+    "@ui-perf/critical-path-android-arm64": "2.0.0",
+    "@ui-perf/critical-path-freebsd-x64": "2.0.0",
+    "@ui-perf/critical-path-linux-arm64-musl": "2.0.0",
+    "@ui-perf/critical-path-win32-arm64-msvc": "2.0.0",
+    "@ui-perf/critical-path-android-arm-eabi": "2.0.0"
+  }
+}

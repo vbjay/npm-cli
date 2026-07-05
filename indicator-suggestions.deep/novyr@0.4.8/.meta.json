@@ -1,0 +1,179 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6ff59b9c5bfa8cdf",
+    "fetchedFiles": [
+      "lib/engine.js",
+      "lib/resolve-binary.js",
+      "lib/runtime-paths.js",
+      "lib/setup.js",
+      "lib/shims.js",
+      "lib/targets.cjs",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "34f999fe4997fa17081647ccbf3133125e73b2ec760cba40e4e7a658fa1385da",
+        "sizeBytes": 1471,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/setup.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/setup.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "b2171648c02c8339a9c1b97e8eaac907361d41d57b99e58d0e08a0156a79c915",
+        "sizeBytes": 10075,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/engine.js",
+          "lib/resolve-binary.js",
+          "lib/shims.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/engine.js",
+        "reason": "required by ./lib/setup.js",
+        "sha256": "c75765e69f1ad70b718145ade7ac293c34f0b29747acf25acac36fc5de494df3",
+        "sizeBytes": 1909,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/resolve-binary.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/resolve-binary.js",
+        "reason": "required by ./lib/engine.js; required by ./lib/setup.js",
+        "sha256": "cc8a4b89f9430ad2b4d4faa1fa6c267ba7cc8ac4e5160625655c28d9333875f9",
+        "sizeBytes": 2383,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/targets.cjs",
+          "lib/runtime-paths.js"
+        ],
+        "urls": [
+          {
+            "url": "https://novyr.dev/install",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "lib/targets.cjs",
+        "reason": "required by ./lib/resolve-binary.js",
+        "sha256": "8cda3b3e33c70ff57dc71f9ac603bdf71311fe63bfee0feab92dc1487b2c3cbf",
+        "sizeBytes": 1274,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/runtime-paths.js",
+        "reason": "required by ./lib/resolve-binary.js",
+        "sha256": "5ca90ee4179626e85874ff16bf2c9f200e5b2639a3035b4aba7481ebbf49c30f",
+        "sizeBytes": 2910,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "base64-decode-exec",
+          "shell-network-fetch",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/shims.js",
+        "reason": "required by ./lib/setup.js",
+        "sha256": "87ff7229f3272e95f352848635c879018ef930801a54571105692cc71ae8345d",
+        "sizeBytes": 6470,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:18.069Z"
+  },
+  "hash": "sha256:fad0903cd8f48f10b1fc9116adea5fd98aceb16f372a6974c49dfecfc0163950"
+}

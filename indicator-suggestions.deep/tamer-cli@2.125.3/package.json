@@ -1,0 +1,111 @@
+{
+  "name": "tamer-cli",
+  "version": "2.125.3",
+  "description": "Transparent PTY proxy + worker for AI coding agents (Claude Code, Gemini, Codex, Copilot, Vibe, OpenCode, Cursor, Windsurf, …). Supervised by a Tamer master agent with sandboxing, MCP wiring, skills, and approval policy.",
+  "keywords": [
+    "ai",
+    "agent",
+    "orchestration",
+    "claude",
+    "gemini",
+    "codex",
+    "copilot",
+    "mcp",
+    "cli",
+    "supervisor",
+    "sandbox",
+    "pty"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "tamer": "./dist/tamer.bundle.js",
+    "tamer-log": "./dist/tamer-log.bundle.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist/tamer.bundle.js",
+    "dist/tamer-log.bundle.js",
+    "templates/",
+    "node_modules/node-pty/",
+    "node_modules/koffi/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "npm run prebuild && tsx src/index.ts",
+    "prebuild": "node scripts/sync-version.js",
+    "build": "npm run prebuild && tsc",
+    "build:bundle": "node scripts/build-bundle.mjs",
+    "prepack": "node scripts/build-bundle.mjs",
+    "dev": "npm run prebuild && tsx src/index.ts",
+    "lint": "eslint -c eslint.bundle.config.js src",
+    "pkg:smoke": "bash scripts/pkg-smoke.sh",
+    "pack:smoke": "bash scripts/npm-pack-smoke.sh",
+    "test": "tsx tests/run-all.ts",
+    "test:agent": "tsx tests/run-all.ts --with-agent claude",
+    "test:watch": "vitest",
+    "test:crypto:coverage": "vitest run --coverage --config vitest.crypto-coverage.config.ts tests/crypto/key-exchange.test.ts",
+    "test:crypto:fuzz": "vitest run tests/crypto/key-exchange.fuzz.test.ts",
+    "poc:f01": "tsx tests/f01-pty-proxy/poc.ts claude",
+    "poc:f02": "tsx tests/f02-event-builder/poc.ts",
+    "poc:f03": "tsx tests/f03-approval-detection/poc.ts",
+    "poc:f04": "tsx tests/f04-input-injection/poc.ts claude",
+    "poc:f12": "tsx tests/f12-idle-detection/poc.ts"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.4.2",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@xterm/headless": "^6.0.0",
+    "commander": "^13.0.0",
+    "node-pty": "^1.1.0",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1",
+    "ws": "^8.18.0",
+    "yaml": "^2.6.0",
+    "zod": "^4.3.6"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/node-pty/build/Release/*.node",
+      "node_modules/node-pty/build/Release/*.dll",
+      "node_modules/node-pty/prebuilds/**/*",
+      "templates/**/*"
+    ],
+    "scripts": [
+      "dist/src/**/*.js",
+      "node_modules/node-pty/lib/*.js",
+      "!node_modules/node-pty/lib/*.test.js",
+      "node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js",
+      "node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.js"
+    ]
+  },
+  "optionalDependencies": {
+    "koffi": "^2.16.1"
+  },
+  "overrides": {
+    "test-exclude": "^8.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "esbuild": "^0.27.7",
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.5.0",
+    "@vitest/coverage-v8": "^3.0.0",
+    "@yao-pkg/pkg": "^6.19.0",
+    "c8": "^10.1.3",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "fast-check": "^3.23.0",
+    "prettier": "^3.8.3",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.59.0",
+    "vitest": "^3.0.0"
+  }
+}

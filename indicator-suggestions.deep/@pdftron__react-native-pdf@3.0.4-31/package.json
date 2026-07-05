@@ -1,0 +1,47 @@
+{
+  "name": "@pdftron/react-native-pdf",
+  "title": "React Native Pdftron",
+  "version": "3.0.4-31",
+  "description": "React Native Pdftron",
+  "main": "./lib/index.js",
+  "typings": "index.ts",
+  "scripts": {
+    "copy-to-repo": "cd scripts && python3 fileCopy.py toRepo && cd ..",
+    "copy-to-node-modules": "cd scripts && python3 fileCopy.py toModule && cd ..",
+    "start": "tsc",
+    "postinstall": "python3 scripts/newPodspecMessage.py",
+    "prestart": "python3 scripts/newPodspecMessage.py",
+    "prepublishOnly": "bash scripts/prepare.sh",
+    "postpublish": "bash scripts/postpublish.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApryseSDK/pdftron-react-native.git",
+    "baseUrl": "https://github.com/ApryseSDK/pdftron-react-native"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://docs.apryse.com/",
+  "keywords": [
+    "react-native",
+    "PDFTron",
+    "pdf",
+    "office"
+  ],
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "deprecated-react-native-prop-types": "*",
+    "json": "^11.0.0"
+  },
+  "peerDependencies": {
+    "prop-types": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/prop-types": "*",
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "react": "*",
+    "typescript": "*"
+  }
+}

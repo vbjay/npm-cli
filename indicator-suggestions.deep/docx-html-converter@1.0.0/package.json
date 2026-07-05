@@ -1,0 +1,55 @@
+{
+  "name": "docx-html-converter",
+  "version": "1.0.0",
+  "description": "Convert DOCX to HTML with styles, tables, lists. WASM + Rust. Includes calculate_html for contentEditable page recalculation. Works in Node.js, React, Next.js, Vite.",
+  "main": "./pkg/docx_html_converter.js",
+  "module": "./pkg/docx_html_converter.js",
+  "types": "./pkg/docx_html_converter.d.ts",
+  "exports": {
+    ".": {
+      "types": "./pkg/docx_html_converter.d.ts",
+      "import": "./pkg/docx_html_converter.js",
+      "default": "./pkg/docx_html_converter.js"
+    }
+  },
+  "files": [
+    "pkg"
+  ],
+  "scripts": {
+    "build": "node scripts/rm-pkg-package-json.cjs && node scripts/run-with-rustup-toolchain.js wasm-pack build --target web --release --out-dir pkg && node scripts/ensure-pkg.cjs",
+    "build:dev": "node scripts/rm-pkg-package-json.cjs && node scripts/run-with-rustup-toolchain.js wasm-pack build --target web --dev --out-dir pkg && node scripts/ensure-pkg.cjs",
+    "test": "node scripts/run-with-rustup-toolchain.js cargo test",
+    "publish:prepare": "node scripts/publish-prepare.cjs",
+    "prepublishOnly": "npm run build:for-publish && npm run test",
+    "build:for-publish": "node scripts/run-build-for-publish.cjs",
+    "golden:manifest": "node scripts/generate-golden-manifest.cjs",
+    "golden:baseline": "node scripts/generate-golden-manifest.cjs && cargo test golden_matches_recorded_baseline -- --nocapture",
+    "golden:readme": "node scripts/write-snapshots-readme.cjs",
+    "golden:test": "cargo test golden",
+    "golden:test:full": "node -e \"require('child_process').execSync('cargo test golden', { env: { ...process.env, GOLDEN_FULL: '1' }, stdio: 'inherit' })\"",
+    "prepack": "node scripts/ensure-pkg.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "docx",
+    "html",
+    "converter",
+    "wasm",
+    "rust",
+    "react",
+    "nextjs",
+    "vite",
+    "webpack",
+    "word"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilgrebnev/docx-html-converter.git"
+  }
+}

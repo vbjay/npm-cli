@@ -1,0 +1,83 @@
+{
+  "name": "@newpeak/barista-cli",
+  "version": "0.2.146",
+  "description": "AI Tools CLI for Liberica and Arabica services",
+  "license": "MIT",
+  "keywords": [
+    "cli",
+    "ai-tools",
+    "liberica",
+    "arabica",
+    "enterprise-saas",
+    "production-management",
+    "api-client",
+    "typescript",
+    "nodejs",
+    "automation",
+    "ai-integration"
+  ],
+  "author": "Newpeak Technology",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.newpeaksh.com/coffee/coffee-barista-cli.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.newpeaksh.com/coffee/coffee-barista-cli/issues"
+  },
+  "homepage": "https://gitlab.newpeaksh.com/coffee/coffee-barista-cli#readme",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "barista": "./bin/barista"
+  },
+  "scripts": {
+    "generate-skills-data": "npx tsx src/skills/barista-cli/scripts/generate.ts",
+    "build": "npm run generate-skills-data && tsc",
+    "dev": "tsc --watch",
+    "start": "node ./bin/barista",
+    "test": "vitest",
+    "test:unit": "vitest run",
+    "lint": "eslint src --ext .ts,.js",
+    "format": "prettier --write src",
+    "changelog": "git-cliff -o CHANGELOG.md",
+    "changelog:prepend": "git-cliff --unreleased --prepend CHANGELOG.md",
+    "postinstall": "node scripts/postinstall.js",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "skills",
+    "scripts",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "axios": "^1.6.8",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.3",
+    "commander": "^12.0.0",
+    "inquirer": "^9.2.12",
+    "ws": "^8.21.0",
+    "yaml": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.18.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "git-cliff": "^2.13.1",
+    "prettier": "^3.2.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
+  },
+  "optionalDependencies": {
+    "keytar": "^7.9.0"
+  }
+}

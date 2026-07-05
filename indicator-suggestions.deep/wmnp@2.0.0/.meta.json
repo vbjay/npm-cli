@@ -1,0 +1,79 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f6806538cf019b56",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "5ad609d13aa1fb017cde68cdff1d608f8ffbb0138f36c8a5d50db2f03df64b6b",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `wmnp`  -  C/C++ sources",
+            "items": [
+              "src/WmnpWindow.cc",
+              "src/Wmnp.cc"
+            ]
+          },
+          {
+            "label": "Target `wmnp`  -  libraries",
+            "items": [
+              "user32.lib"
+            ]
+          },
+          {
+            "label": "Target `wmnp`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<(node_root_dir)/include/node"
+            ]
+          },
+          {
+            "label": "Target `wmnp`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:30.661Z"
+  },
+  "hash": "sha256:85b2330a30039e104766ae9849fec8a17df486d84379473da10a89875868f787"
+}

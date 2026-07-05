@@ -1,0 +1,145 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "517c70013c98469d",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/detectors/antigravity.js",
+      "scripts/detectors/claudeCode.js",
+      "scripts/detectors/claudeDesktop.js",
+      "scripts/detectors/codex.js",
+      "scripts/detectors/cursor.js",
+      "scripts/detectors/opencode.js",
+      "scripts/install-skills.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-skills.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "2d512ae606778ddeca76e68543cd9cb099a7d42bd29363cb972ee159a0c31aac",
+        "sizeBytes": 6852,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/detectors/claudeCode.js",
+          "scripts/detectors/cursor.js",
+          "scripts/detectors/claudeDesktop.js",
+          "scripts/detectors/opencode.js",
+          "scripts/detectors/codex.js",
+          "scripts/detectors/antigravity.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/detectors/claudeCode.js",
+        "reason": "required by ./scripts/install-skills.js",
+        "sha256": "326381c495c54b60b7b54bb403ca66b6a2dc0899fad10080e88cb929c572e1dd",
+        "sizeBytes": 792,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/detectors/cursor.js",
+        "reason": "required by ./scripts/install-skills.js",
+        "sha256": "e4d44e233e8294d3240688eb3b56fe814cc2c522344e462dfd77470f580fd91c",
+        "sizeBytes": 924,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/detectors/claudeDesktop.js",
+        "reason": "required by ./scripts/install-skills.js",
+        "sha256": "9f1edc1abe61fcf4cc986e4167062d1cf64881ca94bae9f2e9122b964db42a6e",
+        "sizeBytes": 1650,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/detectors/opencode.js",
+        "reason": "required by ./scripts/install-skills.js",
+        "sha256": "9b5d4544a24c2c2f3355217e8f7aa582b594deebf0b10576e0117d2febf320c6",
+        "sizeBytes": 1325,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/detectors/codex.js",
+        "reason": "required by ./scripts/install-skills.js",
+        "sha256": "d6a60404d17a7e9f8824c6c19dfcd8b6af40eabf65d1c5076d2bf50f5f78b5df",
+        "sizeBytes": 972,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/detectors/antigravity.js",
+        "reason": "required by ./scripts/install-skills.js",
+        "sha256": "4274f4c7150f4ac667fd1b959c29904483cb0cdc45867d66e4f24e36c08eb06d",
+        "sizeBytes": 1177,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:45:29.144Z"
+  },
+  "hash": "sha256:c656c0a3846b6e33fa10090bc98e1dbdf9c29916452e2443028d128d7428324b"
+}

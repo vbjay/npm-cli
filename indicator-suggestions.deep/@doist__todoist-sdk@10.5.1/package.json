@@ -1,0 +1,100 @@
+{
+    "name": "@doist/todoist-sdk",
+    "version": "10.5.1",
+    "description": "The official TypeScript SDK for the Todoist REST API.",
+    "author": "Doist developers",
+    "repository": "https://github.com/Doist/todoist-sdk-typescript",
+    "homepage": "https://doist.github.io/todoist-sdk-typescript/",
+    "license": "MIT",
+    "type": "module",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=20.18.1"
+    },
+    "scripts": {
+        "clean": "rimraf dist",
+        "check": "oxlint src && oxfmt --check",
+        "check:fix": "oxlint src --fix && oxfmt",
+        "ts-compile-check": "npx tsc -p tsconfig.typecheck.json",
+        "audit": "npm audit --audit-level=moderate",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "api:request": "node ./scripts/todoist-api-request.cjs",
+        "build:cjs": "npx tsc -p tsconfig.cjs.json",
+        "build:esm": "npx tsc -p tsconfig.esm.json",
+        "build:fix-esm": "node scripts/fix-esm-imports.cjs",
+        "build:fix-dts": "node scripts/fix-dts-imports.cjs",
+        "build:post": "echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
+        "build": "npm-run-all clean build:cjs build:esm build:fix-esm build:fix-dts build:post",
+        "attw": "attw --pack --ignore-rules fallback-condition false-esm",
+        "integrity-checks": "npm-run-all clean check test build attw",
+        "prepublishOnly": "npm run integrity-checks",
+        "prepare": "npm run build"
+    },
+    "overrides": {
+        "fflate": "0.8.2"
+    },
+    "dependencies": {
+        "camelcase": "6.3.0",
+        "emoji-regex": "10.6.0",
+        "form-data": "4.0.6",
+        "ts-custom-error": "^3.2.0",
+        "undici": "7.24.8",
+        "uuid": "11.1.1",
+        "zod": "4.3.6"
+    },
+    "devDependencies": {
+        "@arethetypeswrong/cli": "0.18.2",
+        "@semantic-release/changelog": "6.0.3",
+        "@semantic-release/git": "10.0.1",
+        "conventional-changelog-conventionalcommits": "9.3.1",
+        "dotenv": "17.4.1",
+        "husky": "9.1.7",
+        "lint-staged": "16.4.0",
+        "msw": "2.13.2",
+        "npm-run-all2": "8.0.4",
+        "obsidian": "^1.10.2-1",
+        "oxfmt": "0.43.0",
+        "oxlint": "1.57.0",
+        "rimraf": "6.1.3",
+        "semantic-release": "25.0.3",
+        "ts-node": "10.9.2",
+        "type-fest": "^5.0.0",
+        "typescript": "5.9.3",
+        "vitest": "4.1.0"
+    },
+    "peerDependencies": {
+        "type-fest": "^4.12.0 || ^5.5.0"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npx lint-staged && npm run build"
+        }
+    },
+    "lint-staged": {
+        "*.{ts,tsx}": "oxlint --fix",
+        "*.{ts,tsx,json,md,yml,yaml}": "oxfmt --no-error-on-unmatched-pattern"
+    },
+    "files": [
+        "dist/cjs/**/*",
+        "dist/esm/**/*",
+        "dist/types/**/*",
+        "!dist/**/*.test.js",
+        "!dist/**/*.test.d.ts"
+    ]
+}

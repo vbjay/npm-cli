@@ -1,0 +1,90 @@
+{
+  "name": "@react-native-ohos/clipboard",
+  "version": "1.16.3",
+  "description": "React Native Clipboard API",
+  "harmony": {
+    "alias": "@react-native-clipboard/clipboard"
+  },
+  "keywords": [
+    "Clipboard",
+    "getString",
+    "react-native",
+    "setString"
+  ],
+  "homepage": "https://gitcode.com/openharmony-sig/rntpc_clipboard/tree/br_rnoh0.77#readme",
+  "bugs": {
+    "url": "https://gitcode.com/openharmony-sig/rntpc_clipboard/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitcode.com/openharmony-sig/rntpc_clipboard.git"
+  },
+  "license": "MIT",
+  "author": "M.Haris Baig <harisbaig100@gmail.com>",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "RNCClipboard.podspec",
+    "harmony",
+    "src",
+    "!harmony/oh_modules",
+    "!harmony/**/build",
+    "!harmony/**/oh_modules"
+  ],
+  "scripts": {
+    "windows": "cd example && react-native run-windows",
+    "start": "react-native start",
+    "build": "tsc",
+    "format": "biome format --write .",
+    "lint": "biome lint --write .",
+    "prepare": "npm run build",
+    "test": "jest",
+    "type-check": "tsc --noEmit"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@biomejs/biome": "1.9.4",
+    "@callstack/react-native-visionos": "^0.76.0",
+    "@react-native/babel-preset": "^0.75.0",
+    "@react-native/metro-config": "^0.75.0",
+    "@rnx-kit/align-deps": "^2.4.1",
+    "@rnx-kit/metro-config": "^2.0.0",
+    "@types/react": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "babel-jest": "^26.1.0",
+    "jest": "^29.2.1",
+    "react": "^18.3.1",
+    "react-native": "^0.77.1",
+    "react-native-macos": "0.76.0",
+    "react-native-test-app": "^4.0.5",
+    "react-native-windows": "^0.75.0",
+    "react-test-renderer": "^18.2.0",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@react-native-clipboard/clipboard": "1.16.2"
+  },
+  "peerDependencies": {
+    "react": ">= 16.9.0",
+    "react-native": ">= 0.61.5",
+    "react-native-macos": ">= 0.61.0",
+    "react-native-windows": ">= 0.61.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-macos": {
+      "optional": true
+    },
+    "react-native-windows": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "packageManager": "yarn@4.1.1"
+}

@@ -1,0 +1,99 @@
+{
+  "name": "@anansi/generator-js",
+  "version": "12.6.38",
+  "description": "Generate Fast React Web Apps",
+  "homepage": "https://github.com/ntucker/anansi/tree/master/packages/generator-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:ntucker/anansi.git",
+    "directory": "packages/generator"
+  },
+  "bugs": {
+    "url": "https://github.com/ntucker/anansi/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Nathaniel Tucker",
+    "email": "me@ntucker.me",
+    "url": "https://ntucker.true.io"
+  },
+  "contributors": [
+    {
+      "name": "Melissa Zhang",
+      "email": "melissa.zhang@coinbase.com",
+      "url": "https://twitter.com/melissazhang13"
+    }
+  ],
+  "files": [
+    "generators",
+    "run.js"
+  ],
+  "type": "module",
+  "main": "generators/app/index.js",
+  "module": "generators/app/index.js",
+  "exports": {
+    ".": {
+      "default": "./generators/app/index.js"
+    }
+  },
+  "keywords": [
+    "cli",
+    "react",
+    "framework",
+    "spa",
+    "fast-refresh",
+    "react-refresh",
+    "yeoman-generator",
+    "yeoman",
+    "typescript",
+    "data-client",
+    "webpack",
+    "sdk",
+    "scss",
+    "css modules",
+    "storybook",
+    "suspense",
+    "concurrent"
+  ],
+  "devDependencies": {
+    "@types/ejs": "3.1.5",
+    "@types/gulp-filter": "3.0.41",
+    "@types/node": "^24.0.0",
+    "@types/pacote": "11.1.8",
+    "copyfiles": "2.4.1",
+    "yeoman-assert": "3.1.1",
+    "yeoman-environment": "6.1.0",
+    "yeoman-test": "11.6.0"
+  },
+  "engines": {
+    "node": "^18.17.0 || >=20.5.0",
+    "npm": ">= 6.0.0"
+  },
+  "dependencies": {
+    "@babel/runtime-corejs3": "^7.26.0",
+    "@types/inquirer": "^9.0.10",
+    "@yeoman/types": "^1.11.1",
+    "chalk": "^4.1.2",
+    "core-js-pure": "^3.40.0",
+    "ejs": "^3.1.10",
+    "execa": "^9.6.1",
+    "gulp-filter": "^9.0.1",
+    "gulp-prettier": "^6.0.0",
+    "import-meta-resolve": "^4.2.0",
+    "mem-fs": "^4.1.4",
+    "mem-fs-editor": "^12.0.4",
+    "pacote": "^21.5.1",
+    "shelobsay": "^2.0.0",
+    "yeoman-generator": "^8.2.2"
+  },
+  "scripts": {
+    "pretest": "yarn g:lint .",
+    "test": "NODE_OPTIONS=\"--experimental-vm-modules\" yarn g:test",
+    "test:type": "yarn g:tsc",
+    "build": "run build:lib && run copyfiles",
+    "build:lib": "BROWSERSLIST_ENV=node18 yarn g:babel --out-dir generators --ignore \"**/templates/**/*\",\"**/templates/*\",\"**/yeoman-types/*\"",
+    "build:clean": "yarn g:rimraf generators",
+    "copyfiles": "copyfiles -u 1 \"src/**/templates/**/*\" \"src/**/templates/**/.*\" \"src/**/templates/**/.**/*\" \"src/**/templates/.**/**/*\" \"src/**/templates/**/.**/.*\" generators",
+    "prepack": "run build:clean && run build"
+  }
+}

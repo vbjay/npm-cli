@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "29c53f6b800ea61d",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/post-install.js",
+      "scripts/pre-install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "detect-libc",
+        "versionSpec": "^2.0.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "detect-libc@2.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/pre-install.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "33d3d53ab886b889057ecc51e9d5f8db73277469cea0cb1842bc6cd6394ebfb2",
+        "sizeBytes": 883,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/post-install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e2c1053ca4829aae853ced91e1b4cc6954207abaacdf0e1f959ed2b3eb1f9517",
+        "sizeBytes": 849,
+        "signals": [
+          "uses-child-process",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:03.545Z"
+  },
+  "hash": "sha256:6fb573ab9a64149fb9501496ae124b1d36a0ecaa80544db92cc774e234b679c5"
+}

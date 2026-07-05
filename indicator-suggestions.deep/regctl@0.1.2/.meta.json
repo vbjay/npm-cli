@@ -1,0 +1,165 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "188c36adb2412229",
+    "fetchedFiles": [
+      "lib/constants.js",
+      "lib/index.js",
+      "lib/install.js",
+      "lib/lib.js",
+      "lib/regctl.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "d29438caed5e922a866bb16598a48ffd6e66d1ae69865f2ba829181c60eb3352",
+        "sizeBytes": 362,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/regctl.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e0f721f47c12adab50e295b3f9107d32278805e04f2e9db76fc6eae341d91078",
+        "sizeBytes": 176,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/index.js",
+        "reason": "required by ./lib/regctl.js",
+        "sha256": "2a6012121775d44bbd527780ea89ebffcbc7cfa38665ac47e1e6e97f6ade2802",
+        "sizeBytes": 1812,
+        "signals": [
+          "uses-child-process",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/lib.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/regclient/regclient/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/lib.js",
+        "reason": "required by ./lib/index.js",
+        "sha256": "fde2bf41d1c7dcea4c3aee5b1b50f250e5d36fddbd2e60b5f86487eca98100fe",
+        "sizeBytes": 165,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/constants.js",
+          "lib/install.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/constants.js",
+        "reason": "required by ./lib/lib.js",
+        "sha256": "a0a3d42b14654903dbc82b22acd08af8cedbe2844805ca81b19c684d5f02f6ad",
+        "sizeBytes": 475,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/install.js",
+        "reason": "required by ./lib/lib.js",
+        "sha256": "59abecf17a56aec7aeadba4a9b7f4ce0447068a9fb233ec206d38570714804da",
+        "sizeBytes": 3078,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/regclient/regclient/releases/",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:02.947Z"
+  },
+  "hash": "sha256:0383fa9744fa71a1b19bf0522182798ab1e75f5b11e66ca612331fbe7e11828a"
+}

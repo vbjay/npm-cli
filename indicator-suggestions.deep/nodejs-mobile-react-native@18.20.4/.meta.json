@@ -1,0 +1,86 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f0920cb8a4de0378",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/create-node-structure.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "ncp",
+        "versionSpec": "^2.0.0"
+      },
+      {
+        "name": "mkdirp",
+        "versionSpec": "^0.5.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "mkdirp@0.5.6",
+      "ncp@2.0.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "6fd25ad31d3c1c4de061128a9196ea302d0b48cf1e065d91ac1d6cffd1a3f209",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "= project(\":app\").android.defaultConfig.ndk.abiFilters ?: [\"armeabi-v7a\", \"x86_64\", \"arm64-v8a\"]"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/create-node-structure.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "89257c00aad5bbb681b609fbe6dbda316504b3e9cce7a901c112475de9f8f131",
+        "sizeBytes": 3522,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.627Z"
+  },
+  "hash": "sha256:5c5d95226b1b75922d5d4d5fac5dd1bc62f09ecf1d0036e38eab96c13a2666c5"
+}

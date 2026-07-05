@@ -1,0 +1,123 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "46166a14d3b9d861",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "package.json",
+      "scripts/postinstall.cjs",
+      "scripts/star-prompt.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "7ec915967f127269093482bb7bc33fca8d1ba235e9d4296decbf285a2c426140",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "ai-exec"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.4"
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a9ba184c81de203d4dc7bba05bdc8192a5a57193c2a0e5f0042e8d1ccd6a97f5",
+        "sizeBytes": 3700,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/star-prompt.cjs"
+        ],
+        "urls": [
+          {
+            "url": "https://rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/star-prompt.cjs",
+        "reason": "required by ./scripts/postinstall.cjs",
+        "sha256": "607b0c2fc203e889a3f279fa44eb510587c1d104c2973bdb47b49347081094ba",
+        "sizeBytes": 4696,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:45.974Z"
+  },
+  "hash": "sha256:751c9acbcc6db9c50f8bb3fc97215c386297c4da2ca5ff6d339d053788978e8e"
+}

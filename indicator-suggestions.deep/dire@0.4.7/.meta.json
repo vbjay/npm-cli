@@ -1,0 +1,98 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "184120c631496774",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "007816ed97c827523b20019dc543979a270935fe0ddd819c5c6407a02ac1ee71",
+        "sizeBytes": 4095,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/juliandreas/dire-cli/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/juliandreas/dire-cli/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "3b8930b3200f4e229965ddbab6f452bd1f9e48d636ca9069d114d62381848ac0",
+        "sizeBytes": 797,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:03.706Z"
+  },
+  "hash": "sha256:da22ddac8d63237096c71a9a44a4d1a659d233e86f0ba18d051e0c4f29f6956d"
+}

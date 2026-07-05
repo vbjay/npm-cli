@@ -1,0 +1,149 @@
+{
+  "name": "@andreasnicolaou/typescript-expression-language",
+  "version": "1.7.0",
+  "description": "TypeScript implementation of symfony/expression-language",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "browser": "dist/index.umd.js",
+  "private": false,
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:check:hook": "npm run format:check",
+    "lint": "eslint --fix",
+    "test": "jest",
+    "test:ci": "cross-env JEST_JUNIT_CLASSNAME=\"{filepath}\" jest --reporters=default --reporters=jest-junit",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:bundle": "node scripts/check-bundle-size.js",
+    "build:check": "npm run build && npm run test:bundle",
+    "prepare": "husky",
+    "prepublishOnly": "npm run build"
+  },
+  "homepage": "https://andreasnicolaou.github.io/typescript-expression-language/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andreasnicolaou/typescript-expression-language.git"
+  },
+  "bugs": {
+    "url": "https://github.com/andreasnicolaou/typescript-expression-language/issues"
+  },
+  "author": {
+    "name": "Andreas Nicolaou",
+    "email": "anicolaou66@gmail.com"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "bundle-size": [
+    {
+      "path": "dist/index.js",
+      "limit": "40kB",
+      "gzip": true
+    },
+    {
+      "path": "dist/index.cjs",
+      "limit": "40kB",
+      "gzip": true
+    },
+    {
+      "path": "dist/index.umd.js",
+      "limit": "40kB",
+      "gzip": true
+    },
+    {
+      "path": "dist/index.umd.min.js",
+      "limit": "20kB",
+      "gzip": true
+    }
+  ],
+  "jest": {
+    "transform": {
+      "^.+\\.(ts)$": [
+        "ts-jest"
+      ]
+    },
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
+  },
+  "devDependencies": {
+    "@codecov/rollup-plugin": "^2.0.1",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/locutus": "^0.0.8",
+    "@types/node": "^26.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
+    "@typescript-eslint/parser": "^8.61.1",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "jest-junit": "^17.0.0",
+    "locutus": "^3.0.36",
+    "lru-cache": "^11.5.1",
+    "prettier": "3.9.4",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "rollup": "^4.62.0",
+    "rollup-plugin-dts": "^6.4.1",
+    "ts-jest": "^29.4.11",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "symfony",
+    "expression",
+    "javascript",
+    "language",
+    "expression-language",
+    "typescript",
+    "andreasnicolaou",
+    "expression language",
+    "filter",
+    "rules",
+    "parser",
+    "ast",
+    "evaluator",
+    "custom functions",
+    "safe expressions",
+    "formula",
+    "calculation",
+    "runtime",
+    "dynamic",
+    "condition",
+    "validation",
+    "lexer",
+    "compiler",
+    "syntax",
+    "esm",
+    "cjs",
+    "umd",
+    "mathematical",
+    "logical",
+    "operators"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "name": "pact-node",
+  "version": "1.3.8",
+  "description": "A wrapper for the Ruby version of Pact to work within Node - DEPRECATED: please uninstall and install @pact-foundation/pact-node",
+  "main": "./src/pact.js",
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "ia32"
+  ],
+  "engine": {
+    "node": ">=0.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pact-foundation/pact-node.git"
+  },
+  "keywords": [
+    "pact",
+    "node",
+    "wrapper",
+    "mock",
+    "service"
+  ],
+  "author": {
+    "name": "Michel Boudreau",
+    "email": "michelboudreau@gmail.com",
+    "url": "codinghitchhiker.com"
+  },
+  "contributors": [
+    {
+      "name": "David Stanciu",
+      "email": "davidstanciu29@gmail.com",
+      "url": "https://github.com/dstanciu29"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pact-foundation/pact-node/issues"
+  },
+  "dependencies": {
+    "check-types": "~3.3.1",
+    "commander": "^2.9.0",
+    "q": "^1.4.1"
+  },
+  "optionalDependencies": {
+    "pact-mock-service-linux-ia32": "0.7.2-1",
+    "pact-mock-service-linux-x64": "0.7.2-1",
+    "pact-mock-service-win32": "0.7.2-1",
+    "pact-mock-service-darwin": "0.7.2-1"
+  },
+  "bin": {
+    "pact": "./bin/pact-node"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "jscs": "^2.1.0",
+    "mocha": "^2.2.5",
+    "nodemon": "^1.4.1",
+    "rimraf": "^2.4.2",
+    "sinon": "^1.15.4"
+  },
+  "scripts": {
+    "postinstall": "node ./scripts/check-dependencies.js",
+    "clean": "./node_modules/.bin/rimraf logs/*",
+    "lint": "./node_modules/.bin/jscs .",
+    "test": "./node_modules/.bin/mocha -R spec ./**/*.spec.js --timeout 10000",
+    "watch": "./node_modules/.bin/nodemon -x npm run dev",
+    "watch:debug": "./node_modules/.bin/nodemon --debug -q -w assets/ --ext '.' --exec 'npm run lint'",
+    "dev": "npm run clean && npm run lint --force && npm test && node .",
+    "start": "npm run watch",
+    "prepublish": "npm test"
+  }
+}

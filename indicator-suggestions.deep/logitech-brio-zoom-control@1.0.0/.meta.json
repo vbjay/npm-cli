@@ -1,0 +1,92 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "13775407e6f02ca0",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "cc3321599aeb60e94d1e17ff19950cfc0f677f73d356b6948e964017a16bb50a",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `brio_zoom_control`  -  C/C++ sources",
+            "items": [
+              "src/binding.cpp",
+              "src/camera_control.cpp",
+              "src/windows/directshow_control.cpp",
+              "src/linux/v4l2_control.cpp",
+              "src/macos/avfoundation_control.mm"
+            ]
+          },
+          {
+            "label": "Target `brio_zoom_control`  -  libraries",
+            "items": [
+              "-lole32",
+              "-loleaut32",
+              "-lstrmiids",
+              "-luuid",
+              "-lv4l2",
+              "-framework Foundation",
+              "-framework AVFoundation",
+              "-framework CoreMedia"
+            ]
+          },
+          {
+            "label": "Target `brio_zoom_control`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "src/",
+              "src/windows/",
+              "src/linux/",
+              "src/macos/"
+            ]
+          },
+          {
+            "label": "Target `brio_zoom_control`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:07.365Z"
+  },
+  "hash": "sha256:8ac35429782fc71cce997b73d7566f5e8c31de044d56a23dfae30c12dd56f28b"
+}

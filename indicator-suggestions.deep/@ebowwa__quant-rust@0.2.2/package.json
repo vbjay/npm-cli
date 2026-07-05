@@ -1,0 +1,70 @@
+{
+  "name": "@ebowwa/quant-rust",
+  "version": "0.2.2",
+  "description": "High-performance quantitative finance library with Rust FFI bindings for Bun",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "native",
+    "src",
+    "types",
+    "scripts",
+    "bun-ffi.d.ts"
+  ],
+  "scripts": {
+    "build": "bun run build:rust && bun run build:ts",
+    "build:rust": "cargo build --release",
+    "build:ts": "bun build ./src/index.ts --outdir ./dist --target=bun && tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build:ts-only": "bun build ./src/index.ts --outdir ./dist --target=bun",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "prepublishOnly": "bun run build",
+    "postinstall": "node scripts/postinstall.cjs",
+    "test": "bun test",
+    "clean": "rm -rf dist && cargo clean"
+  },
+  "keywords": [
+    "quant",
+    "finance",
+    "trading",
+    "prediction-markets",
+    "kelly-criterion",
+    "amm",
+    "technical-indicators",
+    "rust",
+    "ffi",
+    "bun"
+  ],
+  "author": "ebowwa",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ebowwa/codespaces",
+    "directory": "packages/src/quant-rust"
+  },
+  "bugs": {
+    "url": "https://github.com/ebowwa/codespaces/issues"
+  },
+  "homepage": "https://github.com/ebowwa/codespaces/tree/main/packages/src/quant-rust#readme",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "bun-types": "^1.3.9",
+    "typescript": "^5.9.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

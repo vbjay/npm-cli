@@ -1,0 +1,125 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3ecd1051b2dc7bc3",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/download-rln-bindings.js",
+      "scripts/setup-rln-bindings.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "78c64a72766a33b64012dd914392efe55fb5aa2eff85eb9dc2db144d0824e1af",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "net.java.dev.jna:jna:5.17.0@aar",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/download-rln-bindings.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "30ee2e531ec1768869c0d6cd1115bb853210c46e0c49558cb630e7a76c21e2b6",
+        "sizeBytes": 5149,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/UTEXO-Protocol/rgb-lightning-node/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/setup-rln-bindings.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "efa2cd5c404492c8906eb3643e3a2aef21c5455200745e403954c67582436df9",
+        "sizeBytes": 1506,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:09.024Z"
+  },
+  "hash": "sha256:34dd00dfb8d0b040a098d8f6fc30b30b2faf5067212634c6a2175bab7e9b9fc9"
+}

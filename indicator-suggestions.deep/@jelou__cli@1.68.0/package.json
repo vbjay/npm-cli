@@ -1,0 +1,76 @@
+{
+  "name": "@jelou/cli",
+  "version": "1.68.0",
+  "description": "Build AI agents on the Jelou platform — from your terminal or your AI editor.",
+  "author": "Jelou Inc. (https://jelou.ai)",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JelouLatam/jelou-cli.git"
+  },
+  "homepage": "https://jelou.ai",
+  "bin": {
+    "jelou": "bin/jelou"
+  },
+  "scripts": {
+    "postinstall": "node bin/postinstall.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "optionalDependencies": {
+    "@jelou/cli-darwin-arm64": "1.68.0",
+    "@jelou/cli-darwin-x64": "1.68.0",
+    "@jelou/cli-linux-x64": "1.68.0",
+    "@jelou/cli-linux-arm64": "1.68.0",
+    "@jelou/cli-win32-x64": "1.68.0"
+  },
+  "keywords": [
+    "jelou",
+    "cli",
+    "ai-agents",
+    "agent-skills",
+    "agents",
+    "agentic",
+    "workflows",
+    "functions",
+    "serverless",
+    "whatsapp",
+    "whatsapp-bot",
+    "whatsapp-campaigns",
+    "claude-code",
+    "cursor",
+    "codex",
+    "windsurf",
+    "mcp",
+    "channels"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jelou": {
+    "minVersion": "1.65.0",
+    "release_notes": {
+      "version": "1.68.0",
+      "date": "2026-07-10",
+      "headline": "New `jelou shop metrics` command group for company-scoped Shop analytics, plus typed field schemas when creating Datum collections.",
+      "highlights": [
+        {
+          "type": "new",
+          "text": "`jelou shop metrics` — company-scoped Shop analytics as terminal cards and charts (or JSON for agents): `overview`, `sales`, `search`, `catalog`, and `customers`. Each takes `--from`/`--to` (YYYY-MM-DD) and `--app-ids`; `sales`/`search`/`customers` also accept `--detail` for paginated row-level data."
+        },
+        {
+          "type": "new",
+          "text": "`jelou databases collections create --field name:type[:opt=val,...]` — define a collection's field schema up front instead of adding it later in the admin UI. Repeatable; trailing `!` on the name marks a field required, and array options (select values, mime types, domains) use `|`. Unknown types or options fail before any network call."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "zig-crypto",
+  "version": "0.3.2",
+  "description": "A zero-allocation, N-ABI-stable Node.js native extension for high-performance nanoid and Snowflake ID generation, written in Zig",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "package-lock.json",
+    "!src/zig-cache",
+    "dist",
+    "src",
+    "tsconfig.json"
+  ],
+  "preferUnplugged": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --emitDeclarationOnly",
+    "build": "tsc",
+    "prepack": "tsc",
+    "test": "node dist/test/test.js",
+    "pretest": "tsc",
+    "prepare": "husky",
+    "build:native": "zig build -Dnapi-include=node_modules/node-api-headers/include && mkdir -p dist/bin && cp zig-out/lib/libzig_id.so dist/bin/x86_64-linux-gnu/zig-id.node",
+    "build:all": "npm run build:native && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
+    "node-api-headers": "^0.0.2",
+    "prettier": "^3.8.3",
+    "typescript": "^5.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coderx85/zig-crypto-library.git"
+  },
+  "keywords": [
+    "nanoid",
+    "snowflake",
+    "id",
+    "zig",
+    "native",
+    "n-api",
+    "bigint"
+  ],
+  "license": "MIT"
+}

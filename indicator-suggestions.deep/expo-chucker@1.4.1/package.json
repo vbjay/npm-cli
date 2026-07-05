@@ -1,0 +1,66 @@
+{
+  "name": "expo-chucker",
+  "version": "1.4.1",
+  "description": "Android HTTP(S) inspector for Expo — wraps Chucker for network debugging",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "android/src",
+    "android/build.gradle",
+    "build",
+    "plugin/build",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "package.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "reset": "find . -type dir -name node_modules | xargs rm -rfv && watchman watch-del-all && pnpm install",
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-chucker",
+    "chucker",
+    "android",
+    "http-inspector",
+    "network-debug",
+    "react-native-module"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/puguhsudarma/expo-chucker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/puguhsudarma/expo-chucker/issues"
+  },
+  "author": "reroet <wayanpuguhsudarma@gmail.com> (https://github.com/puguhsudarma)",
+  "license": "MIT",
+  "homepage": "https://github.com/puguhsudarma/expo-chucker#readme",
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^10.0.4",
+    "@types/react": "~19.2.0",
+    "expo": "~55.0.0",
+    "expo-module-scripts": "^55.0.2",
+    "react": "19.2.0",
+    "react-native": "0.83.4",
+    "release-it": "^19.2.4",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "expo": ">=52.0.0",
+    "react": "*",
+    "react-native": "*"
+  }
+}

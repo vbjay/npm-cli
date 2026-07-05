@@ -1,0 +1,58 @@
+{
+	"private": false,
+	"name": "@choleski/abacus",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "Choleski Louis <choleski@gmx.com>",
+	"keywords": [
+		"node-pre-gyp",
+		"gyp",
+		"native",
+		"addon",
+		"module",
+		"c",
+		"bindings",
+		"binary",
+		"arithmetic",
+		"calculation",
+		"scientific",
+		"finance"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Arbinuity/abacus.git"
+	},
+	"scripts": {
+		"preinstall": "npm run build",
+		"build": "node-gyp configure build",
+		"lint": "eslint ./lib --ext .ts",
+		"prettier-format": "run-script-os",
+		"prettier-format:win32": "prettier --config .prettierrc \"./lib/**/*.ts\" --write",
+		"prettier-format:darwin:linux": "prettier --config .prettierrc 'lib/**/*.ts' --write",
+		"prettier-format:default": "prettier --config .prettierrc 'lib/**/*.ts' --write",
+		"prettier-watch": "run-script-os",
+		"prettier-watch:win32": "onchange \"lib/**/*.ts\" -- prettier --write {{changed}}",
+		"prettier-watch:darwin:linux": "onchange 'lib/**/*.ts' -- prettier --write {{changed}}",
+		"prettier-watch:default": "onchange 'lib/**/*.ts' -- prettier --write {{changed}}",
+		"test": "jest"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run test && npm run prettier-format && npm run lint"
+		}
+	},
+	"dependencies": {
+		"eslint-plugin-jest": "^25.2.2",
+		"onchange": "^7.1.0",
+		"prettier": "^2.4.1",
+		"ts-jest": "^27.0.7"
+	},
+	"devDependencies": {
+		"eslint": "^8.1.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"husky": "^7.0.4",
+		"jest": "^27.3.1"
+	}
+}

@@ -1,0 +1,193 @@
+{
+  "name": "@derodero24/comprs",
+  "version": "2.0.0",
+  "description": "Rust-powered universal compression for JavaScript/TypeScript. zstd, gzip, brotli, and lz4 in one package.",
+  "license": "MIT",
+  "author": "derodero24",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derodero24/comprs.git"
+  },
+  "homepage": "https://github.com/derodero24/comprs",
+  "bugs": {
+    "url": "https://github.com/derodero24/comprs/issues"
+  },
+  "keywords": [
+    "compress",
+    "compression",
+    "decompress",
+    "zstd",
+    "zstandard",
+    "gzip",
+    "brotli",
+    "deflate",
+    "lz4",
+    "wasm",
+    "wasm-bindgen",
+    "rust",
+    "napi-rs",
+    "native",
+    "typescript",
+    "streaming",
+    "web-streams"
+  ],
+  "sideEffects": false,
+  "type": "commonjs",
+  "main": "index.js",
+  "module": "index.mjs",
+  "browser": "browser-entry.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "browser": {
+        "types": "./index.d.ts",
+        "default": "./browser-entry.js"
+      }
+    },
+    "./streams": {
+      "import": {
+        "types": "./streams.d.ts",
+        "default": "./streams.js"
+      },
+      "require": {
+        "types": "./streams.d.ts",
+        "default": "./streams.js"
+      }
+    },
+    "./node": {
+      "import": {
+        "types": "./node.d.ts",
+        "default": "./node.js"
+      },
+      "require": {
+        "types": "./node.d.ts",
+        "default": "./node.js"
+      }
+    }
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "streams.js",
+    "streams.d.ts",
+    "node.js",
+    "node.d.ts",
+    "browser.js",
+    "browser-entry.js",
+    "browser-streaming.js",
+    "comprs-wasm.js",
+    "comprs-wasm_bg.js",
+    "comprs-wasm_bg.wasm",
+    "comprs-wasm.d.ts",
+    "comprs-wasm_bg.wasm.d.ts"
+  ],
+  "napi": {
+    "binaryName": "comprs",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-gnu",
+      "aarch64-unknown-linux-musl",
+      "x86_64-pc-windows-msvc",
+      "aarch64-pc-windows-msvc",
+      "wasm32-wasip1-threads"
+    ]
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "build": "napi build --manifest-path crates/core/Cargo.toml --platform --release --js index.js --dts index.d.ts --output-dir .",
+    "build:debug": "napi build --manifest-path crates/core/Cargo.toml --platform --js index.js --dts index.d.ts --output-dir .",
+    "build:wasm": "napi build --manifest-path crates/core/Cargo.toml --platform --release --js index.js --dts index.d.ts --output-dir . --target wasm32-wasip1-threads",
+    "postbuild:wasm": "node scripts/optimize-wasm.js",
+    "build:wasm-bindgen": "node scripts/build-wasm-bindgen.js",
+    "postbuild:wasm-bindgen": "node scripts/optimize-wasm.js",
+    "optimize:wasm": "node scripts/optimize-wasm.js",
+    "artifacts": "napi artifacts",
+    "changeset:version": "changeset version && node scripts/sync-cargo-version.js && napi version && pnpm run build && node scripts/patch-browser-js.js && pnpm run format",
+    "prepublishOnly": "napi prepublish -t npm",
+    "version": "napi version",
+    "check": "biome ci",
+    "format": "biome format --write",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "test:deno": "deno test --allow-read --allow-env --allow-net --node-modules-dir=auto e2e/wasm-deno.test.ts",
+    "test:wasm": "vitest run __test__/wasm.spec.ts",
+    "test:bun": "bun test e2e/wasm-bun.test.ts",
+    "test:watch": "vitest watch",
+    "bench": "vitest bench",
+    "bench:ci": "vitest bench --exclude '**/*.compare.bench.ts'",
+    "attw": "attw --pack .",
+    "publint": "publint",
+    "verify": "pnpm run check && cargo clippy -- -W clippy::all && cargo test && pnpm run build && pnpm run typecheck && pnpm test",
+    "clean": "rm -rf target coverage *.node *.wasm",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@biomejs/biome": "^2.4.8",
+    "@changesets/cli": "^2.30.0",
+    "@codspeed/vitest-plugin": "^5.2.0",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@emnapi/core": "^1.10.0",
+    "@emnapi/runtime": "^1.10.0",
+    "@napi-rs/cli": "^3.6.0",
+    "@napi-rs/wasm-runtime": "^1.1.1",
+    "@playwright/test": "^1.58.2",
+    "@tybys/wasm-util": "^0.10.1",
+    "@types/node": "^24.0.0",
+    "@types/pako": "^2.0.4",
+    "@vitest/coverage-v8": "^4.1.0",
+    "buffer": "^6.0.3",
+    "fflate": "^0.8.2",
+    "lefthook": "^2.1.4",
+    "pako": "^2.1.0",
+    "publint": "^0.3.18",
+    "typescript": "^6.0.0",
+    "vite": "^8.0.0",
+    "vitest": "^4.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "lefthook"
+    ],
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "@codspeed/vitest-plugin>vite": "8"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "optionalDependencies": {
+    "@derodero24/comprs-darwin-x64": "2.0.0",
+    "@derodero24/comprs-darwin-arm64": "2.0.0",
+    "@derodero24/comprs-linux-x64-gnu": "2.0.0",
+    "@derodero24/comprs-linux-x64-musl": "2.0.0",
+    "@derodero24/comprs-linux-arm64-gnu": "2.0.0",
+    "@derodero24/comprs-linux-arm64-musl": "2.0.0",
+    "@derodero24/comprs-win32-x64-msvc": "2.0.0",
+    "@derodero24/comprs-win32-arm64-msvc": "2.0.0",
+    "@derodero24/comprs-wasm32-wasi": "2.0.0"
+  }
+}

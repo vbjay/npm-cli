@@ -1,0 +1,72 @@
+{
+  "name": "@granite-js/cookies",
+  "type": "module",
+  "version": "1.0.36",
+  "description": "Cookie manager module for Brick framework",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js",
+      "react-native": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src/",
+    "ios/",
+    "android/",
+    "package.json",
+    "GraniteCookies.podspec"
+  ],
+  "scripts": {
+    "prepack": "yarn build",
+    "build": "brick-codegen && tsdown"
+  },
+  "keywords": [
+    "react-native",
+    "brick",
+    "brick-module",
+    "cookies",
+    "cookie-manager",
+    "native-module"
+  ],
+  "license": "Apache-2.0",
+  "author": "Toss <opensource@toss.im>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toss/granite.git",
+    "directory": "packages/cookies"
+  },
+  "bugs": {
+    "url": "https://github.com/toss/granite/issues"
+  },
+  "homepage": "https://github.com/toss/granite#readme",
+  "brickModule": {
+    "specSrc": "./src/spec",
+    "ios": {
+      "moduleName": "GraniteCookies",
+      "className": "CookiesModule"
+    },
+    "android": {
+      "package": "run.granite.cookies",
+      "projectName": "cookies",
+      "moduleName": "CookiesModule"
+    }
+  },
+  "peerDependencies": {
+    "brick-module": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "brick-module": "0.5.0",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "tsdown": "0.20.3",
+    "typescript": "5.9.3"
+  }
+}

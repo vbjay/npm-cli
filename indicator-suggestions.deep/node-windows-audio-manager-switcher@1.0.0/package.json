@@ -1,0 +1,63 @@
+{
+  "name": "node-windows-audio-manager-switcher",
+  "version": "1.0.0",
+  "main": "index.js",
+  "binary": {
+    "module_name": "addon",
+    "module_path": "build/Release/",
+    "remote_path": "./",
+    "package_name": "node-windows-audio-manager-switcher-v{version}-node-v{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/AudioProgrammingD/node-windows-audio-manager-switcher/releases/download/v{version}/"
+  },
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "scripts": {
+    "install": "prebuild-install || node-gyp rebuild",
+    "prebuild": "prebuild --backend=node-gyp -t 22.0.0 -t 21.0.0 -t 20.13.1 -t 19.0.0 -t 18.0.0 -t 17.0.0 --strip --napi",
+    "build": "node-gyp rebuild",
+    "dev:build": "npx node-gyp clean && npx node-gyp configure && npx node-gyp build",
+    "dev:prebuild": "npx prebuild --backend=node-gyp -t 22.0.0 -t 21.0.0 -t 20.13.1 -t 19.0.0 -t 18.0.0 -t 17.0.0 --strip --napi",
+    "dev:test:list-devices": "node ./test/testListingDevices.js",
+    "dev:test:set-default": "node ./test/testSettingDefaultPlayBack.js",
+    "dev:test:mute-default": "node ./test/testMutingDefault.js",
+    "dev:test:mute-device": "node ./test/testMutingDevice.js",
+    "dev:test:unmute-default": "node ./test/testUnmutingDefault.js",
+    "dev:test:unmute-device": "node ./test/testUnmutingDevice.js"
+  },
+  "files": [
+    "prebuilds/",
+    "native/",
+    "index.js",
+    "binding.gyp"
+  ],
+  "keywords": [
+    "audio",
+    "windows",
+    "native",
+    "addon",
+    "node-gyp",
+    "c++"
+  ],
+  "author": "sameerbk201",
+  "license": "ISC",
+  "gypfile": true,
+  "description": "Native Node.js C++ addon for managing Windows audio devices",
+  "dependencies": {
+    "node-addon-api": "^8.3.1",
+    "node-gyp-build": "^4.8.4",
+    "prebuild": "^13.0.1",
+    "prebuild-install": "^7.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AudioProgrammingD/node-windows-audio-manager-switcher"
+  },
+  "bugs": {
+    "url": "https://github.com/AudioProgrammingD/node-windows-audio-manager-switcher"
+  },
+  "homepage": "https://github.com/AudioProgrammingD/node-windows-audio-manager-switcher#readme"
+}

@@ -1,0 +1,165 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c3617631fbcdba4a",
+    "fetchedFiles": [
+      "binding.gyp",
+      "buildutils/node_prebuild_install.sh",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "7487c4c6bc9241eabfedb896f3cbaa93a697c30bbb8afd678859dc39a68e3f21",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `k2hash`  -  C/C++ sources",
+            "items": [
+              "src/k2hash.cc",
+              "src/k2h_shm.cc",
+              "src/k2h_queue.cc",
+              "src/k2h_keyqueue.cc",
+              "src/k2h_cbs.cc"
+            ]
+          },
+          {
+            "label": "Target `k2hash`  -  include directories",
+            "items": [
+              "<!(node -e \"incpath = require('node-addon-api').include; if(incpath.length && incpath[0] === '\\\"' && incpath[incpath.length - 1] === '\\\"') incpath = incpath.slice(1, -1); process.stdout.write(incpath)\")",
+              "<(module_root_dir)/node_modules/node-addon-api"
+            ]
+          },
+          {
+            "label": "Target `k2hqueue`  -  C/C++ sources",
+            "items": [
+              "src/k2hqueue.cc",
+              "src/k2h_queue.cc",
+              "src/k2h_cbs.cc"
+            ]
+          },
+          {
+            "label": "Target `k2hqueue`  -  include directories",
+            "items": [
+              "<!(node -e \"incpath = require('node-addon-api').include; if(incpath.length && incpath[0] === '\\\"' && incpath[incpath.length - 1] === '\\\"') incpath = incpath.slice(1, -1); process.stdout.write(incpath)\")",
+              "<(module_root_dir)/node_modules/node-addon-api"
+            ]
+          },
+          {
+            "label": "Target `k2hkeyqueue`  -  C/C++ sources",
+            "items": [
+              "src/k2hkeyqueue.cc",
+              "src/k2h_keyqueue.cc",
+              "src/k2h_cbs.cc"
+            ]
+          },
+          {
+            "label": "Target `k2hkeyqueue`  -  include directories",
+            "items": [
+              "<!(node -e \"incpath = require('node-addon-api').include; if(incpath.length && incpath[0] === '\\\"' && incpath[incpath.length - 1] === '\\\"') incpath = incpath.slice(1, -1); process.stdout.write(incpath)\")",
+              "<(module_root_dir)/node_modules/node-addon-api"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "buildutils/node_prebuild_install.sh",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "0b4dda3455fd0b1e9b846dd0e08b66ff5fd11a003406d3fa06d134be48bb0084",
+        "sizeBytes": 9460,
+        "signals": [
+          "native-build",
+          "shell-network-fetch"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build:rebuild`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build:configure`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:04.208Z"
+  },
+  "hash": "sha256:0aea7a579ed5e2dd74e7ea71ac4b867bb1e8344e4450ea25731425f54061346d"
+}

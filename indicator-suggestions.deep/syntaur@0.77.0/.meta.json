@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a1200b7c96407740",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install-macos-url-handler.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-macos-url-handler.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0774a0a2c672197ed07c2d0a8f15f2bccf5c340f5260a24d9da0533127621f53",
+        "sizeBytes": 25973,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/mirror-skills-to-platforms.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/sync-plugin-version.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:18.128Z"
+  },
+  "hash": "sha256:99116382d405d90bab3d5b39b2983c99685acee0aa931bb13407f898dec2d91b"
+}

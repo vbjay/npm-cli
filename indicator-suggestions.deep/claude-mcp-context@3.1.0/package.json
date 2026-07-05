@@ -1,0 +1,77 @@
+{
+  "name": "claude-mcp-context",
+  "version": "3.1.0",
+  "description": "Blazing-fast semantic code toolkit for Claude - Smart context, git-aware indexing, symbol editing, find references. 15+ languages, NO LSP needed, 100% free",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-context-manager": "./dist/index.js",
+    "mcp-context-setup": "./install.cjs"
+  },
+  "files": [
+    "dist/",
+    "install.cjs",
+    "mcp_config.example.json",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build",
+    "postinstall": "node install.cjs || exit 0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "code-analysis",
+    "token-optimization",
+    "context-manager",
+    "typescript",
+    "javascript",
+    "python",
+    "go",
+    "rust",
+    "lua",
+    "cpp",
+    "csharp",
+    "dotnet",
+    "java",
+    "ruby",
+    "php",
+    "swift",
+    "kotlin",
+    "scala",
+    "elixir",
+    "dart",
+    "monorepo",
+    "large-codebase"
+  ],
+  "author": "transparentlyok",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nyrilol/mcp-context-manager"
+  },
+  "bugs": {
+    "url": "https://github.com/nyrilol/mcp-context-manager/issues"
+  },
+  "homepage": "https://github.com/nyrilol/mcp-context-manager#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}

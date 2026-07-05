@@ -1,0 +1,98 @@
+{
+  "name": "@comet-cli/core",
+  "version": "0.2.4",
+  "description": "Core comet cli application",
+  "keywords": [
+    "comet",
+    "cli",
+    "api",
+    "documentation",
+    "testing"
+  ],
+  "author": "Elisha Witte <elishawitte@gmail.com>",
+  "homepage": "https://github.com/chiiya/comet/tree/master/packages/core#readme",
+  "license": "MIT",
+  "bin": {
+    "comet": "./bin/run"
+  },
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "dist": "dist"
+  },
+  "files": [
+    "/bin",
+    "dist",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "oclif": {
+    "commands": "./dist/commands",
+    "bin": "comet",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiiya/comet.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "tslint -p . -t stylish",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "bugs": {
+    "url": "https://github.com/chiiya/comet/issues"
+  },
+  "dependencies": {
+    "@comet-cli/adapter-api-blueprint": "^0.2.4",
+    "@comet-cli/adapter-openapi": "^0.2.0",
+    "@comet-cli/adapter-raml": "^0.2.4",
+    "@comet-cli/helper-identify": "^0.2.0",
+    "@comet-cli/helper-utils": "^0.2.0",
+    "@comet-cli/plugin-documentation": "^0.2.4",
+    "@comet-cli/plugin-json-schemas": "^0.2.0",
+    "@comet-cli/plugin-postman": "^0.2.0",
+    "@comet-cli/plugin-tests-laravel": "^0.2.0",
+    "@iarna/toml": "^2.2.1",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^2",
+    "assign-deep": "^1.0.0",
+    "chalk": "^2.4.2",
+    "cosmiconfig": "^5.0.7",
+    "dot-prop": "^5.0.0",
+    "fs-extra": "^8.1.0",
+    "ora": "^v3.4.0",
+    "signale": "^1.3.0",
+    "tslib": "^1",
+    "tty-table": "^2.7.0"
+  },
+  "devDependencies": {
+    "@comet-cli/types": "^0.2.0",
+    "@oclif/dev-cli": "^1",
+    "@types/chai": "^4",
+    "@types/cosmiconfig": "^5.0.3",
+    "@types/mocha": "^5",
+    "@types/node": "^12",
+    "@types/signale": "^1.2.0",
+    "bili": "^4.8.0",
+    "globby": "^10",
+    "rollup-plugin-typescript2": "^0.24.0",
+    "ts-node": "^8",
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.4.5"
+  },
+  "gitHead": "49bf37970648f43c1b095c1ab64b19e9c2a5827e"
+}

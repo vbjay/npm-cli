@@ -1,0 +1,147 @@
+{
+  "name": "@data-client/core",
+  "version": "0.18.1",
+  "description": "Async State Management without the Management. REST, GraphQL, SSE, Websockets, Fetch",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "react-native": "legacy/index.js",
+  "module": "legacy/index.js",
+  "unpkg": "dist/index.umd.min.js",
+  "types": "lib/index.d.ts",
+  "typesVersions": {
+    ">=4.0": {
+      "": [
+        "lib/index.d.ts"
+      ],
+      "next": [
+        "lib/next/index.d.ts"
+      ],
+      "mock": [
+        "lib/mock/index.d.ts"
+      ],
+      "*": [
+        "lib/index.d.ts"
+      ]
+    },
+    ">=3.4": {
+      "": [
+        "ts3.4/index.d.ts"
+      ],
+      "next": [
+        "ts3.4/next/index.d.ts"
+      ],
+      "mock": [
+        "ts3.4/mock/index.d.ts"
+      ],
+      "*": [
+        "ts3.4/index.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "module": "./lib/index.js",
+      "import": "./node.mjs",
+      "require": "./dist/index.js",
+      "browser": "./lib/index.js",
+      "react-native": "./lib/index.js",
+      "default": "./lib/index.js"
+    },
+    "./next": {
+      "types": "./lib/next/index.d.ts",
+      "require": "./dist/next.js",
+      "browser": "./lib/next/index.js",
+      "react-native": "./lib/next/index.js",
+      "default": "./lib/next/index.js"
+    },
+    "./mock": {
+      "types": "./lib/mock/index.d.ts",
+      "require": "./dist/mock.js",
+      "default": "./lib/mock/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "engines": {
+    "node": "^12.17 || ^13.7 || >=14"
+  },
+  "files": [
+    "src",
+    "dist",
+    "lib",
+    "ts3.4",
+    "node.mjs",
+    "legacy",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build:lib": "NODE_ENV=production BROWSERSLIST_ENV='2020' POLYFILL_TARGETS='chrome>88,safari>14' yarn g:babel --out-dir lib",
+    "build:legacy:lib": "NODE_ENV=production BROWSERSLIST_ENV='2018' POLYFILL_TARGETS='chrome>80,safari>13,firefox>72' yarn g:babel --out-dir legacy",
+    "build:js:node": "BROWSERSLIST_ENV=node12 yarn g:rollup",
+    "build:js:browser": "BROWSERSLIST_ENV=legacy yarn g:rollup",
+    "build:bundle": "yarn g:runs build:js:\\* && echo '{\"type\":\"commonjs\"}' > dist/package.json",
+    "build:clean": "yarn g:clean ./index.d.ts",
+    "build:legacy-types": "yarn g:downtypes lib ts3.4",
+    "build": "run build:lib && run build:legacy:lib && run build:bundle",
+    "dev": "run build:lib -w",
+    "prepare": "run build:lib",
+    "prepack": "run prepare && run build:bundle && run build:legacy:lib"
+  },
+  "keywords": [
+    "data",
+    "cache",
+    "normalizr",
+    "normalization",
+    "flux",
+    "fetch",
+    "hook",
+    "networking",
+    "async",
+    "typescript",
+    "async",
+    "data fetching",
+    "data cache",
+    "reactive",
+    "state management",
+    "api client",
+    "api",
+    "normalized cache",
+    "swr",
+    "query",
+    "ios",
+    "android",
+    "web",
+    "middleware",
+    "websocket",
+    "SSE",
+    "GraphQL",
+    "REST",
+    "RPC",
+    "declarative"
+  ],
+  "author": "Nathaniel Tucker <me@ntucker.me> (https://github.com/ntucker)",
+  "funding": "https://github.com/sponsors/ntucker",
+  "license": "Apache-2.0",
+  "homepage": "https://dataclient.io",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:reactive/data-client.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/reactive/data-client/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.20.0",
+    "@data-client/normalizr": "^0.18.1",
+    "flux-standard-action": "^2.1.1"
+  },
+  "devDependencies": {
+    "@anansi/browserslist-config": "^1.4.2",
+    "@data-client/endpoint": "0.18.0",
+    "@types/jest": "30.0.0",
+    "@types/node": "^25.0.0",
+    "rollup-plugins": "1.0.0"
+  }
+}

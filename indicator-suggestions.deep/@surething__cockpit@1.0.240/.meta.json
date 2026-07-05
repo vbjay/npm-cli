@@ -1,0 +1,124 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "046006220f394375",
+    "fetchedFiles": [
+      "bin/postinstall.mjs",
+      "package.json",
+      "scripts/claudeBinary.mjs",
+      "scripts/copy-pdfjs-worker.mjs",
+      "scripts/copy-tree-sitter-wasms.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "28711f842740573cc91c36c0a5e2e0103f9f50b93b9987ca8ca152858c2b8632",
+        "sizeBytes": 4231,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/copy-tree-sitter-wasms.mjs",
+          "scripts/copy-pdfjs-worker.mjs",
+          "scripts/claudeBinary.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/copy-tree-sitter-wasms.mjs",
+        "reason": "required by ./bin/postinstall.mjs",
+        "sha256": "e10b8e4f0e8ae52422fee0c3d59c91a72f5ea6e5df1fdd264c8bdd4b6aa4297a",
+        "sizeBytes": 4430,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/copy-pdfjs-worker.mjs",
+        "reason": "required by ./bin/postinstall.mjs",
+        "sha256": "bfe9cbf8fed122e0289bbe50027fd68be195af135c23537adce6a0edd8863d4c",
+        "sizeBytes": 2972,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/claudeBinary.mjs",
+        "reason": "required by ./bin/postinstall.mjs",
+        "sha256": "8022cc5cff6628c9e008085c86943f72463a287e034c4c3dac5589d1573c962f",
+        "sizeBytes": 1693,
+        "signals": [
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:02.364Z"
+  },
+  "hash": "sha256:b9fba40fdae331fdbb7ba3fa8e77ae4192550e7db98d2c569a88097d8093298b"
+}

@@ -1,0 +1,63 @@
+{
+  "name": "scalar",
+  "version": "0.3.6",
+  "description": "Scalable and not intrusive Javascript",
+  "main": "./lib/cjs/scalar.min.js",
+  "module": "./lib/mjs/scalar.min.js",
+  "unpkg": "./lib/umd/scalar.min.js",
+  "types": "./src/scalar.d.ts",
+  "exports": {
+    "development": "./src/scalar.js",
+    "import": "./lib/mjs/scalar.min.js",
+    "require": "./lib/cjs/scalar.min.js",
+    "browser": "./lib/umd/scalar.min.js"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "rimraf lib && webpack --config config/webpack.js --mode production",
+    "dev": "webpack server --config config/webpack.js --mode development",
+    "prepare": "npm run build",
+    "start": "npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mirdware/scalar.git"
+  },
+  "keywords": [
+    "scalar",
+    "javascript",
+    "components",
+    "resources",
+    "templates"
+  ],
+  "author": "Marlon Ramírez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mirdware/scalar/issues"
+  },
+  "homepage": "https://github.com/mirdware/scalar#readme",
+  "dependencies": {
+    "@spawm/resource": "^0.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-proposal-decorators": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "babel-loader": "^10.1.1",
+    "compression-webpack-plugin": "^12.0.0",
+    "copy-webpack-plugin": "^14.0.0",
+    "css-loader": "^7.1.4",
+    "css-minimizer-webpack-plugin": "^8.0.0",
+    "html-webpack-plugin": "^5.6.6",
+    "mini-css-extract-plugin": "^2.10.1",
+    "rimraf": "^6.1.3",
+    "terser-webpack-plugin": "^5.4.0",
+    "unminified-webpack-plugin": "^3.0.0",
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.1",
+    "webpack-dev-server": "^5.2.3"
+  }
+}

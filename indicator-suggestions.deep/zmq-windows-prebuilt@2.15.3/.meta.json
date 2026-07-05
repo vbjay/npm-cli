@@ -1,0 +1,108 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b11b4289d042e8dd",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "e22901d1d7bf26eebc6a680b88187b24d46c167b678ab0dc3307f15ceb917397",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `zmq`  -  C/C++ sources",
+            "items": [
+              "binding.cc"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  libraries",
+            "items": [
+              "-lzmq",
+              "<!@(pkg-config libzmq --libs)",
+              "-L/opt/local/lib",
+              "-L/usr/local/lib",
+              "<!@(pkg-config libzmq --libs)",
+              "-L/usr/local/lib",
+              "<!(pkg-config libzmq --libs 2>/dev/null || echo \"\")"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "windows/include",
+              "<!@(pkg-config libzmq --cflags-only-I | sed s/-I//g)",
+              "/opt/local/include",
+              "/usr/local/include",
+              "<!@(pkg-config libzmq --cflags-only-I | sed s/-I//g)",
+              "/usr/local/include"
+            ]
+          },
+          {
+            "label": "Target `zmq`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "9e887e0cc39f9189d0586dff9e42a20a21895ddefba50fd75c39ff8865124efa",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked",
+            "items": [
+              "node",
+              "npm"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:33.932Z"
+  },
+  "hash": "sha256:d5cced7e0e7d7e29fae223485cc321e5553713e1dc8ba88ae4b61fdceeba6580"
+}

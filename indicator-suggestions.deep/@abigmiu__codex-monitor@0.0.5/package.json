@@ -1,0 +1,98 @@
+{
+  "name": "@abigmiu/codex-monitor",
+  "private": false,
+  "version": "0.0.5",
+  "description": "CodexMonitor web launcher (local Rust backend + browser UI)",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://cnb.cool/abigmiu/codexMonitor-webui"
+  },
+  "codexMonitor": {
+    "backendReleaseBase": "https://github.com/abigmiu/codex-monitor-webui/releases/download"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "codex",
+    "monitor",
+    "cli",
+    "rust",
+    "websocket"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "sync:material-icons": "node scripts/sync-material-icons.mjs",
+    "postinstall": "node scripts/install-backend.mjs",
+    "predev": "npm run sync:material-icons",
+    "dev": "vite",
+    "prebuild": "npm run sync:material-icons",
+    "build": "tsc && vite build && node scripts/write-frontend-server-config.mjs",
+    "build:appimage": "NO_STRIP=1 tauri build --bundles appimage",
+    "doctor": "sh scripts/doctor.sh",
+    "doctor:strict": "sh scripts/doctor.sh --strict",
+    "doctor:win": "node scripts/doctor.mjs --strict",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "pretauri:dev": "npm run sync:material-icons",
+    "tauri:dev": "npm run doctor:strict && tauri dev",
+    "pretauri:build": "npm run sync:material-icons",
+    "tauri:build": "npm run doctor:strict && tauri build",
+    "pretauri:dev:win": "npm run sync:material-icons",
+    "tauri:dev:win": "npm run doctor:win && tauri dev --config src-tauri/tauri.windows.conf.json",
+    "pretauri:build:win": "npm run sync:material-icons",
+    "tauri:build:win": "npm run doctor:win && tauri build --config src-tauri/tauri.windows.conf.json",
+    "start:web": "node ./bin/codex-monitor.mjs",
+    "prepack": "npm run build",
+    "pack:check": "npm pack --dry-run"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@pierre/diffs": "^1.0.6",
+    "@tanstack/react-virtual": "^3.13.18",
+    "@tauri-apps/cli": "^2.9.6",
+    "@testing-library/react": "^16.3.2",
+    "@types/prismjs": "^1.26.5",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.6.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/xterm": "^5.5.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "jsdom": "^27.0.1",
+    "lucide-react": "^0.562.0",
+    "prismjs": "^1.30.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4",
+    "vitest": "^3.2.4",
+    "vscode-material-icons": "^0.1.1"
+  },
+  "bin": {
+    "codex-monitor": "./bin/codex-monitor.mjs"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "scripts/serve-frontend.mjs",
+    "scripts/write-frontend-server-config.mjs",
+    "scripts/install-backend.mjs",
+    "README.md",
+    "LICENSE"
+  ]
+}

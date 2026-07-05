@@ -1,0 +1,71 @@
+{
+  "name": "outlier-audit",
+  "version": "0.33.2",
+  "bin": {
+    "outlier": "bin/outlier.js"
+  },
+  "files": [
+    "bin/outlier.js",
+    "bin/postinstall.js",
+    "src",
+    "data"
+  ],
+  "scripts": {
+    "build": "bunx tsc --noEmit && bun build ./src/cli.ts --target=node --outfile bin/outlier.js",
+    "test": "bun test",
+    "start": "bun run src/cli.ts",
+    "postinstall": "node bin/postinstall.js",
+    "prepublishOnly": "npm run build"
+  },
+  "type": "module",
+  "private": false,
+  "author": "Roshan Abraham",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rosh100yx/outlier.git"
+  },
+  "description": "AI coding audit, token tracker, and deskilling detector. Local-first CLI that measures AI authorship, carbon footprint, agent blast radius, and context waste — with warnings, not surveillance.",
+  "keywords": [
+    "ai-governance",
+    "ai-safety",
+    "ai-coding",
+    "ai-agent",
+    "ai-audit",
+    "agent",
+    "claude-code",
+    "cursor",
+    "aider",
+    "copilot",
+    "codex",
+    "developer-tools",
+    "productivity",
+    "git",
+    "git-hook",
+    "pre-commit",
+    "telemetry",
+    "carbon-footprint",
+    "carbon",
+    "zero-trust",
+    "authorship",
+    "deskilling",
+    "token-cost",
+    "context-waste",
+    "bloat",
+    "cli"
+  ],
+  "homepage": "https://github.com/rosh100yx/outlier",
+  "bugs": {
+    "url": "https://github.com/rosh100yx/outlier/issues"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.6.0",
+    "picocolors": "^1.1.1"
+  }
+}

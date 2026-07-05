@@ -1,0 +1,36 @@
+{
+  "name": "qqwing-wasm",
+  "version": "1.3.4",
+  "description": "Experimental WASM compilation of QQwing code",
+  "main": "./main.js",
+  "exports": {
+    ".": {
+      "types": "./main.d.ts",
+      "require": "./main.js",
+      "default": "./main.js"
+    }
+  },
+  "types": "./main.d.ts",
+  "files": [
+    "main.js",
+    "main.d.ts",
+    "README.md",
+    "LICENSE",
+    "main.wasm"
+  ],
+  "scripts": {
+    "prepack": "node ./scripts/prepack.mjs"
+  },
+  "keywords": [
+    "sudoku",
+    "hodoku",
+    "cli",
+    "qqwing",
+    "wasm"
+  ],
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": ">=18.3.0"
+  },
+  "sideEffects": false
+}

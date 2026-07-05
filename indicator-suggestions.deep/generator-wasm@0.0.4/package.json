@@ -1,0 +1,63 @@
+{
+  "name": "generator-wasm",
+  "version": "0.0.4",
+  "preview": true,
+  "description": "Publish programs as WASM modules",
+  "homepage": "https://github.com/deislabs/yo-wasm",
+  "author": {
+    "name": "itowlson",
+    "email": "ivan.towlson@microsoft.com"
+  },
+  "files": [
+    "generators",
+    "templates"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "wasm",
+    "yeoman-generator"
+  ],
+  "devDependencies": {
+    "@types/mkdirp": "^1.0.1",
+    "@types/shelljs": "^0.8.8",
+    "@types/yeoman-generator": "^4.11.3",
+    "eslint": "^6.6.0",
+    "jest": "^26.1.0",
+    "typescript": "^3.8.0",
+    "yeoman-assert": "^3.1.0",
+    "yeoman-test": "^1.7.0"
+  },
+  "engines": {
+    "npm": ">= 4.0.0"
+  },
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "hippo-js": "https://github.com/deislabs/hippo-client-node/releases/download/v0.0.2/hippo-js-0.0.2.tgz",
+    "mkdirp": "^1.0.4",
+    "shelljs": "^0.8.4",
+    "yeoman-generator": "^2.0.1",
+    "yosay": "^2.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "env": {
+      "jest": true,
+      "node": true
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "prepare": "npm run compile",
+    "pretest": "eslint .",
+    "test": "jest"
+  },
+  "repository": "https://github.com/deislabs/yo-wasm",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,100 @@
+{
+  "name": "openyida",
+  "version": "2026.7.10",
+  "description": "OpenYida CLI - 宜搭低代码 AI 开发工具（安装即用，零配置）",
+  "bin": {
+    "openyida": "bin/yida.js",
+    "yida": "bin/yida.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "agent/",
+    "project/config.json",
+    "project/pages/src/demo-*.js",
+    "project/pages/src/demo-*.oyd.jsx",
+    "!project/pages/src/demo-agent-chatbox.oyd.jsx",
+    "!project/pages/src/demo-dingtalk-ai-solution-center.oyd.jsx",
+    "!project/pages/src/demo-openyida-image2-slider.oyd.jsx",
+    "project/pages/src/openyida-knowledge-doc.oyd.jsx",
+    "project/prd/demo-*.md",
+    "yida-skills/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:unit": "jest",
+    "test:e2e:real": "node scripts/e2e-real/runner.js",
+    "test:e2e:real:full": "node scripts/e2e-real/full-runner.js",
+    "test:e2e:real:skills": "node scripts/e2e-real/skill-coverage.js",
+    "test:e2e:real:cleanup": "node scripts/e2e-real/cleanup.js",
+    "eval:e2e": "node scripts/eval/runner.js --mode e2e",
+    "eval:routing": "node scripts/eval/runner.js --mode routing",
+    "eval:generate": "node scripts/eval/runner.js --mode generate",
+    "eval:all": "node scripts/eval/runner.js --mode all",
+    "eval:dashboard": "node scripts/eval/dashboard/server.js",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint bin/ lib/ scripts/ tests/ --ext .js",
+    "lint:fix": "eslint bin/ lib/ scripts/ tests/ --ext .js --fix",
+    "solution:runner": "node scripts/solution-center-runner.js",
+    "build:skills": "node scripts/build-skills-package.js",
+    "docs:commands": "node scripts/generate-command-docs.js",
+    "check:quick": "npm run check:structure && npm run check:commands && npm run check:docs && npm run check:syntax && npm run lint",
+    "check:structure": "node scripts/validate-structure.js",
+    "check:commands": "node scripts/validate-command-manifest.js",
+    "check:docs": "node scripts/generate-command-docs.js --check",
+    "check:skills": "node scripts/validate-skills.js",
+    "check:syntax": "node scripts/check-syntax.js",
+    "check:package-size": "node scripts/validate-package-size.js",
+    "check:package": "npm pack --dry-run",
+    "check:release": "npm run check:ci",
+    "check:ci": "bash scripts/validate-ci.sh",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "yida",
+    "aliwork",
+    "dingtalk",
+    "cli",
+    "openyida",
+    "low-code",
+    "ai",
+    "qoder",
+    "wukong",
+    "mulerun"
+  ],
+  "author": "OpenYida Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openyida/openyida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openyida/openyida/issues"
+  },
+  "homepage": "https://github.com/openyida/openyida#readme",
+  "dependencies": {
+    "@babel/standalone": "^7.15.1",
+    "qrcode": "^1.5.4",
+    "uglify-js": "^3.19.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "eslint-plugin-import": "^2.32.0",
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ]
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

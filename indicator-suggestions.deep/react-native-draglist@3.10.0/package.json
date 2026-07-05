@@ -1,0 +1,64 @@
+{
+  "name": "react-native-draglist",
+  "version": "3.10.0",
+  "description": "FlatList that reorders items by dragging",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.tsx",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"YOLO! What could possibly go wrong? (On a serious note, please run both iOS and Android examples and drag things around).\" && exit 1",
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "prepare": "npm run build",
+    "release": "release-it"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "native",
+    "react",
+    "flatlist",
+    "drag",
+    "draggable",
+    "reorder"
+  ],
+  "author": "Philip Su",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=17.0.1",
+    "react-native": ">=0.64.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fivecar/react-native-draglist.git"
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@tsconfig/react-native": "^2.0.3",
+    "@types/jest": "^29.2.3",
+    "@types/react": "^18.2.6",
+    "microbundle-crl": "^0.13.11",
+    "react": "^18.3.1",
+    "react-native": "^0.76.3",
+    "release-it": "^15.5.1"
+  },
+  "release-it": {
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": false
+      }
+    },
+    "git": {
+      "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs"
+    },
+    "github": {
+      "release": true
+    },
+    "hooks": {
+      "after:bump": "npx auto-changelog -p"
+    }
+  }
+}

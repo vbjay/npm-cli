@@ -1,0 +1,89 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "351f3d4d15a1475a",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "3d86acc69c19d54c3485ae15a417feec93605a4e589a0f53a3a8b0dfe62b46f9",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `hal_addon`  -  C/C++ sources",
+            "items": [
+              "src/cpp/hal_addon.cc",
+              "src/cpp/hal_component.cc"
+            ]
+          },
+          {
+            "label": "Target `hal_addon`  -  libraries",
+            "items": [
+              "-llinuxcnchal"
+            ]
+          },
+          {
+            "label": "Target `hal_addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<@(hal_include_dirs)"
+            ]
+          },
+          {
+            "label": "Target `hal_addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:24.954Z"
+  },
+  "hash": "sha256:7b43eb6c8b23254ee1ded2d780d66c145faa8a3349c2bd838380337cb5175744"
+}

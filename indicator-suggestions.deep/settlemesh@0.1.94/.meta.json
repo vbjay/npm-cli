@@ -1,0 +1,105 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d1629cee198ddb38",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js",
+      "scripts/stage-binaries.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "469b987996e1cf4eb03bd346e98ef26b2d7b845d98c4b1452fe3d918b8a1becb",
+        "sizeBytes": 6698,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "dynamic-require",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/StructureIntelligence/SettleMesh/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/stage-binaries.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "ca418b00d0c8289121f5378df05bc249a649bddc0c42615c1d37e3bcab6bf267",
+        "sizeBytes": 1637,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:10.122Z"
+  },
+  "hash": "sha256:bc5f5d390106db9fca23f983c0c18b35fd114f71b54cafcd424767aa743ba4ca"
+}

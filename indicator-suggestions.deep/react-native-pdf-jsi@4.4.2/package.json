@@ -1,0 +1,128 @@
+{
+    "name": "react-native-pdf-jsi",
+    "version": "4.4.2",
+    "summary": "High-performance React Native PDF viewer with JSI acceleration - up to 80x faster than traditional bridge",
+    "description": "🚀 Ultra-fast React Native PDF viewer with JSI (JavaScript Interface) integration for maximum performance. Features lazy loading, smart caching, progressive loading, and zero-bridge overhead operations. Perfect for large PDF files with 30-day persistent cache and advanced memory optimization. Google Play 16KB page size compliant for Android 15+. Supports iOS, Android, and Windows platforms.",
+    "main": "index.js",
+    "typings": "./index.d.ts",
+    "app": {
+        "plugin": "./plugin/build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/126punith/react-native-pdf-jsi.git"
+    },
+    "keywords": [
+        "react-native-pdf",
+        "react-native-pdf-viewer",
+        "react-native-pdf-jsi",
+        "react-native-pdf-enhanced",
+        "pdf-viewer",
+        "pdf-reader",
+        "pdf-view",
+        "react-component",
+        "react-native",
+        "react-native-module",
+        "react-native-library",
+        "android",
+        "ios",
+        "windows",
+        "pdf",
+        "view",
+        "viewer",
+        "jsi",
+        "javascript-interface",
+        "performance",
+        "enhanced",
+        "native",
+        "bridge",
+        "high-performance",
+        "fast-pdf",
+        "lazy-loading",
+        "smart-caching",
+        "progressive-loading",
+        "memory-optimization",
+        "zero-bridge",
+        "native-module",
+        "cross-platform",
+        "mobile",
+        "document-viewer",
+        "pdf-renderer",
+        "pdf-display",
+        "large-files",
+        "optimization",
+        "caching",
+        "persistent-cache",
+        "react-native-pdf-jsi-enhanced",
+        "expo",
+        "expo-plugin"
+    ],
+    "author": {
+        "name": "Punith M",
+        "email": "punithm300@gmail.com",
+        "url": "https://github.com/126punith"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/126punith/react-native-pdf-jsi",
+    "bugs": {
+        "url": "https://github.com/126punith/react-native-pdf-jsi/issues"
+    },
+    "dependencies": {
+        "crypto-js": "4.2.0",
+        "deprecated-react-native-prop-types": "^2.3.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.2",
+        "@babel/runtime": "^7.20.1",
+        "@expo/config-plugins": "^9.0.0",
+        "prop-types": "^15.7.2",
+        "typescript": "^5.0.0"
+    },
+    "scripts": {
+        "build:plugin": "tsc -p plugin/tsconfig.json",
+        "prepublishOnly": "npm run build:plugin",
+        "clean:for-publish": "node -e \"const fs=require('fs'),path=require('path');['android/.cxx','android/.gradle','android/build'].forEach(p=>{try{fs.rmSync(path.join(__dirname,p),{recursive:true});console.log('Removed',p);}catch(e){}})\"",
+        "prepack": "npm run clean:for-publish"
+    },
+    "peerDependencies": {
+        "@react-native-async-storage/async-storage": ">=1.17.0",
+        "react": "*",
+        "react-native": "*",
+        "react-native-blob-util": ">=0.13.7"
+    },
+    "files": [
+        "android/",
+        "ios/",
+        "windows/",
+        "src/",
+        "plugin/",
+        "app.plugin.js",
+        "DoubleTapView.js",
+        "index.d.ts",
+        "index.js",
+        "index.js.flow",
+        "PdfManager.js",
+        "PdfPageView.js",
+        "PdfView.js",
+        "PdfViewFlatList.js",
+        "PinchZoomView.js",
+        "react-native-pdf-jsi.podspec",
+        "fabric/",
+        "README.md",
+        "README_JSI.md",
+        "LICENSE"
+    ],
+    "codegenConfig": {
+        "name": "rnpdf",
+        "type": "components",
+        "jsSrcsDir": "./fabric",
+        "android": {
+            "javaPackageName": "org.wonday.pdf"
+        },
+        "ios": {
+            "componentProvider": {
+                "RNPDFPdfView": "RNPDFPdfView"
+            }
+        }
+    }
+}

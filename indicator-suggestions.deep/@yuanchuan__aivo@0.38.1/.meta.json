@@ -1,0 +1,147 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b49b1ef9cf8ce44a",
+    "fetchedFiles": [
+      "lib/checksum.js",
+      "lib/paths.js",
+      "lib/platform.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "fcacde8f93cfeb12017723b0948cee080a1937b0cfbf73b92b51ca039ad9a943",
+        "sizeBytes": 5061,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-outside-package",
+          "makes-executable",
+          "dynamic-require",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/checksum.js",
+          "lib/paths.js",
+          "lib/platform.js"
+        ],
+        "urls": [
+          {
+            "url": "https://getaivo.dev/dl/v",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "lib/checksum.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "4dc6444917a955ce84b85994703dfe3f38c05cb4554677d7b953e95c4f0610c5",
+        "sizeBytes": 1340,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/paths.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "41662765d56726841e883bd87f4dad43cda0ecb6605dd1e179272fde5d5fec9b",
+        "sizeBytes": 592,
+        "signals": [
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/platform.js",
+        "reason": "required by ./lib/paths.js; required by ./scripts/postinstall.js",
+        "sha256": "b414eaec045a8891f290fb3f14177a36e4220dae9e2f607c25e718c27288177a",
+        "sizeBytes": 898,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:15.006Z"
+  },
+  "hash": "sha256:4bd163b5865546f826dfbe90957ce54da7a4d9ab4e28c745cc96c857b41c1818"
+}

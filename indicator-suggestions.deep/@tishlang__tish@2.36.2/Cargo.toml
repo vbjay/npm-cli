@@ -1,0 +1,54 @@
+[workspace]
+members = [
+    "crates/tish_build_utils",
+    "crates/tish_cranelift",
+    "crates/tish_cranelift_runtime",
+    "crates/tish_wasm_runtime",
+    "crates/tish_core",
+    "crates/tish_builtins",
+    "crates/tish_lexer",
+    "crates/tish_ast",
+    "crates/tish_parser",
+    "crates/tish_opt",
+    "crates/tish_eval",
+    "crates/tish_runtime",
+    "crates/tish_pg",
+    "crates/tish_compile",
+    "crates/tish_ui",
+    "crates/tish_jsx_web",
+    "crates/tish_compile_js",
+    "crates/tish_bytecode",
+    "crates/tish_compiler_wasm",
+    "crates/tish_vm",
+    "crates/tish_llvm",
+    "crates/tish_ffi",
+    "examples/ffi/mathext",
+
+    "crates/tish_native",
+    "crates/tish_wasm",
+    "crates/tish",
+    "crates/js_to_tish",
+    "crates/tish_fmt",
+    "crates/tish_lint",
+    "crates/tish_lsp",
+    "crates/tish_resolve",
+    "crates/tishlang_cargo_bindgen",
+]
+# Generated native-build projects (`tish build`) land under `target/` when TMPDIR points there;
+# never enroll anything beneath `target/` as a workspace member.
+exclude = ["target"]
+resolver = "2"
+
+[workspace.package]
+version = "1.0.0"
+license-file = "LICENSE"
+repository = "https://github.com/tishlang/tish"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+opt-level = 3
+
+[profile.bench]
+inherits = "release"
+debug = true

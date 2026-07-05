@@ -1,0 +1,157 @@
+{
+  "name": "react-native-notificated",
+  "version": "0.1.7",
+  "description": "React Native toast notifications for iOS and Android",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-notificated.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch --detectOpenHandles",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "docs": "yarn --cwd docs",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn docs && yarn && yarn pods"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "react native",
+    "push notifications",
+    "notifications",
+    "react native notifications",
+    "react native toast",
+    "toast notifications"
+  ],
+  "repository": "https://github.com/TheWidlarzGroup/react-native-notificated",
+  "author": "TWG <rn-notificated@thewidlarzgroup.com> (https://thewidlarzgroup.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheWidlarzGroup/react-native-notificated/issues"
+  },
+  "homepage": "https://github.com/TheWidlarzGroup/react-native-notificated#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^11.0.0",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@twgdev/prettier-config": "^1.0.2",
+    "@types/jest": "^26.0.0",
+    "@types/react": "^16.9.19",
+    "@types/react-native": "0.68.4",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "commitlint": "^11.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^6.0.0",
+    "jest": "^26.0.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "16.13.1",
+    "react-native": "0.68.5",
+    "react-native-builder-bob": "^0.18.0",
+    "react-native-gesture-handler": "^2.9.0",
+    "react-native-reanimated": "^2.14.4",
+    "release-it": "^15.5.1",
+    "typescript": "^4.1.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": "^2.9.0",
+    "react-native-reanimated": "^2.14.4 || ^3.0.0"
+  },
+  "resolutions": {
+    "shell-quote": "1.7.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?@?react-native|react-native|@react-navigation|@react-native-community)"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "requireBranch": "master",
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "hooks": {
+      "after:bump": "npx auto-changelog -p"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/",
+    "docs/"
+  ],
+  "prettier": "@twgdev/prettier-config",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

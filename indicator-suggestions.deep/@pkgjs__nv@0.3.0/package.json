@@ -1,0 +1,53 @@
+{
+  "name": "@pkgjs/nv",
+  "version": "0.3.0",
+  "description": "A tool for resolving node versions from common aliases",
+  "author": "Wes Todd <wes@wesleytodd.com>",
+  "keywords": [
+    "alias",
+    "node",
+    "node versions",
+    "versions",
+    "lts",
+    "active",
+    "maintenance"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./.esm-wrapper.mjs"
+    },
+    "./": "./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pkgjs/nv.git"
+  },
+  "scripts": {
+    "test": "mocha && tsd",
+    "test:types": "tsd",
+    "lint": "standard",
+    "debug": "mocha --inspect --inspect-brk --timeout=0",
+    "prepublishOnly": "npm t",
+    "postpublish": "git push origin && git push origin --tags",
+    "prepack": "gen-esm-wrapper . ./.esm-wrapper.mjs",
+    "release": "npm t && standard-version && npm publish"
+  },
+  "dependencies": {
+    "got": "^11.8.6",
+    "semver": "^7.1.1",
+    "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "gen-esm-wrapper": "^1.1.0",
+    "mocha": "^9.2.2",
+    "standard": "^17.1.2",
+    "standard-version": "^9.3.2",
+    "tsd": "^0.27.0"
+  },
+  "bin": {
+    "nv": "./bin/nv"
+  }
+}

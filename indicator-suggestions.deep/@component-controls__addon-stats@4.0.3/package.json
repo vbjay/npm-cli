@@ -1,0 +1,72 @@
+{
+  "name": "@component-controls/addon-stats",
+  "version": "4.0.3",
+  "description": "Component controls stats addon",
+  "keywords": [
+    "addon",
+    "stats"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "yarn cross-env NODE_ENV=production rollup -c",
+    "dev": "yarn cross-env NODE_ENV=development rollup -cw",
+    "docs": "api-readme",
+    "fix": "yarn lint --fix",
+    "lint": "yarn eslint . --ext mdx,ts,tsx",
+    "prepare": "yarn build",
+    "test:create": "cc-cli -g doc -c ./.config -w -d 5",
+    "test": "yarn jest"
+  },
+  "homepage": "https://github.com/ccontrols/component-controls",
+  "bugs": {
+    "url": "https://github.com/ccontrols/component-controls/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccontrols/component-controls.git",
+    "directory": "plugins/addon-stats"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@component-controls/blocks": "^4.0.3",
+    "@component-controls/components": "^4.0.3",
+    "@component-controls/core": "^4.0.3",
+    "react": "^17.0.1",
+    "theme-ui": "^0.8.4"
+  },
+  "devDependencies": {
+    "@emotion/jest": "^11.3.0",
+    "typescript": "^4.2.4"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
+    },
+    "roots": [
+      "./src"
+    ],
+    "snapshotSerializers": [
+      "@emotion/jest/serializer"
+    ]
+  },
+  "authors": [
+    "Atanas Stoyanov"
+  ],
+  "gitHead": "c31f66fb91f771e7c8da3988616962f1b40d52af"
+}

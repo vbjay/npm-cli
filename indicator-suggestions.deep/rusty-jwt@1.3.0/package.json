@@ -1,0 +1,58 @@
+{
+  "name": "rusty-jwt",
+  "version": "1.3.0",
+  "description": "Rust-based, optionally cached JWT implementation",
+  "main": "lib/index.js",
+  "typings": "types/index.d.ts",
+  "types": "types/index.d.ts",
+  "files": [
+    "lib",
+    "types"
+  ],
+  "author": "ACO .",
+  "homepage": "https://github.com/acoBOYZ/rusty-jwt",
+  "contributors": [
+    {
+      "name": "Ahmet Cevdet ÖZTÜRK",
+      "url": "https://github.com/acoBOYZ"
+    }
+  ],
+  "scripts": {
+    "build": "rm -rf ./types ./lib && tsc",
+    "prepare": "rm -rf ./types ./lib && bun run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acoBOYZ/rusty-jwt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acoBOYZ/rusty-jwt/issues"
+  },
+  "keywords": [
+    "rust",
+    "node",
+    "jwt"
+  ],
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@lukeed/ms": "^2.0.2",
+    "@node-rs/jsonwebtoken": "^0.5.9",
+    "@node-rs/jsonwebtoken-linux-arm64-gnu": "^0.5.9",
+    "@node-rs/xxhash": "^1.7.6",
+    "@node-rs/xxhash-linux-x64-gnu": "^1.7.6",
+    "mnemonist": "^0.40.3"
+  },
+  "devDependencies": {
+    "@types/node": "25.0.3",
+    "typescript": "5.5.4"
+  }
+}

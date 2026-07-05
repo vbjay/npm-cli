@@ -1,0 +1,103 @@
+{
+  "name": "@hasna/accounts",
+  "version": "0.2.6",
+  "description": "Manage and switch between multiple Claude Code (and other AI coding tool) profiles/accounts locally — isolated config dirs, per-account email, one-command switching.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "accounts": "dist/cli.js",
+    "accounts-mcp": "dist/mcp.js",
+    "accounts-serve": "dist/server/index.js",
+    "accounts-migrate": "dist/server/migrate.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "import": "./dist/storage.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "migrations",
+    "docs",
+    "hasna.contract.json",
+    "docker-compose.yml",
+    "examples",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && bun build src/cli.ts --outdir dist --target node --external @hasna/contracts && bun build src/mcp.ts --outdir dist --target node && bun build src/index.ts --outdir dist --target node --external @hasna/contracts && bun build src/storage.ts --outdir dist --target node && bun build src/sdk/index.ts --outdir dist/sdk --target node && bun build src/server/index.ts src/server/migrate.ts --outdir dist/server --target bun --packages external && tsc --emitDeclarationOnly --outDir dist",
+    "contracts:conformance": "contracts conformance examples",
+    "contracts:no-cloud-scan": "contracts no-cloud-scan --json .",
+    "dev": "bun run src/cli.ts",
+    "sdk:generate": "bun run src/sdk/generate-sdk.ts",
+    "vendor-kit:check": "bunx @hasna/contracts vendor-kit --check .",
+    "conformance": "bunx @hasna/contracts repo-conformance .",
+    "prepack": "bun run build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "codex",
+    "takumi",
+    "gemini",
+    "opencode",
+    "cursor-agent",
+    "pi",
+    "hermes",
+    "kimi-code",
+    "grok-build",
+    "profile",
+    "account",
+    "switcher",
+    "cli",
+    "ai",
+    "coding-agent",
+    "CLAUDE_CONFIG_DIR"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/accounts.git"
+  },
+  "homepage": "https://github.com/hasna/accounts",
+  "bugs": {
+    "url": "https://github.com/hasna/accounts/issues"
+  },
+  "engines": {
+    "node": ">=18",
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/contracts": "0.5.2",
+    "@hasna/events": "^0.1.7",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "pg": "^8.13.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.7.3"
+  }
+}

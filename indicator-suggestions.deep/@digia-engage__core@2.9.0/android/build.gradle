@@ -1,0 +1,99 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+/**
+ * Android Gradle build file for the @digia/engage-react-native library module.
+ *
+ * This module is a thin bridge layer that:
+ *   • Depends on the Digia Engage Android AAR
+ *   • Depends on the React Native SDK
+ *   • Exposes a ReactPackage (DigiaPackage) that registers the native module
+ *     and native view to React Native's bridge
+ *
+ * The Compose runtime/tooling dependencies are inherited transitively from
+ * the Digia Engage AAR via `api` declarations; we only add what is needed for
+ * the bridge code itself.
+ */
+
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose' version '2.1.20'
+}
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+if (isNewArchitectureEnabled()) {
+    react {
+        jsRootDir = file("../src/")
+        libraryName = "DigiaEngageSpec"
+        codegenJavaPackageName = "com.digia.engage.rn"
+    }
+}
+
+android {
+    compileSdk 35
+    namespace 'com.digia.engage.rn'
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 35
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/java'
+        }
+    }
+}
+
+dependencies {
+    // Digia Engage Android library
+    implementation 'tech.digia:engage:[2.6.0, 3.0.0['
+
+    // ── React Native ─────────────────────────────────────────────────────────
+    // React Native is provided by the host app; mark as compileOnly so it is
+    // NOT bundled into this library.
+    compileOnly "com.facebook.react:react-android"
+
+    // ── Jetpack Compose ───────────────────────────────────────────────────────
+    // Compose UI is transitively provided by digia-ui; we only need the
+    // platform BOM for version alignment.
+    implementation platform('androidx.compose:compose-bom:2023.03.00')
+
+    // UI tooling annotations (used by AbstractComposeView / preview)
+    implementation 'androidx.compose.ui:ui'
+
+    // Lifecycle: ViewTreeLifecycleOwner / setViewTreeLifecycleOwner
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+
+    // SavedState: setViewTreeSavedStateRegistryOwner
+    implementation 'androidx.savedstate:savedstate-ktx:1.2.1'
+
+    // Activity: ComponentActivity needed for lifecycle owner detection
+    implementation 'androidx.activity:activity-compose:1.7.2'
+}

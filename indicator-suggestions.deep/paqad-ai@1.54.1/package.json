@@ -1,0 +1,125 @@
+{
+  "name": "paqad-ai",
+  "version": "1.54.1",
+  "description": "Spec-driven development framework — AI agents that think before they type",
+  "type": "module",
+  "license": "MIT",
+  "author": "Haider Lasani <haider@eliyce.com>",
+  "homepage": "https://github.com/Eliyce/paqad-ai#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eliyce/paqad-ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Eliyce/paqad-ai/issues"
+  },
+  "keywords": [
+    "ai",
+    "ai-agents",
+    "ai-coding",
+    "claude-code",
+    "cursor",
+    "codex",
+    "gemini-cli",
+    "junie",
+    "antigravity",
+    "github-copilot",
+    "mcp",
+    "rag",
+    "code-generation",
+    "cli",
+    "agent-framework",
+    "spec-driven-development",
+    "developer-tools"
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/HLasani"
+  },
+  "bin": {
+    "paqad-ai": "./dist/cli/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./cli": {
+      "import": "./dist/cli/index.js",
+      "types": "./dist/cli/index.d.ts"
+    },
+    "./rule-scripts": {
+      "import": "./dist/rule-scripts/index.js",
+      "types": "./dist/rule-scripts/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "runtime",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.5.2",
+    "@xenova/transformers": "^2.17.2",
+    "ajv": "^8.20.0",
+    "chalk": "^5.4.1",
+    "commander": "^15.0.0",
+    "execa": "^9.6.0",
+    "fast-glob": "^3.3.3",
+    "handlebars": "^4.7.9",
+    "openai": "^6.45.0",
+    "ora": "^9.4.1",
+    "pathe": "^2.0.3",
+    "voyageai": "^0.4.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@changesets/changelog-git": "^0.2.1",
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.1",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
+    "markdownlint-cli2": "^0.23.0",
+    "prettier": "^3.9.4",
+    "tsup": "^8.5.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.63.0",
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "postinstall": "node runtime/scripts/postinstall.mjs",
+    "build": "tsup && pnpm run graph-ui:build",
+    "build:server": "tsup",
+    "dev": "tsup --watch",
+    "graph-ui:install": "cd graph-ui && pnpm install",
+    "graph-ui:dev": "cd graph-ui && pnpm dev",
+    "graph-ui:build": "cd graph-ui && pnpm build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "check:surface-orphans": "node scripts/check-surface-orphans.mjs",
+    "check:surface-drift": "node scripts/check-surface-drift.mjs",
+    "ci": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run test:coverage && pnpm run build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm run build && changeset publish"
+  }
+}

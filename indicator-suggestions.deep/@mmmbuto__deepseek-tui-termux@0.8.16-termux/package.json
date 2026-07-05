@@ -1,0 +1,52 @@
+{
+  "name": "@mmmbuto/deepseek-tui-termux",
+  "version": "0.8.16-termux",
+  "deepseekBinaryVersion": "0.8.16",
+  "description": "Termux/Android ARM64 package for DeepSeek TUI.",
+  "author": "DioNanos",
+  "license": "MIT",
+  "homepage": "https://github.com/DioNanos/deepseek-tui-termux",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DioNanos/deepseek-tui-termux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DioNanos/deepseek-tui-termux/issues"
+  },
+  "keywords": [
+    "deepseek",
+    "cli",
+    "tui",
+    "rust",
+    "binary",
+    "terminal",
+    "termux",
+    "android",
+    "arm64"
+  ],
+  "type": "commonjs",
+  "bin": {
+    "deepseek": "bin/deepseek.js",
+    "deepseek-tui": "bin/deepseek-tui.js"
+  },
+  "scripts": {
+    "release:check": "node scripts/verify-bundled-termux.js",
+    "postinstall": "node scripts/install.js",
+    "prepublishOnly": "node scripts/verify-bundled-termux.js",
+    "prepack": "node scripts/verify-bundled-termux.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "preferGlobal": true,
+  "files": [
+    "bin/*.js",
+    "bin/downloads/*",
+    "scripts/*.js",
+    "README.md",
+    "package.json"
+  ]
+}

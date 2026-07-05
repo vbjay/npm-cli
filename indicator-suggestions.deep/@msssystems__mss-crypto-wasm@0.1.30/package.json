@@ -1,0 +1,65 @@
+{
+  "name": "@msssystems/mss-crypto-wasm",
+  "version": "0.1.30",
+  "description": "Browser WebAssembly bindings for MSS Crypto Core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mss-systems/mss-crypto-wasm.git"
+  },
+  "type": "module",
+  "files": [
+    "pkg/mss_crypto_wasm.d.ts",
+    "pkg/mss_crypto_wasm.js",
+    "pkg/mss_crypto_wasm_bg.js",
+    "pkg/mss_crypto_wasm_bg.wasm",
+    "pkg/mss_crypto_wasm_bg.wasm.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./pkg/mss_crypto_wasm.js",
+  "module": "./pkg/mss_crypto_wasm.js",
+  "types": "./pkg/mss_crypto_wasm.d.ts",
+  "exports": {
+    ".": {
+      "types": "./pkg/mss_crypto_wasm.d.ts",
+      "import": "./pkg/mss_crypto_wasm.js"
+    }
+  },
+  "scripts": {
+    "clean:artifacts": "node scripts/clean-package-artifacts.mjs",
+    "build": "wasm-pack build --target bundler --release --out-dir pkg && yarn clean:artifacts",
+    "build:web": "wasm-pack build --target web --release --out-dir pkg && yarn clean:artifacts",
+    "build:browser-smoke": "wasm-pack build --target web --release --out-dir pkg-web && yarn clean:artifacts",
+    "check": "cargo check --target wasm32-unknown-unknown",
+    "serve:browser-smoke": "node browser-smoke-server.mjs",
+    "test:smoke": "yarn build && NODE_OPTIONS= node smoke.mjs",
+    "test": "wasm-pack test --headless --chrome",
+    "pack:check": "node scripts/verify-package-contents.mjs",
+    "release:check-tag": "node scripts/verify-release-tag.mjs",
+    "bundle-ctx": "yarn repomix --include \"src/**/*.rs,Cargo.toml,build.rs,.github/workflows/release.yml,scripts/**/*\" --ignore \"target/**,Cargo.lock,mss-core-context.md,mss-contracts-ctx.md,mss-crypto-wasm-ctx.md\" --output mss-crypto-wasm-ctx.md",
+    "clean": "rimraf pkg dist target",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn build"
+  },
+  "keywords": [
+    "wasm",
+    "rust",
+    "crypto",
+    "e2ee",
+    "x3dh",
+    "double-ratchet",
+    "mss"
+  ],
+  "author": "Danil <mss@modular-systems.ru>",
+  "license": "SEE LICENSE IN LICENSE",
+  "devDependencies": {
+    "repomix": "^1.14.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "packageManager": "yarn@4.14.1"
+}

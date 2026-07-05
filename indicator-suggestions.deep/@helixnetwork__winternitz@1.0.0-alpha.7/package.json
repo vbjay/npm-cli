@@ -1,0 +1,73 @@
+{
+  "name": "@helixnetwork/winternitz",
+  "version": "1.0.0-alpha.7",
+  "description": "Winternitz signing functions",
+  "main": "./out/winternitz/src/index.js",
+  "typings": "typings/winternitz/src",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepare": "tsc",
+    "test": "tsc && nyc ava",
+    "test-ci": "nyc ava",
+    "format": "prettier",
+    "docs": "tsc && jsdoc2md --no-cache --plugin dmd-clear -t README_tpl.hbs --files './out/**/*.js' > README.md"
+  },
+  "contributors": [
+    "Frauke Sophie Abben <fsa@hlx.ai> (https://hlx.ai)",
+    "Oliver Fohrmann <of@hlx.ai> (https://hlx.ai)"
+  ],
+  "ava": {
+    "files": "out/winternitz/test/*.test.js",
+    "failFast": false,
+    "failWithoutAssertions": false,
+    "compileEnhancements": false,
+    "verbose": true
+  },
+  "nyc": {
+    "watermarks": {
+      "functions": [
+        80,
+        95
+      ],
+      "branches": [
+        80,
+        95
+      ],
+      "statements": [
+        80,
+        95
+      ]
+    },
+    "include": [
+      "out/*/src/*.js",
+      "out/*/test/*.js"
+    ]
+  },
+  "keywords": [
+    "helix",
+    "tangle",
+    "library",
+    "browser",
+    "javascript",
+    "nodejs",
+    "API"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/helixnetwork/helix.api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/helixnetwork/helix.api.git/tree/dev/packages/crypto"
+  },
+  "dependencies": {
+    "@helixnetwork/converter": "^1.0.0-alpha.7",
+    "@helixnetwork/hash-module": "^1.0.0-alpha.7",
+    "@helixnetwork/pad": "^1.0.0-alpha.7",
+    "@helixnetwork/sha3": "^1.0.0-alpha.7",
+    "bcrypto": "^2.0.0"
+  },
+  "gitHead": "807205f4acf6d8d1fec044a57ff0ed717490aa34"
+}

@@ -1,0 +1,212 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "26977773b282feda",
+    "fetchedFiles": [
+      "binding.js",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "@lewisl9029/swc-core-android-arm64",
+        "versionSpec": null
+      },
+      {
+        "name": "@lewisl9029/swc-core-android-arm-eabi",
+        "versionSpec": null
+      },
+      {
+        "name": "@lewisl9029/swc-core-win32-x64-msvc",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-win32-ia32-msvc",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-win32-arm64-msvc",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-darwin-universal",
+        "versionSpec": null
+      },
+      {
+        "name": "@lewisl9029/swc-core-darwin-x64",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-darwin-arm64",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-freebsd-x64",
+        "versionSpec": null
+      },
+      {
+        "name": "@lewisl9029/swc-core-linux-x64-musl",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-linux-x64-gnu",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-linux-arm64-musl",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-linux-arm64-gnu",
+        "versionSpec": "1.3.81-1"
+      },
+      {
+        "name": "@lewisl9029/swc-core-linux-arm-gnueabihf",
+        "versionSpec": "1.3.81-1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@lewisl9029/swc-core-darwin-arm64@1.3.81-1",
+      "@lewisl9029/swc-core-linux-x64-musl@1.3.81-1",
+      "@lewisl9029/swc-core-win32-x64-msvc@1.3.81-1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@lewisl9029__swc-core@1.3.81-1\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7500126a4b38b1a34a38461917947f1b015af39d1c48880b0ef67ac4d8d23715",
+        "sizeBytes": 6863,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "dynamic-require",
+          "binary-download",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "binding.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/swc-project/swc/issues",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "binding.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "658c36524ce042dd76e87b8e27bb8134f26fc8bf981750a8b6f76c09307a41b5",
+        "sizeBytes": 10385,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "crates/swc_ecma_preset_env/scripts/copy-data.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:24.304Z"
+  },
+  "hash": "sha256:0f4448f1229a013e692f3414084b7cab125b295403271419efdd153bb8f28a24"
+}

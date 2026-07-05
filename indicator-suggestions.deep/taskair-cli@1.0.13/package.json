@@ -1,0 +1,67 @@
+{
+  "name": "taskair-cli",
+  "version": "1.0.13",
+  "description": "Space-themed, privacy-first task management CLI with E2E encryption",
+  "type": "module",
+  "bin": {
+    "taskair": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "scripts"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "taskair",
+    "cli",
+    "ink",
+    "e2e-encryption",
+    "space-themed",
+    "task-management",
+    "terminal-ui",
+    "privacy-first"
+  ],
+  "author": "AJAYMYTH",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AJAYMYTH/TaskAir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AJAYMYTH/TaskAir/issues"
+  },
+  "homepage": "https://github.com/AJAYMYTH/TaskAir#readme",
+  "scripts": {
+    "dev": "node --import tsx/esm src/index.ts",
+    "build": "tsup src/index.ts --format esm --dts --out-dir dist --shims",
+    "start": "node dist/index.js",
+    "lint": "tsc --noEmit",
+    "taskair": "node --import tsx/esm src/index.ts",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "conf": "^13.0.0",
+    "figures": "^6.1.0",
+    "ink": "^5.1.0",
+    "ink-big-text": "^2.0.0",
+    "ink-gradient": "^3.0.0",
+    "ink-spinner": "^5.0.0",
+    "react": "^18.3.1",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/uuid": "^10.0.0",
+    "tsup": "^8.1.0",
+    "tsx": "^4.15.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

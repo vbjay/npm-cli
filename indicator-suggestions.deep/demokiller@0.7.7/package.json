@@ -1,0 +1,67 @@
+{
+  "name": "demokiller",
+  "version": "0.7.7",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "demokiller": "dist/src/cli.js",
+    "demokiller-mcp": "dist/src/mcp.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/src/plugin.js",
+      "types": "./dist/src/plugin.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/cli.js",
+    "benchmark": "node dist/src/cli.js benchmark benchmarks/github-projects.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "tree-sitter-wasms": "^0.1.13",
+    "web-tree-sitter": "^0.25.10",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.4.3",
+    "vitest": "^3.2.6"
+  },
+  "description": "AI agent production gate: kill demos and turn them into production-deliverable systems",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AVIDS2/demokiller.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AVIDS2/demokiller/issues"
+  },
+  "homepage": "https://github.com/AVIDS2/demokiller",
+  "keywords": [
+    "ai",
+    "agent",
+    "production",
+    "cli",
+    "mcp",
+    "nextjs",
+    "security",
+    "devtools"
+  ],
+  "files": [
+    "dist/src",
+    "assets/demokiller-banner.svg",
+    "README.md",
+    "README.en.md",
+    "benchmarks/github-projects.json",
+    "LICENSE"
+  ]
+}

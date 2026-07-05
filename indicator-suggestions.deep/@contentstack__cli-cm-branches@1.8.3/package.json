@@ -1,0 +1,79 @@
+{
+  "name": "@contentstack/cli-cm-branches",
+  "description": "Contentstack CLI plugin to do branches operations",
+  "version": "1.8.3",
+  "author": "Contentstack",
+  "bugs": "https://github.com/contentstack/cli/issues",
+  "dependencies": {
+    "@contentstack/cli-command": "~1.8.4",
+    "@oclif/core": "^4.11.4",
+    "@contentstack/cli-utilities": "~1.18.5",
+    "chalk": "^4.1.2",
+    "just-diff": "^6.0.2",
+    "lodash": "^4.18.1"
+  },
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "dotenv": "^16.5.0",
+    "dotenv-expand": "^9.0.0",
+    "eslint": "^10.5.0",
+    "eslint-config-oclif": "^6.0.62",
+    "mocha": "10.8.2",
+    "nyc": "^15.1.0",
+    "oclif": "^4.17.46",
+    "sinon": "^21.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "build": "pnpm compile && oclif manifest && oclif readme",
+    "clean": "rm -rf ./lib ./node_modules tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json",
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "pnpm compile && oclif manifest && oclif readme",
+    "version": "oclif readme && git add README.md",
+    "test:report": "tsc -p test && nyc --reporter=lcov --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "pretest": "tsc -p test",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "posttest": "npm run lint",
+    "lint": "eslint src/**/*.ts",
+    "format": "eslint src/**/*.ts --fix",
+    "test:integration": "mocha --forbid-only \"test/integration/*.test.ts\"",
+    "test:unit": "mocha --forbid-only \"test/unit/**/*.test.ts\" --exit || exit 0",
+    "test:unit:report": "nyc --extension .ts mocha --forbid-only \"test/unit/**/*.test.ts\""
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "/lib",
+    "/messages",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/contentstack/cli",
+  "keywords": [
+    "contentstack",
+    "cli",
+    "plugin"
+  ],
+  "license": "MIT",
+  "main": "./lib/commands/cm/stacks/export.js",
+  "types": "./types/index.d.ts",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "csdx",
+    "repositoryPrefix": "<%- repo %>/blob/main/packages/contentstack-export/<%- commandPath %>"
+  },
+  "csdxConfig": {
+    "shortCommandName": {
+      "cm:branches:create": "BRCR",
+      "cm:branches:delete": "BRDEL",
+      "cm:branches:diff": "BRDIF",
+      "cm:branches:merge": "BRMRG",
+      "cm:branches:merge-status": "BRMST",
+      "cm:branches": "BRLS"
+    }
+  },
+  "repository": "https://github.com/contentstack/cli"
+}

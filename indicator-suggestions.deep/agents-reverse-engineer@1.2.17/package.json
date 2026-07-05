@@ -1,0 +1,78 @@
+{
+  "name": "agents-reverse-engineer",
+  "version": "1.2.17",
+  "description": "CLI tool for reverse-engineering codebase documentation for AI agents",
+  "type": "module",
+  "bin": {
+    "agents-reverse-engineer": "dist/cli/index.js",
+    "are": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:hooks": "node scripts/build-hooks.js",
+    "prepack": "rm -f LICENSE.sum README.md.sum",
+    "prepublishOnly": "npm run build && npm run build:hooks",
+    "dev": "tsx watch src/cli/index.ts"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.3",
+    "ignore": "^7.0.3",
+    "isbinaryfile": "^5.0.4",
+    "jsonc-parser": "^3.3.1",
+    "picocolors": "^1.1.1",
+    "simple-git": "^3.27.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "marked": "^15.0.12",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "documentation",
+    "codebase",
+    "ai",
+    "agents",
+    "reverse-engineering",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "opencode",
+    "agents-md",
+    "code-documentation",
+    "ai-documentation",
+    "codebase-analysis",
+    "developer-tools",
+    "cli",
+    "llm"
+  ],
+  "author": "GeoloeG-IsT",
+  "license": "MIT",
+  "exports": {
+    ".": "./dist/cli/index.js",
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "default": "./dist/core/index.js"
+    }
+  },
+  "main": "dist/cli/index.js",
+  "files": [
+    "dist",
+    "hooks/dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeoloeG-IsT/agents-reverse-engineer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GeoloeG-IsT/agents-reverse-engineer/issues"
+  },
+  "homepage": "https://github.com/GeoloeG-IsT/agents-reverse-engineer#readme"
+}

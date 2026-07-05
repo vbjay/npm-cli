@@ -1,0 +1,51 @@
+{
+  "name": "@corpus-core/isix",
+  "version": "1.1.0",
+  "license": "MIT",
+  "description": "Canonical ISIX perceptual image hash and media hash (same implementation as Colicam / Flutter). Browser-only; requires WasmGC (current Chromium).",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "sideEffects": [
+    "./src/index.js"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./loader": "./dist/colicam_isix.mjs",
+    "./wasm": "./dist/colicam_isix.wasm"
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corpus-core/colicam.git",
+    "directory": "npm/isix"
+  },
+  "bugs": {
+    "url": "https://github.com/corpus-core/colicam/issues"
+  },
+  "homepage": "https://github.com/corpus-core/colicam/tree/dev/npm/isix#readme",
+  "keywords": [
+    "isix",
+    "perceptual-hash",
+    "image-hash",
+    "wasm",
+    "colicam"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepack": "node ./scripts/assert-dist.mjs"
+  }
+}

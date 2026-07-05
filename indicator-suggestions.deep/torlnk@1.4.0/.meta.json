@@ -1,0 +1,88 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "657ecd3a637a5be6",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/ensure-webrtc.cjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "node-datachannel",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "node-datachannel@0.32.3"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/ensure-webrtc.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "8c6702b23c4f96888d53a813666c1b2efcf3e164bc60d3cba2d3a6227b71dd94",
+        "sizeBytes": 2230,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "native-build",
+          "runtime-installer",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/baairon/torlink/issues/60",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-11T22:45:47.274Z"
+  },
+  "hash": "sha256:41e1fa7307effb09efbd1df5c95736596725fbfb9231205a523152decc780505"
+}

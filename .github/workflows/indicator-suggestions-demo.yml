@@ -6,6 +6,16 @@ on:
       - scripts/build-indicator-suggestions.js
       - lib/utils/indicator-definitions.js
       - lib/utils/script-risk-scanner.js
+      - indicator-suggestions.json
+  push:
+    branches:
+      - main
+      - copilot/**
+    paths:
+      - scripts/build-indicator-suggestions.js
+      - lib/utils/indicator-definitions.js
+      - lib/utils/script-risk-scanner.js
+      - indicator-suggestions.json
   workflow_dispatch:
 
 permissions:

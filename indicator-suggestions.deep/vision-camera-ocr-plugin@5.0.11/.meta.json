@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fc862546baa54c2a",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/patch-ios-nitrogen-includes.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "f1468d8616130d04e05b1e5423546508e98785a47e5d455c7f39779c546e3b7e",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "androidx.camera:camera-core:${camerax_version}",
+              "com.google.mlkit:text-recognition:16.0.1"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/patch-ios-nitrogen-includes.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "6e3bae4dffef540c06a58d4e809b55f2d84c778030c0a6d81b0354ba33371ec0",
+        "sizeBytes": 2451,
+        "signals": [
+          "writes-file",
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:26.894Z"
+  },
+  "hash": "sha256:8592293e128fcb7bcaf71ea8750ce045eeafe779cb96120cee06cf3ae95da3e9"
+}

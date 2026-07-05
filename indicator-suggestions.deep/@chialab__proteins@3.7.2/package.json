@@ -1,0 +1,69 @@
+{
+  "name": "@chialab/proteins",
+  "version": "3.7.2",
+  "type": "module",
+  "description": "A primer for JavaScript libraries and frameworks development.",
+  "main": "dist/proteins.cjs",
+  "module": "dist/proteins.js",
+  "typings": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "require": "./dist/proteins.cjs",
+      "default": "./dist/proteins.js"
+    }
+  },
+  "files": [
+    "dist",
+    "types",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rimraf 'dist' 'types' && yarn types && yarn build:esm && yarn build:cjs",
+    "build:esm": "esbuild src/index.js --outfile=dist/proteins.js --format=esm --bundle --packages=external --sourcemap",
+    "build:cjs": "esbuild src/index.js --outfile=dist/proteins.cjs --format=cjs --bundle --packages=external --sourcemap",
+    "types": "tsc",
+    "test": "yarn test:browser && yarn test:node",
+    "test:browser": "vitest run --config vitest.browser.ts",
+    "test:node": "vitest run --config vitest.node.ts",
+    "lint": "prettier --check . && eslint src test",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "prepack": "yarn build && publint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chialab/proteins"
+  },
+  "keywords": [
+    "proteins",
+    "chialab",
+    "javascript",
+    "utils"
+  ],
+  "author": "Chialab <dev@chialab.io> (https://www.chialab.it)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chialab/proteins/issues"
+  },
+  "homepage": "https://chialab.io/p/proteins",
+  "devDependencies": {
+    "@changesets/cli": "^2.22.0",
+    "@chialab/eslint-config": "^4.0.0",
+    "@chialab/prettier-config": "^1.2.2",
+    "@vitest/browser": "^1.2.2",
+    "@vitest/coverage-istanbul": "^1.2.2",
+    "@vitest/coverage-v8": "^1.2.2",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.0.0",
+    "playwright": "^1.41.1",
+    "prettier": "^3.2.4",
+    "publint": "^0.2.7",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0",
+    "vitepress": "^1.0.0-rc.40",
+    "vitest": "^1.2.2"
+  }
+}

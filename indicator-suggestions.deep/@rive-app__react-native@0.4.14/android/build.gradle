@@ -1,0 +1,167 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['Rive_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply from: '../nitrogen/generated/android/rive+autolinking.gradle'
+apply plugin: "com.facebook.react"
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "rive"
+  codegenJavaPackageName = "com.rive"
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Rive_" + name]).toInteger()
+}
+
+android {
+  namespace "com.rive"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  def skipSetup = project.hasProperty('Rive_RiveRuntimeAndroidSkipSetup') ?
+    project.property('Rive_RiveRuntimeAndroidSkipSetup').toBoolean() : false
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "RIVE_SKIP_SETUP", "$skipSetup"
+
+    externalNativeBuild {
+      cmake {
+        cppFlags "-frtti -fexceptions -Wall -fstack-protector-all"
+        arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+        abiFilters(*reactNativeArchitectures())
+
+        buildTypes {
+          debug {
+            cppFlags "-O1 -g"
+          }
+          release {
+            cppFlags "-O2"
+          }
+        }
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+      // On Windows the NDK default CMake (3.22.1) fails when object-file
+      // paths exceed MAX_PATH (260 chars). Set CMAKE_VERSION=3.31.6 to fix.
+      // See: https://docs.swmansion.com/react-native-reanimated/docs/guides/building-on-windows/
+      def cmakeVersionOverride = System.getenv("CMAKE_VERSION")
+      if (cmakeVersionOverride) {
+        version cmakeVersionOverride
+      }
+    }
+  }
+
+  packagingOptions {
+    excludes = ["META-INF",
+                "META-INF/**",
+                "**/libc++_shared.so",
+                "**/libfbjni.so",
+                "**/libjsi.so",
+                "**/libfolly_json.so",
+                "**/libfolly_runtime.so",
+                "**/libglog.so",
+                "**/libhermes.so",
+                "**/libhermes-executor-debug.so",
+                "**/libhermes_executor.so",
+                "**/libreactnative.so",
+                "**/libreactnativejni.so",
+                "**/libturbomodulejsijni.so",
+                "**/libreact_nativemodule_core.so",
+                "**/libjscexecutor.so"]
+  }
+
+  buildFeatures {
+    buildConfig true
+    prefab true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += ["generated/java",
+                       "generated/jni"]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+def getRiveAndroidVersion() {
+  if (rootProject.ext.has('RiveRuntimeAndroidVersion')) {
+    return rootProject.ext.get('RiveRuntimeAndroidVersion')
+  }
+
+  if (project.hasProperty('Rive_RiveRuntimeAndroidVersion')) {
+    return project.property('Rive_RiveRuntimeAndroidVersion')
+  }
+
+  def packageJson = file("${projectDir}/../package.json")
+  if (packageJson.exists()) {
+    def json = new groovy.json.JsonSlurper().parseText(packageJson.text)
+    if (json.runtimeVersions?.android) {
+      return json.runtimeVersions.android
+    }
+  }
+
+  throw new GradleException("Failed to determine Rive Android SDK version. Please ensure package.json contains 'runtimeVersions.android'")
+}
+
+def riveAndroidVersion = getRiveAndroidVersion()
+println "@rive-app/react-native: Rive Android SDK ${riveAndroidVersion}"
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "app.rive:rive-android:${riveAndroidVersion}"
+  implementation project(":react-native-nitro-modules")
+}
+

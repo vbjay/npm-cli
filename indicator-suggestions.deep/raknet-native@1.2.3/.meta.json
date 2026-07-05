@@ -1,0 +1,186 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "83930462773c0c23",
+    "fetchedFiles": [
+      "CMakeLists.txt",
+      "binding.js",
+      "buildChecks.js",
+      "helpers/buildPath.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "debug",
+        "versionSpec": null
+      },
+      {
+        "name": "segfault-handler",
+        "versionSpec": null
+      },
+      {
+        "name": "bindings",
+        "versionSpec": "^1.5.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "bindings@1.5.0",
+      "debug@4.4.3",
+      "segfault-handler@1.3.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "CMakeLists.txt",
+        "label": "CMake build descriptor",
+        "sha256": "6efd0350cc016e7dd25c02b24bab22c33905270950aaf8d7f654c8e1899f610e",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Native libraries",
+            "items": [
+              "${PROJECT_NAME}"
+            ]
+          },
+          {
+            "label": "Linked libraries",
+            "items": [
+              "RakNetLibStatic"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\raknet-native@1.2.3\\binding.gyp'",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "CMakePresets.json",
+        "label": "CMake build presets",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\raknet-native@1.2.3\\CMakePresets.json'",
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "buildChecks.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "24fcfa8e712138c581a5c8bf44c79b3fec0cdddccf76e7c04353336fd09cd74f",
+        "sizeBytes": 1713,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "native-build",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "binding.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/extremeheat/fb-raknet",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/extremeheat/node-raknet-native\\n",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "binding.js",
+        "reason": "required by ./buildChecks.js",
+        "sha256": "129bf39f576b1f2d1c9d8d555ee4277ddcb3c2ae64935d6df7521f557b95c8de",
+        "sizeBytes": 1158,
+        "signals": [
+          "dynamic-require",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "helpers/buildPath.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "helpers/buildPath.js",
+        "reason": "required by ./binding.js",
+        "sha256": "ea8b3f56885db63f7a7530f584384e2c28ca5666897dc27235e00670c71696e3",
+        "sizeBytes": 1019,
+        "signals": [
+          "writes-outside-package",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:29.785Z"
+  },
+  "hash": "sha256:dc3e147a4142529673b143475e4415c4b7ebeb7e9040d19e324e41cda1c1977a"
+}

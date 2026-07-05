@@ -1,0 +1,111 @@
+{
+  "name": "ai-sdk-provider-claude-code",
+  "version": "3.5.1",
+  "description": "AI SDK v6 provider for Claude via Claude Agent SDK (use Pro/Max subscription)",
+  "keywords": [
+    "ai-sdk",
+    "claude-agent-sdk",
+    "anthropic",
+    "cli",
+    "language-model",
+    "llm"
+  ],
+  "homepage": "https://github.com/ben-vargas/ai-sdk-provider-claude-code",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ben-vargas/ai-sdk-provider-claude-code.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ben-vargas/ai-sdk-provider-claude-code/issues"
+  },
+  "license": "MIT",
+  "author": "Ben Vargas",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "docs/**/*",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "dev": "tsup --watch",
+    "lint": "eslint src",
+    "lint:all": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "ci": "npm run typecheck && npm run lint:all && npm run test",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:edge": "vitest run --project=edge",
+    "test:node": "vitest run --project=node",
+    "test:watch": "vitest",
+    "test:integration": "npm run build && npx tsx examples/integration-test.ts",
+    "typecheck": "tsc --noEmit",
+    "example:basic": "npm run build && npx tsx examples/basic-usage.ts",
+    "example:streaming": "npm run build && npx tsx examples/streaming.ts",
+    "example:conversation": "npm run build && npx tsx examples/conversation-history.ts",
+    "example:config": "npm run build && npx tsx examples/custom-config.ts",
+    "example:object": "npm run build && npx tsx examples/generate-object.ts",
+    "example:object:constraints": "npm run build && npx tsx examples/generate-object-constraints.ts",
+    "example:tools": "npm run build && npx tsx examples/tool-management.ts",
+    "example:ai-sdk-tools": "npm run build && npx tsx examples/ai-sdk-tools.ts",
+    "example:sessions": "npm run build && npx tsx examples/session-management.ts",
+    "example:hooks-permissions": "npm run build && npx tsx examples/hooks-permission-denied.ts",
+    "example:warm-start": "npm run build && npx tsx examples/warm-start.ts",
+    "example:context-usage": "npm run build && npx tsx examples/context-usage.ts",
+    "example:prompt-suggestions": "npm run build && npx tsx examples/prompt-suggestions.ts",
+    "example:skills-option": "npm run build && npx tsx examples/skills-option.ts",
+    "example:mcp:filesystem": "npm run build && npx tsx examples/mcp-filesystem.ts",
+    "example:mcp:exa": "npm run build && npx tsx examples/mcp-exa.ts",
+    "example:timeout": "npm run build && npx tsx examples/long-running-tasks.ts",
+    "example:zod4": "npm run build && npx tsx examples/zod4-compatibility-test.ts",
+    "example:structured-repro": "npx tsx examples/structured-output-repro.ts",
+    "example:all": "npm run build && npm run example:basic && npm run example:streaming && npm run example:conversation && npm run example:config && npm run example:object && npm run example:object:constraints && npm run example:tools && npm run example:timeout"
+  },
+  "dependencies": {
+    "@ai-sdk/provider": "^3.0.0",
+    "@ai-sdk/provider-utils": "^4.0.1",
+    "@anthropic-ai/claude-agent-sdk": "^0.3.170"
+  },
+  "devDependencies": {
+    "@edge-runtime/vm": "5.0.0",
+    "@eslint/js": "9.28.0",
+    "@types/node": "^20.19.0",
+    "@typescript-eslint/eslint-plugin": "8.34.0",
+    "@typescript-eslint/parser": "8.34.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "ai": "^6.0.3",
+    "eslint": "9.28.0",
+    "globals": "16.2.0",
+    "prettier": "^3.6.2",
+    "tsup": "8.5.0",
+    "typescript": "5.6.3",
+    "vitest": "3.2.4",
+    "zod": "^4.1.12"
+  },
+  "peerDependencies": {
+    "zod": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

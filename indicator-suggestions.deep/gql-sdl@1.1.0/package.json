@@ -1,0 +1,41 @@
+{
+  "name": "gql-sdl",
+  "version": "1.1.0",
+  "description": "CLI tool to download the GraphQL schema (as GraphQL SDL or JSON) from a given API with introspection enabled",
+  "keywords": [
+    "cli",
+    "graphql"
+  ],
+  "homepage": "https://github.com/jkmartindale/gql-sdl#readme",
+  "bugs": "https://github.com/jkmartindale/gql-sdl/issues",
+  "license": "MIT",
+  "author": "James Martindale (https://twitter.com/jkmartindale)",
+  "files": [
+    "dist/**/*",
+    "!dist/*.tsbuildinfo"
+  ],
+  "main": "dist/index.js",
+  "bin": {
+    "gql-sdl": "dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkmartindale/gql-sdl.git"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "prepare": "npm run build",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "argparse": "^2.0.1",
+    "graphql": "^16.8.1"
+  },
+  "devDependencies": {
+    "@types/argparse": "file:types/argparse",
+    "@types/node": "^20.9.0",
+    "typescript": "^5.2.2"
+  },
+  "type": "module",
+  "types": "dist/index.d.ts"
+}

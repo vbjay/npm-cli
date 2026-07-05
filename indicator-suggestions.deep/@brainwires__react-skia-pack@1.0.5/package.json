@@ -1,0 +1,96 @@
+{
+  "name": "@brainwires/react-skia-pack",
+  "version": "1.0.5",
+  "description": "React components for Skia-based charts, widgets, and visualizations using CanvasKit WASM",
+  "keywords": [
+    "react",
+    "skia",
+    "canvaskit",
+    "charts",
+    "visualization",
+    "canvas",
+    "wasm",
+    "widgets",
+    "graphics"
+  ],
+  "author": "Brainwires",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brainwires/react-skia-pack.git"
+  },
+  "homepage": "https://github.com/brainwires/react-skia-pack#readme",
+  "bugs": {
+    "url": "https://github.com/brainwires/react-skia-pack/issues"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./charts": {
+      "types": "./dist/charts/index.d.ts",
+      "import": "./dist/charts/index.mjs",
+      "require": "./dist/charts/index.js"
+    },
+    "./widgets": {
+      "types": "./dist/widgets/index.d.ts",
+      "import": "./dist/widgets/index.mjs",
+      "require": "./dist/widgets/index.js"
+    },
+    "./primitives": {
+      "types": "./dist/primitives/index.d.ts",
+      "import": "./dist/primitives/index.mjs",
+      "require": "./dist/primitives/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.mjs",
+      "require": "./dist/utils/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "public",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "postinstall": "node scripts/postinstall.js",
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "canvaskit-wasm": {
+      "optional": true
+    }
+  },
+  "optionalDependencies": {
+    "canvaskit-wasm": "^0.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "canvaskit-wasm": "^0.40.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@brainwires/react-skia-pack": "^1.0.2"
+  }
+}

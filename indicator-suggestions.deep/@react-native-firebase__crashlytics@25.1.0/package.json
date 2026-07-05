@@ -1,0 +1,81 @@
+{
+  "name": "@react-native-firebase/crashlytics",
+  "version": "25.1.0",
+  "author": "Invertase <oss@invertase.io> (http://invertase.io)",
+  "description": "React Native Firebase - Firebase Crashlytics is a lightweight, realtime crash reporter that helps you track, prioritize, and fix stability issues that erode your app quality. React Native Firebase provides automatic crash reporting for both native and JavaScript errors, including unhandled promise rejections.",
+  "main": "./dist/module/index.js",
+  "types": "./dist/typescript/lib/index.d.ts",
+  "scripts": {
+    "build": "genversion --esm --semi lib/version.ts",
+    "build:clean": "rimraf android/build && rimraf ios/build",
+    "build:plugin": "rimraf plugin/build && tsc --build plugin",
+    "lint:plugin": "eslint plugin/src/*",
+    "compile": "bob build",
+    "prepare": "yarn run build && yarn run build:plugin && yarn compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/invertase/react-native-firebase/tree/main/packages/crashlytics"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "react",
+    "react-native",
+    "firebase",
+    "fabric",
+    "crash",
+    "bug",
+    "error",
+    "reporting",
+    "crashlytics"
+  ],
+  "peerDependencies": {
+    "@react-native-firebase/app": "25.1.0",
+    "expo": ">=47.0.0"
+  },
+  "dependencies": {
+    "stacktrace-js": "^2.0.2"
+  },
+  "devDependencies": {
+    "expo": "^55.0.18",
+    "react-native-builder-bob": "^0.41.0",
+    "typescript": "^6.0.3"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "exports": {
+    ".": {
+      "source": "./lib/index.ts",
+      "types": "./dist/typescript/lib/index.d.ts",
+      "default": "./dist/module/index.js"
+    },
+    "./app.plugin.js": "./app.plugin.js",
+    "./package.json": "./package.json"
+  },
+  "react-native-builder-bob": {
+    "source": "lib",
+    "output": "dist",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "tsc": "../../node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  },
+  "gitHead": "e0a565d8a73a9b103d140ffacfb8876b30d8bdc5"
+}

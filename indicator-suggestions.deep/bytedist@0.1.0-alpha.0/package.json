@@ -1,0 +1,110 @@
+{
+  "name": "bytedist",
+  "version": "0.1.0-alpha.0",
+  "description": "A WASM-friendly binary payload toolkit for offline-capable web artifacts.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreamancuso/bytedist.git"
+  },
+  "bugs": {
+    "url": "https://github.com/andreamancuso/bytedist/issues"
+  },
+  "homepage": "https://github.com/andreamancuso/bytedist#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "bytedist": "dist/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./node": {
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser/index.d.ts",
+      "import": "./dist/browser/index.js"
+    },
+    "./html": {
+      "types": "./dist/html/index.d.ts",
+      "import": "./dist/html/index.js"
+    },
+    "./wasm": {
+      "types": "./dist/wasm/index.d.ts",
+      "import": "./dist/wasm/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite/index.d.ts",
+      "import": "./dist/vite/index.js"
+    },
+    "./vite/client": {
+      "types": "./src/vite/client.d.ts",
+      "import": "./dist/vite/client.js"
+    }
+  },
+  "files": [
+    "dist",
+    "docs",
+    "scripts",
+    "src/vite/client.d.ts",
+    "wasm/Dockerfile",
+    "wasm/src",
+    "CHANGELOG.md",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "toc:measure": "node scripts/measure-toc.mjs",
+    "perf:baseline": "npm run build && node scripts/measure-performance.mjs",
+    "perf:baseline:quick": "npm run build && node scripts/measure-performance.mjs --quick",
+    "wasm:build": "node scripts/build-wasm.mjs",
+    "wasm:test": "npm run wasm:build && vitest run src/wasm/reader.test.ts src/wasm/index.test.ts",
+    "example:basic": "npm run build && node examples/basic.mjs",
+    "example:browser-gallery": "npm run build && node examples/browser-gallery.mjs",
+    "example:single-file-html": "npm run build && node examples/single-file-html.mjs",
+    "example:interactive-document": "npm run build && node examples/interactive-document.mjs",
+    "example:vite": "npm run build && vite build examples/vite-single-file --config examples/vite-single-file/vite.config.mjs",
+    "example:all": "npm run build && node examples/basic.mjs && node examples/browser-gallery.mjs && node examples/single-file-html.mjs && node examples/interactive-document.mjs && vite build examples/vite-single-file --config examples/vite-single-file/vite.config.mjs"
+  },
+  "keywords": [
+    "binary",
+    "payload",
+    "assets",
+    "packaging",
+    "offline",
+    "wasm",
+    "browser"
+  ],
+  "peerDependencies": {
+    "vite": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@vitest/coverage-v8": "^2.1.8",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.21",
+    "vitest": "^2.1.8"
+  }
+}

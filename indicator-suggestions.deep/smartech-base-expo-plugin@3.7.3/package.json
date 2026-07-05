@@ -1,0 +1,48 @@
+{
+  "name": "smartech-base-expo-plugin",
+  "version": "3.7.3",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "description": "Smartech Base Expo SDK's React Native Plugin For React Native Projects.",
+  "scripts": {
+    "clean": "rm -rf build",
+    "build": "tsc",
+    "prepare": "npm run clean && npm run build",
+    "pack": "rm -f *.tgz && npm run prepare && npm pack",
+    "releasePlugin": "rm -f *.tgz && npm run prepare && npm publish"
+  },
+  "keywords": [
+    "smartech",
+    "netcore",
+    "push",
+    "notification",
+    "push notification",
+    "apns",
+    "fcm",
+    "messaging",
+    "ios",
+    "android",
+    "expo"
+  ],
+  "repository": "https://github.com/NetcoreSolutions/Smartech-ReactNative-Expo",
+  "author": "Netcore Solutions",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NetcoreSolutions/Smartech-ReactNative-Expo/issues"
+  },
+  "homepage": "https://github.com/NetcoreSolutions/Smartech-ReactNative-Expo#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.11",
+    "expo-module-scripts": "^3.5.2",
+    "typescript": "5.3.3"
+  },
+  "dependencies": {
+    "@expo/config-types": "^51.0.2",
+    "expo": "^51.0.22"
+  }
+}

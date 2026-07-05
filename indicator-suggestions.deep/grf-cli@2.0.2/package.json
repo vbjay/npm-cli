@@ -1,0 +1,59 @@
+{
+  "name": "grf-cli",
+  "version": "2.0.2",
+  "description": "Rust-first CLI distribution for Git reference repositories, with npm only handling installation and upgrades.",
+  "license": "MIT",
+  "author": "haiyewei",
+  "type": "commonjs",
+  "bin": {
+    "grf": "./bin/grf.cjs",
+    "git-rf": "./bin/git-rf.cjs",
+    "gitref": "./bin/gitref.cjs"
+  },
+  "keywords": [
+    "git",
+    "reference",
+    "repository",
+    "cli",
+    "rust"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haiyewei/grf-cli.git"
+  },
+  "homepage": "https://github.com/haiyewei/grf-cli#readme",
+  "bugs": {
+    "url": "https://github.com/haiyewei/grf-cli/issues"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin",
+    "scripts/npm",
+    "LICENSE",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "grf": {
+    "binaryName": "grf"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15"
+  },
+  "scripts": {
+    "build": "cargo build --release --locked",
+    "dev": "cargo run --",
+    "test": "cargo test --locked",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format --check .",
+    "check": "cargo fmt --check && cargo check --locked && pnpm run lint",
+    "postinstall": "node ./scripts/npm/postinstall.cjs",
+    "release:verify": "node ./scripts/npm/check-release-version.cjs"
+  }
+}

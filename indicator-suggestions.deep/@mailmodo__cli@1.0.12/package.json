@@ -1,0 +1,101 @@
+{
+  "name": "@mailmodo/cli",
+  "description": "Email lifecycle automation for the AI-native builder generation.",
+  "version": "1.0.12",
+  "author": "provishalk",
+  "bin": {
+    "mailmodo": "bin/run.js"
+  },
+  "bugs": "https://github.com/Mailmodo/mailmodo-cli/issues",
+  "dependencies": {
+    "@inquirer/prompts": "^8.3.2",
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-not-found": "^3",
+    "chalk": "^5.6.2",
+    "js-yaml": "^4.1.1",
+    "open": "^11.0.0",
+    "ora": "^9.3.0",
+    "update-notifier": "^7.3.1"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1",
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/mocha": "^10",
+    "@types/node": "^18.19.130",
+    "@types/update-notifier": "^6.0.8",
+    "chai": "^4",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
+    "eslint-config-prettier": "^10",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "mocha": "^11",
+    "oclif": "^4",
+    "prettier": "^3.8.2",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "./bin",
+    "./dist",
+    "./oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/Mailmodo/mailmodo-cli",
+  "keywords": [
+    "email",
+    "email-automation",
+    "lifecycle-emails",
+    "onboarding",
+    "transactional-email",
+    "cli",
+    "ai",
+    "mailmodo",
+    "sdk",
+    "saas"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "mailmodo",
+    "dirname": "mailmodo-cli",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-not-found"
+    ],
+    "topicSeparator": " "
+  },
+  "repository": "Mailmodo/mailmodo-cli",
+  "scripts": {
+    "build": "shx rm -rf dist tsconfig.tsbuildinfo && tsc -b",
+    "lint": "eslint",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif manifest",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "git add README.md",
+    "prepare": "husky"
+  },
+  "types": "dist/index.d.ts",
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,yaml,yml}": "prettier --write"
+  }
+}

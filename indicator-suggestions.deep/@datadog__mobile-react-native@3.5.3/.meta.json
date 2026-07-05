@@ -1,0 +1,104 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4420335b6f6e3e84",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/replace-react-require.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "react",
+        "versionSpec": ">=16.13.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "react@19.2.7"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "d970d2c7d24f40dadd5827b410e5206790efd1d0f90345802f110943abb9d7b5",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "com.facebook.react:react-android:$reactNativeVersion",
+              "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+              "com.squareup.okhttp3:okhttp:3.12.13",
+              "androidx.metrics:metrics-performance:1.0.0-beta01",
+              "com.datadoghq:dd-sdk-android-rum:3.10.0",
+              "com.datadoghq:dd-sdk-android-logs:3.10.0",
+              "com.datadoghq:dd-sdk-android-trace:3.10.0",
+              "com.datadoghq:dd-sdk-android-webview:3.10.0",
+              "com.datadoghq:dd-sdk-android-ndk:3.10.0",
+              "com.datadoghq:dd-sdk-android-flags:3.10.0",
+              "com.google.code.gson:gson:2.11.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `postinstall`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/DataDog/dd-sdk-reactnative/issues/358",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/replace-react-require.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "63856d6af1708f86c3b9bba473fb43f80fa7e714f963ad39118628125ccdc8d3",
+        "sizeBytes": 3458,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:55.853Z"
+  },
+  "hash": "sha256:da5dc9a777a5ae3da64427af36e05cadd2b8d6d49a260ea2dbcb808a216c0d80"
+}

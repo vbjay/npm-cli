@@ -1,0 +1,103 @@
+{
+  "name": "@orbitpanel/cli",
+  "version": "7.3.5",
+  "description": "Orbit CLI — strumento locale per sviluppatori OrbitPanel",
+  "type": "module",
+  "bin": {
+    "orbit": "./bin/run.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "bin",
+    "dist",
+    "assets",
+    "oclif.manifest.json"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -b && oclif manifest",
+    "clean": "rm -rf dist",
+    "dev": "tsx src/commands/doctor.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "smoke": "node ./bin/run.js --help",
+    "prepublishOnly": "npm run typecheck && npm run test",
+    "prepack": "npm run build",
+    "postpack": "rm -f oclif.manifest.json"
+  },
+  "keywords": [
+    "orbit",
+    "cli",
+    "mcp",
+    "wordpress",
+    "hosting",
+    "maintenance"
+  ],
+  "author": "PrincipiADV",
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@oclif/core": "^4.0.0",
+    "@oclif/plugin-help": "^6.0.0",
+    "boxen": "^8.0.1",
+    "chalk": "^5.4.0",
+    "chalk-animation": "^2.0.3",
+    "figlet": "^1.11.0",
+    "gradient-string": "^3.0.0",
+    "ink": "^6.8.0",
+    "ink-text-input": "^6.0.0",
+    "ora": "^9.3.0",
+    "react": "^19.2.4",
+    "update-notifier": "^7.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.11",
+    "@oclif/test": "^4.0.0",
+    "@types/chalk-animation": "^1.6.3",
+    "@types/figlet": "^1.7.0",
+    "@types/gradient-string": "^1.1.6",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.14",
+    "@types/update-notifier": "^6.0.8",
+    "oclif": "^4.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "oclif": {
+    "bin": "orbit",
+    "dirname": "orbit",
+    "commands": "./dist/commands",
+    "default": "shell",
+    "topicSeparator": " ",
+    "topics": {
+      "session": {
+        "description": "Gestione sessioni di lavoro"
+      },
+      "intervention": {
+        "description": "Gestione interventi Orbit"
+      },
+      "report": {
+        "description": "Invio report a Orbit"
+      },
+      "note": {
+        "description": "Note sessione"
+      },
+      "ide": {
+        "description": "Gestione VS Code extension Orbit"
+      }
+    },
+    "hooks": {
+      "init": "./dist/hooks/init",
+      "prerun": "./dist/hooks/prerun"
+    },
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  }
+}

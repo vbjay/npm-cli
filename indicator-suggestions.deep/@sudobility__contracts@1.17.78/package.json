@@ -1,0 +1,309 @@
+{
+  "name": "@sudobility/contracts",
+  "version": "1.17.78",
+  "type": "module",
+  "main": "dist/unified/src/unified/index.js",
+  "types": "dist/unified/src/unified/index.d.ts",
+  "browser": "dist/unified/src/unified/index.js",
+  "react-native": "dist/react-native/src/react-native/index.js",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./dist/react-native/src/react-native/index.d.ts",
+        "default": "./dist/react-native/src/react-native/index.js"
+      },
+      "browser": {
+        "types": "./dist/unified/src/unified/index.d.ts",
+        "default": "./dist/unified/src/unified/index.js"
+      },
+      "node": {
+        "types": "./dist/unified/src/unified/index.d.ts",
+        "default": "./dist/unified/src/unified/index.js"
+      },
+      "default": {
+        "types": "./dist/unified/src/unified/index.d.ts",
+        "default": "./dist/unified/src/unified/index.js"
+      }
+    },
+    "./web": {
+      "types": "./dist/unified/src/unified/index.d.ts",
+      "default": "./dist/unified/src/unified/index.js"
+    },
+    "./evm": {
+      "types": "./dist/unified/src/evm/index.d.ts",
+      "default": "./dist/unified/src/evm/index.js"
+    },
+    "./solana": {
+      "types": "./dist/unified/src/solana/index.d.ts",
+      "default": "./dist/unified/src/solana/index.js"
+    },
+    "./react": {
+      "types": "./dist/unified/src/react/index.d.ts",
+      "default": "./dist/unified/src/react/index.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native/src/react-native/index.d.ts",
+      "default": "./dist/react-native/src/react-native/index.js"
+    },
+    "./react-native/polyfills": {
+      "types": "./dist/react-native/src/react-native/polyfills.d.ts",
+      "default": "./dist/react-native/src/react-native/polyfills.js"
+    }
+  },
+  "peerDependencies": {
+    "@solana/spl-token": ">=0.4.0",
+    "@solana/web3.js": ">=1.95.0",
+    "@sudobility/configs": "^0.0.73",
+    "@sudobility/mail_box_types": "^1.0.22",
+    "@sudobility/types": "^1.9.62",
+    "@tanstack/react-query": ">=5.0.0",
+    "buffer": ">=6.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-native": ">=0.70.0",
+    "react-native-get-random-values": ">=1.8.0",
+    "react-native-url-polyfill": ">=2.0.0",
+    "text-encoding": ">=0.7.0",
+    "viem": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@solana/spl-token": {
+      "optional": true
+    },
+    "@solana/web3.js": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-get-random-values": {
+      "optional": true
+    },
+    "react-native-url-polyfill": {
+      "optional": true
+    },
+    "buffer": {
+      "optional": true
+    },
+    "text-encoding": {
+      "optional": true
+    },
+    "@tanstack/react-query": {
+      "optional": true
+    },
+    "viem": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "build": "bun run build:evm && bun run build:solana && bun run build:unified && bun run build:react-native",
+    "build:ci": "bun run build:unified && bun run build:react-native",
+    "build:evm": "npx hardhat compile && tsc --project tsconfig.evm.json",
+    "build:solana": ". \"$HOME/.cargo/env\" 2>/dev/null; cargo build --manifest-path programs/mailer/Cargo.toml && tsc --project tsconfig.solana.json",
+    "build:unified": "tsc --project tsconfig.unified.json",
+    "build:react-native": "tsc --project tsconfig.react-native.json",
+    "pretest": "npx hardhat compile",
+    "test": "bun run test:evm && bun run test:solana && bun run test:unified:direct",
+    "test:ci": "bun run build:unified && bun run test:unified:direct",
+    "test:evm": "node --import tsx/esm ./node_modules/.bin/hardhat test test/evm/Mailer.test.ts",
+    "test:solana": ". \"$HOME/.cargo/env\" 2>/dev/null; cd programs/mailer && cargo test",
+    "test:unified": "mocha dist/test/unified/**/*.test.js",
+    "test:unified:direct": "node scripts/run-unified-tests.mjs",
+    "compile": "bun run compile:evm",
+    "compile:evm": "npx hardhat compile",
+    "compile:solana": "anchor build",
+    "clean": "npx hardhat clean",
+    "prepublishOnly": "bun run clean && bun run compile && bun run build",
+    "prepack": "bun run build",
+    "ai:workflow": "npx ts-node scripts/ai-helpers/dev-workflow.ts",
+    "ai:status": "echo '🤖 Multi-Chain Messaging Contracts AI Status' && echo '📦 Package: @sudobility/contracts v'$(node -p \"require('./package.json').version\") && echo '📊 Architecture: Single Mailer contracts on EVM & Solana' && git status --porcelain",
+    "ai:build": "echo '🔨 AI-Optimized Build Process' && bun run clean && bun run compile && bun run build && echo '✅ Build Complete - Ready for Development'",
+    "ai:test": "echo '🧪 Comprehensive Test Suite' && npm test && echo '📊 Test Summary: EVM(75) + Unified(41) = 116 tests ✅'",
+    "ai:check": "echo '🔍 Quick Validation Check' && npx tsc --noEmit && npx eslint src/ test/ --ext .ts,.js && echo '✅ All validation checks passed'",
+    "ai:dev": "echo '🚀 AI Development Helper Commands:' && echo '• bun run ai:status    - Check project health' && echo '• bun run ai:build     - Clean build everything' && echo '• bun run ai:test      - Run all 116 tests' && echo '• bun run ai:check     - TypeScript + ESLint validation' && echo '• bun run ai:examples  - Test all examples compile' && echo '• bun run ai:docs      - Show AI documentation files' && bun run ai:status",
+    "ai:examples": "echo '📋 Testing AI Examples Compilation...' && npx tsc --noEmit --skipLibCheck examples/solana-usage.ts && npx tsc --noEmit --skipLibCheck examples/unified-usage.ts && echo '✅ Solana and Unified examples compile successfully (EVM example temporarily disabled due to viem v2.37.7 compatibility)'",
+    "ai:docs": "echo '📚 AI Documentation Files:' && echo '• README.md - Main project documentation' && echo '• CLAUDE.md - AI assistant development guide' && echo '• contracts/Mailer.sol - Single contract with all functionality' && echo '• programs/mailer/ - Single Solana program' && echo '• src/unified/ - Cross-chain client library' && echo '• test/ - 116 comprehensive tests'",
+    "lint": "eslint --ext .ts,.js . --ignore-pattern 'examples/**'",
+    "lint:fix": "eslint --ext .ts,.js . --ignore-pattern 'examples/**' --fix",
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\"",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
+    "security:audit": "bash scripts/security-audit.sh",
+    "deploy:evm:local": "npx hardhat run scripts/evm/deploy.ts --network hardhat",
+    "deploy:solana:local": "anchor deploy --provider.cluster localnet",
+    "deploy:solana:devnet": "anchor deploy --provider.cluster devnet",
+    "deploy:solana:mainnet": "anchor deploy --provider.cluster mainnet-beta",
+    "deploy:unified": "bun run deploy:evm:local && bun run deploy:solana:local",
+    "deploy:evm:localhost": "npx hardhat run scripts/evm/deploy.ts --network localhost",
+    "deploy:evm:mainnet": "npx hardhat run scripts/evm/deploy.ts --network mainnet",
+    "deploy:evm:sepolia": "npx hardhat run scripts/evm/deploy.ts --network sepolia",
+    "deploy:evm:goerli": "npx hardhat run scripts/evm/deploy.ts --network goerli",
+    "deploy:evm:polygon": "npx hardhat run scripts/evm/deploy.ts --network polygon",
+    "deploy:evm:mumbai": "npx hardhat run scripts/evm/deploy.ts --network mumbai",
+    "deploy:evm:optimism": "npx hardhat run scripts/evm/deploy.ts --network optimism",
+    "deploy:evm:optimism-goerli": "npx hardhat run scripts/evm/deploy.ts --network optimism-goerli",
+    "deploy:evm:arbitrum": "npx hardhat run scripts/evm/deploy.ts --network arbitrum",
+    "deploy:evm:arbitrum-goerli": "npx hardhat run scripts/evm/deploy.ts --network arbitrum-goerli",
+    "deploy:evm:arbitrum-sepolia": "npx hardhat run scripts/evm/deploy.ts --network arbitrum-sepolia",
+    "deploy:evm:base": "npx hardhat run scripts/evm/deploy.ts --network base",
+    "deploy:evm:base-goerli": "npx hardhat run scripts/evm/deploy.ts --network base-goerli",
+    "deploy:evm:base-sepolia": "npx hardhat run scripts/evm/deploy.ts --network base-sepolia",
+    "deploy:evm:avalanche": "npx hardhat run scripts/evm/deploy.ts --network avalanche",
+    "deploy:evm:fuji": "npx hardhat run scripts/evm/deploy.ts --network fuji",
+    "deploy:evm:bsc": "npx hardhat run scripts/evm/deploy.ts --network bsc",
+    "deploy:evm:bsc-testnet": "npx hardhat run scripts/evm/deploy.ts --network bscTestnet",
+    "deploy:evm:fantom": "npx hardhat run scripts/evm/deploy.ts --network fantom",
+    "deploy:evm:fantom-testnet": "npx hardhat run scripts/evm/deploy.ts --network fantomTestnet",
+    "deploy:evm:zksync": "npx hardhat run scripts/evm/deploy.ts --network zkSync",
+    "deploy:evm:zksync-testnet": "npx hardhat run scripts/evm/deploy.ts --network zkSyncTestnet",
+    "deploy:evm:linea": "npx hardhat run scripts/evm/deploy.ts --network linea",
+    "deploy:evm:linea-goerli": "npx hardhat run scripts/evm/deploy.ts --network linea-goerli",
+    "deploy:evm:scroll": "npx hardhat run scripts/evm/deploy.ts --network scroll",
+    "deploy:evm:scroll-sepolia": "npx hardhat run scripts/evm/deploy.ts --network scroll-sepolia",
+    "deploy:evm:mantle": "npx hardhat run scripts/evm/deploy.ts --network mantle",
+    "deploy:evm:mantle-testnet": "npx hardhat run scripts/evm/deploy.ts --network mantle-testnet",
+    "deploy:evm:gnosis": "npx hardhat run scripts/evm/deploy.ts --network gnosis",
+    "deploy:evm:chiado": "npx hardhat run scripts/evm/deploy.ts --network chiado",
+    "deploy:evm:moonbeam": "npx hardhat run scripts/evm/deploy.ts --network moonbeam",
+    "deploy:evm:moonriver": "npx hardhat run scripts/evm/deploy.ts --network moonriver",
+    "deploy:evm:moonbase-alpha": "npx hardhat run scripts/evm/deploy.ts --network moonbaseAlpha",
+    "deploy:evm:celo": "npx hardhat run scripts/evm/deploy.ts --network celo",
+    "deploy:evm:alfajores": "npx hardhat run scripts/evm/deploy.ts --network alfajores",
+    "verify:evm:mainnet": "npx hardhat run scripts/evm/verify.ts --network mainnet",
+    "verify:evm:sepolia": "npx hardhat run scripts/evm/verify.ts --network sepolia",
+    "verify:evm:goerli": "npx hardhat run scripts/evm/verify.ts --network goerli",
+    "verify:evm:polygon": "npx hardhat run scripts/evm/verify.ts --network polygon",
+    "verify:evm:mumbai": "npx hardhat run scripts/evm/verify.ts --network mumbai",
+    "verify:evm:optimism": "npx hardhat run scripts/evm/verify.ts --network optimism",
+    "verify:evm:optimism-goerli": "npx hardhat run scripts/evm/verify.ts --network optimism-goerli",
+    "verify:evm:arbitrum": "npx hardhat run scripts/evm/verify.ts --network arbitrum",
+    "verify:evm:arbitrum-goerli": "npx hardhat run scripts/evm/verify.ts --network arbitrum-goerli",
+    "verify:evm:arbitrum-sepolia": "npx hardhat run scripts/evm/verify.ts --network arbitrum-sepolia",
+    "verify:evm:base": "npx hardhat run scripts/evm/verify.ts --network base",
+    "verify:evm:base-goerli": "npx hardhat run scripts/evm/verify.ts --network base-goerli",
+    "verify:evm:base-sepolia": "npx hardhat run scripts/evm/verify.ts --network base-sepolia",
+    "verify:evm:avalanche": "npx hardhat run scripts/evm/verify.ts --network avalanche",
+    "verify:evm:fuji": "npx hardhat run scripts/evm/verify.ts --network fuji",
+    "verify:evm:bsc": "npx hardhat run scripts/evm/verify.ts --network bsc",
+    "verify:evm:bsc-testnet": "npx hardhat run scripts/evm/verify.ts --network bscTestnet",
+    "verify:evm:fantom": "npx hardhat run scripts/evm/verify.ts --network fantom",
+    "verify:evm:fantom-testnet": "npx hardhat run scripts/evm/verify.ts --network fantomTestnet",
+    "verify:evm:linea": "npx hardhat run scripts/evm/verify.ts --network linea",
+    "verify:evm:linea-goerli": "npx hardhat run scripts/evm/verify.ts --network linea-goerli",
+    "verify:evm:scroll": "npx hardhat run scripts/evm/verify.ts --network scroll",
+    "verify:evm:scroll-sepolia": "npx hardhat run scripts/evm/verify.ts --network scroll-sepolia",
+    "verify:evm:mantle": "npx hardhat run scripts/evm/verify.ts --network mantle",
+    "verify:evm:mantle-testnet": "npx hardhat run scripts/evm/verify.ts --network mantle-testnet",
+    "verify:evm:gnosis": "npx hardhat run scripts/evm/verify.ts --network gnosis",
+    "verify:evm:chiado": "npx hardhat run scripts/evm/verify.ts --network chiado",
+    "verify:evm:moonbeam": "npx hardhat run scripts/evm/verify.ts --network moonbeam",
+    "verify:evm:moonriver": "npx hardhat run scripts/evm/verify.ts --network moonriver",
+    "verify:evm:moonbase-alpha": "npx hardhat run scripts/evm/verify.ts --network moonbaseAlpha",
+    "verify:evm:celo": "npx hardhat run scripts/evm/verify.ts --network celo",
+    "verify:evm:alfajores": "npx hardhat run scripts/evm/verify.ts --network alfajores"
+  },
+  "keywords": [
+    "solidity",
+    "rust",
+    "smart-contract",
+    "ethereum",
+    "solana",
+    "anchor",
+    "multi-chain",
+    "cross-chain",
+    "mailer",
+    "web3",
+    "defi",
+    "messaging",
+    "usdc",
+    "revenue-sharing",
+    "hardhat",
+    "typechain",
+    "typescript",
+    "react-native",
+    "mobile"
+  ],
+  "author": "Mailer Team",
+  "license": "BUSL-1.1",
+  "description": "Multi-chain decentralized messaging system with USDC fees, revenue sharing, and delegation management. Unified TypeScript client for EVM chains and Solana.",
+  "homepage": "https://github.com/johnqh/mail_box_contracts#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnqh/mail_box_contracts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/johnqh/mail_box_contracts/issues"
+  },
+  "engines": {
+    "node": ">=20.18.0",
+    "npm": ">=10.0.0"
+  },
+  "files": [
+    "dist/",
+    "typechain-types/",
+    "artifacts/contracts/",
+    "contracts/",
+    "target/idl/",
+    "target/types/",
+    "programs/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.1.2",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@nomicfoundation/hardhat-viem": "^2.0.0",
+    "@openzeppelin/contracts-upgradeable": "^5.4.0",
+    "@openzeppelin/hardhat-upgrades": "^3.9.1",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/wallet-adapter-base": "^0.9.27",
+    "@solana/web3.js": "^1.98.4",
+    "@sudobility/configs": "^0.0.73",
+    "@sudobility/mail_box_types": "^1.0.22",
+    "@sudobility/types": "^1.9.62",
+    "@tanstack/react-query": "^5.90.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.18.12",
+    "@types/react": "^19.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "chai": "^4.5.0",
+    "chai-as-promised": "^7.1.2",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.19.0",
+    "ethers": "^6.16.0",
+    "hardhat": "^2.26.3",
+    "hardhat-gas-reporter": "^2.2.0",
+    "markdownlint-cli2": "^0.19.0",
+    "mocha": "^11.7.4",
+    "prettier": "^3.6.2",
+    "react": "^19.0.0",
+    "ts-mocha": "^11.1.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typechain": "^8.3.2",
+    "typescript": "^5.9.3",
+    "viem": "^2.38.4"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0"
+  },
+  "overrides": {
+    "bigint-buffer": "^1.1.5"
+  },
+  "resolutions": {
+    "bigint-buffer": "^1.1.5",
+    "@solana/buffer-layout-utils/bigint-buffer": "^1.1.5"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "name": "@secondts/bark-react-native",
+  "version": "0.11.3",
+  "description": "Bark FFI bindings for React Native",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/module/src/index.d.ts",
+  "exports": {
+    "./app.plugin.js": "./app.plugin.js",
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "app.plugin.js",
+    "react-native.config.js",
+    "scripts",
+    "!scripts/patch-bindings.sh",
+    "plugin",
+    "!plugin/src",
+    "!ios/build",
+    "!ios/generated/build/generated/ios/FBReactNativeSpec",
+    "!ios/generated/build/generated/ios/FBReactNativeSpec/**",
+    "!ios/generated/build/generated/ios/FBReactNativeSpecJSI.h",
+    "!ios/generated/build/generated/ios/FBReactNativeSpecJSI-generated.cpp",
+    "!ios/generated/build/generated/ios/RCTModulesConformingToProtocolsProvider.h",
+    "!ios/generated/build/generated/ios/RCTModulesConformingToProtocolsProvider.mm",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "LICENSE"
+  ],
+  "scripts": {
+    "ubrn:ios": "ubrn build ios --release --config ubrn.config.yaml --and-generate",
+    "ubrn:android": "ubrn build android --release --config ubrn.config.yaml --and-generate",
+    "ubrn:web": "ubrn build web",
+    "ubrn:checkout": "ubrn checkout",
+    "ubrn:clean": "rm -rfv cpp/ android/CMakeLists.txt android/src/main/java 'android/*.cpp' ios/ 'src/Native*' 'src/index.*ts*' src/generated/",
+    "postinstall": "node scripts/postinstall.js",
+    "plugin:build": "EXPO_NONINTERACTIVE=true expo-module build plugin",
+    "plugin:build:win": "tsc --project plugin/tsconfig.json",
+    "example": "yarn workspace bark-react-native-example",
+    "typecheck": "tsc"
+  },
+  "keywords": [
+    "bark",
+    "ark",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ark-bitcoin/bark-ffi-bindings.git"
+  },
+  "author": {
+    "name": "Second",
+    "url": "https://second.tech"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/ark-bitcoin/bark-ffi-bindings/issues"
+  },
+  "homepage": "https://gitlab.com/ark-bitcoin/bark-ffi-bindings#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "releaseTag": "v0.11.3+bark-0.3.0",
+  "checksums": {
+    "android": "8c144cebdb109067dd263dd90c0632ee14064751fbc8b7f132d732bc0b559d95",
+    "ios": "d1ae27f657ead17c1c756a64a78bab4f854a1bfbb9681ec3c3b2a3d86ea3e910"
+  },
+  "dependencies": {
+    "uniffi-bindgen-react-native": "0.31.0-2"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^9.0.0",
+    "@react-native-community/cli": "15.0.1",
+    "@types/react": "^18.2.44",
+    "expo-module-scripts": "^4.0.0",
+    "react": "19.0.0",
+    "react-native": "0.76.9",
+    "react-native-builder-bob": "^0.40.17",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "resolutions": {
+    "typescript": "5.2.2"
+  },
+  "workspaces": [
+    "example",
+    "example-expo"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "exclude": "rust_modules/**",
+    "targets": [
+      "codegen",
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNBarkReactNativeSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.barkreactnative"
+    },
+    "includesGeneratedCode": false
+  },
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "cpp",
+    "version": "0.49.0"
+  }
+}

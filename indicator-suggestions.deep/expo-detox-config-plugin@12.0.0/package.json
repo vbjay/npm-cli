@@ -1,0 +1,52 @@
+{
+  "name": "expo-detox-config-plugin",
+  "version": "12.0.0",
+  "description": "Expo config plugin for Detox E2E testing (SDK 54+, community maintained)",
+  "main": "build/withDetox.js",
+  "types": "build/withDetox.d.ts",
+  "license": "MIT",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isilher/expo-detox-config-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/isilher/expo-detox-config-plugin/issues"
+  },
+  "homepage": "https://github.com/isilher/expo-detox-config-plugin#readme",
+  "files": [
+    "build",
+    "app.plugin.js",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "detox",
+    "e2e",
+    "config-plugin"
+  ],
+  "peerDependencies": {
+    "@expo/config-plugins": "~54.0.0",
+    "expo": "^54.0.0"
+  },
+  "dependencies": {
+    "expo-build-properties": "^1.0.9"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "~54.0.0",
+    "expo-module-scripts": "^4.1.6",
+    "typescript": "^5.9.2"
+  },
+  "upstreamPackage": "detox"
+}

@@ -1,0 +1,81 @@
+{
+  "name": "expo-notifee-plugin",
+  "version": "1.0.7",
+  "description": "Plugin to create a Notification Service extension in order to let Notifee mutate remote notifications",
+  "main": "./lib/commonjs/index.js",
+  "types": "./lib/typescript/commonjs/index.d.ts",
+  "scripts": {
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "notifee",
+    "notifications",
+    "remote",
+    "service",
+    "plugin",
+    "extension",
+    "expo-notifee-plugin"
+  ],
+  "repository": "https://github.com/LunatiqueCoder/expo-notifee-plugin",
+  "bugs": {
+    "url": "https://github.com/LunatiqueCoder/expo-notifee-plugin/issues"
+  },
+  "author": "Ovidiu Cristescu <ovidiucristescu@software-space.com> (https://github.com/LunatiqueCoder)",
+  "license": "MIT",
+  "homepage": "https://github.com/LunatiqueCoder/expo-notifee-plugin#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@expo/config-plugins": "^8.0.10",
+    "@types/react": "^18.0.25",
+    "eslint": "^8.19.0",
+    "eslint-config-universe": "^13.0.0",
+    "prettier": "3.3.3",
+    "react-native-builder-bob": "^0.30.2",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "source": "./src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
+}

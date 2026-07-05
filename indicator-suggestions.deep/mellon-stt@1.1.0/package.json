@@ -1,0 +1,47 @@
+{
+  "name": "mellon-stt",
+  "version": "1.1.0",
+  "description": "Offline, in-browser hotword detection powered by EfficientWord-Net (ResNet-50 ArcFace). Works as a standalone app or npm library.",
+  "type": "module",
+  "main": "./dist/mellon-stt.cjs",
+  "module": "./dist/mellon-stt.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/mellon-stt.mjs",
+      "require": "./dist/mellon-stt.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "hotword",
+    "wake-word",
+    "speech",
+    "onnx",
+    "offline",
+    "browser",
+    "wasm",
+    "audio",
+    "voice"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:app",
+    "build:app": "vite build && npm run copy-wasm",
+    "build:lib": "vite build --config vite.lib.config.js",
+    "copy-wasm": "node scripts/copy-wasm.js",
+    "preview": "vite preview",
+    "prepare": "node scripts/prepare_check.js"
+  },
+  "dependencies": {
+    "fft.js": "^4.0.4",
+    "onnxruntime-web": "^1.20.1"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "@hasna/brains",
+  "version": "0.0.34",
+  "description": "Fine-tuned model tracker and trainer — wraps OpenAI + Thinker Labs, gathers training data from todos/mementos/conversations/sessions",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "brains": "dist/cli/index.js",
+    "brains-mcp": "dist/mcp/index.js",
+    "brains-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "drizzle",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun run clean && bun build src/cli/index.ts --outdir dist/cli --target bun --external ink --external react --external chalk --external pg --external @modelcontextprotocol/sdk && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external pg --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun --external pg && bun build src/index.ts --outdir dist --target bun --external pg && tsc --emitDeclarationOnly --outDir dist",
+    "dev": "bun run src/cli/index.ts",
+    "dev:cli": "bun run src/cli/index.ts",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "start": "bun run dist/cli/index.js",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "db:generate": "bunx drizzle-kit generate",
+    "db:migrate": "bunx drizzle-kit migrate",
+    "db:studio": "bunx drizzle-kit studio",
+    "prepublishOnly": "bun run typecheck && bun test && bun run build",
+    "postinstall": "install -d -m 700 \"$HOME/.hasna/brains\" \"$HOME/.hasna/brains/datasets\" 2>/dev/null || mkdir -p \"$HOME/.hasna/brains/datasets\""
+  },
+  "keywords": [
+    "brains",
+    "fine-tuning",
+    "openai",
+    "mcp",
+    "ai",
+    "training",
+    "cli"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/brains.git"
+  },
+  "homepage": "https://github.com/hasna/brains",
+  "bugs": {
+    "url": "https://github.com/hasna/brains/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "drizzle-orm": "^0.40.0",
+    "ink": "^5.2.0",
+    "openai": "^4.0.0",
+    "pg": "^8.20.0",
+    "react": "^18.3.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.15.6",
+    "@types/react": "^18.3.18",
+    "drizzle-kit": "^0.30.0",
+    "typescript": "^5.7.3"
+  }
+}

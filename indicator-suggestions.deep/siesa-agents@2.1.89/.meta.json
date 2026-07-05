@@ -1,0 +1,97 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6d2bad2b896166fb",
+    "fetchedFiles": [
+      "bin/folder-mappings.js",
+      "bin/install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "fs-extra",
+        "versionSpec": "^11.1.1"
+      },
+      {
+        "name": "@clack/prompts",
+        "versionSpec": "^0.11.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@clack/prompts@0.11.0",
+      "fs-extra@11.3.6"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "da280a36f42fe222fe8d8d4e1f186b58ec862622c0a33cab4cfba2ca37b61b3e",
+        "sizeBytes": 37090,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/folder-mappings.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/<org>/<repo>.git",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "bin/folder-mappings.js",
+        "reason": "required by ./bin/install.js",
+        "sha256": "917a85894e07e719c8ddb1ece919175b04baeb429c0de51bef2d7e9785a5ec7f",
+        "sizeBytes": 4139,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./bin/install.js",
+        "sha256": "8e8fac9823879bb139306671a58660b3666f20f07898353f6f41d9244c0d1531",
+        "sizeBytes": 917,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:10.632Z"
+  },
+  "hash": "sha256:412e8e2e0dbafc5c0dfde53dbdb9b8ecdc39b26d854b71519b0e2b7ad02a5c16"
+}

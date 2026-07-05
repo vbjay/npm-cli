@@ -1,0 +1,41 @@
+{
+  "name": "twoxhash-wasm",
+  "version": "0.2.1",
+  "description": "xxhash implementation in WebAssembly using Rust twox-hash crate",
+  "scripts": {
+    "preinstall": "wasm-pack build",
+    "prebuild": "wasm-pack build",
+    "build": "webpack --config webpack.config.js",
+    "prepublish": "CDN_BUILD=true npm run build",
+    "release": "np",
+    "test": "echo 'No test defined'"
+  },
+  "keywords": [
+    "webassembly",
+    "wasm",
+    "xxhash",
+    "hash"
+  ],
+  "main": "index.js",
+  "files": [
+    "dist/*.{js,wasm}",
+    "rust/pkg/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/limzykenneth/xxhash-wasm.git"
+  },
+  "homepage": "https://github.com/limzykenneth/xxhash-wasm",
+  "bugs": {
+    "url": "https://github.com/limzykenneth/xxhash-wasm/issues"
+  },
+  "author": "Kenneth Lim <limzy.kenneth@gmail.com> (https://limzykenneth.com/)",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "np": "^7.0.0",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.1.0",
+    "webpack-dynamic-public-path": "^1.0.6",
+    "xxhash-wasm": "file:./pkg"
+  }
+}

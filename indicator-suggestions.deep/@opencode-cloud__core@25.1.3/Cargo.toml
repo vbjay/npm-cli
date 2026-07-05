@@ -1,0 +1,64 @@
+[package]
+name = "opencode-cloud-core"
+version = "25.1.3"
+edition = "2024"
+rust-version = "1.89"
+license = "MIT"
+repository = "https://github.com/pRizz/opencode-cloud"
+homepage = "https://github.com/pRizz/opencode-cloud"
+documentation = "https://docs.rs/opencode-cloud"
+keywords = ["opencode", "ai", "cloud", "docker", "cli"]
+categories = ["command-line-utilities", "development-tools"]
+description = "Core library for opencode-cloud - config management, singleton enforcement, and shared utilities"
+readme = "README.md"
+exclude = ["*.node", "index.js", "index.d.ts"]
+
+[lib]
+# Both crate types: cdylib for NAPI Node bindings, rlib for Rust CLI
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+napi = ["dep:napi", "dep:napi-derive"]
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+tokio = { version = "1.49", features = ["rt-multi-thread", "macros"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+jsonc-parser = { version = "0.29", features = ["serde"] }
+directories = "6"
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+console = "0.16"
+chrono = { version = "0.4", default-features = false, features = ["std", "clock"] }
+
+# NAPI dependencies (optional - only for Node bindings)
+napi = { version = "3", features = ["tokio_rt", "napi9"], optional = true }
+napi-derive = { version = "3", optional = true }
+
+# Docker integration
+bollard = { version = "0.20.1", features = ["chrono", "buildkit"] }
+futures-util = "0.3"
+tar = "0.4"
+flate2 = "1.1"
+tokio-retry = "0.3"
+indicatif = { version = "0.18", features = ["tokio", "futures"] }
+http-body-util = "0.1"
+bytes = "1.11"
+reqwest = { version = "0.13", default-features = false, features = ["rustls", "webpki-roots", "json"] }
+
+# Platform service management (macOS)
+plist = "1.8"
+
+# Host management
+whoami = "2.1"
+ssh2-config-rs = "0.7.2"
+dirs = "6"
+
+[build-dependencies]
+napi-build = "2"
+
+[dev-dependencies]
+tempfile = "3"

@@ -1,0 +1,53 @@
+{
+  "name": "react-native-sortable-drag-list",
+  "version": "1.0.6",
+  "description": "A performant, flicker-free sortable list component for React Native with drag-and-drop reordering",
+  "main": "lib/index.ts",
+  "types": "lib/index.ts",
+  "files": [
+    "lib/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "mkdir -p lib && cp *.ts *.tsx lib/",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf lib",
+    "prebuild": "npm run clean"
+  },
+  "keywords": [
+    "react-native",
+    "sortable",
+    "drag-and-drop",
+    "reorder",
+    "list",
+    "gesture",
+    "reanimated"
+  ],
+  "author": "Facilitron",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.60.0",
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=2.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-native": "^0.70.0",
+    "react": "^17.0.0",
+    "react-native": "^0.70.0",
+    "react-native-gesture-handler": "^2.0.0",
+    "react-native-reanimated": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/facilitron/react-native-sortable-list.git"
+  },
+  "bugs": {
+    "url": "https://bitbucket.org/facilitron/react-native-sortable-list/issues"
+  },
+  "homepage": "https://bitbucket.org/facilitron/react-native-sortable-list#readme",
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

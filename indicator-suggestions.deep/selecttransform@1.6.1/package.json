@@ -1,0 +1,55 @@
+{
+  "name": "selecttransform",
+  "version": "1.6.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakubMifek/SelectTransform.git"
+  },
+  "keywords": [
+    "stjs",
+    "stts",
+    "select-transform",
+    "selectransform",
+    "library",
+    "typescript",
+    "javascript",
+    "json",
+    "transform",
+    "select",
+    "mapping",
+    "template"
+  ],
+  "author": "Jakub Mifek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JakubMifek/SelectTransform/issues"
+  },
+  "homepage": "https://github.com/JakubMifek/SelectTransform#readme",
+  "scripts": {
+    "lint": "tslint -c './tslint.json' './src/**/*.ts'",
+    "clean": "rm -rf *.tgz dist",
+    "build": "npm run clean && tsc --outDir dist && npm run browsify",
+    "browsify": "browserify browser.js > st.js",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/node": "^11.13.4",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.5.5",
+    "browserify": "^17.0.0",
+    "eslint": "^7.25.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "tsify": "^5.0.2"
+  }
+}

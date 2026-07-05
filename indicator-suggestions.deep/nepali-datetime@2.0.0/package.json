@@ -1,0 +1,78 @@
+{
+    "name": "nepali-datetime",
+    "version": "2.0.0",
+    "description": "A Node project designed to support native JavaScript-like features for Nepali dates. It includes features such as 'NepaliDate' for Nepali date support and 'dateConverter' for date conversions.",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs"
+        },
+        "./dateConverter": {
+            "types": "./dist/dateConverter/index.d.ts",
+            "import": "./dist/dateConverter/index.mjs",
+            "require": "./dist/dateConverter/index.cjs"
+        }
+    },
+    "main": "./dist/index.mjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "javascript",
+        "typescript",
+        "node",
+        "nepal",
+        "nepali",
+        "nepali-date",
+        "nepali-date-converter",
+        "nepali-time",
+        "nepali-timezone",
+        "date-converter",
+        "calendar",
+        "ad-bs",
+        "ad-to-bs",
+        "bs-ad",
+        "bs-to-ad",
+        "AD to BS",
+        "BS to AD"
+    ],
+    "scripts": {
+        "build": "unbuild",
+        "test": "jest",
+        "coverage": "jest --coverage",
+        "prepare": "husky && npm run build",
+        "lint": "prettier --check .",
+        "format": "prettier --write .",
+        "example": "ts-node example.ts"
+    },
+    "lint-staged": {
+        "*": "prettier --ignore-unknown --write"
+    },
+    "repository": {
+        "url": "https://github.com/opensource-nepal/node-nepali-datetime.git",
+        "type": "git"
+    },
+    "author": "OpenSource Nepal",
+    "license": "GPL-3.0",
+    "devDependencies": {
+        "@commitlint/cli": "^20.4.0",
+        "@commitlint/config-conventional": "^20.4.0",
+        "@types/jest": "^30.0.0",
+        "@types/node": "^25.1.0",
+        "husky": "^9.1.7",
+        "jest": "^30.2.0",
+        "lint-staged": "^16.2.7",
+        "prettier": "^3.8.1",
+        "ts-jest": "^29.4.6",
+        "ts-node": "^10.9.2",
+        "tslib": "^2.8.1",
+        "typescript": "^5.9.3",
+        "unbuild": "^3.6.1"
+    },
+    "engines": {
+        "node": ">=22"
+    }
+}

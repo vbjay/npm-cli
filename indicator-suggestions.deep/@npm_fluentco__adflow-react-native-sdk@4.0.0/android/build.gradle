@@ -1,0 +1,105 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['WebviewFabric_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+    // Add the private Maven repo here too
+    maven {
+        url = uri("https://mobile-sdk.adflow-prod.minionplatform.com/android")
+    }
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["WebviewFabric_" + name]).toInteger()
+}
+
+android {
+  namespace "com.fluentco.adflow.widget"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  // Removed hardcoded Java version to allow SDK to adapt to consuming app's Java version
+  // This enables the SDK to work with both RN 0.72 (Java 11) and RN 0.79 (Java 17)
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+  maven {
+    url = uri("https://mobile-sdk.adflow-prod.minionplatform.com/android")
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "com.google.android.gms:play-services-ads-identifier:18.0.1"
+  api "com.fluent.adflowsdk:adflow:3.0.3"
+//  implementation files("libs/adflow-release.aar")
+//  implementation "com.squareup.retrofit2:retrofit:2.1.0"
+//  implementation "com.google.code.gson:gson:2.6.2"
+//  implementation "com.squareup.retrofit2:converter-gson:2.1.0"
+}
+
+// Configure Kotlin to match the Java version of the consuming app
+// This allows the SDK to work with both Java 11 (RN 0.72) and Java 17 (RN 0.79)
+afterEvaluate {
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    // If the root project or app module has specified compileOptions, match them
+    // Otherwise, kotlinOptions will use the Kotlin default (which is JVM 17 for Kotlin 1.8+)
+    def appProject = project.rootProject.subprojects.find { it.name == 'app' }
+    if (appProject?.android?.compileOptions?.sourceCompatibility) {
+      kotlinOptions {
+        jvmTarget = appProject.android.compileOptions.sourceCompatibility.toString()
+      }
+    }
+  }
+}

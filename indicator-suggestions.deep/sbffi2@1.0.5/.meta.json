@@ -1,0 +1,102 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "523825106103ee48",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "05689d907ee5fa8a889f8e567c4e779589ffde348f7614b40e8b135118b61768",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `sbffi`  -  C/C++ sources",
+            "items": [
+              "src/sbffi.cc",
+              "deps/dyncall/dyncall/dyncall_api.c",
+              "deps/dyncall/dyncall/dyncall_vector.c",
+              "deps/dyncall/dyncall/dyncall_callvm.c",
+              "deps/dyncall/dyncall/dyncall_callvm_base.c",
+              "deps/dyncall/dyncall/dyncall_callf.c",
+              "deps/dyncall/dyncall/dyncall_struct.c",
+              "deps/dyncall/dynload/dynload.c",
+              "deps/dyncall/dynload/dynload_syms.c",
+              "deps/dyncall/dyncallback/dyncall_thunk.c",
+              "deps/dyncall/dyncallback/dyncall_alloc_wx.c",
+              "deps/dyncall/dyncallback/dyncall_args.c",
+              "deps/dyncall/dyncallback/dyncall_callback.c",
+              "deps/dyncall/dyncall/dyncall_call_x86_generic_masm.asm",
+              "deps/dyncall/dyncallback/dyncall_callback_x86_masm.asm",
+              "deps/dyncall/dyncall/dyncall_call_x64_generic_masm.asm",
+              "deps/dyncall/dyncallback/dyncall_callback_x64_masm.asm",
+              "deps/dyncall/dyncall/dyncall_call.S",
+              "deps/dyncall/dyncallback/dyncall_callback_arch.S"
+            ]
+          },
+          {
+            "label": "Target `sbffi`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "deps/dyncall/dyncall",
+              "deps/dyncall/dynload",
+              "deps/dyncall/dyncallback"
+            ]
+          },
+          {
+            "label": "Target `sbffi`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:08.233Z"
+  },
+  "hash": "sha256:feaed3b9e2f600d4b589502e04aa6499b49344757651cc5050fbc3038a467160"
+}

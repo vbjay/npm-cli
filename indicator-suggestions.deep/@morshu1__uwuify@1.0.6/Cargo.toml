@@ -1,0 +1,19 @@
+[package]
+name = "uwuify-rs"
+version = "1.0.0"
+description = "Node.js wrapper to the uwuify library"
+authors = ["Rooster"]
+license = "MIT"
+edition = "2018"
+exclude = ["index.node"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies.neon]
+version = "0.8"
+default-features = false
+features = ["napi-6"]
+
+[dependencies]
+uwuify = "0.2.2"

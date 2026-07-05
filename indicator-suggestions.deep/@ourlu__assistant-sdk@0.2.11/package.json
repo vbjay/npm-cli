@@ -1,0 +1,41 @@
+{
+  "name": "@ourlu/assistant-sdk",
+  "version": "0.2.11",
+  "description": "SDK JavaScript pour l'assistant conversationnel Ourlu — widget intégrable pour les mairies.",
+  "type": "module",
+  "private": false,
+  "main": "dist/esm/index.js",
+  "exports": {
+    ".": "./dist/esm/index.js",
+    "./loader.v1.js": "./dist/iife/loader.v1.js",
+    "./ui.v1.js": "./dist/iife/ui.v1.js",
+    "./audio.v1.js": "./dist/iife/audio.v1.js",
+    "./signalement.v1.js": "./dist/iife/signalement.v1.js",
+    "./plu.v1.js": "./dist/iife/plu.v1.js",
+    "./engine.v1.js": "./dist/iife/engine.v1.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "test": "node --test ./tests/*.test.mjs",
+    "prepack": "npm run build && npm run test",
+    "pack:check": "npm pack --dry-run",
+    "publish:dry-run": "npm publish --dry-run"
+  },
+  "keywords": [
+    "assistant",
+    "widget",
+    "sdk",
+    "javascript",
+    "ourlu",
+    "mairie"
+  ],
+  "author": "Ourlu",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}

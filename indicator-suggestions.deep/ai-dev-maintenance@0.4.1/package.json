@@ -1,0 +1,60 @@
+{
+  "name": "ai-dev-maintenance",
+  "version": "0.4.1",
+  "description": "Safely diagnose AI coding tool disk state and live CPU/RAM pressure.",
+  "type": "module",
+  "packageManager": "pnpm@10.34.4",
+  "bin": {
+    "ai-dev-maintenance": "dist/cli.js",
+    "aidm": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README.ja.md",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "examples",
+    "schemas"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "hygiene": "node scripts/public-hygiene.mjs",
+    "hygiene:package": "node scripts/public-hygiene.mjs --package",
+    "verify": "pnpm run typecheck && pnpm run test && pnpm run hygiene",
+    "release:check": "node scripts/release-check.mjs",
+    "release:check:prepublic": "node scripts/release-check.mjs --allow-missing-metadata",
+    "prepack": "corepack pnpm run verify && corepack pnpm run build && corepack pnpm run hygiene:package",
+    "prepublishOnly": "corepack pnpm run verify && corepack pnpm run build && corepack pnpm run hygiene:package && corepack pnpm run release:check"
+  },
+  "keywords": [
+    "codex",
+    "sqlite",
+    "wal",
+    "macos",
+    "cli",
+    "performance"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niconicotesla369/ai-dev-maintenance.git"
+  },
+  "bugs": {
+    "url": "https://github.com/niconicotesla369/ai-dev-maintenance/issues"
+  },
+  "homepage": "https://github.com/niconicotesla369/ai-dev-maintenance#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "ajv": "^8.20.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

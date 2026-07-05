@@ -1,0 +1,109 @@
+{
+  "name": "@bambuser/react-native-commerce-sdk",
+  "version": "1.1.0",
+  "description": "React Native wrapper for Bambuser Commerce SDK",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "BambuserCommerceSDK.xcframework",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @bambuser/react-native-commerce-sdk-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\""
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "author": "Bambuser (https://bambuser.com)",
+  "homepage": "https://bambuser.com",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@react-native/babel-preset": "0.81.1",
+    "@react-native/eslint-config": "0.81.1",
+    "@types/react": "^19.2.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "react": "19.1.0",
+    "react-native": "0.81.1",
+    "react-native-builder-bob": "^0.41.0",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.72.0"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "create-react-native-library": {
+    "type": "view",
+    "languages": "kotlin-objc",
+    "tools": [
+      "eslint"
+    ],
+    "version": "0.60.0"
+  }
+}

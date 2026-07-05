@@ -1,0 +1,64 @@
+{
+  "name": "handback",
+  "version": "0.1.10",
+  "description": "Hand control from an agent to a human via a local web runbook.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "handback": "dist/src/cli.js"
+  },
+  "files": [
+    "dist/src",
+    "dist/ui",
+    "examples",
+    "schema/task.schema.json",
+    "scripts/postinstall.mjs"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phin-tech/handback.git"
+  },
+  "homepage": "https://github.com/phin-tech/handback#readme",
+  "bugs": {
+    "url": "https://github.com/phin-tech/handback/issues"
+  },
+  "keywords": [
+    "agent",
+    "human-in-the-loop",
+    "runbook",
+    "checklist",
+    "cli",
+    "ai"
+  ],
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -p tsconfig.json && npm run gen:schema && vite build",
+    "gen:schema": "node --import tsx scripts/gen-schema.mjs",
+    "postinstall": "node scripts/postinstall.mjs",
+    "release": "npm test && npm run build && test -z \"$(git status --porcelain)\" && gh release create \"v$(node -p 'require(\"./package.json\").version')\" --generate-notes",
+    "test": "node --import tsx --test test/*.test.ts",
+    "test:uat": "npm run build && node scripts/uat.mjs",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "prepublishOnly": "npm run build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.2",
+    "@types/node": "^25.0.3",
+    "playwright": "^1.61.0",
+    "svelte": "^5.46.1",
+    "svelte-check": "^4.3.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.7",
+    "vitepress": "^1.6.4"
+  }
+}

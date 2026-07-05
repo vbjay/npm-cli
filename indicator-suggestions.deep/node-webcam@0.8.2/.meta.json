@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1642f855b9780dfb",
+    "fetchedFiles": [
+      "bin/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7d58651084b48b8de03706f5c59f12f35d77cc433f9ae0da9aa819ce070e14bc",
+        "sizeBytes": 1049,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./bin/postinstall.js",
+        "sha256": "f277500f14f6b9c351d910acbb639baa9ee3790a143bd5fcbba273c2b49e0ab2",
+        "sizeBytes": 1059,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.366Z"
+  },
+  "hash": "sha256:83c5acc2b6f65fb95a3762b7fe474ab059575f50c51f86004ecdf69a60ac855e"
+}

@@ -1,0 +1,123 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ea5b6791914b4327",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js",
+      "scripts/lib/download.js",
+      "scripts/lib/platform.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a5e3cb1da99879396566d1bc461348b3a72b24ac099e5f7f88e34e0f9b0c8f92",
+        "sizeBytes": 1273,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/download.js",
+          "scripts/lib/platform.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/download.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "dcd1c058ce1754aa034309d340a9356d966bd17307475ae87d82b64789efad4c",
+        "sizeBytes": 814,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/platform.js",
+        "reason": "required by ./scripts/lib/download.js; required by ./scripts/install.js",
+        "sha256": "457efc3ab61ec0ec82bf84f64abab32737d7bd4db63ed6be7e139b441f79b273",
+        "sizeBytes": 1043,
+        "signals": [
+          "binary-download",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/214140846/ai-media-generator/releases/download/ai-media-generator-v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "674bc71c035491b9dd47a216a454912eb12a1787fb9a2b1ddb18fbc70241552e",
+        "sizeBytes": 660,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:18.981Z"
+  },
+  "hash": "sha256:30461f54391d9b684f3771ede777b4dbd6f13bddd48904edb214eedf4e09e393"
+}

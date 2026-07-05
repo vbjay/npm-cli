@@ -1,0 +1,43 @@
+{
+  "name": "test2jzsocket-server",
+  "version": "0.4.0",
+  "description": "Socket.IO clone rebuilt in Rust - Server package (TEST VERSION)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "socket2jz-server": "./bin/cli.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "postinstall": "node scripts/post-install.mjs"
+  },
+  "keywords": [
+    "socket",
+    "websocket",
+    "realtime",
+    "rust",
+    "server"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ioredis": "^5.0.0",
+    "ws": "^8.14.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0",
+    "nock": "^13.0.0",
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.5.0"
+  }
+}

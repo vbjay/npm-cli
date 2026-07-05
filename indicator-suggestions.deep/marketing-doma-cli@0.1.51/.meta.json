@@ -1,0 +1,55 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a83e79f66d159e69",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "74d2981c753daece6736b24fb2bf5bb8367b7ff89d8e4dea7745e5956b21502b",
+        "sizeBytes": 2690,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.js",
+        "sha256": "5778191c97f5a5077a1b6b029b0a43862d011463d7d2e1531b8d606ffc175b4f",
+        "sizeBytes": 1328,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:08.835Z"
+  },
+  "hash": "sha256:be1d8ad8f5f8926897140b49a5296656ca3d86d021805e78adc0ba2a3b4f6fec"
+}

@@ -1,0 +1,54 @@
+{
+  "name": "lazyaif",
+  "version": "0.8.0",
+  "type": "module",
+  "description": "Analyze ai-factory plan statuses (fast/full) via TUI or CLI",
+  "license": "MIT",
+  "author": "Daniil G <dealenx@gmail.com>",
+  "homepage": "https://github.com/dealenx/lazyaif#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dealenx/lazyaif.git",
+    "directory": "packages/lazyaif"
+  },
+  "bugs": {
+    "url": "https://github.com/dealenx/lazyaif/issues"
+  },
+  "keywords": [
+    "ai-factory",
+    "plan",
+    "status",
+    "tui",
+    "cli",
+    "opentui",
+    "bun"
+  ],
+  "bin": {
+    "lazyaif": "dist/lazyaif.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "bun run scripts/prebuild.ts",
+    "prepack": "bun run scripts/prebuild.ts",
+    "tui": "bun bin/lazyaif.ts tui",
+    "plans": "bun bin/lazyaif.ts plans",
+    "status": "bun bin/lazyaif.ts status",
+    "test": "bun test",
+    "typecheck": "bunx tsc --noEmit -p tsconfig.json",
+    "build": "bun build --compile bin/lazyaif.ts --outfile lazyaif"
+  },
+  "dependencies": {
+    "@opentui/core": "0.4.2",
+    "commander": "^13.1.0"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.14",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

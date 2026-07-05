@@ -1,0 +1,98 @@
+{
+  "name": "as-str",
+  "version": "0.3.0",
+  "author": "Jairus Tanaka <me@jairus.dev>",
+  "description": "Virtual, zero-copy strings for AssemblyScript - slice, trim and search without allocating",
+  "types": "assembly/index.ts",
+  "main": "transform/lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JairusSW/as-str.git"
+  },
+  "funding": "https://github.com/sponsors/JairusSW",
+  "bugs": {
+    "url": "https://github.com/JairusSW/as-str/issues"
+  },
+  "homepage": "https://docs.jairus.dev/as-str",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "assemblyscript",
+    "string",
+    "str",
+    "virtual",
+    "zero-copy",
+    "view",
+    "slice",
+    "substring",
+    "rope",
+    "wasm",
+    "performance"
+  ],
+  "files": [
+    "assembly/index.ts",
+    "assembly/str.ts",
+    "assembly/str8.ts",
+    "assembly/util.ts",
+    "assembly/util8.ts",
+    "assembly/tsconfig.json",
+    "index.ts",
+    "transform/lib/",
+    "transform/package.json",
+    "globals/index.d.ts",
+    "globals.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "ast test",
+    "test:ci": "ast test --clean",
+    "test:fuzz": "ast fuzz",
+    "format": "prettier -w .",
+    "lint": "eslint . --no-warn-ignored",
+    "lint:fix": "eslint . --fix --no-warn-ignored",
+    "typecheck": "asc assembly/index.ts --noEmit",
+    "typecheck:transform": "tsc -p ./transform --noEmit",
+    "build:transform": "tsc -p ./transform",
+    "prepublishOnly": "npm run build:transform",
+    "check": "npm run lint && npm run typecheck && npm run typecheck:transform",
+    "bench": "asb run",
+    "bench:full": "asb run --mode full",
+    "charts": "bun run charts:build && bun run charts:serve",
+    "charts:build": "bash ./scripts/build-charts.sh",
+    "charts:serve": "serve ./build/charts/",
+    "charts:publish": "bash ./scripts/publish-benchmarks.sh",
+    "build:playground": "asc assembly/playground.ts -o ./build/playground.wasm --textFile ./build/playground.wat --enable simd --enable bulk-memory --config ./node_modules/@assemblyscript/wasi-shim/asconfig.json",
+    "run:playground": "wasmtime ./build/playground.wasm",
+    "playground": "npm run build:playground && npm run run:playground",
+    "pg": "npm run playground",
+    "commitmsg:verify": "bash ./scripts/commit-msg.sh",
+    "precommit:verify": "bash ./scripts/pre-commit.sh",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@assemblyscript/wasi-shim": "^0.1.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.9.2",
+    "as-bench": "^0.1.0",
+    "as-test": "^1.8.0",
+    "assemblyscript": "^0.28.18",
+    "assemblyscript-prettier": "^3.0.4",
+    "chart.js": "^4.4.8",
+    "chartjs-node-canvas": "^5.0.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "eslint": "^10.4.1",
+    "husky": "^9.1.7",
+    "prettier": "3.8.3",
+    "serve": "^14.2.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.1"
+  },
+  "publishConfig": {
+    "@JairusSW:registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "utf-as": "^0.3.1"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "node-luajit",
+  "version": "3.0.0",
+  "description": "luajit node binding",
+  "main": "index.js",
+  "homepage": "https://github.com/whtiehack/node-luajit",
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/whtiehack/node-luajit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/whtiehack/node-luajit/issues"
+  },
+  "keywords": [
+    "lua",
+    "luajit",
+    "nodejs",
+    "addon",
+    "cjson",
+    "lua51"
+  ],
+  "scripts": {
+    "build": "node-pre-gyp rebuild",
+    "test": "node test/test.js",
+    "packageVersion": "echo $npm_package_version",
+    "dev": "node index.js",
+    "package": "node-pre-gyp package",
+    "install": "node-pre-gyp install --fallback-to-build",
+    "publish": "node-pre-gyp-github publish --release"
+  },
+  "engines": {
+    "node": ">= 10.20.0"
+  },
+  "author": "smallwhite",
+  "license": "ISC",
+  "dependencies": {
+    "node-pre-gyp": "^0.17.0"
+  },
+  "devDependencies": {
+    "co": "4.6.0",
+    "node-addon-api": "^3.1.0",
+    "node-pre-gyp-github": "^1.4.3"
+  },
+  "binary": {
+    "module_name": "node-luajit",
+    "module_path": "./binding/Release/napi-v{napi_build_version}",
+    "package_name": "napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/whtiehack/node-luajit/releases/download/",
+    "remote_path": "v{version}",
+    "napi_versions": [
+      6,
+      7
+    ]
+  }
+}

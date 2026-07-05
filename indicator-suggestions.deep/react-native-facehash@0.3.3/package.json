@@ -1,0 +1,166 @@
+{
+  "name": "react-native-facehash",
+  "version": "0.3.3",
+  "description": "Facehash implementation in React Native",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-facehash-example",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscarvx00/react-native-facehash.git"
+  },
+  "author": "oscarvx00 <oscarv201008@gmail.com> (https://github.com/oscarvx00)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oscarvx00/react-native-facehash/issues"
+  },
+  "homepage": "https://github.com/oscarvx00/react-native-facehash#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.30.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@jest/globals": "^30.0.0",
+    "@react-native/babel-preset": "0.83.0",
+    "@react-native/eslint-config": "0.83.0",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@types/react": "^19.2.0",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "lefthook": "^2.1.4",
+    "prettier": "^3.8.1",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.41.0",
+    "react-native-svg": "*",
+    "release-it": "^19.2.4",
+    "turbo": "^2.8.21",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "create-react-native-library": {
+    "type": "library",
+    "languages": "js",
+    "tools": [
+      "eslint",
+      "jest",
+      "lefthook",
+      "release-it"
+    ],
+    "version": "0.58.2"
+  }
+}

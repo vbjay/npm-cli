@@ -1,0 +1,66 @@
+{
+  "name": "helpers_wallet_abi_web",
+  "version": "0.16.1",
+  "description": "Thin Wallet ABI helpers for wallet_abi_sdk_core_web",
+  "license": "MIT OR BSD-2-Clause",
+  "homepage": "https://github.com/Blockstream/lwk/tree/master/lwk_wasm",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blockstream/lwk.git",
+    "directory": "lwk_wasm/npm/packages/wallet-abi-web"
+  },
+  "bugs": {
+    "url": "https://github.com/Blockstream/lwk/issues"
+  },
+  "keywords": [
+    "blockstream",
+    "liquid",
+    "wallet",
+    "wallet-abi",
+    "wasm",
+    "webassembly",
+    "browser",
+    "typescript"
+  ],
+  "type": "module",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "import": "./dist/schema.js",
+      "default": "./dist/schema.js"
+    },
+    "./helpers": {
+      "types": "./dist/helpers.d.ts",
+      "import": "./dist/helpers.js",
+      "default": "./dist/helpers.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npm --prefix ../.. run build -w wallet_abi_sdk_core_web && tsc -p tsconfig.build.json",
+    "build:features": "LWK_WASM_FEATURES=\"serial,simplicity\" npm run build",
+    "typecheck": "npm run build:features && tsc -p tsconfig.json --noEmit",
+    "test": "npm run build:features && tsc -p tsconfig.json --noEmit",
+    "pack:check": "npm run build:features && npm pack --dry-run",
+    "prepack": "npm run build:features"
+  },
+  "dependencies": {
+    "wallet_abi_sdk_core_web": "0.16.1"
+  }
+}

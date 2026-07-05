@@ -1,0 +1,89 @@
+{
+  "name": "rn-pendo-sdk",
+  "title": "Pendo Mobile SDK for React Native",
+  "version": "3.13.3",
+  "description": "Pendo Mobile React Native SDK",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pendo-io/react-native-pendo-sdk.git",
+    "baseUrl": "https://github.com/pendo-io/react-native-pendo-sdk/"
+  },
+  "scripts": {
+    "prepare": "eslint . && tsc && tsc --project __tests__/tsconfig.json && babel --extensions '.ts,.tsx' ./src --out-dir lib --delete-dir-on-start &&   cd plugin && tsc && babel --extensions '.ts,.tsx' ./src --out-dir ./build --delete-dir-on-start  && cd ..",
+    "build": "jest && eslint . && tsc && tsc --project __tests__/tsconfig.json && babel --extensions '.ts,.tsx' ./src --out-dir lib --delete-dir-on-start && cd plugin && tsc && babel --extensions '.ts,.tsx' ./src --out-dir ./build --delete-dir-on-start  &&  cd ..",
+    "watch": "babel --watch --verbose --extensions '.js,.jsx,.ts,.tsx' ./src --out-dir lib --delete-dir-on-start",
+    "test": "jest",
+    "lint": "eslint .",
+    "tsc:test": "tsc --project __tests__/tsconfig.json"
+  },
+  "keywords": [
+    "react-native",
+    "pendo",
+    "pendosdk",
+    "ios",
+    "android"
+  ],
+  "author": {
+    "name": "Pendo Inc",
+    "email": "support@pendo.io"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://www.pendo.io",
+  "peerDependencies": {
+    "react-native": ">= 0.66.0"
+  },
+  "main": "lib/index",
+  "files": [
+    "android",
+    "ios",
+    "lib",
+    "scripts",
+    "RNPendoSdk.podspec",
+    "index.d.ts",
+    "app.plugin.js",
+    "plugin/build",
+    "plugin/ios",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "types": "index.d.ts",
+  "devDependencies": {
+    "@babel/cli": "7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-typescript": "^7.28.5",
+    "@babel/runtime": "^7.28.6",
+    "@eslint/compat": "1.4.0",
+    "@eslint/eslintrc": "3.3.4",
+    "@eslint/js": "9.37.0",
+    "@expo/config-plugins": "~9.0.17",
+    "@expo/config-types": "52.0.5",
+    "@jest/globals": "^30.2.0",
+    "@react-native-community/eslint-config": "3.2.0",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^30.0.0",
+    "@types/react": "17.0.2",
+    "@types/react-native": "0.66.34",
+    "babel-jest": "^30.2.0",
+    "babel-plugin-module-resolver": "5.0.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-prettier": "5.5.5",
+    "eslint-plugin-react-hooks": "4.6.2",
+    "expo-module-scripts": "3.5.4",
+    "jest": "^30.2.0",
+    "metro-react-native-babel-preset": "0.77.0",
+    "prettier": "3.8.1",
+    "react": "17.0.2",
+    "react-native": "0.66.5",
+    "react-test-renderer": "17.0.2",
+    "ts-jest": "^29.4.6",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

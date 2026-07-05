@@ -1,0 +1,98 @@
+{
+  "name": "style-guide-mcp-server",
+  "version": "2.0.0",
+  "description": "Lightning-fast MCP server providing comprehensive programming style guides, security best practices, and code analysis for 15+ languages with intelligent caching and optimization",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "style-guide",
+    "code-quality",
+    "security",
+    "best-practices",
+    "typescript",
+    "javascript",
+    "python",
+    "java",
+    "cpp",
+    "go",
+    "rust",
+    "csharp",
+    "php",
+    "ruby",
+    "swift",
+    "kotlin",
+    "code-analysis",
+    "linting",
+    "security-guidelines",
+    "owasp",
+    "vulnerability-detection",
+    "performance-optimization",
+    "caching",
+    "sqlite",
+    "claude-desktop",
+    "ai-assistant",
+    "development-tools",
+    "programming-languages",
+    "coding-standards",
+    "enterprise-grade"
+  ],
+  "author": "Chris Bunting <cbuntingde@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbuntingde/style-guide-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cbuntingde/style-guide-mcp-server/issues"
+  },
+  "homepage": "https://github.com/cbuntingde/style-guide-mcp-server#readme",
+  "type": "module",
+  "main": "build/index.js",
+  "bin": {
+    "style-guide-mcp-server": "build/index.js"
+  },
+  "files": [
+    "build",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "tsc && node build/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:performance": "node --expose-gc tests/performance/test-startup-time.js",
+    "test:memory": "node --expose-gc tests/performance/test-memory-usage.js",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "clean": "rimraf build",
+    "prepublishOnly": "npm run clean && npm run build",
+    "prepack": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "better-sqlite3": "^12.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "marked": "^9.1.6",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.5",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "rimraf": "^6.1.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
+}

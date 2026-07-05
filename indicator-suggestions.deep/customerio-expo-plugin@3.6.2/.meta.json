@@ -1,0 +1,116 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "36fe29f3d8bd412b",
+    "fetchedFiles": [
+      "package.json",
+      "plugin/src/postInstall.js",
+      "plugin/src/postInstallHelper.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "resolve-from",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "resolve-from@5.0.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\customerio-expo-plugin@3.6.2\\android\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\customerio-expo-plugin@3.6.2\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "plugin/src/postInstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4a5ac6ee62c6880833f4c9e7777759ecb984c7d254788e0f9cdcb86c05ab4b1e",
+        "sizeBytes": 152,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "plugin/src/postInstallHelper.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "plugin/src/postInstallHelper.js",
+        "reason": "required by ./plugin/src/postInstall.js",
+        "sha256": "0d2dd353065e764c93d7bb793d115ad4723703fe77e4fde5f11eff4d465778d3",
+        "sizeBytes": 3113,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "dynamic-require",
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:35.766Z"
+  },
+  "hash": "sha256:1ad96199cc818b334d6a80cd6455004881036fa1bd44405e2983f3cc8e2f8e1f"
+}

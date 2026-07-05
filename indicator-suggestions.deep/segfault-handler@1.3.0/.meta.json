@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8f55074690680357",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "8aed567cddbf0ac322e256ed562eae4002849591b4bf4efa8706bb95ac383536",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `segfault-handler`  -  C/C++ sources",
+            "items": [
+              "src/segfault-handler.cpp",
+              "src/StackWalker.cpp",
+              "includes/StackWalker.h"
+            ]
+          },
+          {
+            "label": "Target `segfault-handler`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")"
+            ]
+          },
+          {
+            "label": "Target `segfault-handler`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:09.250Z"
+  },
+  "hash": "sha256:088d5722e8a0becbe42961221bd0d431811b226dffc589fd0f2cca71cfe97a56"
+}

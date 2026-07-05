@@ -1,0 +1,135 @@
+{
+  "name": "react-native-nitro-amplitude",
+  "version": "0.5.4",
+  "description": "Amplitude Analytics and Experiment SDK for React Native powered by Nitro Modules and C++ on native platforms, with web-compatible fetch and storage fallbacks.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "browser": "src/index.web.ts",
+  "source": "src/index.ts",
+  "app": "app.plugin.js",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/index.d.ts",
+      "react-native": "./src/index.ts",
+      "browser": "./src/index.web.ts",
+      "default": "./lib/commonjs/index.js"
+    },
+    "./analytics": {
+      "types": "./lib/typescript/analytics/index.d.ts",
+      "react-native": "./src/analytics/index.ts",
+      "browser": "./src/analytics/index.ts",
+      "default": "./lib/commonjs/analytics/index.js"
+    },
+    "./experiment": {
+      "types": "./lib/typescript/experiment/index.d.ts",
+      "react-native": "./src/experiment/index.ts",
+      "browser": "./src/experiment/index.ts",
+      "default": "./lib/commonjs/experiment/index.js"
+    },
+    "./app.plugin": "./app.plugin.js",
+    "./app.plugin.js": "./app.plugin.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "cpp",
+    "android",
+    "ios",
+    "nitrogen",
+    "nitro.json",
+    "CHANGELOG.md",
+    "*.podspec",
+    "app.plugin.js",
+    ".watchmanconfig",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!cpp/**/*Test.cpp",
+    "!cpp/build",
+    "!android/build",
+    "!android/.cxx",
+    "!scripts"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "clean": "rimraf lib nitrogen/generated",
+    "codegen": "nitrogen --logLevel=\"debug\"",
+    "lint": "bunx eslint src --max-warnings=0",
+    "lint:fix": "bunx eslint src --max-warnings=0 --fix",
+    "lint:check": "bunx eslint src --max-warnings=0",
+    "format": "bunx prettier --write \"src/**/*.{ts,tsx}\" \"../../README.md\" \"../../CHANGELOG.md\"",
+    "format:check": "bunx prettier --check \"src/**/*.{ts,tsx}\" \"../../README.md\" \"../../CHANGELOG.md\"",
+    "typecheck": "tsc --noEmit",
+    "test:types": "tsc --noEmit -p tsconfig.types.json",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "benchmark": "node scripts/benchmark-check.js",
+    "test:cpp": "node scripts/test-cpp.js",
+    "test:cpp:sanitize": "NITRO_CPP_SANITIZE=address,undefined node scripts/test-cpp.js",
+    "test:cpp:coverage": "node scripts/test-cpp.js --coverage",
+    "check:pack": "node scripts/check-pack-contents.js",
+    "prepack": "node scripts/sync-package-docs.js prepare",
+    "postpack": "node scripts/sync-package-docs.js cleanup",
+    "prepublishOnly": "bun run clean && bun run codegen && bun run build && bun run test:types"
+  },
+  "keywords": [
+    "react-native",
+    "amplitude",
+    "analytics",
+    "experiment",
+    "feature-flags",
+    "a-b-testing",
+    "nitro",
+    "nitro-modules",
+    "jsi",
+    "expo",
+    "performance"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaoPauloCMarra/react-native-nitro-amplitude.git"
+  },
+  "author": "JoaoPauloCMarra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoaoPauloCMarra/react-native-nitro-amplitude/issues"
+  },
+  "homepage": "https://github.com/JoaoPauloCMarra/react-native-nitro-amplitude#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@amplitude/analytics-connector": "^1.6.4",
+    "@amplitude/analytics-core": "2.49.0",
+    "@amplitude/experiment-core": "^0.13.1",
+    "@amplitude/ua-parser-js": "^0.7.33",
+    "tslib": "^2.8.1",
+    "unfetch": "^4.2.0"
+  },
+  "devDependencies": {
+    "@react-native/babel-preset": "^0.85.3",
+    "@types/react": "~19.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-native": ">=0.75.0",
+    "react-native-nitro-modules": ">=0.35.7"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "tsc": "../../node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  }
+}

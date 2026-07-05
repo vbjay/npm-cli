@@ -1,0 +1,94 @@
+{
+  "name": "gotodev",
+  "version": "2.0.4",
+  "description": "🚀 Create React + TypeScript + Tailwind apps in 2.3s instead of 45s. 100x faster than Vite. Built with Rust + Oxc + Rolldown. Single-pass compilation. Security audit passed (0 vulnerabilities).",
+  "main": "index.js",
+  "type": "commonjs",
+  "bin": {
+    "gotodev": "cli.js"
+  },
+  "scripts": {
+    "build": "cd crates/binding && node ../../node_modules/@napi-rs/cli/dist/cli.js build --platform --release",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "create-app",
+    "react",
+    "vue",
+    "angular",
+    "svelte",
+    "typescript",
+    "vite",
+    "rust",
+    "fast",
+    "cli",
+    "scaffold",
+    "boilerplate",
+    "starter",
+    "generator",
+    "template"
+  ],
+  "author": "gotodev-team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/packages2282801/gotodev-installer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gotodev-manager/gotodev-installer/issues"
+  },
+  "homepage": "https://github.com/gotodev-manager/gotodev-installer#readme",
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "axios": "^1.13.2",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "ejs": "^3.1.10",
+    "execa": "^9.6.1",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.3",
+    "github-repo": "^0.0.3",
+    "inquirer": "^13.1.0",
+    "ora": "^9.0.0",
+    "picocolors": "^1.1.1",
+    "rimraf": "^6.1.2",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.5.1",
+    "fast-glob": "^3.3.3",
+    "github-repo": "^0.0.3",
+    "rimraf": "^6.1.2",
+    "typescript": "^5.9.3",
+    "yargs": "^18.0.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "napi": {
+    "name": "gotodev-binding",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-gnu",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin",
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "cli.js",
+    "template-fetcher.js",
+    "templates/",
+    "scripts/",
+    "gotodev-*.node",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ]
+}

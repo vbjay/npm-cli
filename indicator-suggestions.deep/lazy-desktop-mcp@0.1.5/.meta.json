@@ -1,0 +1,80 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6dea59ee2e3e8bf4",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "package.json",
+      "scripts/build-native.mjs",
+      "scripts/postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "1e1af89456dc6b63786b61219bc1ced534b240a909ea6984be45ddbfa644886a",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.5"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "47f5f7ca317a025facfd32470f312073f7bac5e77696062167b5a92fb37ce9e8",
+        "sizeBytes": 645,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/build-native.mjs",
+        "reason": "spawned via process.execPath from ./scripts/postinstall.mjs",
+        "sha256": "64397867dc511ce10589fb2146551bc9934d64539c5d7fe653dfab740119b204",
+        "sizeBytes": 911,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:05.722Z"
+  },
+  "hash": "sha256:3fbcaa9260efad693eee7289d3168e8bdbd36e9346aa6024f31682a847232669"
+}

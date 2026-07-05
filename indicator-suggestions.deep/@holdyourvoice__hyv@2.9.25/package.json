@@ -1,0 +1,77 @@
+{
+  "name": "@holdyourvoice/hyv",
+  "version": "2.9.25",
+  "description": "Free local AI writing scan for cursor & claude. MCP server, 220+ pattern detection, voice profiles. npx @holdyourvoice/hyv welcome",
+  "main": "dist/index.js",
+  "bin": {
+    "hyv": "dist/index.js",
+    "hyvoice": "dist/index.js"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node18 --outfile=dist/index.js --format=cjs --external:canvas --banner:js='#!/usr/bin/env node'",
+    "build:debug": "esbuild src/index.ts --bundle --platform=node --target=node18 --outfile=dist/index.js --format=cjs --sourcemap --banner:js='#!/usr/bin/env node'",
+    "dev": "npm run build && node dist/index.js",
+    "validate:publish": "npm run build && node scripts/validate-publish.js",
+    "prepublishOnly": "npm run validate:publish",
+    "postinstall": "node scripts/postinstall.js",
+    "prepare": "npm run build",
+    "test": "npm run build && vitest run",
+    "test:smoke": "npm run build && bash scripts/smoke-test.sh",
+    "test:watch": "vitest",
+    "release:patch": "npm version patch && npm publish --access public",
+    "release:minor": "npm version minor && npm publish --access public",
+    "release:major": "npm version major && npm publish --access public"
+  },
+  "keywords": [
+    "voice",
+    "writing",
+    "ai",
+    "cli",
+    "brand-voice",
+    "content-gate",
+    "hyv",
+    "cursor",
+    "claude",
+    "mcp",
+    "ai-agent",
+    "ai-writing",
+    "voice-profile"
+  ],
+  "author": "Hold Your Voice",
+  "license": "UNLICENSED",
+  "private": false,
+  "dependencies": {
+    "canvas": "^3.2.3",
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "glob": "^13.0.6",
+    "open": "^8.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.42",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.3",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist/",
+    "scripts/postinstall.js",
+    "scripts/postinstall-lib.js",
+    "scripts/install.sh",
+    "scripts/install.ps1",
+    "scripts/check-no-duplicates.js",
+    "assets/",
+    "skills/",
+    "agents/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shashank-sn/hold-your-voice-app.git"
+  }
+}

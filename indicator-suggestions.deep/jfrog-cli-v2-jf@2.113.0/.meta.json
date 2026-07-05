@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2aba6a64375fbbd5",
+    "fetchedFiles": [
+      "init.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "init.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "2b0829c854d17dc261a1368f8e9a46dd2efef6873656300ff98ea262fa039589",
+        "sizeBytes": 4511,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://releases.jfrog.io/artifactory/jfrog-cli/v2-jf/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./init.js",
+        "sha256": "d06b2a967ac205d2f0fee401360125e0cdd1a0f99c89b9b115fd5940a6ee6a67",
+        "sizeBytes": 909,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:02.906Z"
+  },
+  "hash": "sha256:c7434b8b569e0599c23a8a335ac87cdcf8ae047019effd3be9514bef0291210c"
+}

@@ -1,0 +1,108 @@
+{
+  "name": "npm-run-all-next",
+  "version": "1.4.2",
+  "description": "A CLI tool to run multiple npm-scripts in parallel or sequentially, with support for retrying failed tasks.",
+  "bin": {
+    "run-p": "bin/run-p/index.js",
+    "run-s": "bin/run-s/index.js",
+    "npm-run-all": "bin/npm-run-all/index.js",
+    "npm-run-all-next": "bin/npm-run-all-next/index.js"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "bin",
+    "lib",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "_mocha": "mocha \"test/*.js\" --timeout 120000",
+    "clean": "rimraf .nyc_output coverage jsdoc \"test-workspace/{build,test.txt}\"",
+    "docs": "jsdoc -c jsdoc.json",
+    "lint": "eslint bin lib scripts test \"test-workspace/tasks/*.js\"",
+    "pretest": "node scripts/make-slink.js && npm run lint",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags",
+    "test": "nyc --reporter=lcov --reporter=text --reporter=text-summary --require @babel/register npm run _mocha",
+    "test:parallel": "node test/bin/run-tests.js",
+    "test:parallel:coverage": "nyc --reporter=lcov --reporter=text --reporter=text-summary --require @babel/register node test/bin/run-tests.js",
+    "coverage:report": "nyc report --reporter=text --reporter=text-summary",
+    "watch": "npm run _mocha -- --require @babel/register --watch",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "ansi-styles": "5.2.0",
+    "chalk": "^4.1.2",
+    "cross-spawn": "^7.0.6",
+    "minimatch": "^10.0.1",
+    "pidtree": "^0.6.0",
+    "read-pkg": "^5.2.0",
+    "shell-quote": "^1.8.2",
+    "string.prototype.padend": "^3.1.6",
+    "tree-kill": "^1.2.2"
+  },
+  "devDependencies": {
+    "npm-check-updates": "^18.0.1",
+    "husky": "^9.1.7",
+    "@babel/cli": "^7.27.0",
+    "@babel/core": "^7.26.10",
+    "@babel/node": "^7.26.0",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/register": "^7.25.9",
+    "@eslint/js": "^9.25.1",
+    "@types/node": "^22.15.3",
+    "eslint": "^9.25.1",
+    "fs-extra": "^11.3.0",
+    "mocha": "^11.1.0",
+    "nyc": "^17.1.0",
+    "p-queue": "^8.1.0",
+    "rimraf": "^6.0.1"
+  },
+  "nyc": {
+    "extension": [
+      ".js"
+    ],
+    "include": [
+      "lib/**/*.js"
+    ],
+    "exclude": [
+      "test/**/*.js"
+    ],
+    "all": true,
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "temp-dir": ".nyc_output",
+    "report-dir": "coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alecmestroni/npm-run-all-next.git"
+  },
+  "keywords": [
+    "cli",
+    "command",
+    "commandline",
+    "tool",
+    "npm",
+    "npm-scripts",
+    "run",
+    "sequential",
+    "serial",
+    "parallel",
+    "retries",
+    "retry-failed",
+    "retry-failed-task",
+    "retries",
+    "task"
+  ],
+  "author": "Alec Mestroni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alecmestroni/npm-run-all-next/issues"
+  },
+  "homepage": "https://github.com/alecmestroni/npm-run-all-next"
+}

@@ -1,0 +1,52 @@
+{
+  "name": "@iola_adm/iola-cli",
+  "version": "0.2.69",
+  "description": "CLI и AI-агент городского округа Йошкар-Ола.",
+  "license": "MIT",
+  "homepage": "https://github.com/adm-iola/iola-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adm-iola/iola-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adm-iola/iola-cli/issues"
+  },
+  "type": "module",
+  "bin": {
+    "iola": "bin/iola.js"
+  },
+  "scripts": {
+    "postinstall": "node --no-warnings bin/postinstall.js",
+    "start": "node --no-warnings bin/iola.js",
+    "installer:windows": "powershell -NoProfile -ExecutionPolicy Bypass -File ./installer/windows/scripts/build-installer.ps1",
+    "installer:windows:premium": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./installer/windows/premium/build-premium-installer.ps1",
+    "test": "node --no-warnings --check bin/iola.js && node --no-warnings --check bin/postinstall.js && node --no-warnings --check src/cli.js && node --no-warnings test/smoke-test.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "test",
+    "skills",
+    "wiki",
+    "docs/assets/readme-header.png",
+    "docs/assets/iola-oauth-icon.png",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "yoshkar-ola",
+    "open-data",
+    "mcp",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

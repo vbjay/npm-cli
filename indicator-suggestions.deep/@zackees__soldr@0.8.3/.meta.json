@@ -1,0 +1,135 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7185cbbcac03c321",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install.js",
+      "scripts/test-npm-package.js",
+      "scripts/zccache-contract.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "38d2f20f4b0f7851db45aab68b9991e6a825d757e84b8371bda9227fd1c4fe1b",
+        "sizeBytes": 12160,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "dynamic-require",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/zccache-contract.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/zackees/soldr/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/zccache-contract.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "4cab87ea3b5df598ae737e2d353f318b44623a7f0d59da985f0cd30476e7a7e5",
+        "sizeBytes": 6312,
+        "signals": [
+          "binary-download",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/test-npm-package.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "18df5f246202cd5da33c50c988da8ddcd230fb3e237c032d67485f4e192eb88d",
+        "sizeBytes": 6920,
+        "signals": [
+          "dynamic-require",
+          "binary-download",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:14.994Z"
+  },
+  "hash": "sha256:8251a8a3fc8954d49b0c0735b64ee2c0b32137b7c29c72b0db51c58dd63cc356"
+}

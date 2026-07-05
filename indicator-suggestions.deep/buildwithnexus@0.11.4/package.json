@@ -1,0 +1,56 @@
+{
+  "name": "buildwithnexus",
+  "version": "0.11.4",
+  "description": "A hilariously fast, agentic AI CLI harness in Rust — remote (API key) or local models, full-screen TUI with sessions, plan/build/brainstorm modes, and hooks",
+  "bin": {
+    "buildwithnexus": "bin/buildwithnexus.js",
+    "bwn": "bin/buildwithnexus.js"
+  },
+  "files": [
+    "bin/buildwithnexus.js",
+    "scripts/resolve-binary.js",
+    "scripts/postinstall.js",
+    "harness/Cargo.toml",
+    "harness/Cargo.lock",
+    "harness/src/",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "build": "cargo build --release --manifest-path harness/Cargo.toml",
+    "vendor": "bash scripts/vendor.sh",
+    "start": "node bin/buildwithnexus.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "cli",
+    "coding-agent",
+    "rust",
+    "tui",
+    "anthropic",
+    "openai",
+    "ollama",
+    "local-llm"
+  ],
+  "author": "Garrett Eaglin",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garretts-Apps/buildwithnexus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Garretts-Apps/buildwithnexus/issues"
+  },
+  "homepage": "https://buildwithnexus.dev",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  }
+}

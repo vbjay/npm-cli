@@ -1,0 +1,51 @@
+{
+  "name": "vgif",
+  "version": "0.2.1",
+  "description": "Zero-dependency Discord-focused ship GIF generator powered by a custom Rust+WASM core.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.cjs",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.cjs"
+    },
+    "./scene": {
+      "import": "./src/scene.cjs",
+      "require": "./src/scene.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "rust-core/src",
+    "rust-core/Cargo.toml",
+    "rust-core/Cargo.lock",
+    "scripts/build-wasm.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build:wasm": "node ./scripts/build-wasm.mjs",
+    "test": "node --test test/*.test.cjs",
+    "prepack": "npm run build:wasm"
+  },
+  "keywords": [
+    "discord",
+    "gif",
+    "ship",
+    "scene",
+    "canvas",
+    "animation",
+    "debug",
+    "wasm",
+    "rust"
+  ],
+  "bin": {
+    "vgif": "src/cli.cjs"
+  }
+}

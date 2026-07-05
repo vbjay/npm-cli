@@ -1,0 +1,237 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "159a97befd68b65b",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.js",
+      "src/download.js",
+      "src/install-error.js",
+      "src/nvidia-hibernation-setup.js",
+      "src/resolve-binary.js",
+      "src/socket-paths.js",
+      "src/utils/system-detect.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "480999bf750b9ecec1aa65692fb4846f1d806933f8e7d16877b0bb14c3f46023",
+        "sizeBytes": 131236,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "obfuscation-pattern",
+          "binary-download",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "dynamic-require",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/nvidia-hibernation-setup.js",
+          "src/socket-paths.js",
+          "src/install-error.js",
+          "src/download.js",
+          "src/resolve-binary.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/robertelee78/swictation/releases/tag/gpu-libs-v1.2.0",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/robertelee78/swictation/releases/download/gpu-libs-v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/robertelee78/swictation/releases/download/onnx-runtime-macos-v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "src/nvidia-hibernation-setup.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "39b611931229543bcf6a190d78157258561eea20eb9019075c9df172d5e5d7f0",
+        "sizeBytes": 5068,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/utils/system-detect.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/utils/system-detect.js",
+        "reason": "required by ./src/nvidia-hibernation-setup.js",
+        "sha256": "e79f257934c412a7154db64cabe7af84ee5bb5bf33a2b89f0e7db5892a76a716",
+        "sizeBytes": 3275,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/socket-paths.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "e87771aac7257e6d7677e787e97ab815f8a858f77322960a622b1206caa5a7b6",
+        "sizeBytes": 1960,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/install-error.js",
+        "reason": "required by ./postinstall.js; required by ./src/download.js",
+        "sha256": "37621fe4f631b19fb4da87f894e05f0cf43c38b3ec70a6da5c17d07dbcd0d7dd",
+        "sizeBytes": 5388,
+        "signals": [
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/robertelee78/swictation/wiki/errors",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "src/download.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "33c6ab3d7d157ab8824f7c72ff70b3185a79cf7043d53946ccc00342d39abbcf",
+        "sizeBytes": 17001,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "runtime-installer",
+          "shell-network-fetch",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/install-error.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/resolve-binary.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "b6992bc7fdd40fd61249ecf8cc8e374532df918c799118540d8b353603135ad9",
+        "sizeBytes": 8620,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.js",
+        "sha256": "47a5cf2965564aeafcf6768b3ebae8cdf25fb1e2a7dffe5b148b6ae12558d9b5",
+        "sizeBytes": 2624,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:17.799Z"
+  },
+  "hash": "sha256:d894bafe98fdde4d65fd83a08d268d7901713eda262b0d526733c98b9560eb83"
+}

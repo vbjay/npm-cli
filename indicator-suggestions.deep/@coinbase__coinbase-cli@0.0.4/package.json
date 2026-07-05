@@ -1,0 +1,50 @@
+{
+  "name": "@coinbase/coinbase-cli",
+  "version": "0.0.4",
+  "description": "Coinbase for agents — CLI and MCP server for trading, wallets, payments, and onchain across the Coinbase platform",
+  "type": "module",
+  "bin": {
+    "coinbase": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "BUILD=external node scripts/embed-spec.mjs",
+    "gen:types": "BUNDLE_SKIP=1 BUILD=external node scripts/embed-spec.mjs && node scripts/gen-types.mjs specs/cli/coinbase-cli.yaml '' > generated/cli/types.ts && node scripts/gen-types.mjs dist/spec.json '' RetailBrokerageApi_ > generated/brokerage/types.ts && node scripts/gen-client.mjs > generated/brokerage/client.ts && node scripts/gen-surface.mjs specs/cli/coinbase-cli.yaml > generated/cli/surface.ts",
+    "gen:test": "node scripts/gen-mapping-tests.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --no-warnings --test 'src/**/*.test.ts'",
+    "test:keyring": "node --experimental-strip-types --no-warnings --test src/lib/keyring/keyring.integration-test.ts",
+    "postinstall": "node scripts/postinstall.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.11.1",
+  "files": [
+    "dist/",
+    "skills/",
+    "scripts/postinstall.mjs"
+  ],
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "esbuild": "^0.27.3",
+    "swagger2openapi": "^7.0.8",
+    "typescript": "^5.7.0",
+    "yaml": "^2.6.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "license": "MIT",
+  "homepage": "https://docs.cdp.coinbase.com",
+  "keywords": [
+    "coinbase",
+    "cli",
+    "mcp",
+    "api",
+    "agents",
+    "crypto",
+    "trading"
+  ]
+}

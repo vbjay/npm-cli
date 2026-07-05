@@ -1,0 +1,84 @@
+{
+   "name": "react-crud-mobile",
+   "version": "1.3.563",
+   "license": "MIT",
+   "description": "Uma biblioteca de componentes para React Native v1",
+   "author": "juarez",
+   "keywords": [
+      "react-native",
+      "components",
+      "library",
+      "ui"
+   ],
+   "main": "dist/index.js",
+   "module": "dist/index.mjs",
+   "types": "dist/index.d.ts",
+   "react-native": "src/index.ts",
+   "files": [
+      "dist",
+      "src"
+   ],
+   "scripts": {
+      "dev": "tsup --watch",
+      "build": "tsup src/index.ts --format esm,cjs --dts --sourcemap --clean",
+      "build:watch": "tsup src/index.ts --watch --onSuccess \"echo Build concluída ✔️\"",
+      "test": "echo \"No tests configured\"",
+      "lint": "eslint src --ext .ts,.tsx",
+      "prepare": "npm run build",
+      "prepublishOnly": "npm version patch",
+      "deploy": "npm publish --access public"
+   },
+   "peerDependencies": {
+      "react": "19.1.0",
+      "react-dom": "19.1.0",
+      "react-native": "0.81.4"
+   },
+   "dependencies": {
+      "@expo/vector-icons": "^15.0.2",
+      "@react-native-async-storage/async-storage": "^2.2.0",
+      "@react-native-community/slider": "^5.0.1",
+      "@react-native-vector-icons/ionicons": "^7.4.0",
+      "@react-native-vector-icons/material-icons": "^0.0.1",
+      "@react-navigation/native": "^7.1.18",
+      "expo-localization": "^17.0.7",
+      "expo-status-bar": "~3.0.8",
+      "react-crud-utils": "0.2.22",
+      "react-native-reanimated": "~4.1.0",
+      "react-native-safe-area-context": "^5.6.1",
+      "react-native-screens": "~4.16.0",
+      "react-native-toast-message": "^2.3.3",
+      "react-native-web": "~0.21.1",
+      "react-native-webview": "13.15.0",
+      "tslib": "^2.8.1"
+   },
+   "devDependencies": {
+      "@types/react": "^19.1.2",
+      "@types/react-dom": "^19.1.3",
+      "eslint": "^9.25.0",
+      "tsup": "^8.0.2",
+      "typescript": "^5.8.3"
+   },
+   "tsup": {
+      "entry": [
+         "src/index.ts"
+      ],
+      "format": [
+         "esm",
+         "cjs"
+      ],
+      "dts": true,
+      "sourcemap": true,
+      "clean": true,
+      "minify": false,
+      "splitting": false,
+      "skipNodeModulesBundle": true,
+      "external": [
+         "react",
+         "react-dom",
+         "react-native"
+      ],
+      "outDir": "dist",
+      "jsx": "transform",
+      "jsxImportSource": "react"
+   }
+}

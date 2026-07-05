@@ -1,0 +1,107 @@
+{
+  "name": "@engie-group/fluid-design-system",
+  "version": "6.2.0",
+  "description": "The Fluid Design System is ENGIE’s open-source library to create, build and deliver ENGIE digital services in a more efficient way.",
+  "type": "module",
+  "keywords": [
+    "engie",
+    "fluid",
+    "design-system",
+    "design",
+    "system",
+    "css",
+    "scss",
+    "sass",
+    "js",
+    "javascript",
+    "ts",
+    "typescript",
+    "responsive",
+    "front-end",
+    "framework",
+    "web"
+  ],
+  "author": "ENGIE Digital's Fluid core team <fluid.design.system.eit@engie.com>",
+  "contributors": [
+    "Massinissa BOUNEFFA <massibouneffa@gmail.com>",
+    "Maxime GROFF <maxime.groff@gmail.com>",
+    "Justin GALLY <justin@jgcoding.com>",
+    "Guillaume CHAMBARD <guillaume.chambard@codeblend.fr>",
+    "Léon MANGEAT <leon.mangeat@gmail.com>"
+  ],
+  "license": "EPL-2.0",
+  "homepage": "https://www.engie.design/fluid-design-system/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FluidDesignSystem/fluid-design-system"
+  },
+  "bugs": {
+    "url": "https://github.com/FluidDesignSystem/fluid-design-system/issues"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "docs/",
+    "CHANGELOG.md"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "main": "./lib/fluid-design-system.cjs",
+  "module": "./lib/fluid-design-system.js",
+  "types": "./lib/fluid-design-system.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/fluid-design-system.d.ts",
+      "require": "./lib/fluid-design-system.cjs",
+      "import": "./lib/fluid-design-system.js"
+    },
+    "./auto-init": {
+      "types": "./lib/auto-init.d.ts",
+      "require": "./lib/auto-init.cjs",
+      "import": "./lib/auto-init.js"
+    },
+    "./css": "./lib/fluid-design-system.css",
+    "./lib/*": "./lib/*",
+    "./docs/*": "./docs/*",
+    "./CHANGELOG.md": "./CHANGELOG.md",
+    "./README.md": "./README.md",
+    "./package.json": "./package.json",
+    "./docs/migrations/v4-to-v5.md": {
+      "default": "./docs/MIGRATION_GUIDE_V4_TO_V5.md"
+    },
+    "./docs/migrations/v5-to-v6.md": {
+      "default": "./docs/migration-guides/migration-v5-to-v6.md"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "runkitExample": "const fluidDesignSystem = require(\"@engie-group/fluid-design-system@4.5.0\")",
+  "dependencies": {
+    "@floating-ui/dom": "1.6.3",
+    "@engie-group/fluid-design-tokens": "6.2.0"
+  },
+  "scripts": {
+    "build": "rollup -c --silent",
+    "prefix-css": "postcss lib/**/*.css --replace --no-map",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "pnpm run lint --fix",
+    "postinstall": "node bin/engage.js",
+    "test": "vitest run --silent",
+    "update-test": "vitest run -u",
+    "browserinfo": "node browserRequirement.js",
+    "dev": "pnpm run build --watch",
+    "start": "webpack serve",
+    "web-server": "node serve.cjs",
+    "nrt": "docker compose -f ../../.docker/docker-compose.nrt.yaml run --rm nrt pnpm turbo nrt:test --filter @engie-group/fluid-design-system; npx playwright show-report",
+    "nrt:update": "docker compose -f ../../.docker/docker-compose.nrt.yaml run --rm nrt pnpm turbo nrt:test-update --filter @engie-group/fluid-design-system",
+    "nrt:test": "pnpm playwright test",
+    "nrt:test-update": "pnpm playwright test -u",
+    "nrt:ui": "docker compose -f ../../.docker/docker-compose.nrt.yaml run --rm -p 3333:3333 nrt bash -c 'pnpm turbo build --filter @engie-group/fluid-design-system && cd packages/fluid && npx playwright test --ui-host 0.0.0.0 --ui-port 3333'",
+    "nrt:test-ui": "pnpm playwright test --ui-host 0.0.0.0 --ui-port 3333",
+    "turbo:build": "pnpm turbo build",
+    "turbo:dev": "pnpm turbo dev",
+    "turbo:lint": "pnpm turbo lint"
+  }
+}

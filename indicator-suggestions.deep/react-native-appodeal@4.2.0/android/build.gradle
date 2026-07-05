@@ -1,0 +1,101 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.getExtOrDefault = { name ->
+        return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["Appodeal_" + name]
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.8.2"
+        // noinspection DifferentKotlinGradleVersion
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault("kotlinVersion")}"
+    }
+}
+
+def isNewArchitectureEnabled() {
+    return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: "com.facebook.react"
+}
+
+def getExtOrIntegerDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Appodeal_" + name]).toInteger()
+}
+
+android {
+    namespace "com.appodeal.rnappodeal"
+
+    compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+    defaultConfig {
+        minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+        targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+        buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lintOptions {
+        disable "GradleCompatible"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += ["generated/java", "generated/jni"]
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/newarch']
+            } else {
+                java.srcDirs += ['src/oldarch']
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+    // Appodeal Repository
+    maven { url = "https://artifactory.appodeal.com/appodeal" }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+    implementation "com.facebook.react:react-android"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Appodeal SDK 4.2.0
+    implementation "com.appodeal.ads.sdk:core:4.2.0"
+    implementation "com.appodeal.ads.sdk.adapters:iab:1.8.1.0"
+}
+
+if (isNewArchitectureEnabled()) {
+    react {
+        jsRootDir = file("../src/")
+        libraryName = "Appodeal"
+        codegenJavaPackageName = "com.appodeal.rnappodeal"
+    }
+}

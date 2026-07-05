@@ -1,0 +1,148 @@
+{
+  "name": "react-native-compressor",
+  "version": "2.0.2",
+  "description": "Compress Image, Video, and Audio same like Whatsapp & Auto/Manual Compression | Background Upload | Download File | Create Video Thumbnail",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "nitrogen",
+    "app.plugin.js",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:pr": "yarn test --runInBand && yarn typecheck && yarn lint",
+    "test:harness:android": "cd examples/bare && react-native-harness --config ./jest.harness.config.mjs --harnessRunner android --verbose",
+    "test:harness:ios": "cd examples/bare && react-native-harness --config ./jest.harness.config.mjs --harnessRunner ios --verbose",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "nitrogen": "nitrogen",
+    "prepack": "nitrogen && bob build",
+    "release": "release-it",
+    "example:bare": "yarn workspace react-native-compressor-bare-example",
+    "example:expo": "yarn workspace react-native-compressor-expo-example",
+    "build:android": "cd examples/bare/android && ./gradlew assembleDebug --no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a",
+    "build:ios": "cd examples/bare/ios && xcodebuild -workspace BareExample.xcworkspace -scheme BareExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO",
+    "clean": "del-cli android/build examples/bare/android/build examples/bare/android/app/build examples/bare/ios/build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "audio",
+    "image",
+    "compression",
+    "react-native",
+    "video",
+    "compress",
+    "compress-images",
+    "compress-videos",
+    "react-native-compress",
+    "react-native-compressor",
+    "compress-audio",
+    "whatsapp",
+    "compressor",
+    "background",
+    "NSURLSession",
+    "uploader",
+    "upload",
+    "UploadService",
+    "downloader",
+    "download",
+    "thumbnail",
+    "create-thumbnail",
+    "video-metadata",
+    "media",
+    "bitrate",
+    "exif",
+    "metadata"
+  ],
+  "repository": "https://github.com/numandev1/react-native-compressor",
+  "author": "numandev1 <muhammadnuman70@gmail.com> (https://github.com/numandev1)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/numandev1/react-native-compressor/issues"
+  },
+  "homepage": "https://github.com/numandev1/react-native-compressor#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@expo/config-plugins": "^55.0.8",
+    "@jest/globals": "^30.0.0",
+    "@react-native-harness/platform-android": "1.1.0",
+    "@react-native-harness/platform-apple": "1.1.0",
+    "@react-native/babel-preset": "0.85.0",
+    "@react-native/eslint-config": "0.85.0",
+    "@react-native/jest-preset": "0.85.0",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@types/react": "^19.2.0",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "lefthook": "^2.1.4",
+    "nitrogen": "^0.35.9",
+    "prettier": "^3.8.1",
+    "react": "19.2.3",
+    "react-native": "0.85.0",
+    "react-native-builder-bob": "^0.41.0",
+    "react-native-harness": "1.1.0",
+    "react-native-nitro-modules": "^0.35.9",
+    "release-it": "^19.2.4",
+    "turbo": "^2.8.21",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": ">=0.35.0"
+  },
+  "engines": {
+    "node": ">= 22.11.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "workspaces": [
+    "examples/*"
+  ],
+  "packageManager": "yarn@4.14.1"
+}

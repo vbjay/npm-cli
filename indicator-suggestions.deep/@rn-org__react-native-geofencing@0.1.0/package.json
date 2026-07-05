@@ -1,0 +1,145 @@
+{
+  "name": "@rn-org/react-native-geofencing",
+  "version": "0.1.0",
+  "description": "React native module to determine if a location is within defined geographical boundaries.",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @rn-org/react-native-geofencing-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "clean": "cd android && ./gradlew clean && cd .. && cd example && cd android && ./gradlew clean && cd .. && cd .."
+  },
+  "keywords": [
+    "react-native",
+    "react-native-geofence",
+    "react-native-geofencing",
+    "library",
+    "ios",
+    "android",
+    "geofence",
+    "geofencing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rn-org/react-native-geofencing"
+  },
+  "author": "sriharshamadamanchi <sriharshamadamanchiz@gmail.com> (https://github.com/sriharshamadamanchi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rn-org/react-native-geofencing/issues"
+  },
+  "homepage": "https://github.com/rn-org",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "^0.79.2",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.1.4",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.5.3",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-builder-bob": "^0.40.11",
+    "turbo": "^2.5.3",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "workspaces": [
+    "example"
+  ],
+  "codegenConfig": {
+    "name": "geofencing",
+    "type": "modules",
+    "jsSrcsDir": "./src",
+    "android": {
+      "javaPackageName": "com.rnorg.geofencing"
+    }
+  },
+  "packageManager": "yarn@3.6.1",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "none",
+          "useTabs": true,
+          "bracketSpacing": true
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

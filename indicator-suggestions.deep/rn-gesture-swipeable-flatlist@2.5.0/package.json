@@ -1,0 +1,97 @@
+{
+  "name": "rn-gesture-swipeable-flatlist",
+  "version": "2.5.0",
+  "description": "React Native swipeable FlatList with swipe-to-delete, row actions, and Gesture Handler/Reanimated support",
+  "main": "./dist/index.js",
+  "react-native": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "reanimated.js",
+    "reanimated.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && node ./node_modules/typescript/bin/tsc",
+    "prepare": "npm run build && husky",
+    "prepublishOnly": "npm run build",
+    "test:typecheck": "node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.test.json",
+    "test": "npm run build && npm run test:typecheck && node ./scripts/run-node-tests.mjs",
+    "test:coverage": "npm run build && npm run test:typecheck && c8 node ./scripts/run-node-tests.mjs"
+  },
+  "author": {
+    "name": "George Fean",
+    "url": "https://github.com/GFean"
+  },
+  "homepage": "https://github.com/GFean/rn-gesture-swipeable-flatlist#readme",
+  "bugs": {
+    "url": "https://github.com/GFean/rn-gesture-swipeable-flatlist/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GFean/rn-gesture-swipeable-flatlist.git"
+  },
+  "keywords": [
+    "react-native",
+    "flatlist",
+    "swipeable-flatlist",
+    "swipeable-list",
+    "swipe-list",
+    "swipe-to-delete",
+    "swipe-actions",
+    "row-actions",
+    "gesture-handler",
+    "react-native-gesture-handler",
+    "reanimated",
+    "react-native-reanimated",
+    "reanimated-swipeable",
+    "swipeable",
+    "list-item-swipe",
+    "inbox-list",
+    "email-list",
+    "react-native-flatlist",
+    "react-native-swipeable-list",
+    "react-native-swipeable-flatlist"
+  ],
+  "license": "ISC",
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.71.0",
+    "react-native-gesture-handler": ">=2.10.0",
+    "react-native-reanimated": ">=2.3.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-reanimated": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/react": "^18.0.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "c8": "^11.0.0",
+    "husky": "^9.1.7",
+    "react": "^18.2.0",
+    "react-native": "^0.73.2",
+    "react-native-gesture-handler": "^2.18.0",
+    "react-test-renderer": "^18.2.0",
+    "tsx": "^4.21.0",
+    "typescript": "^4.4.4"
+  },
+  "c8": {
+    "all": true,
+    "exclude": [
+      "src/types.ts"
+    ],
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "reporter": [
+      "text",
+      "text-summary"
+    ]
+  }
+}

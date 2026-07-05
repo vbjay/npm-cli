@@ -1,0 +1,64 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext {
+        buildToolsVersion = findProperty('android.buildToolsVersion') ?: '34.0.0'
+        minSdkVersion = Integer.parseInt(findProperty('android.minSdkVersion') ?: '24')
+        compileSdkVersion = Integer.parseInt(findProperty('android.compileSdkVersion') ?: '34')
+        targetSdkVersion = Integer.parseInt(findProperty('android.targetSdkVersion') ?: '34')
+    }
+}
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+// When consumed from an app's Gradle root, prefer the host app's SDK versions (npm monorepo).
+def resolvedCompileSdk = (rootProject.ext.has("compileSdkVersion")
+        ? rootProject.ext.compileSdkVersion
+        : compileSdkVersion)
+
+android {
+    compileSdk resolvedCompileSdk
+    namespace 'com.velox.formulas.rn'
+
+    sourceSets {
+        main {
+            // Codegen Java (NativeVeloxFormulasSpec) — committed under android/build/generated (see codegen-rn-android.sh).
+            java.srcDirs += "$buildDir/generated/source/codegen/java"
+        }
+    }
+
+    defaultConfig {
+        minSdk rootProject.ext.has("minSdkVersion") ? rootProject.ext.minSdkVersion : minSdkVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    // Prebuilt .so files in src/main/jniLibs/ are picked up automatically by Gradle.
+    // No externalNativeBuild / CMake step required when consuming the npm package.
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    // React Native is provided by the consuming application.
+    compileOnly 'com.facebook.react:react-android:+'
+}

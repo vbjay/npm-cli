@@ -1,0 +1,68 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:3.5.3'
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+// Required for codegen: RNGP only wires up the generateCodegenArtifactsFromSchema task (which
+// produces NativeSpInAppUpdatesSpec) for projects that apply this plugin themselves - it isn't
+// generated on a consumer's behalf just from being autolinked. Makes RN >= 0.71 the effective
+// minimum, since that's the version this plugin ships from.
+apply plugin: 'com.facebook.react'
+
+def DEFAULT_CORE_APP_UPDATE_VERSION = "2.1.0"
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', 29)
+    buildToolsVersion safeExtGet('buildToolsVersion', '29.0.2')
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', 21)
+        targetSdkVersion safeExtGet('targetSdkVersion', 29)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation("com.google.android.play:app-update:${safeExtGet('playCoreAppUpdateVersion', DEFAULT_CORE_APP_UPDATE_VERSION)}")
+}

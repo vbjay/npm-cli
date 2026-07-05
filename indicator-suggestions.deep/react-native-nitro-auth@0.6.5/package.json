@@ -1,0 +1,147 @@
+{
+  "name": "react-native-nitro-auth",
+  "version": "0.6.5",
+  "description": "High-performance authentication library for React Native with Google Sign-In, Apple Sign-In, and Microsoft Sign-In support, powered by Nitro Modules (JSI)",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/commonjs/index.d.ts",
+  "react-native": "src/index.ts",
+  "browser": "src/index.web.ts",
+  "source": "src/index.ts",
+  "app": "app.plugin.js",
+  "files": [
+    "src",
+    "lib",
+    "cpp",
+    "android",
+    "ios",
+    "nitrogen",
+    "nitro.json",
+    "CHANGELOG.md",
+    "*.podspec",
+    "app.plugin.js",
+    ".watchmanconfig",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!cpp/core/*Test.cpp",
+    "!cpp/build",
+    "!android/build",
+    "!android/.cxx",
+    "!scripts"
+  ],
+  "scripts": {
+    "prebuild": "bun run codegen",
+    "build": "bob build",
+    "clean": "rimraf lib nitrogen/generated",
+    "codegen": "nitrogen --logLevel=\"debug\"",
+    "format:check": "eslint .",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:cpp": "node scripts/test-cpp.js",
+    "test:cpp:coverage": "node scripts/test-cpp.js --coverage",
+    "prepublishOnly": "bun run clean && bun run codegen && bun run build && bun run typecheck && bun run lint && bun run test && bun run test:cpp",
+    "prepack": "bun ../../scripts/sync-package-docs.ts",
+    "pack:dry-run": "bun pm pack --dry-run",
+    "publish:dry-run": "bun publish --dry-run --access public"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-auth",
+    "authentication",
+    "google-sign-in",
+    "apple-sign-in",
+    "microsoft-sign-in",
+    "azure-ad",
+    "social-login",
+    "nitro",
+    "jsi",
+    "nitro-modules",
+    "expo",
+    "typescript",
+    "oauth",
+    "auth-provider",
+    "sign-in",
+    "login"
+  ],
+  "author": {
+    "name": "Jo\u00e3o Paulo C. Marra",
+    "url": "https://github.com/JoaoPauloCMarra"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/JoaoPauloCMarra/react-native-nitro-auth#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JoaoPauloCMarra/react-native-nitro-auth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JoaoPauloCMarra/react-native-nitro-auth/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "dependencies": {
+    "expo-build-properties": "~56.0.18"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^56.0.8",
+    "@react-native/babel-preset": "^0.85.3",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^22.19.17",
+    "jest-environment-jsdom": "^29.7.0",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-nitro-modules": "^0.35.7",
+    "react-native-web": "^0.21.2",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.75.0",
+    "react-native-nitro-modules": ">=0.35.7"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "tsc": "../../node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  },
+  "exports": {
+    ".": {
+      "react-native": "./src/index.ts",
+      "browser": "./src/index.web.ts",
+      "import": {
+        "types": "./lib/typescript/module/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    },
+    "./app.plugin": "./app.plugin.js",
+    "./app.plugin.js": "./app.plugin.js",
+    "./package.json": "./package.json"
+  }
+}

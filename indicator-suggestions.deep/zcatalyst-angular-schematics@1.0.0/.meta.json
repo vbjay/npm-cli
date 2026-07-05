@@ -1,0 +1,64 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2dff188d443191bb",
+    "fetchedFiles": [
+      "collectionTemplate.js",
+      "package.json",
+      "scripts/postInstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postInstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "8f31a819a535b177ec8670342bd398988d39833d063aa485e903865c3d013d53",
+        "sizeBytes": 1246,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "collectionTemplate.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "collectionTemplate.js",
+        "reason": "required by ./scripts/postInstall.js",
+        "sha256": "1e6c6e844438cd0e62ae3d95214662aacd89d44527db15d5a0bf18fe14d36b3c",
+        "sizeBytes": 4216,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:33.051Z"
+  },
+  "hash": "sha256:7b55e8671ab83d0e5fffcd47c7b03f25d01636a35bbdb76fc6561fc99831d3df"
+}

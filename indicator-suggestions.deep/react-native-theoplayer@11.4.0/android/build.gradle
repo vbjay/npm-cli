@@ -1,0 +1,178 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:${safeExtGet('gradlePluginVersion', '8.13.0')}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${safeExtGet('kotlinVersion', '2.2.10')}"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+static def versionString(version) {
+    return "${version == '+' ? 'latest' : version}"
+}
+
+def isNewArchitectureEnabled() {
+    // To opt-in for the New Architecture, you can either:
+    // - Set `newArchEnabled` to true inside the `gradle.properties` file
+    // - Invoke gradle with `-newArchEnabled=true`
+    // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+// Extensions
+def enabledGoogleIMA = safeExtGet("THEOplayer_extensionGoogleIMA", 'false').toBoolean()
+def enabledGoogleDAI = safeExtGet("THEOplayer_extensionGoogleDAI", 'false').toBoolean()
+def enabledTHEOads = safeExtGet("THEOplayer_extensionTHEOads", 'false').toBoolean()
+def enabledAds = enabledGoogleIMA || enabledGoogleDAI || enabledTHEOads
+def enabledCast = safeExtGet("THEOplayer_extensionCast", 'false').toBoolean()
+def enabledMediaSession = safeExtGet("THEOplayer_extensionMediaSession", 'true').toBoolean()
+def enabledMillicast = safeExtGet("THEOplayer_extensionMillicast", 'false').toBoolean()
+
+android {
+    compileSdk safeExtGet('THEOplayer_compileSdkVersion', 36)
+    namespace "com.theoplayer"
+
+    defaultConfig {
+        minSdkVersion safeExtGet('THEOplayer_minSdkVersion', 23)
+        targetSdkVersion safeExtGet('THEOplayer_targetSdkVersion', 36)
+        versionCode 1
+        versionName "1.0"
+
+        // Optionally limit timeUpdate rate. Possible values:
+        // - "com.theoplayer.TimeUpdateRate.UNLIMITED"
+        // - "com.theoplayer.TimeUpdateRate.LIMITED_ONE_HZ"
+        // - "com.theoplayer.TimeUpdateRate.LIMITED_TWO_HZ"
+        // - "com.theoplayer.TimeUpdateRate.LIMITED_THREE_HZ"
+        def TimeUpdateRate = "com.theoplayer.TimeUpdateRate"
+        buildConfigField TimeUpdateRate, "TIMEUPDATE_RATE", safeExtGet('THEOplayer_timeUpdateRate', "${TimeUpdateRate}.UNLIMITED")
+
+        // Optionally re-parent player view on fullscreen or PiP event
+        buildConfigField "boolean", "REPARENT_ON_FULLSCREEN", "${safeExtGet('THEOplayer_reparent_on_fullscreen', 'true')}"
+        buildConfigField "boolean", "REPARENT_ON_PIP", "${safeExtGet('THEOplayer_reparent_on_PiP', 'false')}"
+
+        // Optionally log events to logcat
+        buildConfigField "boolean", "LOG_PLAYER_EVENTS", "${safeExtGet('THEOplayer_logPlayerEvents', 'false')}"
+        buildConfigField "boolean", "LOG_VIEW_EVENTS", "${safeExtGet('THEOplayer_logViewEvents', 'false')}"
+        buildConfigField "boolean", "LOG_MEDIASESSION_EVENTS", "${safeExtGet('THEOplayer_logMediaSessionEvents', 'false')}"
+        buildConfigField "boolean", "USE_PLAYBACK_SERVICE", "${safeExtGet('THEOplayer_usePlaybackService', 'true')}"
+
+        // Extension buildConfig fields
+        buildConfigField "boolean", "EXTENSION_GOOGLE_IMA", "${enabledGoogleIMA}"
+        buildConfigField "boolean", "EXTENSION_GOOGLE_DAI", "${enabledGoogleDAI}"
+        buildConfigField "boolean", "EXTENSION_THEOADS", "${enabledTHEOads}"
+        buildConfigField "boolean", "EXTENSION_ADS", "${enabledAds}"
+        buildConfigField "boolean", "EXTENSION_CAST", "${enabledCast}"
+        buildConfigField "boolean", "EXTENSION_MEDIASESSION", "${enabledMediaSession}"
+        buildConfigField "boolean", "EXTENSION_MILLICAST", "${enabledMillicast}"
+
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+    buildFeatures {
+        buildConfig true
+    }
+    lint {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
+    }
+    packagingOptions {
+        exclude 'META-INF/kotlin-stdlib.kotlin_module'
+        exclude 'META-INF/annotation-experimental_release.kotlin_module'
+    }
+}
+
+// Make sure all subprojects can resolve THEOplayer modules
+rootProject.allprojects {
+    repositories {
+        maven { url "https://maven.theoplayer.com/releases" }
+        maven { url("$rootDir/../node_modules/react-native-theoplayer/android/local") }
+        mavenLocal()
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://maven.theoplayer.com/releases" }
+    maven { url("$rootDir/../node_modules/react-native-theoplayer/android/local") }
+    mavenLocal()
+}
+
+// The minimum supported THEOplayer version is 11.5.0
+def theoVersion = safeExtGet('THEOplayer_sdk', '[11.5.0, 12.0.0)')
+def theoMediaSessionVersion = safeExtGet('THEOplayer_mediasession', '[11.0.0, 12.0.0)')
+def theoAdsWrapperVersion = "11.0.0"
+def coroutinesVersion = safeExtGet('coroutinesVersion', '1.10.2')
+def appcompatVersion = safeExtGet('appcompatVersion', '1.7.1')
+def corektxVersion = safeExtGet('corektxVersion', '1.17.0')
+def gsonVersion = safeExtGet('gsonVersion', '2.13.2')
+def activityktxVersion = safeExtGet('activityktxVersion', '1.10.1')
+def coreLibraryDesugaringVersion = safeExtGet('coreLibraryDesugaringVersion', '2.1.5')
+
+dependencies {
+    def addOptiViewIntegration = { enabled, notation, additional = null ->
+        if (enabled) {
+            println("Enable $notation.")
+            implementation("com.theoplayer.theoplayer-sdk-android:$notation:$theoVersion") {
+                version {
+                    strictly theoVersion
+                }
+            }
+            if (additional) implementation "$additional"
+        } else {
+            println("Disable $notation.")
+            compileOnly("com.theoplayer.theoplayer-sdk-android:$notation:$theoVersion")
+            if (additional) compileOnly "$additional"
+        }
+    }
+
+    //noinspection GradleDynamicVersion
+    implementation("com.facebook.react:react-android:+")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation("androidx.appcompat:appcompat:$appcompatVersion")
+    implementation("androidx.core:core-ktx:$corektxVersion")
+    implementation("androidx.activity:activity-ktx:$activityktxVersion")
+    implementation("com.google.code.gson:gson:$gsonVersion")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$coreLibraryDesugaringVersion")
+
+    println("Using THEOplayer (${versionString(theoVersion)})")
+    implementation("com.theoplayer.theoplayer-sdk-android:core:$theoVersion")
+    implementation("com.theoplayer.theoplayer-sdk-android:ads-wrapper:$theoAdsWrapperVersion")
+    implementation("com.theoplayer.android-connector:mediasession:$theoMediaSessionVersion")
+
+    addOptiViewIntegration(enabledGoogleIMA || enabledGoogleDAI || enabledTHEOads, 'integration-ads-ima')
+    addOptiViewIntegration(enabledGoogleDAI || enabledTHEOads, 'integration-ads-dai')
+    addOptiViewIntegration(enabledTHEOads, 'integration-ads-theoads')
+    addOptiViewIntegration(enabledCast, 'integration-cast')
+    addOptiViewIntegration(enabledMillicast, 'integration-millicast')
+}

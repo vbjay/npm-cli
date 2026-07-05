@@ -1,0 +1,160 @@
+{
+  "name": "react-native-session-storage",
+  "version": "2.0.4",
+  "description": "Session Storage like module for React Native for session-bound storage.",
+  "main": "lib/commonjs/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "module": "lib/module/index.js",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-session-storage.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:cov": "jest --coverage --maxWorkers=2 --coverageReporters=\"json-summary\" --coverageReporters=\"html\"",
+    "typecheck": "tsc --noEmit --skipLibCheck",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "release": "release-it",
+    "example": "yarn workspace react-native-session-storage-example"
+  },
+  "keywords": [
+    "react-native",
+    "session-storage",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JairajJangle/react-native-session-storage.git"
+  },
+  "author": "Jairaj Jangle <reachout.jairaj.jangle@gmail.com> (https://github.com/JairajJangle)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JairajJangle/react-native-session-storage/issues",
+    "email": "reachout.jairaj.jangle@gmail.com"
+  },
+  "homepage": "https://github.com/JairajJangle/react-native-session-storage#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/runtime": "^7.28.6",
+    "@commitlint/config-conventional": "^20.4.1",
+    "@evilmartians/lefthook": "^2.1.0",
+    "@release-it/conventional-changelog": "^10.0.5",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.5",
+    "@semantic-release/npm": "^13.1.4",
+    "@types/jest": "^29.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "commitlint": "^20.4.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-native": "^5.0.0",
+    "jest": "^30.2.0",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "prettier": "^3.8.1",
+    "react-native-builder-bob": "^0.40.17",
+    "release-it": "^19.2.4",
+    "semantic-release": "^25.0.3",
+    "typescript": "^5.9.3"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "packageManager": "yarn@4.9.2",
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "coverage/",
+    "example/.expo/*",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "workspaces": [
+    "example"
+  ],
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://www.paypal.com/paypalme/jairajjangle001/usd"
+    },
+    {
+      "type": "individual",
+      "url": "https://liberapay.com/FutureJJ/donate"
+    },
+    {
+      "type": "individual",
+      "url": "https://ko-fi.com/futurejj"
+    }
+  ]
+}

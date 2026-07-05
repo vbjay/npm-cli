@@ -1,0 +1,82 @@
+{
+  "name": "@hasna/attachments",
+  "version": "1.1.3",
+  "description": "Open-source attachment transfer with local or private S3 storage, app-hosted share links, CLI, MCP, and REST API",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/attachments.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hasna/attachments/issues"
+  },
+  "homepage": "https://github.com/hasna/attachments#readme",
+  "bin": {
+    "attachments": "dist/cli/index.js",
+    "attachments-mcp": "dist/mcp/server.js",
+    "attachments-serve": "dist/serve/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "AGENTS.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bun run clean && bun build src/index.ts src/cli/index.ts src/mcp/server.ts src/serve/index.ts --root src --outdir dist --target bun && bun run scripts/write-types.ts",
+    "sdk:generate": "bun run scripts/generate-sdk.ts",
+    "build:cli": "bun run clean && bun build src/cli/index.ts --outdir dist/cli --target bun",
+    "prepare": "bun run build",
+    "typecheck": "bunx tsc --noEmit",
+    "test": "bash scripts/test.sh",
+    "test:coverage": "bash scripts/test.sh --coverage",
+    "verify:release": "bun run typecheck && bun run test && bun run build",
+    "prepublishOnly": "bun run verify:release",
+    "dev": "bun run src/cli/index.ts",
+    "dashboard": "cd dashboard && bun run dev",
+    "dashboard:build": "cd dashboard && bun run build",
+    "postinstall": "mkdir -p $HOME/.hasna/attachments 2>/dev/null || true"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "keywords": [
+    "attachments",
+    "s3",
+    "local-storage",
+    "file-transfer",
+    "share-links",
+    "ai-agents",
+    "mcp",
+    "cli"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1007.0",
+    "@aws-sdk/lib-storage": "3.1007.0",
+    "@aws-sdk/s3-request-presigner": "^3.1007.0",
+    "@hasna/contracts": "^0.5.2",
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@types/mime-types": "^3.0.1",
+    "commander": "^14.0.3",
+    "date-fns": "^4.1.0",
+    "hono": "^4.12.7",
+    "mime-types": "^3.0.2",
+    "nanoid": "^5.1.6",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.10",
+    "@types/pg": "^8.15.6",
+    "typescript": "^5.9.3"
+  }
+}

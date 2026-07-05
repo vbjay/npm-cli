@@ -1,0 +1,75 @@
+{
+  "name": "greptile",
+  "version": "3.2.0",
+  "type": "module",
+  "description": "Greptile code review from your terminal",
+  "bin": {
+    "greptile": "dist/greptile.js"
+  },
+  "scripts": {
+    "test": "bun test",
+    "build": "bun scripts/bundle.ts",
+    "postbuild": "bun scripts/link-dev.ts",
+    "dev": "bun run src/main.ts",
+    "generate:schema": "bun scripts/generate-settings-schema.ts",
+    "lint": "oxlint --type-aware src --ignore-pattern '**/__tests__/**' --ignore-pattern '**/*.test.ts' --ignore-pattern '**/*.test.tsx'",
+    "format": "oxfmt src package.json tsconfig.json",
+    "prepack": "bun scripts/bundle.ts",
+    "prepublishOnly": "bun run typecheck && bun scripts/bundle.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@inkjs/ui": "^2.0.0",
+    "@pierre/theme": "^1.0.3",
+    "@types/bun": "^1.3.11",
+    "@types/picomatch": "^4.0.3",
+    "@types/react": "^19.2.14",
+    "cli-truncate": "^6.0.0",
+    "commander": "^15.0.0",
+    "ink": "^7.0.3",
+    "picocolors": "^1.1.1",
+    "picomatch": "^4.0.4",
+    "react": "^19.2.6",
+    "shiki": "^4.1.0",
+    "ssh-config": "^5.1.0",
+    "string-width": "^8.2.1",
+    "strip-ansi": "^7.2.0",
+    "terminal-link": "^5.0.0",
+    "typescript": "^6.0.3",
+    "wrap-ansi": "^9.0.2",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.2"
+  },
+  "files": [
+    "dist/greptile.js",
+    "settings-schema.json",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "greptile",
+    "code-review",
+    "cli",
+    "claude-code",
+    "codex"
+  ],
+  "license": "MIT",
+  "homepage": "https://greptile.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greptileai/cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/greptileai/cli/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "overrides": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "@lingjingai/lj-awb-cli-pre",
+  "version": "0.5.5",
+  "description": "Lingjing AWB CLI monorepo with shared core, standalone CLI, and agent skills (pre-release build pointing to https://animeworkbench-pre.lingjingai.cn)",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "lj-awb": "packages/awb-cli/bin/lj-awb.js"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "node build/build.mjs",
+    "build:pre": "node build/pre.mjs",
+    "build:volta-pre": "node build/volta-pre.mjs",
+    "build:pre-publish": "node build/pre-publish.mjs",
+    "build:prod": "node build/prod.mjs",
+    "check": "npm run check:local && npm run check:real",
+    "check:local": "node --check install.mjs && node --check packages/awb-core/src/common.js && node --check packages/awb-core/src/api.js && node --check packages/awb-core/src/auth.js && node --check packages/awb-core/src/output.js && node --check packages/awb-core/src/update.js && node --check packages/awb-core/src/services.js && node --check packages/awb-core/src/commands.js && node --check packages/awb-core/src/standalone.js && sh -n packages/awb-cli/bin/lj-awb && bash -n skills/lj-awb/scripts/resolve-lj-awb-cmd.sh && node --check packages/awb-cli/bin/lj-awb.js && node --check build/build.mjs && node --check build/_shared.mjs && node --check build/pre.mjs && node --check build/volta-pre.mjs && node --check build/pre-publish.mjs && node --check build/prod.mjs && node --check scripts/run-openapi-cli-examples-real.mjs && node --check scripts/validate-cli-schema.mjs && node --check scripts/validate-cli-output-contract.mjs && node --check scripts/validate-cli-command-coverage.mjs && node --check tests/test-model-filters.mjs && node --check tests/test-credits-records.mjs && node --check tests/test-task-status.mjs && node scripts/validate-skill-meta.mjs && node scripts/validate-cli-schema.mjs && node scripts/validate-cli-command-coverage.mjs && node --test tests/test-model-filters.mjs tests/test-credits-records.mjs tests/test-task-status.mjs",
+    "check:real": "node scripts/validate-cli-output-contract.mjs && node scripts/validate-openapi-cli-examples.mjs",
+    "test:openapi-real": "node scripts/run-openapi-cli-examples-real.mjs",
+    "smoke": "packages/awb-cli/bin/lj-awb --help && packages/awb-cli/bin/lj-awb auth status -f json && packages/awb-cli/bin/lj-awb system && packages/awb-cli/bin/lj-awb auth && packages/awb-cli/bin/lj-awb account && packages/awb-cli/bin/lj-awb project && packages/awb-cli/bin/lj-awb credits && packages/awb-cli/bin/lj-awb upload && packages/awb-cli/bin/lj-awb model && packages/awb-cli/bin/lj-awb create && packages/awb-cli/bin/lj-awb task && packages/awb-cli/bin/lj-awb schema -f json >/dev/null",
+    "postinstall": "node install.mjs",
+    "version:sync": "node scripts/sync-versions.mjs"
+  },
+  "files": [
+    "build",
+    "install.mjs",
+    "packages/awb-core",
+    "packages/awb-cli",
+    "skills/lj-awb",
+    "README.md"
+  ],
+  "keywords": [
+    "awb",
+    "agent",
+    "cli",
+    "skill",
+    "lingjing"
+  ]
+}

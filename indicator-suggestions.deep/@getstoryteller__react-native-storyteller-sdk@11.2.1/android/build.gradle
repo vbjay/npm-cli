@@ -1,0 +1,94 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['StorytellerSdk_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+    classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "org.jetbrains.kotlin.plugin.compose"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["StorytellerSdk_" + name]).toInteger()
+}
+
+android {
+  namespace "com.storyteller.reactnative"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+    compose true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+  maven { url 'https://storyteller.mycloudrepo.io/public/repositories/storyteller-sdk' }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Jetpack Compose BOM
+  implementation platform('androidx.compose:compose-bom:2024.12.01')
+  implementation 'androidx.compose.ui:ui'
+  implementation 'androidx.compose.ui:ui-tooling-preview'
+  implementation 'androidx.compose.runtime:runtime'
+  implementation 'androidx.compose.foundation:foundation'
+  implementation 'androidx.activity:activity-compose:1.8.1'
+
+  def storytellerSdkVersion = getExtOrDefault("sdkVersion")
+  implementation(group: "Storyteller", name: "sdk", version: storytellerSdkVersion)
+}

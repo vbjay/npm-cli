@@ -1,0 +1,49 @@
+{
+  "name": "eslint-config-javascript",
+  "version": "3.0.0",
+  "description": "Shareable ESLint config for the JavaScript Styleguide",
+  "main": "index.js",
+  "type": "module",
+  "files": [
+    ".eslintrc.yaml"
+  ],
+  "scripts": {
+    "lint": "eslint tests/correct.js tests/correct.ts",
+    "unit-tests": "node tests/main && node tests/eslint-config",
+    "test": "npm run lint && npm run unit-tests && npm run add-toc",
+    "add-toc": " markdown-toc -i README.md",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/style-guides/JavaScript.git"
+  },
+  "keywords": [
+    "javascript",
+    "styleguide",
+    "eslint",
+    "eslintconfig",
+    "eslint-config"
+  ],
+  "author": "Adrian Sieber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/style-guides/JavaScript/issues"
+  },
+  "homepage": "https://github.com/style-guides/JavaScript#readme",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "globals": "^15.3.0",
+    "js-yaml": "^4.1.0",
+    "markdown-toc": "^1.2.0",
+    "typescript-eslint": "^7.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.4.0",
+    "husky": "^9.0.11"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.0.0"
+  }
+}

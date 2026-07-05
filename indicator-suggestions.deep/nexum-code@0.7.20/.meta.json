@@ -1,0 +1,138 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5a1db113da51fa4f",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.mjs",
+      "scripts/postinstall/migrate.mjs",
+      "scripts/postinstall/reach.mjs",
+      "scripts/postinstall/shortcut.mjs",
+      "scripts/postinstall/ui.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "24df0470866dfee70ee5b2db5917fb11256dc753ee8d052de3f7ca913e422824",
+        "sizeBytes": 11261,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/postinstall/reach.mjs",
+          "scripts/postinstall/migrate.mjs",
+          "scripts/postinstall/shortcut.mjs",
+          "scripts/postinstall/ui.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/reach.mjs",
+        "reason": "required by ./scripts/postinstall.mjs; required by ./scripts/postinstall/ui.mjs",
+        "sha256": "032bdebda470fd99cb31e2a1694ff9ce479d00a62c1160d04bc5460cfea3f20a",
+        "sizeBytes": 17686,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "modifies-shell-config",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/migrate.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "85acced255c2192cb0593e5fc779c66f6efd3b213d689d8213164b933e606849",
+        "sizeBytes": 13149,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/shortcut.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "d326f0caca9b6c7410efa00ca65b85693d14595a1ef0050d85ae41a17a79beed",
+        "sizeBytes": 2496,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall/ui.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "f6b2fb4bd62daaab856f7b604133710f0a70c93e9b4e9b414b24f2e1edf5b79a",
+        "sizeBytes": 18397,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/postinstall/reach.mjs"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:15.239Z"
+  },
+  "hash": "sha256:967a699efc5006a22fb52879fa9216943a2a20f9b8337ceb46c8732e67462578"
+}

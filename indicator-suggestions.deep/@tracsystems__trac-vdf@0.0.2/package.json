@@ -1,0 +1,37 @@
+{
+  "name": "@tracsystems/trac-vdf",
+  "version": "0.0.2",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Trac-Systems/vdf"
+  },
+  "main": "dist/wasm/vdf.js",
+  "module": "dist/wasm/vdf.mjs",
+  "files": [
+    "dist/",
+    "LICENSE",
+    "NOTICE",
+    "THIRD_PARTY_NOTICES.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "make",
+    "clean": "make clean",
+    "test": "node test/vdf.test.js && node test/vdf-esm.test.mjs",
+    "prepack": "npm run build",
+    "bench": "node test/bench.js"
+  },
+  "dependencies": {
+    "b4a": "1.6.7"
+  },
+  "keywords": [
+    "vdf",
+    "wasm",
+    "trac"
+  ]
+}

@@ -1,0 +1,114 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply from: 'zoom-meeting-sdk-versions.gradle'
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        maven { url 'https://www.jitpack.io' }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.3'
+    }
+}
+
+
+android {
+    namespace = 'ch.milosz.reactnative'
+    compileSdkVersion 35
+    buildToolsVersion '35.0.0'
+
+    // viewBinding is needed for handling incoming screen share
+    viewBinding {
+        enabled = true
+    }
+
+    defaultConfig {
+        minSdkVersion 28
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+' // From node_modules
+
+    implementation 'us.zoom.meetingsdk:zoomsdk:6.6.8'
+}
+
+// Copied from mobilertc-android-studio/mobilertc/build.gradle and change configurartion `default`->`implementation`
+dependencies.add("implementation", libraries.securityCrypto)
+dependencies.add("implementation", libraries.cryptoTink)
+dependencies.add("implementation", libraries.exoplayerCore)
+dependencies.add("implementation", libraries.exoplayerUI)
+dependencies.add("implementation", libraries.swiperefreshlayout)
+
+dependencies.add("implementation", libraries.supportAppcompat)
+dependencies.add("implementation", libraries.constraintlayout)
+dependencies.add("implementation", libraries.supportDesign)
+dependencies.add("implementation", libraries.multidex)
+dependencies.add("implementation", libraries.gson)
+dependencies.add("implementation", libraries.glideAnnotations)
+dependencies.add("implementation", libraries.glideGlide)
+
+dependencies.add("implementation", libraries.recyclerview)
+dependencies.add("implementation", libraries.lottie)
+
+dependencies.add("implementation", libraries.supportWindow)
+dependencies.add("implementation", libraries.windowJava)
+
+dependencies.add("implementation", libraries.jetbrainskotlin)
+dependencies.add("implementation", libraries.kotlinStdlibJdk)
+
+dependencies.add("implementation", libraries.kotlinxCoroutinesAndroid)
+dependencies.add("implementation", libraries.kotlinxCoroutinesCore)
+dependencies.add("implementation", libraries.androidxCoreKtx)
+dependencies.add("implementation", libraries.androidxCore)
+dependencies.add("implementation", libraries.viewmodelKtx)
+dependencies.add("implementation", libraries.lifecycleKtx)
+dependencies.add("implementation", libraries.lifecycleService)
+dependencies.add("implementation", libraries.workerManager)
+
+dependencies.add("implementation", libraries.fragmentKtx)
+dependencies.add("implementation", libraries.scaleImageView)
+dependencies.add("implementation", libraries.splashScreenLib)
+dependencies.add("implementation", libraries.livedataKtx)
+dependencies.add("implementation", libraries.rxAndroid)
+
+dependencies.add("implementation", libraries.composeMaterial3)
+dependencies.add("implementation", libraries.composeMaterial3WindowSize)
+dependencies.add("implementation", libraries.composeUIToolingPreview)
+dependencies.add("implementation", libraries.composeConstraintlayout)
+dependencies.add("implementation", libraries.composeActivity)
+dependencies.add("implementation", libraries.composeLifecycle)
+dependencies.add("implementation", libraries.composeNavigation)
+dependencies.add("implementation", libraries.coil)
+
+dependencies.add("implementation", libraries.androidxWebkitKtx)
+dependencies.add("implementation", libraries.jetbrainsAnnotations)
+dependencies.add("implementation", libraries.kotlinxCoroutinesCoreJvm)
+dependencies.add("implementation", libraries.kotlinxCoroutinesSwing)
+
+dependencies.add("implementation", libraries.cameraXCore)
+dependencies.add("implementation", libraries.cameraXCamera2)
+dependencies.add("implementation", libraries.cameraXLifecycle)
+dependencies.add("implementation", libraries.cameraXView)
+
+dependencies.add("implementation", libraries.mlkitTextRecognition)
+dependencies.add("implementation", libraries.blueparrottsdk)
+//6.6.0
+dependencies.add("implementation", libraries.composeLifecycleViewmodel)
+dependencies.add("implementation", libraries.profileinstaller)
+dependencies.add("implementation", libraries.coilGif)

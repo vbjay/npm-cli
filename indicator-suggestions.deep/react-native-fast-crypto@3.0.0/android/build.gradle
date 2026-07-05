@@ -1,0 +1,41 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:7.3.1'
+  }
+}
+
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace = "co.airbitz.fastcrypto"
+  compileSdk = safeExtGet('compileSdkVersion', 28)
+  ndkVersion = safeExtGet('ndkVersion', '28.0.12674087')
+
+  defaultConfig {
+    minSdk = safeExtGet('minSdkVersion', 23)
+    targetSdk = safeExtGet('targetSdkVersion', 27)
+    versionCode = 1
+    versionName = '1.0'
+  }
+  lintOptions {
+    abortOnError = false
+  }
+}
+
+repositories {
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native:+'
+}

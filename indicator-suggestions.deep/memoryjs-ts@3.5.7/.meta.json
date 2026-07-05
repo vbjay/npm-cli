@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a37e6afe0b0b3b75",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "ded930122d5c2570edbe4ad0928fb64860fbea8b8bb7c6349b18531491ddd763",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `memoryjs`  -  C/C++ sources",
+            "items": [
+              "lib/memoryjs.cc",
+              "lib/memory.cc",
+              "lib/process.cc",
+              "lib/module.cc",
+              "lib/pattern.cc",
+              "lib/functions.cc",
+              "lib/debugger.cc"
+            ]
+          },
+          {
+            "label": "Target `memoryjs`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": "7d77fe5b2ceaa0ab2029a36c5670ac89249fb513de2492253753c66753a74ec8",
+        "sizeBytes": 1299,
+        "signals": [
+          "uses-child-process",
+          "native-build",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:09.912Z"
+  },
+  "hash": "sha256:046e31809260b9b3bd17886dd78a795e95a4c03c2a9289ead59e33cfeec08459"
+}

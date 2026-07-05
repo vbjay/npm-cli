@@ -1,0 +1,35 @@
+{
+  "name": "@baidu-map/bns",
+  "version": "1.2.0",
+  "repository": "icode:baidu/nodejs/bns",
+  "description": "Node.js n-api bns cpp addon",
+  "author": "liuwenzhu@baidu.com",
+  "keywords": [
+    "bns",
+    "addon",
+    "n-api"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.4.0"
+  },
+  "scripts": {
+    "build:dev": "node-gyp -j 8 rebuild --debug",
+    "test": "npm run build && jest",
+    "build": "node-gyp rebuild",
+    "install": "node-gyp-build",
+    "postbuild": "prebuildify --strip --napi --target node@v12.16.1"
+  },
+  "gypfile": true,
+  "devDependencies": {
+    "jest": "^26.4.1",
+    "prebuildify": "^5.0.0"
+  },
+  "os": [
+    "linux"
+  ],
+  "publishConfig": {
+    "access": "public"
+}
+}

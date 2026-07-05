@@ -1,0 +1,110 @@
+{
+  "name": "zig-pug",
+  "version": "4.1.3",
+  "description": "High-performance Pug template engine powered by Zig and mujs. Native N-API addon with ES5.1 JavaScript support, full UTF-8 (emoji, accents), Builder API for dynamic data construction, comprehensive C/C++ API, and fast compilation. Compatible with Node.js and Bun.",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "scripts": {
+    "install": "node install.js",
+    "postinstall": "node install.js",
+    "build": "node-gyp configure build",
+    "rebuild": "npm run prebuild-fix && node-gyp rebuild",
+    "prebuild-fix": "node prebuild-fix.js",
+    "clean": "node-gyp clean",
+    "test": "node test/test.js",
+    "build-prebuilts": "./build-prebuilts.sh",
+    "build-binaries": "./build-node-binaries.sh"
+  },
+  "keywords": [
+    "pug",
+    "template",
+    "template-engine",
+    "html",
+    "zig",
+    "mujs",
+    "javascript",
+    "es5",
+    "native",
+    "addon",
+    "napi",
+    "n-api",
+    "node-addon",
+    "fast",
+    "performance",
+    "high-performance",
+    "bun",
+    "bunjs",
+    "compiler",
+    "view-engine",
+    "express",
+    "jade",
+    "haml",
+    "utf-8",
+    "utf8",
+    "unicode",
+    "emoji",
+    "i18n",
+    "internationalization",
+    "multilingual",
+    "spanish",
+    "portuguese",
+    "french",
+    "german",
+    "c-api",
+    "c++",
+    "cpp",
+    "ffi",
+    "builder-api",
+    "dynamic-data",
+    "type-safe"
+  ],
+  "author": {
+    "name": "zig-pug contributors",
+    "url": "https://github.com/carlos-sweb/zig-pug/graphs/contributors"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlos-sweb/zig-pug.git",
+    "directory": "nodejs"
+  },
+  "bugs": {
+    "url": "https://github.com/carlos-sweb/zig-pug/issues"
+  },
+  "homepage": "https://github.com/carlos-sweb/zig-pug#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "node-gyp": "^10.0.0"
+  },
+  "gypfile": true,
+  "binary": {
+    "module_name": "zigpug",
+    "module_path": "./build/Release/",
+    "host": "https://github.com/carlos-sweb/zig-pug/releases/download/"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "install.js",
+    "prebuild-fix.js",
+    "binding.c",
+    "binding.gyp",
+    "common.gypi",
+    "README.md",
+    "LICENSE",
+    "include/",
+    "prebuilts/",
+    "prebuilt-binaries/"
+  ]
+}

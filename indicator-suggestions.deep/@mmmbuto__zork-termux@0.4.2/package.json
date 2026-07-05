@@ -1,0 +1,45 @@
+{
+  "name": "@mmmbuto/zork-termux",
+  "version": "0.4.2",
+  "description": "ZORK I, II, III for Termux terminal with prebuilt binary",
+  "main": "check-update.js",
+  "files": [
+    "README.md",
+    "install.js",
+    "check-update.js",
+    "prebuilt/"
+  ],
+  "bin": {
+    "zork-termux": "prebuilt/zork-termux",
+    "zork-termux-check-update": "check-update.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js",
+    "check-update": "node check-update.js"
+  },
+  "keywords": [
+    "zork",
+    "termux",
+    "rust",
+    "interactive-fiction",
+    "text-adventure",
+    "android"
+  ],
+  "author": "Davide A. Guglielmi <dev@mmmbuto.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DioNanos/zork-termux.git"
+  },
+  "homepage": "https://github.com/DioNanos/zork-termux#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "os": [
+    "android",
+    "linux"
+  ],
+  "cpu": [
+    "arm64"
+  ]
+}

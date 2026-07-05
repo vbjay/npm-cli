@@ -1,0 +1,54 @@
+{
+  "name": "pii-browser",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Browser-first PII detection, obfuscation, and de-obfuscation with a precompiled Rust/WASM core and GLiNER integration.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "vendor/pii-wasm",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist vendor/pii-wasm",
+    "prepare:runtime": "node ../../scripts/patch-gliner.mjs",
+    "build:wasm": "mkdir -p ./vendor && PATH=\"$HOME/.cargo/bin:$PATH\" wasm-pack build ../../rust/pii-wasm --target bundler --out-dir ../../packages/pii-browser/vendor/pii-wasm --out-name pii_wasm && node ../../scripts/finalize-wasm-pkg.mjs",
+    "build": "pnpm run prepare:runtime && pnpm run build:wasm && ../../node_modules/.bin/tsc -p tsconfig.json",
+    "test": "pnpm run prepare:runtime && pnpm run build:wasm && ../../node_modules/.bin/tsc --noEmit -p tsconfig.json",
+    "prepack": "pnpm run build",
+    "pack:check": "pnpm run build && npm pack --dry-run",
+    "publish:public": "pnpm run build && npm publish --access public"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "pii",
+    "privacy",
+    "wasm",
+    "gliner",
+    "browser",
+    "obfuscation",
+    "deobfuscation"
+  ],
+  "dependencies": {
+    "@huggingface/transformers": "3.8.1",
+    "gliner": "^0.0.19",
+    "onnxruntime-common": "1.19.2",
+    "onnxruntime-web": "1.19.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

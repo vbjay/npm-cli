@@ -1,0 +1,125 @@
+{
+  "name": "@zap-js/client",
+  "version": "0.2.3",
+  "description": "High-performance fullstack React framework - Client package",
+  "homepage": "https://github.com/saint0x/zapjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saint0x/zapjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/saint0x/zapjs/issues"
+  },
+  "type": "module",
+  "main": "./dist/runtime/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "node": "./dist/runtime/node.js",
+      "default": "./dist/runtime/browser.js"
+    },
+    "./node": {
+      "types": "./index.d.ts",
+      "default": "./dist/runtime/node.js"
+    },
+    "./server": {
+      "types": "./index.d.ts",
+      "default": "./dist/runtime/server.js"
+    },
+    "./browser": {
+      "types": "./index.d.ts",
+      "default": "./dist/runtime/browser.js"
+    },
+    "./client": {
+      "types": "./index.d.ts",
+      "default": "./dist/runtime/client.js"
+    },
+    "./router": "./dist/router/index.js"
+  },
+  "bin": {
+    "zap": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
+    "@babel/types": "^7.28.5",
+    "@msgpack/msgpack": "^3.1.2",
+    "@types/fs-extra": "^11.0.4",
+    "chalk": "^5.3.0",
+    "chokidar": "^3.5.3",
+    "commander": "^12.0.0",
+    "express": "^4.18.2",
+    "fs-extra": "^11.3.2",
+    "http-proxy-middleware": "^2.0.6",
+    "inquirer": "^9.2.12",
+    "ora": "^6.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "strip-ansi": "^7.0.0",
+    "tsx": "^4.21.0",
+    "vite": "^5.0.0",
+    "ws": "^8.16.0"
+  },
+  "optionalDependencies": {
+    "@zap-js/darwin-arm64": "0.2.3",
+    "@zap-js/darwin-x64": "0.2.3",
+    "@zap-js/linux-x64": "0.2.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/express": "^4.17.17",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/ws": "^8.5.10",
+    "@vitejs/plugin-react": "^5.1.2",
+    "happy-dom": "^20.0.11",
+    "jsdom": "^27.3.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "zap",
+    "zapjs",
+    "zap-js",
+    "react",
+    "framework",
+    "router",
+    "client",
+    "typescript",
+    "rust",
+    "fullstack",
+    "file-routing",
+    "ssr",
+    "ssg",
+    "middleware",
+    "hot-reload",
+    "hmr",
+    "vite",
+    "performance"
+  ],
+  "author": "saint0x",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

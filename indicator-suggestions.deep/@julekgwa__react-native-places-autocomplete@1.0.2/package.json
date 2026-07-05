@@ -1,0 +1,177 @@
+{
+  "name": "@julekgwa/react-native-places-autocomplete",
+  "version": "1.0.2",
+  "description": "A provider-agnostic React Native autocomplete component for searching addresses and places. Supports Google Places, OpenStreetMap (Nominatim), LocationIQ, Mapbox, or any other custom API. Easy to integrate, fully customizable, and lightweight.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @julekgwa/react-native-places-autocomplete-example run start",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "release": "release-it --only-version",
+    "docs:dev": "yarn workspace react-native-places-autocomplete-docs start"
+  },
+  "keywords": [
+    "react-native",
+    "autocomplete",
+    "places",
+    "addresses",
+    "geocoding",
+    "nominatim",
+    "google-places",
+    "mapbox",
+    "locationiq"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julekgwa/react-native-places-autocomplete.git"
+  },
+  "author": "Junius Lekgwara <phutigravel@gmail.com> (https://github.com/julekgwa)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/julekgwa/react-native-places-autocomplete/issues"
+  },
+  "homepage": "https://juniusl.space/places-autocomplete",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/compat": "^1.3.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
+    "@evilmartians/lefthook": "^1.12.3",
+    "@react-native/babel-preset": "0.81.1",
+    "@react-native/eslint-config": "^0.81.1",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^12.7.2",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.1.12",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "commitlint": "^19.8.1",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react-hooks": "latest",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.1.2",
+    "prettier": "^3.6.2",
+    "react": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-builder-bob": "^0.40.13",
+    "react-native-svg": "^15.13.0",
+    "react-test-renderer": "^19.0.0",
+    "release-it": "^19.0.4",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "*"
+  },
+  "workspaces": [
+    "example",
+    "website"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|@react-native|react-native-svg)/)"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.54.3"
+  }
+}

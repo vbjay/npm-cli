@@ -1,0 +1,58 @@
+{
+  "name": "react-native-electrum-client-rs",
+  "version": "0.10.0",
+  "description": "High-performance Electrum client for React Native, powered by Rust",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "npm run build:ts",
+    "build:rust": "cargo build --release",
+    "build:rust:ios": "./scripts/build-ios.sh",
+    "build:rust:android": "./scripts/build-android.sh",
+    "build:rust:all": "npm run build:rust:ios && npm run build:rust:android",
+    "build:ts": "tsc",
+    "prepare": "npm run build:ts",
+    "prepublishOnly": "npm run build:ts && npm run build:rust:all",
+    "test": "cargo test",
+    "version:bump": "./scripts/version-bump.sh"
+  },
+  "keywords": [
+    "react-native",
+    "bitcoin",
+    "electrum",
+    "lightning",
+    "blockchain",
+    "rust",
+    "uniffi"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reklis/react-native-electrum-client-rs.git"
+  },
+  "author": "Steven Fusco",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.72.0",
+    "react": "^18.2.0",
+    "react-native": "^0.72.0",
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "target/universal",
+    "react-native-electrum-client-rs.podspec",
+    "Cargo.toml",
+    "README.md",
+    "scripts"
+  ]
+}

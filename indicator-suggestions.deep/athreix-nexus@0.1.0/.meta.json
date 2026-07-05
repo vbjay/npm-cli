@@ -1,0 +1,118 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d7d816300a37df39",
+    "fetchedFiles": [
+      "lib/resolve.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0fdfb624393c70a7eb969cc55a8852433dae3f2c1d56d3511249fb42f6ba5dfc",
+        "sizeBytes": 3866,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/resolve.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/TusharND12/Athriex-Nexus",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/resolve.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "193c2ef741c620d84d066313359737d2806c5b13aee6700957be61998c95a191",
+        "sizeBytes": 1386,
+        "signals": [
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/TusharND12/Athriex-Nexus",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "305f68e401b57a7401c72f9449b67412de22478b9a35e1b4b98bd02e71017ef2",
+        "sizeBytes": 1031,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:22.801Z"
+  },
+  "hash": "sha256:d505abc06b1687bffdc4cc33b1c36a3704b4a278faf250a8b229e39d59b4909c"
+}

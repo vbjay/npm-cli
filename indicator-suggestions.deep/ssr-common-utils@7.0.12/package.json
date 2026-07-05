@@ -1,0 +1,68 @@
+{
+  "name": "ssr-common-utils",
+  "version": "7.0.12",
+  "description": "utils for serverless ssr",
+  "keywords": [
+    "cli",
+    "react",
+    "serverless",
+    "ssr",
+    "vue"
+  ],
+  "homepage": "https://github.com/zhangyuang/ssr#readme",
+  "bugs": {
+    "url": "https://github.com/zhangyuang/ssr/issues"
+  },
+  "license": "MIT",
+  "author": "zhangyuang",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangyuang/ssr.git"
+  },
+  "sideEffects": false,
+  "main": "./cjs/server/index.js",
+  "module": "./esm/server/index.js",
+  "browser": "./esm/client/index.js",
+  "types": "./esm/types.d.ts",
+  "exports": {
+    "node": {
+      "import": "./cjs/server/index.js",
+      "require": "./cjs/server/index.js"
+    },
+    "default": {
+      "import": "./esm/client/index.js",
+      "require": "./cjs/client/index.js"
+    }
+  },
+  "scripts": {
+    "postinstall": "node postinstall.js",
+    "build": "concurrently \"tsc -p ./tsconfig.cjs.json \" \" tsc -p ./tsconfig.esm.json\"",
+    "watch": "concurrently \"tsc -w -p ./tsconfig.cjs.json \" \"tsc -w -p ./tsconfig.esm.json \""
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "debug": "^4.3.4",
+    "http-proxy-middleware": "^1.0.6",
+    "koa2-connect": "^1.0.2",
+    "path-to-regexp": "^6.2.0",
+    "qs": "^6.11.2",
+    "semver": "^7.3.5",
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/qs": "^6.9.7",
+    "@types/react": "^17.0.0",
+    "@types/semver": "^7.3.9",
+    "@types/shelljs": "^0.8.7",
+    "concurrently": "^5.1.0",
+    "pinia": "^2.0.13",
+    "rolldown-vite": "^7.3.0",
+    "ssr-types": "workspace:*",
+    "vue": "^3.0.0",
+    "webpack-chain": "^6.4.0"
+  },
+  "engines": {
+    "node": ">=14.17.0"
+  }
+}

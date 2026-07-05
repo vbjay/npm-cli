@@ -1,0 +1,162 @@
+{
+  "name": "react-native-unit-components",
+  "version": "3.5.0",
+  "description": "Unit React Native components",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-unit-components.podspec",
+    "!lib/typescript/example",
+    "!lib/typescript/exampleNewArch",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{ts,tsx}\" --fix",
+    "prepare": "bob build",
+    "example": "yarn --cwd example",
+    "cleanNodeModules": "rm -rf node_modules",
+    "setup-veryfi": "node scripts/setup-veryfi.js",
+    "bootstrap": "node scripts/setup-veryfi.js && yarn cleanNodeModules && yarn example cleanNodeModules && yarn example && yarn && yarn example pods",
+    "cleanAll": "rm -rf node_modules example/node_modules android/build example/android/build example/ios/pods",
+    "installAll": "yarn installOldArch && yarn installNewArch",
+    "installOldArch": "node scripts/setup-veryfi.js && yarn install && cd example && yarn install && cd ios && pod install",
+    "installNewArch": "node scripts/setup-veryfi.js && yarn install && cd exampleNewArch && yarn install && cd ios && pod install"
+  },
+  "keywords": [
+    "react-native",
+    "Unit",
+    "components"
+  ],
+  "author": "Unit",
+  "license": "MIT",
+  "homepage": "https://www.unit.co",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.18.2",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@react-native/codegen": "^0.78.0",
+    "@types/jest": "^29.5",
+    "@types/react": "18.2.0",
+    "@types/react-native": "^0.69.9",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "detox": "20.39.0",
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest": "~29.7",
+    "prettier": "^2.0.5",
+    "react": "18.2.0",
+    "react-native": "0.69.9",
+    "react-native-builder-bob": "^0.23.2",
+    "react-native-safe-area-context": "^4.7.4",
+    "react-native-tscodegen": "^0.72.0",
+    "react-native-webview": "^13.6.3",
+    "ts-jest": "29.3.4",
+    "typescript": "^4.5.2"
+  },
+  "resolutions": {
+    "@types/react": "^16.14.20"
+  },
+  "peerDependencies": {
+    "@veryfi/react-native-veryfi-lens": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-plaid-link-sdk": "*",
+    "react-native-safe-area-context": ">=4.0.0",
+    "react-native-webview": "*"
+  },
+  "peerDependenciesMeta": {
+    "@veryfi/react-native-veryfi-lens": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.7.1",
+    "react-native-plaid-link-sdk": "^12.7.0",
+    "react-native-webview": "^13.16.0",
+    "react-redux": "^8.1.2"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/exampleNewArch/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@babel/eslint-parser",
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNUnitComponentsSdkViewSpec",
+    "type": "all",
+    "jsSrcsDir": "./src",
+    "android": {
+      "javaPackageName": "com.unitreactnativecomponents"
+    },
+    "ios": {
+      "componentProvider": {
+        "UnitAddToWalletButtonNativeView": "UnitAddToWalletButtonNativeViewComponentView"
+      }
+    }
+  }
+}

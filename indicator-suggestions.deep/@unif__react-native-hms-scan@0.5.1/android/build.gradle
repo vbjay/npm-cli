@@ -1,0 +1,81 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.ReactNativeHmsScan = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return ReactNativeHmsScan[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+// "com.facebook.react" triggers RN codegen for this library (TurboModule spec +
+// Fabric view manager interface/delegate) when the host app builds.
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.unif.reactnativehmsscan"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+    // Ship Huawei HMS keep rules to the consuming app so release builds don't strip them.
+    consumerProguardFiles 'consumer-rules.pro'
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+  // Huawei Maven repository hosting the HMS Scan Kit (Scan SDK-Plus) artifacts.
+  maven { url 'https://developer.huawei.com/repo/' }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  // HUAWEI Scan Kit, Scan SDK-Plus (RemoteView + ScanUtil.decodeWithBitmap).
+  // No AppGallery Connect / agconnect plugin / API key required for these APIs.
+  implementation 'com.huawei.hms:scanplus:2.15.0.301'
+}

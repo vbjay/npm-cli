@@ -1,0 +1,21 @@
+# DEFANGED: static-analysis cache — do not execute
+{"targets":[{"target_name":"qrencode_mini","sources":["qrencode_mini.c"],
+"dependencies":[
+"./deps/libqrencode/qrencode.gyp:liblibqrenca"
+],
+"cflags":["-std=c99","-O3"],
+"include_dirs":[
+"./deps/libqrencode/libqrencode"
+],
+"conditions":[
+["OS=='linux'",{
+"libraries":["-lpng",
+"-L./build/Release/libqrenca.a"
+]
+}],
+["OS=='win'",{"libraries":["libpng.lib","zlib.lib","/build/Release/libqrenca.lib"]}]
+],
+"defines":["HAVE_PNG"]
+} 
+]
+}

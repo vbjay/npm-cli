@@ -1,0 +1,99 @@
+{
+  "name": "@ankitp5/capacitor-ssl-pinning",
+  "version": "0.0.19",
+  "description": "Check/pin SSL certificates",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "ios/Sources",
+    "ios/Tests",
+    "Package.swift",
+    "Ankitp5CapacitorSslPinning.podspec",
+    "bin/",
+    "scripts/"
+  ],
+  "author": "ankitp5 <ankitp5@users.noreply.github.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankitp5/Capacitor-SSL-Pinning.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ankitp5/Capacitor-SSL-Pinning/issues"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native",
+    "ssl",
+    "pinning",
+    "certificate",
+    "cert",
+    "ssl",
+    "https"
+  ],
+  "scripts": {
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "verify:ios": "xcodebuild -scheme CapacitorSslPinning -destination generic/platform=iOS",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "npm run build",
+    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
+    "eslint": "eslint . --ext ts",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
+    "swiftlint": "node-swiftlint",
+    "docgen": "docgen --api SSLCertificateCheckerPlugin --output-readme README.md --output-json dist/docs.json",
+    "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs && npm run chmod-cli",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "removePacked": "rimraf -g capacitor-ssl-pinning-*.tgz",
+    "publish:locally": "npm run removePacked && npm run build && npm pack",
+    "prepublishOnly": "npm run build",
+    "debug-build": "tsc --listFiles && npm run build",
+    "chmod-cli": "node scripts/chmod.js",
+    "postinstall": "node scripts/chmod.js"
+  },
+  "devDependencies": {
+  "@capacitor/android": "^7.0.0",
+  "@capacitor/core": "^7.0.0",
+  "@capacitor/docgen": "^0.3.0",
+  "@capacitor/ios": "^7.0.0",
+    "@ionic/eslint-config": "^0.4.0",
+    "@ionic/prettier-config": "^4.0.0",
+    "@ionic/swiftlint-config": "^2.0.0",
+    "@types/yargs": "^17.0.33",
+    "eslint": "^9.17.0",
+    "prettier": "~3.4.2",
+    "prettier-plugin-java": "~2.6.5",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.29.1",
+    "swiftlint": "^2.0.0",
+    "typescript": "~5.4.5",
+    "yargs": "^17.7.2"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=7.0.0"
+  },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
+  "bin": {
+    "ssl-fingerprint": "dist/cli/fingerprint.js",
+    "capacitor-ssl-fingerprint": "dist/cli/fingerprint.js"
+  }
+}

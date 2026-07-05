@@ -1,0 +1,126 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fb8a06e892c2289a",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "1f863f80224cf17ef5fc826d4bb375932376212da1d17604a1122e4106978287",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `canvas-postbuild`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          },
+          {
+            "label": "Target `canvas`  -  C/C++ sources",
+            "items": [
+              "src/bmp/BMPParser.cc",
+              "src/Canvas.cc",
+              "src/CanvasGradient.cc",
+              "src/CanvasPattern.cc",
+              "src/CanvasRenderingContext2d.cc",
+              "src/closure.cc",
+              "src/color.cc",
+              "src/Image.cc",
+              "src/ImageData.cc",
+              "src/init.cc",
+              "src/register_font.cc",
+              "src/FontParser.cc"
+            ]
+          },
+          {
+            "label": "Target `canvas`  -  libraries",
+            "items": [
+              "-l<(GTK_Root)/lib/cairo.lib",
+              "-l<(GTK_Root)/lib/libpng.lib",
+              "-l<(GTK_Root)/lib/pangocairo-1.0.lib",
+              "-l<(GTK_Root)/lib/pango-1.0.lib",
+              "-l<(GTK_Root)/lib/freetype.lib",
+              "-l<(GTK_Root)/lib/glib-2.0.lib",
+              "-l<(GTK_Root)/lib/gobject-2.0.lib",
+              "<!@(pkg-config pixman-1 --libs)",
+              "<!@(pkg-config cairo --libs)",
+              "<!@(pkg-config libpng --libs)",
+              "<!@(pkg-config pangocairo --libs)",
+              "<!@(pkg-config freetype2 --libs)",
+              "-l<(jpeg_root)/lib/jpeg.lib",
+              "<!@(pkg-config libjpeg --libs)",
+              "-l<(GTK_Root)/lib/gif.lib",
+              "-L/opt/homebrew/lib",
+              "-lgif",
+              "-l<(GTK_Root)/lib/librsvg-2-2.lib",
+              "<!@(pkg-config librsvg-2.0 --libs)"
+            ]
+          },
+          {
+            "label": "Target `canvas`  -  include directories",
+            "items": [
+              "<!(node -p \"require('node-addon-api').include_dir\")",
+              "<(GTK_Root)/include",
+              "<(GTK_Root)/include/cairo",
+              "<(GTK_Root)/include/pango-1.0",
+              "<(GTK_Root)/include/glib-2.0",
+              "<(GTK_Root)/include/freetype2",
+              "<(GTK_Root)/lib/glib-2.0/include",
+              "<!@(pkg-config cairo --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config libpng --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config pangocairo --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config freetype2 --cflags-only-I | sed s/-I//g)",
+              "<(jpeg_root)/include",
+              "<!@(pkg-config libjpeg --cflags-only-I | sed s/-I//g)",
+              "/opt/homebrew/include",
+              "<!@(pkg-config librsvg-2.0 --cflags-only-I | sed s/-I//g)"
+            ]
+          },
+          {
+            "label": "Target `canvas`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:27.281Z"
+  },
+  "hash": "sha256:ec5df18d6e6df7992298230bdc71098f63ffac4b430527365385c8289f6304c2"
+}

@@ -1,0 +1,114 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9d138650f7e94d98",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "4ea729cd8807c258d7ec41cea56c01eef73846eb2ed2f23e42089e3353a17072",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `filesystem-utilities`  -  C/C++ sources",
+            "items": [
+              "source/addon.cpp",
+              "source/get_files_worker.cpp",
+              "source/get_icon_worker.cpp",
+              "source/get_exif_date_worker.cpp",
+              "source/get_exif_infos_worker.cpp",
+              "source/std_utils.cpp",
+              "source/exif_reader.cpp",
+              "source/get_gpx_track_worker.cpp",
+              "source/gpx_track.cpp",
+              "source/tinyxml2.cpp",
+              "source/cancellation.cpp",
+              "source/get_icon_from_name_worker.cpp",
+              "source/trash_worker.cpp",
+              "source/windows/drives.cpp",
+              "source/windows/files.cpp",
+              "source/windows/icon.cpp",
+              "source/windows/file_version.cpp",
+              "source/windows/shell.cpp",
+              "source/windows/utils.cpp",
+              "source/windows/get_drives_worker.cpp",
+              "source/windows/get_file_version_worker.cpp",
+              "source/windows/create_directory_worker.cpp",
+              "source/windows/copy_worker.cpp",
+              "source/windows/error.cpp",
+              "source/windows/process_file.cpp",
+              "source/windows/rename_worker.cpp",
+              "source/windows/get_versions_worker.cpp",
+              "source/windows/network_share_worker.cpp",
+              "source/windows/services_worker.cpp",
+              "source/linux/files.cpp",
+              "source/linux/icon.cpp",
+              "source/linux/copy_worker.cpp",
+              "source/linux/trash.cpp",
+              "source/linux/error.cpp",
+              "source/linux/accent_color.cpp"
+            ]
+          },
+          {
+            "label": "Target `filesystem-utilities`  -  libraries",
+            "items": [
+              "gdiplus.lib",
+              "Mincore.lib",
+              "<!@(pkg-config --libs gtk+-3.0)"
+            ]
+          },
+          {
+            "label": "Target `filesystem-utilities`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<!@(node -p \"var a = require('node-addon-api').include; var b = a.substr(0, a.length - 15); b + 'event-source-base' + a[a.length-1]\")"
+            ]
+          },
+          {
+            "label": "Target `filesystem-utilities`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:51.508Z"
+  },
+  "hash": "sha256:eca0c30e3369b531e0deb31db5e642cf821ac1ace1ef9b6a752cbeb8f34a2ebc"
+}

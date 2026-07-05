@@ -1,0 +1,156 @@
+{
+  "name": "nativeflowcss",
+  "version": "1.4.1",
+  "description": "A utility-first styling objects for React Native, syntax similar to Tailwind.",
+  "source": "./src/index.ts",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      },
+      "require": {
+        "types": "./lib/index.d.cts",
+        "default": "./lib/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "check:size": "node scripts/check-lib-size.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.ts\"",
+    "test": "jest",
+    "clean": "del-cli lib",
+    "prepare": "npm run build",
+    "release:patch": "release-it patch",
+    "release:minor": "release-it minor",
+    "release:major": "release-it major"
+  },
+  "keywords": [
+    "react-native",
+    "tailwind-css",
+    "utility-first",
+    "css-in-js",
+    "no-babel",
+    "easy-setup",
+    "one-package",
+    "ui-library",
+    "mobile-ui",
+    "cross-platform",
+    "ios",
+    "android",
+    "flexbox",
+    "minimalist",
+    "tailwind",
+    "responsive",
+    "design-system",
+    "native",
+    "styling",
+    "lightweight",
+    "performance",
+    "customizable",
+    "theme",
+    "mobile-first",
+    "react-native-styling",
+    "react-native-tailwind",
+    "react-native-utility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nativeflowteam/nativeflowcss.git"
+  },
+  "author": "Jay Singh <work.jayssingh@gmail.com> (https://github.com/nativeflowteam)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nativeflowcrafts/nativeflowcss/issues"
+  },
+  "homepage": "https://nativeflow.js.org",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/default-esm",
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/tests/**/*.test.ts"
+    ],
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    "transform": {
+      "^.+\\.ts$": [
+        "ts-jest",
+        {
+          "useESM": true,
+          "tsconfig": "tsconfig.json"
+        }
+      ]
+    },
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "type": "module",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.3",
+    "@evilmartians/lefthook": "^2.1.6",
+    "@release-it/conventional-changelog": "^11.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "@types/react-native": "^0.72.8",
+    "@typescript-eslint/eslint-plugin": "^8.59.1",
+    "@typescript-eslint/parser": "^8.59.1",
+    "commitlint": "^20.5.3",
+    "conventional-changelog-angular": "^8.3.1",
+    "del-cli": "^7.0.0",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "prettier": "^3.8.3",
+    "release-it": "^20.0.1",
+    "ts-jest": "^29.4.9",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@nmhuei/chatcli",
+  "version": "1.0.0",
+  "description": "Secure P2P Chat CLI with AES encryption and UPnP support.",
+  "main": "index.js",
+  "bin": {
+    "chat-server": "./npm-bin/server.js",
+    "chat-cli": "./npm-bin/cli.js"
+  },
+  "scripts": {
+    "postinstall": "cargo build --release && mkdir -p bin && cp target/release/p2pchat bin/p2pchat",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "p2p",
+    "chat",
+    "cli",
+    "rust",
+    "encrypted",
+    "upnp"
+  ],
+  "author": "Bitsness",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitsness/chatCLI.git"
+  }
+}

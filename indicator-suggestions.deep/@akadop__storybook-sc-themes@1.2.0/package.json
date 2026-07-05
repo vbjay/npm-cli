@@ -1,0 +1,60 @@
+{
+  "name": "@akadop/storybook-sc-themes",
+  "version": "1.2.0",
+  "description": "storybook addon with styled-components theme",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "serve": "start-storybook -p 6006",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p .",
+    "build:watch": "npm run clean && tsc -p . -w",
+    "pretest": "tslint -p .",
+    "test": "rimraf dist && jest",
+    "prepare": "npm run build"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "immutable": "^3.8.2",
+    "recompose": "^0.27.1"
+  },
+  "devDependencies": {
+    "@storybook/addons": "^5.0.0",
+    "@storybook/react": "^5.0.0",
+    "@types/enzyme": "^3.1.13",
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.3.3",
+    "@types/react": "^16.3.17",
+    "@types/recompose": "^0.26.1",
+    "@types/sinon": "^5.0.2",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7.1.5",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "enzyme-to-json": "^3.3.4",
+    "jest": "23.4.2",
+    "react": "^16.3.0",
+    "react-dom": "^16.5.0",
+    "rimraf": "^2.6.2",
+    "sinon": "^6.2.0",
+    "styled-components": "4.0.0",
+    "ts-jest": "^23.1.4",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
+  },
+  "peerDependencies": {
+    "@storybook/addons": "^5.0.0",
+    "@storybook/react": "^5.0.0",
+    "react": "^16.0.0",
+    "styled-components": "^4.0.0"
+  },
+  "keywords": [
+    "storybook",
+    "styled-component",
+    "addon",
+    "theme",
+    "react",
+    "typescript"
+  ]
+}

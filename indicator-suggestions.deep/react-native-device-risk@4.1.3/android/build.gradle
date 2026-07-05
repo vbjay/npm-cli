@@ -1,0 +1,87 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['DeviceRisk_kotlinVersion']
+
+  repositories {
+    google()
+    jcenter()
+    maven {url "https://sdk.socure.com/"}
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.1.1'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10'
+  }
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['DeviceRisk_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['DeviceRisk_' + name]).toInteger()
+}
+
+android {
+  namespace "com.reactnativedevicerisk"
+  compileSdkVersion 34
+  buildToolsVersion "30.0.3"
+
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion 34
+    versionCode 10016
+    versionName "4.1.1"
+    multiDexEnabled true
+  }
+  buildFeatures {
+    buildConfig = true
+  }
+
+  tasks.register("prepareKotlinBuildScriptModel"){}
+
+  buildTypes {
+    debug {
+      buildConfigField "String", "B_URL", "\"https://dvnfo.com/\""
+    }
+    release {
+      buildConfigField "String", "B_URL", "\"https://dvnfo.com/\""
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+repositories {
+  mavenCentral()
+  jcenter()
+  google()
+}
+
+dependencies {
+  // noinspection GradleDynamicVersion
+  implementation fileTree(dir: "libs", include: ["*.jar"])
+  implementation 'com.socure.devicerisk.sdk:socure-devicerisk:4.1.2'
+
+  api 'com.google.android.gms:play-services-location:17.1.0'
+
+  api 'com.karumi:dexter:6.2.1'
+  api 'com.google.code.gson:gson:2.10.1'
+
+  // Network
+  api 'com.facebook.react:react-native:+'
+  implementation 'com.facebook.infer.annotation:infer-annotation:0.18.0'
+  implementation 'javax.inject:javax.inject:1'
+}

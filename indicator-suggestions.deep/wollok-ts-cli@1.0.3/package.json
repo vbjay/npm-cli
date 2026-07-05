@@ -1,0 +1,83 @@
+{
+  "name": "wollok-ts-cli",
+  "version": "1.0.3",
+  "type": "module",
+  "description": "Wollok Command Line Interface",
+  "repository": "https://github.com/uqbar-project/wollok-ts-cli",
+  "license": "MIT",
+  "author": {
+    "name": "Uqbar Foundation",
+    "email": "org.uqbar@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/uqbar-project/wollok-ts-cli/issues"
+  },
+  "homepage": "https://github.com/uqbar-project/wollok-language",
+  "keywords": [
+    "wollok",
+    "cli",
+    "typescript"
+  ],
+  "main": "./dist/src/index.js",
+  "scripts": {
+    "prepare": "node ./scripts/download-libs.js && npm run build:tools",
+    "start": "node ./dist/src/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "npm run lint && npm run test:unit",
+    "test:ast": "vitest run test/ast.test.ts",
+    "test:diagram": "vitest run test/diagram.test.ts",
+    "test:init": "vitest run test/init.test.ts",
+    "test:lint": "vitest run test/lint.test.ts",
+    "test:run": "vitest run test/run.test.ts",
+    "test:repl": "vitest run test/repl.test.ts",
+    "test:utils": "vitest run test/utils.test.ts",
+    "test-with-coverage": "npm run lint && vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test:unit": "vitest run",
+    "build:tools": "shx cp ./node_modules/wollok-web-tools/dist/web/game-index.js ./public/game/lib && shx cp ./node_modules/wollok-web-tools/dist/dynamicDiagram/diagram-index.js ./public/diagram",
+    "copy:public": "shx rm -rf dist && shx mkdir dist && shx cp -R ./public ./dist/public",
+    "build": "npm run copy:public && tsc -p ./tsconfig.build.json",
+    "watch": "npm run build -- -w",
+    "prepublishOnly": "npm run prepare && npm run build && npm run test"
+  },
+  "bin": {
+    "wollok": "./dist/src/index.js"
+  },
+  "dependencies": {
+    "chalk": "5.6.2",
+    "cli-box": "6.0.10",
+    "commander": "14.0.1",
+    "compare-versions": "6.1.1",
+    "cors": "2.8.5",
+    "cytoscape": "3.30.2",
+    "express": "5.1.0",
+    "globby": "14.1.0",
+    "kebab-case": "2.0.2",
+    "latest-version": "9.0.0",
+    "loglevel": "1.8.1",
+    "print-message": "3.0.1",
+    "socket.io": "4.8.1",
+    "typescript": "5.5.3",
+    "winston": "3.11.0",
+    "wollok-ts": "4.2.4",
+    "wollok-web-tools": "1.1.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.35.0",
+    "@stylistic/eslint-plugin": "5.3.1",
+    "@types/cli-box": "6.0.4",
+    "@types/cytoscape": "3.21.9",
+    "@types/express": "5.0.3",
+    "@types/node": "22.18.1",
+    "@typescript-eslint/eslint-plugin": "8.7.0",
+    "@typescript-eslint/parser": "8.7.0",
+    "@vitest/coverage-v8": "3.2.4",
+    "eslint": "9.35.0",
+    "shx": "0.4.0",
+    "socket.io-client": "4.8.1",
+    "tsx": "4.20.5",
+    "typescript-eslint": "8.43.0",
+    "vitest": "3.2.4"
+  }
+}

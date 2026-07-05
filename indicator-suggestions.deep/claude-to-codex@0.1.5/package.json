@@ -1,0 +1,54 @@
+{
+  "name": "claude-to-codex",
+  "version": "0.1.5",
+  "description": "Convert Claude Code repo artifacts (CLAUDE.md, skills, commands, agents) into Codex-native equivalents",
+  "keywords": [
+    "claude",
+    "cli",
+    "codex",
+    "migration"
+  ],
+  "homepage": "https://github.com/johnpyp/claude-to-codex#readme",
+  "bugs": {
+    "url": "https://github.com/johnpyp/claude-to-codex/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "johnpyp",
+    "email": "johnpyp.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnpyp/claude-to-codex"
+  },
+  "bin": {
+    "claude-to-codex": "./dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "!dist/.tsbuildinfo"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "check": "tsc --noEmit",
+    "prepare": "bun run build",
+    "test": "bun test",
+    "start": "bun run index.ts",
+    "fmt": "oxfmt --write"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "cac": "^6.7.14",
+    "globby": "^14.1.0",
+    "yaml": "^2.8.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "oxfmt": "^0.36.0",
+    "typescript": "^5.9.2"
+  }
+}

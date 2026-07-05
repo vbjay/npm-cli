@@ -1,0 +1,184 @@
+{
+  "name": "react-native-dynamically-selected-picker",
+  "version": "3.3.2",
+  "description": "React Native Custom Picker for Android and IOS with onScroll change selected items",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.tsx",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "!/__tests__",
+    "!/__fixtures__",
+    "!/__mocks__",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepack": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install && yarn example pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
+    "clean:all": "yarn clean && rm -rf node_modules example/node_modules"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "react-native",
+    "swipe-picker",
+    "dynamic-select",
+    "selector",
+    "select-picker",
+    "ios-style-android-picker",
+    "ios-android-picker",
+    "on-scroll-select",
+    "picker",
+    "swiper",
+    "scroll-change-picker",
+    "ios-android-select",
+    "typescript-support"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sosog/react-native-dynamically-selected-picker.git"
+  },
+  "author": "sosog <sosogvritishvili@gmail.com> (https://github.com/sosog)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sosog/react-native-dynamically-selected-picker/issues"
+  },
+  "homepage": "https://github.com/sosog/react-native-dynamically-selected-picker#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^18.4.0",
+    "@evilmartians/lefthook": "^1.5.2",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@react-native/babel-preset": "^0.84.0",
+    "@release-it/conventional-changelog": "^7.0.2",
+    "@types/jest": "^29.5.8",
+    "@types/react": "^19.2.0",
+    "@types/react-native": "0.73.0",
+    "@types/react-test-renderer": "^18.0.6",
+    "commitlint": "^18.4.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "29.7.0",
+    "pod-install": "^0.1.39",
+    "prettier": "^3.0.3",
+    "react": "19.2.3",
+    "react-native": "0.84.1",
+    "react-native-builder-bob": "^0.23.1",
+    "react-test-renderer": "19.2.3",
+    "release-it": "^16.2.1",
+    "typescript": "~5.0.4"
+  },
+  "resolutions": {
+    "@types/react": "^19.2.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 18.15.0"
+  },
+  "packageManager": "yarn@1.22.15",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native(-.*)?|@react-native(-community)?|react-native-linear-gradient)/)"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "dependencies": {
+    "react-native-linear-gradient": "^2.8.3"
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  }
+}

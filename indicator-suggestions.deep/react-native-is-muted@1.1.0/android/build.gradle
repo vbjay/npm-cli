@@ -1,0 +1,22 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
+
+group = 'expo.modules.ismuted'
+version = packageJson.version
+
+android {
+  namespace "expo.modules.ismuted"
+  defaultConfig {
+    versionCode 1
+    versionName packageJson.version
+  }
+  lintOptions {
+    abortOnError false
+  }
+}

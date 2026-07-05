@@ -1,0 +1,41 @@
+{
+  "name": "@testmuai/kane-cli-darwin-arm64",
+  "version": "0.4.10",
+  "description": "KaneAI CLI — v16-runner binary for macOS ARM64",
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "files": [
+    "bin/v16-runner",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node -e \"require('fs').chmodSync(require('path').join(__dirname,'bin','v16-runner'),0o755)\""
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LambdaTest/kane-cli.git"
+  },
+  "homepage": "https://github.com/LambdaTest/kane-cli",
+  "bugs": {
+    "url": "https://github.com/LambdaTest/kane-cli/issues"
+  },
+  "keywords": [
+    "lambdatest",
+    "kane",
+    "kane-ai",
+    "browser-automation",
+    "testing",
+    "ai",
+    "cli"
+  ],
+  "license": "Apache-2.0",
+  "private": false
+}

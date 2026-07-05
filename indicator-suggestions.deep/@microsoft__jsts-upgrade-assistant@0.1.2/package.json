@@ -1,0 +1,66 @@
+{
+  "name": "@microsoft/jsts-upgrade-assistant",
+  "version": "0.1.2",
+  "description": "AI-powered tool for automatically upgrading npm packages in TypeScript projects and resolving compiler errors",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "jsts-upgrade": "./lib/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:binaries": "node ./scripts/build-binaries.js",
+    "build:windows": "node ./scripts/build-binaries.js --platforms=windows",
+    "build:linux": "node ./scripts/build-binaries.js --platforms=linux",
+    "build:macos": "node ./scripts/build-binaries.js --platforms=macos",
+    "package": "node ./scripts/build-package.js",
+    "package:windows": "node ./scripts/build-package.js --platforms=windows",
+    "package:linux": "node ./scripts/build-package.js --platforms=linux",
+    "package:macos": "node ./scripts/build-package.js --platforms=macos",
+    "set-version": "node ./scripts/set-version.js",
+    "prepare": "npm run build",
+    "test": "npm run build && npm run build:binaries && jest"
+  },
+  "keywords": [
+    "typescript",
+    "javascript",
+    "upgrade",
+    "tool",
+    "ai",
+    "npm",
+    "packages",
+    "mcp",
+    "model-context-protocol"
+  ],
+  "author": "Microsoft Corporation",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "lib/**/*",
+    "skills/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "optionalDependencies": {
+    "@microsoft/jsts-upgrade-assistant-win32-x64": "0.1.2",
+    "@microsoft/jsts-upgrade-assistant-win32-arm64": "0.1.2",
+    "@microsoft/jsts-upgrade-assistant-linux-x64": "0.1.2",
+    "@microsoft/jsts-upgrade-assistant-linux-arm64": "0.1.2",
+    "@microsoft/jsts-upgrade-assistant-darwin-x64": "0.1.2",
+    "@microsoft/jsts-upgrade-assistant-darwin-arm64": "0.1.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "esbuild": "^0.27.1",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  }
+}

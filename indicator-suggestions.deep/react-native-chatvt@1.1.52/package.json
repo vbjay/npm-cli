@@ -1,0 +1,238 @@
+{
+    "name": "react-native-chatvt",
+    "version": "1.1.52",
+    "description": "test",
+    "main": "lib/commonjs/index",
+    "module": "lib/module/index",
+    "types": "lib/typescript/index.d.ts",
+    "react-native": "src/index",
+    "source": "src/index",
+    "files": [
+        "src",
+        "lib",
+        "android",
+        "ios",
+        "cpp",
+        "*.podspec",
+        "!lib/typescript/example",
+        "!ios/build",
+        "!android/build",
+        "!android/gradle",
+        "!android/gradlew",
+        "!android/gradlew.bat",
+        "!android/local.properties",
+        "!**/__tests__",
+        "!**/__fixtures__",
+        "!**/__mocks__",
+        "!**/.*"
+    ],
+    "scripts": {
+        "test": "jest",
+        "android": "yarn example android",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint \"**/*.{js,ts,tsx}\"",
+        "prepack": "bob build",
+        "debug-vtp": "yarn example android --variant=vtpDebug",
+        "release": "release-it",
+        "example": "yarn --cwd example",
+        "push": "git add . && git commit -m 'update' && git push origin main",
+        "bootstrap": "yarn example && yarn install && yarn example pods",
+        "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build"
+    },
+    "keywords": [
+        "react-native",
+        "ios",
+        "android"
+    ],
+    "repository": "https://github.com/ducnv92/react-native-chatvt",
+    "author": "dev.ducnv <dev.ducnv@gmail.com> (https://github.com/ducnv92)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ducnv92/react-native-chatvt/issues"
+    },
+    "homepage": "https://github.com/ducnv92/react-native-chatvt#readme",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.0",
+        "@babel/plugin-proposal-class-properties": "^7.18.6",
+        "@babel/plugin-proposal-decorators": "^7.22.5",
+        "@babel/plugin-syntax-decorators": "^7.22.5",
+        "@babel/plugin-transform-class-properties": "^7.22.5",
+        "@babel/plugin-transform-runtime": "^7.22.5",
+        "@babel/preset-env": "^7.20.0",
+        "@babel/runtime": "^7.20.0",
+        "@commitlint/config-conventional": "^17.0.2",
+        "@evilmartians/lefthook": "^1.2.2",
+        "@react-native-community/eslint-config": "^3.0.2",
+        "@release-it/conventional-changelog": "^5.0.0",
+        "@types/invariant": "^2.2.35",
+        "@types/jest": "^28.1.2",
+        "@types/react": "~17.0.21",
+        "@types/react-native": "0.70.0",
+        "babel-plugin-module-resolver": "^4.1.0",
+        "commitlint": "^17.0.2",
+        "customize-cra": "^1.0.0",
+        "del-cli": "^5.0.0",
+        "eslint": "^8.4.1",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "jest": "^28.1.1",
+        "metro-react-native-babel-preset": "0.73.9",
+        "pod-install": "^0.1.0",
+        "prettier": "^2.0.5",
+        "react": "18.2.0",
+        "react-app-rewired": "^2.2.1",
+        "react-native": "0.71.11",
+        "react-native-svg-transformer": "^1.1.0",
+        "release-it": "^16.1.3",
+        "typescript": "^4.5.2"
+    },
+    "resolutions": {
+        "@types/react": "17.0.21"
+    },
+    "peerDependencies": {
+        "@bam.tech/react-native-image-resizer": "*",
+        "@react-native-async-storage/async-storage": "*",
+        "prop-types": "*",
+        "react": "*",
+        "react-native": "*",
+        "react-native-audio-recorder-player": "*",
+        "react-native-fast-image": "*",
+        "react-native-fs": "*",
+        "react-native-geolocation-service": "*",
+        "react-native-gesture-handler": "*",
+        "react-native-maps": "*",
+        "react-native-navigation": "*",
+        "react-native-permissions": "*",
+        "react-native-reactions": "*",
+        "react-native-reanimated": "*",
+        "react-native-safe-area-context": "*",
+        "react-native-svg": "*",
+        "react-native-vector-icons": "*",
+        "react-native-video": "*",
+        "react-native-webview": "*"
+    },
+    "dependencies": {
+        "@charkour/react-reactions": "^0.11.0",
+        "apisauce": "1.1.1",
+        "babel-plugin-transform-remove-console": "^6.9.4",
+        "deprecated-react-native-prop-types": "^4.1.0",
+        "emoji-datasource": "~5.0.1",
+        "emoji-datasource-apple": "^15.0.1",
+        "emoji-datasource-google": "^15.0.1",
+        "emoji-mart-native": "^0.6.5-beta",
+        "fbjs": "^3.0.5",
+        "hoist-non-react-statics": "^3.3.2",
+        "invariant": "^2.2.4",
+        "lodash": "^4.17.21",
+        "lodash.groupby": "~4.6.0",
+        "lodash.isequal": "^4.5.0",
+        "lodash.mapvalues": "~4.6.0",
+        "lodash.orderby": "~4.6.0",
+        "mobx": "^6.9.0",
+        "mobx-react-lite": "^3.4.3",
+        "moment": "^2.29.4",
+        "nanoid": "^3.1.20",
+        "react-native-animatable": "^1.3.3",
+        "react-native-builder-bob": "0.17.0",
+        "react-native-clipboard-toast": "^1.0.0",
+        "react-native-emoji-picker-staltz": "^1.0.0",
+        "react-native-gradle-plugin": "^0.71.19",
+        "react-native-mime-types": "^2.4.0",
+        "react-native-modal": "^13.0.1",
+        "react-native-open-maps": "^0.4.2",
+        "react-native-parsed-text": "^0.0.22",
+        "react-native-popover-view": "^5.1.7",
+        "react-native-popup-menu": "^0.16.1",
+        "react-native-progress-circle": "^2.1.0",
+        "react-native-progress-wheel": "^1.0.5",
+        "react-native-redash": "^14.2.4",
+        "react-native-swipeable": "^0.6.0",
+        "react-native-toast-message": "^2.1.6",
+        "react-native-uuid": "^2.0.1",
+        "react-native-video-controls": "^2.8.1",
+        "react-native-waves": "^1.2.5",
+        "recyclerlistview": "https://github.com/ducnv92/recyclerlistview.git#50ed78a",
+        "rn-emoji-keyboard": "^1.5.0",
+        "socket.io-client": "4.6.2",
+        "string.fromcodepoint": "~0.2.1"
+    },
+    "engines": {
+        "node": ">= 14.0.0"
+    },
+    "jest": {
+        "preset": "react-native",
+        "modulePathIgnorePatterns": [
+            "<rootDir>/example/node_modules",
+            "<rootDir>/lib/"
+        ]
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "release-it": {
+        "git": {
+            "commitMessage": "chore: release ${version}",
+            "tagName": "v${version}"
+        },
+        "npm": {
+            "publish": true
+        },
+        "github": {
+            "release": true
+        },
+        "plugins": {
+            "@release-it/conventional-changelog": {
+                "preset": "angular"
+            }
+        }
+    },
+    "eslintConfig": {
+        "root": true,
+        "extends": [
+            "@react-native-community",
+            "prettier"
+        ],
+        "rules": {
+            "prettier/prettier": [
+                "error",
+                {
+                    "quoteProps": "consistent",
+                    "singleQuote": true,
+                    "tabWidth": 2,
+                    "trailingComma": "es5",
+                    "useTabs": false
+                }
+            ]
+        }
+    },
+    "eslintIgnore": [
+        "node_modules/",
+        "lib/"
+    ],
+    "prettier": {
+        "quoteProps": "consistent",
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "useTabs": false
+    },
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            "commonjs",
+            "module",
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.build.json"
+                }
+            ]
+        ]
+    }
+}

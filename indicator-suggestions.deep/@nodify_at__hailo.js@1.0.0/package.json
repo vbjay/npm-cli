@@ -1,0 +1,146 @@
+{
+  "name": "@nodify_at/hailo.js",
+  "version": "1.0.0",
+  "description": "High-performance Node.js bindings for Hailo AI acceleration processors (NPU). Run neural network inference with hardware acceleration on Hailo-8 devices.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "lib/**/*",
+    "dist/**/*",
+    "prebuilds/**/*",
+    "binding.gyp",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "install": "node-gyp-build",
+    "build": "tsc -p tsconfig.prod.json",
+    "build:addon": "node-gyp rebuild",
+    "prebuild": "prebuildify --napi --strip --tag-armv",
+    "prebuild:all": "npm run prebuild -- --arch=arm64",
+    "clean": "node-gyp clean && rm -rf prebuilds dist build",
+    "configure": "node-gyp configure",
+    "test": "node --test test/*.test.js",
+    "lint": "eslint src",
+    "format": "prettier --write \"src/**/*.{js,ts}\"",
+    "prepublishOnly": "npm run clean && npm run build && npm run prebuild:all",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "keywords": [
+    "hailo",
+    "hailo-8",
+    "npu",
+    "ai",
+    "inference",
+    "neural-network",
+    "deep-learning",
+    "machine-learning",
+    "object-detection",
+    "yolo",
+    "computer-vision",
+    "hardware-acceleration",
+    "edge-ai",
+    "edge-computing",
+    "raspberry-pi",
+    "arm64",
+    "aarch64",
+    "embedded",
+    "iot",
+    "ml",
+    "tpu",
+    "accelerator",
+    "hailort",
+    "bindings",
+    "native",
+    "addon"
+  ],
+  "author": {
+    "name": "Hasan Oezdemir",
+    "email": "office@nodify.at",
+    "url": "https://nodify.at"
+  },
+  "contributors": [
+    {
+      "name": "Hasan Oezdemir",
+      "email": "office@nodify.at"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodify-at/hailo.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nodify-at/hailo.js/issues",
+    "email": "office@nodify.at"
+  },
+  "homepage": "https://github.com/nodify-at/hailo.js#readme",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/nodify-at"
+    },
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/nodify_at"
+    }
+  ],
+  "gypfile": true,
+  "os": [
+    "linux",
+    "darwin"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=8.0.0"
+  },
+  "engineStrict": true,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@nodify_at/picamera.js": "^1.0.5",
+    "@types/node": "^22.16.3",
+    "@types/ws": "^8.18.1",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "prettier": "^3.6.2",
+    "sharp": "^0.34.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0",
+    "ws": "^8.18.3"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.4.0",
+    "node-gyp-build": "^4.8.4",
+    "prebuildify": "^6.0.1"
+  },
+  "directories": {
+    "lib": "dist",
+    "src": "src",
+    "demo": "demo"
+  },
+  "tags": [
+    "hailo",
+    "ai-accelerator",
+    "edge-ai",
+    "npu"
+  ],
+  "badges": [
+    {
+      "description": "npm version",
+      "href": "https://badge.fury.io/js/@nodify_at%2Fhailo.js.svg",
+      "url": "https://www.npmjs.com/package/@nodify_at/hailo.js"
+    }
+  ]
+}

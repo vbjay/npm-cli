@@ -1,0 +1,57 @@
+{
+  "name": "@cr8rcho/alkahest",
+  "version": "0.1.37",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Screen-graph CLI that reverse-engineers a product from code (React/Next static analysis → product map)",
+  "type": "module",
+  "bin": {
+    "alkahest": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc && node scripts/copy-assets.mjs",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "react",
+    "nextjs",
+    "product-map",
+    "screen-graph",
+    "static-analysis",
+    "prd",
+    "mcp",
+    "ast"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cr8rcho/alkahest-cli.git"
+  },
+  "homepage": "https://github.com/cr8rcho/alkahest-cli#readme",
+  "bugs": {
+    "url": "https://github.com/cr8rcho/alkahest-cli/issues"
+  },
+  "author": "cr8rcho",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "commander": "^14.0.3",
+    "ts-morph": "^28.0.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}

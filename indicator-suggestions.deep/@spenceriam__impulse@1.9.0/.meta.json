@@ -1,0 +1,93 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "be6bab34da9e6fe3",
+    "fetchedFiles": [
+      "package.json",
+      "platform-package.mjs",
+      "postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "67afd2fb9926eb9d9033a4168a46e09196914c00224ada4a326fa52dec23407d",
+        "sizeBytes": 4090,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "platform-package.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://bun.sh/install",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "platform-package.mjs",
+        "reason": "required by ./postinstall.mjs",
+        "sha256": "82864bcdd0d9c2f407c19dd6dad7b3ecbc6f566945798e9e722ed65d3ec890cc",
+        "sizeBytes": 424,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:59.797Z"
+  },
+  "hash": "sha256:9c278bbf0861991f245f199840ebc2ecf877ea1399b853f40f813d1f738379c1"
+}

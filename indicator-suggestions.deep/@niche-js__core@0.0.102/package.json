@@ -1,0 +1,110 @@
+{
+    "name": "@niche-js/core",
+    "version": "0.0.102",
+    "private": false,
+    "description": "",
+    "keywords": [
+        "javascript"
+    ],
+    "homepage": "https://github.com/urbania-media/niche-js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/urbania-media/niche-js.git"
+    },
+    "author": {
+        "name": "Folklore",
+        "email": "info@folklore.email"
+    },
+    "contributors": [
+        {
+            "name": "David Mongeau-Petitpas",
+            "email": "dmp@folklore.email"
+        },
+        {
+            "name": "Nicolas Roy-Bourdages",
+            "email": "nrb@folklore.email"
+        }
+    ],
+    "license": "ISC",
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "style": "assets/css/styles.css",
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "require": "./lib/index.js",
+            "import": "./es/index.js"
+        },
+        "./components": {
+            "require": "./lib/components.js",
+            "import": "./es/components.js"
+        },
+        "./contexts": {
+            "require": "./lib/contexts.js",
+            "import": "./es/contexts.js"
+        },
+        "./hooks": {
+            "require": "./lib/hooks.js",
+            "import": "./es/hooks.js"
+        },
+        "./utils": {
+            "require": "./lib/utils.js",
+            "import": "./es/utils.js"
+        },
+        "./editor": {
+            "require": "./lib/editor.js",
+            "import": "./es/editor.js"
+        },
+        "./editor/*": {
+            "require": "./lib/editor/*.js",
+            "import": "./es/editor/*.js"
+        },
+        "./css/*": "./css/*.css",
+        "./css/*.css": "./css/*.css",
+        "./assets/css/*.css": "./assets/css/*.css"
+    },
+    "files": [
+        "lib",
+        "es",
+        "assets",
+        "css",
+        "components.js",
+        "contexts.js",
+        "hooks.js",
+        "utils.js"
+    ],
+    "scripts": {
+        "vendor": "../../scripts/build-css.js ./src/styles/vendor.css ./assets/css/vendor.css",
+        "prepare": "../../scripts/prepare-package.sh --styles && npm run vendor"
+    },
+    "devDependencies": {
+        "@rollup/plugin-alias": "^4.0.3",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    },
+    "dependencies": {
+        "@babel/runtime": "^7.13.10",
+        "@panneau/core": "^3.0.119",
+        "@panneau/modal-dialog": "^3.0.119",
+        "bootstrap": "^5.3.1",
+        "bootstrap-icons": "1.10.5",
+        "change-case": "^4.1.2",
+        "classnames": "^2.2.6",
+        "lodash": "^4.17.21",
+        "prop-types": "^15.8.1",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-intl": "^6.3.0",
+        "screenfull": "^6.0.2",
+        "uuid": "^9.0.0"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "gitHead": "bfa75a62bfaf9b26f1065b8056ed6d0a395afdbe"
+}

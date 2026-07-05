@@ -1,0 +1,128 @@
+{
+  "name": "react-native-restart",
+  "version": "0.0.28",
+  "description": "Sometimes you want to reload your app bundle during app runtime. This package will allow you to do it.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.tsx",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "!android/build/",
+    "!android/.gradle/",
+    "ios",
+    "!ios/Restart.xcodeproj/",
+    "!ios/Restart.xcworkspace/",
+    "react-native-restart.podspec",
+    "windows"
+  ],
+  "scripts": {
+    "test": "jest --coverage && jest-coverage-badges --output './badges'",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint --ext .js,.ts,.tsx .",
+    "prepare": "bob build && husky install",
+    "release": "dotenv release-it",
+    "example": "yarn --cwd Example",
+    "pods": "cd Example/ios && node -e \"process.exit(require('os').platform() === 'darwin')\" || pod install",
+    "bootstrap": "yarn example && yarn && yarn pods && cp .env.example .env",
+    "clean": "rm -rf node_modules coverage .env lib Example/node_modules Example/ios/Pods",
+    "windows": "react-native run-windows",
+    "prepack": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avishayil/react-native-restart.git"
+  },
+  "publishConfig": {
+    "provenance": true
+  },
+  "author": "Avishay Bar <avishay.il@gmail.com> (https://github.com/avishayil)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/avishayil/react-native-restart/issues"
+  },
+  "homepage": "https://github.com/avishayil/react-native-restart#readme",
+  "devDependencies": {
+    "@commitlint/config-conventional": "17.4.2",
+    "@react-native/babel-preset": "0.85.3",
+    "@react-native/eslint-config": "^0.85.3",
+    "@react-native/jest-preset": "^0.85.3",
+    "@react-native/metro-config": "^0.85.3",
+    "@release-it/conventional-changelog": "5.1.1",
+    "@types/jest": "29.2.1",
+    "@types/react": "^19.1.1",
+    "commitlint": "17.4.2",
+    "dotenv-cli": "7.0.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "8.6.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "husky": "^9.0.0",
+    "jest": "30.0.0",
+    "jest-coverage-badges": "1.1.2",
+    "prettier": "3.3.3",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-builder-bob": "^0.20.3",
+    "react-native-windows": "0.84.0-preview.11",
+    "release-it": "15.6.0",
+    "typescript": "5.5.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    },
+    "testMatch": [
+      "**/**/*.test.?(j|t)s?(x)"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/Example/",
+      "<rootDir>/example/",
+      "<rootDir>/lib/"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ],
+    "files": [
+      "src/"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "figworkai",
+  "version": "2026.1.0",
+  "figBinaryVersion": "2026.1.0",
+  "description": "Install and run fig — FigWorkAI CLI binary from GitHub Release artifacts.",
+  "author": "CRC Huaruntong",
+  "license": "MIT",
+  "homepage": "https://github.com/FigWorkAI/fig-release",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FigWorkAI/fig-release.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FigWorkAI/fig-release/issues"
+  },
+  "keywords": [
+    "fig",
+    "figworkai",
+    "cli",
+    "rust",
+    "binary",
+    "terminal",
+    "ai"
+  ],
+  "type": "commonjs",
+  "bin": {
+    "fig": "bin/fig.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "prepublishOnly": "node scripts/verify-release-assets.js",
+    "prepack": "node scripts/install.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "preferGlobal": true,
+  "files": [
+    "bin/*.js",
+    "scripts/*.js",
+    "README.md",
+    "package.json"
+  ]
+}

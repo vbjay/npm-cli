@@ -1,0 +1,96 @@
+{
+  "name": "@react-native-assets/slider",
+  "version": "11.0.12",
+  "homepage": "https://github.com/Sharcoux/slider",
+  "description": "Lightweight slider for React-Native and React-Native-Web. A Range slider is included",
+  "keywords": [
+    "react-native",
+    "react",
+    "native",
+    "react-native-web",
+    "slider",
+    "range"
+  ],
+  "author": {
+    "name": "François Billioud",
+    "email": "f.billioud@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Sharcoux/slider/issues",
+    "email": "f.billioud@gmail.com"
+  },
+  "license": "ISC",
+  "scripts": {
+    "test": "jest",
+    "prepare": "jest && tsc",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "lint": "eslint --fix .",
+    "build": "webpack",
+    "release": "npm run prepare && release-it",
+    "web": "webpack serve --open --mode development"
+  },
+  "peerDependencies": {
+    "react": ">=16.13.1",
+    "react-native": ">=0.61.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/runtime": "^7.25.6",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.3.3",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "babel-jest": "^29.7.0",
+    "babel-loader": "^8.2.3",
+    "dotenv": "^14.3.2",
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest": "^27.9.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "html-loader": "^3.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^4.3.8",
+    "jest": "^29.7.0",
+    "lint-staged": "^13.2.1",
+    "@react-native/babel-preset": "^0.76.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "^0.74.0",
+    "react-native-web": "^0.19.12",
+    "react-test-renderer": "18.2.0",
+    "release-it": "^19.0.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.1"
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.[tj]s?(x)": [
+      "eslint . --fix",
+      "git add"
+    ]
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Sharcoux/slider.git"
+  }
+}

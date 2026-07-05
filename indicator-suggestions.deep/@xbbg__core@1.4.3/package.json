@@ -1,0 +1,117 @@
+{
+  "name": "@xbbg/core",
+  "version": "1.4.3",
+  "description": "Independent Node.js client for Bloomberg-connected data workflows",
+  "keywords": [
+    "apache-arrow",
+    "arrow",
+    "bloomberg",
+    "blpapi",
+    "bpipe",
+    "finance",
+    "market-data",
+    "napi",
+    "node-api",
+    "rust",
+    "typescript",
+    "zfp"
+  ],
+  "homepage": "https://xbbg.org/javascript/",
+  "bugs": {
+    "url": "https://github.com/xbbg-org/xbbg/issues"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xbbg-org/xbbg.git",
+    "directory": "js-xbbg"
+  },
+  "files": [
+    "dist/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "bench:subscription-replay": "tsx ./benchmarks/bench-subscription-replay.ts",
+    "build": "npm run build:native && npm run build:ts",
+    "build:native": "tsx ./scripts/build-native.ts",
+    "build:offline-bundle": "tsx ./scripts/build-offline-bundle.ts",
+    "build:package-loaders": "tsx ./scripts/build-package-loaders.ts",
+    "build:ts": "tsup && npm run build:package-loaders",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "lint": "npm run lint:ox && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:fix": "oxlint . --fix && eslint --fix .",
+    "lint:ox": "oxlint .",
+    "pack:dry-run": "tsx ./scripts/validate-packages.ts --dry-run",
+    "pack:lint": "tsx ./scripts/validate-packages.ts --publint",
+    "prepack": "npm run build:ts",
+    "quality": "npm run format:check && npm run lint && npm run typecheck && npm run build:ts && npm test",
+    "smoke:packaged-install": "tsx ./scripts/smoke-packaged-install.ts --packed",
+    "stage:native-package": "tsx ./scripts/stage-native-package.ts",
+    "stamp:version": "tsx ./scripts/stamp-version.ts",
+    "test": "vitest run test/resolve-native.test.ts test/runtime-search-path.test.ts",
+    "test:live": "vitest run test/live.test.ts --testTimeout=120000",
+    "test:smoke": "vitest run test/smoke.test.ts",
+    "test:watch": "vitest test/resolve-native.test.ts test/runtime-search-path.test.ts",
+    "typecheck": "tsc --noEmit",
+    "types:attw": "tsx ./scripts/validate-packages.ts --attw"
+  },
+  "dependencies": {
+    "apache-arrow": "^21.1.0"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@arethetypeswrong/core": "^0.18.2",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.0",
+    "eslint": "^10.4.0",
+    "eslint-plugin-n": "^18.0.1",
+    "globals": "^17.6.0",
+    "jiti": "^2.7.0",
+    "oxfmt": "^0.57.0",
+    "oxlint": "^1.66.0",
+    "oxlint-tsgolint": "^0.24.0",
+    "publint": "^0.3.21",
+    "tsup": "^8.5.1",
+    "tsx": "^4.22.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.59.4",
+    "vitest": "^4.1.6"
+  },
+  "peerDependencies": {
+    "nodejs-polars": ">=0.10.0"
+  },
+  "peerDependenciesMeta": {
+    "nodejs-polars": {
+      "optional": true
+    }
+  },
+  "optionalDependencies": {
+    "@xbbg/core-darwin-arm64": "1.4.3",
+    "@xbbg/core-linux-x64": "1.4.3",
+    "@xbbg/core-win32-x64": "1.4.3"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "npm@11.13.0"
+}

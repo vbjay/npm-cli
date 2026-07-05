@@ -1,0 +1,21 @@
+{
+  "name": "@rust-sandbox/rust-1-95-x86_64-linux",
+  "version": "1.95.0",
+  "description": "Pinned Rust 1.95.0 toolchain (rustc + cargo + rust-std) for x86_64-unknown-linux-gnu, installed via npm postinstall. Intended for restricted sandboxes where static.rust-lang.org is not reachable but the npm registry is.",
+  "keywords": ["rust", "rustc", "cargo", "toolchain", "sandbox"],
+  "license": "(Apache-2.0 OR MIT)",
+  "os": ["linux"],
+  "cpu": ["x64"],
+  "engines": { "node": ">=14" },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "files": [
+    "install.js",
+    "manifest.json",
+    "components/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

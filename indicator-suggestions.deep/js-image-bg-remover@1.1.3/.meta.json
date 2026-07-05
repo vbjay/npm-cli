@@ -1,0 +1,92 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a6f3126ae46ac9b7",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/check-model.js",
+      "scripts/check-system.js",
+      "scripts/download-model.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "node-fetch",
+        "versionSpec": "^3.3.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "node-fetch@3.3.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check-system.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "a14fb0270a3f82821cc449b58df5d27591b4c9fa2dc059b14672ce690d8aec00",
+        "sizeBytes": 1917,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/download-model.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "51068b844adca24d910dcbc6c576af0418500b2207be6894fad1bacf5b47d19f",
+        "sizeBytes": 2050,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "runtime-installer",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://cdn.jsdelivr.net/gh/danielgatis/rembg@v0.0.0/u2net.onnx",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/check-model.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "bc1bb8e5d4d94e516995761c071956aaa1ca95559ca1b0101dc794650ceffd39",
+        "sizeBytes": 1100,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:03.236Z"
+  },
+  "hash": "sha256:2944057a08fc933a2d2a76c09d6f6e355babb13f1af095cf18b5e930bd124c0f"
+}

@@ -1,0 +1,80 @@
+{
+  "name": "io.appium.settings",
+  "version": "7.1.10",
+  "description": "App for dealing with Android settings",
+  "main": "./build/lib/index.js",
+  "types": "./build/lib/index.d.ts",
+  "scripts": {
+    "bump-gradle-version": "node scripts/gradle-version-update.js --package-version=${npm_package_version} && git add app/build.gradle",
+    "lint": "./gradlew lint",
+    "js:lint": "eslint .",
+    "js:lint:fix": "npm run js:lint -- --fix",
+    "move-apks": "rm -rf apks && mkdir -p apks && cp app/build/outputs/apk/debug/settings_apk-debug.apk apks",
+    "build": "tsc -b && ./gradlew clean assembleDebug && npm run move-apks",
+    "js:build": "tsc -b",
+    "prepare": "npm run build",
+    "version": "npm run bump-gradle-version && npm run build",
+    "clean": "npm run build -- --clean",
+    "js:test": "node --test --test-timeout=60000 \"./build/test/unit/**/*.spec.js\"",
+    "e2e-test": "node --test --test-force-exit --test-concurrency=1 --test-timeout=300000 \"./build/test/e2e/**/*.spec.js\"",
+    "format": "prettier -w ./lib ./test",
+    "format:check": "prettier --check ./lib ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appium/io.appium.settings.git"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0",
+    "npm": ">=10"
+  },
+  "keywords": [
+    "appium",
+    "android",
+    "settings"
+  ],
+  "files": [
+    "lib",
+    "build/lib",
+    "apks",
+    "!.DS_Store",
+    "NOTICE.txt",
+    "CHANGELOG.md"
+  ],
+  "author": "Appium Contributors",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/appium/io.appium.settings/issues"
+  },
+  "homepage": "https://github.com/appium/io.appium.settings",
+  "dependencies": {
+    "@appium/logger": "^2.0.0-rc.1",
+    "asyncbox": "^6.0.1",
+    "semver": "^7.5.4",
+    "teen_process": "^4.0.4"
+  },
+  "devDependencies": {
+    "@appium/eslint-config-appium-ts": "^3.0.0",
+    "@appium/tsconfig": "^1.0.0-rc.1",
+    "@appium/types": "^1.0.0-rc.1",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@types/chai": "^5.2.3",
+    "@types/chai-as-promised": "^8.0.2",
+    "@types/node": "^26.0.0",
+    "@types/sinon": "^22.0.0",
+    "appium-adb": "^15.0.0",
+    "chai": "^6.0.0",
+    "chai-as-promised": "^8.0.0",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "prettier": "^3.9.3",
+    "semantic-release": "^25.0.2",
+    "sinon": "^22.0.0",
+    "typescript": "^6.0.3"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "printWidth": 100,
+    "singleQuote": true
+  }
+}

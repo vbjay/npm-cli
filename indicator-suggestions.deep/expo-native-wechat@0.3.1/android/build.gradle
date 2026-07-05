@@ -1,0 +1,114 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
+group = 'expo.modules.nativewechat'
+version = '0.1.0'
+
+def rootProject = getRootProject()
+
+buildscript {
+  def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+  if (expoModulesCorePlugin.exists()) {
+    apply from: expoModulesCorePlugin
+    applyKotlinExpoModulesCorePlugin()
+  }
+
+  // Simple helper that allows the root project to override versions declared by this library.
+  ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+
+  // Ensures backward compatibility
+  ext.getKotlinVersion = {
+    if (ext.has("kotlinVersion")) {
+      ext.kotlinVersion()
+    } else {
+      ext.safeExtGet("kotlinVersion", "1.8.10")
+    }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getKotlinVersion()}")
+  }
+}
+
+android {
+  compileSdkVersion safeExtGet("compileSdkVersion", 34)
+
+  // 根据 AGP 版本设置合适的 JVM 版本，确保兼容性
+  def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+  def agpMajorVersion = agpVersion.tokenize('.')[0].toInteger()
+  
+  compileOptions {
+    if (agpMajorVersion >= 8) {
+      // AGP 8.0+ 使用 Java 17
+      sourceCompatibility JavaVersion.VERSION_17
+      targetCompatibility JavaVersion.VERSION_17
+    } else {
+      // AGP 7.x 及以下使用 Java 11
+      sourceCompatibility JavaVersion.VERSION_11
+      targetCompatibility JavaVersion.VERSION_11
+    }
+  }
+
+  kotlinOptions {
+    if (agpMajorVersion >= 8) {
+      // AGP 8.0+ 使用 Java 17
+      jvmTarget = JavaVersion.VERSION_17.toString()
+    } else {
+      // AGP 7.x 及以下使用 Java 11
+      jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+  }
+
+  namespace "expo.modules.nativewechat"
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 21)
+    targetSdkVersion safeExtGet("targetSdkVersion", 34)
+    versionCode 1
+    versionName "0.1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+  publishing {
+    singleVariant("release") {
+      withSourcesJar()
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${getKotlinVersion()}"
+  implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+  api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+}
+
+afterEvaluate {
+
+  publishing {
+    publications {
+      release(MavenPublication) {
+        from components.release
+      }
+    }
+    repositories {
+      maven {
+        url = mavenLocal().url
+      }
+    }
+  }
+}

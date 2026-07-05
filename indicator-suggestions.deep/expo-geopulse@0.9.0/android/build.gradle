@@ -1,0 +1,48 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.geopulse'
+version = '0.1.0'
+
+android {
+  namespace "expo.modules.geopulse"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+    externalNativeBuild {
+      cmake {
+        cppFlags "-std=c++17"
+      }
+    }
+    ndk {
+      // Device (arm64/armv7) + emulator (x86_64). x86 is omitted (deprecated).
+      abiFilters "arm64-v8a", "armeabi-v7a", "x86_64"
+    }
+  }
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+      version "3.22.1"
+    }
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  // React Native core (for the JS headless task service). Provided by the host
+  // app at runtime; version is managed by the React Native Gradle plugin, so no
+  // version is pinned here (mirrors how expo-modules-core references it).
+  compileOnly "com.facebook.react:react-android"
+  // Fused location, geofencing, activity recognition (Google Play Services).
+  implementation "com.google.android.gms:play-services-location:21.3.0"
+  // ContextCompat / NotificationCompat. Gradle resolves to the highest version on the classpath.
+  implementation "androidx.core:core-ktx:1.13.1"
+  // Background HTTP sync with retry/backoff and network constraints.
+  implementation "androidx.work:work-runtime-ktx:2.9.1"
+}

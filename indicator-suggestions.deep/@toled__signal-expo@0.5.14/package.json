@@ -1,0 +1,60 @@
+{
+  "name": "@toled/signal-expo",
+  "version": "0.5.14",
+  "description": "Signal Protocol encryption for Expo - wraps official libsignal library",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "src",
+    "ios",
+    "android",
+    "plugin/build",
+    "app.plugin.js",
+    "expo-module.config.json"
+  ],
+  "scripts": {
+    "build": "expo-module build && npm run build:plugin",
+    "build:plugin": "tsc --project plugin/tsconfig.json",
+    "clean": "expo-module clean && rm -rf plugin/build",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare && npm run build:plugin",
+    "prepublishOnly": "expo-module prepublishOnly && npm run build:plugin",
+    "expo-module": "expo-module"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "signal",
+    "encryption",
+    "e2ee",
+    "libsignal"
+  ],
+  "license": "AGPL-3.0",
+  "author": "toled",
+  "homepage": "https://github.com/toled/signal-expo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toled/signal-expo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/toled/signal-expo/issues"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^9.0.0",
+    "expo-module-scripts": "^4.0.0",
+    "expo-modules-core": "^2.0.0"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "expo-secure-store": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo-secure-store": {
+      "optional": false
+    }
+  }
+}

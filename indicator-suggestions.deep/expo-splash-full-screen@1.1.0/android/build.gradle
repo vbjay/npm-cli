@@ -1,0 +1,40 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def packageJson = new groovy.json.JsonSlurper().parse(new File("$projectDir/../package.json"))
+
+group = 'com.miiny1206.splashfullscreen'
+version = packageJson.version
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+android {
+  namespace 'com.miiny1206.splashfullscreen'
+
+  compileSdkVersion safeExtGet('compileSdkVersion', 35)
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 24)
+    targetSdkVersion safeExtGet('targetSdkVersion', 35)
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+
+  publishing {
+    singleVariant('release') {
+      withSourcesJar()
+    }
+  }
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+}

@@ -1,0 +1,79 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// android/build.gradle
+
+def DEFAULT_COMPILE_SDK_VERSION = 33
+def DEFAULT_BUILD_TOOLS_VERSION = '33.0.0'
+def DEFAULT_MIN_SDK_VERSION = 21
+def DEFAULT_TARGET_SDK_VERSION = 31
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'maven-publish'
+
+buildscript {
+    ext.safeExtGet = {prop, fallback ->
+      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+    repositories {
+      google()
+      gradlePluginPortal()
+    }
+    dependencies {
+      classpath("com.android.tools.build:gradle:7.3.1")
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+android {
+    namespace 'com.agastya.androidinappupdates'
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    }
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    sourceSets {
+      main {
+        if (isNewArchitectureEnabled()) {
+          java.srcDirs += ["src/newarch/java"]
+        } else {
+          java.srcDirs += ["src/oldarch/java"]
+        }
+      }
+    }
+
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation 'com.facebook.react:react-native'
+    implementation 'com.google.android.play:app-update:2.1.0'
+}
+

@@ -1,0 +1,64 @@
+{
+  "name": "@0dai-dev/cli",
+  "version": "4.5.3",
+  "description": "One config layer for seven AI coding agents \u2014 Claude Code, Codex, OpenCode, Gemini, Aider, Qoder, Cursor",
+  "bin": {
+    "0dai": "./bin/0dai.js"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "claude",
+    "codex",
+    "gemini",
+    "aider",
+    "opencode",
+    "qoder",
+    "developer-tools",
+    "mcp",
+    "cli"
+  ],
+  "author": "0dai-dev <dev@0dai.dev>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0dai-dev/0dai.git",
+    "directory": "cli/npm-package"
+  },
+  "bugs": {
+    "url": "https://github.com/0dai-dev/0dai/issues"
+  },
+  "homepage": "https://0dai.dev",
+  "privacy": "https://0dai.dev/legal/privacy",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js || true",
+    "build:tui": "node scripts/build-tui.js",
+    "build:python": "node scripts/build-python-bundle.js",
+    "prepack": "node scripts/build-tui.js && node scripts/build-python-bundle.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "scripts/",
+    "!scripts/__pycache__/",
+    "!scripts/**/*.pyc",
+    "!lib/**/__pycache__/",
+    "!lib/**/*.pyc",
+    "README.md",
+    "!lib/tui/src/**"
+  ],
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "ink": "^5.0.1",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0"
+  },
+  "optionalDependencies": {
+    "node-pty": "^1.0.0"
+  }
+}

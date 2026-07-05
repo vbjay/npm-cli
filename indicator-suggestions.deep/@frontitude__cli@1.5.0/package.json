@@ -1,0 +1,110 @@
+{
+  "name": "@frontitude/cli",
+  "version": "1.5.0",
+  "description": "The Frontitude CLI enables product teams to integrate their code with Frontitude (frontitude.com), thus creating a single source of truth for their product copy, from design to development.",
+  "author": "Frontitude Ltd.",
+  "homepage": "https://www.frontitude.com",
+  "bugs": {
+    "email": "support@frontitude.com"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "frontitude",
+    "product",
+    "ux",
+    "copy",
+    "strings",
+    "localization",
+    "cli"
+  ],
+  "files": [
+    "/bin",
+    "/dist",
+    "/scripts/postinstall.js",
+    "/npm-shrinkwrap.json"
+  ],
+  "main": "index.js",
+  "bin": {
+    "frontitude": "./bin/run",
+    "fttd": "./bin/run"
+  },
+  "oclif": {
+    "commands": "./dist/commands",
+    "hooks": {
+      "init": "./dist/hooks/init",
+      "postrun": "./dist/hooks/postrun"
+    },
+    "topicSeparator": " ",
+    "plugins": [
+      "@oclif/plugin-warn-if-update-available"
+    ],
+    "warn-if-update-available": {
+      "timeoutInDays": 0.5
+    }
+  },
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "prebuild": "npm run licensecheck",
+    "postbuild": "node ./scripts/minify.js && npm run copy-readme-to-dist",
+    "copy-readme-to-dist": "shx cp README.md dist/",
+    "lint": "eslint . --ext .ts --config .eslintrc",
+    "typecheck": "tsc --noEmit -p test/tsconfig.json",
+    "typecheck:src": "tsc --noEmit",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "prepack": "npm run build && oclif manifest && oclif readme",
+    "test": "vitest run",
+    "test:unit": "vitest run test/unit",
+    "test:integration": "vitest run test/integration",
+    "test:watch": "vitest",
+    "test:smoke": "npm run build:nocheck && ./bin/run --help > /dev/null",
+    "test:e2e": "npm run build:nocheck && vitest run test/integration/cli",
+    "build:nocheck": "shx rm -rf dist && tsc -b --force",
+    "version": "node ./scripts/syncLicensecheck.js && oclif readme && git add README.md package.json",
+    "licensecheck": "license-checker --production --summary --onlyAllow \"MIT;Apache;0BSD;BSD-2-Clause;BSD-3-Clause;ISC;Python-2.0;CC-BY-4.0;CC-BY-3.0;CC0-1.0;WTFPL;Artistic-2.0;BlueOak-1.0.0\" --excludePackages \"@frontitude/cli@1.5.0;spdx-exceptions@2.3.0;spdx-license-ids@3.0.11\" && echo \"We're all good!\"",
+    "licensecheck:dump": "license-checker --production --out ./licenses.txt",
+    "bump": "node ./scripts/versionBump.js patch",
+    "bump:minor": "node ./scripts/versionBump.js minor",
+    "bump:major": "node ./scripts/versionBump.js major"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@oclif/core": "^4.11.0",
+    "@oclif/plugin-help": "^6.2.46",
+    "@oclif/plugin-warn-if-update-available": "^3.1.62",
+    "@sentry/node": "^10.51.0",
+    "cli-color": "^2.0.4",
+    "conf": "^10.2.0",
+    "env-paths": "^2.2.1",
+    "iconv-lite": "^0.7.2",
+    "inquirer": "^8.2.3",
+    "lodash.isequal": "^4.5.0",
+    "lodash.merge": "^4.6.2",
+    "node-fetch": "^2.6.7",
+    "open": "^8.4.0",
+    "ora": "^5.4.1",
+    "properties-reader": "^3.0.1",
+    "tslib": "^2.8.1",
+    "xliff": "^6.3.0",
+    "xml-js": "1.6.11"
+  },
+  "devDependencies": {
+    "@oclif/plugin-plugins": "^5.4.63",
+    "@types/inquirer": "^9.0.9",
+    "@types/lodash.merge": "^4.6.7",
+    "@types/node": "^22.19.17",
+    "@types/node-fetch": "^2.6.13",
+    "eslint": "^8.22.0",
+    "eslint-config-oclif": "^4.0.0",
+    "eslint-config-oclif-typescript": "^1.0.2",
+    "license-checker": "^25.0.1",
+    "oclif": "^4.23.0",
+    "shx": "^0.4.0",
+    "terser": "^5.46.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.5"
+  }
+}

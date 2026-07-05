@@ -1,0 +1,43 @@
+{
+  "name": "rjest-install",
+  "version": "0.1.2",
+  "description": "A fast Jest-compatible test runner written in Rust",
+  "main": "lib/index.js",
+  "bin": {
+    "jest": "./bin/jest",
+    "rjest": "./bin/jest"
+  },
+  "scripts": {
+    "install": "node lib/install.js",
+    "test": "node lib/test.js"
+  },
+  "keywords": [
+    "jest",
+    "testing",
+    "rust",
+    "test-runner",
+    "cli"
+  ],
+  "author": "Dipankar Sarkar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neul-labs/rjest"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "dependencies": {
+    "extract-zip": "^2.0.1",
+    "tar": "^7.0.0"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "75b8495381ca87e2",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/npm-postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/npm-postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9fb2d2469835101dda716aa4af3787e1c19163f3ff3bc5bb24b60f5eb2f23ed5",
+        "sizeBytes": 2535,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/npm-postinstall.cjs",
+        "sha256": "046c34aa9029b0c8cff4b8ad749b33400424fcb9e59aa600488fbae6ef440743",
+        "sizeBytes": 4035,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:19.535Z"
+  },
+  "hash": "sha256:7345e9adbb534da9670cf7fd01a5439f2d83e73fc4a4eadaa0c3783017965a9c"
+}

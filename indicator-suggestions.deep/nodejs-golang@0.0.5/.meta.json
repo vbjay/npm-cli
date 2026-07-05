@@ -1,0 +1,88 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "bdef6860d4a22a4e",
+    "fetchedFiles": [
+      "build.js",
+      "constants.js",
+      "index.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "@assemblyscript/loader",
+        "versionSpec": "^0.18.15"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@assemblyscript/loader@0.18.32"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "build.js",
+        "reason": "referenced by lifecycle script: `preinstall:wasm:build`",
+        "sha256": "b838adaf58d3a04b179f014d98d9520dafae484586c3992af0c23ebbc7388033",
+        "sizeBytes": 252,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "constants.js",
+          "index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "constants.js",
+        "reason": "required by ./build.js; required by ./index.js",
+        "sha256": "903fc8cc888ca78c3b513e81d8d59e0b33433419861e8b0d687d0e3e24845707",
+        "sizeBytes": 378,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./build.js",
+        "sha256": "adae69fe38b9d473d09aab679401304f0f6928a2c699607162028cb5ad988137",
+        "sizeBytes": 4111,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [
+          "constants.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.627Z"
+  },
+  "hash": "sha256:7179f057167da980adef00bf64c5f7daf96cb7b477c5402c4afd9e3e540d3c10"
+}

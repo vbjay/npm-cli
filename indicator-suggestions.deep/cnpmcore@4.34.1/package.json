@@ -1,0 +1,167 @@
+{
+  "name": "cnpmcore",
+  "version": "4.34.1",
+  "description": "Private NPM Registry for Enterprise",
+  "keywords": [
+    "npm",
+    "npm registry",
+    "registry"
+  ],
+  "homepage": "https://github.com/cnpm/cnpmcore#readme",
+  "bugs": {
+    "url": "https://github.com/cnpm/cnpmcore/issues"
+  },
+  "license": "MIT",
+  "author": "killagu",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cnpm/cnpmcore.git"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "type": "module",
+  "main": "./dist/app.js",
+  "typings": "./dist/app",
+  "exports": {
+    "./common/package.json": "./dist/app/common/package.json",
+    "./common/*": {
+      "type": "./dist/app/common",
+      "node": "./dist/app/common/*.js"
+    },
+    "./core/package.json": "./dist/app/core/package.json",
+    "./core/*": {
+      "type": "./dist/app/core",
+      "node": "./dist/app/core/*.js"
+    },
+    "./infra/package.json": "./dist/app/infra/package.json",
+    "./infra/*": {
+      "type": "./dist/app/infra",
+      "node": "./dist/app/infra/*.js"
+    },
+    "./port/package.json": "./dist/app/port/package.json",
+    "./port/*": {
+      "type": "./dist/app/port",
+      "node": "./dist/app/port/*.js"
+    },
+    "./repository/package.json": "./dist/app/repository/package.json",
+    "./repository/*": {
+      "type": "./dist/app/repository",
+      "node": "./dist/app/repository/*.js"
+    }
+  },
+  "scripts": {
+    "predev": "npm run clean",
+    "dev": "egg-bin dev",
+    "dev:postgresql": "CNPMCORE_DATABASE_TYPE=PostgreSQL egg-bin dev",
+    "lint": "vp lint",
+    "lint:fix": "npm run lint -- --fix",
+    "typecheck": "tsc --noEmit",
+    "fmt": "vp fmt",
+    "fmtcheck": "vp fmt --check",
+    "test:postgresql": "npm run test:local:postgresql",
+    "pretest:local:postgresql": "bash prepare-database-postgresql.sh",
+    "test:local:postgresql": "CNPMCORE_DATABASE_TYPE=PostgreSQL egg-bin test",
+    "pretest": "npm run clean",
+    "test": "npm run test:local",
+    "pretest:local": "bash prepare-database-mysql.sh",
+    "test:local": "egg-bin test",
+    "pret": "bash prepare-database-mysql.sh",
+    "t": "npm run lint && egg-bin test --changed",
+    "precov": "bash prepare-database-mysql.sh",
+    "cov": "egg-bin cov",
+    "precov:postgresql": "bash prepare-database-postgresql.sh",
+    "cov:postgresql": "CNPMCORE_DATABASE_TYPE=PostgreSQL egg-bin cov",
+    "ci": "npm run cov",
+    "ci:postgresql": "npm run cov:postgresql",
+    "clean": "tsc -b --clean && rm -rf dist *.tsbuildinfo",
+    "build": "npm run tsc",
+    "tsc": "npm run clean && tsc -p ./tsconfig.json",
+    "tsc:prod": "npm run clean && tsc -p ./tsconfig.prod.json",
+    "prepublishOnly": "npm run tsc:prod",
+    "images": "npm run images:alpine && npm run images:debian",
+    "images:alpine": "docker build -t cnpmcore:alpine-latest -f .docker/alpine/Dockerfile .",
+    "images:debian": "docker build -t cnpmcore:latest -f .docker/debian/Dockerfile .",
+    "start": "eggctl start --daemon && touch egg.status",
+    "start:foreground": "eggctl start",
+    "stop": "rm -f egg.status && sleep 15 && eggctl stop",
+    "prepare": "vp config || true"
+  },
+  "dependencies": {
+    "@cnpmjs/packument": "^1.7.0",
+    "@eggjs/redis": "^4.0.2-beta.2",
+    "@eggjs/scripts": "^5.0.2-beta.2",
+    "@eggjs/tracer": "^4.0.2-beta.2",
+    "@eggjs/typebox-validate": "^4.0.2-beta.2",
+    "@elastic/elasticsearch": "^8.19.1",
+    "@simplewebauthn/server": "^7.4.0",
+    "base-x": "^5.0.1",
+    "base64url": "^3.0.1",
+    "bson-objectid": "^2.0.4",
+    "dayjs": "^1.11.19",
+    "egg": "^4.1.2-beta.2",
+    "egg-cors": "^3.0.1",
+    "egg-status": "^1.0.0",
+    "egg-view-nunjucks": "^2.3.0",
+    "eggjs-elasticsearch": "^0.0.6",
+    "fast-xml-parser": "^5.8.0",
+    "fs-cnpm": "^2.4.1",
+    "ioredis": "^5.8.2",
+    "leoric": "^2.14.0",
+    "lodash-es": "^4.17.21",
+    "mime-types": "^3.0.2",
+    "mysql2": "^3.15.3",
+    "node-rsa": "^2.0.0",
+    "npm-package-arg": "^14.0.0",
+    "oss-cnpm": "^5.0.1",
+    "p-map": "^7.0.4",
+    "pg": "^8.16.3",
+    "read-env-value": "^2.0.2",
+    "semver": "^7.7.3",
+    "ssri": "^14.0.0",
+    "tar": "^7.5.2",
+    "type-fest": "^5.3.1",
+    "ua-parser-js": "^2.0.7",
+    "validate-npm-package-name": "^8.0.0"
+  },
+  "devDependencies": {
+    "@eggjs/bin": "^8.0.2-beta.2",
+    "@eggjs/mock": "^7.0.2-beta.2",
+    "@eggjs/tsconfig": "^3.1.2-beta.2",
+    "@elastic/elasticsearch-mock": "^2.1.0",
+    "@simplewebauthn/typescript-types": "^7.4.0",
+    "@types/ioredis-mock": "^8.2.6",
+    "@types/lodash-es": "^4.17.12",
+    "@types/mime-types": "^3.0.1",
+    "@types/mysql": "^2.15.27",
+    "@types/node": "^22.19.2",
+    "@types/node-rsa": "^1.1.4",
+    "@types/npm-package-arg": "^6.1.4",
+    "@types/pg": "^8.16.0",
+    "@types/semver": "^7.7.1",
+    "@types/tar": "^7.0.0",
+    "@types/validate-npm-package-name": "^4.0.2",
+    "@vitest/coverage-v8": "4.1.9",
+    "coffee": "^5.5.1",
+    "ioredis-mock": "^8.13.1",
+    "typescript": "^6.0.0",
+    "vite-plus": "0.2.1"
+  },
+  "optionalDependencies": {
+    "s3-cnpmcore": "^1.1.2"
+  },
+  "overrides": {
+    "@aws-sdk/xml-builder": {
+      "fast-xml-parser": "$fast-xml-parser"
+    },
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.1",
+    "vitest": "4.1.9"
+  },
+  "engines": {
+    "node": "^20.18.0 || ^22.18.0 || ^24.11.0"
+  },
+  "packageManager": "npm@11.17.0",
+  "egg": {
+    "typescript": true
+  }
+}

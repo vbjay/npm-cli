@@ -1,0 +1,57 @@
+{
+  "type": "module",
+  "name": "@julian-i/try-error",
+  "version": "0.1.11",
+  "description": "Elegant tuple-based error handling utilities for TypeScript, inspired by Rust's Result<T, E> pattern.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "tag": "git tag v$(node -p \"require('./package.json').version\") && git push origin v$(node -p \"require('./package.json').version\")",
+    "deploy:beta": "echo \"Have you bumped the version in package.json?\" && read -p \"Press enter to continue...\" && npm run build && npm run test:run && git add . && git commit -m \"chore: deploy beta v$(node -p \"require('./package.json').version\")\" && git push origin main",
+    "deploy:release": "echo \"Have you bumped the version in package.json?\" && read -p \"Press enter to continue...\" && npm run build && npm run test:run && git add . && git commit -m \"chore: release v$(node -p \"require('./package.json').version\")\" && npm run tag"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "typescript",
+    "error-handling",
+    "try-catch",
+    "result",
+    "tuple",
+    "rust",
+    "functional-programming"
+  ],
+  "author": "Julian I",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kensledev/try-error.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kensledev/try-error/issues"
+  },
+  "homepage": "https://github.com/kensledev/try-error#readme"
+}

@@ -1,0 +1,66 @@
+{
+  "name": "@buaa_smat/hometrans",
+  "version": "0.1.17",
+  "description": "HomeTrans (Android-to-HarmonyOS) skill + agent installer. Run `ht init` to distribute conversion skills and subagents into AI editors.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitcode.com/SMAT/HomeTrans"
+  },
+  "type": "module",
+  "bin": {
+    "hometrans": "dist/cli/index.js",
+    "ht": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "agents",
+    "tools",
+    "resource",
+    "env-requirements.json"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "tsx src/cli/index.ts",
+    "prepare": "node scripts/build.js",
+    "prepack": "node scripts/build.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "arkanalyzer": "^1.0.19",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.0",
+    "figlet": "^1.11.0",
+    "fs-extra": "11.3.0",
+    "inquirer": "^14.0.0",
+    "jsonc-parser": "^3.3.1",
+    "simple-git": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.28.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "hometrans",
+    "harmonyos",
+    "android",
+    "skill",
+    "claude-code",
+    "cursor",
+    "opencode",
+    "codex",
+    "mcp"
+  ]
+}

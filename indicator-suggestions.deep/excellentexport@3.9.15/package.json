@@ -1,0 +1,42 @@
+{
+  "name": "excellentexport",
+  "version": "3.9.15",
+  "description": "Client side JavaScript export to Excel or CSV",
+  "license": "MIT",
+  "homepage": "https://jordiburgos.com",
+  "author": "Jordi Burgos <jordiburgos@gmail.com>",
+  "bugs": "https://github.com/jmaister/excellentexport/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jmaister/excellentexport.git"
+  },
+  "keywords": [
+    "excel",
+    "export",
+    "csv",
+    "javascript",
+    "client",
+    "side"
+  ],
+  "scripts": {
+    "build": "vite",
+    "prod": "vite build",
+    "test": "vitest run --coverage",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "main": "dist/excellentexport.js",
+  "devDependencies": {
+    "@types/node": "25.9.2",
+    "@vitest/browser-playwright": "4.1.8",
+    "@vitest/coverage-v8": "4.1.8",
+    "puppeteer": "25.1.0",
+    "ts-loader": "9.6.0",
+    "ts-node": "10.9.2",
+    "typescript": "6.0.3",
+    "vite": "8.0.16",
+    "vite-plugin-dts": "5.0.2",
+    "vite-tsconfig-paths": "6.1.1",
+    "vitest": "4.1.8",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  }
+}

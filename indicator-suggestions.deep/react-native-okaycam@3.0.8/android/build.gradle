@@ -1,0 +1,56 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.kotlin_version = '1.9.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.5.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.facebook.react'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+android {
+    namespace "com.innov8tif.rnokaycam"
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 30
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://www.jitpack.io' }
+}
+
+dependencies {
+    compileOnly "com.facebook.react:react-android"
+    implementation('com.innov8tif.okaycam:OkayCam:3.1.5@aar') {
+        transitive = true
+        exclude group: "junit", module: "junit"
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.caverock:androidsvg-aar:1.4'
+}

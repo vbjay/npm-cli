@@ -1,0 +1,98 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// android/build.gradle
+
+// based on:
+//
+// * https://github.com/facebook/react-native/blob/0.60-stable/template/android/build.gradle
+//   original location:
+//   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/build.gradle
+//
+// * https://github.com/facebook/react-native/blob/0.60-stable/template/android/app/build.gradle
+//   original location:
+//   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
+
+rootProject.ext {
+    // expose sdk version for consistency
+    LEANPLUM_SDK_VERSION = '7.8.0'
+    LEANPLUM_CT_SDK_VERSION = '7.5.0'
+}
+
+def DEFAULT_COMPILE_SDK_VERSION = 35
+def DEFAULT_BUILD_TOOLS_VERSION = '34.0.0'
+def DEFAULT_MIN_SDK_VERSION = 21
+def DEFAULT_TARGET_SDK_VERSION = 35
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+
+buildscript {
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    // ref: https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:build_script_external_dependencies
+    if (project == rootProject) {
+        repositories {
+            mavenCentral()
+            google()
+        }
+        dependencies {
+            classpath 'com.android.tools.build:gradle:8.1.1'
+        }
+    }
+}
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+    }
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    namespace 'com.leanplum.rn'
+}
+
+repositories {
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url "$rootDir/../node_modules/react-native/android"
+    }
+    maven {
+        // Android JSC is installed from npm
+        url "$rootDir/../node_modules/jsc-android/dist"
+    }
+    mavenCentral {
+        // We don't want to fetch react-native from Maven Central
+        // https://github.com/facebook/react-native/issues/35210
+        content {
+            excludeGroup "com.facebook.react"
+        }
+    }
+    google()
+
+    maven {
+        url "https://repo.leanplum.com/"
+    }
+    maven {
+        // for clients with gradle below 4.1 (SDK-593)
+        url 'https://maven.google.com'
+    }
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+'  // From node_modules
+    implementation "com.leanplum:leanplum-core:${LEANPLUM_SDK_VERSION}"
+    implementation "com.clevertap.android:clevertap-android-sdk:${LEANPLUM_CT_SDK_VERSION}"
+}

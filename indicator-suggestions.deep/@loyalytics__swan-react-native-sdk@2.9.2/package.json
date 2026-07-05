@@ -1,0 +1,251 @@
+{
+  "name": "@loyalytics/swan-react-native-sdk",
+  "version": "2.9.2",
+  "description": "React Native SDK for Swan",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "lib",
+    "src",
+    "android",
+    "ios",
+    "cpp",
+    "scripts",
+    "*.podspec",
+    "react-native.config.json",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "!android/src/test",
+    "!scripts/test-carousel-push.js"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "node scripts/generate-version.js && bob build",
+    "release": "release-it",
+    "setup-ios-extension": "node ./scripts/setup-ios-extension.js",
+    "changeset": "changeset",
+    "release:version": "changeset version && yarn install --immutable",
+    "release:publish": "yarn prepare && changeset publish"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SwanCX/swan-sdks.git",
+    "directory": "platforms/react-native"
+  },
+  "author": "Loyalytics <support@loyalytics.ai> (https://www.loyalytics.ai/)",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/SwanCX/swan-sdks/issues"
+  },
+  "homepage": "https://loyalytics-ai.notion.site/Swan-React-Native-SDK-Integration-Guide-2de475792e7a810386c7d0ab666b830f",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/geolocation": "^3.4.0",
+    "@react-native-community/netinfo": "^11.0.0",
+    "@react-native/eslint-config": "^0.73.1",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.2.44",
+    "@types/react-native": "^0.73.0",
+    "@types/react-native-base64": "^0.2.2",
+    "@types/react-native-sqlite-storage": "^6.0.5",
+    "@types/react-native-vector-icons": "^6.4.18",
+    "changeset-conventional-commits": "^0.2.5",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "firebase-admin": "^13.6.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "18.3.1",
+    "react-native": "0.76.2",
+    "react-native-builder-bob": "^0.32.1",
+    "react-native-device-info": "^14.0.1",
+    "react-native-shared-group-preferences": "^1.1.24",
+    "react-native-sqlite-2": "^3.6.3",
+    "react-native-vector-icons": "^10.2.0",
+    "release-it": "^17.10.0",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.44"
+  },
+  "peerDependencies": {
+    "@notifee/react-native": "^9.1.8",
+    "@react-native-async-storage/async-storage": ">=1.0.0",
+    "@react-native-community/geolocation": ">=3.0.0",
+    "@react-native-community/netinfo": ">=9.0.0",
+    "@react-native-firebase/app": "^21.14.0",
+    "@react-native-firebase/messaging": "^21.14.0",
+    "react": "*",
+    "react-native": "*",
+    "react-native-device-info": ">=10.0.0",
+    "react-native-shared-group-preferences": ">=1.0.0",
+    "react-native-sqlite-2": ">=3.6.3",
+    "react-native-vector-icons": ">=6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@notifee/react-native": {
+      "optional": true
+    },
+    "@react-native-community/geolocation": {
+      "optional": true
+    },
+    "@react-native-firebase/app": {
+      "optional": true
+    },
+    "@react-native-firebase/messaging": {
+      "optional": true
+    },
+    "react-native-shared-group-preferences": {
+      "optional": true
+    }
+  },
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ],
+    "moduleNameMapper": {
+      "^@notifee/react-native$": "<rootDir>/src/__mocks__/@notifee/react-native.js",
+      "^@react-native-firebase/messaging$": "<rootDir>/src/__mocks__/@react-native-firebase/messaging.js"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/",
+    "sample-app-android/",
+    "sample-app-ios/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "turbo-module",
+    "version": "0.44.1"
+  },
+  "codegenConfig": {
+    "name": "SwanSDKSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/native",
+    "android": {
+      "javaPackageName": "com.loyalytics.swan"
+    }
+  },
+  "dependencies": {
+    "react-native-base64": "^0.2.1",
+    "react-native-uuid": "^2.0.3"
+  }
+}

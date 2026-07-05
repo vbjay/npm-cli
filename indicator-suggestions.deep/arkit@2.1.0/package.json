@@ -1,0 +1,168 @@
+{
+  "name": "arkit",
+  "version": "2.1.0",
+  "description": "Visualises JavaScript, TypeScript and Flow codebases as meaningful and committable architecture diagrams",
+  "main": "./dist/arkit.js",
+  "types": "./dist/arkit.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/arkit.js",
+      "types": "./dist/arkit.d.ts"
+    },
+    "./schema.json": "./schema.json"
+  },
+  "scripts": {
+    "architecture": "./index.js",
+    "prettier": "prettier --write \"{src,test}/*.ts\"",
+    "compile": "tsc --project .",
+    "build-schema": "typescript-json-schema src/schema.ts ConfigSchema --required true --id 'https://arkit.pro/schema.json' -o schema.json",
+    "build": "npm run prettier && npm run compile && npm run build-schema",
+    "lint": "eslint --ext .ts .",
+    "jest": "jest --coverage",
+    "test": "npm run lint && npm run jest",
+    "prepack": "npm run build && npm run test",
+    "prepare": "husky"
+  },
+  "arkit": {
+    "$schema": "https://arkit.pro/schema.json",
+    "output": [
+      {
+        "path": [
+          "dist/arkit.svg",
+          "dist/arkit.png"
+        ]
+      }
+    ]
+  },
+  "engines": {
+    "node": ">= 20.0.0"
+  },
+  "bin": {
+    "arkit": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dyatko/arkit.git"
+  },
+  "author": "Marat Dyatko <i@marat.by>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dyatko/arkit/issues"
+  },
+  "homepage": "https://arkit.pro",
+  "devDependencies": {
+    "@types/jest": "30.0.0",
+    "@types/node": "24.12.0",
+    "@types/pino": "7.0.5",
+    "@types/progress": "2.0.7",
+    "@types/resolve": "1.20.6",
+    "@types/yargs": "17.0.35",
+    "@typescript-eslint/eslint-plugin": "8.57.2",
+    "@typescript-eslint/parser": "8.57.2",
+    "eslint": "9.39.4",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-n": "17.24.0",
+    "eslint-plugin-prettier": "5.5.5",
+    "husky": "^9.1.7",
+    "jest": "30.3.0",
+    "lint-staged": "^16.4.0",
+    "prettier": "3.6.2",
+    "ts-jest": "29.4.6",
+    "typescript": "5.9.3",
+    "typescript-json-schema": "0.67.1"
+  },
+  "dependencies": {
+    "@hpcc-js/wasm-graphviz": "^1.16.0",
+    "nanomatch": "^1.2.13",
+    "node-plantuml": "^0.9.0",
+    "pino": "^10.0.0",
+    "pino-pretty": "^13.0.0",
+    "progress": "^2.0.3",
+    "resolve": "^1.20.0",
+    "ts-morph": "^27.0.0",
+    "tsconfig-paths": "^4.0.0",
+    "yargs": "^17.7.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/test"
+    ],
+    "testRegex": ".*\\.test\\.tsx?$",
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "json",
+      "js",
+      "ts",
+      "node"
+    ],
+    "collectCoverageFrom": [
+      "src/*.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/test/angular2_es2015/",
+      "<rootDir>/test/react-dom/",
+      "<rootDir>/test/express/",
+      "<rootDir>/test/exclude-sample/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(yargs)/)"
+    ],
+    "verbose": true
+  },
+  "eslintIgnore": [
+    "node_modules/*",
+    "test/*",
+    "dist/*"
+  ],
+  "eslintConfig": {
+    "extends": "prettier",
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "prettier",
+      "@typescript-eslint"
+    ],
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": false
+    }
+  },
+  "lint-staged": {
+    "{src,test}/*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "renovate": {
+    "extends": [
+      "config:base",
+      ":automergeAll"
+    ]
+  },
+  "keywords": [
+    "architecture",
+    "cli",
+    "codebase",
+    "component",
+    "diagram",
+    "flow",
+    "generate",
+    "javascript",
+    "js",
+    "plantuml",
+    "ts",
+    "typescript",
+    "uml",
+    "visualisation"
+  ]
+}

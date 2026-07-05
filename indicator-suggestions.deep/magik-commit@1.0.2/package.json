@@ -1,0 +1,50 @@
+{
+  "name": "magik-commit",
+  "version": "1.0.2",
+  "description": "Automagically adds the Jira ticket ID to the Git commit message.",
+  "main": "./src/lib/index.js",
+  "scripts": {
+    "postinstall": "node ./src/bin/install.js",
+    "preuninstall": "node ./src/bin/uninstall.js",
+    "test": "eslint ./src && tape './src/**/*.spec.js'"
+  },
+  "keywords": [
+    "bitbucket",
+    "branch",
+    "branch name",
+    "commit",
+    "commit message",
+    "git",
+    "githook",
+    "githooks",
+    "hook",
+    "hooks",
+    "jira",
+    "magikMaker",
+    "npm",
+    "ticket",
+    "issue"
+  ],
+  "homepage": "https://github.com/magikMaker/magik-commit",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:magikMaker/magik-commit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/magikMaker/magik-commit/issues"
+  },
+  "author": "Bjørn Wikkeling",
+  "license": "MIT",
+  "os" : [ "!win32" ],
+  "dependencies": {
+    "magik-hooks": "*"
+  },
+  "devDependencies": {
+    "eslint": "2.13.1",
+    "tape": "4.6.0"
+  },
+  "engines" : {
+    "node" : ">=5.0.0",
+    "npm": ">= 3.0.0"
+  }
+}

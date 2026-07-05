@@ -1,0 +1,54 @@
+{
+  "name": "keras-predict",
+  "version": "0.2.9",
+  "description": "A nodejs Native addons to run Keras ML model.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aghabeiki/keras-predict.git"
+  },
+  "keywords": [
+    "napi",
+    "n-api",
+    "native",
+    "addon",
+    "asynchronous",
+    "async",
+    "callback"
+  ],
+  "author": {
+    "name": "Amin Aghabeiki"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Aghabeiki/keras-predict/issues"
+  },
+  "homepage": "https://github.com/Aghabeiki/keras-predict/blob/master/README.md",
+  "main": "index.js",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "scripts": {
+    "preinstall": "npm install node-pre-gyp node-addon-api",
+    "install": "node-pre-gyp install --fallback-to-build",
+    "start": "node example/mytest.js",
+    "build:dev": "node-gyp -j 16 build --debug",
+    "build": "node-gyp -j 16 build",
+    "rebuild:dev": "node-gyp -j 16 rebuild --debug",
+    "rebuild": "node-gyp -j 16 rebuild",
+    "clean": "node-gyp clean"
+  },
+  "dependencies": {
+    "bindings": "^1.3.0",
+    "node-pre-gyp": "^0.11.0"
+  },
+  "devDependencies": {
+    "node-addon-api": "^1.6.0"
+  },
+  "binary": {
+    "module_name": "predicator",
+    "module_path": "build/Release",
+    "package_name": "{module_name}-v{version}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/Aghabeiki/keras-predict/releases/download/",
+    "remote_path": "{version}"
+  }
+}

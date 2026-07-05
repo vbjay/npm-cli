@@ -1,0 +1,69 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "876a6244493de9b3",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/build-opencode-bundle.mjs",
+      "scripts/lib/bundle-helpers.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build-opencode-bundle.mjs",
+        "reason": "referenced by lifecycle script: `build:opencode-bundle`",
+        "sha256": "d61cc1f3b17417e245a18bdd44987737d39fd731fbee216ef8d8af68a4b55b0a",
+        "sizeBytes": 7333,
+        "signals": [
+          "reads-process-env",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/bundle-helpers.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/bundle-helpers.mjs",
+        "reason": "required by ./scripts/build-opencode-bundle.mjs",
+        "sha256": "cf50fbf0ce583fea4bb9becd743e746977677853a95e1105636e2d58a6bf8bab",
+        "sizeBytes": 7345,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:52.620Z"
+  },
+  "hash": "sha256:c2a7ddb7531e800aa3076d2cecd452ba4ee300e7b95081f78523726dbe10c3de"
+}

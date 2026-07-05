@@ -1,0 +1,80 @@
+{
+  "name": "crisp-sdk-react-native",
+  "version": "0.4.0",
+  "description": "Expo Module bridge for Crisp Chat iOS and Android SDK",
+  "keywords": [
+    "crisp",
+    "chat",
+    "react-native",
+    "expo"
+  ],
+  "author": "Crisp IM SAS",
+  "homepage": "https://github.com/crisp-im/crisp-sdk-react-native",
+  "license": "MIT",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": [
+    "./build/ExpoCrispSdkModule.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crisp-im/crisp-sdk-react-native.git"
+  },
+  "scripts": {
+    "build": "expo-module build",
+    "build:plugin": "expo-module build plugin",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "format": "biome check --write .",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "version": "changeset version",
+    "release": "EXPO_NONINTERACTIVE=1 yarn build && changeset publish"
+  },
+  "bugs": {
+    "url": "https://github.com/crisp-im/crisp-sdk-react-native/issues"
+  },
+  "packageManager": "yarn@4.7.0",
+  "devDependencies": {
+    "@biomejs/biome": "2.5.0",
+    "@changesets/cli": "2.29.8",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/react": "16.3.2",
+    "@types/jest": "30.0.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint": "8.57.1",
+    "expo": "~56.0.11",
+    "expo-module-scripts": "5.0.7",
+    "jest": "30.2.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.85.3",
+    "ts-jest": "29.4.6"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "files": [
+    "build",
+    "plugin/build",
+    "app.plugin.js",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "ios",
+    "android",
+    "expo-module.config.json"
+  ]
+}

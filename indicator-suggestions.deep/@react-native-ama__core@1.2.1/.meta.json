@@ -1,0 +1,65 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d22bd192b117e5ca",
+    "fetchedFiles": [
+      "dist/scripts/create-config.js",
+      "package.json",
+      "src/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "da15cfe78facd7f6fc3f8ab41f2c9d356cda20879d28829f690c3c127d30c55a",
+        "sizeBytes": 738,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/scripts/create-config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/scripts/create-config.js",
+        "reason": "required by ./src/postinstall.js",
+        "sha256": "903e6efdb2461d7682e1926809d2c892dd9bc2eaace45759b422c20f93a14a6f",
+        "sizeBytes": 961,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:46.031Z"
+  },
+  "hash": "sha256:6bd414ed5da655ee7ce572395f8467d07f5daba7e9f964b3628134b932420328"
+}

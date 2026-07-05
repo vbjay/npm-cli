@@ -1,0 +1,66 @@
+{
+  "name": "expo-realtime-audio",
+  "version": "1.0.0",
+  "description": "Real-time bidirectional audio streaming for Expo and React Native. Record microphone input and play audio chunks with low latency using native AVAudioEngine.",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "types": "build/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "author": "Poppy <hello@askpoppy.ai>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ask-Poppy/expo-realtime-audio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ask-Poppy/expo-realtime-audio/issues"
+  },
+  "homepage": "https://github.com/Ask-Poppy/expo-realtime-audio#readme",
+  "keywords": [
+    "expo",
+    "react-native",
+    "audio",
+    "streaming",
+    "realtime",
+    "microphone",
+    "recording",
+    "playback",
+    "voice",
+    "speech",
+    "ios",
+    "avfoundation",
+    "avaudioengine"
+  ],
+  "files": [
+    "build",
+    "src",
+    "ios",
+    "expo-module.config.json",
+    "header.jpg"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:swift": "swiftc -parse ios/*.swift",
+    "clean": "rm -rf build",
+    "prepare": "bun run build",
+    "prepublishOnly": "bun run clean && bun run build",
+    "format": "biome check --write . && swiftformat ios",
+    "format:swift": "swiftformat ios",
+    "lint": "biome lint .",
+    "lint:swift": "swiftlint lint ios --strict",
+    "check": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "ci": "biome check . && swiftformat --lint ios && bun run lint:swift && bun run build:swift && bun run typecheck"
+  },
+  "peerDependencies": {
+    "expo": ">=54.0.0",
+    "react": ">=18.0.0",
+    "react-native": ">=0.76.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.5",
+    "@types/react": "~18.3.0",
+    "expo": "~54.0.0",
+    "typescript": "~5.6.0"
+  }
+}

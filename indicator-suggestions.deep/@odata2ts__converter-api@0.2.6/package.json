@@ -1,0 +1,37 @@
+{
+  "name": "@odata2ts/converter-api",
+  "version": "0.2.6",
+  "description": "The converter API establishes a contract between odata2ts and converter implementations",
+  "keywords": [
+    "odata2ts",
+    "odata",
+    "converter",
+    "api",
+    "typescript",
+    "ts",
+    "javascript",
+    "js",
+    "types",
+    "data types"
+  ],
+  "repository": "git@github.com:odata2ts/converter.git",
+  "license": "MIT",
+  "author": "texttechne",
+  "type": "commonjs",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "*.md",
+    "lib",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn compile",
+    "clean": "rimraf lib coverage",
+    "compile": "tsc",
+    "prepack": "yarn compile"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

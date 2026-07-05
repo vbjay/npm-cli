@@ -1,0 +1,127 @@
+{
+  "name": "@hyperdrive.bot/bmad-workflow",
+  "description": "AI-driven development workflow orchestration CLI for BMAD projects",
+  "version": "1.0.54",
+  "author": {
+    "name": "DevSquad",
+    "email": "marcelo@devsquad.email",
+    "url": "https://www.grupokingdom.com/devsquad"
+  },
+  "bin": {
+    "bmad-workflow": "./bin/run"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/dev_squad/repo/cli/bmad-orchestrator/issues"
+  },
+  "dependencies": {
+    "@hyperdrive.bot/cli-auth": "^1.1.4",
+    "@hyperdrive.bot/claude-channels": "^0.1.1",
+    "@hyperdrive.bot/plugin-telemetry": "^0.1.2",
+    "@inquirer/prompts": "^8.3.2",
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "bcrypt": "^6.0.0",
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.2",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "listr2": "^10.1.0",
+    "nodemailer": "^7.0.9",
+    "ora": "^9.0.0",
+    "pino": "^10.0.0",
+    "pino-pretty": "^13.1.2",
+    "uuid": "^13.0.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1",
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/bcrypt": "^6.0.0",
+    "@types/chai": "^4.3.20",
+    "@types/chai-as-promised": "^8.0.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^18",
+    "@types/nodemailer": "^7.0.2",
+    "@types/proxyquire": "^1.3.31",
+    "@types/sinon": "^17.0.4",
+    "@types/uuid": "^10.0.0",
+    "c8": "^10.1.3",
+    "chai": "^4.5.0",
+    "chai-as-promised": "^8.0.2",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
+    "eslint-config-prettier": "^10",
+    "esmock": "^2.7.3",
+    "mocha": "^10.8.2",
+    "oclif": "^4",
+    "prettier": "^3.6.2",
+    "proxyquire": "^2.1.3",
+    "sinon": "^17.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "bin/",
+    "dist/",
+    "oclif.manifest.json",
+    "README.md",
+    "LICENSE",
+    "assets/"
+  ],
+  "homepage": "https://gitlab.com/dev_squad/repo/cli/bmad-orchestrator#readme",
+  "keywords": [
+    "cli",
+    "workflow",
+    "orchestration",
+    "ai",
+    "bmad",
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "bmad-workflow",
+    "dirname": "bmad-workflow",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@hyperdrive.bot/plugin-telemetry"
+    ],
+    "topicSeparator": " "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:dev_squad/repo/cli/bmad-orchestrator.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -b",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "npm run build && npx oclif manifest || true",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "test:integration": "mocha --forbid-only \"test/integration/**/*.test.ts\" \"test/e2e/pipelined-workflow.test.ts\"",
+    "test:smoke": "mocha --forbid-only \"test/e2e/prd-smoke.test.ts\"",
+    "test:coverage": "c8 npm run test",
+    "test:watch": "mocha --watch \"test/**/*.test.ts\"",
+    "version": "npx oclif readme && git add README.md || true",
+    "watch": "tsc -b --watch"
+  },
+  "types": "dist/index.d.ts"
+}

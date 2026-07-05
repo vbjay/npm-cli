@@ -1,0 +1,35 @@
+{
+  "name": "standupmate",
+  "version": "0.7.7",
+  "description": "Personal GitHub-backed AI daily standup journal CLI",
+  "type": "module",
+  "bin": {
+    "standupmate": "./src/index.js"
+  },
+  "scripts": {
+    "standup": "node src/index.js",
+    "check": "node src/index.js --help",
+    "test": "node --test",
+    "prepublishOnly": "npm test",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "standup",
+    "github",
+    "ai",
+    "cli",
+    "automation"
+  ],
+  "license": "MIT",
+  "files": [
+    "src/",
+    "scripts/",
+    "docs/",
+    "examples/",
+    "README.md",
+    "package.json"
+  ]
+}

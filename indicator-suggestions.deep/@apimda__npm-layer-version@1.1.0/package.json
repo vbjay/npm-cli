@@ -1,0 +1,62 @@
+{
+  "name": "@apimda/npm-layer-version",
+  "version": "1.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "/dist",
+    "!/**/*.map",
+    "!/**/*.test.*"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "format": "prettier --plugin-search-dir . --write . && prettier-package-json --write",
+    "preinstall": "npx only-allow pnpm",
+    "lint": "prettier --plugin-search-dir . --check . && eslint \".\"",
+    "prepare": "husky install",
+    "repo-clean": "git clean -xdf",
+    "semantic-release": "semantic-release",
+    "test": "pnpm run build && vitest run"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.x",
+    "constructs": "10.x"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.7",
+    "prettier-package-json": "^2.8.0",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "semantic-release": "^23.0.2",
+    "typescript": "^5.0.4",
+    "vitest": "^0.31.1"
+  },
+  "keywords": [
+    "LayerVersion",
+    "aws",
+    "cdk",
+    "lambda",
+    "layer",
+    "npm"
+  ],
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown",
+    "package.json": "prettier-package-json --write",
+    "*.ts": "eslint"
+  },
+  "packageManager": "pnpm@8.5.1",
+  "release": {
+    "branches": [
+      "release"
+    ]
+  }
+}

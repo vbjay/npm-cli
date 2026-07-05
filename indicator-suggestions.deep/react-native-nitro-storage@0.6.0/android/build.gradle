@@ -1,0 +1,87 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.10.1"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+// Apply autolinking script for Nitro
+apply from: "../nitrogen/generated/android/NitroStorage+autolinking.gradle"
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroStorage_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroStorage_" + name]).toInteger()
+}
+
+android {
+  namespace = "com.nitrostorage"
+
+  // Use values from root project or defaults
+  ndkVersion = getExtOrDefault("ndkVersion")
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    consumerProguardFiles "consumer-rules.pro"
+
+    externalNativeBuild {
+      cmake {
+        cppFlags "-frtti -fexceptions -Wall -Wextra -fstack-protector-all"
+        arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+        abiFilters (*reactNativeArchitectures())
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  buildFeatures {
+    buildConfig = true
+    prefab = true
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  
+  sourceSets {
+    main {
+      java.srcDirs += ["src/main/java"]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation "androidx.security:security-crypto:1.1.0"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
+  implementation project(":react-native-nitro-modules")
+}

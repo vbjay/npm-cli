@@ -1,0 +1,169 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ffeaa37436b4f005",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/binaries.mjs",
+      "scripts/check-build.mjs",
+      "scripts/copy-target.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "detect-libc",
+        "versionSpec": "^2.0.4"
+      },
+      {
+        "name": "node-abi",
+        "versionSpec": "^3.89.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "detect-libc@2.1.2",
+      "node-abi@3.94.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "5f5c1fec4d78fc3c7ad202cffd0e1954e04d566fb4d5309c10607b17532bb017",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `stack-trace`  -  C/C++ sources",
+            "items": [
+              "module.cc"
+            ]
+          },
+          {
+            "label": "Target `stack-trace`  -  libraries",
+            "items": [
+              "Mincore.lib"
+            ]
+          },
+          {
+            "label": "Target `stack-trace`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check-build.mjs",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "189f5655edfc20fb297788c519c10f2eff742fc064edd8fabc86ab9b2f1158c6",
+        "sizeBytes": 1464,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "dynamic-require",
+          "native-build",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/binaries.mjs",
+          "scripts/copy-target.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/binaries.mjs",
+        "reason": "required by ./scripts/check-build.mjs; required by ./scripts/copy-target.mjs",
+        "sha256": "74c45b2c07453d85ed85b403af750ded098fb8d070e33e83df3237cceb7efb85",
+        "sizeBytes": 790,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/copy-target.mjs",
+        "reason": "required by ./scripts/check-build.mjs",
+        "sha256": "51b377219859bbf8ccd84689a9fcfefa475cd8127170f3288bf483fc42d0f736",
+        "sizeBytes": 766,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/binaries.mjs"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:55.380Z"
+  },
+  "hash": "sha256:6453176639f116e7f34d20775b132cf6fc9f8b0cc69e83d63abf5fb85e8dcd6a"
+}

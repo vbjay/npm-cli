@@ -1,0 +1,150 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  def kotlinVersion = rootProject.ext.has("kotlinVersion")
+    ? rootProject.ext.get("kotlinVersion")
+    : project.properties["NitroVisionCameraOcrPlus_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:9.2.1"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: 'org.jetbrains.kotlin.android'
+apply from: '../nitrogen/generated/android/NitroVisionCameraOcrPlus+autolinking.gradle'
+apply from: "./fix-prefab.gradle"
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroVisionCameraOcrPlus_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroVisionCameraOcrPlus_" + name]).toInteger()
+}
+
+android {
+  namespace "com.margelo.nitro.visioncameraocrplus"
+
+  ndkVersion getExtOrDefault("ndkVersion")
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+    externalNativeBuild {
+      cmake {
+        cppFlags "-frtti -fexceptions -Wall -Wextra -fstack-protector-all"
+        arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+        abiFilters (*reactNativeArchitectures())
+      }
+    }
+  }
+
+  buildTypes {
+    debug {
+      externalNativeBuild {
+        cmake {
+          cppFlags "-O1 -g"
+        }
+      }
+    }
+    release {
+      externalNativeBuild {
+        cmake {
+          cppFlags "-O2"
+        }
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  packagingOptions {
+    excludes = [
+            "META-INF",
+            "META-INF/**",
+            "**/libc++_shared.so",
+            "**/libNitroModules.so",
+            "**/libfbjni.so",
+            "**/libjsi.so",
+            "**/libfolly_json.so",
+            "**/libfolly_runtime.so",
+            "**/libglog.so",
+            "**/libhermes.so",
+            "**/libhermes-executor-debug.so",
+            "**/libhermes_executor.so",
+            "**/libreactnative.so",
+            "**/libreactnativejni.so",
+            "**/libturbomodulejsijni.so",
+            "**/libreact_nativemodule_core.so",
+            "**/libjscexecutor.so"
+    ]
+  }
+
+  buildFeatures {
+    buildConfig true
+    prefab true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+
+dependencies {
+  // For < 0.71, this will be from the local maven repo
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+
+  // Add a dependency on NitroModules
+  implementation project(":react-native-nitro-modules")
+
+  // ML Kit Text Recognition
+  implementation "com.google.mlkit:text-recognition:16.0.1"
+  implementation "com.google.mlkit:text-recognition-chinese:16.0.0"
+  implementation "com.google.mlkit:text-recognition-devanagari:16.0.0"
+  implementation "com.google.mlkit:text-recognition-japanese:16.0.0"
+  implementation "com.google.mlkit:text-recognition-korean:16.0.0"
+
+  // ML Kit Translation
+  implementation "com.google.mlkit:translate:17.0.3"
+}

@@ -1,0 +1,89 @@
+{
+  "name": "@magicpro97/vibeflow",
+  "version": "0.12.1",
+  "description": "Local-first npm CLI that opens a web UI and orchestrates Claude Code, Codex CLI, and GitHub Copilot CLI with shared context, skills, hooks, and verification.",
+  "type": "module",
+  "bin": {
+    "vf": "./bin/vf"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "README.md",
+    "LICENSE",
+    ".agents/skills/skill-creator",
+    ".agents/skills/vf",
+    "templates/skills",
+    "templates",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "bun run src/cli.ts",
+    "state": "node dist/cli.js state",
+    "coord": "node dist/cli.js coord",
+    "build": "bun run --cwd src/ui build && bun build ./src/cli.ts --target=node --external bun:sqlite --outfile=dist/cli.js --banner='#!/usr/bin/env node' && mkdir -p dist/assets && cp -R src/assets/. dist/assets && chmod +x dist/cli.js",
+    "ui:dev": "bun run --cwd src/ui dev",
+    "debug:ui": "bun --inspect=7499 run src/cli.ts ui --no-open --port 7799",
+    "debug:ui:break": "bun --inspect-brk=7499 run src/cli.ts ui --no-open --port 7799",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src test",
+    "format": "biome format --write src test",
+    "fix": "biome check --write src test",
+    "test": "bun test --timeout 30000 test/coverage-anti-patterns.test.ts && bun test --timeout 30000",
+    "test:patterns": "bun test test/coverage-anti-patterns.test.ts",
+    "test:e2e": "playwright test",
+    "smoke": "node scripts/smoke.mjs",
+    "check": "bun run typecheck && bun run lint && bun run file-size:check && bun run test && bun run coverage:check",
+    "file-size:check": "node scripts/check-file-size.cjs",
+    "file-size:check:waivers": "node -e \"const r=require('./scripts/check-file-size.cjs');\" 2>/dev/null; node -e \"const fs=require('fs');const path=require('path');const text=fs.readFileSync('scripts/check-file-size.cjs','utf8');const m=text.match(/const WAIVERS = \\[([\\s\\S]*?)\\];/);if(!m){console.log('no waivers');process.exit(0)}console.log(m[1])\"",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "prepublishOnly": "bun run build",
+    "coverage": "bun test --coverage",
+    "coverage:check": "rm -rf coverage && bun test --coverage --coverage-reporter=lcov && bun run coverage:gate",
+    "coverage:report": "node -e \"const fs=require(\"fs\");const lines=fs.readFileSync(\"coverage/lcov.info\",\"utf8\").split(\"\\n\");let totl=0,toth=0;for(const l of lines){const m=l.match(/^L([FH]):(\\d+)/);if(m){{m[1]===\"F\"&&(totl+=+m[2]);m[1]===\"H\"&&(toth+=+m[2])}}}const pct=100*toth/totl;console.log(\"lcov line coverage:\",pct.toFixed(2)+\"%\");if(Math.floor(pct)<100){console.error(\"::error::lcov line coverage is\",pct.toFixed(2)+\"%, must be 100%\");process.exit(1)}\"",
+    "coverage:gate": "node scripts/coverage-gate.cjs",
+    "spike:gh": "bash scripts/gh-spike.sh",
+    "test:spike:gh": "bash test/scripts-gh-spike.test.sh"
+  },
+  "keywords": [
+    "ai",
+    "orchestrator",
+    "claude-code",
+    "codex",
+    "copilot",
+    "skills",
+    "cli",
+    "local-first"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magicpro97/vibeflow.git"
+  },
+  "homepage": "https://github.com/magicpro97/vibeflow#readme",
+  "bugs": {
+    "url": "https://github.com/magicpro97/vibeflow/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "workspaces": [
+    "src/ui"
+  ],
+  "dependencies": {
+    "proper-lockfile": "^4.1.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@playwright/cli": "^0.1.13",
+    "@playwright/test": "^1.60.0",
+    "@types/bun": "^1.3.14",
+    "@types/node": "^22.10.0",
+    "@types/proper-lockfile": "^4.1.4",
+    "smol-toml": "^1.6.1",
+    "typescript": "^5.7.0"
+  }
+}

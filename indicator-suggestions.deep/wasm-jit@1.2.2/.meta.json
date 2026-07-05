@@ -1,0 +1,76 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fbd17caf98754531",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "b8d410181373efd98a3b9814c7f2ffea689dc8e4897dba8d37a58016ef431247",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `std`  -  C/C++ sources",
+            "items": [
+              "src/std.cc"
+            ]
+          },
+          {
+            "label": "Target `std`  -  include directories",
+            "items": [
+              ".",
+              "<!(node -e \"require('nan')\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "c1a46e076543384779982642331fb0c49dd3ef1bc088a67352ca3345a2ad5a31",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:28.406Z"
+  },
+  "hash": "sha256:55db96747892ba08e9a97e8db897a8d83f5d0c181cd8f6993e39b04388cf05b1"
+}

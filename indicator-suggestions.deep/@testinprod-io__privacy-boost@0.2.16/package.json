@@ -1,0 +1,70 @@
+{
+  "name": "@testinprod-io/privacy-boost",
+  "version": "0.2.16",
+  "description": "TypeScript SDK for PrivacyBoost - WASM-powered privacy operations",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./internal": {
+      "types": "./dist/internal.d.ts",
+      "import": "./dist/internal.js",
+      "default": "./dist/internal.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && rm -rf dist/wasm && cp -r src/wasm dist/wasm",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "docs": "typedoc",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "prepack": "node -e \"const fs=require('fs');const d=fs.readdirSync('src/wasm').filter(f=>f.endsWith('.wasm'));if(!d.length){console.error('ERROR: No .wasm files in src/wasm/. Run make wasm first.');process.exit(1)}\"",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "zod": "^3.23.0",
+    "zustand": "^5.0.9"
+  },
+  "peerDependencies": {
+    "viem": "^2.41.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@vitest/coverage-v8": "^3",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.16.0",
+    "react": "^19.2.4",
+    "typedoc": "^0.28.0",
+    "typedoc-plugin-frontmatter": "^1.3.1",
+    "typedoc-plugin-markdown": "^4.10.0",
+    "typescript": "^5",
+    "viem": "^2.41.2",
+    "vitest": "^3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/testinprod-io/privacy-boost-sdk.git",
+    "directory": "packages/privacy-boost-ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "privacy",
+    "ethereum",
+    "wasm",
+    "sdk",
+    "typescript"
+  ],
+  "license": "MIT"
+}

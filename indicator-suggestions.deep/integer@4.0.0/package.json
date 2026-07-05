@@ -1,0 +1,39 @@
+{
+  "name": "integer",
+  "version": "4.0.0",
+  "description": "Native 64-bit integers with overflow protection.",
+  "main": "lib/index.js",
+  "scripts": {
+    "install": "prebuild-install || npm run build-release",
+    "build-release": "node-gyp rebuild --release",
+    "build-debug": "node-gyp rebuild --debug",
+    "test": "mocha --exit --bail --timeout 1000 --slow 500"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JoshuaWise/integer.git"
+  },
+  "keywords": [
+    "integer",
+    "64-bit",
+    "64bit",
+    "int",
+    "overflow",
+    "native"
+  ],
+  "author": "Joshua Wise <joshuathomaswise@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoshuaWise/integer/issues"
+  },
+  "homepage": "https://github.com/JoshuaWise/integer#readme",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "prebuild-install": "^5.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1",
+    "prebuild": "^10.0.0"
+  }
+}

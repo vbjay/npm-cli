@@ -1,0 +1,88 @@
+{
+  "name": "@inventage/envsubst",
+  "version": "0.17.0",
+  "description": "Environment variables substitution for Node",
+  "license": "MIT",
+  "author": "Peter Siska <psiska@inventage.com>",
+  "homepage": "https://github.com/inventage/envsubst#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inventage/envsubst.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inventage/envsubst/issues"
+  },
+  "type": "module",
+  "exports": "./src/utils.js",
+  "bin": {
+    "envsubst": "./bin/envsubst.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "format": "run-s -l format:*",
+    "format:eslint": "eslint --ext .js,.mjs,.cjs . --fix",
+    "format:prettier": "prettier '**/*.{js,mjs,cjs}' --write",
+    "format:prettier-package-json": "npx prettier-package-json --write",
+    "lint": "run-p -l lint:*",
+    "lint:eslint": "eslint --ext .js .",
+    "lint:prettier": "prettier '**/*.{js,mjs,cjs}' --check",
+    "lint:prettier-package-json": "npx prettier-package-json -l",
+    "prepare": "husky install",
+    "test": "ava"
+  },
+  "dependencies": {
+    "cli-table3": "^0.6.5",
+    "escape-string-regexp": "^5.0.0",
+    "globby": "^14.0.1",
+    "meow": "^13.2.0",
+    "string.prototype.matchall": "^4.0.11"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "ava": "^6.1.3",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-ava": "^14.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-no-only-tests": "^3.1.0",
+    "eslint-plugin-require-extensions": "^0.1.3",
+    "eslint-plugin-unicorn": "^53.0.0",
+    "execa": "^9.1.0",
+    "fs-extra": "^11.2.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.7"
+  },
+  "keywords": [
+    "env",
+    "environment",
+    "envsubst",
+    "node",
+    "npm",
+    "variables",
+    "vars"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --write"
+    ],
+    "src/**/*.cjs": [
+      "prettier --write"
+    ],
+    "src/**/*.mjs": [
+      "prettier --write"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+        }
+
+        dependencies {
+            classpath("com.android.tools.build:gradle:8.12.0")
+            classpath("com.facebook.react:react-native-gradle-plugin:0.81.4")
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.20")
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.facebook.react'
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace "com.reactnativetelematicssdk"
+    compileSdkVersion safeExtGet('TelematicsSdk_compileSdkVersion', 36)
+    buildToolsVersion safeExtGet('TelematicsSdk_buildToolsVersion', '36.0.0')
+    defaultConfig {
+        minSdkVersion safeExtGet('TelematicsSdk_minSdkVersion', 24)
+        targetSdkVersion safeExtGet('TelematicsSdk_targetSdkVersion', 36)
+        versionCode 3
+        versionName "1.0"
+
+        def isNewArchEnabled = (project.findProperty("newArchEnabled") ?: "false").toString().toBoolean()
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchEnabled.toString()
+        }
+
+    packaging {
+        resources {
+            excludes += [
+                'META-INF/INDEX.LIST',
+                'META-INF/io.netty.versions.properties',
+                'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
+            ]
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+      google()
+      mavenCentral()
+      maven {
+        url "https://repo1.maven.org/maven2/"
+      }
+      maven {
+            url "https://s3.us-east-2.amazonaws.com/android.telematics.sdk.production/"
+        }
+
+    }
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.5"
+    implementation("com.facebook.react:react-android:0.81.4")
+    implementation("com.telematicssdk:tracking:4.0.0")
+}

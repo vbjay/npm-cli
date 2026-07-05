@@ -1,0 +1,66 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a4c4d0b5e3034ea8",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c49016a9fb131834f1d3083cdb1b9a9553e4dddecb610b06631dfd3308e5d314",
+        "sizeBytes": 2746,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "f7a627ffc4996a7ffc5e3e2318ea53abb3f098b1811d9b5d780c412ffbe34385",
+        "sizeBytes": 1577,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:56.579Z"
+  },
+  "hash": "sha256:cae9363bd50fd127ae6b0125c6059dfd27e005577c2fd815d615b73ab1a9d7f5"
+}

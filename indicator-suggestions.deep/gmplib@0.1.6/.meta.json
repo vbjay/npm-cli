@@ -1,0 +1,97 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b77187870d346da8",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/preinstall.sh"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "161e709bc0a8ca74ff8321ed5bf7c85cc6b89eb2a6de2cd74a2687473de31f90",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `Gmp`  -  C/C++ sources",
+            "items": [
+              "src/gmp_node_addon.cc"
+            ]
+          },
+          {
+            "label": "Target `Gmp`  -  libraries",
+            "items": [
+              "<(module_root_dir)/src/gmp/lib/libgmp.a"
+            ]
+          },
+          {
+            "label": "Target `Gmp`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "<(module_root_dir)/src/gmp/include"
+            ]
+          },
+          {
+            "label": "Target `Gmp`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          },
+          {
+            "label": "Target `libgmp`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/preinstall.sh",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "a63082ecf6ee0509b4abd0f3753e1e0f4d0a1b9486234ce5bb63a714c79b0cda",
+        "sizeBytes": 439,
+        "signals": [
+          "shell-network-fetch",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:55.382Z"
+  },
+  "hash": "sha256:61074cd6f5d47800b92356097b9b5fcb4bdc7ec4ec22322d1db87628ff93382e"
+}

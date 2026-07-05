@@ -1,0 +1,55 @@
+{
+  "name": "@titannio/webtoolkit-cli",
+  "version": "1.2.7",
+  "private": false,
+  "description": "Portable CLI tools for TypeScript monorepos and web projects.",
+  "keywords": [
+    "cli",
+    "tooling",
+    "typescript",
+    "monorepo",
+    "maintenance"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "webtoolkit": "dist/bin.js",
+    "webtoolkit-cli": "dist/bin.js"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=26.0.0 <27"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "type-check": "tsc --noEmit",
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true }); require('fs').rmSync('.tsbuildinfo', { force: true })\"",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "verify": "npm run type-check && npm run test:coverage && npm run build && npm run npm:pack",
+    "release:check": "npm run verify",
+    "prepack": "npm run test:coverage && npm run build",
+    "prepublishOnly": "npm run verify",
+    "npm:pack": "npm pack --dry-run",
+    "deps:update": "npm update",
+    "npm:release": "npm publish --access public"
+  },
+  "dependencies": {
+    "dependency-cruiser": "^18.0.0",
+    "semver": "^7.8.3",
+    "ts-morph": "^28.0.0",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "vitest": "^4.1.9"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e2228ae761882384",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "3eb693006dbe79d30246b7b009283cdf15a6a643276173426154806462666a44",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "com.google.android.gms:play-services-base:$playServicesBaseVersion",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion",
+              "io.github.hyochan.openiap:openiap-google-amazon:${googleVersionString}",
+              "io.github.hyochan.openiap:openiap-google-horizon:${googleVersionString}",
+              "io.github.hyochan.openiap:openiap-google:${googleVersionString}"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\react-native-iap@15.4.0\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "node_modules/nitrogen/lib/index.js",
+        "reason": "referenced by lifecycle script: `nitrogen`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:41.425Z"
+  },
+  "hash": "sha256:0cae1669dce4f451421442b6a1ec9be0fec114b3c8c7b8bc2d050afb1bbafd97"
+}

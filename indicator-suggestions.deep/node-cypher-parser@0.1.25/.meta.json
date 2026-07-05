@@ -1,0 +1,102 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3595c785fdfc518b",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "3e0b9fb0a8df4c2cbcb16cc63669e8e8b4c1e0eea54f69b198b22e768b9a1f82",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `cypher`  -  C/C++ sources",
+            "items": [
+              "addon/binding.cpp",
+              "addon/parser.cpp",
+              "addon/memstream/memstream.c",
+              "addon/fmemopen/fmemopen.c"
+            ]
+          },
+          {
+            "label": "Target `cypher`  -  libraries",
+            "items": [
+              "/usr/local/lib/libcypher-parser.a",
+              "-L/usr/lib"
+            ]
+          },
+          {
+            "label": "Target `cypher`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "/usr/local/include"
+            ]
+          },
+          {
+            "label": "Target `cypher`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:16.065Z"
+  },
+  "hash": "sha256:23324d6d0734b6c0aeadfb5eee42da7416eb3a4fdb672be72b96e9e840f9fbbf"
+}

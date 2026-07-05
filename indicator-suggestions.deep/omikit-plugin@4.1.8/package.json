@@ -1,0 +1,137 @@
+{
+  "name": "omikit-plugin",
+  "version": "4.1.8",
+  "description": "Omikit Plugin by ViHAT",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "src/types/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "prepack": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install && yarn example pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
+    "sync": "./scripts/sync-to-example.sh",
+    "dev:ios": "yarn sync && cd example && yarn ios",
+    "dev:android": "yarn sync && cd example && yarn android",
+    "dev:metro": "yarn sync && cd example && yarn start --reset-cache"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VIHATTeam/OMICALL-React-Native-SDK"
+  },
+  "author": "ViHAT Group <tranhoaihung05@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/VIHATTeam/OMICALL-React-Native-SDK/issues"
+  },
+  "homepage": "https://github.com/VIHATTeam/OMICALL-React-Native-SDK#README.md",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.2",
+    "@types/react": "18.3.1",
+    "react": "18.3.1",
+    "react-native": "0.76.2",
+    "del-cli": "^5.0.0",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.8.4",
+    "react-native-builder-bob": "0.20.0",
+    "release-it": "^15.0.0",
+    "typescript": "^4.5.2"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.74.0"
+  },
+  "codegenConfig": {
+    "name": "RNOmikitPluginSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.omikitplugin"
+    },
+    "ios": {}
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "packageManager": "yarn@1.22.15",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module"
+    ]
+  },
+  "directories": {
+    "example": "example"
+  }
+}

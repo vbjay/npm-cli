@@ -1,0 +1,70 @@
+{
+  "name": "ibm_db",
+  "description": "IBM DB2 and IBM Informix bindings for node",
+  "version": "4.0.1",
+  "main": "lib/odbc.js",
+  "types": "typescript/dist/index.d.ts",
+  "homepage": "https://github.com/ibmdb/node-ibm_db/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ibmdb/node-ibm_db.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ibmdb/node-ibm_db/issues"
+  },
+  "contributors": [
+    "IBM <opendev@us.ibm.com>"
+  ],
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "files": [
+    "examples/",
+    "installer/",
+    "lib/",
+    "src/",
+    "test/",
+    "APIDocumentation.md",
+    "LICENSE",
+    "README.md",
+    "binding.gyp",
+    "build.zip",
+    "package.json",
+    "typescript/dist/"
+  ],
+  "engines": {
+    "node": ">=6.0"
+  },
+  "scripts": {
+    "install": "node installer/driverInstall.js",
+    "test": "cd test && node run-tests.js",
+    "build:types": "tsc -p typescript/tsconfig.json",
+    "prepare": "npm run build:types"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "axios": "^1.16.1",
+    "big-integer": "^1.6.51",
+    "bindings": "^1.5.0",
+    "fs-extra": "^11.1.1",
+    "lodash": "^4.18.1",
+    "node-addon-api": "^7.1.1",
+    "targz": "^1.0.1"
+  },
+  "keywords": [
+    "node",
+    "odbc",
+    "db2",
+    "driver"
+  ],
+  "author": "IBM",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "async": "^3.2.4",
+    "bluebird": "^3.7.2",
+    "moment": "^2.29.4",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "name": "tateru-cli",
+  "version": "1.6.3",
+  "description": "Simple CLI static site builder tool with Twig.",
+  "keywords": [
+    "cli",
+    "generator",
+    "html",
+    "typescript",
+    "npm",
+    "site",
+    "static",
+    "static-site-generation",
+    "static-site-generator",
+    "twig",
+    "twigjs"
+  ],
+  "homepage": "https://github.com/danielsitek/tateru-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielsitek/tateru-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/danielsitek/tateru-cli/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Daniel Sitek",
+    "email": "dan.sitek@gmail.com",
+    "url": "https://danielsitek.cz"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "types.d.ts"
+  ],
+  "main": "./dist/core.js",
+  "bin": {
+    "tateru-cli": "./dist/tateru-cli.js"
+  },
+  "scripts": {
+    "build": "rm -rf dist/* && npx tsc",
+    "test": "run-simple-tests",
+    "example:build": "cd ./example && node ../dist/tateru-cli.js tateru.config.json",
+    "example:build:prod": "cd ./example && node ../dist/tateru-cli.js tateru.config.json --env prod",
+    "example:clean": "rm -rf example/dist/*",
+    "clean": "rm -rf dist/*",
+    "dev": "npx ts-node src/tateru-cli.ts example/tateru.config.json",
+    "dev:error": "npx ts-node src/tateru-cli.ts",
+    "dev:args-error": "npx ts-node src/tateru-cli.ts --foo bar",
+    "dev:missing-arg-error": "npx ts-node src/tateru-cli.ts --env",
+    "dev:args": "npx ts-node src/tateru-cli.ts example/tateru.config.json --env prod --lang cs --page about",
+    "dev:help": "npx ts-node src/tateru-cli.ts --help",
+    "dev:version": "npx ts-node src/tateru-cli.ts --version",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@minify-html/node": "0.18.1",
+    "twig": "1.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "@types/twig": "1.12.17",
+    "simple-test-framework": "file:local_modules/simple-test-framework",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "types": "./types.d.ts",
+  "preferGlobal": true
+}

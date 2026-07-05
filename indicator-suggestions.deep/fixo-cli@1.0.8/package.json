@@ -1,0 +1,75 @@
+{
+  "name": "fixo-cli",
+  "version": "1.0.8",
+  "description": "FixO CLI — Autonomous Free Multi-Provider LLM Coding Tool",
+  "type": "module",
+  "bin": {
+    "fixo": "dist/index.js",
+    "fixo-cli": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/",
+    "vendor/",
+    "scripts/check-vendor-wasm.js",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "node --import tsx --test src/__tests__/*.test.ts",
+    "lint": "eslint src --max-warnings=0",
+    "check:vendor": "node scripts/check-vendor-wasm.js",
+    "graphify:update": "graphify update . 2>/dev/null || echo 'Graphify not installed — run: pipx install graphifyy'",
+    "postinstall": "node -e \"var v=process.version.match(/^v(\\d+)/);if(!v||+v[1]<20){console.error('\\n❌ FixO CLI requires Node.js >= 20.0.0 (current: '+process.version+')');process.exit(1)}\" && npm run graphify:update",
+    "prepack": "npm run check:vendor",
+    "prepublishOnly": "npm run build && npm run check:vendor"
+  },
+  "keywords": [
+    "ai",
+    "coding",
+    "agent",
+    "cli",
+    "llm",
+    "free",
+    "openai",
+    "groq",
+    "gemini",
+    "claude-code-alternative"
+  ],
+  "license": "Apache-2.0",
+  "author": "Abrar Akhunji",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abrar-Akhunji/FIXO_CLI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Abrar-Akhunji/FIXO_CLI/issues"
+  },
+  "homepage": "https://github.com/Abrar-Akhunji/FIXO_CLI#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.0",
+    "cheerio": "^1.2.0",
+    "gpt-tokenizer": "^3.4.0",
+    "js-yaml": "^4.1.0",
+    "turndown": "^7.2.4",
+    "vscode-jsonrpc": "^8.2.1",
+    "web-tree-sitter": "^0.25.10"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.15.3",
+    "@types/turndown": "^5.0.6",
+    "eslint": "^9.39.4",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.61.1"
+  }
+}

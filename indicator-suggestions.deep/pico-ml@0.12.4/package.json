@@ -1,0 +1,49 @@
+{
+  "name": "pico-ml",
+  "version": "0.12.4",
+  "description": "A toy programming language witch is a subset of OCaml",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "pico-ml": "./bin/repl.js",
+    "pico-mlc": "./bin/compiler.js",
+    "ipml": "./bin/repl.js",
+    "pmlc": "./bin/compiler.js"
+  },
+  "files": [
+    "index.mjs",
+    "bin",
+    "lib"
+  ],
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./lib/index.js",
+      "browser": "./index.mjs",
+      "default": "./lib/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf -g \"*.tsbuildinfo\" lib README.md",
+    "compile": "tsc --noEmit",
+    "build": "tsc -p .",
+    "test": "jest",
+    "start": "ts-node src/cli/repl.ts",
+    "prepare": "cp ../../README.md .",
+    "depgraph": "dependency-cruise --config .depcruise.config.js -T dot lib/cli/repl.js lib/cli/compiler.js | dot -T svg > depgraph.svg"
+  },
+  "keywords": [
+    "ml",
+    "language",
+    "wasm",
+    "compiler"
+  ],
+  "author": "Quramy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Quramy/pico-ml.git"
+  }
+}

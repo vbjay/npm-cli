@@ -1,0 +1,47 @@
+{
+   "name": "oxide.ts",
+   "version": "1.1.0",
+   "description": "Rust's Option<T> and Result<T, E>, implemented for TypeScript.",
+   "main": "dist",
+   "types": "dist",
+   "exports": {
+      ".": "./dist/index.js",
+      "./core": "./dist/core.js"
+   },
+   "files": [
+      "dist/**/*"
+   ],
+   "scripts": {
+      "test": "nyc mocha -r ts-node/register 'tests/**/*'",
+      "bench": "for file in bench/tests/*.bench.ts; do ts-node $file; done",
+      "prepack": "npm run test && rm -r dist && tsc"
+   },
+   "keywords": [
+      "rust",
+      "option",
+      "result",
+      "match",
+      "monad",
+      "functional",
+      "fp"
+   ],
+   "author": "Matthew Wilson",
+   "license": "MIT",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/traverse1984/oxide.ts.git"
+   },
+   "dependencies": {},
+   "devDependencies": {
+      "@types/chai": "^4.3.1",
+      "@types/mocha": "^9.1.0",
+      "@typescript-eslint/eslint-plugin": "^5.19.0",
+      "@typescript-eslint/parser": "^5.19.0",
+      "chai": "^4.3.6",
+      "eslint": "^8.13.0",
+      "mocha": "^9.2.2",
+      "nyc": "^15.1.0",
+      "ts-node": "^10.7.0",
+      "typescript": "^4.6.3"
+   }
+}

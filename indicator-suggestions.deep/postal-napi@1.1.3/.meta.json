@@ -1,0 +1,126 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3d84044aa00ef0dd",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "2bc6975927d2f9d98f0f828cbbf98353af388ca2acc9b60939fab18a895616b4",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `expand`  -  C/C++ sources",
+            "items": [
+              "src/expand.c"
+            ]
+          },
+          {
+            "label": "Target `expand`  -  libraries",
+            "items": [
+              "-lpostal"
+            ]
+          },
+          {
+            "label": "Target `expand`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-api-headers').include_dir\")",
+              "/usr/local/include",
+              "/usr/include"
+            ]
+          },
+          {
+            "label": "Target `parser`  -  C/C++ sources",
+            "items": [
+              "src/parser.c"
+            ]
+          },
+          {
+            "label": "Target `parser`  -  libraries",
+            "items": [
+              "-lpostal"
+            ]
+          },
+          {
+            "label": "Target `parser`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-api-headers').include_dir\")",
+              "/usr/local/include",
+              "/usr/include"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "1ee991e81ffbc5dbb29c6bb356d244e2aa0de2a59912ea38c1c4e392d0ca1f2e",
+        "sizeBytes": 2703,
+        "signals": [
+          "uses-child-process",
+          "native-build",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:26.693Z"
+  },
+  "hash": "sha256:2078c7f76dd1d4e0f0ea9fea9091a122e9e994966e5a8e6471935bcce331e83d"
+}

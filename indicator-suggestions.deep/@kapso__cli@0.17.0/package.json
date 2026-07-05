@@ -1,0 +1,125 @@
+{
+  "name": "@kapso/cli",
+  "description": "Kapso CLI for source-controlled workflows, functions, WhatsApp numbers, conversations, messages, and templates",
+  "version": "0.17.0",
+  "author": "Andrés Matte",
+  "bin": {
+    "kapso": "bin/run.js"
+  },
+  "bugs": "https://github.com/gokapso/kapso-cli/issues",
+  "dependencies": {
+    "@kapso/whatsapp-cloud-api": "^0.2.0",
+    "@kapso/workflows": "^0.2.0",
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-warn-if-update-available": "^3.1.38",
+    "axios": "^1.6.2",
+    "chalk": "^5.3.0",
+    "conf": "^12.0.0",
+    "esbuild": "^0.28.0",
+    "humps": "^2.0.1",
+    "open": "^10.1.1",
+    "ora": "^7.0.1",
+    "yaml": "^2.8.3"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/humps": "^2.0.6",
+    "@types/mocha": "^10",
+    "@types/node": "^20",
+    "chai": "^4",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6",
+    "eslint-config-prettier": "^10",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "files": [
+    "./bin",
+    "./dist",
+    "./oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/gokapso/kapso-cli",
+  "keywords": [
+    "oclif",
+    "kapso",
+    "whatsapp",
+    "messaging",
+    "cli"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "kapso",
+    "dirname": "kapso",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-warn-if-update-available"
+    ],
+    "hooks": {
+      "init": "./dist/hooks/init/telemetry.js",
+      "finally": "./dist/hooks/finally/telemetry.js"
+    },
+    "topicSeparator": " ",
+    "topics": {
+      "customers": {
+        "description": "Manage customers in the current project"
+      },
+      "logs": {
+        "description": "Search Rails logs in the current project"
+      },
+      "projects": {
+        "description": "Manage Kapso project context"
+      },
+      "whatsapp": {
+        "description": "Operate WhatsApp numbers, webhooks, conversations, messages, and templates"
+      },
+      "whatsapp:conversations": {
+        "description": "Manage WhatsApp conversations"
+      },
+      "whatsapp:messages": {
+        "description": "Manage WhatsApp messages"
+      },
+      "whatsapp:numbers": {
+        "description": "Manage WhatsApp numbers"
+      },
+      "whatsapp:webhooks": {
+        "description": "Manage WhatsApp webhooks for a number"
+      },
+      "whatsapp:templates": {
+        "description": "Manage WhatsApp templates"
+      }
+    },
+    "warn-if-update-available": {
+      "timeoutInDays": 1,
+      "message": "A new version of <%= config.name %> is available: <%= chalk.greenBright(config.version) %> -> <%= chalk.greenBright(latest) %>.\nUpdate by running: <%= chalk.cyanBright('bun add -g @kapso/cli') %>"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gokapso/kapso-cli.git"
+  },
+  "scripts": {
+    "build": "bunx shx rm -rf dist oclif.manifest.json && tsc -b",
+    "lint": "eslint .",
+    "postpack": "bunx shx rm -f oclif.manifest.json",
+    "posttest": "bun run lint",
+    "prepack": "bun run build && bunx oclif manifest && bunx oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "bunx oclif readme && git add README.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "dist/index.d.ts"
+}

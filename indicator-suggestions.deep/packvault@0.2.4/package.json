@@ -1,0 +1,85 @@
+{
+  "name": "packvault",
+  "version": "0.2.4",
+  "description": "Offline-first package caching and distribution CLI for JavaScript developers.",
+  "type": "module",
+  "homepage": "https://pack-vault-website.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Omnikon-Org/PackVault.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Omnikon-Org/PackVault/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "packvault": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "bundles",
+    "docs",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli/index.ts",
+    "start": "node dist/cli/index.js",
+    "prepare": "npm run build",
+    "lint": "eslint . --ext .ts",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "npm",
+    "offline",
+    "cache",
+    "registry",
+    "cli"
+  ],
+  "author": "Omnikon-Org",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "axios": "^1.7.9",
+    "bonjour-service": "^1.3.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "express": "^4.21.2",
+    "fs-extra": "^11.2.0",
+    "node-cron": "^3.0.3",
+    "ora": "^8.1.1",
+    "progress": "^2.0.3",
+    "semver": "^7.8.4",
+    "sql.js": "^1.12.0",
+    "tar": "^7.4.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.2",
+    "@types/node-cron": "^3.0.11",
+    "@types/progress": "^2.0.7",
+    "@types/semver": "^7.7.1",
+    "@types/sql.js": "^1.4.9",
+    "eslint": "^9.17.0",
+    "ts-morph": "^28.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

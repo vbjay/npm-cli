@@ -1,0 +1,126 @@
+{
+  "name": "@a5c-ai/a5c",
+  "version": "1.26.2",
+  "description": "a5c SDK and CLI for normalizing and enriching repo/CI events for agentic workflows",
+  "type": "module",
+  "private": false,
+  "bin": {
+    "a5c": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "pretest": "npm run build",
+    "prepare": "husky && npm run build",
+    "clean": "rimraf dist .turbo .vitest coverage",
+    "build": "tsc -p tsconfig.build.json && node scripts/build-post.js",
+    "build:clean": "rimraf dist && npm run build",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\" \"tests/**/*.ts\"",
+    "format": "prettier -w .",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
+    "test": "vitest run",
+    "validate:obs": "node scripts/validate-obs.cjs",
+    "test:ci": "vitest run --coverage",
+    "flaky:detect": "node scripts/flaky-detector.cjs",
+    "dev": "tsx watch src/cli.ts -- --help",
+    "cli": "node dist/cli.js",
+    "prepush:changed": "node scripts/prepush-related.js",
+    "prepush:full": "npx --yes vitest run",
+    "prepush": "node scripts/prepush-related.js || npx --yes vitest run",
+    "release": "semantic-release",
+    "lint:filenames": "node scripts/lint-filenames.cjs",
+    "validate:obs:file": "ajv compile -s docs/specs/observability.schema.json --spec=draft2020 -c ajv-formats",
+    "validate:examples": "npm run -s build && node dist/cli.js normalize --in samples/workflow_run.completed.json --out /tmp/out.ne.json && (npx -y ajv-cli@5.0.0 validate -s docs/specs/ne.schema.json -d /tmp/out.ne.json --spec=draft2020 -c ajv-formats || node dist/cli.js validate --in /tmp/out.ne.json --schema docs/specs/ne.schema.json --quiet)",
+    "commit:prepare": "npx --yes husky && echo 'husky installed'",
+    "smoke": "node dist/cli.js normalize --in samples/pull_request.synchronize.json --out out.ne.json && node dist/cli.js enrich --in out.ne.json --out out.enriched.json && node dist/cli.js validate --in out.enriched.json --schema docs/specs/ne.schema.json --quiet",
+    "reactor:sample": "npm run -s build && node dist/cli.js reactor --in samples/pull_request.synchronize.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "predefined.yaml"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a5c-ai/a5c.git"
+  },
+  "homepage": "https://github.com/a5c-ai/a5c",
+  "bugs": {
+    "url": "https://github.com/a5c-ai/a5c/issues"
+  },
+  "keywords": [
+    "a5c",
+    "cli",
+    "sdk",
+    "github",
+    "normalization",
+    "enrich"
+  ],
+  "author": "a5c.ai",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint/js": "9.36.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.6",
+    "@semantic-release/npm": "^12.0.1",
+    "@types/node": "^22.7.4",
+    "@types/yaml": "1.9.7",
+    "@typescript-eslint/eslint-plugin": "8.44.0",
+    "@typescript-eslint/parser": "8.44.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "ajv": "^8.17.1",
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "3.0.1",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "^2.29.1",
+    "globals": "16.4.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^16.1.6",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "semantic-release": "^24.2.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "8.44.0",
+    "vitest": "^3.2.4",
+    "yaml": "2.8.1"
+  },
+  "dependencies": {
+    "@actions/artifact": "^2.3.2",
+    "@octokit/rest": "^21.0.0",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "minimatch": "^9.0.5",
+    "yaml": "^2.8.1",
+    "zod": "^3.23.8"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier -w"
+    ],
+    "{test,tests}/**/*.{ts,tsx,js}": [
+      "eslint --fix --max-warnings=0",
+      "prettier -w"
+    ],
+    "**/*.{md,json,yml,yaml}": [
+      "prettier -w"
+    ]
+  }
+}

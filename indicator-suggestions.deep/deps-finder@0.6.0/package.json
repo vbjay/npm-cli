@@ -1,0 +1,68 @@
+{
+  "name": "deps-finder",
+  "version": "0.6.0",
+  "description": "A TypeScript dependency analyzer that detects unused and misplaced dependencies",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "deps-finder": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "bench": "bun bench/import-parser.bench.ts",
+    "typecheck": "tsgo --noEmit",
+    "lint": "bunx biome lint src/",
+    "format": "bunx biome format --write src/",
+    "format:check": "bunx biome format src/",
+    "check": "bunx biome check --write src/",
+    "build": "rm -rf dist && tsgo -p tsconfig.build.json",
+    "validate": "bun run typecheck && bun run lint && bun test",
+    "prepublishOnly": "bun run validate && bun run build",
+    "prepare": "husky"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "dependency",
+    "analyzer",
+    "typescript",
+    "unused",
+    "devDependencies",
+    "npm",
+    "package-manager",
+    "bun"
+  ],
+  "author": "yuniithings@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jazz1x/deps-finder.git"
+  },
+  "homepage": "https://github.com/jazz1x/deps-finder#readme",
+  "bugs": {
+    "url": "https://github.com/jazz1x/deps-finder/issues"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.14",
+    "@types/bun": "^1.3.13",
+    "@typescript/native-preview": "7.0.0-dev.20260503.1",
+    "husky": "^9.1.7",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "typescript": "^6.0.0"
+  },
+  "dependencies": {
+    "@mobily/ts-belt": "4.0.0-rc.5",
+    "glob": "^13.0.6",
+    "ts-pattern": "^5.9.0"
+  }
+}

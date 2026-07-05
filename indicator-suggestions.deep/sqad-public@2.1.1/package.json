@@ -1,0 +1,60 @@
+{
+  "name": "sqad-public",
+  "version": "2.1.1",
+  "description": "56-agent AI development framework — any stack, any IDE, any cloud. Zero dependencies.",
+  "type": "module",
+  "bin": {
+    "squad-public": "./bin/squad-public.js"
+  },
+  "scripts": {
+    "postinstall": "node ./bin/postinstall.js || true",
+    "test": "node --test test/*.test.js",
+    "test:e2e": "node test/e2e-setup-test.mjs && node test/e2e-init-test.mjs",
+    "test:all": "npm test && npm run test:e2e",
+    "prepublishOnly": "npm run test:all"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "multi-agent",
+    "development",
+    "code-review",
+    "framework",
+    "devops",
+    "security",
+    "android",
+    "ios",
+    "mobile",
+    "generative-ai",
+    "langchain",
+    "openai",
+    "llm",
+    "agentic",
+    "testing",
+    "qa"
+  ],
+  "author": "Aditya Shubham",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adityashubham1997/sqad-public.git"
+  },
+  "homepage": "https://github.com/adityashubham1997/sqad-public#readme",
+  "bugs": {
+    "url": "https://github.com/adityashubham1997/sqad-public/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "squad-method/",
+    "README.md",
+    "LICENSE"
+  ]
+}

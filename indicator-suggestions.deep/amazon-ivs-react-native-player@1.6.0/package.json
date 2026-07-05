@@ -1,0 +1,224 @@
+{
+  "name": "amazon-ivs-react-native-player",
+  "version": "1.6.0",
+  "description": "amazon-ivs-react-native-player",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "commit": "commit",
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "reset": "git clean -xdfe .vscode && yarn && yarn prepare",
+    "markbuild": "tsx ./scripts/example-dot-env.ts",
+    "prepare": "bob build && yarn markbuild",
+    "postinstall": "husky",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn && yarn pods && yarn markbuild",
+    "e2e:ios": "yarn bootstrap && yarn e2e:reset && yarn e2e:build:ios && yarn e2e:test:ios",
+    "e2e:android": "yarn bootstrap && yarn e2e:build:android && yarn e2e:test:android",
+    "e2e:reset": "detox clean-framework-cache && detox build-framework-cache",
+    "e2e:build:android": "detox build --configuration android",
+    "e2e:build:ios": "detox build --configuration ios",
+    "e2e:test:android": "yarn get:testbutler && detox test --configuration android --take-screenshots failing --loglevel verbose",
+    "e2e:test:ios": "detox test --configuration ios --take-screenshots failing --loglevel verbose",
+    "e2e:build:android:release": "detox build --configuration android.emu.release",
+    "e2e:build:ios:release": "detox build --configuration ios.sim.release",
+    "e2e:test:android:release": "yarn get:testbutler && detox test --configuration android.emu.release --headless --take-screenshots failing",
+    "e2e:test:ios:release": "detox test --configuration ios.sim.release --headless --take-screenshots failing",
+    "get:testbutler": "curl -L -o ./test-butler-app.apk https://github.com/wix-incubator/detox-butler/releases/download/1.1.0/detoxbutler-1.1.0-aosp-release.apk",
+    "release:create": "tsx ./scripts/release-create.ts",
+    "release:verify": "tsx ./scripts/release-verify.ts",
+    "release:latest": "npm publish",
+    "release:rc": "npm publish --tag rc",
+    "release:tag": "tsx ./scripts/release-tag.ts"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "https://github.com/aws/amazon-ivs-react-native-player",
+  "author": "AWS",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/aws/amazon-ivs-react-native-player/issues"
+  },
+  "homepage": "https://github.com/aws/amazon-ivs-react-native-player#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/compat": "^1.3.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
+    "@react-native-community/cli": "20.0.1",
+    "@react-native/babel-preset": "0.82.1",
+    "@react-native/eslint-config": "0.82.1",
+    "@react-native/metro-config": "0.82.1",
+    "@react-native/typescript-config": "0.82.1",
+    "@testing-library/react-native": "^12.4.3",
+    "@types/inquirer": "^9.0.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.1.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "chalk": "^5.3.0",
+    "commitlint": "^19.8.1",
+    "detox": "^20.45.1",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-detox": "^1.0.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-plugin-react": "^7.37.5",
+    "husky": "^9.1.7",
+    "inquirer": "^9.2.7",
+    "jest": "^29.7.0",
+    "pod-install": "^1.0.7",
+    "prettier": "^3.6.2",
+    "react": "19.1.1",
+    "react-native": "0.82.1",
+    "react-native-builder-bob": "^0.40.13",
+    "react-test-renderer": "19.1.1",
+    "semver": "^7.5.4",
+    "simple-git": "^3.19.1",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
+    "turbo": "^2.5.6",
+    "typescript": "^5.9.2",
+    "valtio": "^2.1.8"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "resolutions": {
+    "cross-spawn": "^7.0.3",
+    "ws": "^7.5.10",
+    "braces": "^3.0.3",
+    "esbuild": "^0.25.0",
+    "nanoid": "^3.3.8",
+    "glob": "^8.1.0"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "@testing-library/react-native/extend-expect"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|@react-native|react-native-vector-icons)/)"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "@callstack/eslint-config/react",
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ],
+      "import/no-unresolved": "off",
+      "import/no-extraneous-dependencies": "off"
+    },
+    "plugins": [
+      "detox",
+      "jest"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "AmazonIvsSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.amazonaws.ivs.reactnative.player"
+    },
+    "ios": {
+      "componentProvider": {
+        "AmazonIvs": "AmazonIvs"
+      }
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "version": "0.54.7"
+  }
+}

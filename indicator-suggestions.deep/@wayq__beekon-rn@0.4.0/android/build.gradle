@@ -1,0 +1,95 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.BeekonRn = [
+    kotlinVersion: "2.1.20",
+    // minSdk 26 is required by the native Beekon AAR (io.github.beekonlabs:beekon).
+    minSdkVersion: 26,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return BeekonRn[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.getbeekon.rn"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  // mavenLocal first so an unreleased native SDK can be developed against:
+  //   cd ../beekon-android && ./gradlew :beekon:publishToMavenLocal -Pversion=<pin below>
+  // Harmless otherwise — versions absent from ~/.m2 fall through to Central.
+  mavenLocal()
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  // Native Beekon SDK — published from beekon-android/ via Maven Central.
+  // Pinned exact in v0.x to avoid surprise breakage; loosen to a range when
+  // the SDK reaches v1 stability. 0.0.7 is the release that ships the license
+  // API (setWrapperInfo / BeekonConfig.licenseKey / Beekon.licenseStatus);
+  // 0.0.8 embeds the production ES256 verification keyset. 0.4.0 ships the
+  // permission-request layer (requestPermission / openSettings).
+  implementation "io.github.beekonlabs:beekon:0.4.0"
+  // Kotlin coroutines — required for collecting Beekon's StateFlow/SharedFlow.
+  // Beekon already depends on coroutines transitively, but declaring it here
+  // makes the dependency intent explicit.
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+}

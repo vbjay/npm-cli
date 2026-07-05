@@ -1,0 +1,94 @@
+{
+  "name": "@gurge/sdk-react-native",
+  "version": "0.3.150",
+  "description": "Prebundled Hinkal SDK for React Native — no Metro config required.",
+  "homepage": "hinkal.io",
+  "author": {
+    "name": "Hinkal Protocol"
+  },
+  "keywords": [
+    "blockchain",
+    "privacy",
+    "zero-knowledge",
+    "react-native"
+  ],
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.cjs"
+    },
+    "./bootstrap": {
+      "import": "./bootstrap.mjs",
+      "default": "./bootstrap.cjs"
+    },
+    "./providers/prepareEthersHinkal": {
+      "types": "./providers/prepareEthersHinkal.d.ts",
+      "import": "./providers/prepareEthersHinkal.mjs",
+      "default": "./providers/prepareEthersHinkal.cjs"
+    },
+    "./providers/prepareWagmiHinkal": {
+      "types": "./providers/prepareWagmiHinkal.d.ts",
+      "import": "./providers/prepareWagmiHinkal.mjs",
+      "default": "./providers/prepareWagmiHinkal.cjs"
+    },
+    "./providers/prepareTronHinkal": {
+      "types": "./providers/prepareTronHinkal.d.ts",
+      "import": "./providers/prepareTronHinkal.mjs",
+      "default": "./providers/prepareTronHinkal.cjs"
+    },
+    "./providers/prepareSolanaHinkal": {
+      "types": "./providers/prepareSolanaHinkal.d.ts",
+      "import": "./providers/prepareSolanaHinkal.mjs",
+      "default": "./providers/prepareSolanaHinkal.cjs"
+    }
+  },
+  "scripts": {
+    "build": "nx build sdk-react-native",
+    "postinstall": "node ./scripts/patch-libsodium-for-rn.js"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.0",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/web3.js": "^1.98.4",
+    "@solana/wallet-adapter-react": "^0.15.39",
+    "axios": "^1.15.0",
+    "async-mutex": "^0.4.0",
+    "bs58": "^6.0.0",
+    "buffer": "6.0.3",
+    "circomlibjs-hinkal-fork": "^0.0.11",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.15.0",
+    "idb-keyval": "6.2.1",
+    "multiformats": "^9.4.2",
+    "snarkjs": "0.7.5",
+    "libsodium-wrappers": "^0.8.2",
+    "lodash": "^4.17.21",
+    "tweetnacl": "^1.0.3",
+    "process": "0.11.10",
+    "ua-parser-js": "^1.0.37",
+    "uuid": "^9.0.1",
+    "node-forge": "^1.3.1",
+    "tronweb": "^6.2.0",
+    "react-native-webview": "^13.0.0",
+    "react-native-get-random-values": "^1.11.0",
+    "@react-native-async-storage/async-storage": "^2.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-native": ">=0.74.0",
+    "wagmi": "2.13.3",
+    "@walletconnect/utils": "^2.17.2"
+  },
+  "peerDependenciesMeta": {
+    "wagmi": {
+      "optional": true
+    },
+    "@walletconnect/utils": {
+      "optional": true
+    }
+  }
+}

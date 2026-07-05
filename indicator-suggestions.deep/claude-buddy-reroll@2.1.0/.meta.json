@@ -1,0 +1,205 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "330d00c81705db56",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install-hook.mjs",
+      "scripts/postinstall.mjs",
+      "src/bun-runtime.mjs",
+      "src/context.mjs",
+      "src/engine.mjs",
+      "src/patcher.mjs",
+      "src/shell-runtime.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "981d2606e0e08866be28173748c8623fb48b51915996afd8bd750fb23126b876",
+        "sizeBytes": 637,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/install-hook.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/install-hook.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "5490857f45ecedfa6730e3b43590705b50d6e30d87277225fd201a42aa672ef5",
+        "sizeBytes": 4802,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "makes-executable",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/context.mjs",
+          "src/bun-runtime.mjs",
+          "src/shell-runtime.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://bun.sh/install",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://bun.sh/docs/installation",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "src/context.mjs",
+        "reason": "required by ./scripts/install-hook.mjs",
+        "sha256": "7862e919dd42dce4c94bdfb092df40e9b82a30bfb674cc5f57275254cbb5fd1b",
+        "sizeBytes": 2789,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/patcher.mjs",
+          "src/engine.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/patcher.mjs",
+        "reason": "required by ./src/context.mjs",
+        "sha256": "4372257188f22b8e0ce7a5d1fcb89acb32ac7a9770053a9ace9573f6b32a3b88",
+        "sizeBytes": 9317,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/engine.mjs",
+          "src/shell-runtime.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/engine.mjs",
+        "reason": "required by ./src/patcher.mjs; required by ./src/context.mjs",
+        "sha256": "137c4d2d40acf2a802facfb5e49b4ee04926abb58b85c475ef1d140e7b798c84",
+        "sizeBytes": 6508,
+        "signals": [
+          "uses-child-process",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/bun-runtime.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/bun-runtime.mjs",
+        "reason": "required by ./src/engine.mjs; required by ./scripts/install-hook.mjs",
+        "sha256": "3cb08fe3fce3ac8a8da482879487fabac13fcd34bf30d787c9454a1f9e2ecfff",
+        "sizeBytes": 1426,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/shell-runtime.mjs",
+        "reason": "required by ./src/patcher.mjs; required by ./scripts/install-hook.mjs",
+        "sha256": "ff87dca4d10836527fcbdfbd05d12d073c8902ee534ea74ddb2f243978d9409e",
+        "sizeBytes": 1273,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:43:55.157Z"
+  },
+  "hash": "sha256:cd35e14847c828591c71a0dcc9b17a3a406bfcc3f02fc5ee99abe8e8ed19687e"
+}

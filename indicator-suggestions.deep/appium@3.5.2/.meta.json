@@ -1,0 +1,366 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a8df8f5e5caf030f",
+    "fetchedFiles": [
+      "build/lib/cli/driver-command.js",
+      "build/lib/cli/extension-command.js",
+      "build/lib/cli/extension.js",
+      "build/lib/cli/plugin-command.js",
+      "build/lib/cli/utils.js",
+      "build/lib/constants.js",
+      "build/lib/doctor/doctor.js",
+      "build/lib/extension/extension-config.js",
+      "build/lib/helpers/build.js",
+      "build/lib/logger.js",
+      "build/lib/schema/arg-spec.js",
+      "build/lib/schema/cli-args-guards.js",
+      "build/lib/schema/cli-transformers.js",
+      "build/lib/schema/keywords.js",
+      "build/lib/schema/schema.js",
+      "package.json",
+      "scripts/autoinstall-extensions.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "@appium/support",
+        "versionSpec": "7.2.5"
+      },
+      {
+        "name": "ora",
+        "versionSpec": "5.4.1"
+      },
+      {
+        "name": "axios",
+        "versionSpec": "1.18.0"
+      },
+      {
+        "name": "teen_process",
+        "versionSpec": "4.1.3"
+      },
+      {
+        "name": "argparse",
+        "versionSpec": "2.0.1"
+      },
+      {
+        "name": "ajv",
+        "versionSpec": "8.20.0"
+      },
+      {
+        "name": "ajv-formats",
+        "versionSpec": "3.0.1"
+      },
+      {
+        "name": "@appium/schema",
+        "versionSpec": "1.2.1"
+      },
+      {
+        "name": "semver",
+        "versionSpec": "7.8.4"
+      },
+      {
+        "name": "asyncbox",
+        "versionSpec": "6.3.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@appium/schema@1.2.1",
+      "@appium/support@7.2.5",
+      "ajv-formats@3.0.1",
+      "ajv@8.20.0",
+      "argparse@2.0.1",
+      "asyncbox@6.3.0",
+      "axios@1.18.0",
+      "ora@5.4.1",
+      "semver@7.8.4",
+      "teen_process@4.1.3"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/autoinstall-extensions.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "d19bc60bd5464ae8997a21874a1b49a39ab6d827ff86176a06dc868f3345d175",
+        "sizeBytes": 7365,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/cli/extension.js",
+          "build/lib/constants.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/cli/extension.js",
+        "reason": "required by ./scripts/autoinstall-extensions.js; required by ./build/lib/extension/extension-config.js",
+        "sha256": "56fac1c2512c898c3cdea918c797ba0c3bda7bf555bad69362852b7b3d5d9b0c",
+        "sizeBytes": 2264,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/constants.js",
+          "build/lib/schema/cli-args-guards.js",
+          "build/lib/cli/driver-command.js",
+          "build/lib/cli/plugin-command.js",
+          "build/lib/cli/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/constants.js",
+        "reason": "required by ./build/lib/cli/extension.js; required by ./build/lib/schema/cli-args-guards.js; required by ./build/lib/schema/schema.js; required by ./build/lib/cli/driver-command.js; required by ./build/lib/cli/plugin-command.js; required by ./scripts/autoinstall-extensions.js",
+        "sha256": "ac20eb7f8097e4604d0564cc4335a6f0b47813ce605eb7b992d1b368d9dfda97",
+        "sizeBytes": 4549,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/lib/schema/cli-args-guards.js",
+        "reason": "required by ./build/lib/cli/extension.js",
+        "sha256": "05e3cbeb22d6155b07d5db1b8d3bc52e1fda2b27071801bb56c3e45b90aead63",
+        "sizeBytes": 1703,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/constants.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/cli/driver-command.js",
+        "reason": "required by ./build/lib/cli/extension.js",
+        "sha256": "1f9bfb03ab30054a133d8160729a922f3d7fc44ae534e37e8f06658d780dbecf",
+        "sizeBytes": 3621,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/cli/extension-command.js",
+          "build/lib/constants.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/cli/extension-command.js",
+        "reason": "required by ./build/lib/cli/driver-command.js; required by ./build/lib/cli/plugin-command.js",
+        "sha256": "97c7297ce4a72d5eeecbad7cdd54a9d3789df8cbdac50db05a6c0630a4e32759",
+        "sizeBytes": 45079,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/cli/utils.js",
+          "build/lib/extension/extension-config.js",
+          "build/lib/doctor/doctor.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/cli/utils.js",
+        "reason": "required by ./build/lib/cli/extension-command.js; required by ./build/lib/cli/extension.js",
+        "sha256": "a0d7337181a864ecef6960bb00b8c0add666915cb1e62c2240182ca49fa0818f",
+        "sizeBytes": 2507,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/lib/extension/extension-config.js",
+        "reason": "required by ./build/lib/cli/extension-command.js",
+        "sha256": "0301d1a4d9a2211a04e1f2ad7e99fd13bfba84fecf1bfe53885d099aca5620c7",
+        "sizeBytes": 22165,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "dynamic-require",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/cli/extension.js",
+          "build/lib/helpers/build.js",
+          "build/lib/logger.js",
+          "build/lib/schema/schema.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/helpers/build.js",
+        "reason": "required by ./build/lib/extension/extension-config.js",
+        "sha256": "09f2211c31f4cba7fdeba9bf4f0b2876b615b40129a7d7d963229f7bd06fbbbc",
+        "sizeBytes": 3557,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/appium/appium",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "build/lib/logger.js",
+        "reason": "required by ./build/lib/extension/extension-config.js",
+        "sha256": "7e3d5c05e7b7280ad6faa78bf7351a57987ee231d3865070e24dcc3b3685983e",
+        "sizeBytes": 375,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/lib/schema/schema.js",
+        "reason": "required by ./build/lib/extension/extension-config.js",
+        "sha256": "1cf72650b50f115c9940359f04d831352b1418f7d7b7f311c7195033b2655038",
+        "sizeBytes": 15349,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/constants.js",
+          "build/lib/schema/arg-spec.js",
+          "build/lib/schema/keywords.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/schema/arg-spec.js",
+        "reason": "required by ./build/lib/schema/schema.js",
+        "sha256": "b77a256ef592a71a79961cdbc490ab160d4a5e702391fef6958e5f3086387cdf",
+        "sizeBytes": 3856,
+        "signals": [
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/lib/schema/keywords.js",
+        "reason": "required by ./build/lib/schema/schema.js",
+        "sha256": "593e3f07a76f1510adaad4b33de7b3ab37b4ad666026673630d3f6bb58410b24",
+        "sizeBytes": 2845,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/schema/cli-transformers.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/schema/cli-transformers.js",
+        "reason": "required by ./build/lib/schema/keywords.js",
+        "sha256": "1395c8fb5859d99d4f1bcbfd60958733d46f47b2bd53ab342fe40118d71a9e8b",
+        "sizeBytes": 3033,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/lib/doctor/doctor.js",
+        "reason": "required by ./build/lib/cli/extension-command.js",
+        "sha256": "c9e0a0e0382dffb98b8c15cbe58231a8398fdc91e07ae08dd97816fdb937883e",
+        "sizeBytes": 6661,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build/lib/cli/plugin-command.js",
+        "reason": "required by ./build/lib/cli/extension.js",
+        "sha256": "492409f4c7fc988ebd9a94ae5dc24a142400bea079369e71298016cebcab4de5",
+        "sizeBytes": 3374,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/cli/extension-command.js",
+          "build/lib/constants.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:20.766Z"
+  },
+  "hash": "sha256:2e238daf53eb8c3dd0ed3470bf38a617fbf21ab0035e5af3fdacb9234de3093f"
+}

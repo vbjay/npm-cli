@@ -1,0 +1,175 @@
+{
+  "name": "xpm",
+  "version": "0.23.2",
+  "description": "The xPack project manager command line tool",
+  "type": "module",
+  "exports": {
+    "import": "./index.mjs"
+  },
+  "directories": {
+    "bin": "./bin",
+    "src": "./src"
+  },
+  "bin": {
+    "xpm": "bin/xpm.js",
+    "xpm-dev": "bin/xpm-dev.js"
+  },
+  "scripts": {
+    "generate-top-commons": "bash node_modules/@xpack/npm-packages-helper/maintenance-scripts/generate-top-commons.sh --xpack",
+    "compile-watch": "tsc --build --verbose --watch src",
+    "prettier": "prettier src tests --write --config config/.prettierrc.json --ignore-path config/.prettierignore",
+    "fix": "standard --fix src tests",
+    "compile": "echo tsc --build --verbose src",
+    "fix-compile": "npm run prettier && npm run fix && npm run compile",
+    "dev-cycle": "npm run fix && npm run test",
+    "npm-install": "npm install",
+    "npm-link-deps": "npm link @ilg/cli-start-options @xpack/xpm-lib",
+    "npm-link-lib": "npm link @xpack/xpm-lib",
+    "npm-link-helpers": "npm link @xpack/npm-packages-helper @xpack/docusaurus-template-liquid",
+    "npm-outdated": "npm outdated",
+    "npm-update": "npm update",
+    "npm-version-patch": "npm version patch",
+    "npm-version-minor": "npm version minor",
+    "npm-pack": "npm pack",
+    "npm-link": "npm link",
+    "postversion": "git push origin --all && git push origin --tags",
+    "git-log": "git log --pretty='%cd * %h %s' --date=short",
+    "lint": "echo standard src",
+    "prepare": "npm run lint",
+    "pretest": "npm run compile && npm run lint",
+    "test-ci": "tap run --reporter=terse --disable-coverage",
+    "test": "echo 'No tests defined'",
+    "test-coverage": "tap --show-full-coverage",
+    "test-all": "tap run --reporter=tap --disable-coverage",
+    "test-one-010": "tap run --reporter=tap --disable-coverage tests/tap/010-*.ts",
+    "test-one-020": "tap run --reporter=tap --disable-coverage tests/tap/020-*.ts",
+    "test-one-030": "tap run --reporter=tap --disable-coverage tests/tap/030-*.ts",
+    "test-one-040": "tap run --reporter=tap --disable-coverage tests/tap/040-*.ts",
+    "test-one-050": "tap run --reporter=tap --disable-coverage tests/tap/050-*.ts",
+    "test-one-060": "tap run --reporter=tap --disable-coverage tests/tap/060-*.ts",
+    "test-tap-config-list": "tap config list",
+    "prepublishOnly": "npm run lint && npm run test",
+    "postpublish": "git push origin --follow-tags",
+    "dumpconf": "env | sort | uniq",
+    "show-versions": "echo $(which node) $(node --version) && echo $(which npm) $(npm --version)",
+    "clean": "del-cli --force dist build .tap",
+    "deep-clean": "npm run clean && del-cli --force node_modules package-lock.json",
+    "pretest-coverage": "npm run lint",
+    "pretest-no-coverage": "npm run lint",
+    "test-no-coverage": "tap --disable-coverage",
+    "tap": "tap --reporter=tap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xpack/xpm-js.git"
+  },
+  "keywords": [
+    "xpack",
+    "xpm",
+    "project",
+    "manager",
+    "cli",
+    "npm"
+  ],
+  "author": {
+    "name": "Liviu Ionescu",
+    "email": "ilg@livius.net",
+    "url": "https://github.com/ilg-ul"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xpack/xpm-js/issues"
+  },
+  "homepage": "https://xpack.github.io/xpm/",
+  "homepagePreview": "https://xpack.github.io/xpm-js/",
+  "dependencies": {
+    "@ilg/cli-start-options": "^0.9.0",
+    "@npmcli/arborist": "^9.4.0",
+    "@xpack/cmd-shim": "^4.1.0-2",
+    "@xpack/logger": "^6.0.0",
+    "@xpack/xpm-lib": "^5.0.0",
+    "cacache": "^20.0.0",
+    "copy-file": "^11.1.0",
+    "cross-spawn": "^7.0.6",
+    "decompress": "^4.2.1",
+    "del": "^8.0.1",
+    "https-proxy-agent": "^7.0.6",
+    "liquidjs": "^10.25.0",
+    "make-dir": "^5.1.0",
+    "node-fetch": "^3.3.2",
+    "pacote": "^21.5.0",
+    "parse-git-config": "^3.0.0",
+    "proxy-from-env": "^2.0.0",
+    "semver": "^7.7.4",
+    "tar": "^7.5.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "json": "^11.0.0",
+    "prettier": "^3.8.1",
+    "standard": "^17.1.2",
+    "tap": "^21.5.1",
+    "typescript-eslint": "^8.57.0",
+    "liquidjs": "^10.24.0"
+  },
+  "bundleDependencies": [
+    "@npmcli/arborist",
+    "pacote",
+    "cacache",
+    "decompress",
+    "https-proxy-agent",
+    "proxy-from-env",
+    "node-fetch",
+    "@ilg/cli-start-options",
+    "@xpack/cmd-shim",
+    "@xpack/logger",
+    "@xpack/xpm-lib",
+    "copy-file",
+    "cross-spawn",
+    "del",
+    "liquidjs",
+    "make-dir",
+    "parse-git-config",
+    "semver",
+    "tar"
+  ],
+  "standard": {
+    "ignore": [
+      "/website/"
+    ]
+  },
+  "ts-standard": {
+    "ignore": [
+      "**/*.d.ts",
+      "**/*.js"
+    ]
+  },
+  "topConfig": {
+    "descriptiveName": "xPack Project Manager",
+    "githubActionsNodeVersions": [
+      "20",
+      "22",
+      "24"
+    ],
+    "githubActionsOses": [
+      "ubuntu-24.04",
+      "ubuntu-24.04-arm",
+      "macos-15-intel",
+      "macos-15",
+      "windows-2025"
+    ],
+    "permalinkName": "xpm",
+    "preferShortName": "true",
+    "hasTriggerPublish": "true",
+    "hasCli": "true",
+    "isWebPreview": "true",
+    "testCoverage": "false"
+  },
+  "engines": {
+    "node": ">=20.0"
+  }
+}

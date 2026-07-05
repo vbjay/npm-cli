@@ -1,0 +1,45 @@
+{
+  "type": "module",
+  "name": "@hazae41/secp256k1-wasm",
+  "version": "2.0.9",
+  "description": "WebAssembly port of Secp256k1",
+  "repository": "github:hazae41/secp256k1.wasm",
+  "author": "hazae41",
+  "scripts": {
+    "compile": "deno run -A ./run/compile.ts",
+    "examine": "deno lint ./src/node && deno check ./src/node && deno test ./src/node",
+    "prepack": "rm -rf ./out && tsc && tscousin && deno run -RW ./run/prepack.ts"
+  },
+  "files": [
+    "./out"
+  ],
+  "exports": {
+    ".": {
+      "types": "./out/node/mod.d.ts",
+      "import": "./out/node/mod.js"
+    }
+  },
+  "keywords": [
+    "reproducible",
+    "webassembly",
+    "memory",
+    "bytes",
+    "reference",
+    "box",
+    "browser",
+    "typescript",
+    "rust",
+    "unit-tested",
+    "deno"
+  ],
+  "devDependencies": {
+    "@hazae41/phobos": "^2.0.16",
+    "@hazae41/tscousin": "^1.0.28",
+    "@types/node": "^25.9.1",
+    "deno": "^2.8.1",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "@hazae41/memory-wasm": "^2.0.14"
+  }
+}

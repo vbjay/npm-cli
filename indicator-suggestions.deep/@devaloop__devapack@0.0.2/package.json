@@ -1,0 +1,53 @@
+{
+  "name": "@devaloop/devapack",
+  "private": false,
+  "version": "0.0.2",
+  "description": "Addon generator and packager for Devalang",
+  "main": "out-tsc/index.js",
+  "bin": {
+    "devapack": "./out-tsc/bin/index.js"
+  },
+  "scripts": {
+    "rust:fmt": "cargo fmt",
+    "scripts:version:bump": "tsc && node out-tsc/scripts/version/index.js",
+    "scripts:copy-version": "tsc && node out-tsc/scripts/version/copy-to-binary.js --out-dir ./out-tsc/bin",
+    "prepublish": "npm run scripts:copy-version",
+    "postinstall": "node out-tsc/scripts/postinstall.js"
+  },
+  "homepage": "https://devalang.com",
+  "keywords": [
+    "devalang",
+    "music",
+    "sound",
+    "domain-specific language",
+    "dsl",
+    "programming language",
+    "sound design",
+    "music hacking",
+    "audio",
+    "synthesis",
+    "scripting",
+    "sound synthesis",
+    "music programming",
+    "addon",
+    "packaging",
+    "bundler",
+    "devapack",
+    "rust",
+    "generator"
+  ],
+  "author": "Labscend Studios",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devaloop-labs/devapack.git"
+  },
+  "dependencies": {
+    "@types/follow-redirects": "^1.14.4",
+    "@types/node": "^24.0.3",
+    "follow-redirects": "^1.15.11"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "name": "react-native-otp-auto-verify",
+  "version": "0.2.2",
+  "description": "react-native-otp-auto-verify is a React Native library for automatic OTP verification on Android and iOS. It uses the Google SMS Retriever API to detect OTP codes automatically without requiring the READ_SMS permission. The library is fully Play Store compliant, improves user login experience, supports TurboModule, and works with the React Native New Architecture",
+  "keywords": [
+    "react-native",
+    "react-native-library",
+    "react-native-otp",
+    "react-native-otp-auto-verify",
+    "react-native-sms",
+    "otp",
+    "otp-verification",
+    "otp-auto-verify",
+    "otp-auto-read",
+    "sms",
+    "sms-retriever",
+    "google-sms-retriever",
+    "android-otp",
+    "ios-otp",
+    "otp-without-permission",
+    "play-store-compliant",
+    "react-native-new-architecture",
+    "turbo-module"
+  ],
+  "homepage": "https://github.com/kailas-rathod/react-native-otp-auto-verify?tab=readme-ov-file",
+  "bugs": {
+    "url": "https://github.com/kailas-rathod/react-native-otp-auto-verify/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kailas-rathod/react-native-otp-auto-verify.git"
+  },
+  "license": "MIT",
+  "author": "Kailas Rathod (https://github.com/kailas-rathod)",
+  "type": "commonjs",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest",
+    "check": "yarn typecheck && yarn lint && yarn test",
+    "release": "release-it --only-version"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.28.0",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/eslintrc": "^3.3.4",
+    "@eslint/js": "9.35.0",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@react-native-community/eslint-plugin": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "@react-native/babel-preset": "0.83.3",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.2.0",
+    "commitlint": "^19.8.1",
+    "eslint": "9.35.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-ft-flow": "^2.0.1",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "jest": "^30.3.0",
+    "prettier": "^3.4.2",
+    "react": "19.2.5",
+    "react-native": "0.83.3",
+    "react-native-builder-bob": "0.39.1",
+    "release-it": "^19.0.4",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "OtpAutoVerifySpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.otpautoverify"
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  }
+}

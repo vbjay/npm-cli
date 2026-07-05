@@ -1,0 +1,79 @@
+{
+  "name": "storybook-multilevel-sort",
+  "version": "2.1.0",
+  "description": "Applies specific sort order to more than two levels of chapters and stories in a storybook.",
+  "author": "Ferdinand Prantl <prantlf@gmail.com>",
+  "contributors": [
+    "Alessandro Rabitti <alessandro.rabitti@externals.adidas.com>",
+    "Cesar Costas <gatsbimantico@gmail.com>"
+  ],
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/prantlf/storybook-multilevel-sort/blob/master/LICENSE"
+    }
+  ],
+  "homepage": "https://github.com/prantlf/storybook-multilevel-sort#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prantlf/storybook-multilevel-sort.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prantlf/storybook-multilevel-sort/issues"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "lib"
+  ],
+  "type": "module",
+  "types": "lib/index.d.ts",
+  "main": "lib/index.cjs",
+  "module": "lib/index.js",
+  "exports": {
+    "types": "./lib/index.d.ts",
+    "require": "./lib/index.cjs",
+    "import": "./lib/index.js"
+  },
+  "scripts": {
+    "prepare": "rollup -c",
+    "lint": "biome lint *.js lib test && tsc --noEmit test/types.ts",
+    "fix": "biome lint --write *.js lib test",
+    "check": "teru-esm test/index.js && teru-cjs test/index.cjs",
+    "cover": "c8 teru-esm test/index.js",
+    "test": "biome lint *.js lib test && tsc --noEmit test/types.ts && teru-cjs test/index.cjs && c8 teru-esm test/index.js"
+  },
+  "storybook": {
+    "displayName": "Multi-level Sorting of Stories",
+    "icon": "https://raw.github.com/prantlf/storybook-multilevel-sort/master/docs/sort-128.png"
+  },
+  "c8": {
+    "100": true,
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.2",
+    "c8": "^10.1.3",
+    "rollup": "^4.52.5",
+    "storybook-multilevel-sort": "link:",
+    "tehanu": "^1.0.1",
+    "tehanu-repo-coco": "^1.0.1",
+    "tehanu-teru": "^1.0.1",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "storybook-addons",
+    "storybook-addon",
+    "storybookjs",
+    "storybook",
+    "addons",
+    "addon",
+    "sort",
+    "multilevel"
+  ]
+}

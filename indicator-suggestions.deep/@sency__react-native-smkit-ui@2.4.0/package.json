@@ -1,0 +1,98 @@
+{
+  "name": "@sency/react-native-smkit-ui",
+  "version": "2.4.0",
+  "description": "React Native library for SMKit UI - Advanced fitness assessments and workout programs with AI-powered motion detection and real-time performance tracking",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "react-native-smkit-ui.podspec",
+    "!android/.gradle",
+    "!android/build",
+    "!android/build/**",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "clean": "rm -rf lib/",
+    "prepare": "bob build",
+    "publish-package": "./scripts/publish.sh",
+    "test-package": "npm pack && echo 'Test package created. Install in example app to test.'",
+    "version-check": "echo \"Package: $(cat package.json | grep '\"version\"' | cut -d'\"' -f4)\" && echo \"Podspec: reads from package.json\" && echo \"Android: $(grep 'smkitui:' android/build.gradle | head -1)\""
+  },
+  "keywords": [
+    "react-native",
+    "fitness",
+    "assessment",
+    "workout",
+    "motion-detection",
+    "ai",
+    "computer-vision",
+    "health",
+    "exercise-tracking",
+    "body-tracking",
+    "pose-estimation",
+    "smkit",
+    "sency",
+    "exercise",
+    "sports-tech",
+    "fitness-app",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sency-ai/smkit-ui-react-native-demo.git"
+  },
+  "author": {
+    "name": "Sency AI",
+    "email": "support@sency.ai",
+    "url": "https://sency.ai"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sency-ai/smkit-ui-react-native-demo/issues"
+  },
+  "homepage": "https://github.com/sency-ai/smkit-ui-react-native-demo#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "react": "^18.3.1",
+    "react-native": "^0.76.9",
+    "react-native-builder-bob": "^0.20.0",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "packageManager": "yarn@3.6.1",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

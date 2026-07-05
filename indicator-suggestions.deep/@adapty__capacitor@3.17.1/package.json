@@ -1,0 +1,123 @@
+{
+  "name": "@adapty/capacitor",
+  "version": "3.17.1",
+  "description": "Official Adapty SDK for Capacitor",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "ios/Sources",
+    "ios/Tests",
+    "Package.swift",
+    "AdaptyCapacitor.podspec"
+  ],
+  "author": "Adapty team <support@adapty.io>",
+  "license": "MIT",
+  "homepage": "https://adapty.io/docs/capacitor-sdk-overview",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adaptyteam/AdaptySDK-Capacitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adaptyteam/AdaptySDK-Capacitor/issues"
+  },
+  "keywords": [
+    "capacitor",
+    "adapty",
+    "plugin",
+    "purchases",
+    "in-apps",
+    "subscriptions",
+    "native"
+  ],
+  "scripts": {
+    "verify": "yarn verify:ios && yarn verify:android && yarn verify:web",
+    "verify:ios": "xcodebuild -scheme AdaptyCapacitor -destination generic/platform=iOS",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "yarn build",
+    "lint": "yarn eslint && yarn prettier -- --check",
+    "format": "yarn eslint -- --fix && yarn prettier && yarn swiftlint -- --fix --format",
+    "eslint": "eslint . --ext ts",
+    "prettier-check": "prettier \"**/*.{css,html,ts,js,tsx}\" --check",
+    "prettier": "prettier \"**/*.{css,html,ts,js,tsx}\" --write",
+    "swiftlint": "node-swiftlint ios/Sources",
+    "doc-gen": "typedoc --tsconfig tsconfig.typedoc.json",
+    "deploy-docs": "netlify deploy --dir=docs --prod",
+    "build": "yarn clean && yarn update-versions && tsc && rollup -c rollup.config.mjs",
+    "clean": "rimraf ./dist",
+    "tsc": "tsc --noEmit && tsc --noEmit -p tsconfig.spec.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:jest-coverage": "jest --coverage",
+    "test:coverage": "node ./scripts/check-bridge-api-test-coverage.js",
+    "update-versions": "node ./scripts/update_versions.cjs",
+    "prepublishOnly": "yarn install --force && yarn update-versions && yarn prettier-check && yarn lint && yarn tsc && yarn test && yarn doc-gen && yarn build",
+    "dev-sync-all-files": "./scripts/sync-plugin-files.sh",
+    "dev-example-js": "yarn build && yarn dev-sync-all-files && cd ./examples/adapty-devtools && yarn build && yarn cap copy",
+    "dev-example": "yarn build && yarn dev-sync-all-files && cd ./examples/adapty-devtools && yarn build && yarn cap sync --deployment",
+    "dev-example-full": "yarn build && cd ./examples/adapty-devtools && yarn --force &&  yarn build && yarn cap sync",
+    "patch-adaptyui-webview": "git apply --directory=examples/adapty-devtools/ios/App/Pods/AdaptyUI patches/adaptyui-inspectable-webview.patch",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/docgen": "^0.3.1",
+    "@capacitor/ios": "^8.0.0",
+    "@ionic/eslint-config": "^0.4.0",
+    "@ionic/prettier-config": "^4.0.0",
+    "@ionic/swiftlint-config": "^2.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@types/jest": "30.0.0",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.7",
+    "jest": "30.0.3",
+    "lint-staged": "^15.2.11",
+    "netlify-cli": "23.15.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-java": "^2.7.7",
+    "prompt-sync": "^4.2.0",
+    "rimraf": "^6.1.0",
+    "rollup": "^4.53.2",
+    "swiftlint": "^2.0.0",
+    "ts-jest": "29.4.0",
+    "typedoc": "^0.28.13",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=8.0.0"
+  },
+  "dependencies": {
+    "@adapty/core": "3.17.2",
+    "tslib": "^2.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,html}": [
+      "prettier --write"
+    ],
+    "*.swift": [
+      "node-swiftlint --fix --format"
+    ]
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  }
+}

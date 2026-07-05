@@ -1,0 +1,61 @@
+{
+  "name": "@warmhub/cli",
+  "version": "0.69.0",
+  "private": false,
+  "type": "module",
+  "description": "The wh CLI for WarmHub — create repos, commit and query data, and compound knowledge with your AI agents.",
+  "keywords": [
+    "warmhub",
+    "wh",
+    "cli",
+    "ai",
+    "agents",
+    "agent",
+    "mcp",
+    "knowledge",
+    "knowledge-graph",
+    "assertions",
+    "trust"
+  ],
+  "author": {
+    "name": "WarmHub",
+    "url": "https://warmhub.ai"
+  },
+  "homepage": "https://docs.warmhub.ai/get-started/quickstart/#connect-via-cli",
+  "bugs": {
+    "email": "support@warmhub.ai"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "wh": "./dist/wh.js"
+  },
+  "files": [
+    "dist/wh.js",
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "bun run scripts/build.ts",
+    "prepack": "bun run build",
+    "check:boundary": "node ../../scripts/lint/boundary-imports.mjs bin src scripts",
+    "audit:bundle": "bun run scripts/audit-bundle.ts",
+    "audit:pack": "bun run scripts/audit-pack.ts",
+    "audit:cleanroom": "bun run scripts/audit-cleanroom.ts",
+    "audit:content": "bun run scripts/audit-content.ts",
+    "verify:publish": "bun run build && bun run audit:bundle && bun run audit:pack && bun run audit:content && bun run audit:cleanroom",
+    "test": "bun run scripts/test.ts",
+    "test:watch": "vitest",
+    "typecheck": "bun run check:boundary && tsc --noEmit"
+  },
+  "devDependencies": {
+    "@warmhub/warmhub-cli": "workspace:*",
+    "typescript": "catalog:",
+    "undici": "6.27.0",
+    "vitest": "catalog:"
+  }
+}

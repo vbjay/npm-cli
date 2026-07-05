@@ -1,0 +1,175 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a652b0a7b18388b9",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/framework-source.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "edaa0b4bf6393b889511f336b9834953860ff10c604c5c9b92243c44e0c8d18a",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "'arm64-v8a'"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android",
+              "com.facebook.fbjni:fbjni:0.6.0",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3",
+              "com.google.ai.edge.litertlm:litertlm-android:${litertLmVersion}"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@dr33m__react-native-litert-lm@0.5.5\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b3ba3830b08586b9e6b9787072b7b352d03bea6aa80fa773d20bac38d2f97b6f",
+        "sizeBytes": 4790,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/framework-source.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/framework-source.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "e2f99e4d7a33e9a2f070e4154a34835a9034463a4309b41b408ee11eff14585a",
+        "sizeBytes": 1970,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/framework-source.js",
+        "sha256": "87ec5f78633cd03985963cbc1d30ea845b81a027d840e3f6fc6aeedac3fd72a2",
+        "sizeBytes": 3024,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:59.124Z"
+  },
+  "hash": "sha256:493c7a2ae2457857de30c1058de62a1886680eea97a0498d4bc2d59ffae9ef96"
+}

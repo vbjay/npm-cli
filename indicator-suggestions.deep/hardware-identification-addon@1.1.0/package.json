@@ -1,0 +1,76 @@
+{
+  "name": "hardware-identification-addon",
+  "version": "1.1.0",
+  "description": "A Node.js C++ addon for retrieving hardware identification on Windows platform",
+  "main": "index.js",
+  "module": "index.mjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "types": "index.d.ts",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build",
+    "clean": "node-gyp clean",
+    "configure": "node-gyp configure",
+    "test": "node test.js",
+    "test:esm": "node -e \"import('./index.mjs').then(m => { if(m.initialize()) { console.log('✓ ES imports work!', m.getCpuId() || 'CPU ID not available'); m.cleanup(); } })\"",
+    "example:basic": "node examples/basic-usage.js",
+    "example:system": "node examples/system-info.js",
+    "example:security": "node examples/security-check.js",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm test && npm run test:esm"
+  },
+  "keywords": [
+    "hardware",
+    "identification",
+    "windows",
+    "native",
+    "addon",
+    "c++",
+    "cpu-id",
+    "motherboard",
+    "bios",
+    "disk-serial",
+    "mac-address",
+    "fingerprint",
+    "security",
+    "wmi",
+    "system-info"
+  ],
+  "author": "Jeperson Noda",
+  "license": "MIT",
+  "homepage": "https://github.com/jepnoda/hardware-identification-addon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jepnoda/hardware-identification-addon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jepnoda/hardware-identification-addon/issues"
+  },
+  "gypfile": true,
+  "os": ["win32"],
+  "cpu": ["x64", "ia32"],
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "src/",
+    "examples/",
+    "binding.gyp",
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "README.md"
+  ]
+}

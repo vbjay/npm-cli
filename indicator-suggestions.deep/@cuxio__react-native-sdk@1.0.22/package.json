@@ -1,0 +1,109 @@
+{
+  "name": "@cuxio/react-native-sdk",
+  "version": "1.0.22",
+  "description": "The official CUX SDK for React Native applications (native wrapper)",
+  "license": "MIT",
+  "author": "cux.io",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "react-native": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "android",
+    "ios",
+    "src/NativeCuxModule.ts",
+    "react-native.config.js",
+    "CuxReactNativeSDK.podspec",
+    "README.md",
+    "doc/README.md",
+    "doc/QUICKSTART.md",
+    "doc/API_REFERENCE.md",
+    "doc/MIGRATION_GUIDE_v1.md",
+    "doc/NAVIGATION.md",
+    "doc/COMPONENTS.md",
+    "doc/CHECKLIST.md",
+    "doc/COMPATIBILITY.md",
+    "doc/SCREENSHOTS.md",
+    "doc/GESTURES.md",
+    "doc/SCROLL_TRACKING.md",
+    "doc/IDENTITY_MANAGER.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --config jest.config.js",
+    "test:watch": "jest --config jest.config.js --watch",
+    "test:coverage": "jest --config jest.config.js --coverage",
+    "prepack": "npm run clean && npm run build",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "analytics",
+    "tracking",
+    "cux",
+    "native"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cuxio/react-native-sdk.git"
+  },
+  "homepage": "https://cux.io",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.64.0",
+    "react-native-webview": ">=11.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-webview": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-typescript": "^7.28.5",
+    "@react-native/babel-preset": "^0.85.2",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^30.0.0",
+    "@types/react": ">=16.8.0",
+    "@types/react-native": "^0.72.0",
+    "babel-jest": "^30.3.0",
+    "jest": "^30.3.0",
+    "jest-environment-node": "^30.3.0",
+    "rimraf": "^5.0.10",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "codegenConfig": {
+    "name": "CuxAnalyticsSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "io.cux.rn"
+    }
+  },
+  "nativeSdkVersion": {
+    "android": "0.0.45",
+    "ios": "1.1.11"
+  }
+}

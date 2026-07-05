@@ -1,0 +1,132 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a4d9c33856df9149",
+    "fetchedFiles": [
+      "npm/getBinary.js",
+      "npm/install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e898406506205bd31e97df5d8a3b7fedf187f17336d4d9cfe6e727216f120f3a",
+        "sizeBytes": 92,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/getBinary.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/getBinary.js",
+        "reason": "required by ./npm/install.js",
+        "sha256": "ccb74dabc317e1c708411cbcf5a4a351556fa4e1e7b0b6f79c40185b9dc878c8",
+        "sizeBytes": 5499,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./npm/getBinary.js",
+        "sha256": "c8277a4d7bb2d27034f9abcf15a805ada64ef941cb570d94f1c1dc4d8edb6ade",
+        "sizeBytes": 581,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:15.313Z"
+  },
+  "hash": "sha256:cfb6784b48c73af59473a5635490aaf3f62a80af553a717ae25b473745fad963"
+}

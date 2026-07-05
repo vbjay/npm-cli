@@ -1,0 +1,67 @@
+{
+  "name": "@ferridriver/node",
+  "version": "0.5.0",
+  "description": "Browser automation with a Playwright-compatible API. Rust engine, NAPI bindings.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "MIT OR Apache-2.0",
+  "author": "Salama Ashoush <salamaashoush@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salamaashoush/ferridriver"
+  },
+  "homepage": "https://github.com/salamaashoush/ferridriver",
+  "bugs": {
+    "url": "https://github.com/salamaashoush/ferridriver/issues"
+  },
+  "keywords": [
+    "napi-rs",
+    "browser",
+    "automation",
+    "playwright",
+    "cdp",
+    "webkit",
+    "rust"
+  ],
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "fd_webkit_host",
+    "postinstall.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "napi": {
+    "binaryName": "ferridriver-node",
+    "targets": [
+      "aarch64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu"
+    ],
+    "packageConfig": {
+      "access": "public"
+    }
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "optionalDependencies": {
+    "@ferridriver/node-darwin-arm64": "0.5.0",
+    "@ferridriver/node-linux-x64-gnu": "0.5.0",
+    "@ferridriver/node-linux-arm64-gnu": "0.5.0"
+  },
+  "scripts": {
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "artifacts": "napi artifacts",
+    "version": "napi version",
+    "postinstall": "node postinstall.js"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.2.0",
+    "@types/ws": "^8.5.10",
+    "playwright": "^1.60.0",
+    "ws": "^8.18.0"
+  }
+}

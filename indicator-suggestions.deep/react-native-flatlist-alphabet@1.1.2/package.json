@@ -1,0 +1,66 @@
+{
+  "name": "react-native-flatlist-alphabet",
+  "version": "1.1.2",
+  "description": "A simple React Native component that takes an array of data and renders a SectionList with alphabetically sorted data.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "test:unit": "jest --config jestconfig.json",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "build": "rm -rf dist && tsc",
+    "build:example": "npm run build && cd example && npm run clean:modules && cd ..",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test:unit && npm run lint",
+    "preversion": "npm run lint",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CofferHub/react-native-flatlist-alphabet.git",
+    "baseUrl": "https://github.com/CofferHub/react-native-flatlist-alphabet"
+  },
+  "keywords": [
+    "react-native",
+    "alphabet",
+    "SectionList",
+    "letters",
+    "address",
+    "addressbook",
+    "FlatList",
+    "typescript",
+    "react-native-components"
+  ],
+  "bugs": {
+    "url": "https://github.com/CofferHub/react-native-flatlist-alphabet/issues"
+  },
+  "author": {
+    "name": "CofferHub",
+    "email": "coffer.hub@gmail.com",
+    "url": "https://github.com/CofferHub"
+  },
+  "homepage": "https://github.com/CofferHub/react-native-flatlist-alphabet/blob/master/README.md",
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/react": "^16.9.32",
+    "@types/react-native": "^0.62.2",
+    "@types/react-test-renderer": "^16.9.2",
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4",
+    "react": "^16.9.0",
+    "react-native": "^0.61.5",
+    "ts-jest": "^25.3.1",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "react-native-section-list-get-item-layout": "^2.2.3"
+  }
+}

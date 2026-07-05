@@ -1,0 +1,130 @@
+{
+  "name": "@ceraph/react-native-mcp",
+  "version": "0.5.0",
+  "description": "MCP server for React Native and Expo development workflow",
+  "author": "Ike Studios LLC",
+  "keywords": [
+    "react-native",
+    "expo",
+    "mobile",
+    "debug",
+    "debugging",
+    "testing",
+    "e2e",
+    "end-to-end",
+    "ui-testing",
+    "automated-testing",
+    "test-automation",
+    "agentic",
+    "agentic-testing",
+    "qa",
+    "quality-assurance",
+    "screenshot",
+    "ios",
+    "ios-simulator",
+    "ios-testing",
+    "ai",
+    "agent",
+    "llm",
+    "mcp",
+    "model-context-protocol",
+    "webdriveragent",
+    "accessibility",
+    "ceraph"
+  ],
+  "homepage": "https://ceraph.dev",
+  "bugs": {
+    "url": "https://github.com/ceraph-dev/community/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceraph-dev/community.git"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "react-native-mcp": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./shim": {
+      "types": "./dist/shim/index.d.ts",
+      "react-native": "./dist/shim/index.js",
+      "import": "./dist/shim/index.js",
+      "default": "./dist/shim/index.js"
+    },
+    "./babel-plugin": {
+      "types": "./dist/babel-plugin/index.d.ts",
+      "import": "./dist/babel-plugin/index.js",
+      "require": "./dist/babel-plugin/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "assets",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "plist": "^3.1.1",
+    "ts-morph": "^25",
+    "zod": "^3.25.0"
+  },
+  "peerDependencies": {
+    "@babel/core": ">=7",
+    "expo-camera": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "@babel/core": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "expo-camera": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.0",
+    "@babel/plugin-syntax-jsx": "^7.25.0",
+    "@babel/preset-typescript": "^7.25.0",
+    "@babel/types": "^7.25.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^22",
+    "@types/plist": "^3.0.5",
+    "javascript-obfuscator": "^5.4.3",
+    "react": "18.3.1",
+    "react-test-renderer": "18.3.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4",
+    "typescript": "^5.7",
+    "vitest": "^3",
+    "@ceraph/graph": "0.1.0",
+    "@ceraph/core": "0.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "FSL-1.1-MIT",
+  "scripts": {
+    "build": "rm -rf dist && tsup && tsc -p tsconfig.shim.json",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.shim.json",
+    "test": "vitest run --passWithNoTests",
+    "check:catalog-key": "tsx scripts/check-catalog-key.ts",
+    "obfuscate": "tsx scripts/obfuscate.ts",
+    "postinstall": "node -e \"try{var e=process.env;if(e.CI||e.CERAPH_SKIP_POSTINSTALL||require('fs').existsSync(process.cwd()+'/../../pnpm-workspace.yaml'))process.exit(0);process.stderr.write('\\n[@ceraph/react-native-mcp] installed. To finish setup run: npx @ceraph/react-native-mcp init\\n  (MCP config, sign-in, the runtime-error hook, and your Mac LAN IP. Build/run/device tools work without it.)\\n\\n')}catch(_){}\""
+  }
+}

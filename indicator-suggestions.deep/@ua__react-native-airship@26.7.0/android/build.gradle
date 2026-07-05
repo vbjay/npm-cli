@@ -1,0 +1,95 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['Airship_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.13.0"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Airship_" + name]).toInteger()
+}
+
+def isHmsEnabled() {
+    return (rootProject.hasProperty("airshipHmsEnabled") && rootProject.getProperty("airshipHmsEnabled") == "true") || (rootProject.ext.has("airshipHmsEnabled") && rootProject.ext.get("airshipHmsEnabled") == "true")
+}
+
+android {
+  namespace "com.urbanairship.reactnative"
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField("String", "AIRSHIP_MODULE_VERSION", "\"${getModuleVersion()}\"")
+    consumerProguardFiles 'proguard-rules.pro'
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  // Note: android/generated/ directory contains pre-generated codegen files
+  // for backwards compatibility with older React Native versions (< 0.72).
+  // For RN 0.72+ with new architecture, codegen generates these automatically
+  // in build/generated/source/codegen/, so we don't include them here.
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def getModuleVersion() {
+  def jsonFile = file('../package.json')
+  def parsedJson = new JsonSlurper().parseText(jsonFile.text)
+
+  return parsedJson["version"]
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+def proxy_version = getExtOrDefault("airshipProxyVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  api "com.urbanairship.android:airship-framework-proxy:$proxy_version"
+
+  if (isHmsEnabled()) {
+    implementation "com.urbanairship.android:airship-framework-proxy-hms:$proxy_version"
+  }
+}

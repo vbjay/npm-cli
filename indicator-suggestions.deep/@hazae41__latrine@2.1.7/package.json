@@ -1,0 +1,62 @@
+{
+  "type": "module",
+  "name": "@hazae41/latrine",
+  "version": "2.1.7",
+  "description": "Secure and private WalletConnect client",
+  "homepage": "https://github.com/hazae41/latrine",
+  "repository": "github:hazae41/latrine",
+  "author": "hazae41",
+  "scripts": {
+    "examine": "deno lint ./src && deno check ./src && deno test ./src",
+    "prepack": "rm -rf ./out && tsc && tscousin"
+  },
+  "files": [
+    "./out"
+  ],
+  "exports": {
+    ".": {
+      "types": "./out/mod.d.ts",
+      "import": "./out/mod.js"
+    }
+  },
+  "devDependencies": {
+    "@hazae41/phobos": "^2.0.16",
+    "@hazae41/tscousin": "^1.0.28",
+    "@types/node": "^25.9.3",
+    "deno": "^2.8.3",
+    "typescript": "^6.0.3"
+  },
+  "keywords": [
+    "walletconnect",
+    "latrine",
+    "wc",
+    "jsonrpc",
+    "rpc",
+    "safe",
+    "ed25519",
+    "x25519",
+    "websocket",
+    "result",
+    "rust",
+    "data",
+    "error",
+    "catching",
+    "ok",
+    "err",
+    "unwrap",
+    "wrap",
+    "typescript",
+    "esmodules",
+    "tested",
+    "unit-tested"
+  ],
+  "dependencies": {
+    "@hazae41/base58": "^2.0.0",
+    "@hazae41/binary": "^2.1.1",
+    "@hazae41/cursor": "^2.2.0",
+    "@hazae41/jsonrpc": "^1.2.0",
+    "@hazae41/plume": "^4.0.1",
+    "@hazae41/result-and-option": "^2.1.1",
+    "@hazae41/chacha20poly1305": "^2.0.10"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d73d9001f28242e3",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "30e3386e7ac9c5d28da82347bd5a0bb7993ff00dd588f2ebc22782f39c5ef302",
+        "sizeBytes": 2893,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "b4bfd02d54f4aaedb05910b7ca32f3a0c1811bb8d1253e9a224927d5565f3da6",
+        "sizeBytes": 949,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:05.926Z"
+  },
+  "hash": "sha256:a766a25bf915cd228526ca7d6592570c0f438b95b791f3b02e923b08bf22a97a"
+}

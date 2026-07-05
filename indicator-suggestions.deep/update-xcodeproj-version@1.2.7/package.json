@@ -1,0 +1,49 @@
+{
+  "name": "update-xcodeproj-version",
+  "version": "1.2.7",
+  "type": "commonjs",
+  "description": "update xcodeproj's marketing & build version",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "release": "release-it",
+    "test": "jest"
+  },
+  "bin": {
+    "update-xcodeproj-ver": "./bin/update-xcodeproj-ver.js"
+  },
+  "keywords": [
+    "xcodeproj",
+    "xcode",
+    "version",
+    "update",
+    "build",
+    "marketing",
+    "versioning"
+  ],
+  "author": "Kwonkunkun",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kwonkunkun/update-xcodeproj-version"
+  },
+  "homepage": "https://github.com/Kwonkunkun/update-xcodeproj-version",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@release-it/conventional-changelog": "^5.1.1",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "release-it": "^15.10.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "commander": "^10.0.0"
+  }
+}

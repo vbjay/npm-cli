@@ -1,0 +1,85 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.1.0'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22'
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+if (isNewArchitectureEnabled()) {
+  apply plugin: 'com.facebook.react'
+}
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace "com.txbody.callLogs"
+  compileSdkVersion safeExtGet('compileSdkVersion', 34)
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 23)
+    targetSdkVersion safeExtGet('targetSdkVersion', 34)
+    versionCode 1
+    versionName "3.0.0"
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ['src/newarch/kotlin']
+      } else {
+        java.srcDirs += ['src/oldarch/kotlin']
+      }
+    }
+  }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android:${safeExtGet('reactNativeVersion', '+')}"
+  implementation "com.google.code.gson:gson:2.10.1"
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "CallLogs"
+    codegenJavaPackageName = "com.txbody.callLogs"
+  }
+}

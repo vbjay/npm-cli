@@ -1,0 +1,115 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "eaa507799650840c",
+    "fetchedFiles": [
+      "index.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6afc5ed9f3359bd2fa2860699f822af3250b30f3e073d55d74b3d0db2d9d246f",
+        "sizeBytes": 5577,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "index.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/pulseengine/timedate-mcp.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/pulseengine/timedate-mcp/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/pulseengine/timedate-mcp/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./install.js",
+        "sha256": "9e4435d66d0dacae3bd75ecf82fb377b417e29e0da0dadecb168b17310c1980f",
+        "sizeBytes": 2743,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "3e7863ce8de15665b48b4c14814180fda3aaec0ef1071d0a37c0e1a0a142c511",
+        "sizeBytes": 1271,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:44.094Z"
+  },
+  "hash": "sha256:11471d76e1e815d9fd30e59dd15aede0ed5d5b8304c1225edf3defb5824f8a96"
+}

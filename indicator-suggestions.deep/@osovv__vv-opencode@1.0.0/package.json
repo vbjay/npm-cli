@@ -1,0 +1,111 @@
+{
+  "name": "@osovv/vv-opencode",
+  "version": "1.0.0",
+  "description": "A curated, opinionated set of OpenCode plugins for spec-first, review-driven, safer agentic development.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "plugins",
+    "workflow",
+    "agent-workflow",
+    "ai-agent",
+    "agent-framework",
+    "llm",
+    "spec-to-code",
+    "bun",
+    "cli",
+    "typescript",
+    "developer-tools",
+    "guardian",
+    "prompt-engineering",
+    "security"
+  ],
+  "bin": {
+    "vvoc": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "schemas",
+    "templates",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./plugins/guardian": {
+      "types": "./dist/plugins/guardian/index.d.ts",
+      "import": "./dist/plugins/guardian/index.js"
+    },
+    "./plugins/hashline-edit": {
+      "types": "./dist/plugins/hashline-edit/index.d.ts",
+      "import": "./dist/plugins/hashline-edit/index.js"
+    },
+    "./plugins/model-roles": {
+      "types": "./dist/plugins/model-roles/index.d.ts",
+      "import": "./dist/plugins/model-roles/index.js"
+    },
+    "./plugins/system-context-injection": {
+      "types": "./dist/plugins/system-context-injection/index.d.ts",
+      "import": "./dist/plugins/system-context-injection/index.js"
+    },
+    "./plugins/workflow": {
+      "types": "./dist/plugins/workflow/index.d.ts",
+      "import": "./dist/plugins/workflow/index.js"
+    },
+    "./plugins/secrets-redaction": {
+      "types": "./dist/plugins/secrets-redaction/index.d.ts",
+      "import": "./dist/plugins/secrets-redaction/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && mkdir -p dist/plugins/workflow && cp src/plugins/workflow/system-instruction.md dist/plugins/workflow/system-instruction.md",
+    "prepublishOnly": "bun run build",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "oxlint --deny warnings src",
+    "fmt": "oxfmt --write src",
+    "fmt:check": "oxfmt --check src",
+    "test": "bun test",
+    "check": "bun run typecheck && bun run lint && bun run fmt:check && bun test",
+    "pack:check": "bun run build && bun -e \"const root = await import('./dist/index.js'); if (!('GuardianPlugin' in root)) throw new Error('dist root export missing GuardianPlugin'); if (!('HashlineEditPlugin' in root)) throw new Error('dist root export missing HashlineEditPlugin'); if (!('ModelRolesPlugin' in root)) throw new Error('dist root export missing ModelRolesPlugin'); if (!('SystemContextInjectionPlugin' in root)) throw new Error('dist root export missing SystemContextInjectionPlugin'); if (!('WorkflowPlugin' in root)) throw new Error('dist root export missing WorkflowPlugin'); if (!('SecretsRedactionPlugin' in root)) throw new Error('dist root export missing SecretsRedactionPlugin'); await import('./dist/plugins/guardian/index.js'); await import('./dist/plugins/hashline-edit/index.js'); await import('./dist/plugins/model-roles/index.js'); await import('./dist/plugins/system-context-injection/index.js'); await import('./dist/plugins/workflow/index.js'); await import('./dist/plugins/secrets-redaction/index.js')\" && npm pack --dry-run",
+    "release:check": "bun scripts/release-check.ts",
+    "release:bump": "bun scripts/release-bump.ts",
+    "prepare": "lefthook install --force"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "@opencode-ai/plugin": "1.3.17",
+    "@opencode-ai/sdk": "1.3.17",
+    "ajv": "^8.17.1",
+    "citty": "0.2.2",
+    "jsonc-parser": "3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.9",
+    "bun-types": "1.3.11",
+    "lefthook": "2.1.5",
+    "oxfmt": "0.43.0",
+    "oxlint": "1.58.0",
+    "typescript": "5.8.2",
+    "conventional-changelog-cli": "^5.0.0",
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0"
+  },
+  "engines": {
+    "bun": ">=1.3.8"
+  },
+  "packageManager": "bun@1.3.8",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osovv/vv-opencode.git"
+  }
+}

@@ -1,0 +1,56 @@
+{
+    "name": "seczure.ts",
+    "version": "1.0.5",
+    "description": "Node.js native integration TypeScript library for sf-api",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "scripts": {
+        "build": "pnpm run build:native && pnpm run build:ts",
+        "build:native": "node-gyp rebuild",
+        "build:ts": "tsc",
+        "clean": "node-gyp clean && rm -rf dist",
+        "install": "node-gyp rebuild",
+        "test": "pnpm run build && node dist/test.js",
+        "prepublishOnly": "pnpm run build",
+        "ls": "tsx src/cli/sf-ls.ts",
+        "tree": "tsx src/cli/sf-tree.ts",
+        "push": "tsx src/cli/sf-push.ts",
+        "pull": "tsx src/cli/sf-pull.ts",
+        "format": "tsx src/cli/sf-format.ts",
+        "cmd": "tsx src/cli/sf-cmd.ts",
+        "rsync": "tsx src/cli/sf-rsync.ts",
+        "burn": "tsx src/cli/sf-burn.ts"
+    },
+    "keywords": [
+        "native",
+        "addon",
+        "typescript",
+        "filesystem",
+        "security"
+    ],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "typescript": "^5.0.0",
+        "tsx": "^4.0.0"
+    },
+    "dependencies": {
+        "node-addon-api": "^7.0.0"
+    },
+    "gypfile": true,
+    "files": [
+        "dist/**/*",
+        "binding.gyp",
+        "include/**/*",
+        "src/**/*",
+        "lib/**/*"
+    ]
+}

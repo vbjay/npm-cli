@@ -1,0 +1,89 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+def getVersionFromNpmPackage() {
+    def inputFile = new File("$projectDir/../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+
+    return packageJson["version"]
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace "com.breezsdk"
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$projectDir")
+    }
+    google()
+    mavenCentral {
+        // We don't want to fetch react-native from Maven Central as there are
+        // older versions over there.
+        content {
+            excludeGroup "com.facebook.react"
+        }
+    }
+    jcenter()
+}
+
+allprojects {
+    repositories {
+        google()
+    }
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21"
+    // Due to an issue with Jitpack (https://github.com/jitpack/jitpack.io/issues/5752)
+    // the Android platform versions of JNA (specifically libjnadispatch.so) are missing when downloading the Breez SDK from Jitpack.
+    // Thereforew we ignore the version of JNA that comes with the Breez SDK from Jitpack
+    // and manually add one that does include the necessary Android platoform binaries.
+    implementation("net.java.dev.jna:jna:5.14.0@aar")
+    // Comment this line for using locally built bindings during development
+    implementation("com.github.breez:breez-sdk:${getVersionFromNpmPackage()}") { exclude group:"net.java.dev.jna" }
+    // Uncomment this line for using locally built bindings during development
+    // implementation "org.jetbrains.kotlinx:atomicfu:0.23.1"
+}

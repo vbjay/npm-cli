@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d10f08b77b4b13cd",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "32e32308aa2e95c75cd8e0c1acde0aab73c8fd478abcd6fee8b1c8b030933493",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `abletonlink`  -  C/C++ sources",
+            "items": [
+              "src/napi-abletonlink.cc"
+            ]
+          },
+          {
+            "label": "Target `abletonlink`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<(module_root_dir)/libs/link/include",
+              "<(module_root_dir)/libs/link/modules/asio-standalone/asio/include"
+            ]
+          },
+          {
+            "label": "Target `abletonlink`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:16.561Z"
+  },
+  "hash": "sha256:e957cded14916e82cb286d1191f27f76e46605dbfffcbef6000839ad2f632889"
+}

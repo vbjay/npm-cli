@@ -1,0 +1,55 @@
+{
+    "name": "@playfulsparkle/robotstxt-js",
+    "type": "commonjs",
+    "version": "1.0.10",
+    "description": "A lightweight, Open Source robots.txt parser written in JavaScript",
+    "author": "Zsolt Oroszlány <hello@playfulsparkle.com>",
+    "main": "dist/robotstxt.min.js",
+    "scripts": {
+        "pretest": "npm run lint",
+        "prepare": "npm run build",
+        "test": "mocha test/*.js",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "build": "gulp"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/playfulsparkle/robotstxt.js.git"
+    },
+    "keywords": [
+        "javascript",
+        "robotstxt",
+        "parser"
+    ],
+    "license": "BSD-3-Clause",
+    "readmeFilename": "README.md",
+    "bugs": {
+      "url": "https://github.com/playfulsparkle/robotstxt.js/issues"
+    },
+    "homepage": "https://github.com/playfulsparkle/robotstxt.js#readme",
+    "devDependencies": {
+        "benchmark": "^2.1.4",
+        "eslint": "^5.10.0",
+        "gulp": "^3.9.1",
+        "gulp-benchmark": "^1.1.1",
+        "gulp-eslint": "^5.0.0",
+        "gulp-header": "^2.0.5",
+        "gulp-mocha": "^6.0.0",
+        "gulp-rename": "^1.4.0",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-uglify": "^3.0.1",
+        "mocha": "^5.2.0"
+    },
+    "overrides": {
+        "graceful-fs": "^4.2.11"
+    },
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "publishConfig": {
+        "access": "public"
+    }
+}

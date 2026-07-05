@@ -1,0 +1,139 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['JudoKitReactNative_' + name]
+  }
+
+  ext.getExtOrIntegerDefault = { name ->
+    return getExtOrDefault(name).toInteger()
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+def isNewArchitectureEnabled() {
+  // To opt-in for the New Architecture, you can either:
+  // - Set `newArchEnabled` to true inside the `gradle.properties` file
+  // - Invoke gradle with `-newArchEnabled=true`
+  // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+def reactNativeArchitectures() {
+  def value = project.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : [
+    "armeabi-v7a",
+    "x86",
+    "x86_64",
+    "arm64-v8a"
+  ]
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: 'com.facebook.react'
+}
+
+android {
+  def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+  if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
+    namespace "com.judopay.judokit.reactnative"
+    buildFeatures {
+      buildConfig true
+    }
+    sourceSets {
+      main {
+        manifest.srcFile "src/main/AndroidManifestNew.xml"
+      }
+    }
+  }
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  // Used to override the NDK path/version on internal CI or by allowing
+  // users to customize the NDK path/version from their root project (e.g. for M1 support)
+  if (rootProject.hasProperty("ndkPath")) {
+    ndkPath rootProject.ext.ndkPath
+  }
+  if (rootProject.hasProperty("ndkVersion")) {
+    ndkVersion rootProject.ext.ndkVersion
+  }
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+
+    ndk {
+      abiFilters (*reactNativeArchitectures())
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets.main {
+    java {
+      if (isNewArchitectureEnabled()) {
+        srcDirs += [
+          "src/newarch/java",
+          // Codegen specs
+          "generated/java",
+          "generated/jni"
+        ]
+      } else {
+        srcDirs += [
+          "src/oldarch/java"
+        ]
+      }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url "$rootDir/../node_modules/react-native/android"
+  }
+  google()
+}
+
+dependencies {
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${getExtOrDefault('kotlinVersion')}"
+  implementation "com.judopay:judokit-android:${getExtOrDefault('judoKitAndroidVersion')}"
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "JudoKitReactNative"
+    codegenJavaPackageName = "com.judopay.judokit.reactnative"
+  }
+}

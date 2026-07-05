@@ -1,0 +1,74 @@
+{
+  "artifactDownloadUrls": [
+    "https://github.com/contextbridge/aether/releases/download/aether-agent-cli-v0.7.21"
+  ],
+  "bin": {
+    "aether": "run-aether.js"
+  },
+  "dependencies": {
+    "axios": "^1.13.5",
+    "axios-proxy-builder": "^0.1.2",
+    "console.table": "^0.10.0",
+    "detect-libc": "^2.1.2",
+    "rimraf": "^6.1.3"
+  },
+  "description": "CLI and ACP server for the Aether AI coding agent",
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "glibcMinimum": {
+    "major": 2,
+    "series": 35
+  },
+  "homepage": "https://github.com/contextbridge/aether",
+  "keywords": [
+    "command-line-utilities",
+    "development-tools",
+    "ai",
+    "agent",
+    "cli",
+    "acp",
+    "coding"
+  ],
+  "license": "MIT",
+  "name": "@aether-agent/cli",
+  "preferUnplugged": true,
+  "repository": "https://github.com/contextbridge/aether",
+  "scripts": {
+    "fmt": "prettier --write **/*.js",
+    "fmt:check": "prettier --check **/*.js",
+    "postinstall": "node ./install.js"
+  },
+  "supportedPlatforms": {
+    "aarch64-apple-darwin": {
+      "artifactName": "aether-agent-cli-aarch64-apple-darwin.tar.xz",
+      "bins": {
+        "aether": "aether"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "aarch64-unknown-linux-gnu": {
+      "artifactName": "aether-agent-cli-aarch64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "aether": "aether"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "x86_64-unknown-linux-gnu": {
+      "artifactName": "aether-agent-cli-x86_64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "aether": "aether"
+      },
+      "zipExt": ".tar.xz"
+    }
+  },
+  "version": "0.7.21",
+  "volta": {
+    "node": "18.14.1",
+    "npm": "9.5.0"
+  }
+}

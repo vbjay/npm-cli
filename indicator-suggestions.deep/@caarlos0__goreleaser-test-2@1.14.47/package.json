@@ -1,0 +1,90 @@
+{
+  "name": "@caarlos0/goreleaser-test-2",
+  "type": "module",
+  "version": "1.14.47",
+  "scripts": {
+    "postinstall": "node install.js",
+    "run": "node run-mybin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goreleaser/goreleaser-pro.git"
+  },
+  "keywords": [
+    "release",
+    "golang",
+    "go",
+    "rust",
+    "zig",
+    "bun",
+    "deno",
+    "docker"
+  ],
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/goreleaser/goreleaser/issues"
+  },
+  "bin": {
+    "mybin": "run-mybin.js"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "proxy-agent": "^7.0.0",
+    "tar": "^7.4.3"
+  },
+  "archives": {
+    "darwin-arm64": {
+      "name": "test_1.14.46_darwin_arm64.zip",
+      "url": "https://github.com/caarlos0-graveyard/test/releases/download/v1.14.46/test_1.14.46_darwin_arm64.zip",
+      "bins": [
+        "mybin"
+      ],
+      "format": "zip",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "6a5039e1df078af648863526dd10659706ff61f409a014134f89a05e037056e7"
+      },
+      "wrappedIn": "test_1.14.46_darwin_arm64"
+    },
+    "darwin-x64": {
+      "name": "test_1.14.46_darwin_amd64.zip",
+      "url": "https://github.com/caarlos0-graveyard/test/releases/download/v1.14.46/test_1.14.46_darwin_amd64.zip",
+      "bins": [
+        "mybin"
+      ],
+      "format": "zip",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "ad9f8d21cc9498863395b60805704f1f1ebc2c417a2b0088334cdfc6214d84bd"
+      },
+      "wrappedIn": "test_1.14.46_darwin_amd64"
+    },
+    "linux-arm64": {
+      "name": "test_1.14.46_linux_arm64.zip",
+      "url": "https://github.com/caarlos0-graveyard/test/releases/download/v1.14.46/test_1.14.46_linux_arm64.zip",
+      "bins": [
+        "mybin"
+      ],
+      "format": "zip",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "0f5ba7eac38ff5b0f8e76b17729068ce937dcaf001a16bd4988d90b01ddc005c"
+      },
+      "wrappedIn": "test_1.14.46_linux_arm64"
+    },
+    "linux-x64": {
+      "name": "test_1.14.46_linux_amd64.zip",
+      "url": "https://github.com/caarlos0-graveyard/test/releases/download/v1.14.46/test_1.14.46_linux_amd64.zip",
+      "bins": [
+        "mybin"
+      ],
+      "format": "zip",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "4598b100c02eb1696af8cd1d516eaec31c42a0d5e13d75f8590d07bc42db6917"
+      },
+      "wrappedIn": "test_1.14.46_linux_amd64"
+    }
+  }
+}

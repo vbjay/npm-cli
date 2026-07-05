@@ -1,0 +1,77 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "13d5193a8b0a7cac",
+    "fetchedFiles": [
+      "lib/bin.js",
+      "lib/index.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `postinstall`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/bin.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "64a45eacfdef829c52abd3ae7e95289bbed7cd959e4645fb7a78fe802c9812f8",
+        "sizeBytes": 1061,
+        "signals": [
+          "git-hook-setup",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/index.js",
+        "reason": "required by ./lib/bin.js",
+        "sha256": "07416f8261377fb911b31147bdd300993dd3a4a84fe6257eaa75988dff04bd84",
+        "sizeBytes": 1576,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:33.938Z"
+  },
+  "hash": "sha256:a1140862e0cee64ac0994dad2ba629f904948a81c69ad1d54d28a595887c3d04"
+}

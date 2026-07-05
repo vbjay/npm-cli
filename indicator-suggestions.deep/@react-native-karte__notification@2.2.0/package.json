@@ -1,0 +1,64 @@
+{
+  "name": "@react-native-karte/notification",
+  "version": "2.2.0",
+  "description": "KARTE SDK Notification for React Native.",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "keywords": [
+    "react-native",
+    "karte",
+    "notification",
+    "ios",
+    "android"
+  ],
+  "author": "PLAID, Inc.",
+  "homepage": "https://karte.io",
+  "license": "Apache-2.0",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "RNKRTNotification.podspec",
+    "!**/__tests__"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plaidev/karte-react-native.git",
+    "directory": "packages/notification"
+  },
+  "scripts": {
+    "prepare": "yarn run build",
+    "build": "bob build",
+    "build:clean": "del lib",
+    "docs": "typedoc src/index.tsx --excludePrivate",
+    "docs:clean": "del docs",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/plaidev/karte-react-native/issues"
+  },
+  "peerDependencies": {
+    "@react-native-karte/core": "^2.2.0"
+  },
+  "devDependencies": {
+    "react-native-builder-bob": "^0.18.3",
+    "typescript": "~5.0.4"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "gitHead": "281a6abf5b918ba4f880cc600d6fe62fe90fb785"
+}

@@ -1,0 +1,88 @@
+{
+  "name": "@pankajtime12/react-native-squircle-view",
+  "description": "Figma-flavored squircles for React Native with gradient support — no native modules",
+  "author": "Pankaj Yadav (https://github.com/pankajtime123)",
+  "version": "0.1.31",
+  "license": "MIT",
+  "main": "lib/commonjs/index.js",
+  "react-native": "src/index.tsx",
+  "source": "src/index.tsx",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "scripts": {
+    "prepare": "bob build",
+    "tsc": "tsc --noEmit",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": ">=3.0.0",
+    "react-native-svg": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native-reanimated": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "figma-squircle": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.6",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "del-cli": "7.0.0",
+    "eslint": "^8.51.0",
+    "eslint-config-expo": "^8.0.1",
+    "eslint-config-prettier": "10.1.8",
+    "prettier": "^3.3.3",
+    "react": "18.3.1",
+    "react-native": "0.76.7",
+    "react-native-builder-bob": "^0.37.0",
+    "react-native-reanimated": "4.4.1",
+    "react-native-svg": "12.1.0",
+    "turbo": "2.8.21",
+    "typescript": "^5.5.4"
+  },
+  "keywords": [
+    "react-native",
+    "squircle",
+    "figma",
+    "gradient",
+    "svg",
+    "smooth-corners",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pankajtime123/react-native-squircle-view.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pankajtime123/react-native-squircle-view/issues"
+  },
+  "homepage": "https://github.com/pankajtime123/react-native-squircle-view#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "workspaces": [
+    "example"
+  ]
+}

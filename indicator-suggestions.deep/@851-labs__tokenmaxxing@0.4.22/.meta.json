@@ -1,0 +1,92 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "192e92db9080ed47",
+    "fetchedFiles": [
+      "install-native.mjs",
+      "native-bin-launcher.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install-native.mjs",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "ae945c9cd2b20c395922eed611310ede8192edbd659188357daee9c719d68ccc",
+        "sizeBytes": 3630,
+        "signals": [
+          "uses-child-process",
+          "makes-executable",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "native-bin-launcher.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "native-bin-launcher.cjs",
+        "reason": "required by ./install-native.mjs",
+        "sha256": "017df005a5b102edd307bd6e9e4d32709e6add687ae575cfc71f348979f13b2e",
+        "sizeBytes": 7151,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:35.586Z"
+  },
+  "hash": "sha256:dac9dc666a28f10e7181c5b670bf8e3068fac84831feb70cda40e0c7b96a2d03"
+}

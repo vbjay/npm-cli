@@ -1,0 +1,40 @@
+{
+  "name": "cx-protofetch",
+  "version": "0.1.19",
+  "description": "A source dependency management tool for Protobuf.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coralogix/protofetch.git"
+  },
+  "homepage": "https://github.com/coralogix/protofetch",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "protofetch": "run.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "proto",
+    "cli",
+    "toml",
+    "protobuf",
+    "dependencies",
+    "dependency-manager",
+    "grpc"
+  ],
+  "optionalDependencies": {
+    "@coralogix/protofetch-darwin-arm64": "0.1.19",
+    "@coralogix/protofetch-darwin-x64": "0.1.19",
+    "@coralogix/protofetch-linux-arm64": "0.1.19",
+    "@coralogix/protofetch-linux-x64": "0.1.19",
+    "@coralogix/protofetch-win32-x64": "0.1.19"
+  },
+  "scripts": {
+    "postinstall": "node deprecation-notice.js"
+  }
+}

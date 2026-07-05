@@ -1,0 +1,108 @@
+{
+  "name": "aurix-ai",
+  "version": "3.0.6",
+  "description": "Open-source terminal AI agent for coding, deep research, automation, and multi-platform task execution.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "aurix": "bin/aurix.js"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "terminal",
+    "cli",
+    "typescript",
+    "bun",
+    "openai",
+    "anthropic",
+    "automation",
+    "research",
+    "productivity",
+    "devtools",
+    "browser-automation",
+    "multi-agent",
+    "llm",
+    "developer-tools",
+    "discord-bot",
+    "telegram-bot",
+    "whatsapp-bot",
+    "git-automation",
+    "github-api",
+    "captcha-solver",
+    "langgraph"
+  ],
+  "homepage": "https://github.com/DekaPrayoga/AurixAgent",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DekaPrayoga/AurixAgent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DekaPrayoga/AurixAgent/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "dist/",
+    "scripts/",
+    "training/",
+    "skills/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "dev": "tsx src/index.tsx",
+    "start": "node dist/index.js",
+    "prepare": "node scripts/build.cjs",
+    "postinstall": "node scripts/postinstall.mjs",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.35.0",
+    "@fastify/cors": "^11.2.0",
+    "@inquirer/prompts": "^8.5.2",
+    "@opentui/core": "^0.4.0",
+    "@opentui/react": "^0.4.0",
+    "chalk": "^5.3.0",
+    "cloakbrowser": "^0.3.31",
+    "fastify": "^5.8.5",
+    "js-tiktoken": "^1.0.21",
+    "js-yaml": "^4.1.0",
+    "marked-terminal": "^7.3.0",
+    "mmdb-lib": "^3.0.2",
+    "node-cron": "^4.5.0",
+    "openai": "^4.70.0",
+    "playwright-core": "^1.60.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.7",
+    "react-reconciler": "^0.33.0",
+    "sharp": "^0.35.3",
+    "sql.js": "^1.14.1",
+    "systeminformation": "^5.23.0",
+    "undici": "^8.5.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/marked-terminal": "^6.1.1",
+    "@types/node": "^22.0.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/ora": "^3.2.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.3.0",
+    "@types/sql.js": "^1.4.11",
+    "@typescript-eslint/eslint-plugin": "^8.61.0",
+    "@typescript-eslint/parser": "^8.61.0",
+    "eslint": "^10.4.1",
+    "prettier": "^3.8.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "optionalDependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc13",
+    "pino": "^10.3.1"
+  }
+}

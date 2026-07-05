@@ -1,0 +1,78 @@
+{
+	"name": "@ktarmyshov/assert",
+	"description": "Assert module for Node.js, JavaScript, and TypeScript similar to node:assert, to be used in server and browser environments.",
+	"version": "0.1.12",
+	"license": "MIT",
+	"author": {
+		"name": "Konstantin Tarmyshov",
+		"email": "k.tarmyshov@googlemail.com"
+	},
+	"keywords": [
+		"node",
+		"javascript",
+		"typescript",
+		"nodejs",
+		"node_modules",
+		"npm",
+		"assert",
+		"browser",
+		"server"
+	],
+	"homepage": "https://github.com/kt-npm-modules/assert#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kt-npm-modules/assert.git"
+	},
+	"bugs": {
+		"url": "https://github.com/kt-npm-modules/assert/issues"
+	},
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "rimraf ./dist && tsc --project tsconfig.json && npm run prepack",
+		"build:release": "rimraf ./dist && tsc --project tsconfig-release.json && npm run prepack",
+		"prepack": "publint",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"check": "tsc --skipLibCheck",
+		"check:test": "tsc --project tsconfig-test.json --skipLibCheck --noEmit",
+		"test": "npm run check:test && vitest run",
+		"coverage": "vitest run --coverage",
+		"changeset:version": "changeset version && npm install && git add --all",
+		"changeset:publish": "changeset publish"
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*",
+		"!tests",
+		"!examples",
+		"!benchmarks"
+	],
+	"devDependencies": {
+		"@changesets/cli": "^2.28.1",
+		"@eslint/compat": "^2.0.0",
+		"@eslint/js": "^10.0.1",
+		"@types/node": "^26.0.1",
+		"@vitest/coverage-istanbul": "^4.1.9",
+		"eslint": "^10.6.0",
+		"eslint-config-prettier": "^10.1.2",
+		"globals": "^17.7.0",
+		"prettier": "^3.9.1",
+		"publint": "^0.3.11",
+		"rimraf": "^6.0.1",
+		"tsc-alias": "^1.8.15",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.62.0",
+		"vitest": "^4.0.3"
+	},
+	"engines": {
+		"node": ">=20"
+	}
+}

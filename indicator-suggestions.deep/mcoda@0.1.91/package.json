@@ -1,0 +1,64 @@
+{
+  "name": "mcoda",
+  "version": "0.1.91",
+  "description": "Local-first CLI for planning, documentation, and execution workflows with agent assistance.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "mcoda": "dist/bin/McodaEntrypoint.js"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "!dist/**/__tests__/**",
+    "!dist/**/*.test.*",
+    "MSWARM_DATA_COLLECTION_TERMS.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bekirdag/mcoda.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bekirdag/mcoda/issues"
+  },
+  "homepage": "https://github.com/bekirdag/mcoda#readme",
+  "license": "MIT",
+  "author": "bekir dag",
+  "keywords": [
+    "mcoda",
+    "cli",
+    "planning",
+    "backlog",
+    "agent",
+    "documentation",
+    "openapi",
+    "pdr",
+    "sds"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "yaml": "^2.4.2",
+    "@mcoda/shared": "0.1.91",
+    "@mcoda/core": "0.1.91"
+  },
+  "devDependencies": {
+    "@mcoda/db": "0.1.91",
+    "@mcoda/integrations": "0.1.91"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "echo \"lint not configured\"",
+    "postinstall": "node ./scripts/postinstall.js",
+    "test": "pnpm run build && node ../../scripts/run-node-tests.js dist",
+    "pack:verify": "node --test test/packaging_guardrails.test.js"
+  }
+}

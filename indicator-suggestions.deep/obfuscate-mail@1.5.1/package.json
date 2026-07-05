@@ -1,0 +1,79 @@
+{
+  "name": "obfuscate-mail",
+  "version": "1.5.1",
+  "description": "Obfuscate email",
+  "main": "obfuscateEmail.js",
+  "types": "obfuscateEmail.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/bundle.js",
+      "import": "./dist/bundle.mjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "obfuscateEmail.d.ts"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "test": "npm run test:source",
+    "test:bundle": "cp test/obfuscate.js test/obfuscate.bundle.js && echo 'const obfuscate = require(\"../dist/bundle\");const { DEFAULT_OPTIONS } = require(\"../dist/bundle\");' | cat - test/obfuscate.bundle.js > temp && mv temp test/obfuscate.bundle.js && mocha test/obfuscate.bundle.js && rm test/obfuscate.bundle.js",
+    "test:source": "cp test/obfuscate.js test/obfuscate.source.js && echo 'const obfuscate = require(\"../obfuscateEmail\");const { DEFAULT_OPTIONS } = require(\"../utils\");' | cat - test/obfuscate.source.js > temp && mv temp test/obfuscate.source.js && mocha test/obfuscate.source.js && rm test/obfuscate.source.js",
+    "build": "npm run types:emit && npm run bundle && npm run build:esm && npm run build:wasm",
+    "build:esm": "npx gen-esm-wrapper dist/bundle.js dist/bundle.mjs",
+    "build:wasm": "rm -f dist/wasm.js && mkdir -p dist && esbuild --bundle --platform=node wasm.js --outfile=dist/wasm.js",
+    "bundle": "rm -f dist/bundle.js && mkdir -p dist && esbuild --bundle --platform=node obfuscateEmail.js --outfile=dist/bundle.js && terser dist/bundle.js --compress --mangle --output dist/bundle.js",
+    "types:emit": "tsc --allowJs --removeComments",
+    "coverage": "nyc --reporter=lcov npm run test:source",
+    "prepare": "husky install",
+    "precommit": "lint-staged && npm run build && npm run test:bundle && git add dist/.",
+    "prettier": "prettier --write \"./*.js\"",
+    "lint": "eslint \"./*.js\" --fix"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint *.js --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rawpixel-vincent/obfuscate-email.git"
+  },
+  "keywords": [
+    "javascript",
+    "obfuscate",
+    "spam",
+    "email"
+  ],
+  "license": "CC0-1.0",
+  "author": {
+    "name": "Vincent Bar****t"
+  },
+  "bugs": {
+    "url": "https://github.com/rawpixel-vincent/obfuscate-email/issues"
+  },
+  "homepage": "https://github.com/rawpixel-vincent/obfuscate-email#readme",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "esbuild": "^0.18.14",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "prettier": "^3.0.0",
+    "terser": "^5.19.1",
+    "typescript": "^5.1.6"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c5fe2c8410a2305a",
+    "fetchedFiles": [
+      "index.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ee12c78c60e540d863de562a35677621ae07ec0f2ce7ec771a328a80ef70bfad",
+        "sizeBytes": 5553,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "index.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/pulseengine/studio-mcp.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/pulseengine/studio-mcp/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/pulseengine/studio-mcp/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./install.js",
+        "sha256": "ee783443235917e4b3cf7f0a85d10d757edcb01109a5a105c4b4b16b8833d27d",
+        "sizeBytes": 2680,
+        "signals": [
+          "uses-child-process",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/pulseengine/studio-mcp/releases",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/pulseengine/studio-mcp.git",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "19198dfb010822cd52a7a5196c4f8054bc292b9546cb9ff2858ba03be66f2dc8",
+        "sizeBytes": 1187,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:44.088Z"
+  },
+  "hash": "sha256:ac78c249100343118f1aa47dcfbbeb84709b3428ea38618b030d63b3048d1ac0"
+}

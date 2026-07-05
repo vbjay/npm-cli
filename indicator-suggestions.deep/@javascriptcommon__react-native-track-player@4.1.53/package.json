@@ -1,0 +1,127 @@
+{
+  "name": "@javascriptcommon/react-native-track-player",
+  "version": "4.1.53",
+  "description": "A fully fledged audio module created for music apps",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "scripts": {
+    "build": "rimraf lib && tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src",
+    "format": "prettier --write src",
+    "types": "tsc --noEmit true",
+    "prepare": "yarn build",
+    "example": "yarn --cwd example",
+    "pods": "cd example/ios && pod install",
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "version": "yarn format && git add -A src && yarn changelog && git add CHANGELOG.md",
+    "postversion": "if [[ ${npm_package_version} != *'nightly'* ]]; then yarn publish:git && yarn publish:npm; fi",
+    "ci:lint": "eslint src --max-warnings=0",
+    "ci:format": "prettier --check src",
+    "changelog": "conventional-changelog -p angular -s -i CHANGELOG.md -r 1",
+    "publish:git": "git push && git push --tags",
+    "publish:npm": "yarn prepare && npm publish --access public"
+  },
+  "files": [
+    "src",
+    "lib/**/*",
+    "ios/**/*",
+    "!ios/SwiftAudioEx/.build/**",
+    "!ios/Example/**",
+    "android/src/**/*",
+    "android/build.gradle",
+    "android/proguard-rules.txt",
+    "*.podspec",
+    "specs"
+  ],
+  "contributors": [
+    {
+      "name": "David Chavez",
+      "email": "david@dcvz.io",
+      "url": "http://dcvz.io"
+    },
+    {
+      "name": "Guilherme Chaguri",
+      "email": "guichaguri@gmail.com",
+      "url": "http://guichaguri.com"
+    },
+    {
+      "name": "Dustin Bahr",
+      "email": "dustin@curiousmedia.com"
+    }
+  ],
+  "keywords": [
+    "react",
+    "react-native",
+    "track-player",
+    "audio-player",
+    "audio",
+    "player",
+    "music",
+    "controls",
+    "chromecast",
+    "android",
+    "ios",
+    "windows",
+    "hooks"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doublesymmetry/react-native-track-player.git"
+  },
+  "bugs": {
+    "url": "https://github.com/doublesymmetry/react-native-track-player/issues"
+  },
+  "codegenConfig": {
+    "name": "NativeTrackPlayerSpec",
+    "type": "modules",
+    "jsSrcsDir": "specs",
+    "android": {
+      "javaPackageName": "com.doublesymmetry.trackplayer"
+    },
+    "ios": {
+      "modulesProvider": {
+        "TrackPlayer": "NativeTrackPlayer"
+      }
+    }
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-windows": "*",
+    "shaka-player": "^4.7.9"
+  },
+  "peerDependenciesMeta": {
+    "react-native-windows": {
+      "optional": true
+    },
+    "shaka-player": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "20.0.0",
+    "@react-native/babel-preset": "0.81.1",
+    "@types/react": "^19.1.0",
+    "del-cli": "^5.1.0",
+    "react": "19.1.0",
+    "react-native": "0.81.1",
+    "shaka-player": "^4.15.4",
+    "typescript": "^5.8.3"
+  },
+  "funding": "https://github.com/doublesymmetry/react-native-track-player?sponsor=1",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "tea": {
+    "dependencies": {
+      "classic.yarnpkg.com": "^1"
+    }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+}

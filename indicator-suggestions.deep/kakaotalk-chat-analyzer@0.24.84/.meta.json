@@ -1,0 +1,125 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1a390ac08e3cf8bc",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/ensure-ml-bundles.mjs",
+      "scripts/ml-bundle-install.mjs",
+      "scripts/ml-bundle-lib.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/ensure-ml-bundles.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e03c1cefabd3deaeda2fbe6b257e053711cc780e40d2a0ac5ffc888842ed0076",
+        "sizeBytes": 1615,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/ml-bundle-lib.mjs",
+          "scripts/ml-bundle-install.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/ml-bundle-lib.mjs",
+        "reason": "required by ./scripts/ensure-ml-bundles.mjs; required by ./scripts/ml-bundle-install.mjs",
+        "sha256": "77f2a37af618ba2631e4a64681045bffed6a0e9c0731e109f863c738b53b0be3",
+        "sizeBytes": 2322,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/ml-bundle-install.mjs",
+        "reason": "required by ./scripts/ensure-ml-bundles.mjs",
+        "sha256": "54f09441b750ee2c1eae3cb105fcf262265ea466196fad783bb090892a86f813",
+        "sizeBytes": 2329,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/ml-bundle-lib.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/sync-version.mjs",
+        "reason": "referenced by lifecycle script: `prepack`; referenced by lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/bundle-report-css.mjs",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:04.284Z"
+  },
+  "hash": "sha256:5d7fd91ddec10c1db14da3d9be314b9040d01d9e0d299622caad7c24a4952d5b"
+}

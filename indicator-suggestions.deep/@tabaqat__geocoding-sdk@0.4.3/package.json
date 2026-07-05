@@ -1,0 +1,73 @@
+{
+  "name": "@tabaqat/geocoding-sdk",
+  "version": "0.4.3",
+  "description": "Browser-based geocoding SDK using DuckDB-WASM",
+  "module": "src/index.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bun run clean && bun build src/index.ts --outdir dist --target browser && tsc -p tsconfig.build.json",
+    "build:check": "bun run build && test -f dist/index.d.ts || (echo 'ERROR: Type definitions not generated!' && exit 1)",
+    "dev": "bun run --watch src/demo.ts",
+    "test": "bun test",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "docs": "typedoc",
+    "docs:json": "typedoc --json examples/react/app/data/api-docs.json --emit none",
+    "prepare": "husky",
+    "prepublishOnly": "bun run lint && bun run typecheck && bun run build:check"
+  },
+  "keywords": [
+    "geocoding",
+    "reverse-geocoding",
+    "wasm",
+    "duckdb",
+    "browser",
+    "saudi-arabia",
+    "arabic",
+    "h3",
+    "parquet",
+    "offline"
+  ],
+  "author": "Tabaqat",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tabaqatdev/geocoding-sdk.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
+    "@types/bun": "latest",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^9.39.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "typedoc": "^0.28.17",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "1.33.1-dev18.0"
+  }
+}

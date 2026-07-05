@@ -1,0 +1,132 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    // Resolves a build knob from, in order: a command-line/Gradle project
+    // property (`-Pprop=...` or gradle.properties), then rootProject.ext,
+    // then the fallback. The project-property branch is what lets CI lanes
+    // override e.g. `-PreactAndroidVersion` / `-PkotlinVersion` explicitly.
+    ext.safeExtGet = {prop, fallback ->
+        rootProject.hasProperty(prop) ? rootProject.property(prop) :
+            (rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback)
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:${safeExtGet('androidGradlePluginVersion', '8.2.2')}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${safeExtGet('kotlinVersion', '1.9.22')}")
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def isNewArchitectureEnabled() {
+    return project.hasProperty('newArchEnabled') && project.newArchEnabled == 'true'
+}
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+android {
+    namespace 'com.loyalytics.swan'
+    compileSdkVersion safeExtGet('compileSdkVersion', 34)
+
+    // Required for the `buildConfigField` below — AGP 8+ disables
+    // BuildConfig generation by default.
+    buildFeatures {
+        buildConfig true
+    }
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', 24)
+        targetSdkVersion safeExtGet('targetSdkVersion', 34)
+        // Exposed to Kotlin as BuildConfig.IS_NEW_ARCHITECTURE_ENABLED.
+        // SwanNotificationPackage.getReactModuleInfoProvider() reads this
+        // to advertise the correct module type for the compiled sourceSet
+        // (oldarch wrapper extends ReactContextBaseJavaModule, newarch
+        // wrapper extends NativeSwanNotificationModuleSpec).
+        buildConfigField('boolean', 'IS_NEW_ARCHITECTURE_ENABLED', isNewArchitectureEnabled().toString())
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    def javaVersion = safeExtGet('jvmTargetVersion', '17')
+
+    compileOptions {
+        sourceCompatibility JavaVersion.toVersion(javaVersion)
+        targetCompatibility JavaVersion.toVersion(javaVersion)
+    }
+
+    kotlinOptions {
+        jvmTarget = javaVersion
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += 'src/newarch/kotlin'
+                java.srcDirs += 'src/newarch/java'
+            } else {
+                java.srcDirs += 'src/oldarch/kotlin'
+                java.srcDirs += 'src/oldarch/java'
+            }
+        }
+        test {
+            java.srcDirs += 'src/test/kotlin'
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+// For standalone builds (CI, local `./gradlew test`), react-native:+ can't resolve
+// because the host app's Maven repo isn't available. Substitute with react-android
+// from Maven Central. When consumed by an app, rootProject.name != 'swan-android'
+// so this block is skipped and the app's own dependency resolution applies.
+//
+// The substituted version is overridable via the `reactAndroidVersion` Gradle
+// property (e.g. `-PreactAndroidVersion=0.83.0`). The default keeps the floor
+// CI compiles against today; a separate CI lane overrides it to a newer
+// react-android (0.83.x) to catch RN-interface changes — e.g. RN 0.83 making
+// ActivityEventListener.onNewIntent(Intent)/onActivityResult(Activity, …)
+// non-null — before they reach customers.
+if (rootProject.name == 'swan-android') {
+    project.ext.newArchEnabled = 'false'
+    // Overridable via `-PreactAndroidVersion=...` (how the 0.83 CI lane
+    // overrides it); defaults to the floor CI compiles against today.
+    def reactAndroidVersion = safeExtGet('reactAndroidVersion', '0.76.2')
+    configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            substitute module('com.facebook.react:react-native') using module("com.facebook.react:react-android:${reactAndroidVersion}")
+        }
+    }
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${safeExtGet('kotlinVersion', '1.9.22')}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    implementation "androidx.core:core-ktx:1.12.0"
+
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
+    testImplementation "org.robolectric:robolectric:4.14.1"
+    testImplementation "androidx.test:core:1.6.1"
+    testImplementation "org.json:json:20231013"
+}

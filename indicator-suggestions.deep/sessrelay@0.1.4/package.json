@@ -1,0 +1,72 @@
+{
+  "name": "sessrelay",
+  "version": "0.1.4",
+  "type": "module",
+  "description": "Lock-free, time-bucketed persistent storage intermediary for sessvm.",
+  "keywords": [
+    "sessvm",
+    "session",
+    "session-storage",
+    "wasm",
+    "webassembly",
+    "sync",
+    "storage",
+    "sqlite",
+    "postgres",
+    "redis",
+    "supabase",
+    "firestore",
+    "serverless"
+  ],
+  "license": "MIT",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist/src",
+    "dist/wasm",
+    "Readme.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./wasm": {
+      "types": "./dist/wasm/sessrelay.d.ts",
+      "import": "./dist/wasm/sessrelay.js",
+      "require": "./dist/wasm/sessrelay.js",
+      "default": "./dist/wasm/sessrelay.js"
+    },
+    "./wasm/sessrelay_bg.wasm": "./dist/wasm/sessrelay_bg.wasm",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "prepack": "npm run build",
+    "test:integration": "node --enable-source-maps ./dist/test/integration/run.js",
+    "integration:start": "node ./scripts/integration.mjs",
+    "test:sync-engine": "node --enable-source-maps ./dist/test/sync-engine.js",
+    "test:sessvm-port": "node --enable-source-maps ./dist/test/sessvm-port.js",
+    "test:wasm-concurrency": "node --enable-source-maps ./dist/test/wasm-concurrency.js",
+    "test:wasm-fuzz": "node --enable-source-maps ./dist/test/wasm-fuzz.js",
+    "test:all": "npm run test:sync-engine && npm run test:sessvm-port && npm run test:wasm-concurrency && npm run test:wasm-fuzz",
+    "bench": "node --enable-source-maps ./dist/test/benchmarks.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.107.0",
+    "better-sqlite3": "^12.10.0",
+    "bindings": "^1.5.0",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^13.10.0",
+    "pg": "^8.21.0",
+    "redis": "^6.0.0",
+    "sessvm": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.9.1",
+    "@types/pg": "^8.15.6",
+    "typescript": "^5.9.3"
+  }
+}

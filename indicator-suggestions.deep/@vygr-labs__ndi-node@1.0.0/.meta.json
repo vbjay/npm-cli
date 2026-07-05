@@ -1,0 +1,125 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d80743169dded3ec",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "2d95edc69566815f3c6badb465b09a022ffb828e92dd96a965590de820c6de8b",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `ndi_addon`  -  C/C++ sources",
+            "items": [
+              "src/ndi_addon.cpp",
+              "src/ndi_finder.cpp",
+              "src/ndi_sender.cpp",
+              "src/ndi_receiver.cpp",
+              "src/ndi_utils.cpp"
+            ]
+          },
+          {
+            "label": "Target `ndi_addon`  -  libraries",
+            "items": [
+              "<(module_root_dir)/deps/ndi/lib/x64/Processing.NDI.Lib.x64.lib",
+              "-L<(module_root_dir)/deps/ndi/lib",
+              "-lndi",
+              "-L<(module_root_dir)/deps/ndi/lib",
+              "-lndi"
+            ]
+          },
+          {
+            "label": "Target `ndi_addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "deps/ndi/include"
+            ]
+          },
+          {
+            "label": "Target `ndi_addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5f031b0da46021d452bdb843e402a13f55151c085a9b8483cc3a3f05813b5a13",
+        "sizeBytes": 10444,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/CodeKing12/ndi-node#readme",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:10.883Z"
+  },
+  "hash": "sha256:82d961986934f302a7fc39bb6f74f9af7679be0bcacd41a39e3aba3cee2cc1c3"
+}

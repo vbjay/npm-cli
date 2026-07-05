@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9f042208479a5404",
+    "fetchedFiles": [
+      "commander.js",
+      "config.js",
+      "package.json",
+      "preinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "preinstall.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "80fc6775a4e00302053969a6b6cc5f7912bb7c5c8941872bad9c35223e4da24e",
+        "sizeBytes": 507,
+        "signals": [
+          "binary-download",
+          "shell-network-fetch",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "config.js",
+          "commander.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/shyiko/ktlint/releases/download/0.29.0/ktlint",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "config.js",
+        "reason": "required by ./preinstall.js",
+        "sha256": "23debba7d58952c788a2c23f3580765456f4a2836c90aefecdb45a664cd2d9fc",
+        "sizeBytes": 188,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "commander.js",
+        "reason": "required by ./preinstall.js",
+        "sha256": "497dbe8a136524fbf82dcad30109b52b7d0ba9c430224d2b7cd5cc46832daef7",
+        "sizeBytes": 509,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:05.083Z"
+  },
+  "hash": "sha256:21ab58c7328280537f299318d3d1956d94d92d345657579d51685138a2981ac4"
+}

@@ -1,0 +1,81 @@
+{
+  "name": "@sandbox-technologies/release-kit",
+  "version": "0.5.32",
+  "description": "ReleaseKit CLI for managed desktop release candidates.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://release-kit.dev/docs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandbox-technologies/inspector.git",
+    "directory": "release-kit/packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/sandbox-technologies/inspector/issues"
+  },
+  "keywords": [
+    "sandbox-technologies",
+    "release-kit",
+    "desktop",
+    "electron",
+    "updates",
+    "release",
+    "cli",
+    "hosted-builders"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "bin": {
+    "release-kit": "bin/release-kit.mjs",
+    "release-kit-builder": "bin/release-kit-builder.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./apple-setup": "./src/apple-setup.mjs",
+    "./auth": "./src/auth.mjs",
+    "./builder": "./src/builder/cli.mjs",
+    "./cli": "./src/cli.mjs",
+    "./desktop": {
+      "types": "./dist/desktop-sdk/index.d.ts",
+      "default": "./dist/desktop-sdk/index.js"
+    },
+    "./doctor": "./src/doctor.mjs",
+    "./electron": {
+      "types": "./dist/desktop-sdk/electron.d.ts",
+      "default": "./dist/desktop-sdk/electron.js"
+    },
+    "./init": "./src/init.mjs",
+    "./projects": "./src/projects.mjs",
+    "./update": "./src/self-update.mjs",
+    "./updates": "./src/updates.mjs"
+  },
+  "files": [
+    "assets",
+    "bin",
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build:sdk": "tsc -p tsconfig.sdk.json && node scripts/write-sdk-dist-package.mjs",
+    "test": "node --test test/*.test.mjs && vitest run --root ../desktop-updates src/index.test.ts",
+    "test:mac-update-e2e": "node --test test/e2e/macos-update-e2e.test.mjs",
+    "test:pack": "node scripts/pack-smoke.mjs",
+    "prepublishOnly": "node scripts/assert-publish-git-state.mjs",
+    "prepack": "node --test test/*.test.mjs && npm run build:sdk"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

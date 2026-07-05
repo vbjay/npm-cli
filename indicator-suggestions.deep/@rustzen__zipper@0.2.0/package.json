@@ -1,0 +1,39 @@
+{
+  "name": "@rustzen/zipper",
+  "version": "0.2.0",
+  "description": "Rust-based CLI & JS library for zipping dist folders",
+  "main": "index.js",
+  "bin": {
+    "rz-zip": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "bin",
+    "scripts/install.js"
+  ],
+  "scripts": {
+    "install": "node scripts/install.js",
+    "test": "cargo test --locked",
+    "build": "cargo build",
+    "postbuild": "node scripts/test.js -f=%Y%m%d%H%M%S",
+    "ci": "cargo build --locked && cargo test --locked && cargo clippy --locked -- -D warnings"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idaibin/rustzen-zipper.git"
+  },
+  "keywords": [
+    "zip",
+    "rust",
+    "cli",
+    "dist",
+    "postbuild"
+  ],
+  "author": "idaibin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/idaibin/rustzen-zipper/issues"
+  },
+  "homepage": "https://github.com/idaibin/rustzen-zipper#readme"
+}

@@ -1,0 +1,62 @@
+{
+  "name": "@allboatsrise/expo-gigya",
+  "version": "55.0.0",
+  "description": "Expo module for SAP Customer Data Cloud",
+  "homepage": "https://github.com/allboatsrise/expo-gigya",
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "expo",
+    "ios",
+    "android",
+    "gigya",
+    "sap"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allboatsrise/expo-gigya.git"
+  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "/build/**/*",
+    "/plugin/assets/**/*",
+    "/plugin/build/**/*",
+    "/app.plugin.js",
+    "/package.json",
+    "/README.md"
+  ],
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "jest": {
+    "preset": "expo-module-scripts"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@sap_oss/gigya-react-native-plugin-for-sap-customer-data-cloud": "0.6.3",
+    "@types/react": "~19.1.1",
+    "expo-module-scripts": "^55.0.2",
+    "expo": "^55.0.16",
+    "react-native": "0.82.1",
+    "zod": "~3.15.0"
+  },
+  "peerDependencies": {
+    "expo": ">=55.0.16",
+    "@sap_oss/gigya-react-native-plugin-for-sap-customer-data-cloud": ">=0.6.3",
+    "zod": "^3.15.0"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  }
+}

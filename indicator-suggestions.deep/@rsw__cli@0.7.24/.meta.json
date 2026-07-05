@@ -1,0 +1,86 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3107364e88dc1a9f",
+    "fetchedFiles": [
+      "binary.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "binary-install",
+        "versionSpec": "^1.0.6"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "binary-install@1.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7079fac60a8c8d4d8a85422e936302ea26af9a803840a27c273535ca02776baf",
+        "sizeBytes": 185,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "binary.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "binary.js",
+        "reason": "required by ./install.js",
+        "sha256": "15bd7fd2b539b7b70a3d71817e2f8992f524a48cd1fe59a8f5c86c77cd3dd162",
+        "sizeBytes": 1662,
+        "signals": [
+          "binary-download",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./binary.js",
+        "sha256": "fccd52cd4ba60ac137d3c9e562f36ad8df6f7111bc0c7874e5d417cb3fc07520",
+        "sizeBytes": 734,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:52.792Z"
+  },
+  "hash": "sha256:a2c3eb3372af75ed09f01bc7763c9ac41cf49607d1ed425298aae516a5a7e13f"
+}

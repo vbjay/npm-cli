@@ -1,0 +1,88 @@
+
+{
+  "name": "rn-id-blurview",
+  "version": "1.2.2",
+  "description": "React Native light Blured component",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index",
+  "files": [
+    "src/",
+    "lib/",
+    "android/",
+    "ios/",
+    "rn-id-blurview.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint-ci": "yarn lint -f ./node_modules/@firmnav/eslint-github-actions-formatter/dist/formatter.js",
+    "build": "bob build",
+    "check-js": "yarn lint --fix && yarn typescript",
+    "bootstrap": "yarn && cd example && yarn && yarn setup && yarn pods"
+  },
+  "keywords": [
+    "react-native",
+    "blured",
+    "blurView",
+    "blur",
+    "native blur",
+    "react-native-blur",
+    "blur-view"
+  ],
+  "author": "Idris Sakhi <idrisssakhi@gmail.com> (https://github.com/idrisssakhi)",
+  "license": "MIT",
+  "devDependencies": {
+    "react-native-builder-bob": "0.18.2",
+    "react-native": "^0.66.0",
+    "react": "^17.0.2",
+    "@babel/core": "7.12.9",
+    "@babel/runtime": "7.12.5",
+    "@react-native-community/eslint-config": "2.0.0",
+    "@types/jest": "26.0.23",
+    "@types/react-native": "0.67.3",
+    "@types/react-test-renderer": "17.0.1",
+    "@typescript-eslint/eslint-plugin": "5.17.0",
+    "@typescript-eslint/parser": "5.17.0",
+    "babel-jest": "26.6.3",
+    "eslint": "7.32.0",
+    "jest": "26.6.3",
+    "metro-react-native-babel-preset": "0.67.0",
+    "react-test-renderer": "17.0.2",
+    "typescript": "4.4.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json"
+        }
+      ]
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:idrisssakhi/blurView.git"
+  },
+  "bugs": {
+    "url": "https://github.com/idrisssakhi/blurView/issues"
+  },
+  "homepage": "https://github.com/idrisssakhi/blurView#readme",
+  "publishConfig": {
+    "@idrisssakhi:registry": "https://npm.pkg.github.com"
+  }
+}

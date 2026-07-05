@@ -1,0 +1,155 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d628bf1bf9e4c8f8",
+    "fetchedFiles": [
+      "install.js",
+      "lib/download.js",
+      "lib/locate.js",
+      "lib/platform.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "dde55f33d7daa5c06e4cc1fe489a8311ac785475bb82d436f0d73b88cccb9350",
+        "sizeBytes": 2100,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js",
+          "lib/locate.js",
+          "lib/download.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Kantosaurus/origin",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/platform.js",
+        "reason": "required by ./install.js; required by ./lib/locate.js; required by ./lib/download.js",
+        "sha256": "2ef9a8b21d340fdacc55543a19bf38ea571f13a590a0385df89836cd9aed8686",
+        "sizeBytes": 4398,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/locate.js",
+        "reason": "required by ./install.js",
+        "sha256": "5e124d424b2af198e55d6237d5446f9a797c2f37b36b12f87ee9cbd23057f288",
+        "sizeBytes": 1810,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/download.js",
+        "reason": "required by ./install.js",
+        "sha256": "9c03a2f84aa944d7bc92462f0317746599e21ee7ded14757ec7ab69efaf098f4",
+        "sizeBytes": 5667,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "0d2d8a817dde4f58cae73e109a2612373e7c4642fc078a59c1044ab6ae0c294e",
+        "sizeBytes": 1085,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:20.926Z"
+  },
+  "hash": "sha256:3a3c4cdac68cc524b65e5e745bc3b7c8c1bee0ebcbf4bc38182f01f36bb330e4"
+}

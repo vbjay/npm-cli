@@ -1,0 +1,81 @@
+{
+  "name": "@mastermindzh/composable-json-stringify",
+  "version": "1.0.1",
+  "description": "Enhance JSON.stringify with composable replacer functions to handle non-serializable JavaScript types like BigInt, Symbols, and more",
+  "keywords": [
+    "typescript",
+    "npm",
+    "ts",
+    "json",
+    "serializer",
+    "stringify",
+    "mixin",
+    "composition",
+    "bigint",
+    "symbol",
+    "replacer",
+    "functional",
+    "kysely"
+  ],
+  "homepage": "https://github.com/mastermindzh/composable-json-stringify#readme",
+  "bugs": {
+    "url": "https://github.com/mastermindzh/composable-json-stringify/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mastermindzh/composable-json-stringify.git"
+  },
+  "license": "MIT",
+  "author": "Rick van Lieshout",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "deps": "npm run dev",
+    "dev": "tsc -w",
+    "fix-all": "npm run fix-lint && npm run format",
+    "fix-lint": "eslint --fix",
+    "format": "prettier --write .",
+    "lint": "eslint",
+    "prepare": "husky",
+    "prepublishOnly": "npm run fix-all",
+    "prettier": "prettier --check .",
+    "start": "node lib/index.js",
+    "test": "jest --config jestconfig.json",
+    "typeCheck": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "!(ci/**/*)*.{js, jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,js,ts,jsx,tsx,html,md}": [
+      "prettier --write --ignore-unknown"
+    ],
+    "*.test.ts": [
+      "jest --config jestconfig.json"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.8",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.25.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.1",
+    "@typescript-eslint/eslint-plugin": "^8.31.0",
+    "@typescript-eslint/parser": "^8.31.0",
+    "ansi-regex": ">=6.1.0",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
+    "prettier-eslint": "^16.4.1",
+    "ts-jest": "^29.3.2",
+    "typescript": "^5.8.3"
+  }
+}

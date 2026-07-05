@@ -1,0 +1,61 @@
+{
+  "name": "zidane-tui",
+  "version": "6.2.13",
+  "description": "Terminal UI for the zidane agent. Ships as a self-contained binary — install globally and run `zidane`.",
+  "license": "MIT",
+  "author": "Yaël GUILLOUX <yael.guilloux@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tahul/zidane",
+    "directory": "tui"
+  },
+  "homepage": "https://github.com/Tahul/zidane#readme",
+  "bugs": {
+    "url": "https://github.com/Tahul/zidane/issues"
+  },
+  "keywords": [
+    "zidane",
+    "tui",
+    "agent",
+    "cli",
+    "terminal-ui",
+    "ai",
+    "anthropic",
+    "claude"
+  ],
+  "type": "module",
+  "bin": {
+    "zidane": "./bin/zidane.mjs"
+  },
+  "files": [
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "postinstall": "node ./bin/postinstall.mjs",
+    "prestart": "bun run ../scripts/bundle-parser-worker.ts",
+    "start": "bun run src/cli.ts",
+    "predev": "bun run ../scripts/bundle-parser-worker.ts",
+    "dev": "ZIDANE_DEV=1 ZIDANE_DEBUG=1 ZIDANE_EXTENSION_DIRS=../extensions bun --watch run src/cli.ts",
+    "dev:executable": "ZIDANE_DEV=1 ZIDANE_DEBUG=1 ZIDANE_EXTENSION_DIRS=../extensions bun run ../scripts/run-executable.ts",
+    "build": "bun run ../scripts/build-executables.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "optionalDependencies": {
+    "zidane-tui-darwin-arm64": "6.2.13",
+    "zidane-tui-darwin-x64": "6.2.13",
+    "zidane-tui-linux-x64": "6.2.13",
+    "zidane-tui-linux-arm64": "6.2.13"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.104.2",
+    "@opentui/core": "^0.4.1",
+    "@opentui/react": "^0.4.1",
+    "@types/bun": "^1.3.14",
+    "@types/react": "^19.2.17",
+    "react": "^19.2.0",
+    "typescript": "~6.0.3"
+  }
+}

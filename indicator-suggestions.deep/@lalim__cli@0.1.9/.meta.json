@@ -1,0 +1,75 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "dd06604ee5f9370b",
+    "fetchedFiles": [
+      "install.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0985115bc46fc3b47e6c0106fafa264af9be620682f84b040a7ef981e8f45a46",
+        "sizeBytes": 3525,
+        "signals": [
+          "uses-child-process",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.cjs",
+        "sha256": "3561a6bba740f34195b9f7c0f9899763a3dd3d35249d4703d1ef23c7d9d5863e",
+        "sizeBytes": 1497,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:23.428Z"
+  },
+  "hash": "sha256:e22a8645b63795d0ae1df3bcf3ad51e1a7f00e3a959368199da448cd83a33b33"
+}

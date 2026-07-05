@@ -1,0 +1,226 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b5853aa8fd02359b",
+    "fetchedFiles": [
+      "dist/src/lib/backport-error.js",
+      "dist/src/lib/env.js",
+      "dist/src/lib/logger.js",
+      "dist/src/options/config/global-config.js",
+      "dist/src/options/config/read-config-file.js",
+      "dist/src/scripts/postinstall.js",
+      "dist/src/scripts/run-postinstall.js",
+      "dist/src/utils/exclude-undefined.js",
+      "dist/src/utils/is-errno-error.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "winston",
+        "versionSpec": "^3.19.0"
+      },
+      {
+        "name": "strip-json-comments",
+        "versionSpec": "^5.0.3"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "strip-json-comments@5.0.3",
+      "winston@3.19.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/src/scripts/run-postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ee2a55f5a6ed2f57d2fb1d4ee06c19656252cdaad44f27b7ce3f93a086a5cede",
+        "sizeBytes": 169,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/src/scripts/postinstall.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/src/scripts/postinstall.js",
+        "reason": "required by ./dist/src/scripts/run-postinstall.js",
+        "sha256": "0c0942ee336613f87929490cdc202cad4e2a90fd1f4c453e4939564f7326df35",
+        "sizeBytes": 781,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/src/lib/env.js",
+          "dist/src/lib/logger.js",
+          "dist/src/options/config/global-config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/src/lib/env.js",
+        "reason": "required by ./dist/src/scripts/postinstall.js; required by ./dist/src/lib/logger.js; required by ./dist/src/options/config/global-config.js",
+        "sha256": "01c35ff4c77e605f996d504e7baf5c3d9b9863e639e3cb4fb6dd5a285debc9e0",
+        "sizeBytes": 851,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/src/lib/logger.js",
+        "reason": "required by ./dist/src/scripts/postinstall.js; required by ./dist/src/options/config/read-config-file.js",
+        "sha256": "c0bd6cad5090a97e134c90637207b4b80bbb4a1b1b66dd57e9fce60edf1ca004",
+        "sizeBytes": 1871,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/src/lib/env.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/src/options/config/global-config.js",
+        "reason": "required by ./dist/src/scripts/postinstall.js",
+        "sha256": "98dc6e3af1181b251387c8d4265e25406a17259e6355d1937c19aba751bb00ac",
+        "sizeBytes": 2362,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/src/lib/backport-error.js",
+          "dist/src/lib/env.js",
+          "dist/src/utils/is-errno-error.js",
+          "dist/src/options/config/read-config-file.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/src/lib/backport-error.js",
+        "reason": "required by ./dist/src/options/config/global-config.js; required by ./dist/src/options/config/read-config-file.js",
+        "sha256": "595aab029d3d3758e3ea1f67efb32efc68bc499f4cbdd6bfde4d1a7835b8c283",
+        "sizeBytes": 2542,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/${errorContext.repoForkOwner}/${errorContext.repoName}",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/sorenlouv/backport/blob/main/docs/configuration.md#fork",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "dist/src/utils/is-errno-error.js",
+        "reason": "required by ./dist/src/options/config/global-config.js",
+        "sha256": "e4bbfdd5774d1f3a3f94ddb3239e7488528aac4cc7897bb7203a8b162bbff7d5",
+        "sizeBytes": 194,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/src/options/config/read-config-file.js",
+        "reason": "required by ./dist/src/options/config/global-config.js",
+        "sha256": "1b774edb5a1f8ddc968f1217af2030f9eb7813439ba6430d3b832c0acb2279c0",
+        "sizeBytes": 4597,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/src/lib/backport-error.js",
+          "dist/src/lib/logger.js",
+          "dist/src/utils/exclude-undefined.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/src/utils/exclude-undefined.js",
+        "reason": "required by ./dist/src/options/config/read-config-file.js",
+        "sha256": "655dc538843f839bd93f2544904a4bf378eb5efd60f8b54cc3575d9a06e93979",
+        "sizeBytes": 232,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/codegen-fix-imports.js",
+        "reason": "referenced by lifecycle script: `codegen`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:23.659Z"
+  },
+  "hash": "sha256:49b71c428f5bcad669264e4763c0f34330ffda8783ecde89af7d48110c7b0dd4"
+}

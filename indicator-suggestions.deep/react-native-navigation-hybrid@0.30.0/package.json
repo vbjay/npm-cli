@@ -1,0 +1,76 @@
+{
+  "name": "react-native-navigation-hybrid",
+  "description": "React Native Navigation that supports seamless navigation between Native and React.",
+  "version": "0.30.0",
+  "keywords": [
+    "react-native",
+    "navigation",
+    "navigator",
+    "router",
+    "hybrid"
+  ],
+  "nativePackage": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/listenzz/hybrid-navigation.git"
+  },
+  "homepage": "https://github.com/listenzz/hybrid-navigation",
+  "author": "listen <listenzz@163.com>",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./lib && tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "tsc": "tsc",
+    "start": "react-native start",
+    "run:ios": "react-native run-ios --project-path ./playground/ios",
+    "start:android": "adb shell am start -n com.navigationhybrid.playground/.SplashActivity",
+    "run:android": "cd playground/android && ./gradlew installDebug && npm run start:android",
+    "test": "jest",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
+  },
+  "peerDependencies": {
+    "react": ">=16.8",
+    "react-native": ">=0.60"
+  },
+  "dependencies": {
+    "path-to-regexp": "^6.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/runtime": "^7.13.10",
+    "@gfez/eslint-config-react-native": "^1.0.0",
+    "@react-native-community/hooks": "^2.4.7",
+    "@types/jest": "^26.0.21",
+    "@types/react": "^17.0.1",
+    "@types/react-native": "^0.64.0",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-test-renderer": "17.0.1",
+    "babel-jest": "^26.6.3",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.64.0",
+    "react": "17.0.1",
+    "react-native": "^0.64.0",
+    "react-native-fast-image": "^8.1.5",
+    "react-native-iphone-x-helper": "^1.2.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-toast-hybrid": "^2.3.0",
+    "react-redux": "^7.2.1",
+    "react-test-renderer": "17.0.1",
+    "redux": "^3.7.2",
+    "typescript": "^3.7.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

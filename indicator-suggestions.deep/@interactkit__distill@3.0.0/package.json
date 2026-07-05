@@ -1,0 +1,64 @@
+{
+  "name": "@interactkit/distill",
+  "version": "3.0.0",
+  "description": "CLI tool to distill an LLM's specific ability into a fast, deterministic code extractor (LLM → code).",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/define.d.ts",
+      "default": "./dist/define.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "distill": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "distill": "tsx src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InteractKit/distill.git"
+  },
+  "homepage": "https://github.com/InteractKit/distill#readme",
+  "bugs": {
+    "url": "https://github.com/InteractKit/distill/issues"
+  },
+  "keywords": [
+    "ner",
+    "entity-extraction",
+    "llm",
+    "code-generation",
+    "openai",
+    "anthropic",
+    "extraction",
+    "cli"
+  ],
+  "dependencies": {
+    "ai": "^6.0.209",
+    "commander": "^14.0.3",
+    "tsx": "^4.22.4",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}

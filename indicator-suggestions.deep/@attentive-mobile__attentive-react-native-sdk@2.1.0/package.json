@@ -1,0 +1,191 @@
+{
+  "name": "@attentive-mobile/attentive-react-native-sdk",
+  "version": "2.1.0",
+  "description": "React Native Module for the Attentive SDK",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!ios/Pods",
+    "!ios/Podfile.lock",
+    "!ios/*.xcworkspace",
+    "!**/xcuserdata",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!android/github.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
+    "build": "bob build",
+    "prepack": "bob build",
+    "release": "release-it",
+    "example": "npm --prefix example",
+    "bootstrap": "npm install && npm --prefix example install && npm --prefix example run pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
+    "dev:start": "npm run build && cd example && ./reset.sh && cd .. && npm run dev",
+    "dev": "npm --prefix example run start",
+    "dev:ios": "npm --prefix example run ios",
+    "dev:android": "npm --prefix example run android"
+  },
+  "keywords": [
+    "attentive",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/attentive-mobile/attentive-react-native-sdk.git"
+  },
+  "author": "Attentive <epd-accounts+npm@attentivemobile.com> (https://www.attentive.com)",
+  "contributors": [
+    "Wyatt Davis"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/attentive-mobile/attentive-react-native-sdk/issues"
+  },
+  "homepage": "https://github.com/attentive-mobile/attentive-react-native-sdk#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.2.2",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.2",
+    "@types/react": "^18.2.6",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "18.2.0",
+    "react-native": "0.75.5",
+    "react-native-builder-bob": "^0.20.4",
+    "release-it": "^15.0.0",
+    "typescript": "^4.5.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/Bonni",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false,
+          "semi": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false,
+    "semi": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "AttentiveReactNativeSdkSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.attentivereactnativesdk"
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.27.0",
+    "metro-react-native-babel-preset": "^0.77.0"
+  }
+}

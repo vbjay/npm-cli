@@ -1,0 +1,62 @@
+{
+  "name": "@vpnsin-labs/devsetup",
+  "version": "0.1.8",
+  "description": "Machine bootstrap CLI for web/mobile full-stack developers.",
+  "type": "module",
+  "bin": {
+    "devsetup": "bin/cli.js"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "templates",
+    "setup.sh",
+    "setup.ps1"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vpnsin-labs/devsetup.git"
+  },
+  "homepage": "https://github.com/vpnsin-labs/devsetup#readme",
+  "bugs": {
+    "url": "https://github.com/vpnsin-labs/devsetup/issues"
+  },
+  "keywords": [
+    "devtools",
+    "setup",
+    "bootstrap",
+    "nodejs",
+    "docker",
+    "android",
+    "mobile"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:md": "markdownlint-cli2",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "tsc --noEmit",
+    "test": "node --test",
+    "prepare": "husky"
+  },
+  "prettier": "@vpnsin-labs/devkit/prettier",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.2",
+    "@vpnsin-labs/devkit": "latest",
+    "eslint": "^10.4.1",
+    "husky": "^9.1.7",
+    "jiti": "^2.7.0",
+    "lint-staged": "^17.0.7",
+    "markdownlint-cli2": "^0.22.1",
+    "prettier": "^3.8.4",
+    "typescript": "^6.0.3"
+  }
+}

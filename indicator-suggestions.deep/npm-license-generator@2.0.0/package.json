@@ -1,0 +1,56 @@
+{
+  "name": "npm-license-generator",
+  "version": "2.0.0",
+  "description": "Generate HTML with license text from NPM dependencies",
+  "bin": {
+    "npm-license-generator": "./build/npm-license-generator"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "prepare": "npm run build-only",
+    "start": "npm run build && npm exec npm-license-generator",
+    "build": "eslint --fix src && prettier -w src/* && npm run build-only",
+    "build-only": "tsc && cp -p -r lib/* build",
+    "watch": "tsc --watch"
+  },
+  "author": "Brendan Early <mymindstorm@evermiss.net>",
+  "license": "MIT",
+  "exports": {
+    ".": "./build/licenses.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/mustache": "^4.2.5",
+    "@types/node": "^20.10.4",
+    "@types/superagent": "^8.1.9",
+    "@types/yargs": "^15.0.5",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "3.3.3",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.5.0"
+  },
+  "dependencies": {
+    "mustache": "^4.2.0",
+    "rimraf": "^6.0.1",
+    "spdx-expression-parse": "^4.0.0",
+    "superagent": "^10.1.0",
+    "tar": "^7.4.3",
+    "yargs": "^15.3.1"
+  },
+  "keywords": [
+    "license",
+    "licence",
+    "npm",
+    "static",
+    "generator"
+  ],
+  "homepage": "https://github.com/mymindstorm/npm-license-generator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mymindstorm/npm-license-generator.git"
+  }
+}

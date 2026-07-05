@@ -1,0 +1,58 @@
+{
+  "name": "@khriztianmoreno/storybook-addon-raw-styled-component",
+  "version": "0.8.1",
+  "description": "A Storybook addon that extracts and displays compiled syntax-highlighted HTML & CSS",
+  "main": "index.js",
+  "scripts": {
+    "build:watch": "babel --watch -d ./lib ./src",
+    "build": "npm run clean && babel -d ./lib ./src",
+    "clean": "rm -rf ./lib",
+    "prepare": "npm run build",
+    "prettier": "prettier --write '**/*.{js,json,md,yml}'"
+  },
+  "keywords": [
+    "addon",
+    "storybook",
+    "styled-components",
+    "react",
+    "html",
+    "css"
+  ],
+  "author": "khriztianmoreno <khriztianmoreno@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/preset-env": "7.9.5",
+    "@babel/preset-react": "7.9.4",
+    "@storybook/react": "5.3.18",
+    "babel-eslint": "10.1.0",
+    "eslint": "6.8.0",
+    "eslint-plugin-react": "7.19.0",
+    "react": "16.13.1"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.8.3",
+    "@babel/parser": "^7.8.3",
+    "@storybook/addons": "^5.3.4",
+    "@storybook/api": "^5.3.4",
+    "@storybook/components": "^5.3.4",
+    "estraverse": "^5.0.0",
+    "prettier": "^1.19.1",
+    "prismjs": "^1.19.0",
+    "react-syntax-highlighter": "^12.2.1",
+    "styled-components": "^5.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/khriztianmoreno/storybook-addon-raw-styled-component/issues"
+  },
+  "homepage": "https://github.com/khriztianmoreno/storybook-addon-raw-styled-component/",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  }
+}

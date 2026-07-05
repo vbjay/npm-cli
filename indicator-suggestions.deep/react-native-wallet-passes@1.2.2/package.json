@@ -1,0 +1,78 @@
+{
+  "name": "react-native-wallet-passes",
+  "version": "1.2.2",
+  "description": "React Native module to handle Wallet passes on iOS and Android.",
+  "scripts": {
+    "prepare": "bob build",
+    "release": "yarn login && yarn publish"
+  },
+  "react-native": "src/index.ts",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheWirv/react-native-wallet-passes.git"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "PassKit",
+    "Wallet"
+  ],
+  "author": {
+    "email": "miyabi@mybdesign.com",
+    "name": "Masayuki Iwai",
+    "url": "http://mybdesign.com"
+  },
+  "contributors": [
+    {
+      "email": "xxx.mazzel.xxx+github@gmail.com",
+      "name": "Marcel Lasaj"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/TheWirv/react-native-wallet-passes#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/eslint-parser": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-typescript": "^7.15.0",
+    "@babel/runtime": "^7.15.0",
+    "@types/react": "^17.0.19",
+    "@types/react-native": "^0.64.13",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.24.0",
+    "react": "^17.0.2",
+    "react-native": "^0.65.0",
+    "react-native-builder-bob": "^0.18.1",
+    "react-native-codegen": "^0.0.7",
+    "typescript": "^4.3.5"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100,
+    "endOfLine": "lf"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "files": [
+    "android",
+    "ios",
+    "lib",
+    "src",
+    "react-native-wallet-passes.podspec"
+  ]
+}

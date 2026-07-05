@@ -1,0 +1,99 @@
+{
+	"name": "@untemps/user-permissions-utils",
+	"version": "2.2.3",
+	"description": "Collection of utility functions to manage user permissions",
+	"repository": "git@github.com:untemps/user-permissions-utils.git",
+	"keywords": [
+		"utils",
+		"permissions",
+		"javascript"
+	],
+	"author": "Vincent Le Badezet <v.lebadezet@untemps.net>",
+	"license": "MIT",
+	"engines": {
+		"node": ">=20"
+	},
+	"private": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "dist/index.js",
+	"module": "dist/index.es.js",
+	"types": "dist/index.d.ts",
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.es.js",
+			"require": "./dist/index.js",
+			"default": "./dist/index.es.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@commitlint/cli": "^21.0.1",
+		"@commitlint/config-conventional": "^21.0.1",
+		"@eslint/js": "^10.0.1",
+		"@semantic-release/changelog": "^6.0.1",
+		"@semantic-release/git": "^10.0.1",
+		"@vitest/coverage-v8": "^4.1.6",
+		"eslint": "^10.3.0",
+		"globals": "^17.6.0",
+		"husky": "^9.1.7",
+		"jsdom": "^29.1.1",
+		"lint-staged": "^17.0.7",
+		"prettier": "^3.8.3",
+		"semantic-release": "^25.0.3",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.60.1",
+		"vite": "^8.0.12",
+		"vite-plugin-dts": "^5.0.2",
+		"vitest": "^4.1.6"
+	},
+	"release": {
+		"branches": [
+			"main",
+			{
+				"name": "beta",
+				"prerelease": true
+			}
+		],
+		"plugins": [
+			[
+				"@semantic-release/commit-analyzer",
+				{
+					"releaseRules": [
+						{
+							"breaking": true,
+							"release": "major"
+						},
+						{
+							"type": "chore",
+							"release": "patch"
+						}
+					]
+				}
+			],
+			"@semantic-release/release-notes-generator",
+			"@semantic-release/changelog",
+			"@semantic-release/npm",
+			"@semantic-release/git"
+		]
+	},
+	"scripts": {
+		"dev": "vite demo --config demo/vite.config.js",
+		"test": "vitest",
+		"test:ci": "vitest run --coverage",
+		"typecheck": "tsc --noEmit",
+		"build": "vite build",
+		"lint": "eslint .",
+		"prettier": "prettier \"./**/*.{js,ts}\" --ignore-path ./.prettierignore --write",
+		"format:check": "prettier \"./**/*.{js,ts}\" --ignore-path ./.prettierignore --check",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.{js,ts}": "prettier --ignore-path ./.prettierignore --write"
+	}
+}

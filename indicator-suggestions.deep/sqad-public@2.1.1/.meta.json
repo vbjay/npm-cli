@@ -1,0 +1,193 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9865223ce59f09bb",
+    "fetchedFiles": [
+      "bin/postinstall.js",
+      "lib/detect/cloud.js",
+      "lib/detect/ide.js",
+      "lib/detect/stack.js",
+      "lib/detect/tracker.js",
+      "lib/detect/utils.js",
+      "lib/generate/config.js",
+      "lib/generate/context-files.js",
+      "lib/generate/ide-skills.js",
+      "lib/init.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "fc54a458eabb1cf64e06a2767a72e0147bf2535e1406ff270cd4e7bf2ddd7270",
+        "sizeBytes": 2139,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/init.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/init.js",
+        "reason": "required by ./bin/postinstall.js",
+        "sha256": "eb9806bdbe107ae9ebe7d27eba7a5ed8ab24a7a6af44ce4c28bd873b7bff5022",
+        "sizeBytes": 11891,
+        "signals": [
+          "uses-child-process",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/detect/stack.js",
+          "lib/detect/cloud.js",
+          "lib/detect/tracker.js",
+          "lib/detect/ide.js",
+          "lib/generate/context-files.js",
+          "lib/generate/config.js",
+          "lib/generate/ide-skills.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/detect/stack.js",
+        "reason": "required by ./lib/init.js",
+        "sha256": "5fb6b167321e5f31283a9b719f29c5772ce6911cf2e9cabf52602ca3cbdbaf1e",
+        "sizeBytes": 24761,
+        "signals": [
+          "native-build",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/detect/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/detect/utils.js",
+        "reason": "required by ./lib/detect/stack.js; required by ./lib/detect/cloud.js",
+        "sha256": "757a6adef6fd581d828b8f73f0b2a1b8279ecea77113fc22beb64a3d3a423a51",
+        "sizeBytes": 2941,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/detect/cloud.js",
+        "reason": "required by ./lib/init.js",
+        "sha256": "da3330ca6aa6e2aebd02a2d89e9f47acc241020ca1638a23561b2eb434ce7b2c",
+        "sizeBytes": 9557,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/detect/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/detect/tracker.js",
+        "reason": "required by ./lib/init.js",
+        "sha256": "f9b72142afa5b19f148571820ecd2c0c5261ca73cfe0fb38f1b06fc2ae98c5f7",
+        "sizeBytes": 1668,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/detect/ide.js",
+        "reason": "required by ./lib/init.js",
+        "sha256": "89d53cbc9c69f1a2e18dadbcba4dbe3dfefab284f6fb11342a8ca9dc500b6937",
+        "sizeBytes": 2448,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/generate/context-files.js",
+        "reason": "required by ./lib/init.js",
+        "sha256": "ba6b35150ab7d279fd4c85fca2514c81f35169aa734e9d9ce6a0a4d1e8c1726e",
+        "sizeBytes": 21853,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/generate/config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/generate/config.js",
+        "reason": "required by ./lib/generate/context-files.js; required by ./lib/init.js; required by ./lib/generate/ide-skills.js",
+        "sha256": "145692ec67c9260f5531c403405a08cc12517eda3184ca4ba8496f39911c49ad",
+        "sizeBytes": 7924,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/generate/ide-skills.js",
+        "reason": "required by ./lib/init.js",
+        "sha256": "f8ec2a7c6ec434fca2821ed23710d95ca4481a3fe76260baeebb0afd50905dce",
+        "sizeBytes": 6028,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/generate/config.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:13.569Z"
+  },
+  "hash": "sha256:1c6155862c8a15574d6391f234124020f1273f27309ae5b144d7ebd9787a55dd"
+}

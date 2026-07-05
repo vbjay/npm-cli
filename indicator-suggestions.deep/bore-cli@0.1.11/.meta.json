@@ -1,0 +1,90 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d1037e4570dbe4cd",
+    "fetchedFiles": [
+      "package.json",
+      "post-install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^7.5.6"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "tar@7.5.19"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "post-install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "15223d936110cc1b1f0d98269e4d7b58c5b4ad1e0d9c2792d1675a5838a3e9d7",
+        "sizeBytes": 3466,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Aditya-ds-1806/bore/releases/download/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./post-install.js",
+        "sha256": "ac07d7e5686e72993a3842e46603334dca99fd1525b7ce6d25e475d156d74f42",
+        "sizeBytes": 1070,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:25.393Z"
+  },
+  "hash": "sha256:20f94f641b0f102a558498cd4795df738ce03f5093fbff4fc5afd8fe031f5c0a"
+}

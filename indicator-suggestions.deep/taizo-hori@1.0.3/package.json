@@ -1,0 +1,80 @@
+{
+    "name": "taizo-hori",
+    "version": "1.0.3",
+    "description": "An updated recreation of the classic 1982 Dig Dug arcade game using vanilla JavaScript and HTML5 Canvas",
+    "keywords": [
+        "digdug",
+        "dig dug",
+        "arcade",
+        "game",
+        "retro",
+        "html5",
+        "canvas",
+        "javascript",
+        "pixel-art",
+        "namco",
+        "classic-game",
+        "taizo-hori",
+        "browser-game",
+        "2d-game",
+        "vanilla-js"
+    ],
+    "homepage": "https://IanSmith89.github.io/digdug/",
+    "bugs": {
+        "url": "https://github.com/IanSmith89/digdug/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IanSmith89/digdug.git"
+    },
+    "license": "MIT",
+    "author": "Ian Smith",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/digdug.es.js",
+            "require": "./dist/digdug.umd.js"
+        }
+    },
+    "main": "./dist/digdug.umd.js",
+    "module": "./dist/digdug.es.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "vite build",
+        "build:demo": "vite build --config vite.config.demo.js",
+        "dev": "vite",
+        "format": "prettier --write \"**/*.{js,json,md}\"",
+        "format:check": "prettier --check \"**/*.{js,json,md}\"",
+        "lint": "eslint",
+        "prepare": "husky",
+        "prepublishOnly": "npm run lint && npm run build",
+        "preview": "vite preview"
+    },
+    "lint-staged": {
+        "*.{js}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{json,md,css}": [
+            "prettier --write"
+        ]
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.2",
+        "eslint-config-prettier": "^10.1.8",
+        "globals": "^17.1.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.7",
+        "prettier": "^3.8.1",
+        "prettier-plugin-packagejson": "^3.0.0",
+        "terser": "^5.46.0",
+        "vite": "^5.0.0"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

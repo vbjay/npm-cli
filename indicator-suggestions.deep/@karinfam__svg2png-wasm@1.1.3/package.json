@@ -1,0 +1,95 @@
+{
+  "name": "@karinfam/svg2png-wasm",
+  "version": "1.1.3",
+  "description": "A svg to png converter made with wasm.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "unpkg": "dist/index.min.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "node": "./dist/index.mjs",
+      "default": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./svg2png_wasm_bg.wasm": "./svg2png_wasm_bg.wasm"
+  },
+  "scripts": {
+    "prepack": "run-s clean build",
+    "build": "run-s build:*",
+    "build:wasm": "npm run copy-wasm",
+    "build:ts": "run-s bundle",
+    "bundle": "run-p bundle:*",
+    "bundle:js": "node bundle",
+    "bundle:dts": "dts-bundle-generator --no-banner --external-types -o dist/index.d.ts lib/index.ts",
+    "clean": "run-p clean:*",
+    "clean:bundle": "rimraf dist",
+    "copy-wasm": "copyfiles -f dist-wasm/svg2png_wasm_bg.wasm .",
+    "format": "run-p format:*",
+    "format:all": "prettier --write --plugin-search-dir=. .",
+    "format:rust": "cargo fmt",
+    "lint": "run-p lint:*",
+    "lint:js": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .prettierignore .",
+    "lint:rust": "cargo fmt -- --check && cargo clippy",
+    "test": "run-p test:vrt test:node",
+    "test:node": "vitest",
+    "test:vrt": "run-s vrt:gen vrt:comp",
+    "vrt:gen": "node test/vrt/index.mjs",
+    "vrt:comp": "reg-cli test/vrt/actual test/vrt/expected test/vrt/diff",
+    "vrt:clean": "rimraf test/vrt/diff test/vrt/actual",
+    "vrt-update": "run-s vrt:clean vrt:gen && reg-cli test/vrt/actual test/vrt/expected test/vrt/diff -U",
+    "semantic-release": "semantic-release",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karinfam/svg2png-wasm.git"
+  },
+  "keywords": [
+    "wasm",
+    "svg",
+    "png"
+  ],
+  "files": [
+    "svg2png_wasm_bg.wasm",
+    "dist",
+    "NOTICE"
+  ],
+  "author": "ssssota",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karinfam/svg2png-wasm/issues"
+  },
+  "homepage": "https://karinfam.github.io/svg2png-wasm/",
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@types/glob": "^7.2.0",
+    "copyfiles": "^2.4.1",
+    "dts-bundle-generator": "^6.3.0",
+    "esbuild": "^0.14.10",
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-svelte3": "^3.2.1",
+    "glob": "^7.2.0",
+    "husky": "^7.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "prettier-plugin-svelte": "^2.5.1",
+    "reg-cli": "^0.17.4",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^19.0.2",
+    "serve": "^13.0.2",
+    "svelte": "^3.44.3",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4",
+    "vitest": "^0.9.4",
+    "wasm-pack": "^0.10.2"
+  },
+  "type": "module"
+}

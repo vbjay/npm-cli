@@ -1,0 +1,97 @@
+{
+	"name": "lamington",
+	"version": "1.0.0-alpha.6",
+	"description": "A suite of tools to make building and testing EOS smart contracts easier. ",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
+	"scripts": {
+		"build": "npm run clean && tsc && npm run copy:scripts && npm run copy:configs",
+		"changelog": "auto-changelog --commit-limit false",
+		"check:types": "tsc --noEmit",
+		"copy:scripts": "cp -r ./src/scripts/ ./lib/scripts/",
+		"copy:configs": "cp -R ./src/eosio-config ./lib/eosio-config",
+		"clean": "rm -rf ./lib",
+		"docs": "typedoc --out api-docs ./src",
+		"format": "prettier --write \"src/**/*.ts\"",
+		"lamington:init": "lamington init",
+		"prepublishOnly": "npm test",
+		"prepare": "npm run build",
+		"test": "TS_NODE_FILES=true mocha --require ts-node/register src/**/*.test.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CoinageCrypto/lamington.git"
+	},
+	"bin": {
+		"lamington": "./lib/cli/index.js"
+	},
+	"keywords": [
+		"EOS",
+		"EOS.io",
+		"Smart Contract",
+		"C++",
+		"wasm",
+		"Typescript",
+		"Truffle",
+		"Compile",
+		"Deployment",
+		"Testing",
+		"Unit Testing",
+		"Mocha"
+	],
+	"author": "Kevin Brown",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/CoinageCrypto/lamington/issues"
+	},
+	"homepage": "https://github.com/CoinageCrypto/lamington#readme",
+	"files": [
+		"lib/**/*"
+	],
+	"devDependencies": {
+		"@types/chai": "4.2.12",
+		"@types/chalk": "2.2.0",
+		"@types/mkdirp": "1.0.1",
+		"@types/mocha": "8.0.1",
+		"@types/ncp": "2.0.4",
+		"@types/node": "14.0.27",
+		"@types/node-fetch": "2.5.7",
+		"@types/ora": "3.2.0",
+		"@types/rimraf": "3.0.0",
+		"@types/text-encoding": "0.0.35",
+		"auto-changelog": "2.2.0",
+		"eosjs": "20.0.3",
+		"eosjs-ecc": "4.0.7",
+		"prettier": "2.0.5",
+		"ts-node": "8.10.2",
+		"typedoc": "0.18.0",
+		"typescript": "3.9.7"
+	},
+	"dependencies": {
+		"axios": "0.19.2",
+		"chai": "4.2.0",
+		"chalk": "4.1.0",
+		"clarify": "2.1.0",
+		"colors": "1.4.0",
+		"commander": "6.0.0",
+		"deep-equal-in-any-order": "1.0.28",
+		"docker-cli-js": "2.7.1",
+		"dotenv": "8.2.0",
+		"glob": "7.1.6",
+		"got": "11.5.2",
+		"mkdirp": "1.0.4",
+		"mocha": "8.1.1",
+		"ncp": "2.0.0",
+		"node-fetch": "2.6.0",
+		"ora": "5.0.0",
+		"qrcode-terminal": "0.12.0",
+		"rimraf": "3.0.2",
+		"tar": "6.0.2",
+		"trace": "3.1.1",
+		"ts-mocha": "7.0.0"
+	},
+	"peerDependencies": {
+		"eosjs": "^20.0.0",
+		"eosjs-ecc": "^4.0.4"
+	}
+}

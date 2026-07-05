@@ -1,0 +1,159 @@
+{
+  "name": "git-history-ui",
+  "version": "5.4.1",
+  "description": "Local-first Git history investigation, portable reports, and PR impact automation.",
+  "main": "dist/cli.js",
+  "types": "dist/backend/server.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/backend/server.d.ts",
+      "require": "./dist/backend/server.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "require": "./dist/cli.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "git-history-ui": "dist/cli.js"
+  },
+  "files": [
+    "dist/**/*",
+    "build/**/*",
+    "scripts/check-native.js",
+    "scripts/pr-impact-action.js",
+    "scripts/register-protocol.js",
+    "action.yml",
+    "docs/**/*.md",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "build": "npm run build:backend && npm run build:frontend && npm run copy-frontend",
+    "build:backend": "tsc -p tsconfig.json",
+    "build:frontend": "npm run --prefix frontend -s build -- --configuration production",
+    "build:production": "NODE_ENV=production npm run build",
+    "dev": "concurrently -n backend,frontend -c blue,magenta \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "ts-node-dev --respawn --transpile-only src/backend/dev-server.ts",
+    "dev:frontend": "npm run --prefix frontend start -- --port 4200 --proxy-config proxy.conf.json",
+    "start": "node dist/backend/server.js",
+    "start:production": "NODE_ENV=production node dist/backend/server.js",
+    "test": "node --test apps/chrome-extension/link.test.js scripts/pr-impact-action.test.js && node scripts/check-extension.js && jest",
+    "test:node": "node --test apps/chrome-extension/link.test.js scripts/pr-impact-action.test.js",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:frontend": "npm run --prefix frontend test -- --watch=false --browsers=ChromeHeadless",
+    "test:all": "npm test && npm run test:frontend",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,js}\" \"frontend/src/**/*.{ts,html,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js}\" \"frontend/src/**/*.{ts,html,css}\"",
+    "audit:prod": "npm audit --omit=dev --audit-level=moderate --registry=https://registry.npmjs.org",
+    "audit:frontend:prod": "npm audit --prefix frontend --omit=dev --audit-level=moderate --registry=https://registry.npmjs.org",
+    "check:extension": "node scripts/check-extension.js",
+    "package:extension": "node scripts/package-extension.js",
+    "smoke:action": "node scripts/smoke-pr-impact-action.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist build coverage frontend/dist frontend/.angular",
+    "copy-frontend": "rm -rf build/frontend && mkdir -p build/frontend && cp -r frontend/dist/frontend/browser/* build/frontend/",
+    "prepare": "husky",
+    "postinstall": "node scripts/check-native.js",
+    "prepublishOnly": "npm run clean && npm run lint && npm run typecheck && npm test -- --ci && npm run audit:prod && npm run audit:frontend:prod && npm run build"
+  },
+  "keywords": [
+    "git",
+    "history",
+    "visualization",
+    "cli",
+    "ui",
+    "commit",
+    "graph",
+    "diff",
+    "angular",
+    "developer-tools",
+    "git-graph",
+    "git-log",
+    "command-palette",
+    "natural-language-search",
+    "ai",
+    "anthropic",
+    "openai",
+    "claude",
+    "blame",
+    "code-insights",
+    "time-travel",
+    "pull-request"
+  ],
+  "author": "Ankit Sharma <ankit.sharma199803@gmail.com>",
+  "license": "MIT",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/beingmartinbmc"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^8.0.0",
+    "open": "^8.4.2"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^12.9.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@eslint/js": "^9.39.4",
+    "@types/compression": "^1.7.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.16.10",
+    "concurrently": "^9.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.4.11",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.61.0"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "overrides": {
+    "qs": "^6.15.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beingmartinbmc/git-history-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/beingmartinbmc/git-history-ui/issues"
+  },
+  "homepage": "https://github.com/beingmartinbmc/git-history-ui#readme",
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "frontend/src/**/*.{ts,html,css}": [
+      "prettier --write"
+    ],
+    "*.{json,yml,yaml,cjs}": [
+      "prettier --write"
+    ]
+  }
+}

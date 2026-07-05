@@ -1,0 +1,259 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e6804171cbdd34fe",
+    "fetchedFiles": [
+      "dist/lib/auth-constants.js",
+      "dist/lib/config.js",
+      "dist/lib/errors.js",
+      "dist/lib/migrate-auth.js",
+      "dist/lib/skills/content.js",
+      "dist/lib/skills/create-installer.js",
+      "dist/lib/skills/index.js",
+      "dist/lib/skills/update-installed.js",
+      "dist/lib/twist-account.js",
+      "dist/lib/user-records.js",
+      "dist/postinstall.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "@doist/cli-core",
+        "versionSpec": "0.26.0"
+      },
+      {
+        "name": "@doist/twist-sdk",
+        "versionSpec": "2.9.4"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@doist/cli-core@0.26.0",
+      "@doist/twist-sdk@2.9.4"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0620528eaa186efbe27488277340b1fe0c567d7abea5873b1401b5a11c2a468d",
+        "sizeBytes": 444,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/postinstall.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/postinstall.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "ced17e9e40627ecdcb756b6ae32ba1342fea0c6286c2eab7c91d4fbe374770dc",
+        "sizeBytes": 501,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/migrate-auth.js",
+          "dist/lib/skills/update-installed.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/migrate-auth.js",
+        "reason": "required by ./dist/postinstall.js",
+        "sha256": "18040c1802a32c854b1aad154320871e1d7ba5e8e0610766311f7d596ddffdf2",
+        "sizeBytes": 2475,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/auth-constants.js",
+          "dist/lib/config.js",
+          "dist/lib/twist-account.js",
+          "dist/lib/user-records.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/auth-constants.js",
+        "reason": "required by ./dist/lib/migrate-auth.js",
+        "sha256": "722844de03e6f6be5f8d3cbb93c938b0b840f7e7fb649b2004bac5c079232933",
+        "sizeBytes": 492,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/config.js",
+        "reason": "required by ./dist/lib/migrate-auth.js; required by ./dist/lib/user-records.js",
+        "sha256": "1bec82cecefa051a2a859c23b430133d564871de8e1c8d52738ca33d19bfe61b",
+        "sizeBytes": 10365,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/errors.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/errors.js",
+        "reason": "required by ./dist/lib/config.js; required by ./dist/lib/skills/create-installer.js",
+        "sha256": "a490d4c82d32ff2156723d79240b8c90cb1bd9ffa1c2aafc04e0571f35ebe8b9",
+        "sizeBytes": 2002,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/twist-account.js",
+        "reason": "required by ./dist/lib/migrate-auth.js; required by ./dist/lib/user-records.js",
+        "sha256": "29704fde041aefe37735bbb9d3c24ee557d5017efed3085f6dc73faf87417c2f",
+        "sizeBytes": 821,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/user-records.js",
+        "reason": "required by ./dist/lib/migrate-auth.js",
+        "sha256": "ded29921256844322d3c896870940c663cbe96c85f02c2eed2a3071b107322d5",
+        "sizeBytes": 3108,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/config.js",
+          "dist/lib/twist-account.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/update-installed.js",
+        "reason": "required by ./dist/postinstall.js",
+        "sha256": "694d2e2228cbcacd40d84318e99a66b83db9df942a77ee140535c6c9afb1e82a",
+        "sizeBytes": 745,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/skills/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/index.js",
+        "reason": "required by ./dist/lib/skills/update-installed.js",
+        "sha256": "e582214913dbf15e2f809d3e04be8c926e715fb67a5df6e76d35532e3b201f64",
+        "sizeBytes": 1652,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/skills/create-installer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/create-installer.js",
+        "reason": "required by ./dist/lib/skills/index.js",
+        "sha256": "6917e007b32cfe6b9337e6e0ea93f85f2dd3b8975666b235b28bd1914a258999",
+        "sizeBytes": 2695,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/errors.js",
+          "dist/lib/skills/content.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/content.js",
+        "reason": "required by ./dist/lib/skills/create-installer.js",
+        "sha256": "7c049140618b5aae94335896cca1cf9e25044b61a580f10cc651013d50d5c12f",
+        "sizeBytes": 24866,
+        "signals": [
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://twist.com/...\\",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://twist.com/a/1585/ch/100/t/200",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://twist.com/a/1585/ch/100/t/200/c/300",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://twist.com/a/1585/msg/400",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://twist.com/a/1585/msg/400/m/500",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./dist/lib/skills/content.js",
+        "sha256": "a465cdc39e662759e06424f77d5487278b251944a64098e2f018f549405512f1",
+        "sizeBytes": 2317,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:58.774Z"
+  },
+  "hash": "sha256:153315d2966397e199e094a6e671bc49f21db29e61f9410492b27de7b77340cd"
+}

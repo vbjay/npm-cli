@@ -1,0 +1,108 @@
+{
+  "name": "akm-cli",
+  "version": "0.8.14",
+  "type": "module",
+  "description": "akm (Agent Knowledge Management) — A package manager for AI agent skills, commands, tools, and knowledge. Works with Claude Code, OpenCode, Cursor, and any AI coding assistant.",
+  "keywords": [
+    "akm",
+    "agent-knowledge-management",
+    "agent-kit-manager",
+    "akm-cli",
+    "ai-agent",
+    "ai-tools",
+    "agent-framework",
+    "package-manager",
+    "developer-tools",
+    "cli",
+    "skills",
+    "commands",
+    "claude-code",
+    "opencode",
+    "mcp",
+    "ai-coding-assistant",
+    "agent-skills",
+    "skill-management"
+  ],
+  "homepage": "https://github.com/itlackey/akm#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itlackey/akm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itlackey/akm/issues"
+  },
+  "license": "MPL-2.0",
+  "pinNotes": {
+    "@opencode-ai/sdk@1.2.20": "Exact pin. The SDK surface we use (createOpencode + session.create/prompt/delete in src/integrations/agent/sdk-runner.ts) is stable across 1.x, but the SDK has shipped 5+ minor versions of unrelated provider/registry churn. akm-cli is a global CLI install so the pin is isolated from user-project deps. Re-test sdk-runner before bumping."
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "LICENSE",
+    "docs/migration/release-notes",
+    "docs/migration/v0.7-to-v0.8.md",
+    "docs/data-and-telemetry.md"
+  ],
+  "bin": {
+    "akm": "dist/cli.js",
+    "akm-migrate-storage": "dist/scripts/migrate-storage.js"
+  },
+  "scripts": {
+    "preinstall": "node -e \"var ua=process.env.npm_config_user_agent||'';var major=parseInt((process.versions.node||'0').split('.')[0],10);if(process.versions.bun||ua.startsWith('bun/')||process.env.BUN_INSTALL||major>=20){process.exit(0)}console.error('\\n  ERROR: akm-cli requires the Bun runtime (https://bun.sh), Node.js >= 20, or the prebuilt binary.\\n  Install options:\\n    1. Bun:    curl -fsSL https://bun.sh/install | bash  &&  bun install -g akm-cli\\n    2. Binary: curl -fsSL https://github.com/itlackey/akm/releases/latest/download/install.sh | bash\\n');process.exit(1)\"",
+    "build": "rm -rf dist && bun run tsc --project ./tsconfig.build.json && bun scripts/copy-assets.ts && bun scripts/fix-esm-extensions.ts",
+    "check": "bun run lint && bunx tsc --noEmit && bun run test:unit && bun run test:integration",
+    "check:fast": "bun run lint && bunx tsc --noEmit && bun run test:unit",
+    "check:changed": "bun test tests/output-baseline.test.ts tests/integration/e2e.test.ts tests/stash-search.test.ts && bun run lint && bunx tsc --noEmit",
+    "test": "bun test --parallel=${TEST_PARALLEL:-12} --timeout=30000 ./tests --path-ignore-patterns=tests/integration",
+    "test:unit": "bun test --parallel=${TEST_PARALLEL:-12} --timeout=30000 ./tests --path-ignore-patterns=tests/integration",
+    "test:integration": "bun test --parallel=${TEST_PARALLEL:-12} --timeout=30000 ./tests/integration ./tests/commands ./tests/workflows",
+    "test:node-smoke": "bun scripts/node-smoke.ts",
+    "test:node-compat": "AKM_NODE_COMPAT_TESTS=1 bun test --timeout=120000 tests/integration/node-compat.test.ts",
+    "test:sharded": "bun test ./tests --shard=1/4 & bun test ./tests --shard=2/4 & bun test ./tests --shard=3/4 & bun test ./tests --shard=4/4 & wait",
+    "test:time": "bun scripts/test-timing-report.ts",
+    "lint:isolation": "bun scripts/lint-tests-isolation.ts",
+    "lint:devto-posts": "bun scripts/lint-devto-posts.ts",
+    "lint:devto-posts:fix": "bun scripts/lint-devto-posts.ts --fix",
+    "publish:devto": "npx -y @sinedied/devto-cli push \"docs/posts/**/*.md\" --token \"$DEVTO_TOKEN\" --repo \"$GITHUB_REPOSITORY\" --branch \"${GITHUB_REF_NAME:-main}\" --reconcile",
+    "release:check": "./tests/release-check.sh",
+    "lint": "bunx biome check src/ tests/ && bun scripts/lint-tests-isolation.ts && bun scripts/lint-license-headers.ts && bun scripts/lint-runtime-boundary.ts",
+    "lint:runtime-boundary": "bun scripts/lint-runtime-boundary.ts",
+    "lint:tests-isolation": "bun scripts/lint-tests-isolation.ts",
+    "lint:fix": "bunx biome check --write src/ tests/",
+    "format": "bunx biome format --write src/ tests/",
+    "prepublishOnly": "cp .github/README.npm.md README.md && bun run build",
+    "postpublish": "git checkout -- README.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.14",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^22.19.17",
+    "@types/semver": "^7.5.8",
+    "bun-types": "^1.3.13",
+    "typescript": "^5.9.3"
+  },
+  "optionalDependencies": {
+    "@huggingface/transformers": "^4.2.0",
+    "better-sqlite3": "^11.8.0",
+    "sqlite-vec": "^0.1.9"
+  },
+  "engines": {
+    "bun": ">=1.0.0",
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.3.0",
+    "@opencode-ai/sdk": "1.2.20",
+    "citty": "^0.2.2",
+    "dotenv": "^17.4.2",
+    "semver": "^7.6.0",
+    "yaml": "^2.8.4",
+    "zod": "^3.23.0",
+    "zod-to-json-schema": "^3.23.0"
+  }
+}

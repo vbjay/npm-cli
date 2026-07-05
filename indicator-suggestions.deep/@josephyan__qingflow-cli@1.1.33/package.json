@@ -1,0 +1,35 @@
+{
+  "name": "@josephyan/qingflow-cli",
+  "version": "1.1.33",
+  "description": "Human-friendly Qingflow command line interface for auth, record operations, import, tasks, and stable builder flows.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "qingflow": "./npm/bin/qingflow.mjs",
+    "qingflow-skills": "./npm/bin/qingflow-skills.mjs"
+  },
+  "scripts": {
+    "postinstall": "node ./npm/scripts/postinstall.mjs"
+  },
+  "files": [
+    "README.md",
+    "pyproject.toml",
+    "entry_point.py",
+    "src/qingflow_mcp/**/*.py",
+    "src/qingflow_mcp/py.typed",
+    "qingflow",
+    "npm/",
+    "docs/local-agent-install.md",
+    "skills/"
+  ],
+  "engines": {
+    "node": ">=16.16.0"
+  },
+  "keywords": [
+    "mcp",
+    "qingflow",
+    "agent",
+    "stdio",
+    "cli"
+  ]
+}

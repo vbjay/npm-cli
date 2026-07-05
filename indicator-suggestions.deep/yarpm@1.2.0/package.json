@@ -1,0 +1,49 @@
+{
+  "name": "yarpm",
+  "version": "1.2.0",
+  "description": "CLI tool to run npm scripts with either npm, pnpm or yarn, depending on how it was started",
+  "bin": {
+    "yarpm": "bin/yarpm.js",
+    "yarpm-pnpm": "bin/yarpm-pnpm.js",
+    "yarpm-yarn": "bin/yarpm-yarn.js"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "format": "prettier --write .",
+    "prepare": "husky install",
+    "release": "npm version --sign-git-tag --message 'v%s'",
+    "test": "./test.sh",
+    "test:docker": "docker run -it --rm -v \"$(pwd):/app\" -w /app node:18 /bin/bash -c 'npm i -g pnpm && rm -Rf node_modules && npm i && npm test && rm -Rf node_modules'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BendingBender/yarpm.git"
+  },
+  "keywords": [
+    "npm",
+    "pnpm",
+    "yarn",
+    "npm-scripts",
+    "cross-platform",
+    "npm-package",
+    "cli"
+  ],
+  "author": "Dimitri Benin <semtexx@web.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BendingBender/yarpm/issues"
+  },
+  "homepage": "https://github.com/BendingBender/yarpm#readme",
+  "dependencies": {
+    "command-exists": "^1.2.9",
+    "cross-spawn": "^7.0.3"
+  },
+  "devDependencies": {
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}

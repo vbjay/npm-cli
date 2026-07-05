@@ -1,0 +1,58 @@
+{
+  "name": "npm-exact-versions",
+  "version": "0.0.5",
+  "description": "Check if all the dependencies in the package.json have exact versions.",
+  "main": "lib/npm-exact-versions.js",
+  "types": "lib/npm-exact-versions.d.ts",
+  "scripts": {
+    "test": "npm run build && npm run lint && nyc ava test/test.js --reporter=text-lcov",
+    "test-ci": "npm run test && nyc report ava test/test.js --reporter=text-lcov > lcov.info",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\" \"test/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "nxv": "npm run build && ./cli.js --log"
+  },
+  "pre-commit": [
+    "nxv"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreasGassmann/npm-exact-versions.git"
+  },
+  "keywords": [
+    "npm",
+    "cli",
+    "dependencies",
+    "package.json",
+    "exact-version"
+  ],
+  "author": "Andreas Gassmann <andreas@andreasgassmann.ch> (https://github.com/AndreasGassmann)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AndreasGassmann/npm-exact-versions/issues"
+  },
+  "homepage": "https://github.com/AndreasGassmann/npm-exact-versions#readme",
+  "dependencies": {
+    "semver": "5.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "10.9.4",
+    "@types/semver": "5.5.0",
+    "ava": "0.25.0",
+    "nyc": "13.0.1",
+    "pre-commit": "1.2.2",
+    "prettier": "1.14.2",
+    "tslint": "5.11.0",
+    "tslint-config-prettier": "1.15.0",
+    "typescript": "3.0.3"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "npm-exact-versions": "./cli.js"
+  }
+}

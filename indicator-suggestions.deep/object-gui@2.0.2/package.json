@@ -1,0 +1,75 @@
+{
+  "name": "object-gui",
+  "version": "2.0.2",
+  "description": "Object GUI - Fully customizable Javascript Object GUI Editor",
+  "keywords": [
+    "editor",
+    "dat.gui",
+    "javascript",
+    "wysiwyg",
+    "object",
+    "gui",
+    "object-gui",
+    "objectgui"
+  ],
+  "author": "Matteo Bruni <ar3s@icloud.com>",
+  "homepage": "https://github.com/matteobruni/object-gui/",
+  "license": "MIT",
+  "directories": {
+    "dist": "dist"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/js/index.js",
+  "jsdelivr": "dist/js/object-gui.min.js",
+  "unpkg": "dist/js/object-gui.min.js",
+  "browser": "dist/js/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matteobruni/object-gui.git"
+  },
+  "scripts": {
+    "start": "yarn build && yarn build:demo && node ./demo/app.js",
+    "prettify:src": "prettier --write ./src",
+    "prettify:readme": "prettier --write ./README.md",
+    "lint": "eslint src/ts --ext .js,.jsx,.ts,.tsx --fix",
+    "clear:dist": "rimraf -f ./dist",
+    "build:ts:es": "tsc -b tsconfig.browser.json",
+    "build:ts": "tsc",
+    "build:css": "npx sass src/scss/editor.scss dist/css/object-gui.css && npx cleancss dist/css/object-gui.css -o dist/css/object-gui.min.css",
+    "build": "yarn clear:dist && yarn build:css && yarn prettify:src && yarn build:ts:es && yarn lint && webpack --mode production && yarn build:ts && yarn prettify:readme",
+    "build:demo": "yarn build:demo:style && yarn build:demo:index",
+    "build:demo:index": "npx pug ./demo/views/index.pug",
+    "build:demo:style": "npx stylus ./demo/public/stylesheets/main.styl",
+    "prepack": "yarn build"
+  },
+  "bugs": {
+    "url": "https://github.com/matteobruni/object-gui/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "7.19.1",
+    "@typescript-eslint/eslint-plugin": "5.37.0",
+    "@typescript-eslint/parser": "5.37.0",
+    "babel-loader": "8.2.5",
+    "clean-css-cli": "5.6.1",
+    "eslint": "8.23.1",
+    "eslint-config-prettier": "8.5.0",
+    "express": "4.18.1",
+    "fibers": "5.0.3",
+    "helmet": "6.0.0",
+    "prettier": "2.7.1",
+    "pug": "3.0.2",
+    "pug-cli": "1.0.0-alpha6",
+    "rimraf": "3.0.2",
+    "sass": "1.54.9",
+    "sass-loader": "13.0.2",
+    "stylus": "0.59.0",
+    "terser-webpack-plugin": "5.3.6",
+    "typescript": "4.8.3",
+    "webpack": "5.74.0",
+    "webpack-bundle-analyzer": "4.6.1",
+    "webpack-cli": "4.10.0"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@onekeyfe/electron-mac-icloud",
+  "version": "1.2.6",
+  "description": "A native Node.js module providing an interface to the user’s iCloud key value store (eg. NSUbiquitousKeyValueStore)",
+  "main": "./index.js",
+  "scripts": {
+    "install": "node -e \"if(process.platform === 'darwin') { require('child_process').execSync('node-gyp rebuild', {stdio: 'inherit'}) }\"",
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "lint": "eslint ."
+  },
+  "typings": "./index.d.ts",
+  "keywords": [
+    "nodejs",
+    "native",
+    "node",
+    "modules",
+    "objective-c",
+    "macos",
+    "icloud"
+  ],
+  "author": "Octopus Think Ltd.",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "node-gyp": "^10.2.0",
+    "prettier": "^2.8.1"
+  },
+  "dependencies": {
+    "bindings": "1.5.0",
+    "node-addon-api": "5.0.0"
+  }
+}

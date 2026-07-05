@@ -1,0 +1,135 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2ff6ab8f4d40973c",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/download-binary.cjs",
+      "scripts/postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\roxify@1.16.15\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "afb39e831979b061f76b42d44e3148839ef871da37054bb1a6cbde2c5f24a0c6",
+        "sizeBytes": 7928,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "makes-executable",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/download-binary.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/download-binary.cjs",
+        "reason": "required by ./scripts/postinstall.cjs",
+        "sha256": "2810451c8c02d8e7a22437db159977298aab82bb161012518bf0da736b58f312",
+        "sizeBytes": 8136,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/download-binary.cjs",
+        "sha256": "a398f6a866e8b3ce7daa2a5f2870062a6f176dd06c6b41041ef0b206073a20f8",
+        "sizeBytes": 4101,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:06.719Z"
+  },
+  "hash": "sha256:1e6f52949a8ee606ed4cdaff559d60e5385583e10cc30e06f3dcc878e72186c5"
+}

@@ -1,0 +1,32 @@
+[package]
+name = "json-firestore-seed"
+version = "0.1.8"
+edition = "2024"
+authors = ["Aung Min Khant <aungminkhant.shay@gmail.com>"]
+description = "A simple high-performance CLI tool to bulk-insert documents into Google Firestore from a JSON file."
+license = "MIT"
+repository = "https://github.com/shayyz-code/json-firestore-seed"
+homepage = "https://github.com/shayyz-code/json-firestore-seed"
+readme = "README.md"
+keywords = ["firestore", "seed", "json", "bulk-insert"]
+categories = ["command-line-utilities", "database"]
+
+[dependencies]
+clap = { version = "4.5.51", features = ["derive"] }
+firestore = { version = "0.47" }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.48.0", features = ["full"] }
+anyhow = "1.0"
+colored = "3"
+indicatif = "0.18.2"
+chrono = { version = "0.4.42", features = ["serde"] }
+thiserror = "2.0.18"
+futures = "0.3.32"
+tokio-retry = "0.3.1"
+rand = "0.10.1"
+
+[dev-dependencies]
+assert_cmd = "2.2.1"
+predicates = "3.1.4"

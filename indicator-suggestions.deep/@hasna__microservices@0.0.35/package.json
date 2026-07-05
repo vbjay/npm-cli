@@ -1,0 +1,113 @@
+{
+  "name": "@hasna/microservices",
+  "version": "0.0.35",
+  "description": "21 production-grade microservice building blocks for AI-native SaaS — auth, billing, LLM gateway, agent registry, RAG, guardrails, tracing, and more. Each with PostgreSQL, HTTP API, MCP server, and CLI.",
+  "type": "module",
+  "bin": {
+    "microservices": "./bin/index.js",
+    "microservices-mcp": "./bin/mcp.js"
+  },
+  "files": [
+    "bin/",
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "bun build ./src/cli/index.tsx --outfile ./bin/index.js --target bun && bun build ./src/mcp/index.ts --outfile ./bin/mcp.js --target bun && bun build ./src/index.ts --outdir ./dist --target bun",
+    "build:all": "bun run build && bun run --filter '*' build",
+    "dev": "bun run ./src/cli/index.tsx",
+    "gateway": "bun run gateway.ts",
+    "typecheck": "tsc --noEmit",
+    "typecheck:all": "bun run typecheck && bun run --filter '*' typecheck",
+    "test": "bun test",
+    "test:all": "bun test && bun run --filter '*' test",
+    "lint": "bunx biome check .",
+    "format": "bunx biome format --write .",
+    "clean": "rm -rf dist bin microservices/*/dist microservices/*/bin node_modules microservices/*/node_modules",
+    "pre-commit": "bun run lint && bun run format",
+    "prepublishOnly": "bun run build:all",
+    "postinstall": "mkdir -p $HOME/.hasna/microservices 2>/dev/null || true"
+  },
+  "keywords": [
+    "microservices",
+    "saas",
+    "ai-agents",
+    "auth",
+    "billing",
+    "stripe",
+    "postgresql",
+    "pgvector",
+    "llm-gateway",
+    "feature-flags",
+    "background-jobs",
+    "vector-search",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "cli"
+  ],
+  "author": "Hasna",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@types/bun": "latest",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "zod": "^3.24.0"
+  },
+  "optionalDependencies": {
+    "@hasna/microservice-auth": "^0.0.1",
+    "@hasna/microservice-teams": "^0.0.1",
+    "@hasna/microservice-billing": "^0.0.1",
+    "@hasna/microservice-notify": "^0.0.1",
+    "@hasna/microservice-files": "^0.0.1",
+    "@hasna/microservice-audit": "^0.0.1",
+    "@hasna/microservice-flags": "^0.0.1",
+    "@hasna/microservice-jobs": "^0.0.1",
+    "@hasna/microservice-llm": "^0.0.1",
+    "@hasna/microservice-memory": "^0.0.1",
+    "@hasna/microservice-search": "^0.0.1",
+    "@hasna/microservice-usage": "^0.0.1",
+    "@hasna/microservice-webhooks": "^0.0.1",
+    "@hasna/microservice-onboarding": "^0.0.1",
+    "@hasna/microservice-waitlist": "^0.0.1",
+    "@hasna/microservice-sessions": "^0.0.1",
+    "@hasna/microservice-guardrails": "^0.0.1",
+    "@hasna/microservice-knowledge": "^0.0.1",
+    "@hasna/microservice-traces": "^0.0.1",
+    "@hasna/microservice-agents": "^0.0.1",
+    "@hasna/microservice-prompts": "^0.0.1"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "workspaces": [
+    "microservices/*"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/microservices.git"
+  },
+  "homepage": "https://github.com/hasna/microservices#readme",
+  "bugs": {
+    "url": "https://github.com/hasna/microservices/issues"
+  }
+}

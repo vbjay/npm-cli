@@ -1,0 +1,103 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "8a76cdd9dbbd2f21",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/setup-libswe.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "6f6c894a71febe4d0a4a930a22e2aa464b40fce87d9c957589aceb858cde78da",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `swisseph`  -  C/C++ sources",
+            "items": [
+              "binding/swisseph_binding.cc",
+              "libswe/sweph.c",
+              "libswe/swephlib.c",
+              "libswe/swedate.c",
+              "libswe/swejpl.c",
+              "libswe/swemmoon.c",
+              "libswe/swemplan.c",
+              "libswe/swehouse.c",
+              "libswe/swecl.c",
+              "libswe/swehel.c"
+            ]
+          },
+          {
+            "label": "Target `swisseph`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "libswe"
+            ]
+          },
+          {
+            "label": "Target `swisseph`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/setup-libswe.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "e4a213066e7ad3e641d8f92c7b80d7888d5cf0213fb39fc6fa8085f34c51a6c8",
+        "sizeBytes": 1321,
+        "signals": [
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:02.688Z"
+  },
+  "hash": "sha256:050478f05b60d80919699762b4f290c3e9bc28c2db64db5ca7629031a00a650d"
+}

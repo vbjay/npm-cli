@@ -1,0 +1,61 @@
+{
+  "name": "@zbox/nodejs",
+  "version": "0.5.0",
+  "description": "Node.js binding for ZboxFS",
+  "keywords": [
+    "filesystem",
+    "crypto",
+    "security",
+    "privacy",
+    "rust"
+  ],
+  "main": "lib/index.js",
+  "author": "Zbox.io",
+  "homepage": "https://github.com/zboxfs/zbox-nodejs",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zboxfs/zbox-nodejs.git"
+  },
+  "files": [
+    "examples",
+    "lib",
+    "scripts",
+    "native"
+  ],
+  "binary": {
+    "module_name": "index",
+    "host": "https://github.com/zboxfs/zbox-nodejs/releases/download/",
+    "remote_path": "{version}",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
+    "module_path": "./native",
+    "pkg_path": "./"
+  },
+  "dependencies": {
+    "@amilajack/node-pre-gyp": "github:amilajack/node-pre-gyp#neon-compat",
+    "node-pre-gyp-github": "^1.4.3"
+  },
+  "scripts": {
+    "lint": "eslint ./lib",
+    "build": "./node_modules/.bin/neon build --release",
+    "build-linux": "docker run --rm -v $PWD:/root/zbox zboxfs/nodejs /bin/bash -c 'npm run build && npm run package'",
+    "test": "./node_modules/.bin/mocha",
+    "watch": "./node_modules/nodemon/bin/nodemon.js -w native -e rs -w lib -w test -e js -x './node_modules/.bin/neon build && ./node_modules/mocha/bin/mocha'",
+    "install": "node-pre-gyp install --fallback-to-build=false",
+    "postinstall": "node scripts/postinstall.js",
+    "package": "node-pre-gyp package",
+    "upload-binary": "node-pre-gyp-github publish",
+    "prepack": "node scripts/prepack.js"
+  },
+  "devDependencies": {
+    "neon-cli": "^0.3.1",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.0",
+    "eslint": "^6.3.0",
+    "eslint-config-bliss": "^4.3.0"
+  },
+  "eslintConfig": {
+    "extends": "bliss"
+  }
+}

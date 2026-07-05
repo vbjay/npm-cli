@@ -1,0 +1,42 @@
+{
+  "name": "@nettoolskit/devops",
+  "version": "0.0.1-preview.8",
+  "description": "DevOps operations for images, deployments, backups, and runbooks.",
+  "license": "MIT",
+  "keywords": [
+    "nettoolskit",
+    "devops",
+    "cli",
+    "npx"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NetToolsKit/nettoolskit-devops.git"
+  },
+  "homepage": "https://github.com/NetToolsKit/nettoolskit-devops#readme",
+  "bugs": {
+    "url": "https://github.com/NetToolsKit/nettoolskit-devops/issues"
+  },
+  "bin": {
+    "ntk-devops": "npm/cli/ntk-devops.js"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "npm/cli/ntk-devops.js",
+    "npm/native/",
+    "scripts/npm/postinstall.js",
+    "scripts/npm/stage-native.js"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/npm/postinstall.js",
+    "stage:native": "node scripts/npm/stage-native.js",
+    "pack:dry-run": "npm pack --ignore-scripts --dry-run"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

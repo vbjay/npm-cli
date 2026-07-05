@@ -1,0 +1,109 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d2cd9b0c63373e45",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "bin/chessai.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "551f85d5614b4584b061cd134eddc9113724f954177b933959919a3d6824784d",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "chessai"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.2.1"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/chessai.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e740f629750e0e59404dbbd983506ebff9902e904aa58d12147e1fd0540328c2",
+        "sizeBytes": 3232,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://raw.githubusercontent.com/devasur/claude-chess/main/install.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./bin/chessai.js",
+        "sha256": "64e42234183fdd3d76487a00dd78f6f3be9887b55815aca1698542d8ce47a78f",
+        "sizeBytes": 920,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:00.975Z"
+  },
+  "hash": "sha256:ccce38014050ffcf79a2fb137bb2bd991f77a2dc2e365966a1faa8c10e917d11"
+}

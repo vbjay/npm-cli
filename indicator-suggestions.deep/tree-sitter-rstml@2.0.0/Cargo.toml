@@ -1,0 +1,33 @@
+[package]
+name = "tree-sitter-rstml"
+description = "Rust + html grammar for the tree-sitter parser library."
+authors = ["Ryan Halliwell <git@rayliwell.com>"]
+version = "2.0.0"
+keywords = ["incremental", "parsing", "rstml"]
+categories = ["parsing", "text-editors"]
+repository = "https://github.com/rayliwell/tree-sitter-rstml.git"
+edition = "2021"
+license = "MIT"
+
+build = "bindings/rust/build.rs"
+include = [
+  "bindings/rust/*",
+  "base.grammar.js",
+  "rust.grammar.js",
+  "queries/*",
+  "rstml/grammar.js",
+  "rstml/queries/*",
+  "rstml/src/*",
+  "rust_with_rstml/queries/*",
+  "rust_with_rstml/grammar.js",
+  "rust_with_rstml/src/*",
+]
+
+[lib]
+path = "bindings/rust/lib.rs"
+
+[dependencies]
+tree-sitter = "~0.22.6"
+
+[build-dependencies]
+cc = "1.0"

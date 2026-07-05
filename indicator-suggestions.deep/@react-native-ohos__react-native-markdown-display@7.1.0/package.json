@@ -1,0 +1,80 @@
+{
+  "name": "@react-native-ohos/react-native-markdown-display",
+  "version": "7.1.0",
+  "description": "Markdown renderer for react-native, with CommonMark spec support + adds syntax extensions & sugar (URL autolinking, typographer), originally created by Mient-jan Stelling as react-native-markdown-renderer",
+  "types": "src/index.d.ts",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "react-native": "src/index",
+  "source": "src/index",
+  "harmony": {
+    "alias": "react-native-markdown-display"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint --fix --cache ./src",
+    "bob": "bob build",
+    "prepare": "npm run bob"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitcode.com/openharmony-sig/rntpc_react-native-markdown-display.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "native",
+    "markdown",
+    "commonmark",
+    "markdown-it",
+    "harmony"
+  ],
+  "author": "Mient-jan Stelling and Tom Pickard + others from the community",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitcode.com/openharmony-sig/rntpc_react-native-markdown-display/issues"
+  },
+  "homepage": "https://gitcode.com/openharmony-sig/rntpc_react-native-markdown-display/",
+  "dependencies": {
+    "css-to-react-native": "^3.0.0",
+    "markdown-it": "^14.1.0",
+    "prop-types": "^15.7.2",
+    "react-native-fit-image": "^1.5.5",
+    "react-native-builder-bob": "^0.20.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.2.0",
+    "react-native": ">=0.50.4"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.0.1",
+    "@types/react-native": ">=0.50.0",
+    "@babel/core": "^7.9.6",
+    "@babel/runtime": "^7.9.6",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "@typescript-eslint/parser": "^2.32.0",
+    "eslint": "^7.0.0",
+    "json-schema": "^0.2.5",
+    "pre-commit": "1.2.2",
+    "typescript": "^3.8.3"
+  },
+  "files": [
+    "harmony",
+    "lib",
+    "src"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+     "access": "public"
+    },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module"
+    ]
+  }
+}

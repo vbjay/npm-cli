@@ -1,0 +1,121 @@
+{
+  "name": "otto-agent-cli",
+  "version": "3.260626.3",
+  "description": "The first multimodal, multi-model AI coding agent for your terminal — pair Claude + Codex on every turn and take the same session to WhatsApp or Telegram. Local-first and open source.",
+  "keywords": [
+    "ai",
+    "ai-agent",
+    "coding-agent",
+    "cli",
+    "ai-cli",
+    "multi-model",
+    "multimodal",
+    "claude",
+    "claude-code",
+    "codex",
+    "openai",
+    "gpt",
+    "anthropic",
+    "pair-programming",
+    "whatsapp",
+    "telegram",
+    "whatsapp-ai",
+    "telegram-bot",
+    "autonomous-agent",
+    "local-first",
+    "developer-tools",
+    "agent-framework",
+    "bun",
+    "typescript"
+  ],
+  "type": "module",
+  "main": "dist/bundle/index.js",
+  "bin": {
+    "otto": "bin/otto"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin/otto",
+    "dist/bundle/",
+    "dist/tui/",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moraisdev/otto-agent-cli.git"
+  },
+  "homepage": "https://github.com/moraisdev/otto-agent-cli#readme",
+  "bugs": {
+    "url": "https://github.com/moraisdev/otto-agent-cli/issues"
+  },
+  "license": "MIT",
+  "author": "Pedro Morais",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "scripts": {
+    "version": "bun scripts/version.ts",
+    "gen:commands": "bun scripts/gen-commands.ts",
+    "gen:plugins": "bun scripts/gen-plugins.ts",
+    "prebuild": "bun run gen:commands",
+    "build": "bun run build:cli && bun run build:tui && bun run gen:plugins",
+    "build:cli": "bun build src/cli/index.ts --outdir dist/bundle --target bun --minify --keep-names --sourcemap=linked --external ink --external react --external '@anthropic-ai/*' --external openai --external '@google/*' --external nats --external '@elevenlabs/*'",
+    "build:tui": "bun build src/tui/index.tsx --outdir dist/tui --target bun --keep-names --sourcemap=linked --external '@opentui/core' --external '@opentui/react' --external react --external nats",
+    "prepack": "bun run build",
+    "start": "bun src/index.ts",
+    "dev": "bun --watch src/index.ts",
+    "tui": "bun src/tui/index.tsx",
+    "rc505:debug": "swift src/tui/bridges/rc505-bridge.swift --debug-sources",
+    "cli": "bun src/cli/index.ts",
+    "reference:context": "bun src/reference/context-cli.ts",
+    "typecheck": "bun tsc --noEmit",
+    "lint": "bunx biome check src/",
+    "lint:fix": "bunx biome check --write src/",
+    "test": "bun test src/bash/ src/hooks/ src/router/ src/heartbeat/ src/permissions/ src/triggers/ src/omni/ src/plugins/ src/adapters/ src/approval/ src/tui/hooks/runtime-feed.test.ts src/tui/hooks/runtime-display.test.ts src/tui/lib/group-timeline.test.ts src/tui/lib/input-layout.test.ts src/tui/lib/recent-sessions.test.ts src/tui/lib/status-meter.test.ts src/gateway-typing.test.ts && bun test src/tasks/ src/projects/ src/workflow-substrate/ src/whatsapp-overlay/ && bun run test:cli-commands && bun test src/bot.runtime-guards.test.ts && bun test src/remote-spawn-nats.test.ts && bun test src/runtime/index.test.ts src/runtime/model-catalog.test.ts && bun test src/runtime/context-registry.test.ts && bun test src/cli/context.test.ts src/cli/logging.test.ts src/cli/tui-launcher.test.ts src/cli/auto-launch.test.ts src/cli/skill-gates.test.ts && bun test src/utils/logger.test.ts && bun test src/transcripts.test.ts && bun test src/repl/ src/fusion/ && bun run test:sdk",
+    "test:sdk": "bun test src/sdk/client-codegen/ ./tests/integration/sdk-roundtrip.test.ts ./packages/otto-os-sdk/src/__tests__/types.test-d.ts ./packages/otto-os-sdk/src/__tests__/streaming.test.ts && bun run sdk:check",
+    "test:cli-commands": "for f in src/cli/commands/*.test.ts; do bun test \"$f\" || exit 1; done",
+    "test:live": "OTTO_LIVE_TESTS=1 bun test src/runtime/*.live.test.ts && OTTO_LIVE_TESTS=1 bun test src/bot.live.test.ts",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
+    "sdk:generate": "bun src/cli/index.ts sdk client generate",
+    "sdk:check": "bun src/cli/index.ts sdk client check",
+    "docs:openapi": "bun src/cli/index.ts sdk openapi emit --out docs/openapi.json",
+    "predocs:dev": "bun run docs:openapi",
+    "docs:dev": "cd docs && bunx mintlify dev",
+    "docs:list": "bun scripts/docs-list.js",
+    "docs:check-links": "bun scripts/docs-link-audit.mjs",
+    "lint:docs": "bunx markdownlint-cli2 \"**/*.{md,mdx}\" \"#node_modules\" \"#docs/node_modules\"",
+    "lint:docs:fix": "bunx markdownlint-cli2 --fix",
+    "check:docs": "bun run lint:docs && bun run docs:check-links"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.113",
+    "@elevenlabs/elevenlabs-js": "^2.37.0",
+    "@google/genai": "^1.41.0",
+    "@hapi/boom": "^10.0.1",
+    "@opentui/core": "^0.1.81",
+    "@opentui/react": "^0.1.81",
+    "agora-agent-server-sdk": "^1.3.2",
+    "commander": "^14.0.2",
+    "croner": "^10.0.1",
+    "ink": "^6.6.0",
+    "ink-text-input": "^6.0.0",
+    "nats": "^2.29.3",
+    "openai": "^6.17.0",
+    "pino": "^9.6.0",
+    "qrcode-terminal": "^0.12.0",
+    "react": "^19.2.4",
+    "reflect-metadata": "^0.2.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.4",
+    "@types/node": "^22.0.0",
+    "@types/qrcode-terminal": "^0.12.2",
+    "@types/react": "^19.2.10",
+    "bun-types": "^1.3.8",
+    "typescript": "^5.6.0"
+  }
+}

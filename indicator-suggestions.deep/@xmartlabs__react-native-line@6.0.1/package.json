@@ -1,0 +1,77 @@
+{
+  "name": "@xmartlabs/react-native-line",
+  "description": "React Native Line Wrapper",
+  "author": "Xmartlabs <hi@xmartlabs.com>",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "version": "6.0.1",
+  "homepage": "https://github.com/xmartlabs/react-native-line#readme",
+  "keywords": [
+    "auth",
+    "line",
+    "login",
+    "react",
+    "react-native",
+    "react-native-line",
+    "social"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:app:android": "npm --prefix example run android",
+    "build:app:ios": "npm --prefix example run ios",
+    "lint": "tsc --noEmit && eslint",
+    "prepare": "npm run build",
+    "prepare:app": "npm --prefix example run prepare",
+    "prettify": "prettier --config '.prettierrc' './**/*.ts' './**/*.tsx'",
+    "prettify:check": "npm run prettify -- --check",
+    "prettify:fix": "npm run prettify -- --write",
+    "start:app": "npm --prefix example run start"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^55.0.10",
+    "@typescript-eslint/parser": "^8.59.4",
+    "eslint": "^10.4.0",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "eslint-plugin-simple-sort-keys": "^1.0.2",
+    "prettier": "^3.8.3",
+    "react-native": "0.83.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xmartlabs/react-native-line.git"
+  },
+  "codegenConfig": {
+    "name": "RTNLineSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.xmartlabs.line"
+    }
+  },
+  "files": [
+    "android/src",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "dist",
+    "ios/RTNLine.xcodeproj/xcshareddata",
+    "ios/RTNLine.xcodeproj/project.pbxproj",
+    "ios/LineLoginModule-Bridging-Header.h",
+    "ios/LineLoginModule.mm",
+    "ios/LineLoginModule.swift",
+    "plugin",
+    "src",
+    "app.plugin.js",
+    "LICENSE",
+    "package.json",
+    "react-native-line.podspec",
+    "!README.md"
+  ],
+  "packageManager": "npm@11.4.0+sha512.759091a21ee805d9c842bcfe2878d6626c48a16a5ca73c1e1338fa8379951abfc2d273ec4ad12ede64bd294237c6719b3bcc518118d1affe8a38985fe5d29773"
+}

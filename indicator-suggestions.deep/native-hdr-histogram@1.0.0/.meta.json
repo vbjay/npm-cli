@@ -1,0 +1,69 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "39af0dadf9e3a5e9",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "ed243806199422fe9eb3f7ee60f60840e32c71552145dd06be45e7a1f71e2719",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `histogram`  -  C/C++ sources",
+            "items": [
+              "binding-src/binding.cc",
+              "<!@(node -p \"require('fs').readdirSync('./binding-src/binding-util').map(f=>'binding-src/binding-util/'+f).join(' ')\")",
+              "<!@(node -p \"require('fs').readdirSync('./binding-src/binding').map(f=>'binding-src/binding/'+f).join(' ')\")",
+              "<!@(node -p \"require('fs').readdirSync('./HdrHistogram_c/src').map(f=>'HdrHistogram_c/src/'+f).join(' ')\")"
+            ]
+          },
+          {
+            "label": "Target `histogram`  -  include directories",
+            "items": [
+              "binding-src/binding-util",
+              "HdrHistogram_c/src",
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:13.889Z"
+  },
+  "hash": "sha256:8a1bbc1185c31ba3793649e6958042afb27f8eca6fe56691399e39de9dd3376b"
+}

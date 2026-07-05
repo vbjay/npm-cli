@@ -1,0 +1,126 @@
+{
+  "name": "rush-fs",
+  "version": "0.0.5",
+  "description": "High-performance drop-in replacement for Node.js fs module, powered by Rust",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoderSerio/rush-fs.git"
+  },
+  "license": "MIT",
+  "browser": "browser.js",
+  "keywords": [
+    "fs",
+    "filesystem",
+    "file-system",
+    "performance",
+    "rust",
+    "napi",
+    "napi-rs",
+    "native",
+    "readdir",
+    "glob",
+    "readFile",
+    "writeFile"
+  ],
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "browser.js"
+  ],
+  "napi": {
+    "binaryName": "rush-fs",
+    "targets": [
+      "x86_64-pc-windows-msvc",
+      "x86_64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-apple-darwin"
+    ]
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "doc:dev": "pnpm -C docs dev",
+    "doc:build": "pnpm -C docs build",
+    "doc:start": "pnpm -C docs start",
+    "bench": "node --import @oxc-node/core/register benchmark/bench.ts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "format": "run-p format:prettier format:rs format:toml",
+    "format:prettier": "prettier . -w",
+    "format:toml": "taplo format",
+    "format:rs": "cargo fmt",
+    "fmt:check": "cargo fmt -- --check",
+    "lint": "oxlint .",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "ava",
+    "preversion": "napi build --platform && git add .",
+    "version": "napi version",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@emnapi/core": "^1.5.0",
+    "@emnapi/runtime": "^1.5.0",
+    "@napi-rs/cli": "^3.2.0",
+    "@oxc-node/core": "^0.0.34",
+    "@taplo/cli": "^0.7.0",
+    "@tybys/wasm-util": "^0.10.0",
+    "@types/node": "^20.0.0",
+    "ava": "^6.4.1",
+    "chalk": "^5.6.2",
+    "fast-glob": "^3.3.3",
+    "glob": "^13.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "mitata": "^1.0.34",
+    "npm-run-all2": "^8.0.4",
+    "oxlint": "^1.14.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  },
+  "lint-staged": {
+    "*.@(js|ts|tsx)": [
+      "oxlint --fix"
+    ],
+    "*.@(js|ts|tsx|yml|yaml|md|json)": [
+      "prettier --write"
+    ],
+    "*.toml": [
+      "taplo format"
+    ]
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "timeout": "2m",
+    "workerThreads": false,
+    "environmentVariables": {
+      "OXC_TSCONFIG_PATH": "./__test__/tsconfig.json"
+    },
+    "nodeArguments": [
+      "--import",
+      "@oxc-node/core/register"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "arrowParens": "always"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "optionalDependencies": {
+    "rush-fs-win32-x64-msvc": "0.0.5",
+    "rush-fs-darwin-x64": "0.0.5",
+    "rush-fs-linux-x64-gnu": "0.0.5",
+    "rush-fs-darwin-arm64": "0.0.5"
+  }
+}

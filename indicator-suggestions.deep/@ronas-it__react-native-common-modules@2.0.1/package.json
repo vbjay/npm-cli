@@ -1,0 +1,123 @@
+{
+  "name": "@ronas-it/react-native-common-modules",
+  "version": "2.0.1",
+  "description": "Common modules for React Native apps at Ronas IT",
+  "license": "MIT",
+  "author": "Ronas IT",
+  "bugs": {
+    "url": "https://github.com/RonasIT/react-native-common-modules/issues"
+  },
+  "homepage": "https://github.com/RonasIT/react-native-common-modules",
+  "keywords": [
+    "react-native",
+    "common-modules"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RonasIT/react-native-common-modules.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "src/index.ts",
+  "exports": {
+    "./safe-area-view": "./src/ui/safe-area-view/index.ts",
+    "./push-notifications": "./src/data-access/push-notifications/index.ts",
+    "./image-picker": "./src/data-access/image-picker/index.ts",
+    "./websocket": "./src/data-access/websocket/index.ts",
+    "./reactotron": "./src/data-access/store/utils/reactotron/index.ts",
+    "./i18n": "./src/utils/i18n/index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "safe-area-view": [
+        "./src/ui/safe-area-view/index.ts"
+      ],
+      "push-notifications": [
+        "./src/data-access/push-notifications/index.ts"
+      ],
+      "image-picker": [
+        "./src/data-access/image-picker/index.ts"
+      ],
+      "websocket": [
+        "./src/data-access/websocket/index.ts"
+      ],
+      "reactotron": [
+        "./src/data-access/store/utils/reactotron/index.ts"
+      ],
+      "i18n": [
+        "./src/utils/i18n/index.ts"
+      ]
+    }
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "prepack": "node -e \"require('fs').copyFileSync('../../README.md', './README.md')\""
+  },
+  "peerDependencies": {
+    "@pusher/pusher-websocket-react-native": "*",
+    "pusher-js": "*",
+    "react": "*",
+    "react-native": "*",
+    "@reduxjs/toolkit": "*",
+    "expo-constants": "*",
+    "expo-image-picker": "*",
+    "expo-localization": "*",
+    "expo-modules-core": "*",
+    "expo-notifications": "*",
+    "expo-router": "*",
+    "i18n-js": "*",
+    "lodash-es": "*",
+    "react-native-safe-area-context": "*",
+    "reactotron-react-native": "*",
+    "reactotron-redux": "*",
+    "reactotron-react-js": "*"
+  },
+  "peerDependenciesMeta": {
+    "@pusher/pusher-websocket-react-native": {
+      "optional": true
+    },
+    "pusher-js": {
+      "optional": true
+    },
+    "@reduxjs/toolkit": {
+      "optional": true
+    },
+    "expo-constants": {
+      "optional": true
+    },
+    "expo-image-picker": {
+      "optional": true
+    },
+    "expo-localization": {
+      "optional": true
+    },
+    "expo-modules-core": {
+      "optional": true
+    },
+    "expo-notifications": {
+      "optional": true
+    },
+    "expo-router": {
+      "optional": true
+    },
+    "i18n-js": {
+      "optional": true
+    },
+    "react-native-safe-area-context": {
+      "optional": true
+    },
+    "reactotron-react-native": {
+      "optional": true
+    },
+    "reactotron-redux": {
+      "optional": true
+    },
+    "reactotron-react-js": {
+      "optional": true
+    }
+  }
+}

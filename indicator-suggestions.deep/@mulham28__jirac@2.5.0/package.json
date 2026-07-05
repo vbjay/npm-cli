@@ -1,0 +1,38 @@
+{
+  "name": "@mulham28/jirac",
+  "version": "2.5.0",
+  "description": "Fast Jira CLI with TUI, worklogs, bulk ops, and MCP-friendly workflows — installed from npm via GitHub Releases",
+  "license": "MIT OR Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mulhamna/jira-commands.git"
+  },
+  "homepage": "https://jirac.keton.id",
+  "bugs": {
+    "url": "https://github.com/mulhamna/jira-commands/issues"
+  },
+  "keywords": [
+    "jira",
+    "atlassian",
+    "cli",
+    "tui",
+    "mcp",
+    "worklog",
+    "terminal"
+  ],
+  "bin": {
+    "jirac": "bin/jirac.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node ./lib/install.js",
+    "release:check": "node ../../scripts/sync-npm-version.mjs && git diff --exit-code -- packaging/npm/package.json"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

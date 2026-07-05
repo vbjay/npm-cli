@@ -1,0 +1,112 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9396c184996833dc",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.js",
+      "src/ui.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c2a7d999d5d05e2b65e7a78054f46ded9c2dadf8734912063669e0366bcc8a4a",
+        "sizeBytes": 7286,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "makes-executable",
+          "binary-download",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/ui.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-aarch64-unknown-linux-gnu.tar.gz",
+            "classification": "download"
+          },
+          {
+            "url": "https://registry.npmjs.org/@img/sharp-wasm32/-/sharp-wasm32-0.34.5.tgz",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "src/ui.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "f1b2305adf80a7a191b4ccd690eb7ea514c6b4046c71689fa4a0ebb5cb349406",
+        "sizeBytes": 6194,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.js",
+        "sha256": "a503e0518a5971a45ead499f2a69c0144d35f1ff9c0dc4084fea69c026a52445",
+        "sizeBytes": 1032,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:30.374Z"
+  },
+  "hash": "sha256:45d671d1f2d7dae518eef2a348ece3a4bc0bcfa54a2dbb5437c55951b14c5f83"
+}

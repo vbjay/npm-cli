@@ -1,0 +1,117 @@
+{
+  "name": "@qoder-ai/qoder-agent-sdk",
+  "version": "1.0.13",
+  "description": "TypeScript SDK for building Qoder-powered coding agents.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "!dist/_bundled",
+    "scripts/postinstall.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "homepage": "https://docs.qoder.com/cli",
+  "bugs": {
+    "url": "https://forum.qoder.com"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser/index.d.ts",
+      "default": "./dist/browser/index.js"
+    },
+    "./bridge": {
+      "types": "./dist/bridge/index.d.ts",
+      "default": "./dist/bridge/index.js"
+    },
+    "./embed": {
+      "types": "./dist/embed/embed.d.ts",
+      "default": "./dist/embed/embed.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol/index.d.ts",
+      "default": "./dist/protocol/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "bundle": "npm run clean && tsc && node scripts/bundle.mjs",
+    "bundle:worker": "npm run clean && tsc && node scripts/bundle.mjs --runtime-transport=worker --require-worker-runtime",
+    "build:obfuscated": "npm run bundle",
+    "check:package-version": "node scripts/check-package-version.mjs",
+    "hooks:install": "sh scripts/install-git-hooks.sh",
+    "release:check": "bash scripts/release-npm.sh check",
+    "release:beta": "bash scripts/release-npm.sh beta",
+    "release:latest": "bash scripts/release-npm.sh latest",
+    "release:promote": "bash scripts/release-npm.sh promote",
+    "prepublishOnly": "npm run bundle",
+    "postinstall": "node scripts/postinstall.cjs",
+    "demo:minimal": "npm run demo:chat",
+    "demo:image": "node examples/image-input-demo/demo.mjs",
+    "demo:models": "npm run build && node examples/list-models-demo/demo.mjs",
+    "demo:usage": "npm run build && node examples/usage-info-demo/demo.mjs",
+    "demo:chat": "npm run build && node examples/interactive-chat-demo/demo.mjs",
+    "demo:mcp-oauth": "npm run build && node examples/mcp-oauth-demo/demo.mjs",
+    "demo:inprocess-mcp": "npm run build && node examples/inprocess-mcp-demo/demo.mjs",
+    "demo:byok": "npm run build && node examples/byok-validation-demo/demo.mjs",
+    "test": "npm run test:unit",
+    "test:unit": "npm run build && node --test tests/*.test.mjs",
+    "test:query-session-control:unit": "npm run build && node --test tests/query-session-control/unit/*.test.mjs",
+    "test:query-session-control:functional": "npm run build && node --test tests/query-session-control/functional/*.test.mjs",
+    "test:query-input-output:unit": "npm run build && node --test tests/query-input-output/unit/*.test.mjs",
+    "test:query-input-output:functional": "npm run build && node --test tests/query-input-output/functional/*.test.mjs",
+    "test:query-auth": "npm run test:query-auth:unit && npm run test:query-auth:functional",
+    "test:query-auth:unit": "npm run build && node --test tests/query-auth/unit/*.test.mjs",
+    "test:query-auth:functional": "npm run build && node --test tests/query-auth/functional/*.test.mjs",
+    "test:query-auth:e2e": "npm run test:query-auth:functional",
+    "test:query-system-prompt:unit": "npm run build && node --test tests/query-system-prompt/unit/*.test.mjs",
+    "test:query-system-prompt:functional": "npm run build && node --test tests/query-system-prompt/functional/*.test.mjs",
+    "test:query-mcp:functional": "npm run build && node --test tests/query-mcp/functional/*.test.mjs",
+    "test:query-output-events:unit": "npm run build && node --test tests/query-output-events/unit/*.test.mjs",
+    "test:query-output-events:functional": "npm run build && node --test tests/query-output-events/functional/*.test.mjs",
+    "test:query-working-directory:functional": "npm run build && node --test tests/query-working-directory/functional/*.test.mjs",
+    "test:query-runtime-control:unit": "npm run build && node --test tests/query-runtime-control/unit/*.test.mjs",
+    "test:query-runtime-control:functional": "npm run build && node --test tests/query-runtime-control/functional/*.test.mjs",
+    "test:worker-runtime:functional": "npm run build && node --test tests/worker-runtime/functional/*.test.mjs",
+    "test:skills-loading-control:functional": "npm run build && node --test tests/skills-loading-control/functional/*.test.mjs",
+    "test:plugins-loading-control:unit": "npm run build && node --test tests/plugins-loading-control/unit/*.test.mjs",
+    "test:plugins-loading-control:functional": "npm run build && node --test tests/plugins-loading-control/functional/*.test.mjs",
+    "test:integration": "npm run build && node --test tests/integration/**/*.test.mjs"
+  },
+  "keywords": [
+    "qoder",
+    "agent",
+    "sdk",
+    "cli",
+    "mcp",
+    "ai"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1"
+  },
+  "peerDependencies": {
+    "zod": "^3.25.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.24.2",
+    "typescript": "^5.7.0",
+    "zod": "^4.0.0"
+  },
+  "qoderCliVersion": "1.0.41",
+  "license": "SEE LICENSE IN LICENSE"
+}

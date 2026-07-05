@@ -1,0 +1,89 @@
+{
+  "name": "@yangyongtao/gaea",
+  "version": "1.1.17",
+  "description": "Gaea 3D visualization component library - Vue 3 components based on Godot WASM engine. Includes WMTS layer loading, camera view control, Vite plugin auto-injection, etc.",
+  "type": "module",
+  "main": "src/index.cjs",
+  "module": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.cjs",
+      "default": "./src/index.js"
+    },
+    "./components": {
+      "import": "./src/components/index.js",
+      "default": "./src/components/index.js"
+    },
+    "./components/*": "./src/components/*",
+    "./plugin": {
+      "import": "./src/plugin.js",
+      "default": "./src/plugin.js"
+    }
+  },
+  "files": [
+    "src/",
+    "scripts/",
+    "README.md",
+    "CHANGELOG.md",
+    "public/*.js",
+    "public/*.html",
+    "public/*.png",
+    "public/*.ico",
+    "public/*.import",
+    "public/constants.js",
+    "public/math/",
+    "public/image/",
+    "public/static/css/",
+    "public/static/geojson/",
+    "public/static/img/",
+    "public/static/js/",
+    "public/static/*.png",
+    "public/static/*.jpg"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs",
+    "pub": "npm publish --access public",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": [
+    "gaea",
+    "3d",
+    "viewer",
+    "godot",
+    "wasm",
+    "gis",
+    "wmts",
+    "vue",
+    "component"
+  ],
+  "peerDependencies": {
+    "element-plus": "^2.6.0",
+    "pinia": "^2.1.0",
+    "vue": "^3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "element-plus": {
+      "optional": true
+    },
+    "pinia": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^25.0.0",
+    "echarts": "^5.5.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "yangyongtao",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smallflypig/Gaea.git"
+  },
+  "devDependencies": {
+    "less": "^4.6.7"
+  }
+}

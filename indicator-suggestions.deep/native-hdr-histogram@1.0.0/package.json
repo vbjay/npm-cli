@@ -1,0 +1,57 @@
+{
+  "name": "native-hdr-histogram",
+  "version": "1.0.0",
+  "description": "node.js bindings for hdr histogram C implementation",
+  "main": "histogram.js",
+  "gypfile": "true",
+  "scripts": {
+    "install": "node-gyp-build",
+    "prebuild": "prebuildify --napi",
+    "test": "standard && tap test.js"
+  },
+  "precommit": [
+    "test"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcollina/native-hdr-histogram.git"
+  },
+  "keywords": [
+    "hdr",
+    "histogram",
+    "native",
+    "n-api"
+  ],
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "contributors": [
+    "Glen Keane <glenkeane.94@gmail.com> (http://glenkeane.me/)",
+    "Jim Schlight <jim@inspiredware.com> (https://github.com/jschlight)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcollina/native-hdr-histogram/issues"
+  },
+  "homepage": "https://github.com/mcollina/native-hdr-histogram#readme",
+  "devDependencies": {
+    "pre-commit": "^1.2.2",
+    "prebuildify": "^4.0.0",
+    "prebuildify-ci": "^1.0.5",
+    "standard": "^14.3.4",
+    "tap": "^14.0.0"
+  },
+  "dependencies": {
+    "node-addon-api": "^3.0.0",
+    "node-gyp-build": "^4.2.3"
+  },
+  "files": [
+    "binding-src/",
+    "HdrHistogram_c/src/",
+    "prebuilds/",
+    "zlib/",
+    "binding.gyp",
+    "histogram.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ]
+}

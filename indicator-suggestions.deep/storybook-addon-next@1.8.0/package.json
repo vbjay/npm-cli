@@ -1,0 +1,87 @@
+{
+  "name": "storybook-addon-next",
+  "version": "1.8.0",
+  "author": "ryanclementshax",
+  "license": "MIT",
+  "description": "A no config Storybook addon that makes Next.js features just work in Storybook",
+  "keywords": [
+    "storybook",
+    "addon",
+    "next",
+    "nextjs"
+  ],
+  "homepage": "https://github.com/RyanClementsHax/storybook-addon-next#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RyanClementsHax/storybook-addon-next.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RyanClementsHax/storybook-addon-next/issues"
+  },
+  "storybook": {
+    "displayName": "Next.js + Storybook",
+    "icon": "https://camo.githubusercontent.com/92ec9eb7eeab7db4f5919e3205918918c42e6772562afb4112a2909c1aaaa875/68747470733a2f2f6173736574732e76657263656c2e636f6d2f696d6167652f75706c6f61642f76313630373535343338352f7265706f7369746f726965732f6e6578742d6a732f6e6578742d6c6f676f2e706e67"
+  },
+  "main": "dist/preset.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "yarn clean && tsc",
+    "clean": "tsc --build --clean",
+    "type-check": "tsc --pretty --noEmit",
+    "format": "prettier --write",
+    "format:all": "yarn format .",
+    "lint": "eslint --fix",
+    "lint:all": "yarn lint .",
+    "test:all": "yarn lint:all && yarn type-check",
+    "prepare": "husky install",
+    "prepublishOnly": "yarn build",
+    "release": "semantic-release",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "image-size": "^1.0.0",
+    "loader-utils": "^3.2.1",
+    "postcss-loader": "^7.0.2",
+    "resolve-url-loader": "^5.0.0",
+    "sass-loader": "^13.2.0",
+    "semver": "^7.3.8",
+    "tsconfig-paths": "^4.1.2",
+    "tsconfig-paths-webpack-plugin": "^4.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addons": "^6.5.16",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/core-common": "^6.5.16",
+    "@types/babel__core": "^7.20.0",
+    "@types/loader-utils": "^2.0.3",
+    "@types/react": "^18.0.28",
+    "@types/semver": "^7.3.13",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-typescript": "^3.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
+    "next": "^13.1.6",
+    "prettier": "^2.8.4",
+    "react": "^18.2.0",
+    "semantic-release": "^20.1.0",
+    "ts-jest": "^29.0.5",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "webpack": "^5.75.0"
+  },
+  "peerDependencies": {
+    "@storybook/addon-actions": "^6.0.0 || ^7.0.0",
+    "@storybook/addons": "^6.0.0 || ^7.0.0",
+    "next": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  }
+}

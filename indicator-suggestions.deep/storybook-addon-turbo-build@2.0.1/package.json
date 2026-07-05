@@ -1,0 +1,48 @@
+{
+  "name": "storybook-addon-turbo-build",
+  "description": "Storybook Addon to improve build performance",
+  "keywords": [
+    "storybook-addons",
+    "storybook",
+    "addon",
+    "esbuild",
+    "dx"
+  ],
+  "version": "2.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pocka/storybook-addon-turbo-build"
+  },
+  "author": {
+    "name": "Shota Fuji",
+    "email": "pockawoooh@gmail.com",
+    "url": "https://github.com/pocka"
+  },
+  "main": "preset.js",
+  "type": "commonjs",
+  "dependencies": {
+    "esbuild-loader": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/webpack": "^4.41.26",
+    "prettier": "^2.2.1",
+    "typescript": "~5.0.4",
+    "vitest": "^0.30.1",
+    "webpack": "^4.46.0"
+  },
+  "files": [
+    "cjs",
+    "preset.js"
+  ],
+  "storybook": {
+    "displayName": "TurboBuild"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "clean": "rm -rf cjs",
+    "test": "vitest",
+    "lint": "prettier --check src",
+    "prepack": "yarn clean && yarn build"
+  }
+}

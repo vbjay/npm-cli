@@ -1,0 +1,187 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7ea744cf6876d635",
+    "fetchedFiles": [
+      "index.js",
+      "package.json",
+      "src/fix-libraries.js",
+      "src/fix-script.js",
+      "src/hide-library-schemes.js",
+      "src/utilities.js",
+      "src/verify-config.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "chalk",
+        "versionSpec": "^2.4.2"
+      },
+      {
+        "name": "glob",
+        "versionSpec": "^7.1.1"
+      },
+      {
+        "name": "plist",
+        "versionSpec": "^3.0.1"
+      },
+      {
+        "name": "xcode",
+        "versionSpec": "^2.0.0"
+      },
+      {
+        "name": "yargs",
+        "versionSpec": "^13.2.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chalk@2.4.2",
+      "glob@7.2.3",
+      "plist@3.1.1",
+      "xcode@2.1.0",
+      "yargs@13.3.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "index.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4a35a6e47a9630c442ac57498b215ccda7e876aae97e6a8a9272dce47bc4f27b",
+        "sizeBytes": 1277,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/fix-libraries.js",
+          "src/fix-script.js",
+          "src/hide-library-schemes.js",
+          "src/verify-config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/fix-libraries.js",
+        "reason": "required by ./index.js",
+        "sha256": "52ed1763442ed9e380fca26481ffdf8794209987de6df238952fa7acac161b40",
+        "sizeBytes": 3283,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/utilities.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/utilities.js",
+        "reason": "required by ./src/fix-libraries.js; required by ./src/fix-script.js; required by ./src/hide-library-schemes.js; required by ./src/verify-config.js",
+        "sha256": "ad7033ad315a71edba4245fa615d5aefbaaef4ee954b930e75b36e17624adc1a",
+        "sizeBytes": 2973,
+        "signals": [
+          "writes-file",
+          "dynamic-require",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/thekevinbrown/react-native-schemes-manager/blob/master/README.md",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "src/fix-script.js",
+        "reason": "required by ./index.js",
+        "sha256": "9ee887aaeecd609a6219f82063a3aa7e8d6c9878b13f454755d6f4d7bedf3f18",
+        "sizeBytes": 2422,
+        "signals": [
+          "binary-download",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/utilities.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/hide-library-schemes.js",
+        "reason": "required by ./index.js",
+        "sha256": "6a5a83f4d593dbd82f9df01b4bb0bbe8f1bfaa6998fb6d6f0fdb37fc5993a283",
+        "sizeBytes": 1268,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/utilities.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/verify-config.js",
+        "reason": "required by ./index.js",
+        "sha256": "1c28255227fb5f62a043f8638067ec48f68c29b893dfb7dfac76ec6e15fe5f34",
+        "sizeBytes": 2273,
+        "signals": [
+          "dynamic-require",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/utilities.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/thekevinbrown/react-native-schemes-manager#installation",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:53.395Z"
+  },
+  "hash": "sha256:872edc8f62530aabd7b5bcd6178a10dffebfb490b2808759c6ebd93c1ff75e1c"
+}

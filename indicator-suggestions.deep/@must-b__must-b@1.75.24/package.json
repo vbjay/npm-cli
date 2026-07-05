@@ -1,0 +1,110 @@
+{
+  "name": "@must-b/must-b",
+  "version": "1.75.24",
+  "description": "Must-b v1.74.37 — UX & CONNECTIVITY OVERHAUL: Resolve OpenRouter 405 error, implement dependent dropdown selects for traditional brokers, design robust multi-account state structures, and harden Ollama & Binance connections.",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Must-b Inc.",
+  "homepage": "https://must-b.com",
+  "bugs": {
+    "url": "https://must-b.com/docs"
+  },
+  "keywords": [
+    "ai",
+    "autonomous",
+    "agent",
+    "cli",
+    "terminal",
+    "workflow",
+    "automation",
+    "llm",
+    "orchestrator",
+    "must-b"
+  ],
+  "files": [
+    "dist/",
+    "bin/",
+    "scripts/",
+    "README.md"
+  ],
+  "main": "dist/index.cjs",
+  "bin": {
+    "must-b": "bin/must-b.cjs"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts web",
+    "start:cli": "tsx src/index.ts cli",
+    "dev": "tsx watch src/index.ts web",
+    "doctor": "tsx src/index.ts doctor",
+    "onboard": "tsx src/index.ts onboard",
+    "memory-sync": "tsx src/index.ts memory-sync",
+    "build:frontend": "cd public/must-b-ui && npm install && npx vite build",
+    "dev:frontend": "cd public/must-b-ui && npm install && npx vite",
+    "build:prod": "node scripts/build-prod.mjs",
+    "build:bin": "node scripts/build-prod.mjs --binary",
+    "build:packs": "node scripts/build-packs.mjs",
+    "publish:core": "node scripts/build-prod.mjs --publish",
+    "publish:packs": "node scripts/build-packs.mjs --publish-all",
+    "postinstall": "node scripts/create-must-b-shim.mjs",
+    "dev:all": "concurrently \"npm run dev\" \"npm run server:dev\"",
+    "server:dev": "nodemon server/index.js"
+  },
+  "pkg": {
+    "assets": [
+      "dist/public/**/*"
+    ],
+    "scripts": [
+      "dist/index.cjs"
+    ],
+    "targets": [
+      "node20-win-x64",
+      "node20-linux-x64",
+      "node20-macos-x64"
+    ],
+    "outputPath": "dist/bin"
+  },
+  "dependencies": {
+    "@buape/carbon": "^0.16.0",
+    "@huggingface/transformers": "^3.8.1",
+    "@lancedb/lancedb": "^0.27.2",
+    "@nut-tree-fork/nut-js": "^4.2.6",
+    "@polymarket/clob-client-v2": "^1.0.3-canary.0",
+    "@sinclair/typebox": "^0.34.49",
+    "better-sqlite3": "^12.9.0",
+    "ccxt": "^4.5.56",
+    "chalk": "^5.0.0",
+    "chokidar": "^4.0.3",
+    "discord-api-types": "^0.38.47",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.16.0",
+    "express": "^4.22.1",
+    "grammy": "^1.42.0",
+    "inquirer": "^8.2.7",
+    "json5": "^2.2.3",
+    "metaapi.cloud-sdk": "^29.3.3",
+    "open": "^11.0.0",
+    "openai": "^6.34.0",
+    "playwright": "^1.49.0",
+    "sharp": "^0.33.5",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "tslog": "^4.10.2",
+    "vectra": "^0.12.3",
+    "whatwg-encoding": "^3.1.1",
+    "winston": "^3.11.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/inquirer": "^8.2.12",
+    "@types/node": "^22.0.0",
+    "@yao-pkg/pkg": "^5.11.5",
+    "esbuild": "^0.24.0",
+    "eslint": "^8",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

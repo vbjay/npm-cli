@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "102ca22d9d7b41a7",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/copy-plugins.js",
+      "scripts/postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c2d759b8edc16acd1b8418f02c3e9e4c15a1f2131d030420bacc2dc7ee428ff1",
+        "sizeBytes": 1601,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "modifies-shell-config"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/copy-plugins.js",
+        "reason": "referenced by lifecycle script: `copy-plugin`",
+        "sha256": "45df29c51befca959c7a6d15d450666baf63d6a9efc093791b6984845f03285d",
+        "sizeBytes": 3304,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:52.233Z"
+  },
+  "hash": "sha256:ec264a54e6b19b617e6faf2e5a31390533b67e6326e03875ea06b0a39a812a7e"
+}

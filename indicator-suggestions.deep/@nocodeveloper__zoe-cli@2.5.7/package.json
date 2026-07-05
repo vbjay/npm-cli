@@ -1,0 +1,66 @@
+{
+  "name": "@nocodeveloper/zoe-cli",
+  "version": "2.5.7",
+  "description": "Zoe CLI — Public Preview. AI-powered coding assistant. Ship features, not boilerplate.",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "types": "dist/cli/index.d.ts",
+  "bin": {
+    "zoe": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    ".env.example"
+  ],
+  "scripts": {
+    "start": "tsx src/cli/index.ts",
+    "dev": "tsx watch src/cli/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "coding-assistant",
+    "openrouter",
+    "insforge",
+    "zoe",
+    "code-generation",
+    "developer-tools"
+  ],
+  "author": "Joel Araujo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamnocodeveloper/zoe-cli.git"
+  },
+  "homepage": "https://getzoe.cloud",
+  "bugs": {
+    "url": "https://github.com/iamnocodeveloper/zoe-cli/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@insforge/sdk": "^1.4.3",
+    "@nocodeveloper/zoe-cli": "^2.3.1",
+    "@openrouter/agent": "^0.7.2",
+    "chalk": "^5.6.2",
+    "commander": "^15.0.0",
+    "glob": "^13.0.6",
+    "open": "^11.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "tsx": "^4.23.0",
+    "typescript": "^6.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

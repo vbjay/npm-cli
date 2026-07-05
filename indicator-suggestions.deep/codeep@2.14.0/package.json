@@ -1,0 +1,69 @@
+{
+  "name": "codeep",
+  "version": "2.14.0",
+  "description": "AI-powered coding assistant built for the terminal. Multiple LLM providers, project-aware context, and a seamless development workflow.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "codeep": "bin/codeep.js"
+  },
+  "scripts": {
+    "dev": "node scripts/gen-version.js && node --import tsx src/renderer/main.ts",
+    "prepack": "node scripts/gen-version.js && tsc && node scripts/fix-imports.js",
+    "build": "node scripts/gen-version.js && rm -rf dist && tsc && node scripts/fix-imports.js",
+    "start": "node dist/renderer/main.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "release": "node scripts/release.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladoIvankovic/Codeep.git"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "tui",
+    "glm",
+    "z.ai",
+    "coding",
+    "assistant"
+  ],
+  "author": "Vlado Ivankovic",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/VladoIvankovic/Codeep/issues"
+  },
+  "homepage": "https://codeep.dev",
+  "dependencies": {
+    "clipboardy": "^4.0.0",
+    "conf": "^13.1.0",
+    "js-yaml": "^4.1.0",
+    "keytar": "^7.9.0",
+    "open": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.10.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "tsx": "^4.7.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "bin/codeep.js",
+    "dist/**/*",
+    "!dist/**/*.test.js",
+    "!dist/**/*.test.d.ts",
+    "!dist/zed/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

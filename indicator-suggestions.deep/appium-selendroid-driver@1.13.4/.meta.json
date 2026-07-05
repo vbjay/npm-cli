@@ -1,0 +1,175 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7fd0e2399ee1b4c2",
+    "fetchedFiles": [
+      "bin/install.js",
+      "build/lib/installer.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "@babel/runtime",
+        "versionSpec": "^7.0.0"
+      },
+      {
+        "name": "source-map-support",
+        "versionSpec": "^0.5.5"
+      },
+      {
+        "name": "request-promise",
+        "versionSpec": "^4.1.1"
+      },
+      {
+        "name": "appium-support",
+        "versionSpec": "^2.5.0"
+      },
+      {
+        "name": "teen_process",
+        "versionSpec": "^1.7.1"
+      },
+      {
+        "name": "fancy-log",
+        "versionSpec": "^1.3.2"
+      },
+      {
+        "name": "appium-android-driver",
+        "versionSpec": "^4.0.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@babel/runtime@7.29.7",
+      "appium-android-driver@4.54.0",
+      "appium-support@2.55.0",
+      "fancy-log@1.3.3",
+      "request-promise@4.2.6",
+      "source-map-support@0.5.21",
+      "teen_process@1.16.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "gulpfile.js",
+        "label": "Gulp task runner script",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\appium-selendroid-driver@1.13.4\\gulpfile.js'",
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "gulpfile.ts",
+        "label": "Gulp task runner script (TypeScript)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\appium-selendroid-driver@1.13.4\\gulpfile.ts'",
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "gulpfile.mjs",
+        "label": "Gulp task runner script (ESM)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\appium-selendroid-driver@1.13.4\\gulpfile.mjs'",
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "617c06921c0d633056c953fd6805bec6d2a3424a14bc8f8f11217167f4d3d05e",
+        "sizeBytes": 2165,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "native-build",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/lib/installer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/lib/installer.js",
+        "reason": "required by ./bin/install.js",
+        "sha256": "75759e98fab92eef0bad4572d5745d4f2ac5f0aab93788670abc80d8f12b9aeb",
+        "sizeBytes": 19032,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://repo1.maven.org/maven2/io/selendroid/selendroid-standalone",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:20.941Z"
+  },
+  "hash": "sha256:1d0d48a20df4bb979bcfac36fc9b450b6c2135f81bc81e88805e38adec869e2a"
+}

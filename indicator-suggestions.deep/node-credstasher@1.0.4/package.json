@@ -1,0 +1,91 @@
+{
+  "name": "node-credstasher",
+  "version": "1.0.4",
+  "description": "A TypeScript implementation of credstash for storing and retrieving secrets using AWS KMS and DynamoDB.",
+  "author": "Andrew Meyer <andrew@rewdy.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/rewdy/node-credstasher",
+  "keywords": [
+    "credstash",
+    "aws",
+    "kms",
+    "dynamodb",
+    "secrets",
+    "encryption",
+    "typescript",
+    "cli"
+  ],
+  "type": "module",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "bin": {
+    "credstasher": "./cli/commands.cjs",
+    "node-credstasher": "./cli/commands.cjs"
+  },
+  "files": [
+    "dist",
+    "cli"
+  ],
+  "scripts": {
+    "build": "bun run build:lib && bun run build:cli",
+    "build:cli": "bun build ./src/commands.ts --outfile=cli/commands.cjs --target=node --format=cjs --external:aws-sdk,commander,crypto,aes-js --minify",
+    "build:lib": "rslib build",
+    "check": "biome check .",
+    "check:fix": "biome check . --write",
+    "clean": "rm -rf dist cli credstash.log",
+    "cli": "bun run ./src/commands.ts",
+    "example": "bun run example.ts",
+    "format": "biome format . --write",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint . --write",
+    "local:start": "docker compose up -d",
+    "local:stop": "docker compose down",
+    "preflight": "bun run typecheck && bun run check",
+    "prepare": "husky",
+    "test": "bun run test:lib && bun run test:cli",
+    "test:cli": "./tests/commands.test.sh",
+    "test:lib": "bun test",
+    "test:local": "bun test test-local.ts",
+    "test:watch": "bun test --watch",
+    "typecheck": "tsc --noEmit --strict"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@rslib/core": "^0.12.2",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/aes-js": "^3.1.4",
+    "@types/bun": "latest",
+    "@types/node": "22.13.14",
+    "aws-sdk-client-mock": "^4.1.0",
+    "commander": "^14.0.0",
+    "crypto": "1.0.1",
+    "husky": "^9.1.7",
+    "semantic-release": "^24.2.7",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.872.0",
+    "@aws-sdk/client-kms": "3.872.0",
+    "@aws-sdk/lib-dynamodb": "3.872.0",
+    "aes-js": "^3.1.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

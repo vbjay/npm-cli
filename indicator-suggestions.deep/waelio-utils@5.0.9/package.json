@@ -1,0 +1,70 @@
+{
+  "name": "waelio-utils",
+  "version": "5.0.9",
+  "description": "Helper Utils often used in websites",
+  "homepage": "https://github.com/waelio/waelio-utils#index",
+  "keywords": [
+    "utilities",
+    "browser",
+    "quasar",
+    "vue",
+    "javascript",
+    "helpers",
+    "react",
+    "angular",
+    "nuxt3"
+  ],
+  "main": "lib/waelioUtils.js",
+  "types": "types/waelioUtils.d.ts",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" ",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "files": [
+    "lib/*",
+    "types/*"
+  ],
+  "author": {
+    "name": "Peace Marshal",
+    "email": "wahbehw@me.com",
+    "url": "https://waelio.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waelio/waelio-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/waelio/waelio-utils/issues"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^18.19.33",
+    "axios": "^0.28.0",
+    "jasmine": "^4.6.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "prettier": "^2.8.8",
+    "store2": "^2.14.3",
+    "ts-jest": "^29.1.2",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "axios@>=0.8.1 <0.28.0": ">=0.28.0"
+    }
+  }
+}

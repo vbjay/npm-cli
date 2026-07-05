@@ -1,0 +1,79 @@
+{
+  "name": "@etchteam/storybook-addon-github-link",
+  "version": "2.0.0",
+  "description": "Link stories to source code in Github",
+  "type": "module",
+  "main": "dist/manager.js",
+  "exports": {
+    ".": {
+      "default": "./dist/manager.js"
+    },
+    "./manager": {
+      "default": "./dist/manager.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "manager.js"
+  ],
+  "scripts": {
+    "prepare": "tsup",
+    "storybook": "npm run prepare && storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etchteam/storybook-addon-github-link.git"
+  },
+  "keywords": [
+    "storybook",
+    "addon",
+    "storybook-addon",
+    "github",
+    "link"
+  ],
+  "author": "etchteam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/etchteam/storybook-addon-github-link/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "storybook": {
+    "displayName": "Github Link",
+    "icon": "https://raw.githubusercontent.com/etchteam/storybook-addon-github-link/main/github-link-storybook-logo.png"
+  },
+  "peerDependencies": {
+    "storybook": "^10.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@etchteam/eslint-config": "^2.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^13.1.2",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@storybook/addon-docs": "10.1.11",
+    "@storybook/icons": "^1.2.9",
+    "@storybook/react-vite": "10.1.11",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-storybook": "^0.12.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "semantic-release": "^25.0.2",
+    "storybook": "10.1.11",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  }
+}

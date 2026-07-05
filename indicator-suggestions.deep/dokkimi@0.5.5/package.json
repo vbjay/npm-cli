@@ -1,0 +1,101 @@
+{
+  "name": "dokkimi",
+  "version": "0.5.5",
+  "description": "CLI for isolated Docker environments for microservice testing",
+  "bin": {
+    "dokkimi": "apps/cli/dist/bin/dokkimi.js"
+  },
+  "workspaces": [],
+  "_dokkimi_root": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "testing",
+    "microservices",
+    "integration-testing",
+    "e2e",
+    "end-to-end",
+    "sandbox",
+    "traffic",
+    "mock",
+    "docker",
+    "devops",
+    "api-testing",
+    "cli",
+    "test-automation"
+  ],
+  "license": "Elastic-2.0",
+  "overrides": {
+    "lodash": "4.18.1",
+    "glob": "^11.0.0",
+    "multer": "^2.2.0",
+    "@hono/node-server": "^1.19.13"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "apps/cli/dist/",
+    "apps/mcp/dist/",
+    "apps/mcp/package.json",
+    "services/control-tower/dist/",
+    "services/control-tower/package.json",
+    "shared/prisma/sqlite/schema.prisma",
+    "shared/prisma/prisma.config.ts",
+    "shared/prisma/migrations/",
+    "shared/docs/",
+    "config/config.yaml",
+    "scripts/postinstall.js",
+    "README.md",
+    "LICENSE",
+    "shared/config/dist/",
+    "shared/config/package.json",
+    "shared/definition-resolver/dist/",
+    "shared/definition-resolver/package.json",
+    "shared/definition-validator/dist/",
+    "shared/definition-validator/package.json",
+    "shared/platform/dist/",
+    "shared/platform/package.json",
+    "shared/service-manager/dist/",
+    "shared/service-manager/package.json",
+    "shared/telemetry/dist/",
+    "shared/telemetry/package.json"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@nestjs/axios": "^4.0.1",
+    "@nestjs/common": "^11.1.19",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.1.19",
+    "@nestjs/platform-express": "^11.1.19",
+    "@nestjs/throttler": "^6.5.0",
+    "@prisma/adapter-libsql": "^7.8.0",
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "axios": "^1.18.0",
+    "chokidar": "^5.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "dockerode": "^5.0.0",
+    "dotenv": "^17.4.2",
+    "js-yaml": "^5.0.0",
+    "minimatch": "^10.2.5",
+    "multer": "^2.2.0",
+    "node-forge": "^1.4.0",
+    "pg": "^8.20.0",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
+    "posthog-node": "^5.38.2",
+    "prisma": "^7.8.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "tar-stream": "^3.2.0",
+    "uuid": "^14.0.0"
+  }
+}

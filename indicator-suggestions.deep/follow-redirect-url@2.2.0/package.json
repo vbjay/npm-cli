@@ -1,0 +1,73 @@
+{
+  "name": "follow-redirect-url",
+  "version": "2.2.0",
+  "description": "A simple command-line utility that lets you follow redirects to see where http URLs end up. Useful for shortened URLs.",
+  "main": "lib.js",
+  "files": [
+    "bin.js",
+    "lib.js",
+    "follow-redirect-url.js",
+    "scripts/"
+  ],
+  "dependencies": {
+    "undici": "^7.22.0"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "express": "^4.22.2",
+    "mocha": "^11.7.6",
+    "nyc": "^18.0.0"
+  },
+  "scripts": {
+    "test": "nyc mocha --reporter spec --exit test",
+    "coverage": "nyc report --reporter=lcov",
+    "verify:pack": "node scripts/verify_pack.js",
+    "prepack": "npm run verify:pack",
+    "prepublishOnly": "npm test",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "author": "Sayed Tauseef Naqvi",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sthnaqvi/follow-redirect-url.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sthnaqvi/follow-redirect-url/issues"
+  },
+  "keywords": [
+    "cli",
+    "command",
+    "url",
+    "web",
+    "website",
+    "redirect",
+    "follow",
+    "URI",
+    "short",
+    "http",
+    "https",
+    "node",
+    "followRedirect",
+    "domain"
+  ],
+  "contributors": [
+    {
+      "name": "Sayed Tauseef Naqvi",
+      "email": "tauseef.naqvi786@gmail.com"
+    },
+    "Michael Bianco (https://mikebian.co/about)"
+  ],
+  "preferGlobal": true,
+  "bin": {
+    "follow": "bin.js",
+    "follow-redirect-url": "bin.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "overrides": {
+    "diff": "^8.0.3",
+    "serialize-javascript": "^7.0.5"
+  }
+}

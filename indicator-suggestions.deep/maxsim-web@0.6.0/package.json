@@ -1,0 +1,75 @@
+{
+  "name": "maxsim-web",
+  "version": "0.6.0",
+  "description": "High-performance MaxSim scoring with WebAssembly and SIMD for ColBERT-style retrieval - 3-5x faster than JavaScript",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./baseline": "./dist/maxsim-baseline.js",
+    "./optimized": "./dist/maxsim-optimized.js",
+    "./wasm": "./dist/maxsim-wasm.js"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build:wasm": "cd src/rust && wasm-pack build --target web --out-dir ../../dist/wasm && rm -f ../../dist/wasm/.gitignore",
+    "dev": "node scripts/dev.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "npm test -- --watch",
+    "test:correctness": "node scripts/test-correctness.js",
+    "test:correctness:browser": "node scripts/test-correctness.js browser",
+    "benchmark": "node benchmark/runner.js",
+    "benchmark:all": "node benchmark/runner.js --all",
+    "benchmark:browser": "node benchmark/server.js",
+    "test:pages": "node scripts/test-pages.js",
+    "lint": "eslint src test benchmark",
+    "prepare": "npm run build",
+    "prepublishOnly": "node scripts/publish.js"
+  },
+  "keywords": [
+    "maxsim",
+    "colbert",
+    "retrieval",
+    "similarity",
+    "embedding",
+    "wasm",
+    "simd",
+    "javascript",
+    "browser",
+    "nodejs",
+    "performance",
+    "late-interaction",
+    "semantic-search",
+    "vector-search",
+    "information-retrieval"
+  ],
+  "author": "Joe Hsu <joe32140@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joe32140/maxsim-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe32140/maxsim-web/issues"
+  },
+  "homepage": "https://github.com/joe32140/maxsim-web#readme",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

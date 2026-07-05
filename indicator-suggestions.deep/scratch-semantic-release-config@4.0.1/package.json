@@ -1,0 +1,60 @@
+{
+  "name": "scratch-semantic-release-config",
+  "version": "4.0.1",
+  "description": "semantic-release shareable configuration for Scratch",
+  "main": "release.config.js",
+  "files": [
+    "release.config.js"
+  ],
+  "scripts": {
+    "commit": "git-cz",
+    "prepare": "husky install",
+    "test": "eslint ."
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scratchfoundation/scratch-semantic-release-config.git"
+  },
+  "keywords": [
+    "Scratch",
+    "semantic-release",
+    "semantic-release-config",
+    "npm",
+    "github",
+    "git",
+    "release",
+    "changelog"
+  ],
+  "author": "Christopher Willis-Ford <7019101+cwillisf@users.noreply.github.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/scratchfoundation/scratch-semantic-release-config/issues"
+  },
+  "homepage": "https://github.com/scratchfoundation/scratch-semantic-release-config#readme",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.0",
+    "@semantic-release/npm": "^13.0.0",
+    "@semantic-release/release-notes-generator": "^14.0.0"
+  },
+  "peerDependencies": {
+    "semantic-release": ">=19.0.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.8.1",
+    "@commitlint/config-conventional": "17.8.1",
+    "eslint": "8.57.1",
+    "eslint-config-scratch": "9.0.9",
+    "husky": "8.0.3",
+    "semantic-release": "25.0.2"
+  }
+}
