@@ -212,6 +212,17 @@ t.test('findLocalRefs: detects dynamic import() with literal local path', (t) =>
   t.end()
 })
 
+t.test('findLocalRefs: detects import.meta.resolve() with literal local path', (t) => {
+  const { findLocalRefs } = scanner(t)
+  t.ok(findLocalRefs("import.meta.resolve('./helper.js')").includes('./helper.js'),
+    'single-quote import.meta.resolve')
+  t.ok(findLocalRefs('import.meta.resolve("./data.json")').includes('./data.json'),
+    'double-quote import.meta.resolve')
+  t.notOk(findLocalRefs("import.meta.resolve('lodash')").length > 0,
+    'non-local import.meta.resolve is ignored')
+  t.end()
+})
+
 t.test('findLocalRefs: paths with spaces are matched inside quoted strings', (t) => {
   const { findLocalRefs } = scanner(t)
   // require() — single quotes around a path that has an internal space
@@ -388,7 +399,7 @@ t.test('file-too-large is emitted alongside signals for oversized files', async 
       src.copy(buf, 0, 0, bytesRead)
       return { bytesRead }
     },
-    close: async () => {},
+    close: async () => { },
   }
 
   // Fake stat object that passes the isFile() guard in the scanner.
@@ -1066,6 +1077,56 @@ t.test('tsx script is scanned for signals', async (t) => {
   })
 })
 
+// --- bun / deno runtime tests -------------------------------------------
+
+t.test('bun script is scanned for signals', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'postinstall.ts': "import { exec } from 'child_process'",
+  }, async (dir) => {
+    const result = await scan(dir, { postinstall: 'bun ./postinstall.ts' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('postinstall.ts'), 'bun: script file is scanned')
+    const entry = result.find((f) => f.path === 'postinstall.ts')
+    t.ok(entry.signals.includes('uses-child-process'), 'signals detected in bun script')
+  })
+})
+
+t.test('bun run <file> is scanned for signals', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'setup.ts': "require('https')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'bun run ./setup.ts' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('setup.ts'), 'bun run: script file is scanned')
+  })
+})
+
+t.test('deno run <file> is scanned for signals', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'install.ts': "import { exec } from 'child_process'",
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'deno run ./install.ts' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('install.ts'), 'deno run: script file is scanned')
+    const entry = result.find((f) => f.path === 'install.ts')
+    t.ok(entry.signals.includes('uses-child-process'), 'signals detected in deno run script')
+  })
+})
+
+t.test('deno run with --allow-net flags is scanned', async (t) => {
+  const scan = scanner(t)
+  await withPackage(t, {
+    'fetch.ts': "require('https')",
+  }, async (dir) => {
+    const result = await scan(dir, { install: 'deno run --allow-net --allow-read ./fetch.ts' })
+    const paths = result.map((f) => f.path)
+    t.ok(paths.includes('fetch.ts'), 'deno run with flags: script file is scanned')
+  })
+})
+
 // --- cross-env wrapper tests ---------------------------------------------
 
 t.test('cross-env wrapper: script file is scanned', async (t) => {
@@ -1307,7 +1368,7 @@ t.test('sizeBytes is null for inline command entries', async (t) => {
 t.test('file that opens but read throws is marked file-unreadable with sizeBytes null', async (t) => {
   const fakeFh = {
     read: async () => { throw new Error('simulated disk read error') },
-    close: async () => {},
+    close: async () => { },
   }
   const fakeStat = { isFile: () => true }
   const mockFs = {
