@@ -1,12 +1,12 @@
 'use strict'
 
-const fs   = require('fs/promises')
+const fs = require('fs/promises')
 const path = require('path')
 
 // Null byte at position 0 causes SyntaxError in all Node.js versions, preventing
 // accidental execution of cached JS files while leaving text content intact for
 // static analysis (regex matching is unaffected).
-const DEFANG_MSG     = 'DEFANGED: static-analysis cache — do not execute'
+const DEFANG_MSG = 'DEFANGED: static-analysis cache — do not execute'
 const DEFANG_SHEBANG = `#!/usr/bin/env false  # ${DEFANG_MSG}`
 
 // Binary executable magic bytes — these files are skipped entirely (defangBuf returns null).
@@ -24,7 +24,7 @@ const BINARY_MAGIC = [
  * #!/usr/bin/env false causes OS-level execution to exit 1 before the interpreter
  * ever sees the file content; killLine handles interpreter-direct invocation.
  */
-function defangWithShebang (str, killLine) {
+function defangWithShebang(str, killLine) {
   const nlIdx = str.indexOf('\n')
   const afterFirst = nlIdx >= 0 ? str.slice(nlIdx + 1) : ''
   return `${DEFANG_SHEBANG}\n# ${DEFANG_MSG}\n${killLine}\n${afterFirst}`
@@ -36,13 +36,13 @@ function defangWithShebang (str, killLine) {
  * Returns a modified Buffer with an inert header for script/build-tool types.
  * Returns the original buf unchanged for safe data types (JSON, TOML, .rs, …).
  */
-function defangBuf (relPath, buf) {
+function defangBuf(relPath, buf) {
   // 1. Binary executable → skip entirely
   if (BINARY_MAGIC.some(m => buf.length >= m.length && buf.slice(0, m.length).equals(m))) {
     return null
   }
 
-  const ext  = path.extname(relPath).toLowerCase()
+  const ext = path.extname(relPath).toLowerCase()
   const base = path.basename(relPath).toLowerCase()
 
   // 2. JS/TS: null byte → SyntaxError; also overwrite any shebang
@@ -132,10 +132,20 @@ function defangBuf (relPath, buf) {
   // JS content without recognized extension (e.g. underscore-contrib .arity/.builders,
   // appium extensionless modules, etc.)
   if (/^["']use strict["']/.test(head) ||
-      /^\/\//.test(head) ||
-      /^\(function/.test(head) ||
-      /^(?:var |const |let |function |class |module\.exports|exports\.)/.test(head)) {
+    /^\/\//.test(head) ||
+    /^\(function/.test(head) ||
+    /^(?:var |const |let |function |class |module\.exports|exports\.)/.test(head)) {
     return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n`), buf])
+  }
+
+  // 13. Git hook directories — extensionless files with no recognized content marker.
+  // Git hook scripts (husky, lefthook, simple-git-hooks) are often extensionless
+  // shell scripts that lack a shebang when authored for older hook managers.
+  // A file inside .husky/, .lefthook/, or a standard git hooks/ directory with no
+  // extension and no detectable content type is treated as a shell script.
+  const posix = relPath.replace(/\\/g, '/')
+  if (ext === '' && /(?:^|\/)(?:\.husky|\.lefthook|hooks)\/[^/]+$/.test(posix)) {
+    return Buffer.from(`# ${DEFANG_MSG}\nexit 1\n${buf.toString('utf8')}`)
   }
 
   return buf  // safe data files (JSON, TOML, .rs, .c, CMakeLists.txt, …)
@@ -145,7 +155,7 @@ function defangBuf (relPath, buf) {
  * Write a defanged buffer to disk and strip execute permissions on non-Windows.
  * Returns false if the file should be skipped (binary executable).
  */
-async function writeDefanged (dest, relPath, buf) {
+async function writeDefanged(dest, relPath, buf) {
   const safe = defangBuf(relPath, buf)
   if (!safe) return false
   await fs.writeFile(dest, safe)
@@ -159,7 +169,7 @@ async function writeDefanged (dest, relPath, buf) {
  * Remove a directory tree, clearing read-only flags first on non-Windows so
  * that files chmod'd to 0o444 by writeDefanged can be deleted.
  */
-async function rmReadOnly (dir) {
+async function rmReadOnly(dir) {
   if (process.platform !== 'win32') {
     // Walk and restore write permission before removal
     const restoreWrite = async (p) => {
@@ -167,7 +177,7 @@ async function rmReadOnly (dir) {
         const entries = await fs.readdir(p, { withFileTypes: true })
         await Promise.all(entries.map(e => {
           const full = path.join(p, e.name)
-          return e.isDirectory() ? restoreWrite(full) : fs.chmod(full, 0o644).catch(() => {})
+          return e.isDirectory() ? restoreWrite(full) : fs.chmod(full, 0o644).catch(() => { })
         }))
       } catch { /* ignore */ }
     }

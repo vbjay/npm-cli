@@ -1,6 +1,6 @@
 'use strict'
 
-const fs   = require('fs/promises')
+const fs = require('fs/promises')
 const path = require('path')
 
 const ROOT = path.resolve(__dirname, '..', '..')
@@ -33,17 +33,17 @@ const { fetchRaw } = require('./http')
 // ---------------------------------------------------------------------------
 
 const MANIFEST_CONCURRENCY = 5   // npm's own tooling (make-fetch-happen) uses 5 sockets
-const MANIFEST_DELAY_MS    = 150  // small inter-request stagger to avoid burst detection
+const MANIFEST_DELAY_MS = 150  // small inter-request stagger to avoid burst detection
 const DRAIN_CHECKPOINT_EVERY = 50 // checkpoint to both stores every N manifest resolutions
 const DEFAULT_CURSOR_TTL_HOURS = 168  // 7 days
 
 const DrainMode = Object.freeze({
   Candidates: 'Candidates',
-  Downloads:  'Downloads',
-  DeepFetch:  'DeepFetch',
-  DeepScan:   'DeepScan',
+  Downloads: 'Downloads',
+  DeepFetch: 'DeepFetch',
+  DeepScan: 'DeepScan',
 })
-async function main () {
+async function main() {
   const args = process.argv.slice(2)
   const flag = (name, def) => {
     const i = args.indexOf(name)
@@ -130,11 +130,11 @@ When to use --reset:
   const userKeywordsStr = flag('--keywords', null)
   const userKeywords = userKeywordsStr
     ? (() => {
-        const deduped = new Set()
-        return userKeywordsStr.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
-          .map(k => k.startsWith('keywords:') ? k : `keywords:${k}`)
-          .filter(k => deduped.has(k) ? false : deduped.add(k))
-      })()
+      const deduped = new Set()
+      return userKeywordsStr.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+        .map(k => k.startsWith('keywords:') ? k : `keywords:${k}`)
+        .filter(k => deduped.has(k) ? false : deduped.add(k))
+    })()
     : []
 
   // Acquire process lock — prevents a second run from corrupting shared cache files.
@@ -164,10 +164,10 @@ When to use --reset:
   // --reset           — delete both cache files and start from scratch.
   // --deep            — fetch indicator files from unpkg and run the production
   //                     scanner; results cached in .deep/ next to --out.
-  const pkgFile          = flag('--packages', null)
+  const pkgFile = flag('--packages', null)
   const manifestStorePath = outPath.replace(/\.json$/, '.packages.json')
-  const resumeCachePath   = outPath.replace(/\.json$/, '.tmp.json')
-  const deepDir           = outPath.replace(/\.json$/, '.deep')
+  const resumeCachePath = outPath.replace(/\.json$/, '.tmp.json')
+  const deepDir = outPath.replace(/\.json$/, '.deep')
   const pkgPath = pkgFile
     ? (path.isAbsolute(pkgFile) ? pkgFile : path.join(ROOT, pkgFile))
     : manifestStorePath
@@ -178,8 +178,8 @@ When to use --reset:
   }
 
   if (doReset) {
-    await fs.unlink(manifestStorePath).catch(() => {})
-    await fs.unlink(resumeCachePath).catch(() => {})
+    await fs.unlink(manifestStorePath).catch(() => { })
+    await fs.unlink(resumeCachePath).catch(() => { })
     await rmReadOnly(deepDir)
     process.stderr.write(`  ⚠️  --reset: deleted ${manifestStorePath}, ${resumeCachePath}, and ${deepDir}\n\n`)
     if (!topExplicit) process.exit(0)
@@ -260,12 +260,12 @@ When to use --reset:
     for (const n of (cachedSeen || [])) seen.add(n)
     if (discoveryState) {
       resumeQueryIndex = discoveryState.queryIndex || 0
-      resumeQueryFrom  = discoveryState.queryFrom  || 0
+      resumeQueryFrom = discoveryState.queryFrom || 0
     }
     const withDl = manifests.filter(m => m.weeklyDownloads > 0)
     const sorted = [...withDl].sort((a, b) => b.weeklyDownloads - a.weeklyDownloads)
-    const dlMax  = sorted[0]?.weeklyDownloads ?? 0
-    const dlMin  = sorted[sorted.length - 1]?.weeklyDownloads ?? 0
+    const dlMax = sorted[0]?.weeklyDownloads ?? 0
+    const dlMin = sorted[sorted.length - 1]?.weeklyDownloads ?? 0
 
     process.stderr.write(`  ✓ loaded ${manifests.length} packages with lifecycle scripts (${seen.size.toLocaleString()} names examined, no lifecycle scripts in the rest)\n`)
     if (withDl.length > 0) {
@@ -719,12 +719,12 @@ When to use --reset:
       process.stderr.write(`    checkpoint saved — ready to refill\n`)
       pagesSinceLastDrain = 0
 
-    // ── DeepFetch mode ─────────────────────────────────────────────────────
-    // For each manifest: fetch indicator files + lifecycle JS (BFS within the
-    // package only).  Bare require()/import refs (ESM import…from, import())
-    // are collected as bareFollows.  Workers resolve each follow to name@version
-    // via unpkg and push new ones to candidates so they go through the proper
-    // Candidates drain pipeline (full manifest fetch + weekly-downloads → packages.json).
+      // ── DeepFetch mode ─────────────────────────────────────────────────────
+      // For each manifest: fetch indicator files + lifecycle JS (BFS within the
+      // package only).  Bare require()/import refs (ESM import…from, import())
+      // are collected as bareFollows.  Workers resolve each follow to name@version
+      // via unpkg and push new ones to candidates so they go through the proper
+      // Candidates drain pipeline (full manifest fetch + weekly-downloads → packages.json).
     } else if (mode === DrainMode.DeepFetch) {
       // opts.onlyMissing = true  → discovery pass: only fetch packages with no valid cache
       //                            (newly added packages whose deps haven't been found yet).
@@ -756,13 +756,13 @@ When to use --reset:
       const fetchQueue = onlyMissing
         ? manifests.filter((_, i) => cacheStatus[i] !== 'valid')
         : [
-            ...manifests.filter((_, i) => cacheStatus[i] !== 'valid'),
-            ...manifests.filter((_, i) => cacheStatus[i] === 'valid'),
-          ]
+          ...manifests.filter((_, i) => cacheStatus[i] !== 'valid'),
+          ...manifests.filter((_, i) => cacheStatus[i] === 'valid'),
+        ]
       if (fetchQueue.length === 0) return
 
-      const nValid   = cacheStatus.filter(s => s === 'valid').length
-      const nStale   = cacheStatus.filter(s => s === 'stale').length
+      const nValid = cacheStatus.filter(s => s === 'valid').length
+      const nStale = cacheStatus.filter(s => s === 'stale').length
       const nMissing = cacheStatus.filter(s => s === 'missing').length
       const cacheParts = []
       if (nValid > 0) cacheParts.push(`${nValid} cached`)
@@ -820,12 +820,12 @@ When to use --reset:
             // Still filter for validity: old meta may contain names that fail the
             // current isValidNpmPackageName check (e.g. hostname-like strings).
             ? resolvedFollows.filter(key => {
-                const at = key.lastIndexOf('@')
-                if (at <= 0) return false
-                const name = key.slice(0, at)
-                return isValidNpmPackageName(name) && !NODE_BUILTIN_MODULES.has(name) &&
-                       !inStore.has(key) && !seen.has(key)
-              })
+              const at = key.lastIndexOf('@')
+              if (at <= 0) return false
+              const name = key.slice(0, at)
+              return isValidNpmPackageName(name) && !NODE_BUILTIN_MODULES.has(name) &&
+                !inStore.has(key) && !seen.has(key)
+            })
             // Slow-path: resolve each bare follow via unpkg to get the concrete version.
             : await (async () => {
               const resolved = []
@@ -883,9 +883,9 @@ When to use --reset:
       await checkpoint()  // final save — always runs (isCheckpointing=false at this point)
       process.stderr.write(`    checkpoint saved\n\n`)
 
-    // ── DeepScan mode ─────────────────────────────────────────────────────
-    // Run indicator scan on already-fetched packages (reads from cache).
-    // Must be called after drain(DeepFetch) so files are on disk.
+      // ── DeepScan mode ─────────────────────────────────────────────────────
+      // Run indicator scan on already-fetched packages (reads from cache).
+      // Must be called after drain(DeepFetch) so files are on disk.
     } else if (mode === DrainMode.DeepScan) {
       const dsQueue = [...manifests]
       const startCount = dsQueue.length
@@ -923,12 +923,12 @@ When to use --reset:
       await Promise.all(Array.from({ length: MANIFEST_CONCURRENCY }, (_, i) => worker(i)))
       process.stderr.write(`    ✓ ${dsFetched} packages analyzed\n\n`)
 
-    // ── Downloads mode ─────────────────────────────────────────────────────
-    // Resolve weekly download counts for manifests that weren't discovered via
-    // search pages (state:'lifecycle' means searchDownloads had no entry).
-    // Non-scoped packages are batched up to 128 per request; scoped packages
-    // use individual requests (the bulk endpoint doesn't support @scope/name).
-    // Both paths use fetchJson which handles redirects and 429 back-off.
+      // ── Downloads mode ─────────────────────────────────────────────────────
+      // Resolve weekly download counts for manifests that weren't discovered via
+      // search pages (state:'lifecycle' means searchDownloads had no entry).
+      // Non-scoped packages are batched up to 128 per request; scoped packages
+      // use individual requests (the bulk endpoint doesn't support @scope/name).
+      // Both paths use fetchJson which handles redirects and 429 back-off.
     } else if (mode === DrainMode.Downloads) {
       const BATCH_SIZE = 128
       const DOWNLOADS_TTL_MS = 7 * 24 * 60 * 60 * 1000  // 7 days
@@ -947,17 +947,17 @@ When to use --reset:
 
       if (pending.length === 0) return
 
-      const nNew   = pending.filter(({ m }) => m.state === 'lifecycle').length
+      const nNew = pending.filter(({ m }) => m.state === 'lifecycle').length
       const nStale = pending.length - nNew
       const dlNote = [
-        nNew   > 0 ? `${nNew} new` : '',
+        nNew > 0 ? `${nNew} new` : '',
         nStale > 0 ? `${nStale} stale (>7d)` : '',
       ].filter(Boolean).join(', ')
       process.stderr.write(`\n  Downloads: resolving counts for ${pending.length} packages (${dlNote})...\n`)
 
       const nonScoped = pending.filter(({ m }) => !m.name.startsWith('@'))
-      const scoped    = pending.filter(({ m }) => m.name.startsWith('@'))
-      let dlResolved  = 0
+      const scoped = pending.filter(({ m }) => m.name.startsWith('@'))
+      let dlResolved = 0
 
       // Non-scoped: batch up to 128 per request, delay between batches
       const nonScopedBatches = Math.ceil(nonScoped.length / BATCH_SIZE)
@@ -1080,7 +1080,7 @@ When to use --reset:
             fromLabel = ` (cursor: offset ${from} ~page ${approxPage}, sweep age ${ageH}h/${searchTtlHours}h)`
           } else {
             from = 0  // sweep expired: restart from top to catch newly-popular packages
-              sweepStartedAt = new Date().toISOString()
+            sweepStartedAt = new Date().toISOString()
           }
         } else {
           from = 0  // no cursor or TTL disabled (searchTtlMs === 0 forces restart)
@@ -1340,7 +1340,7 @@ When to use --reset:
   // from the last page reached for each keyword, skipping already-walked pages.
   await savePackageCache(pkgPath, manifests, seen, { keywordCursors }, [], new Set(), lastChangesSeq)
   process.stderr.write(`  ✓ manifests saved to ${pkgPath}\n\n`)
-  await fs.unlink(resumeCachePath).catch(() => {})
+  await fs.unlink(resumeCachePath).catch(() => { })
 
   const analyzeStep = deepMode ? '5/5' : '4/4'
   process.stderr.write(`Step ${analyzeStep}: Analyzing...\n`)
@@ -1349,6 +1349,7 @@ When to use --reset:
   // Signals come from the actual scan results (deep mode) or registry defaults (non-deep).
   const categorized = {}
   const uncategorized = [] // packages with build signals but no definition match
+  const lifecycleOnly = [] // packages with lifecycle scripts but no build hint detected
 
   // token → { packages: string[], totalDownloads: number }
   const gapTokens = {}
@@ -1411,7 +1412,16 @@ When to use --reset:
       ...Object.keys(manifest.devDependencies),
       ...Object.keys(manifest.optionalDependencies),
     ]
-    if (!hasBuildHint(manifest.scripts || {}, deepRefs, undefined, allDeps)) continue
+    if (!hasBuildHint(manifest.scripts || {}, deepRefs, undefined, allDeps)) {
+      lifecycleOnly.push({
+        name: manifest.name,
+        version: manifest.version,
+        weeklyDownloads: manifest.weeklyDownloads,
+        lifecycleScripts: lc,
+        commandTokens: extractCommandTokens(lc),
+      })
+      continue
+    }
 
     const tokens = extractCommandTokens(lc)
     const inferred = inferIndicatorFiles(manifest)
@@ -1450,14 +1460,14 @@ When to use --reset:
 
   // Serialize a RegExp to a JSON-safe object so AI readers can see the exact
   // pattern that drives detection.
-  function serializeRegex (re) {
+  function serializeRegex(re) {
     if (!(re instanceof RegExp)) return String(re)
     return { source: re.source, flags: re.flags }
   }
 
   // Serialize one indicator definition completely — all patterns, scanner steps,
   // and signal names — so the AI has the full picture from the JSON alone.
-  function serializeIndicatorDef (def) {
+  function serializeIndicatorDef(def) {
     const out = {
       label: def.label,
       detect: {
@@ -1519,8 +1529,9 @@ When to use --reset:
       suggestedCommandPattern: `\\b${token}\\b`,
     }))
 
-  const matchedCount = Object.values(categorized).reduce((sum, pkgs) => sum + pkgs.length, 0)
-  const noBuildHint = manifests.length - matchedCount - uncategorized.length
+  const matchedNames = new Set(Object.values(categorized).flatMap(pkgs => pkgs.map(p => p.name)))
+  const matchedCount = matchedNames.size
+  const noBuildHint = lifecycleOnly.length
 
   const output = {
     // ── AI INSTRUCTIONS ─────────────────────────────────────────────────────
@@ -1534,7 +1545,7 @@ When to use --reset:
         'the INDICATOR_REGISTRY in lib/utils/indicator-definitions.js.',
         'Your job is to review the data below and propose concrete improvements to that file.',
       ].join(' '),
-      howToReadThisFile: 'The file is wrapped in an integrity envelope: { hash, data }. The actual content lives in the "data" field. Every section inside data (meta, coverage, existingDefinitionCoverage, uncategorizedPackages, commandPatternGaps) has a "description" field that explains what the section contains and how to interpret it, and a "data" field with the actual content.  Read the description first, then inspect data.',
+      howToReadThisFile: 'The file is wrapped in an integrity envelope: { hash, data }. The actual content lives in the "data" field. Every section inside data (meta, coverage, existingDefinitionCoverage, uncategorizedPackages, lifecycleOnlyPackages, commandPatternGaps) has a "description" field that explains what the section contains and how to interpret it, and a "data" field with the actual content.  Read the description first, then inspect data.',
       sourceFile: 'lib/utils/indicator-definitions.js',
       tasks: [
         {
@@ -1582,7 +1593,7 @@ When to use --reset:
         Object.entries(SIGNAL_DESCRIPTIONS).map(([name, description]) => {
           const raisedBy = Object.entries(INDICATOR_REGISTRY)
             .filter(([, def]) => (def.signals.onFound || []).includes(name) ||
-                                 (def.signals.onWarning || []).includes(name))
+              (def.signals.onWarning || []).includes(name))
             .map(([file]) => file)
           return [name, { description, raisedBy }]
         })
@@ -1632,6 +1643,11 @@ When to use --reset:
     uncategorizedPackages: {
       description: 'Packages that have a build signal (native compile, binary download, runtime-installer, etc.) but no existing indicator definition matched them. Each item has: name, version, weeklyDownloads, lifecycleScripts, buildDependencies, commandTokens, inferredIndicatorFiles, detectedSignals, suggestedSignal. Sorted by weeklyDownloads descending — highest-value gaps first.',
       data: uncategorized,
+    },
+
+    lifecycleOnlyPackages: {
+      description: 'Packages with lifecycle scripts (install/postinstall/prepare/etc.) that did not trigger any build signal and were not matched by any indicator definition. Typically code-gen, patching, type stubs, or other non-native operations at install time. Each item has: name, version, weeklyDownloads, lifecycleScripts, commandTokens. Sorted by weeklyDownloads descending.',
+      data: lifecycleOnly.sort((a, b) => (b.weeklyDownloads || 0) - (a.weeklyDownloads || 0)),
     },
 
     commandPatternGaps: {

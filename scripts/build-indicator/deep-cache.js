@@ -1,17 +1,17 @@
 'use strict'
 
 const crypto = require('crypto')
-const fs     = require('fs/promises')
-const path   = require('path')
+const fs = require('fs/promises')
+const path = require('path')
 
 const ROOT = path.resolve(__dirname, '..', '..')
 const { INDICATOR_REGISTRY, SIGNAL_DESCRIPTIONS } = require(path.join(ROOT, 'lib', 'utils', 'indicator-definitions.js'))
 const { hasBuildHint, scanBuildIndicatorsForPackage, detectClues, investigate } = require(path.join(ROOT, 'lib', 'utils', 'indicator-scanner.js'))
 const scanPackageScripts = require(path.join(ROOT, 'lib', 'utils', 'script-risk-scanner.js'))
-const { findLocalRefs, findBareRefs } = scanPackageScripts
+const { findLocalRefs, findBareRefs, findExecPathRefs } = scanPackageScripts
 
 const { writeDefanged, rmReadOnly } = require('./defang')
-const { fetchRaw, makeLimiter } = require('./http')
+const { fetchRaw, fetchJson, makeLimiter } = require('./http')
 const { wrapWithHash, unwrapVerified, META_HASH_SEED } = require('./integrity')
 const { extractLifecycleScripts, parseCommandFile } = require('./lifecycle')
 
@@ -22,7 +22,7 @@ const { extractLifecycleScripts, parseCommandFile } = require('./lifecycle')
 
 // Increment when defanging or fetch coverage changes (e.g. new file type covered,
 // header format changed).  Mixed into both DEEP_FETCH_VERSION and DEEP_SCAN_VERSION.
-const DEEP_CACHE_SCHEMA = 'defang-v8'
+const DEEP_CACHE_SCHEMA = 'defang-v12'
 
 // Two separate cache versions because fetch and scan have different invalidation triggers.
 //
@@ -40,7 +40,7 @@ const DEEP_CACHE_SCHEMA = 'defang-v8'
 // The scanner re-runs in place against the existing file tree.
 const { SIGNAL_PATTERNS } = scanPackageScripts
 
-function computeDeepFetchVersion () {
+function computeDeepFetchVersion() {
   const parts = [DEEP_CACHE_SCHEMA]
   // Only include indicator file keys — these control which files are proactively fetched.
   for (const key of Object.keys(INDICATOR_REGISTRY)) {
@@ -54,7 +54,7 @@ function computeDeepFetchVersion () {
   return (h >>> 0).toString(36)
 }
 
-function computeDeepScanVersion () {
+function computeDeepScanVersion() {
   const parts = [DEEP_CACHE_SCHEMA, computeDeepFetchVersion()]
   // Signal patterns: name + full regex source (flags included)
   for (const [name, pat] of SIGNAL_PATTERNS) {
@@ -79,7 +79,7 @@ function computeDeepScanVersion () {
 }
 
 const DEEP_FETCH_VERSION = computeDeepFetchVersion()
-const DEEP_SCAN_VERSION  = computeDeepScanVersion()
+const DEEP_SCAN_VERSION = computeDeepScanVersion()
 
 // Maximum files to BFS-scan per package in deep analysis.  Large compiled
 // bundles (e.g. node-llama-cpp with 258 JS files) otherwise consume minutes
@@ -131,9 +131,9 @@ const isValidNpmPackageName = (name) => {
 // Used as a file-tree integrity check: if any file is added, removed, or
 // resized since the cache was written, the hash changes and the cache is
 // considered invalid.
-async function hashDirTree (dir) {
+async function hashDirTree(dir) {
   const entries = []
-  async function walk (current) {
+  async function walk(current) {
     let items
     try { items = await fs.readdir(current, { withFileTypes: true }) } catch { return }
     for (const item of items) {
@@ -154,20 +154,48 @@ async function hashDirTree (dir) {
 
 // Returns a filesystem-safe directory name for a versioned package cache entry.
 // Scoped packages: '@scope/pkg@1.2.3' → '@scope__pkg@1.2.3'
-function deepSafeName (name, version) {
+function deepSafeName(name, version) {
   return name.replace(/\//g, '__') + '@' + version
 }
 
 // Parses a versioned fetchedPkgs entry back into { name, version }.
 // Entries look like 'pkg@1.2.3' or '@scope__pkg@1.2.3' (slashes already replaced).
 // The last '@' separates name from version.
-function parseDeepPkgEntry (entry) {
+function parseDeepPkgEntry(entry) {
   const at = entry.lastIndexOf('@')
   if (at <= 0) return null  // no version suffix — old-format entry, skip
   return { name: entry.slice(0, at).replace(/__/g, '/'), version: entry.slice(at + 1) }
 }
 
-async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
+// Fetch the unpkg ?meta directory listing for a path inside a package.
+// Returns an array of root-relative posix file paths, or [] on error/not-found.
+// Recurses one level into subdirectories to handle the lefthook layout:
+//   .lefthook/<hook-name>/<script>.sh
+// Used to enumerate git-hook script directories (.husky/, .lefthook/) whose
+// file names are not statically known at fetch time.
+const GIT_HOOK_FETCH_RE = /\bhusky\b|\blefthook\b/
+
+async function fetchUnpkgDirListing(encoded, version, dirPosix, depth = 0) {
+  const url = `https://unpkg.com/${encoded}@${version}/${dirPosix}?meta`
+  try {
+    const data = await fetchJson(url)
+    if (!data || data.type !== 'directory') return []
+    const results = []
+    for (const f of (data.files || [])) {
+      if (f.type === 'file') {
+        results.push(f.path.replace(/^\//, ''))   // strip leading slash → relative posix
+      } else if (f.type === 'directory' && depth < 1) {
+        // Recurse one level for lefthook-style nested hook directories.
+        const subPath = f.path.replace(/^\//, '')
+        const subFiles = await fetchUnpkgDirListing(encoded, version, subPath, depth + 1)
+        results.push(...subFiles)
+      }
+    }
+    return results
+  } catch { return [] }
+}
+
+async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
@@ -265,6 +293,7 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
       const content = await fs.readFile(path.join(pkgCacheDir, ...relPosix.split('/')), 'utf8')
       const refs = findLocalRefs(content)
       const bareRefs = findBareRefs(content)
+      const execPathRefs = findExecPathRefs(content)
       const fileDir = path.dirname(path.join(pkgCacheDir, ...relPosix.split('/')))
       await Promise.all([
         ...refs.map(async (ref) => {
@@ -277,6 +306,24 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
             if (!rel.startsWith('..')) {
               // If the ref already carries a file extension (e.g. "../package.json"),
               // use it as-is; only append .js for extension-less module specifiers.
+              const hasExt = path.extname(rel) !== ''
+              const toFetch = hasExt ? rel : rel + '.js'
+              if (!fetched.has(toFetch)) {
+                await fetchWithRefs(toFetch, depth + 1)
+              }
+            }
+          }
+        }),
+        // spawn(Sync)(process.execPath, ['path']) refs — paths are relative to the
+        // package root (cwd used by spawn), not to the current file's directory.
+        ...execPathRefs.map(async (ref) => {
+          const abs = path.resolve(pkgCacheDir, ref)
+          const resolved = await resolveRelPosix(abs)
+          if (resolved) {
+            await fetchWithRefs(resolved, depth + 1)
+          } else {
+            const rel = path.relative(pkgCacheDir, abs).split(path.sep).join('/')
+            if (!rel.startsWith('..')) {
               const hasExt = path.extname(rel) !== ''
               const toFetch = hasExt ? rel : rel + '.js'
               if (!fetched.has(toFetch)) {
@@ -301,6 +348,21 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
       const rel = path.relative(pkgCacheDir, filePath)
       if (!rel.startsWith('..')) {
         await fetchWithRefs(rel.split(path.sep).join('/'), 0)
+      }
+    }
+
+    // For git-hook manager invocations, enumerate and fetch the hook script
+    // directories from unpkg so the scanner can analyse hook file content.
+    // Husky hooks live in .husky/; lefthook local hooks live in .lefthook/.
+    if (GIT_HOOK_FETCH_RE.test(cmd)) {
+      const hookDirs = []
+      if (/\bhusky\b/.test(cmd)) hookDirs.push('.husky')
+      if (/\blefthook\b/.test(cmd)) hookDirs.push('.lefthook')
+      for (const dir of hookDirs) {
+        const hookFiles = await fetchUnpkgDirListing(encoded, manifest.version, dir)
+        for (const relPosix of hookFiles) {
+          await fetchWithRefs(relPosix, 0)
+        }
       }
     }
   }
@@ -330,7 +392,7 @@ async function deepFetchPackage (manifest, deepDir, limit, opts = {}) {
   return { fetchedFiles, bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
 }
 
-async function deepAnalyzePackage (manifest, deepDir) {
+async function deepAnalyzePackage(manifest, deepDir) {
   const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
   const metaPath = path.join(pkgCacheDir, '.meta.json')
 
