@@ -22,7 +22,7 @@ const { extractLifecycleScripts, parseCommandFile } = require('./lifecycle')
 
 // Increment when defanging or fetch coverage changes (e.g. new file type covered,
 // header format changed).  Mixed into both DEEP_FETCH_VERSION and DEEP_SCAN_VERSION.
-const DEEP_CACHE_SCHEMA = 'defang-v12'
+const DEEP_CACHE_SCHEMA = 'defang-v13'
 
 // Two separate cache versions because fetch and scan have different invalidation triggers.
 //
