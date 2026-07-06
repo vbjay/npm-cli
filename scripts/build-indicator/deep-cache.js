@@ -178,7 +178,10 @@ const GIT_HOOK_FETCH_RE = /\bhusky\b|\blefthook\b/
 async function fetchUnpkgDirListing(encoded, version, dirPosix, depth = 0) {
   const url = `https://unpkg.com/${encoded}@${version}/${dirPosix}?meta`
   try {
-    const data = await fetchJson(url)
+    // Directory listings are best-effort; use a single attempt so that
+    // ECONNRESET / non-2xx responses (dotfile dirs are often absent from
+    // published packages) fail silently without noisy retries or backoff.
+    const data = await fetchJson(url, 1)
     if (!data || data.type !== 'directory') return []
     const results = []
     for (const f of (data.files || [])) {
