@@ -733,10 +733,19 @@ When to use --reset:
       const { onlyMissing = false } = opts
 
       // Sort: packages without a valid cache entry come first (real network work).
-      // Cache status: 'valid' = fetchVersion matches, 'stale' = meta exists but version
-      // changed (or file tree differs), 'missing' = no .meta.json yet.
+      // Cache status: 'valid' = fetchVersion + file-tree hash both match,
+      //               'stale' = meta exists but version or tree changed,
+      //               'missing' = no .meta.json yet.
+      //
+      // File-tree invalidation is done here, in a single concurrent pre-check
+      // pass, so that all 🗑️ messages appear upfront — before any "scanning…"
+      // lines — rather than being interleaved with per-package scan output.
+      // Stale cache directories are deleted here; deepFetchPackage receives an
+      // already-absent directory and simply fetches fresh without reprinting the
+      // warning.
       const cacheStatus = await Promise.all(manifests.map(async m => {
-        const metaPath = path.join(deepDir, deepSafeName(m.name, m.version), '.meta.json')
+        const pkgCacheDir = path.join(deepDir, deepSafeName(m.name, m.version))
+        const metaPath = path.join(pkgCacheDir, '.meta.json')
         try {
           const envelope = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
           // Unwrap hash envelope (new format) or use raw (legacy format).
@@ -745,7 +754,16 @@ When to use --reset:
             : envelope
           if (!meta) return 'stale'
           const stateOk = meta.state === 'fetched' || meta.state === 'scanned'
-          return (stateOk && meta.fetchVersion === DEEP_FETCH_VERSION) ? 'valid' : 'stale'
+          if (!stateOk || meta.fetchVersion !== DEEP_FETCH_VERSION) return 'stale'
+          // Version matches — also verify the on-disk file tree hasn't changed
+          // (e.g. due to a partial previous run or external modification).
+          const currentTreeHash = await hashDirTree(pkgCacheDir)
+          if (currentTreeHash !== meta.filesHash) {
+            process.stderr.write(`  🗑️  file tree changed for ${m.name}@${m.version} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
+            await rmReadOnly(pkgCacheDir)
+            return 'stale'
+          }
+          return 'valid'
         } catch {
           return 'missing'
         }
@@ -796,7 +814,9 @@ When to use --reset:
         }
       }
 
-      const deepFetchOpts = nStale > 0 ? { quietTreeWarning: true } : {}
+      // File-tree invalidations are always handled by the pre-check above, so
+      // deepFetchPackage will never encounter a tree mismatch mid-scan.
+      const deepFetchOpts = { quietTreeWarning: true }
 
       const worker = async (workerIndex) => {
         await sleep(workerIndex * MANIFEST_DELAY_MS)
