@@ -86,6 +86,12 @@ const DEEP_SCAN_VERSION = computeDeepScanVersion()
 // of CPU.  100 files covers the vast majority of real-world packages while
 // bounding worst-case scan time to ~5s per package.
 const MAX_FILES_DEEP_SCAN = 100
+
+// File extensions that are compiled native binaries — not scannable as text.
+// When findLocalRefs follows a require('./addon.node') reference, skip the
+// HTTP fetch entirely rather than downloading and then discarding on magic-byte
+// detection (which would also print a noisy "skipped binary" warning).
+const SKIP_FETCH_EXTS = new Set(['.node', '.so', '.dll', '.dylib', '.pyd'])
 const INDICATOR_COUNT = Object.keys(INDICATOR_REGISTRY).length
 
 // Node.js built-in module names.  Bare require()s of these are never npm
@@ -287,6 +293,9 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
 
   const fetchWithRefs = async (relPosix, depth) => {
     if (depth > MAX_FETCH_DEPTH || fetched.has(relPosix)) return
+    // Skip known compiled-binary extensions — not scannable and would only
+    // produce a "skipped binary" warning after a wasted HTTP round-trip.
+    if (SKIP_FETCH_EXTS.has(path.extname(relPosix).toLowerCase())) return
     fetched.add(relPosix)
 
     const ok = await limit(() => fetchOne(relPosix))
