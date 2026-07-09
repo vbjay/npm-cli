@@ -24,7 +24,7 @@ const { extractLifecycleScripts, parseCommandFile } = require('./lifecycle')
 
 // Increment when defanging or fetch coverage changes (e.g. new file type covered,
 // header format changed).  Mixed into both DEEP_FETCH_VERSION and DEEP_SCAN_VERSION.
-const DEEP_CACHE_SCHEMA = 'defang-v13'
+const DEEP_CACHE_SCHEMA = 'defang-v14'
 
 // Two separate cache versions because fetch and scan have different invalidation triggers.
 //
@@ -550,13 +550,13 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   await fs.writeFile(metaPath, JSON.stringify(wrapWithHash(META_HASH_SEED, {
     fetchVersion: DEEP_FETCH_VERSION,
     filesHash,
-    fetchedFiles: [...fetchedFiles],
+    fetchedFiles: [...fetchedFiles].sort(),
     bareFollows: [...bareFollowsMap.values()],
     fetchedPkgs: [],
     state: fetchState,
   }), null, 2) + '\n')
 
-  return { fetchedFiles: [...fetchedFiles], bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
+  return { fetchedFiles: [...fetchedFiles].sort(), bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
 }
 
 async function deepAnalyzePackage(manifest, deepDir) {
