@@ -310,7 +310,7 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   await fs.mkdir(pkgCacheDir, { recursive: true })
 
   const encoded = manifest.name.replace(/\//g, '%2F')
-  const fetchedFiles = []
+  const fetchedFiles = new Set()
 
   // Tarball fallback state — populated in step 1b if unpkg misses package.json.
   // When the decompressed tarball exceeds TAR_MEMORY_THRESHOLD it is written to
@@ -353,7 +353,7 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
       process.stderr.write(`  ⚠️  skipped binary: ${manifest.name}/${relPosix}\n`)
       return false
     }
-    fetchedFiles.push(relPosix)
+    fetchedFiles.add(relPosix)
     return true
   }
 
@@ -367,7 +367,7 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   // Step 1b: If unpkg didn't serve package.json, try the npm registry tarball.
   // Download once, build an in-memory index, then retry all step-1 files that
   // are still missing — the same fetchOne closure picks up tarBuf automatically.
-  if (!fetchedFiles.includes('package.json')) {
+  if (!fetchedFiles.has('package.json')) {
     tarballAttempted = true
     process.stderr.write(`  ↩️  ${manifest.name}@${manifest.version}: unpkg miss — trying registry tarball\n`)
     tarBuf = await fetchNpmTarball(manifest.name, manifest.version)
@@ -394,7 +394,7 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
       const step1Files = ['package.json', ...Object.keys(INDICATOR_REGISTRY)]
       await Promise.all(
         step1Files
-          .filter(f => !fetchedFiles.includes(f))
+          .filter(f => !fetchedFiles.has(f))
           .map(f => limit(() => fetchOne(f)))
       )
     }
@@ -411,7 +411,8 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
 
   // Step 2: BFS fetch of lifecycle JS files and their require() deps.
   const MAX_FETCH_DEPTH = 10
-  const fetched = new Set()
+  // Pre-populate with step-1 files so the BFS never re-fetches them.
+  const fetched = new Set(fetchedFiles)
   // Bare package refs collected during BFS — outer worker pool resolves and enqueues them
   const bareFollowsMap = new Map()  // bare name → {name, versionSpec}
 
@@ -537,7 +538,7 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   // file request failed — unpkg was unreachable or rate-limiting.  Write state
   // 'failed' so the cache-validity check treats this as stale and re-fetches on
   // the next run, rather than locking in an empty cache that looks valid forever.
-  const pkgJsonFetched = fetchedFiles.includes('package.json')
+  const pkgJsonFetched = fetchedFiles.has('package.json')
   const fetchState = pkgJsonFetched ? 'fetched' : 'failed'
   if (!pkgJsonFetched) {
     process.stderr.write(`  ⚠️  ${manifest.name}@${manifest.version}: package.json unreachable on unpkg${tarballAttempted ? ' and registry tarball' : ''} — marked failed, will retry next run\n`)
@@ -549,13 +550,13 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   await fs.writeFile(metaPath, JSON.stringify(wrapWithHash(META_HASH_SEED, {
     fetchVersion: DEEP_FETCH_VERSION,
     filesHash,
-    fetchedFiles,
+    fetchedFiles: [...fetchedFiles],
     bareFollows: [...bareFollowsMap.values()],
     fetchedPkgs: [],
     state: fetchState,
   }), null, 2) + '\n')
 
-  return { fetchedFiles, bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
+  return { fetchedFiles: [...fetchedFiles], bareFollows: [...bareFollowsMap.values()], resolvedFollows: null, fromCache: false }
 }
 
 async function deepAnalyzePackage(manifest, deepDir) {
