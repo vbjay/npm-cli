@@ -2,7 +2,9 @@
 
 const crypto = require('crypto')
 const fs = require('fs/promises')
+const os = require('os')
 const path = require('path')
+const zlib = require('zlib')
 
 const ROOT = path.resolve(__dirname, '..', '..')
 const { INDICATOR_REGISTRY, SIGNAL_DESCRIPTIONS } = require(path.join(ROOT, 'lib', 'utils', 'indicator-definitions.js'))
@@ -86,6 +88,11 @@ const DEEP_SCAN_VERSION = computeDeepScanVersion()
 // of CPU.  100 files covers the vast majority of real-world packages while
 // bounding worst-case scan time to ~5s per package.
 const MAX_FILES_DEEP_SCAN = 100
+
+// Gunzipped tarball size above which we offload the buffer to a temp file
+// rather than keeping it in the heap for the duration of the BFS scan.
+// A 10 MB decompressed tarball is already a large package; most are < 2 MB.
+const TAR_MEMORY_THRESHOLD = 10 * 1024 * 1024   // 10 MB
 
 // File extensions that are compiled native binaries — not scannable as text.
 // When findLocalRefs follows a require('./addon.node') reference, skip the
@@ -204,6 +211,76 @@ async function fetchUnpkgDirListing(encoded, version, dirPosix, depth = 0) {
   } catch { return [] }
 }
 
+// ---------------------------------------------------------------------------
+// npm registry tarball fallback
+//
+// Used when unpkg is unavailable or rate-limiting.  The npm registry serves
+// the same package content as a standard .tgz tarball.  We download it once,
+// build a path→{offset,size} index, and serve individual file requests from
+// the in-memory buffer — avoiding a second network round-trip per file.
+//
+// npm packs every file under a "package/" top-level directory; the index
+// strips that prefix so callers use the same root-relative posix paths as
+// the unpkg fetcher (e.g. "package.json", "scripts/build.js").
+// ---------------------------------------------------------------------------
+
+// Read a null-terminated string from a Buffer slice.
+function readNulStr(buf, start, len) {
+  const slice = buf.slice(start, start + len)
+  const nul = slice.indexOf(0)
+  return (nul === -1 ? slice : slice.slice(0, nul)).toString('utf8')
+}
+
+// Parse a gunzipped tar buffer and return a Map<path → {offset, size}>.
+// Handles POSIX ustar format (used by node-tar, which npm uses internally).
+function buildTarIndex(tarBuf) {
+  const index = new Map()
+  let offset = 0
+  while (offset + 512 <= tarBuf.length) {
+    const header = tarBuf.slice(offset, offset + 512)
+    // Two consecutive all-zero blocks = end of archive
+    if (header.every(b => b === 0)) break
+    offset += 512  // advance past header
+
+    const rawName = readNulStr(header, 0, 100)
+    const prefix = readNulStr(header, 345, 155)  // ustar prefix for long paths
+    const fullName = prefix ? `${prefix}/${rawName}` : rawName
+    const sizeOctal = readNulStr(header, 124, 12).trim()
+    const size = sizeOctal ? parseInt(sizeOctal, 8) : 0
+    const typeFlag = String.fromCharCode(header[156])
+
+    // Only index regular files; skip directories, symlinks, pax headers, etc.
+    if ((typeFlag === '0' || typeFlag === '\0' || typeFlag === '') && size >= 0) {
+      // Strip the "package/" prefix that npm always adds to tarball entries.
+      const normalized = fullName.replace(/^package\//, '')
+      if (normalized && !normalized.includes('..')) {
+        index.set(normalized, { offset, size })
+      }
+    }
+    offset += Math.ceil(Math.max(size, 0) / 512) * 512
+  }
+  return index
+}
+
+// Download, decompress, and index the npm registry tarball for a package.
+// Returns the gunzipped Buffer on success, or null on any error.
+// Uses 2 retries (vs 3 for unpkg) since this is a fallback path.
+async function fetchNpmTarball(name, version) {
+  const bare = name.startsWith('@') ? name.split('/')[1] : name
+  const encoded = name.replace(/\//g, '%2F')
+  const url = `https://registry.npmjs.org/${encoded}/-/${bare}-${version}.tgz`
+  try {
+    const gz = await fetchRaw(url, 2)
+    if (!gz) return null
+    return await new Promise((resolve, reject) =>
+      zlib.gunzip(gz, (err, buf) => err ? reject(err) : resolve(buf))
+    )
+  } catch (err) {
+    process.stderr.write(`  ⚠️  tarball fallback failed for ${name}@${version}: ${err.message}\n`)
+    return null
+  }
+}
+
 async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
   const metaPath = path.join(pkgCacheDir, '.meta.json')
@@ -235,9 +312,40 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   const encoded = manifest.name.replace(/\//g, '%2F')
   const fetchedFiles = []
 
+  // Tarball fallback state — populated in step 1b if unpkg misses package.json.
+  // When the decompressed tarball exceeds TAR_MEMORY_THRESHOLD it is written to
+  // a temp file (tarTempPath) and served via an open file descriptor (tarFd) so
+  // the heap is freed; tarIndex is always in memory (just offsets + sizes, tiny).
+  // The temp file path is registered in opts.tempFilesSet so it appears in the
+  // next checkpoint save — allowing cleanup on resume after an interrupted run.
+  let tarBuf = null    // Buffer when small enough to keep in heap
+  let tarFd = null     // fs.FileHandle when offloaded to temp file
+  let tarTempPath = null   // absolute path of temp file (null when in-heap)
+  let tarIndex = null  // Map<path → {offset,size}>, always in memory
+  let tarballAttempted = false  // true once step 1b triggers the tarball fallback
+
+  const tarFetch = async (relPosix) => {
+    if (!tarBuf && !tarFd) return null
+    const entry = tarIndex?.get(relPosix)
+    if (!entry) return null
+    if (tarBuf) return tarBuf.slice(entry.offset, entry.offset + entry.size)
+    // Large-tarball mode: read the exact byte range from the temp file.
+    const chunk = Buffer.allocUnsafe(entry.size)
+    const { bytesRead } = await tarFd.read(chunk, 0, entry.size, entry.offset)
+    return bytesRead > 0 ? chunk.slice(0, bytesRead) : null
+  }
+
   const fetchOne = async (relPosix) => {
-    const url = `https://unpkg.com/${encoded}@${manifest.version}/${relPosix}`
-    const buf = await fetchRaw(url)
+    // Priority: unpkg (with its full internal retry budget) → tarball fallback.
+    // Once tarBuf/tarFd is set we know unpkg is already unavailable for this
+    // package, so skip the unpkg round-trips and go straight to the tarball.
+    let buf
+    if (tarBuf || tarFd) {
+      buf = await tarFetch(relPosix)
+    } else {
+      const url = `https://unpkg.com/${encoded}@${manifest.version}/${relPosix}`
+      buf = await fetchRaw(url)       // exhausts all unpkg retries before returning null
+    }
     if (!buf) return false
     const dest = path.join(pkgCacheDir, ...relPosix.split('/'))
     await fs.mkdir(path.dirname(dest), { recursive: true })
@@ -255,6 +363,42 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
     limit(() => fetchOne('package.json')),
     ...Object.keys(INDICATOR_REGISTRY).map(file => limit(() => fetchOne(file))),
   ])
+
+  // Step 1b: If unpkg didn't serve package.json, try the npm registry tarball.
+  // Download once, build an in-memory index, then retry all step-1 files that
+  // are still missing — the same fetchOne closure picks up tarBuf automatically.
+  if (!fetchedFiles.includes('package.json')) {
+    tarballAttempted = true
+    process.stderr.write(`  ↩️  ${manifest.name}@${manifest.version}: unpkg miss — trying registry tarball\n`)
+    tarBuf = await fetchNpmTarball(manifest.name, manifest.version)
+    if (tarBuf) {
+      // Build the index while the buffer is in memory (single O(n) parse).
+      tarIndex = buildTarIndex(tarBuf)
+      const tarBufSize = tarBuf.length
+      // Offload to temp file if the decompressed tarball exceeds the threshold.
+      if (tarBufSize > TAR_MEMORY_THRESHOLD) {
+        tarTempPath = path.join(os.tmpdir(),
+          `npm-deep-${process.pid}-${Date.now()}.tar`)
+        try {
+          await fs.writeFile(tarTempPath, tarBuf)
+          tarFd = await fs.open(tarTempPath, 'r')
+          opts?.tempFilesSet?.add(tarTempPath)   // register for checkpoint tracking
+          tarBuf = null  // release heap; fd + index take over
+          process.stderr.write(
+            `  📦  large tarball (${(tarBufSize / 1024 / 1024).toFixed(1)} MB) offloaded to temp file\n`)
+        } catch {
+          // Temp-file write failed — keep the buffer in heap and continue.
+          tarTempPath = null
+        }
+      }
+      const step1Files = ['package.json', ...Object.keys(INDICATOR_REGISTRY)]
+      await Promise.all(
+        step1Files
+          .filter(f => !fetchedFiles.includes(f))
+          .map(f => limit(() => fetchOne(f)))
+      )
+    }
+  }
 
   // Build version map from manifest deps so bare require()/import calls resolve to the
   // version the package actually declared, not just unpkg latest.
@@ -379,6 +523,16 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
     }
   }
 
+  // Step 3: Release temp tarball resources now that all BFS fetches are done.
+  // Remove from tempFilesSet FIRST so the next checkpoint save no longer lists
+  // this path, then close the fd and delete the file.
+  if (tarFd) { await tarFd.close().catch(() => { }); tarFd = null }
+  if (tarTempPath) {
+    opts?.tempFilesSet?.delete(tarTempPath)
+    await fs.unlink(tarTempPath).catch(() => { })
+    tarTempPath = null
+  }
+
   // package.json is always attempted (step 1 above). If it wasn't fetched, every
   // file request failed — unpkg was unreachable or rate-limiting.  Write state
   // 'failed' so the cache-validity check treats this as stale and re-fetches on
@@ -386,7 +540,7 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   const pkgJsonFetched = fetchedFiles.includes('package.json')
   const fetchState = pkgJsonFetched ? 'fetched' : 'failed'
   if (!pkgJsonFetched) {
-    process.stderr.write(`  ⚠️  ${manifest.name}@${manifest.version}: package.json unreachable on unpkg — marked failed, will retry next run\n`)
+    process.stderr.write(`  ⚠️  ${manifest.name}@${manifest.version}: package.json unreachable on unpkg${tarballAttempted ? ' and registry tarball' : ''} — marked failed, will retry next run\n`)
   }
 
   // Hash is computed AFTER all writeDefanged() calls above complete, so it

@@ -1,6 +1,6 @@
 'use strict'
 
-const fs   = require('fs/promises')
+const fs = require('fs/promises')
 const path = require('path')
 const { wrapWithHash, unwrapVerified, CACHE_HASH_SEED } = require('./integrity')
 
@@ -28,7 +28,7 @@ const { wrapWithHash, unwrapVerified, CACHE_HASH_SEED } = require('./integrity')
 // The snapshot in savePackageCache is built synchronously before any await so
 // concurrent closures inside Promise.all cannot produce a torn state.
 
-async function loadPackageCache (filePath) {
+async function loadPackageCache(filePath) {
   try {
     const envelope = JSON.parse(await fs.readFile(filePath, 'utf-8'))
 
@@ -38,13 +38,13 @@ async function loadPackageCache (filePath) {
     if (envelope && typeof envelope === 'object' && envelope.hash !== undefined) {
       const verified = unwrapVerified(CACHE_HASH_SEED, envelope, filePath)
       if (!verified) {
-        return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [], lastChangesSeq: null }
+        return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [], lastChangesSeq: null, pendingTempFiles: [] }
       }
       raw = verified
     }
 
     if (Array.isArray(raw)) {
-      return { names: raw, manifests: null, seen: null, discoveryState: null, pendingCandidates: [] }
+      return { names: raw, manifests: null, seen: null, discoveryState: null, pendingCandidates: [], pendingTempFiles: [] }
     }
     if (raw.packages && Array.isArray(raw.packages)) {
       const manifests = []
@@ -88,6 +88,7 @@ async function loadPackageCache (filePath) {
         discoveryState: raw.discoveryState || null,
         pendingCandidates,
         lastChangesSeq: raw.lastChangesSeq || null,
+        pendingTempFiles: raw.pendingTempFiles || [],
       }
     }
   } catch (err) {
@@ -95,13 +96,13 @@ async function loadPackageCache (filePath) {
       process.stderr.write(`  Warning: could not read cache ${filePath}: ${err.message}\n`)
     }
   }
-  return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [], lastChangesSeq: null }
+  return { names: null, manifests: null, seen: null, discoveryState: null, pendingCandidates: [], lastChangesSeq: null, pendingTempFiles: [] }
 }
 
 // Build snapshot synchronously before any await so concurrent Promise.all closures
 // cannot produce a torn checkpoint.  State for each package is derived from which
 // array it lives in (manifests = lifecycle|ready, candidates = candidate, rest = seen).
-async function savePackageCache (filePath, manifests, seen, discoveryState, candidates = [], failedFetches = new Set(), lastChangesSeq = null) {
+async function savePackageCache(filePath, manifests, seen, discoveryState, candidates = [], failedFetches = new Set(), lastChangesSeq = null, tempTarFiles = new Set()) {
   const candidateSet = new Set(candidates)
   const lifecycleSet = new Set(manifests.map(m => m.name))
 
@@ -152,6 +153,7 @@ async function savePackageCache (filePath, manifests, seen, discoveryState, cand
     count: manifests.length,
     discoveryState: discoveryState ? { ...discoveryState, keywordCursors: cleanCursors } : discoveryState,
     lastChangesSeq: lastChangesSeq ?? null,
+    pendingTempFiles: tempTarFiles.size > 0 ? [...tempTarFiles] : [],
     seenOnlyNames,
     packages,
   }

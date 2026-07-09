@@ -204,6 +204,22 @@ When to use --reset:
   let resumeQueryIndex = 0
   let resumeQueryFrom = 0
 
+  // Tracks temp tarballs created during this run (large-package fallback).
+  // Included in every resume-cache checkpoint so a subsequent run can clean
+  // up any files left behind by a process kill between creation and cleanup.
+  const activeTempFiles = new Set()
+
+  // Pre-flight: delete orphaned temp tarballs from a previously interrupted run.
+  // loadPackageCache returns pendingTempFiles:[] when the resume cache is absent.
+  {
+    const prev = await loadPackageCache(resumeCachePath)
+    const orphaned = prev.pendingTempFiles ?? []
+    if (orphaned.length > 0) {
+      for (const p of orphaned) await fs.unlink(p).catch(() => { })
+      process.stderr.write(`  cleaned up ${orphaned.length} orphaned temp tarball(s) from previous run\n`)
+    }
+  }
+
   process.stderr.write('Loading package data...\n')
 
   // Try permanent store first (from a previous successful run)
@@ -795,7 +811,7 @@ When to use --reset:
       const passLabel = onlyMissing ? 'DeepFetch (discovery)' : 'DeepFetch (reverify)'
 
       const inStore = new Set(manifests.map(m => `${m.name}@${m.version}`))
-      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq)
+      await savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq, activeTempFiles)
       process.stderr.write(`\n  ${passLabel}: ${fetchQueue.length} packages (${cacheNote})...\n`)
       let dfFetched = 0
       let isCheckpointing = false  // guard against concurrent checkpoint writes
@@ -806,7 +822,7 @@ When to use --reset:
         isCheckpointing = true
         try {
           await Promise.all([
-            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq),
+            savePackageCache(resumeCachePath, manifests, seen, finalDiscoveryState, candidates, failedFetches, changesStartSeq, activeTempFiles),
             savePackageCache(pkgPath, manifests, seen, finalDiscoveryState, [], failedFetches, lastChangesSeq),
           ])
         } finally {
@@ -816,7 +832,7 @@ When to use --reset:
 
       // File-tree invalidations are always handled by the pre-check above, so
       // deepFetchPackage will never encounter a tree mismatch mid-scan.
-      const deepFetchOpts = { quietTreeWarning: true }
+      const deepFetchOpts = { quietTreeWarning: true, tempFilesSet: activeTempFiles }
 
       const worker = async (workerIndex) => {
         await sleep(workerIndex * MANIFEST_DELAY_MS)
