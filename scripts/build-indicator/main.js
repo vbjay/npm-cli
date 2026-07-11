@@ -753,37 +753,61 @@ When to use --reset:
       //               'stale' = meta exists but version or tree changed,
       //               'missing' = no .meta.json yet.
       //
-      // File-tree invalidation is done here, in a single concurrent pre-check
-      // pass, so that all 🗑️ messages appear upfront — before any "scanning…"
-      // lines — rather than being interleaved with per-package scan output.
-      // Stale cache directories are deleted here; deepFetchPackage receives an
-      // already-absent directory and simply fetches fresh without reprinting the
-      // warning.
-      const cacheStatus = await Promise.all(manifests.map(async m => {
-        const pkgCacheDir = path.join(deepDir, deepSafeName(m.name, m.version))
-        const metaPath = path.join(pkgCacheDir, '.meta.json')
-        try {
-          const envelope = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
-          // Unwrap hash envelope (new format) or use raw (legacy format).
-          const meta = (envelope?.hash !== undefined)
-            ? unwrapVerified(META_HASH_SEED, envelope, metaPath)
-            : envelope
-          if (!meta) return 'stale'
-          const stateOk = meta.state === 'fetched' || meta.state === 'scanned'
-          if (!stateOk || meta.fetchVersion !== DEEP_FETCH_VERSION) return 'stale'
-          // Version matches — also verify the on-disk file tree hasn't changed
-          // (e.g. due to a partial previous run or external modification).
-          const currentTreeHash = await hashDirTree(pkgCacheDir)
-          if (currentTreeHash !== meta.filesHash) {
-            process.stderr.write(`  🗑️  file tree changed for ${m.name}@${m.version} (${meta.filesHash} → ${currentTreeHash}) — invalidating cache\n`)
-            await rmReadOnly(pkgCacheDir)
-            return 'stale'
+      // Two-phase pre-check before any fetch worker starts:
+      //   Phase 1 — read all .meta.json files concurrently → classify each package
+      //             as 'valid', 'stale', or 'missing'.  Pure reads, no I/O side-effects.
+      //   Phase 2 — delete all stale directories concurrently in one bulk wipe.
+      //             All 🗑️ messages (tree-hash mismatches) appear before any fetch
+      //             output.  Version-mismatch wipes are silent — the summary count
+      //             already covers them and individual lines would flood stderr for
+      //             large schema-version changes (e.g. 7000+ entries at once).
+      //             deepFetchPackage receives an already-absent directory and simply
+      //             fetches fresh without reprinting warnings.
+
+      // Phase 1: classify only (no deletions yet).
+      const { cacheStatus, treeWarnings } = await (async () => {
+        const statuses = []
+        const warnings = []  // {name, version, oldHash, newHash} for tree-change messages
+        await Promise.all(manifests.map(async (m, i) => {
+          const pkgCacheDir = path.join(deepDir, deepSafeName(m.name, m.version))
+          const metaPath = path.join(pkgCacheDir, '.meta.json')
+          try {
+            const envelope = JSON.parse(await fs.readFile(metaPath, 'utf-8'))
+            const meta = (envelope?.hash !== undefined)
+              ? unwrapVerified(META_HASH_SEED, envelope, metaPath)
+              : envelope
+            if (!meta) { statuses[i] = 'stale'; return }
+            const stateOk = meta.state === 'fetched' || meta.state === 'scanned'
+            if (!stateOk || meta.fetchVersion !== DEEP_FETCH_VERSION) { statuses[i] = 'stale'; return }
+            const currentTreeHash = await hashDirTree(pkgCacheDir)
+            if (currentTreeHash !== meta.filesHash) {
+              warnings.push({ name: m.name, version: m.version, oldHash: meta.filesHash, newHash: currentTreeHash })
+              statuses[i] = 'stale'; return
+            }
+            statuses[i] = 'valid'
+          } catch {
+            statuses[i] = 'missing'
           }
-          return 'valid'
-        } catch {
-          return 'missing'
+        }))
+        return { cacheStatus: statuses, treeWarnings: warnings }
+      })()
+
+      // Phase 2: bulk-wipe all stale directories before any fetch worker starts.
+      const staleIndices = cacheStatus.map((s, i) => s === 'stale' ? i : -1).filter(i => i >= 0)
+      if (staleIndices.length > 0) {
+        for (const { name, version, oldHash, newHash } of treeWarnings) {
+          process.stderr.write(`  🗑️  file tree changed for ${name}@${version} (${oldHash} → ${newHash}) — invalidating cache\n`)
         }
-      }))
+        if (staleIndices.length > treeWarnings.length) {
+          const nVersionMismatch = staleIndices.length - treeWarnings.length
+          process.stderr.write(`  🗑️  wiping ${nVersionMismatch} stale cache director${nVersionMismatch === 1 ? 'y' : 'ies'} (schema version changed)...\n`)
+        }
+        await Promise.all(staleIndices.map(i => {
+          const pkgCacheDir = path.join(deepDir, deepSafeName(manifests[i].name, manifests[i].version))
+          return rmReadOnly(pkgCacheDir)
+        }))
+      }
+
 
       // Discovery pass: only non-valid packages (new deps that might add more candidates).
       // Reverification pass: all packages in execution order (non-valid first for fail-fast).
