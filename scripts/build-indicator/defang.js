@@ -45,14 +45,21 @@ function defangBuf(relPath, buf) {
   const ext = path.extname(relPath).toLowerCase()
   const base = path.basename(relPath).toLowerCase()
 
-  // 2. JS/TS: null byte → SyntaxError; also overwrite any shebang
+  // 2. JS/TS: null byte → SyntaxError in Node.js/V8; also overwrite any shebang.
+  //    For TypeScript files (.ts/.mts/.cts), the null byte alone is NOT sufficient:
+  //    ts-node and tsx pipe source through TypeScript's transpiler, which treats
+  //    U+0000 as an invalid character and silently strips it before passing the
+  //    emitted JS to V8.  A top-level `throw` is valid TypeScript, survives
+  //    transpilation unchanged, and fires before any code in the file runs.
   if (['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'].includes(ext)) {
     let str = buf.toString('utf8')
     if (str.startsWith('#!')) {
       const nl = str.indexOf('\n')
       str = `${DEFANG_SHEBANG}\n` + (nl >= 0 ? str.slice(nl + 1) : '')
     }
-    return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n`), Buffer.from(str)])
+    const tsExt = ext === '.ts' || ext === '.mts' || ext === '.cts'
+    const tsKill = tsExt ? `throw new Error(${JSON.stringify(DEFANG_MSG)})\n` : ''
+    return Buffer.concat([Buffer.from(`\x00/* ${DEFANG_MSG} */\n${tsKill}`), Buffer.from(str)])
   }
 
   // 3. Shell scripts — defanged shebang + exit 1

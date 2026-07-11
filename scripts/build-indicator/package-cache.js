@@ -157,7 +157,14 @@ async function savePackageCache(filePath, manifests, seen, discoveryState, candi
     seenOnlyNames,
     packages,
   }
-  await fs.writeFile(filePath, JSON.stringify(wrapWithHash(CACHE_HASH_SEED, data), null, 2) + '\n', 'utf-8')
+  // Atomic write: write to a temp file first, then rename over the target.
+  // On Windows, fs.writeFile directly on the target fails with UNKNOWN
+  // (ERROR_SHARING_VIOLATION) when antivirus, VS Code's file watcher, or the
+  // Search indexer briefly holds the file open.  Writing to a fresh temp path
+  // avoids the contention; the subsequent rename is near-instantaneous on NTFS.
+  const tmpPath = filePath + '.new'
+  await fs.writeFile(tmpPath, JSON.stringify(wrapWithHash(CACHE_HASH_SEED, data), null, 2) + '\n', 'utf-8')
+  await fs.rename(tmpPath, filePath)
 }
 
 module.exports = { loadPackageCache, savePackageCache }

@@ -27,7 +27,11 @@ const { extractLifecycleScripts, parseCommandFile } = require('./lifecycle')
 // defang-v16: resolveRelPosix (deepFetchPackage BFS) now probes .ts/.mts/.cts extensions
 //             so TypeScript source files are fetched when a lifecycle script runs them
 //             via ts-node/tsx; require.resolve() refs are also followed.
-const DEEP_CACHE_SCHEMA = 'defang-v16'
+// defang-v17: .ts/.mts/.cts files now include a top-level `throw new Error()` in
+//             addition to the null byte.  TypeScript's transpiler (used by ts-node
+//             and tsx) strips U+0000 as an invalid character; the throw ensures the
+//             file cannot execute even after transpilation.
+const DEEP_CACHE_SCHEMA = 'defang-v17'
 
 // Bump when scanner implementation changes affect output format or deduplication
 // independently of signal patterns or indicator commandPatterns.
