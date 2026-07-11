@@ -626,8 +626,15 @@ async function deepAnalyzePackage(manifest, deepDir) {
     process.stderr.write(`      [deepScan] ${manifest.name}: ${file} done\n`)
   }
 
+  // Re-compute filesHash so the stored value always reflects the current on-disk
+  // state.  If the pre-check or a prior re-scan left a stale hash in meta (e.g.
+  // via a ...meta spread that preserved an outdated value), using the fresh hash
+  // here breaks the perpetual-invalidation cycle: next run's pre-check will find
+  // the stored hash == actual hash and skip the re-fetch.
+  const filesHash = await hashDirTree(pkgCacheDir)
   await fs.writeFile(metaPath, JSON.stringify(wrapWithHash(META_HASH_SEED, {
     ...meta,
+    filesHash,
     scanVersion: DEEP_SCAN_VERSION,
     results,
     referencedFiles,
