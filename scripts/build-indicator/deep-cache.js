@@ -26,6 +26,11 @@ const { extractLifecycleScripts, parseCommandFile } = require('./lifecycle')
 // header format changed).  Mixed into both DEEP_FETCH_VERSION and DEEP_SCAN_VERSION.
 const DEEP_CACHE_SCHEMA = 'defang-v14'
 
+// Bump when scanner implementation changes affect output format or deduplication
+// independently of signal patterns or indicator commandPatterns.
+// Changes DEEP_SCAN_VERSION only — does NOT trigger a re-fetch of package files.
+const SCAN_IMPL_VERSION = 'scan-impl-v1'
+
 // Two separate cache versions because fetch and scan have different invalidation triggers.
 //
 // DEEP_FETCH_VERSION — changes only when the on-disk file set needs to change:
@@ -57,7 +62,7 @@ function computeDeepFetchVersion() {
 }
 
 function computeDeepScanVersion() {
-  const parts = [DEEP_CACHE_SCHEMA, computeDeepFetchVersion()]
+  const parts = [DEEP_CACHE_SCHEMA, computeDeepFetchVersion(), SCAN_IMPL_VERSION]
   // Signal patterns: name + full regex source (flags included)
   for (const [name, pat] of SIGNAL_PATTERNS) {
     const src = pat instanceof RegExp ? pat.source + pat.flags : String(pat)
