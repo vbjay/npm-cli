@@ -877,6 +877,7 @@ When to use --reset:
               }))
               // Persist resolved list so future cache-hits skip the HTTP calls.
               if (resolved.length > 0) {
+                resolved.sort()
                 const pkgCacheDir = path.join(deepDir, deepSafeName(manifest.name, manifest.version))
                 const metaPath = path.join(pkgCacheDir, '.meta.json')
                 try {

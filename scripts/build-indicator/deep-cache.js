@@ -24,12 +24,22 @@ const { extractLifecycleScripts, parseCommandFile } = require('./lifecycle')
 
 // Increment when defanging or fetch coverage changes (e.g. new file type covered,
 // header format changed).  Mixed into both DEEP_FETCH_VERSION and DEEP_SCAN_VERSION.
-const DEEP_CACHE_SCHEMA = 'defang-v14'
+// defang-v16: resolveRelPosix (deepFetchPackage BFS) now probes .ts/.mts/.cts extensions
+//             so TypeScript source files are fetched when a lifecycle script runs them
+//             via ts-node/tsx; require.resolve() refs are also followed.
+const DEEP_CACHE_SCHEMA = 'defang-v16'
 
 // Bump when scanner implementation changes affect output format or deduplication
 // independently of signal patterns or indicator commandPatterns.
 // Changes DEEP_SCAN_VERSION only — does NOT trigger a re-fetch of package files.
-const SCAN_IMPL_VERSION = 'scan-impl-v1'
+// scan-impl-v4: findBareRefs and findLocalRefs now strip `import type` /
+//               `export type` lines before extracting refs, avoiding wasteful
+//               bare-follows for @types/* and type-only re-export barrels.
+// scan-impl-v5: `import type from './foo'` (ESM binding-name case) is now
+//               correctly preserved — STRIP_TYPE_ONLY_RE uses a lookahead to
+//               distinguish TypeScript type-only syntax from valid ESM imports
+//               where 'type' is the default binding name.
+const SCAN_IMPL_VERSION = 'scan-impl-v5'
 
 // Two separate cache versions because fetch and scan have different invalidation triggers.
 //
@@ -131,6 +141,56 @@ const isValidNpmPackageName = (name) => {
   // (core.js, socket.io, highlight.js) have at most one dot.
   const bare = name.startsWith('@') ? (name.split('/')[1] || '') : name
   return (bare.match(/\./g) || []).length < 2
+}
+
+// ---------------------------------------------------------------------------
+// package.json#exports resolver
+//
+// Resolves the best CJS entry point from the exports field for the purpose of
+// scanning a bare dep's lifecycle-helper code.  Prefers the 'require' condition
+// (CJS), then 'node', then 'default', then falls back to #main / index.js.
+// Only the root '.' export is consulted — subpath exports are not relevant here.
+// ---------------------------------------------------------------------------
+
+// Recursively walk an exports condition node to find a string file path.
+// Conditions tried in order: require → node → default → first string found.
+function resolveExportsCondition(node) {
+  if (typeof node === 'string') return node
+  if (typeof node !== 'object' || node === null || Array.isArray(node)) return null
+  for (const cond of ['require', 'node', 'default']) {
+    if (node[cond] !== undefined) {
+      const resolved = resolveExportsCondition(node[cond])
+      if (resolved) return resolved
+    }
+  }
+  // Fall through to any remaining condition if none of the preferred ones matched.
+  for (const val of Object.values(node)) {
+    const resolved = resolveExportsCondition(val)
+    if (resolved) return resolved
+  }
+  return null
+}
+
+// Return the best entry-point path string from a parsed package.json.
+function resolveExportsEntry(pkgJson) {
+  const exportsField = pkgJson.exports
+  if (exportsField) {
+    // Bare string shorthand: exports = './index.js'
+    if (typeof exportsField === 'string') {
+      return exportsField
+    }
+    // Object form: look for the root '.' entry first, then try the object itself
+    // as a conditions map (packages that omit the '.' key at the top level).
+    const rootNode = (typeof exportsField === 'object' && !Array.isArray(exportsField))
+      ? (exportsField['.'] ?? exportsField)
+      : null
+    if (rootNode) {
+      const resolved = resolveExportsCondition(rootNode)
+      if (resolved) return resolved
+    }
+  }
+  // Fallback: #main field or index.js
+  return (typeof pkgJson.main === 'string' && pkgJson.main) || 'index.js'
 }
 
 // ---------------------------------------------------------------------------
@@ -422,7 +482,7 @@ async function deepFetchPackage(manifest, deepDir, limit, opts = {}) {
   const bareFollowsMap = new Map()  // bare name → {name, versionSpec}
 
   const resolveRelPosix = async (absPath) => {
-    const exts = ['', '.js', '.mjs', '.cjs']
+    const exts = ['', '.js', '.mjs', '.cjs', '.ts', '.mts', '.cts']
     for (const ext of exts) {
       const candidate = absPath + ext
       const rel = path.relative(pkgCacheDir, candidate)
@@ -608,7 +668,7 @@ async function deepAnalyzePackage(manifest, deepDir) {
     try {
       const pkgJsonBuf = await fs.readFile(path.join(pkgDir, 'package.json'), 'utf8')
       const pkgJson = JSON.parse(pkgJsonBuf)
-      const main = (typeof pkgJson.main === 'string' && pkgJson.main) || 'index.js'
+      const main = resolveExportsEntry(pkgJson)
       const mainRel = main.startsWith('./') ? main.slice(2) : main
       // Skip large compiler/bundler main entries (e.g. typescript.js at 9MB) that
       // are not lifecycle helpers and would block the event loop for minutes.
