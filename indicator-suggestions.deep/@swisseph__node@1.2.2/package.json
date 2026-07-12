@@ -1,0 +1,84 @@
+{
+  "name": "@swisseph/node",
+  "version": "1.2.2",
+  "description": "Swiss Ephemeris for Node.js - high precision astronomical calculations with native bindings",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "binding",
+    "binding.gyp",
+    "ephemeris",
+    "libswe",
+    "scripts",
+    "README.md",
+    "prebuilds"
+  ],
+  "keywords": [
+    "astronomy",
+    "astrology",
+    "ephemeris",
+    "swiss-ephemeris",
+    "swisseph",
+    "sweph",
+    "planets",
+    "celestial",
+    "julian-day",
+    "typescript",
+    "native"
+  ],
+  "author": "",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swisseph-js/swisseph.git",
+    "directory": "packages/node"
+  },
+  "homepage": "https://github.com/swisseph-js/swisseph/tree/main/packages/node",
+  "bugs": {
+    "url": "https://github.com/swisseph-js/swisseph/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.4",
+    "@swisseph/core": "1.1.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.6",
+    "jest": "^29.7.0",
+    "node-gyp": "^10.0.1",
+    "prebuildify": "^6.0.1",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "preinstall": "node scripts/setup-libswe.js",
+    "install": "node-gyp-build",
+    "copy:libswe": "mkdir -p libswe && cp ../../native/libswe/* libswe/",
+    "prebuild": "node scripts/setup-libswe.js && prebuildify --napi --strip --name swisseph",
+    "build": "node-gyp rebuild && tsc --build",
+    "build:native": "node-gyp rebuild",
+    "build:js": "tsc --build",
+    "test": "jest",
+    "example": "npm run build && ts-node -P tsconfig.test.json examples/basic-usage.ts",
+    "example:chart": "npm run build && ts-node -P tsconfig.test.json examples/birth-chart.ts",
+    "example:moshier": "npm run build && ts-node -P tsconfig.test.json examples/moshier-ephemeris.ts",
+    "clean": "rm -rf dist build"
+  }
+}

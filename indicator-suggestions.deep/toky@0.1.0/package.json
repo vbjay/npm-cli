@@ -1,0 +1,34 @@
+{
+  "name": "toky",
+  "description": "simple code like tokenizer",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "node -r @ts-tools/node/r test/index.spec.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
+    "start": "node scripts/dev-server.js"
+  },
+  "devDependencies": {
+    "@ts-tools/node": "^2.1.1",
+    "rimraf": "^3.0.2",
+    "typescript": "~4.0.2"
+  },
+  "keywords": [
+    "parser",
+    "tokenizer",
+    "tokens",
+    "code",
+    "javascript"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ],
+  "author": "Wix.com",
+  "license": "MIT",
+  "repository": "https://github.com/wixplosives/toky",
+  "prettier": {}
+}

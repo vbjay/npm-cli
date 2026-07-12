@@ -1,0 +1,80 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b8bdffe6dfa0f165",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "7bc40d90a99e222ee43d63161b334b1197674efecab8804718daf0d9b864c311",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `rsa_keygen`  -  C/C++ sources",
+            "items": [
+              "src/rsa_keygen.cc"
+            ]
+          },
+          {
+            "label": "Target `rsa_keygen`  -  libraries",
+            "items": [
+              "-l<(openssl_root)/lib/libeay32.lib"
+            ]
+          },
+          {
+            "label": "Target `rsa_keygen`  -  include directories",
+            "items": [
+              "<(openssl_root)/include",
+              "<!(node -e \"require('nan')\")",
+              "<(node_root_dir)/deps/openssl/openssl/include",
+              "<!(node -e \"require('nan')\")"
+            ]
+          },
+          {
+            "label": "Target `rsa_keygen`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:06.876Z"
+  },
+  "hash": "sha256:03f8a0fc04e96cc18ceeb8e420e09ba6244b5303d5b24ebdfc50a4c3d4cc7cf3"
+}

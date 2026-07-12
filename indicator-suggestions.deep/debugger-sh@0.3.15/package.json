@@ -1,0 +1,64 @@
+{
+  "name": "debugger-sh",
+  "version": "0.3.15",
+  "description": "A browser-based execution engine and debugger powered by WebAssembly",
+  "keywords": [
+    "wasm",
+    "engine",
+    "c",
+    "debugger",
+    "dap"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debugger-sh/engine.git"
+  },
+  "type": "module",
+  "main": "./dist/debugger-sh.umd.cjs",
+  "module": "./dist/debugger-sh.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/debugger-sh.js",
+      "require": "./dist/debugger-sh.umd.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:rs": "wasm-pack build --target web",
+    "build:ts": "vite build",
+    "build": "npm run build:rs && npm run build:ts",
+    "build:release": "WASM_RELEASE=1 npm run build",
+    "dev": "cd tools/dev && npm run dev --",
+    "tools:dap": "cd tools/dap && npm run test --",
+    "prepublishOnly": "npm run build:release",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@types/node": "^22.13.1",
+    "eslint": "^9.39.2",
+    "events": "^3.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "tsify": "^5.0.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.0",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

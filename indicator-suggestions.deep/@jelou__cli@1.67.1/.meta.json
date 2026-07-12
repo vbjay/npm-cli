@@ -1,0 +1,69 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "93fbd102b6556753",
+    "fetchedFiles": [
+      "bin/postinstall.js",
+      "lib/platform.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "d783e501762503a45592d3fb315f8525e6c5c78566c13b5e6f91939b783eb353",
+        "sizeBytes": 3619,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/platform.js",
+        "reason": "required by ./bin/postinstall.js",
+        "sha256": "ea172a61f8cac36252ad35a89a781def19c1b58a21c1db7206646b5c87607322",
+        "sizeBytes": 1378,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:19.185Z"
+  },
+  "hash": "sha256:2f0db38fb71507728ddafc042656d6cba7f46e0a4feff21597b106280f12c3d0"
+}

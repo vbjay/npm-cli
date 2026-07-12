@@ -1,0 +1,91 @@
+{
+  "name": "@alva-ai/toolkit",
+  "version": "0.16.0",
+  "description": "Alva REST API SDK and CLI — interact with the Alva platform from Node.js, the browser, or the command line.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js"
+    },
+    "./browser": "./dist/browser.global.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "alva": "./dist/cli.js",
+    "toolkit": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "vendor-contract": "tsx scripts/vendor-contract.ts",
+    "prebuild": "npm run vendor-contract",
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "release": "bash scripts/release.sh",
+    "release:stg": "bash scripts/release-stg.sh",
+    "prepare": "node scripts/install-git-hooks.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alva-ai/toolkit-ts.git"
+  },
+  "keywords": [
+    "alva",
+    "sdk",
+    "cli",
+    "api",
+    "finance",
+    "trading",
+    "quant"
+  ],
+  "author": "Alva AI",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alva-ai/toolkit-ts/issues"
+  },
+  "homepage": "https://github.com/alva-ai/toolkit-ts#readme",
+  "dependencies": {
+    "css-tree": "^3.2.1",
+    "undici": "^6.24.1",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/css-tree": "^2.3.11",
+    "@types/node": "^25.5.2",
+    "@vitest/coverage-v8": "^3.2.1",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "jiti": "^2.6.1",
+    "node-html-parser": "^7.1.0",
+    "prettier": "^3.5.3",
+    "tsup": "^8.5.0",
+    "tsx": "^4.22.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1",
+    "vitest": "^3.2.1"
+  }
+}

@@ -1,0 +1,88 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['YamapPlus_' + name]
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault("kotlinVersion")}"
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+def play_services_location_version = getExtOrDefault("playServicesLocationVersion")
+def use_yandex_maps_lite = project.findProperty('EXPO_useYandexMapKitLite') ?: getExtOrDefault("useYandexMapsLite")
+def maps_mobile_full_version = getExtOrDefault("mapsMobileFullVersion")
+def maps_mobile_lite_version = getExtOrDefault("mapsMobileLiteVersion")
+
+println "kotlin_version=" + kotlin_version
+println "play_services_location_version=" + play_services_location_version
+println "use_yandex_maps_lite=" + use_yandex_maps_lite
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["YamapPlus_" + name]).toInteger()
+}
+
+android {
+  namespace = "ru.yamap"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+
+  sourceSets {
+    main {
+      if (use_yandex_maps_lite.toBoolean()) {
+        java.srcDirs += [
+                'src/mapkit/lite'
+        ]
+      } else {
+        java.srcDirs += [
+                'src/mapkit/full'
+        ]
+      }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  implementation "com.google.android.gms:play-services-location:$play_services_location_version"
+  if (use_yandex_maps_lite.toBoolean()) {
+    println "maps_mobile_version=" + maps_mobile_lite_version
+    implementation "com.yandex.android:maps.mobile:$maps_mobile_lite_version"
+  } else {
+    println "maps_mobile_version=" + maps_mobile_full_version
+    implementation "com.yandex.android:maps.mobile:$maps_mobile_full_version"
+  }
+}
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "RNYamapPlus"
+  codegenJavaPackageName = "ru.yamap"
+}

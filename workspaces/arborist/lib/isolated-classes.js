@@ -2,13 +2,6 @@
 const CaseInsensitiveMap = require('./case-insensitive-map.js')
 const { resolve } = require('node:path')
 
-// fake lib/inventory.js
-class IsolatedInventory extends Map {
-  query () {
-    return []
-  }
-}
-
 // fake lib/node.js
 class IsolatedNode {
   binPaths = []
@@ -17,7 +10,7 @@ class IsolatedNode {
   edgesOut = new CaseInsensitiveMap()
   fsChildren = new Set()
   integrity = null
-  inventory = new IsolatedInventory()
+  inventory = new Map()
   isInStore = false
   inBundle = false
   isRegistryDependency = false
@@ -25,6 +18,7 @@ class IsolatedNode {
   linksIn = new Set()
   meta = { loadedFromDisk: false }
   optional = false
+  patched = null
   parent = null
   root = null
   tops = new Set()
@@ -61,6 +55,9 @@ class IsolatedNode {
     if (options.optional) {
       this.optional = true
     }
+    if (options.patched) {
+      this.patched = options.patched
+    }
   }
 
   get isRoot () {
@@ -73,7 +70,10 @@ class IsolatedNode {
   }
 
   get inDepBundle () {
-    return false
+    // In isolated/linked mode every bundled node is a dep-bundle (it was
+    // included inside a published package's tarball, not the root project).
+    // There are no root-bundled IsolatedNodes, so inDepBundle mirrors inBundle.
+    return this.inBundle
   }
 
   get isLink () {

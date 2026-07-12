@@ -1,0 +1,90 @@
+{
+  "name": "@neural-trader/neuro-divergent",
+  "version": "2.1.1",
+  "description": "Neural forecasting library with 27+ models (NHITS, LSTM, Transformers) for time series prediction",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruvnet/neural-trader.git",
+    "directory": "neural-trader-rust/packages/neuro-divergent"
+  },
+  "author": "Neural Trader Team",
+  "license": "MIT",
+  "keywords": [
+    "neural",
+    "forecasting",
+    "time-series",
+    "lstm",
+    "transformer",
+    "nhits",
+    "nbeats",
+    "rust",
+    "napi",
+    "machine-learning",
+    "deep-learning"
+  ],
+  "engines": {
+    "node": ">= 16"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release --crate neuro-divergent-napi",
+    "build:debug": "napi build --platform --crate neuro-divergent-napi",
+    "build:release": "napi build --platform --release --strip --crate neuro-divergent-napi",
+    "build:all": "node scripts/build-all-platforms.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:smoke": "node test/smoke-test.js",
+    "test:integration": "node test/integration-test.js",
+    "universal": "napi universal",
+    "version": "napi version",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "scripts/postinstall.js",
+    "*.node"
+  ],
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0",
+    "@types/jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.0"
+  },
+  "napi": {
+    "name": "neuro-divergent",
+    "package": {
+      "name": "@neural-trader/neuro-divergent"
+    },
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "aarch64-apple-darwin",
+        "x86_64-pc-windows-msvc",
+        "aarch64-pc-windows-msvc"
+      ]
+    }
+  },
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1bc9c2ece9d36177",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "5aad3542a597abeddafc549413ca5bf9442fe8d9a7c49cf59c554b5c4c0a19c8",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `sybase_native`  -  C/C++ sources",
+            "items": [
+              "src/native/binding.c"
+            ]
+          },
+          {
+            "label": "Target `sybase_native`  -  libraries",
+            "items": [
+              "<(module_root_dir)/deps/freetds/lib/libsybdb.a",
+              "<(module_root_dir)/deps/freetds/lib/libsybdb.a",
+              "<(module_root_dir)/deps/freetds/lib/db-lib.lib",
+              "<(module_root_dir)/deps/freetds/lib/tds.lib",
+              "<(module_root_dir)/deps/freetds/lib/replacements.lib",
+              "<(module_root_dir)/deps/freetds/lib/tdsutils.lib",
+              "ws2_32.lib",
+              "crypt32.lib"
+            ]
+          },
+          {
+            "label": "Target `sybase_native`  -  include directories",
+            "items": [
+              "deps/freetds/include"
+            ]
+          },
+          {
+            "label": "Target `sybase_native`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:39.573Z"
+  },
+  "hash": "sha256:a6aa661c653b31148254537200905d489c8cb5eea4cf32161ad385a8c46a450a"
+}

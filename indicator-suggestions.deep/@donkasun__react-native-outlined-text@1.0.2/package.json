@@ -1,0 +1,75 @@
+{
+  "name": "@donkasun/react-native-outlined-text",
+  "version": "1.0.2",
+  "description": "A React Native component for creating outlined text with customizable stroke effects and automatic text wrapping",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf lib",
+    "prepublishOnly": "npm run clean && npm run build",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "type-check": "tsc --noEmit",
+    "pre-commit": "lint-staged",
+    "release": "node scripts/release.js",
+    "release:patch": "node scripts/release.js patch",
+    "release:minor": "node scripts/release.js minor",
+    "release:major": "node scripts/release.js major",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "react-native",
+    "outlined-text",
+    "text-stroke",
+    "stroke-text",
+    "text-outline",
+    "text-wrapping",
+    "react-native-component"
+  ],
+  "author": "donkasun",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.60.0",
+    "react-native-svg": ">=12.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-native": "^0.72.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.0.0",
+    "react-native-svg": "^14.0.0",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donkasun/react-native-outlined-text.git"
+  },
+  "bugs": {
+    "url": "https://github.com/donkasun/react-native-outlined-text/issues"
+  },
+  "homepage": "https://github.com/donkasun/react-native-outlined-text#readme",
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
+}

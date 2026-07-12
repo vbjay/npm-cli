@@ -1,0 +1,74 @@
+{
+  "name": "style-to-js",
+  "version": "2.0.2",
+  "description": "Parses CSS inline style to JavaScript object (camelCased).",
+  "author": "Mark <mark@remarkablemark.org>",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "clean": "rm -rf dist umd",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:package": "publint",
+    "lint:tsc": "tsc --noEmit",
+    "lint:types": "npx @arethetypeswrong/cli --pack",
+    "prepare": "husky",
+    "prepublishOnly": "npm run lint && npm run lint:tsc && npm run test:ci && npm run clean && npm run build",
+    "test": "jest --detectOpenHandles",
+    "test:ci": "CI=true npm test -- --ci --colors --coverage",
+    "test:watch": "npm test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remarkablemark/style-to-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/remarkablemark/style-to-js/issues"
+  },
+  "keywords": [
+    "css",
+    "javascript",
+    "object",
+    "pojo",
+    "style",
+    "style-to-js"
+  ],
+  "dependencies": {
+    "style-to-object": "2.0.2"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.4",
+    "@commitlint/cli": "21.2.0",
+    "@commitlint/config-conventional": "21.2.0",
+    "@eslint/js": "10.0.1",
+    "@types/jest": "30.0.0",
+    "eslint": "10.6.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.6",
+    "eslint-plugin-simple-import-sort": "13.0.0",
+    "globals": "17.7.0",
+    "husky": "9.1.7",
+    "jest": "30.4.2",
+    "lint-staged": "17.0.8",
+    "prettier": "3.9.4",
+    "publint": "0.3.21",
+    "ts-jest": "29.4.11",
+    "ts-node": "10.9.2",
+    "tsdown": "0.22.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.63.0"
+  },
+  "files": [
+    "dist/",
+    "umd/"
+  ],
+  "license": "MIT"
+}

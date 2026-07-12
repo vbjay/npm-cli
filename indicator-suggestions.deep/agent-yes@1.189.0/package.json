@@ -1,0 +1,174 @@
+{
+  "name": "agent-yes",
+  "version": "1.189.0",
+  "description": "A wrapper tool that automates interactions with various AI CLI tools by automatically handling common prompts and responses.",
+  "keywords": [
+    "ai",
+    "anthropic",
+    "assistant",
+    "auto-response",
+    "automation",
+    "claude",
+    "cli",
+    "codex",
+    "copilot",
+    "cursor",
+    "gemini",
+    "grok",
+    "qwen",
+    "wrapper"
+  ],
+  "homepage": "https://github.com/snomiao/agent-yes#readme",
+  "bugs": {
+    "url": "https://github.com/snomiao/agent-yes/issues"
+  },
+  "license": "MIT",
+  "author": "snomiao <snomiao@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snomiao/agent-yes.git"
+  },
+  "bin": {
+    "agent-yes": "./dist/agent-yes.js",
+    "amp-yes": "./dist/amp-yes.js",
+    "auggie-yes": "./dist/auggie-yes.js",
+    "ay": "./dist/agent-yes.js",
+    "claude-yes": "./dist/claude-yes.js",
+    "codex-yes": "./dist/codex-yes.js",
+    "copilot-yes": "./dist/copilot-yes.js",
+    "cursor-yes": "./dist/cursor-yes.js",
+    "cy": "./dist/cy.js",
+    "gemini-yes": "./dist/gemini-yes.js",
+    "glm-yes": "./dist/glm-yes.js",
+    "grok-yes": "./dist/grok-yes.js",
+    "opencode-yes": "./dist/opencode-yes.js",
+    "openrouter-yes": "./dist/openrouter-yes.js",
+    "orcy": "./dist/orcy.js",
+    "pi-yes": "./dist/pi-yes.js",
+    "qwen-yes": "./dist/qwen-yes.js",
+    "bash-yes": "./dist/bash-yes.js",
+    "cmd-yes": "./dist/cmd-yes.js",
+    "powershell-yes": "./dist/powershell-yes.js"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "files": [
+    "agent-yes.config.schema.json",
+    "bin",
+    "default.config.yaml",
+    "examples",
+    "scripts",
+    "ts/*.ts",
+    "!dist/**/*.map",
+    "dist/**/*.js",
+    "lab/ui/console-logic.js",
+    "lab/ui/e2e.d.ts",
+    "lab/ui/e2e.js",
+    "lab/ui/icon.svg",
+    "lab/ui/index.html",
+    "lab/ui/landing.html",
+    "lab/ui/manifest.webmanifest",
+    "lab/ui/qrcode.js",
+    "lab/ui/room-client.js",
+    "lab/ui/sw.js",
+    "lab/ui/blog/**"
+  ],
+  "type": "module",
+  "module": "ts/index.ts",
+  "types": "./ts/index.ts",
+  "exports": {
+    "types": "./ts/index.ts",
+    "import": "./dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "check:e2e": "bun scripts/check-e2e.ts",
+    "cf": "bun scripts/cf.ts",
+    "build:rgui": "bun scripts/build-rgui.ts",
+    "dev:rgui": "bun lab/ui/rgui/dev.ts",
+    "build:rs": "bun ./scripts/build-rs.ts",
+    "postbuild": "bun ./ts/postbuild.ts",
+    "demo": "bun run build && bun link && claude-yes -- demo",
+    "dev": "bun ts/index.ts",
+    "typecheck": "tsgo --noEmit",
+    "fmt": "oxlint --fix --fix-suggestions && oxfmt",
+    "verify-deps": "node ./scripts/verify-deps.js",
+    "_prepack": "bun run build",
+    "prepublishOnly": "bun run build && npm run verify-deps",
+    "prepare": "husky",
+    "release": "standard-version && npm publish",
+    "release:beta": "standard-version && npm publish --tag beta",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest run --config tests/ui-test/vitest.config.ts",
+    "test:ui-dom": "vitest run --config tests/ui-dom/vitest.config.ts",
+    "test:theme": "node tests/ui-test/theme.e2e.mjs"
+  },
+  "dependencies": {
+    "@snomiao/bun-pty": "^0.3.4",
+    "@xterm/headless": "^6.0.0",
+    "bun-pty": "^0.4.8",
+    "execa": "^9.6.1",
+    "from-node-stream": "^0.2.0",
+    "ms": "^2.1.3",
+    "node-datachannel": "^0.32.3",
+    "phpdie": "^1.7.0",
+    "proper-lockfile": "^4.1.2",
+    "sflow": "^1.27.0",
+    "winston": "^3.19.0",
+    "yaml": "^2.8.2",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@types/bun": "^1.3.6",
+    "@types/jest": "^30.0.0",
+    "@types/ms": "^2.1.0",
+    "@types/node": "^25.0.10",
+    "@types/proper-lockfile": "^4.1.4",
+    "@types/ws": "^8.18.1",
+    "@types/yargs": "^17.0.35",
+    "@typescript/native-preview": "^7.0.0-dev.20260124.1",
+    "@vitest/coverage-v8": "4.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "node-pty": "^1.1.0",
+    "oxfmt": "^0.26.0",
+    "oxlint": "^1.41.0",
+    "patch-package": "^8.0.1",
+    "playwright": "^1.58.2",
+    "rambda": "^11.0.1",
+    "semantic-release": "^25.0.2",
+    "standard-version": "^9.5.0",
+    "tsdown": "^0.20.3",
+    "vitest": "4.1.0",
+    "ws": "^8.20.0",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "node-pty": "latest",
+    "typescript": "^5.9.3"
+  },
+  "peerDependenciesMeta": {
+    "node-pty": {
+      "optional": true
+    }
+  },
+  "optionalDependencies": {
+    "systray2": "^2.1.4"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "trustedDependencies": [
+    "node-datachannel",
+    "node-pty"
+  ]
+}

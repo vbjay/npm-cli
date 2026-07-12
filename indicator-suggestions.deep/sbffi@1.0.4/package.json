@@ -1,0 +1,52 @@
+{
+  "name": "sbffi",
+  "version": "1.0.4",
+  "description": "Dynamic C function calls from JS, powered by dyncall.",
+  "main": "lib/index.js",
+  "scripts": {
+    "install": "prebuild-install -t 5 -r napi || npm run build",
+    "build": "prebuild -t 5 -r napi --backend cmake-js",
+    "bench": "node test/bench.js",
+    "test": "eslint . && node test/test.js",
+    "clean": "rm -rf build prebuilds"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bengl/sbffi.git"
+  },
+  "keywords": [
+    "dyncall",
+    "ffi",
+    "c",
+    "native",
+    "addon",
+    "dynamic",
+    "function"
+  ],
+  "author": "Bryan English <bryan@bryanenglish.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bengl/sbffi/issues"
+  },
+  "homepage": "https://github.com/bengl/sbffi#readme",
+  "dependencies": {
+    "prebuild-install": "^5.3.4"
+  },
+  "devDependencies": {
+    "cmake-js": "^6.1.0",
+    "eslint": "^7.1.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "pitesti": "^3.0.0",
+    "prebuild": "^10.0.0",
+    "require-wat": "^2.0.2"
+  },
+  "binary": {
+    "napi_versions": [
+      5
+    ]
+  }
+}

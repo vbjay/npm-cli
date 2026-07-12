@@ -1,0 +1,110 @@
+{
+  "name": "lili-solana-cli",
+  "version": "0.0.9",
+  "description": "Production-ready CLI tool for Solana developers - Build, Deploy, and Manage Solana programs",
+  "main": "dist/lili.js",
+  "type": "module",
+  "bin": {
+    "lili": "./bin/lili.js",
+    "sns-tld": "./bin/sns-tld.js"
+  },
+  "scripts": {
+    "build": "mkdir -p dist && npx --yes terser lili.js --comments false --shebang -o dist/lili.js && chmod +x dist/lili.js",
+    "prepack": "npm run build",
+    "start": "node dist/lili.js",
+    "postinstall": "bash ./install.sh || true",
+    "install-global": "npm install -g .",
+    "uninstall-global": "npm uninstall -g lili-solana-cli"
+  },
+  "keywords": [
+    "solana",
+    "solana-cli",
+    "solana-tools",
+    "solana-templates",
+    "solana-development",
+    "solana-sdk",
+    "anchor",
+    "anchor-framework",
+    "metaplex",
+    "spl-token",
+    "web3",
+    "web3-tools",
+    "blockchain",
+    "blockchain-development",
+    "crypto-tools",
+    "dao",
+    "nft",
+    "nft-tools",
+    "defi",
+    "decentralized-finance",
+    "developer-tools",
+    "devtools",
+    "cli-tool",
+    "command-line",
+    "smart-contracts",
+    "program",
+    "program-deployment",
+    "cryptocurrency",
+    "rust",
+    "typescript",
+    "build-tools",
+    "deployment",
+    "scaffold",
+    "boilerplate",
+    "productivity",
+    "automation",
+    "testing",
+    "mainnet",
+    "devnet",
+    "wallet",
+    "keypair"
+  ],
+  "author": "Lili CLI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reposlayer/lili-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reposlayer/lili-cli/issues"
+  },
+  "homepage": "https://github.com/reposlayer/lili-cli#readme",
+  "files": [
+    "bin/lili.js",
+    "bin/sns-tld.js",
+    "dist/lili.js",
+    "install.sh",
+    "templates/manifest.json",
+    "package.json",
+    "README.md"
+  ],
+  "preferGlobal": true,
+  "dependencies": {
+    "@bonfida/spl-name-service": "^3.0.1",
+    "@metaplex-foundation/js": "0.19.4",
+    "@metaplex-foundation/mpl-token-metadata": "^2.8.0",
+    "@metaplex-foundation/umi": "^0.9.2",
+    "@metaplex-foundation/umi-bundle-defaults": "^0.9.2",
+    "@metaplex-foundation/umi-web3js-adapters": "^0.9.2",
+    "@solana/spl-token": "^0.4.6",
+    "@solana/web3.js": "^1.87.0",
+    "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.2.12",
+    "lili-solana-cli": "^0.0.3-a",
+    "ora": "^7.0.1"
+  },
+  "overrides": {
+    "@metaplex-foundation/js": "0.19.4",
+    "@bundlr-network/client": "0.8.7",
+    "glob": "^10.3.10",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "terser": "^5.36.0"
+  }
+}

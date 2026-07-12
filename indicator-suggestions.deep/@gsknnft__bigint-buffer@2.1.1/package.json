@@ -1,0 +1,111 @@
+{
+  "name": "@gsknnft/bigint-buffer",
+  "version": "2.1.1",
+  "type": "module",
+  "description": "Modern, ESM-only bigint/Buffer conversion with optional native acceleration and fixed-point helpers",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "browser": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./conversion": {
+      "types": "./dist/conversion.d.ts",
+      "import": "./dist/conversion.js",
+      "default": "./dist/conversion.js"
+    },
+    "./build/Release/bigint_buffer.node": "./dist/build/Release/bigint_buffer.node",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "build/Release/bigint_buffer.node",
+    "src/bigint-buffer.c",
+    "binding.gyp",
+    "prebuilds/",
+    "README.md",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "test:node": "vitest run --project node",
+    "test:browser": "vitest run --project browser",
+    "test:watch": "vitest watch",
+    "coverage": "vitest run --coverage --pool=forks",
+    "lint": "eslint .",
+    "fix": "eslint . --fix",
+    "benchmark": "tsx bench/index.bench.ts",
+    "typedoc": "typedoc --out docs src/index.ts src/conversion.ts --excludePrivate --excludeProtected --exclude '**/*+(spec|test|bench).ts'",
+    "sync:native": "tsx ./scripts/sync-native.ts",
+    "declare": "node -e \"require('node:fs').rmSync('dist/types',{recursive:true,force:true})\" && tsc -p tsconfig.declarations.json --declaration --emitDeclarationOnly --outDir dist/types && tsx ./scripts/copy-dts.ts",
+    "build": "vite build && tsc -p tsconfig.json && npm run declare && npm run sync:native",
+    "rebuild": "node-gyp rebuild && npm run build",
+    "prebuilds": "prebuildify --napi --strip --target 24.10.0 --platform win32 --arch x64",
+    "clean": "node -e \"const fs=require('node:fs');for(const p of ['build','dist','node_modules'])fs.rmSync(p,{recursive:true,force:true});fs.rmSync('package-lock.json',{force:true});\"",
+    "clean:js": "node -e \"const fs=require('node:fs');for(const p of ['build','dist'])fs.rmSync(p,{recursive:true,force:true});\"",
+    "prepublishOnly": "npm run clean:js && npm run build && npm run test && npm audit --omit=dev && node -e \"const fs=require('node:fs');const path=require('node:path');if(fs.existsSync('build')){for(const f of fs.readdirSync('build')){if(/^(Makefile|gyp-.*|.*\\.mk|.*\\.Makefile)$/.test(f))fs.rmSync(path.join('build',f),{force:true});}}for(const f of fs.readdirSync('.'))if(f.endsWith('.tgz'))fs.rmSync(f,{force:true});\"",
+    "publish:release": "npm publish --provenance --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsknnft/bigint-buffer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gsknnft/bigint-buffer/issues"
+  },
+  "homepage": "https://github.com/gsknnft/bigint-buffer",
+  "keywords": [
+    "bigint",
+    "bignum",
+    "buffer",
+    "esm",
+    "napi",
+    "native",
+    "zero-allocation",
+    "cryptography",
+    "web3"
+  ],
+  "license": "Apache-2.0",
+  "optionalDependencies": {
+    "bindings": "^1.5.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.2.0",
+    "@types/node": "^24.10.1",
+    "@vitest/browser": "^4.1.7",
+    "@vitest/browser-playwright": "^4.1.7",
+    "@vitest/coverage-v8": "^4.1.7",
+    "bn.js": "^5.2.2",
+    "eslint": "^9.39.1",
+    "globals": "^17.6.0",
+    "playwright": "^1.60.0",
+    "prebuildify": "^6.0.1",
+    "tsx": "^4.20.3",
+    "typedoc": "^0.28.14",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.4",
+    "vite": "^7.0.0",
+    "vitest": "^4.1.7"
+  },
+  "engines": {
+    "node": ">=24.9.0",
+    "npm": ">=10.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "contributors": [
+    "Gordon Skinner <gsknnft@gmail.com> (https://github.com/gsknnft)",
+    "Michael Wei <mwei@vmware.com> (https://github.com/no2chem)"
+  ],
+  "dependencies": {
+    "buffer": "^6.0.3"
+  }
+}

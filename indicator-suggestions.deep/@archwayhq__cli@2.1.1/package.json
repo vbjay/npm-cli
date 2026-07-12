@@ -1,0 +1,198 @@
+{
+  "name": "@archwayhq/cli",
+  "version": "2.1.1",
+  "description": "Develop WASM smart contracts with the Archway Network's Developer CLI",
+  "homepage": "https://docs.archway.io",
+  "repository": "github:archway-network/cli",
+  "keywords": [
+    "archway",
+    "atom",
+    "blockchain",
+    "cli",
+    "cosmjs",
+    "cosmos",
+    "cosmosjs",
+    "cosmwasm",
+    "dapp",
+    "dapps",
+    "nft",
+    "smart-contracts",
+    "tendermint",
+    "terminal",
+    "tooling",
+    "wasm",
+    "web3"
+  ],
+  "author": "Archway Network (https://archway.io)",
+  "contributors": [
+    "Augusto Elesbão (https://github.com/aelesbao)",
+    "Drew Taylor (https://github.com/drewstaylor)",
+    "Elias Poroma (https://github.com/eliasmpw)"
+  ],
+  "license": "Apache-2.0",
+  "bugs": "https://github.com/archway-network/cli/issues",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "bin": {
+    "archway": "./bin/run"
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "/bin",
+    "/dist",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "CHANGELOG.md",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "scripts": {
+    "run:bin": "node ./bin/run",
+    "run:dev": "node ./bin/dev",
+    "clean": "shx rm -rf ./dist",
+    "schemas": "json2ts --input src/repositories/chain.schema.json --output src/types/chain.ts",
+    "build": "yarn clean && tsc -b && tsc-alias -p tsconfig.json",
+    "lint": "eslint --ext .js,.cjs,.ts --no-error-on-unmatched-pattern ./src",
+    "docs:readme": "oclif readme --multi && shx sed -i 's/^# Command Topics$//g' README.md && shx sed -i 's/\\* \\[/- [/g' README.md",
+    "prepack": "pinst --disable && yarn build && oclif manifest",
+    "postpack": "pinst --enable && shx rm -f oclif.manifest.json",
+    "posttest": "yarn lint",
+    "_postinstall": "husky install || echo 'Skipped husky install'",
+    "test": "mocha test/**/*.test.ts",
+    "test:integration": "./test/integration/all.sh",
+    "changelog": "conventional-changelog -p conventionalcommits"
+  },
+  "dependencies": {
+    "@archwayhq/arch3.js": "^0.7.3",
+    "@archwayhq/keyring-go": "^0.2.1",
+    "@cosmjs/amino": "^0.32.4",
+    "@cosmjs/cosmwasm-stargate": "^0.32.4",
+    "@cosmjs/crypto": "^0.32.4",
+    "@cosmjs/encoding": "^0.32.4",
+    "@cosmjs/ledger-amino": "^0.32.4",
+    "@cosmjs/proto-signing": "^0.32.4",
+    "@cosmjs/stargate": "^0.32.4",
+    "@cosmjs/tendermint-rpc": "^0.32.4",
+    "@ledgerhq/hw-transport-node-hid": "^6.29.5",
+    "@oclif/core": "^2.16.0",
+    "@oclif/plugin-autocomplete": "^2.3.10",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^2.1.1",
+    "bech32": "^2.0.0",
+    "bignumber.js": "^9.1.2",
+    "bip39": "^3.1.0",
+    "chalk": "^4.1.2",
+    "cosmjs-types": "^0.9.0",
+    "debug": "^4.3.7",
+    "dockerode": "^4.0.2",
+    "lodash": "^4.17.21",
+    "ora": "^5.4.1",
+    "ow": "^0.28.2",
+    "promisify-child-process": "^4.1.2",
+    "prompts": "^2.4.2",
+    "semver": "^7.6.3",
+    "terminal-link": "^2.1.1",
+    "toml": "^3.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.3",
+    "@oclif/test": "^2.5.6",
+    "@types/chai": "^4.3.20",
+    "@types/debug": "^4.1.12",
+    "@types/dockerode": "^3.3.31",
+    "@types/elliptic": "^6.4.18",
+    "@types/expect": "^24.3.0",
+    "@types/ledgerhq__hw-transport": "^4.21.8",
+    "@types/lodash": "^4.17.10",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^18.19.55",
+    "@types/node-hid": "^1.3.4",
+    "@types/prompts": "^2.4.9",
+    "@types/semver": "^7.5.8",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "chai": "^4.5.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "elliptic": "^6.5.7",
+    "eslint": "^8.57.1",
+    "eslint-config-oclif": "^5.2.1",
+    "eslint-config-oclif-typescript": "^3.1.12",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^46.10.1",
+    "eslint-plugin-mocha": "^10.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-perfectionist": "^2.11.0",
+    "eslint-plugin-tsdoc": "^0.3.0",
+    "eslint-plugin-unicorn": "^49.0.0",
+    "fancy-test": "^3.0.16",
+    "husky": "^8.0.3",
+    "json-schema-to-typescript": "^13.1.2",
+    "mocha": "^10.7.3",
+    "oclif": "^3.17.2",
+    "pinst": "^3.0.0",
+    "shx": "^0.3.4",
+    "sinon": "^17.0.1",
+    "spawk": "^1.8.2",
+    "ts-alias": "^0.0.7",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
+    "tslib": "^2.7.0",
+    "typescript": "^5.6.3"
+  },
+  "oclif": {
+    "additionalVersionFlags": [
+      "version",
+      "v",
+      "-v"
+    ],
+    "bin": "archway",
+    "dirname": "archway",
+    "commands": "./dist/commands",
+    "helpClass": "./dist/plugins/help/help",
+    "plugins": [
+      "@oclif/plugin-autocomplete"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "accounts": {
+        "description": "Manages a local keyring with wallets to sign transactions"
+      },
+      "accounts:balances": {
+        "description": "Manage the token balance of an account"
+      },
+      "config": {
+        "description": "Manage the configuration of the Archway CLI"
+      },
+      "config:chains": {
+        "description": "Chain management commands, the chain files follow the Cosmos chain registry schema"
+      },
+      "contracts": {
+        "description": "Perform actions with the contracts on a project"
+      },
+      "contracts:query": {
+        "description": "Run queries against a contract"
+      },
+      "rewards": {
+        "description": "Queries and transactions in the Archway network's Rewards module"
+      }
+    },
+    "macos": {
+      "identifier": "io.archway.cli"
+    },
+    "hooks": {
+      "postrun": "./dist/hooks/postrun/versionCheck"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "!win32"
+  ],
+  "packageManager": "yarn@3.6.4"
+}

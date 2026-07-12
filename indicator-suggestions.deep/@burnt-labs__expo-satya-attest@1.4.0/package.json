@@ -1,0 +1,90 @@
+{
+  "name": "@burnt-labs/expo-satya-attest",
+  "version": "1.4.0",
+  "description": "SATYA-W mobile TLS app-attestation (App Attest + Secure Enclave / Play Integrity) backed by the Rust satya-sdk core",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "README.md",
+    "CHANGELOG.md",
+    "PUBLISHING.md",
+    "PROVIDER_REGISTRY.md",
+    "PROVIDER_CONFIG.md",
+    "LICENSE",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "build/",
+    "src/",
+    "android/build.gradle",
+    "android/src/main/",
+    "ios/SatyaAttest.podspec",
+    "ios/SatyaAttestModule.swift",
+    "ios/SatyaSpki.swift",
+    "ios/Generated/",
+    "ios/Frameworks/",
+    "scripts/build-rust-android.sh",
+    "scripts/build-rust-ios.sh"
+  ],
+  "scripts": {
+    "build": "node internal/module_scripts/build.js",
+    "build:native": "npm run build:native:android && npm run build:native:ios",
+    "build:native:android": "bash scripts/build-rust-android.sh",
+    "build:native:ios": "bash scripts/build-rust-ios.sh",
+    "check:example": "node internal/module_scripts/typecheck-example.js",
+    "check:metadata": "node internal/module_scripts/check-package-metadata.js",
+    "check:native-artifacts": "node internal/module_scripts/check-native-artifacts.js",
+    "check:pack": "node internal/module_scripts/check-pack.js",
+    "clean": "node internal/module_scripts/clean.js",
+    "lint": "eslint src/",
+    "pack:dry-run": "npm pack --dry-run",
+    "prepublishOnly": "node internal/module_scripts/prepublish-check.js",
+    "prepare": "node internal/module_scripts/prepare.js",
+    "release:check": "node internal/module_scripts/prepublish-check.js",
+    "test": "npm run build && node internal/module_scripts/test-providers.js && node internal/module_scripts/test-verifier-url.js && node internal/module_scripts/test-webview-chrome.js && node internal/module_scripts/test-reveal-rules.mjs && node internal/module_scripts/test-errors.js && node internal/module_scripts/test-artifact-metadata.js",
+    "test:ios-spki": "node internal/module_scripts/test-ios-spki.js",
+    "test:publishing-workflows": "node internal/module_scripts/test-publishing-workflows.js",
+    "test:providers": "npm run build && node internal/module_scripts/test-providers.js",
+    "test:reveal": "node internal/module_scripts/test-reveal-rules.mjs",
+    "open:ios": "node internal/module_scripts/open-ios.js",
+    "open:android": "node internal/module_scripts/open-android.js"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-satya-attest",
+    "SatyaAttest"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burnt-labs/tls-app-attest.git",
+    "directory": "platform_sdks/expo-satya-attest"
+  },
+  "bugs": {
+    "url": "https://github.com/burnt-labs/tls-app-attest/issues"
+  },
+  "author": "Justin <justin@thebarryresidence.com> (https://github.com/burnt-labs)",
+  "license": "MIT",
+  "homepage": "https://github.com/burnt-labs/tls-app-attest#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@types/react": "~19.2.2",
+    "eslint": "~9.39.4",
+    "eslint-config-universe": "^15.0.3",
+    "expo": "^56.0.7",
+    "prettier": "^3.0.0",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-safe-area-context": "~5.6.1",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-webview": "*"
+  }
+}

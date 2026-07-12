@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f1a18aad77b470b7",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^4.4.0"
+      },
+      {
+        "name": "rimraf",
+        "versionSpec": "^2.6.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "rimraf@2.7.1",
+      "tar@4.4.19"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6efcf26c5d4b4ba0c2dd4793e28ca05b59826f317ff1ed69200e681049ace3ff",
+        "sizeBytes": 3077,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "http://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.js",
+        "sha256": "26f180685413c46c8d10c4ceef138012350c861adb91c6343c9ea5faec0b1c60",
+        "sizeBytes": 1759,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:26.771Z"
+  },
+  "hash": "sha256:df88340eec948470bce88289f76f4a7ca0193d61c6ffd31aed4014571eeeb559"
+}

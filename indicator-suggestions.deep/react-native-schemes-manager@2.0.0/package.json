@@ -1,0 +1,48 @@
+{
+  "name": "react-native-schemes-manager",
+  "description": "Helps to manage React Native XCode projects that use multiple schemes to manage things like environment variables.",
+  "version": "2.0.0",
+  "main": "index.js",
+  "bin": {
+    "react-native-schemes-manager": "index.js"
+  },
+  "scripts": {
+    "postinstall": "node index.js verify-config",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thekevinbrown/react-native-schemes-manager.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "xcode",
+    "scheme",
+    "build",
+    "configuration",
+    "environment",
+    "variables"
+  ],
+  "author": "Kevin Brown",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thekevinbrown/react-native-schemes-manager/issues"
+  },
+  "homepage": "https://github.com/thekevinbrown/react-native-schemes-manager#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "glob": "^7.1.1",
+    "path": "^0.12.7",
+    "plist": "^3.0.1",
+    "xcode": "^2.0.0",
+    "yargs": "^13.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-keystone": "^3.0.0",
+    "eslint-config-keystone-react": "^1.0.0",
+    "eslint-plugin-react": "^7.12.4"
+  }
+}

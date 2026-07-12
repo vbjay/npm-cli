@@ -1,0 +1,65 @@
+{
+  "name": "expo-pedometer",
+  "version": "1.0.1",
+  "description": "Core Motion and Health Connect step count module for Expo",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "node internal/module_scripts/build.js",
+    "clean": "node internal/module_scripts/clean.js",
+    "lint": "biome check .",
+    "test": "node internal/module_scripts/test.js",
+    "prepare": "node internal/module_scripts/prepare.js",
+    "open:ios": "node internal/module_scripts/open-ios.js",
+    "open:android": "node internal/module_scripts/open-android.js"
+  },
+  "files": [
+    "android/build.gradle",
+    "android/src",
+    "app.plugin.js",
+    "build",
+    "expo-module.config.json",
+    "ios",
+    "plugin/build",
+    "src"
+  ],
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-pedometer",
+    "ExpoPedometer"
+  ],
+  "repository": "https://github.com/hills-corp/expo-pedometer",
+  "bugs": {
+    "url": "https://github.com/hills-corp/expo-pedometer/issues"
+  },
+  "author": "Injung Chung <injung.chung@gmail.com> (mu29)",
+  "license": "MIT",
+  "homepage": "https://github.com/hills-corp/expo-pedometer#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "7.26.0",
+    "@biomejs/biome": "2.4.8",
+    "@types/jest": "29.2.1",
+    "@types/react": "19.2.14",
+    "babel-preset-expo": "55.0.8",
+    "expo": "55.0.23",
+    "expo-modules-core": "55.0.23",
+    "jest": "29.7.0",
+    "jest-expo": "55.0.9",
+    "react-native": "0.83.6",
+    "typescript": "5.9.3"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/plugin/src"
+    ]
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

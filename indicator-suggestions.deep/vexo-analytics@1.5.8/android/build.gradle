@@ -1,0 +1,94 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def getFlagOrDefault(flagName, defaultValue) {
+  rootProject.hasProperty(flagName) ? rootProject.properties[flagName] == "true" : defaultValue
+}
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+configurations {
+  compileClasspath
+}
+
+buildscript {
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:4.0.2'
+  }
+}
+
+// AsyncStorage has default size of 6MB.
+// This is a sane limit to protect the user from the app storing too much data in the database.
+// This also protects the database from filling up the disk cache and becoming malformed.
+// If you really need bigger size, please keep in mind the potential consequences.
+long dbSizeInMB = 6L
+def newDbSize = rootProject.properties['AsyncStorage_db_size_in_MB']
+if (newDbSize != null && newDbSize.isLong()) {
+  dbSizeInMB = newDbSize.toLong()
+}
+
+// Instead of reusing AsyncTask thread pool, AsyncStorage can use its own executor
+def useDedicatedExecutor = getFlagOrDefault('AsyncStorage_dedicatedExecutor', false)
+
+apply plugin: 'com.android.library'
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['VexoAnalytics_' + name]).toInteger()
+}
+
+android {
+  compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+    targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+
+    //AsyncStorage
+    buildConfigField "Long", "AsyncStorage_db_size", "${dbSizeInMB}L"
+    buildConfigField "boolean", "AsyncStorage_useDedicatedExecutor", "${useDedicatedExecutor}"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation "co.vexo:vexoanalytics:0.11.1"
+  implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
+  //Device info
+  implementation "com.android.installreferrer:installreferrer:${safeExtGet('installReferrerVersion', '1.1.2')}"
+  def firebaseBomVersion = safeExtGet("firebaseBomVersion", null)
+  def firebaseIidVersion = safeExtGet('firebaseIidVersion', null)
+  if (firebaseBomVersion) {
+    implementation platform("com.google.firebase:firebase-bom:${firebaseBomVersion}")
+    implementation "com.google.firebase:firebase-iid"
+  } else if(firebaseIidVersion) {
+    implementation "com.google.firebase:firebase-iid:${firebaseIidVersion}"
+  } else {
+    def iidVersion = safeExtGet('googlePlayServicesIidVersion', safeExtGet('googlePlayServicesVersion', '17.0.0'))
+    implementation "com.google.android.gms:play-services-iid:$iidVersion"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "edsger",
+  "version": "0.83.0",
+  "description": "Agentic CLI to benchmark repositories and review/resolve pull requests against industrial-grade standards.",
+  "keywords": [
+    "cli",
+    "code-review",
+    "benchmark",
+    "code-quality",
+    "pull-request",
+    "claude",
+    "agent",
+    "ai"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "edsger": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "assets",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "sync-assets": "node scripts/sync-assets.mjs",
+    "sync-viewer": "node scripts/sync-viewer.mjs",
+    "prepare": "node scripts/sync-assets.mjs && node scripts/sync-viewer.mjs && husky",
+    "prepublishOnly": "npm run sync-assets && npm run sync-viewer && npm run build"
+  },
+  "lint-staged": {
+    "*.{ts,js,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yaml,yml}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.0",
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0",
+    "picocolors": "^1.1.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint/js": "^9.13.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.11.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.12.0",
+    "vitest": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevenzg/edsger-cli.git"
+  }
+}

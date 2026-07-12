@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6aec3492bfa444c6",
+    "fetchedFiles": [
+      "package.json",
+      "src/check-deps.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "node-pty",
+        "versionSpec": "^1.0.0"
+      },
+      {
+        "name": "node-datachannel",
+        "versionSpec": "^0.32.3"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "node-datachannel@0.32.3",
+      "node-pty@1.1.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/check-deps.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c91129fd3c906e6b9e4d7417a347ab0abbedea01c33f5e33d65d21e2b18c6cde",
+        "sizeBytes": 3175,
+        "signals": [
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://cmake.org/download/",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:24.709Z"
+  },
+  "hash": "sha256:9be8c068689fb39ce0b38893daf73691d9f24cad372258cfdc7e4f9a7e6a84e9"
+}

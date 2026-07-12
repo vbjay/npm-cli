@@ -1,0 +1,138 @@
+{
+  "name": "libadlmidi-js",
+  "version": "2.2.0",
+  "libadlmidi": {
+    "version": "1.6.2",
+    "commit": "ad001c83551779934bacd642fce801c51a5b7b4c"
+  },
+  "description": "WebAssembly build of libADLMIDI - OPL3/FM synthesis for the browser",
+  "main": "dist/libadlmidi.js",
+  "type": "module",
+  "exports": {
+    ".": "./dist/libadlmidi.js",
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./src/core.js"
+    },
+    "./structs": {
+      "types": "./dist/utils/struct.d.ts",
+      "import": "./src/utils/struct.js"
+    },
+    "./opl3": {
+      "types": "./dist/utils/opl3.d.ts",
+      "import": "./src/utils/opl3.js"
+    },
+    "./nuked": {
+      "types": "./dist/profiles/nuked.d.ts",
+      "import": "./src/profiles/nuked.js"
+    },
+    "./nuked/slim": {
+      "types": "./dist/profiles/nuked.slim.d.ts",
+      "import": "./src/profiles/nuked.slim.js"
+    },
+    "./dosbox": {
+      "types": "./dist/profiles/dosbox.d.ts",
+      "import": "./src/profiles/dosbox.js"
+    },
+    "./dosbox/slim": {
+      "types": "./dist/profiles/dosbox.slim.d.ts",
+      "import": "./src/profiles/dosbox.slim.js"
+    },
+    "./light": {
+      "types": "./dist/profiles/light.d.ts",
+      "import": "./src/profiles/light.js"
+    },
+    "./light/slim": {
+      "types": "./dist/profiles/light.slim.d.ts",
+      "import": "./src/profiles/light.slim.js"
+    },
+    "./full": {
+      "types": "./dist/profiles/full.d.ts",
+      "import": "./src/profiles/full.js"
+    },
+    "./full/slim": {
+      "types": "./dist/profiles/full.slim.d.ts",
+      "import": "./src/profiles/full.slim.js"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "scripts": {
+    "build:wasm": "bash build.sh all",
+    "build:wasm:nuked": "bash build.sh nuked",
+    "build:wasm:dosbox": "bash build.sh dosbox",
+    "build:wasm:light": "bash build.sh light",
+    "build:wasm:full": "bash build.sh full",
+    "build:js": "node bundle.js",
+    "build:types": "tsc",
+    "build:banks": "node scripts/copy-banks.js",
+    "build": "npm run build:wasm && npm run build:js && npm run build:types && npm run build:banks",
+    "setup:emsdk": "bash scripts/setup-emsdk.sh",
+    "clean": "rm -rf build-* dist/*.js dist/*.wasm dist/*.d.ts dist/*.map dist/fm_banks",
+    "test": "npm run build:types && vitest run",
+    "test:watch": "vitest",
+    "test:browser": "playwright test",
+    "test:bundler": "cd tests/bundler-smoke && npm install && npm test",
+    "test:all": "npm test && npm run test:browser && npm run test:bundler",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check": "npm run lint && npm run typecheck && npm run sync-version -- --check",
+    "sync-version": "node scripts/sync-libadlmidi-version.js",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
+  },
+  "types": "dist/libadlmidi.d.ts",
+  "keywords": [
+    "midi",
+    "opl3",
+    "fm-synthesis",
+    "adlib",
+    "audio",
+    "webassembly",
+    "wasm",
+    "audioworklet"
+  ],
+  "author": "Tony Gies <tgies@tgies.net>",
+  "license": "LGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/libadlmidi-js/libadlmidi-js.git"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "@emnapi/core": "1.11.1",
+    "@emnapi/runtime": "1.11.1",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "playwright": "^1.57.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "index.js",
+    "nuked.js",
+    "dosbox.js",
+    "light.js",
+    "full.js",
+    "nuked-slim.js",
+    "dosbox-slim.js",
+    "light-slim.js",
+    "full-slim.js",
+    "README.md"
+  ],
+  "overrides": {
+    "fflate": "0.8.2"
+  }
+}

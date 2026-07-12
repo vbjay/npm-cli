@@ -1,0 +1,102 @@
+{
+  "name": "@loradb/lora-wasm",
+  "version": "0.15.0",
+  "description": "WebAssembly bindings for the Lora in-memory graph database",
+  "license": "BUSL-1.1",
+  "packageManager": "yarn@4.5.1",
+  "author": "LoraDB, Inc.",
+  "homepage": "https://github.com/lora-db/lora#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lora-db/lora.git",
+    "directory": "crates/bindings/lora-wasm"
+  },
+  "bugs": {
+    "url": "https://github.com/lora-db/lora/issues"
+  },
+  "keywords": [
+    "lora",
+    "loradb",
+    "graph",
+    "cypher",
+    "database",
+    "embedded",
+    "wasm",
+    "webassembly"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./worker": {
+      "types": "./dist/worker.d.ts",
+      "import": "./dist/worker.js"
+    },
+    "./worker-client": {
+      "types": "./dist/worker-client.d.ts",
+      "import": "./dist/worker-client.js"
+    },
+    "./bundler": {
+      "types": "./pkg-bundler/lora_wasm.d.ts",
+      "import": "./pkg-bundler/lora_wasm.js"
+    },
+    "./web": {
+      "types": "./pkg-web/lora_wasm.d.ts",
+      "import": "./pkg-web/lora_wasm.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "pkg-node/",
+    "pkg-bundler/",
+    "pkg-web/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "sync:types": "node -e \"const fs=require('fs'); for (const f of ['types.ts','decode.ts']) fs.copyFileSync('../shared-ts/' + f, 'ts/' + f);\"",
+    "verify:types": "node -e \"const fs=require('fs'); for (const f of ['types.ts','decode.ts']) { const a=fs.readFileSync('../shared-ts/' + f,'utf8'); const b=fs.readFileSync('ts/' + f,'utf8'); if (a!==b) { console.error('ts/' + f + ' is out of sync with shared-ts/' + f + ' — run yarn run sync:types'); process.exit(1);} } \"",
+    "prebuild": "yarn run sync:types",
+    "pretypecheck": "yarn run sync:types",
+    "pretest": "yarn run sync:types",
+    "build:wasm:node": "wasm-pack build --target nodejs --release --out-dir pkg-node",
+    "build:wasm:bundler": "wasm-pack build --target bundler --release --out-dir pkg-bundler",
+    "build:wasm:web": "wasm-pack build --target web --release --out-dir pkg-web",
+    "build:wasm": "yarn run build:wasm:node && yarn run build:wasm:bundler && yarn run build:wasm:web",
+    "postbuild:wasm": "node -e \"for (const d of ['pkg-node','pkg-bundler','pkg-web']) { try { require('fs').rmSync(d + '/.gitignore'); } catch {} }\"",
+    "build:ts": "tsc -p tsconfig.json",
+    "build": "yarn run build:wasm && yarn run build:ts",
+    "typecheck": "tsc -p tsconfig.test.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint ts test",
+    "lint:fix": "eslint ts test --fix",
+    "test:browser": "playwright test",
+    "test:browser:install": "playwright install chromium",
+    "copy-license": "node -e \"const fs=require('fs'); try { fs.copyFileSync('../../../LICENSE','LICENSE'); } catch (e) { if (e.code !== 'ENOENT') throw e; }\"",
+    "prepack": "yarn run sync:types && yarn run copy-license && yarn run build",
+    "pack:dry": "npm pack --dry-run"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^22.7.4",
+    "eslint": "^9.15.0",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.21",
+    "vite-plugin-top-level-await": "^1.6.0",
+    "vite-plugin-wasm": "^3.6.0",
+    "vitest": "^2.1.1"
+  }
+}

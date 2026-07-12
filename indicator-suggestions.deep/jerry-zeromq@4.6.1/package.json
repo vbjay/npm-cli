@@ -1,0 +1,50 @@
+{
+  "name": "jerry-zeromq",
+  "version": "4.6.1",
+  "description": "ZeroMQ for node.js",
+  "main": "index",
+  "gypfile": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zeromq/zeromq.js.git"
+  },
+  "dependencies": {
+    "nan": "^2.10.0",
+    "prebuild-install": "5.2.0"
+  },
+  "devDependencies": {
+    "electron-mocha": "^6.0.0",
+    "jsdoc": "^3.5.4",
+    "mocha": "^5.0.0",
+    "nyc": "^12.0.2",
+    "prebuild": "^7.6.0",
+    "semver": "^5.4.1",
+    "should": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=6.0"
+  },
+  "scripts": {
+    "build:libzmq": "node scripts/preinstall.js",
+    "install": "node scripts/prebuild-install.js || (node scripts/preinstall.js && node-gyp rebuild)",
+    "prebuild": "prebuild --all --strip",
+    "build:docs": "jsdoc -R README.md -d docs lib/*.js",
+    "postpublish": "./scripts/trigger_travis_build.sh",
+    "test": "mocha --expose-gc --slow 300",
+    "test:electron": "electron-mocha --slow 300",
+    "precoverage": "nyc npm run test",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
+  },
+  "keywords": [
+    "zeromq",
+    "zmq",
+    "0mq",
+    "ømq",
+    "libzmq",
+    "native",
+    "binding",
+    "addon"
+  ],
+  "license": "MIT",
+  "author": "Justin Tulloss <justin.tulloss@gmail.com> (http://justin.harmonize.fm)"
+}

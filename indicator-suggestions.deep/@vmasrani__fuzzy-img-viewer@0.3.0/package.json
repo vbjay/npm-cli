@@ -1,0 +1,61 @@
+{
+  "name": "@vmasrani/fuzzy-img-viewer",
+  "version": "0.3.0",
+  "description": "High-performance image browser with fuzzy search and virtualized grid rendering",
+  "author": "vmasrani",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "fuzzy-img-viewer": "bin/cli.js"
+  },
+  "files": [
+    "dist",
+    "bin/cli.js",
+    "install.js"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "dev:frontend": "vite",
+    "build": "npm run build:frontend && cargo build --manifest-path backend/Cargo.toml --release",
+    "build:frontend": "tsc && vite build",
+    "preview": "vite preview",
+    "postinstall": "node install.js",
+    "package": "npm run build && npm pack",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.11.1",
+    "cmdk": "^1.0.0",
+    "flexsearch": "^0.7.31",
+    "fuzzysort": "^2.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-virtuoso": "^4.10.1",
+    "zustand": "^4.5.5"
+  },
+  "optionalDependencies": {
+    "@vmasrani/fuzzy-img-viewer-darwin-arm64": "0.3.0",
+    "@vmasrani/fuzzy-img-viewer-darwin-x64": "0.3.0",
+    "@vmasrani/fuzzy-img-viewer-linux-x64": "0.3.0",
+    "@vmasrani/fuzzy-img-viewer-linux-arm64": "0.3.0",
+    "@vmasrani/fuzzy-img-viewer-win32-x64": "0.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "image-viewer",
+    "image-browser",
+    "fuzzy-search",
+    "thumbnail-viewer",
+    "rust",
+    "react"
+  ]
+}

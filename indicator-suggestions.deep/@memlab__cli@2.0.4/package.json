@@ -1,0 +1,70 @@
+{
+  "name": "@memlab/cli",
+  "version": "2.0.4",
+  "license": "MIT",
+  "description": "command line interface for memlab",
+  "author": "Liang Gong <lgong@meta.com>",
+  "contributors": [],
+  "keywords": [
+    "cli",
+    "memlab",
+    "memory",
+    "leak",
+    "heap",
+    "snapshot"
+  ],
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "bin",
+    "LICENSE"
+  ],
+  "bin": {
+    "memlab": "bin/memlab.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@memlab/api": "^2.0.4",
+    "@memlab/core": "^2.0.4",
+    "@memlab/e2e": "^2.0.4",
+    "@memlab/heap-analysis": "^2.0.4",
+    "ansi": "^0.3.1",
+    "babar": "^0.2.0",
+    "blessed": "^0.1.81",
+    "chalk": "^4.0.0",
+    "fs-extra": "^4.0.2",
+    "minimist": "^1.2.8",
+    "puppeteer": "24.31.0",
+    "puppeteer-core": "24.31.0",
+    "string-width": "^4.2.0",
+    "util.promisify": "^1.1.1",
+    "xvfb": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/blessed": "^0.1.19",
+    "@types/fs-extra": "^9.0.3",
+    "@types/jest": "^27.4.1",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^25.0.0",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facebook/memlab.git",
+    "directory": "packages/cli"
+  },
+  "scripts": {
+    "preinstall": "node bin/preinstall",
+    "build-pkg": "tsc",
+    "publish-patch": "npm publish",
+    "clean-pkg": "rm -rf ./dist && rm -rf ./node_modules && rm -f ./tsconfig.tsbuildinfo"
+  },
+  "bugs": {
+    "url": "https://github.com/facebook/memlab/issues"
+  },
+  "homepage": "https://github.com/facebook/memlab#readme"
+}

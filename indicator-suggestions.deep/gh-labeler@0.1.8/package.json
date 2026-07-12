@@ -1,0 +1,74 @@
+{
+  "name": "gh-labeler",
+  "version": "0.1.8",
+  "description": "A fast and reliable GitHub repository label management tool built with Rust",
+  "main": "index.js",
+  "bin": {
+    "gh-labeler": "./bin/gh-labeler"
+  },
+  "keywords": [
+    "github",
+    "labels",
+    "sync",
+    "cli",
+    "rust",
+    "automation"
+  ],
+  "author": "Keisuke Hayashi <hi@kkhys.me>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kkhys/gh-labeler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kkhys/gh-labeler/issues"
+  },
+  "homepage": "https://github.com/kkhys/gh-labeler#readme",
+  "files": [
+    "bin/gh-labeler",
+    "scripts/post-install.js",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "preferGlobal": true,
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "@changesets/cli": "2.29.7",
+    "@changesets/get-github-info": "0.6.0",
+    "@types/node": "24.4.0",
+    "dotenv": "17.2.2",
+    "typescript": "5.9.2"
+  },
+  "volta": {
+    "node": "22.19.0"
+  },
+  "scripts": {
+    "preinstall": "npm run build",
+    "build": "cargo build --release",
+    "build:ts": "tsc scripts/post-install.ts --outDir scripts --target ES2022 --module CommonJS --moduleResolution node",
+    "test": "cargo test",
+    "copy-binary": "node scripts/copy-binary.js",
+    "postinstall": "test \"$CI\" = \"true\" || node scripts/post-install.js",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "version": "changeset version && pnpm run sync-versions",
+    "sync-versions": "node scripts/sync-versions.js",
+    "release": "pnpm run build && pnpm run publish:npm && pnpm run publish:cargo",
+    "release:dry-run": "pnpm run build && pnpm run publish:dry-run",
+    "publish:npm": "pnpm publish",
+    "publish:cargo": "cargo publish",
+    "publish:dry-run": "echo 'Dry run: npm publish' && pnpm publish --dry-run && echo 'Dry run: cargo publish' && cargo publish --dry-run"
+  }
+}

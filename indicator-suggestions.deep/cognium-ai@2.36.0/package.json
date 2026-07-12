@@ -1,0 +1,56 @@
+{
+  "name": "cognium-ai",
+  "version": "2.36.0",
+  "description": "AI-powered static analysis CLI with LLM-enhanced vulnerability detection",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "cognium-ai": "dist/cli.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "keywords": [
+    "security",
+    "sast",
+    "static-analysis",
+    "vulnerability",
+    "cli",
+    "ai",
+    "llm",
+    "taint-analysis"
+  ],
+  "author": {
+    "name": "Cognium Labs",
+    "url": "https://cognium.net"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@cognium/project-profile-detect": "^1.1.0",
+    "circle-ir": "3.165.0",
+    "circle-ir-ai": "^2.40.0",
+    "commander": "^14.0.3",
+    "minimatch": "^10.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.3"
+  }
+}

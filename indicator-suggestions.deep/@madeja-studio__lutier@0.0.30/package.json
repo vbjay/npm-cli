@@ -1,0 +1,97 @@
+{
+  "name": "@madeja-studio/lutier",
+  "version": "0.0.30",
+  "description": "Assistant to create and maintain react native apps",
+  "keywords": [
+    "react-native",
+    "assistant",
+    "utility",
+    "cli"
+  ],
+  "homepage": "https://github.com/madeja-studio/lutier",
+  "bugs": "https://github.com/madeja-studio/lutier/issues",
+  "repository": "madeja-studio/lutier",
+  "license": "MIT",
+  "author": "Madeja Studio <madeja.studio@serchinastico.com> (https://madeja.studio)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "lutier": "./bin/run.js"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "scripts": {
+    "build": "tsc -b && shx rm -rf dist/templates && shx cp -r src/templates dist",
+    "lint": "eslint \"**/*.{js,ts}\"",
+    "lint:fix": "eslint \"**/*.{js,ts}\" --fix",
+    "prepack": "oclif manifest && oclif readme",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "release": "release-it",
+    "release:major": "release-it --increment=major",
+    "release:minor": "release-it --increment=minor",
+    "release:patch": "release-it --increment=patch",
+    "start": "npm run build && ./bin/dev.js",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "posttest": "npm run lint",
+    "version": "oclif readme && git add README.md"
+  },
+  "oclif": {
+    "bin": "lutier",
+    "commands": "./dist/commands",
+    "dirname": "lutier",
+    "plugins": [
+      "@oclif/plugin-help"
+    ],
+    "topicSeparator": " "
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^5",
+    "@madeja-studio/cepillo": "^0.1.11",
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@octokit/rest": "^21",
+    "defaults": "^3",
+    "execa": "^9",
+    "fs-extra": "^11",
+    "terminal-kit": "^3",
+    "tiny-invariant": "^1",
+    "ts-morph": "^23"
+  },
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@release-it/conventional-changelog": "^8",
+    "@types/chai": "^4",
+    "@types/fs-extra": "^11",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "@types/terminal-kit": "^2",
+    "@typescript-eslint/eslint-plugin": "^7",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9",
+    "eslint-plugin-perfectionist": "^2",
+    "eslint-plugin-prettier": "^5",
+    "mocha": "^10",
+    "oclif": "^4",
+    "prettier": "^3",
+    "release-it": "^17",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "type-fest": "^4",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

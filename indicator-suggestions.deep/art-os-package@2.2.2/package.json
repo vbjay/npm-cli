@@ -1,0 +1,72 @@
+{
+  "name": "art-os-package",
+  "version": "2.2.2",
+  "description": "Reusable visual effects made with Three.js and raw webgl ",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarryDuncan/art-os-package.git"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "lint": "npx eslint src",
+    "test": "vitest",
+    "build": "tsup",
+    "prepare": "npm run build",
+    "serve": "tsup --watch"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "npm",
+    "typescript",
+    "package",
+    "template"
+  ],
+  "author": "Harry Duncan",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.174.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/three": "^0.175.0",
+    "@typescript-eslint/eslint-plugin": "^8.29.0",
+    "@typescript-eslint/parser": "^8.29.0",
+    "@vitejs/plugin-react": "4.3.4",
+    "eslint": "^9.24.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.0.0",
+    "jsdom": "^25.0.1",
+    "rimraf": "^5.0.5",
+    "tsup": "^8.5.1",
+    "typescript": "^5.8.2",
+    "vite": "6.0.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "2.1.8"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.174.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

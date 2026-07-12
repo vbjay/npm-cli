@@ -1,0 +1,134 @@
+{
+  "name": "@hasna/loops",
+  "version": "0.4.28",
+  "description": "Persistent local loop and workflow runner for deterministic commands and headless AI coding agents",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "loops": "dist/cli/index.js",
+    "loops-daemon": "dist/daemon/index.js",
+    "loops-api": "dist/api/index.js",
+    "loops-serve": "dist/serve/index.js",
+    "loops-runner": "dist/runner/index.js",
+    "loops-mcp": "dist/mcp/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    },
+    "./sdk/http": {
+      "types": "./dist/sdk/http.d.ts",
+      "import": "./dist/sdk/http.js"
+    },
+    "./serve": {
+      "types": "./dist/serve/index.d.ts",
+      "import": "./dist/serve/index.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp/index.d.ts",
+      "import": "./dist/mcp/index.js"
+    },
+    "./api": {
+      "types": "./dist/api/index.d.ts",
+      "import": "./dist/api/index.js"
+    },
+    "./runner": {
+      "types": "./dist/runner/index.d.ts",
+      "import": "./dist/runner/index.js"
+    },
+    "./mode": {
+      "types": "./dist/lib/mode.d.ts",
+      "import": "./dist/lib/mode.js"
+    },
+    "./storage": {
+      "types": "./dist/lib/store.d.ts",
+      "import": "./dist/lib/store.js"
+    },
+    "./storage/contract": {
+      "types": "./dist/lib/storage/contract.d.ts",
+      "import": "./dist/lib/storage/contract.js"
+    },
+    "./storage/sqlite": {
+      "types": "./dist/lib/storage/sqlite.d.ts",
+      "import": "./dist/lib/storage/sqlite.js"
+    },
+    "./storage/postgres": {
+      "types": "./dist/lib/storage/postgres.d.ts",
+      "import": "./dist/lib/storage/postgres.js"
+    },
+    "./storage/postgres-schema": {
+      "types": "./dist/lib/storage/postgres-schema.d.ts",
+      "import": "./dist/lib/storage/postgres-schema.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "docs",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && bun build src/cli/index.ts src/daemon/index.ts src/api/index.ts src/serve/index.ts src/runner/index.ts src/mcp/index.ts src/index.ts src/sdk/index.ts src/sdk/http.ts src/lib/store.ts src/lib/mode.ts src/lib/storage/index.ts src/lib/storage/contract.ts src/lib/storage/sqlite.ts src/lib/storage/postgres.ts src/lib/storage/postgres-schema.ts --root src --outdir dist --target bun --packages external && chmod +x dist/cli/index.js dist/daemon/index.js dist/api/index.js dist/serve/index.js dist/runner/index.js dist/mcp/index.js && tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
+    "build:bin": "bun build src/cli/index.ts --compile --outfile dist/loops",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "test:boundary": "bun run scripts/no-private-cloud-boundary.mjs",
+    "prepare": "test -d dist || bun run build",
+    "dev:cli": "bun run src/cli/index.ts",
+    "dev:daemon": "bun run src/daemon/index.ts",
+    "prepublishOnly": "bun run build && bun run typecheck && bun test && bun run test:boundary"
+  },
+  "keywords": [
+    "loops",
+    "scheduler",
+    "daemon",
+    "agents",
+    "claude",
+    "cursor",
+    "codewith",
+    "opencode",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/loops.git"
+  },
+  "homepage": "https://github.com/hasna/loops#readme",
+  "bugs": {
+    "url": "https://github.com/hasna/loops/issues"
+  },
+  "author": "Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "dependencies": {
+    "@hasna/contracts": "^0.5.1",
+    "@hasna/events": "^0.1.9",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@openrouter/ai-sdk-provider": "2.9.1",
+    "ai": "6.0.204",
+    "commander": "^13.1.0",
+    "pg": "^8.13.1",
+    "zod": "4.4.3"
+  },
+  "optionalDependencies": {
+    "@hasna/machines": "0.0.49"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.7.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "@grafema/rfdb",
+  "version": "0.4.1",
+  "description": "RFDB (Rega Flow Database) — high-performance disk-backed graph database server for Grafema",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "rfdb": "./bin/rfdb-server.js",
+    "rfdb-server": "./bin/rfdb-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Disentinel/grafema.git",
+    "directory": "packages/rfdb-server"
+  },
+  "keywords": [
+    "graph",
+    "database",
+    "semantic-analysis",
+    "code-analysis",
+    "rust",
+    "rega-flow",
+    "rfdb"
+  ],
+  "author": "Vadim Reshetnikov",
+  "license": "FSL-1.1-Apache-2.0",
+  "engines": {
+    "node": ">= 16"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "bin/",
+    "scripts/",
+    "prebuilt/"
+  ],
+  "scripts": {
+    "build": "cargo build --release",
+    "test": "cargo test",
+    "postinstall": "node scripts/postinstall.js"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "name": "react-native-app-restart",
+  "version": "1.0.0-alpha.23",
+  "description": "A simple and efficient way to restart your React Native app programmatically",
+  "main": "./build/dist/index.js",
+  "types": "./build/dist/index.d.ts",
+  "source": "lib/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WrathChaos/react-native-app-restart.git"
+  },
+  "author": "FreakyCoder <kurayogun@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://www.freakycoder.com",
+  "bugs": "https://github.com/WrathChaos/react-native-app-restart/issues",
+  "files": [
+    "build",
+    "android",
+    "ios",
+    "lib",
+    "react-native-app-restart.podspec"
+  ],
+  "keywords": [
+    "FreakyCoder",
+    "freakycoder",
+    "kuray",
+    "Kuray",
+    "react",
+    "react-native",
+    "javascript",
+    "ui-lib",
+    "rn"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && npm run copy:assets && npm run copy:package && npm run copy:native",
+    "prepare": "husky install && tsc",
+    "lint": "node scripts/terminal/lint.mjs",
+    "prettier": "node scripts/terminal/prettier.mjs",
+    "husky:setup": "npx husky-init && npm run husky:commitlint && npm run husky:prettier && npm run husky:lint",
+    "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
+    "semantic-release": "semantic-release",
+    "copy:assets": "cpx 'lib/local-assets/**' 'build/dist/local-assets'",
+    "copy:package": "cpx 'package.json' 'build/dist/'",
+    "copy:native": "cpx 'android/**' 'build/dist/android/' && cpx 'ios/**' 'build/dist/ios/'",
+    "husky:lint": "npx husky add .husky/pre-commit 'npm run lint'",
+    "husky:prettier": "npx husky add .husky/pre-commit 'npm run prettier'"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/react": "^18.3.7",
+    "@types/react-native": "^0.73.0",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "cpx": "^1.5.0",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-jest": "^28.8.3",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-native": "^4.1.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.10",
+    "npm-post-install": "0.0.2",
+    "prettier": "^3.3.3",
+    "prettier-format": "^4.0.0",
+    "react": "^18.2.0",
+    "react-native": "^0.73.0",
+    "react-native-typescript-transformer": "^1.2.13",
+    "semantic-release": "^24.1.1",
+    "typescript": "^5.6.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "RestartApp",
+    "type": "modules",
+    "jsSrcsDir": "specs",
+    "android": {
+      "javaPackageName": "com.reactnativeapprestart"
+    }
+  }
+}

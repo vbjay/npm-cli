@@ -1,0 +1,57 @@
+{
+  "name": "napi-rs-test",
+  "version": "0.0.19",
+  "description": "A Node.js project using napi-rs to call Rust functions",
+  "author": "feng",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "napi build --platform --release",
+    "test": "vitest",
+    "precommit": "node scripts/check-version.js",
+    "prepare": "node scripts/install-git-hooks.js"
+  },
+  "keywords": [
+    "napi",
+    "napi-rs",
+    "rust",
+    "nodejs"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wardenfeng/napi-rs-test.git"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.16.0",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.0"
+  },
+  "optionalDependencies": {
+    "napi-rs-test-win32-x64-msvc": "0.0.19",
+    "napi-rs-test-darwin-universal": "0.0.19",
+    "napi-rs-test-linux-x64-gnu": "0.0.19"
+  },
+  "napi": {
+    "name": "napi-rs-test",
+    "triples": {
+      "defaults": true,
+      "additional": []
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

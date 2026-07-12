@@ -1,0 +1,60 @@
+{
+	"author": "Luis Blanco <luisblanco1337@gmail.com>",
+	"name": "deps-freeimage-raub",
+	"version": "6.2.0",
+	"description": "Binaries and headers for FreeImage-dependent compilation",
+	"license": "MIT",
+	"main": "index.js",
+	"keywords": [
+		"dependency",
+		"freeimage",
+		"image",
+		"decoder",
+		"graphics",
+		"binary",
+		"library",
+		"dll",
+		"headers",
+		"lib",
+		"dylib",
+		"so",
+		"c++",
+		"addon",
+		"bindings",
+		"native",
+		"gyp"
+	],
+	"files": [
+		"include",
+		"index.js",
+		"index.d.ts",
+		"install.js",
+		"FREEIMAGE_FIPL",
+		"LICENSE",
+		"package.json"
+	],
+	"scripts": {
+		"postinstall": "node install",
+		"eslint": "eslint .",
+		"test": "node --test --watch",
+		"test-ci": "node --test"
+	},
+	"engines": {
+		"node": ">=22.14.0",
+		"npm": ">=10.9.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/node-3d/deps-freeimage-raub.git"
+	},
+	"dependencies": {
+		"addon-tools-raub": "^9.3.0"
+	},
+	"devDependencies": {
+		"@types/node": "^22.13.4",
+		"@eslint/js": "^9.20.0",
+		"eslint": "^9.20.1",
+		"node-addon-api": "^8.3.0",
+		"typescript": "^5.7.3"
+	}
+}

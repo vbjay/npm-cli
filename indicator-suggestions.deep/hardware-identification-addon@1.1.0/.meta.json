@@ -1,0 +1,92 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6393f84155a56004",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "c310ddfe0804e46010f63c58d30f23545df8b0af9c48b5945e5f91b61a94538f",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `hardware_id_addon`  -  C/C++ sources",
+            "items": [
+              "src/hardware_id_addon.cpp",
+              "src/hardware_identifier.cpp"
+            ]
+          },
+          {
+            "label": "Target `hardware_id_addon`  -  libraries",
+            "items": [
+              "-lwbemuuid",
+              "-lole32",
+              "-loleaut32"
+            ]
+          },
+          {
+            "label": "Target `hardware_id_addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "src"
+            ]
+          },
+          {
+            "label": "Target `hardware_id_addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:57.234Z"
+  },
+  "hash": "sha256:c40e3e492295b721d149898725bd2350113f6b3427c100774af7ad90fc78adaa"
+}

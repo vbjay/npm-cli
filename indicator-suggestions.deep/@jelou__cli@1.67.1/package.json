@@ -1,0 +1,76 @@
+{
+  "name": "@jelou/cli",
+  "version": "1.67.1",
+  "description": "Build AI agents on the Jelou platform — from your terminal or your AI editor.",
+  "author": "Jelou Inc. (https://jelou.ai)",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JelouLatam/jelou-cli.git"
+  },
+  "homepage": "https://jelou.ai",
+  "bin": {
+    "jelou": "bin/jelou"
+  },
+  "scripts": {
+    "postinstall": "node bin/postinstall.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "optionalDependencies": {
+    "@jelou/cli-darwin-arm64": "1.67.1",
+    "@jelou/cli-darwin-x64": "1.67.1",
+    "@jelou/cli-linux-x64": "1.67.1",
+    "@jelou/cli-linux-arm64": "1.67.1",
+    "@jelou/cli-win32-x64": "1.67.1"
+  },
+  "keywords": [
+    "jelou",
+    "cli",
+    "ai-agents",
+    "agent-skills",
+    "agents",
+    "agentic",
+    "workflows",
+    "functions",
+    "serverless",
+    "whatsapp",
+    "whatsapp-bot",
+    "whatsapp-campaigns",
+    "claude-code",
+    "cursor",
+    "codex",
+    "windsurf",
+    "mcp",
+    "channels"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jelou": {
+    "minVersion": "1.65.0",
+    "release_notes": {
+      "version": "1.66.0",
+      "date": "2026-06-25",
+      "headline": "`jelou pull` reports upstream-deleted workflows; `jelou push` fixes stale JelouPay payment versions.",
+      "highlights": [
+        {
+          "type": "improved",
+          "text": "`jelou pull` now tells you when workflows were deleted on the server instead of silently dropping them — the removed ones are named in the summary (and in `data.removed` for `--json` / `--agent`), so you can see which local files are now orphaned. `jelou pull --check` previews the same under `wouldRemove`."
+        },
+        {
+          "type": "fixed",
+          "text": "`jelou push` now stamps JelouPay payment nodes with the payment tool's current live version instead of a `1.0.0` placeholder, so the node no longer renders against a stale or wrong version. Other native tools (e.g. KYC) are unaffected."
+        }
+      ]
+    }
+  }
+}

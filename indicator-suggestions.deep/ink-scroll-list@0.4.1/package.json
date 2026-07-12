@@ -1,0 +1,61 @@
+{
+  "name": "ink-scroll-list",
+  "version": "0.4.1",
+  "description": "A ScrollList component for Ink CLI applications",
+  "keywords": [
+    "react",
+    "ink",
+    "cli",
+    "terminal",
+    "scrolllist",
+    "component",
+    "ui"
+  ],
+  "homepage": "https://www.byteland.app/opensource/ink-scroll-list",
+  "bugs": {
+    "url": "https://github.com/ByteLandTechnology/ink-scroll-list/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByteLandTechnology/ink-scroll-list.git"
+  },
+  "license": "MIT",
+  "author": "ByteLand Technology <github@byteland.app>",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.tsx",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "prepare": "husky",
+    "build": "tsup",
+    "docs": "typedoc && prettier --write docs/api"
+  },
+  "dependencies": {
+    "ink-scroll-view": "^0.3.5"
+  },
+  "peerDependencies": {
+    "ink": ">=6",
+    "react": ">=19"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@sindresorhus/tsconfig": "^8.1.0",
+    "@types/ink": "^0.5.2",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "husky": "^9.1.7",
+    "ink": "^6.5.1",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "react": "^19.2.1",
+    "tsup": "^8.5.1",
+    "typedoc": "^0.28.15",
+    "typedoc-plugin-markdown": "^4.9.0",
+    "vitest": "^4.0.16"
+  }
+}

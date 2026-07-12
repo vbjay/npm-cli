@@ -1,0 +1,41 @@
+{
+  "name": "yeeap-cli",
+  "version": "0.3.14",
+  "description": "YEEAP payment CLI: pay, auth, order files, and Agent host context for payment skills",
+  "type": "module",
+  "bin": {
+    "yeeap-cli": "bin/yeeap-cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "scripts",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "prepublishOnly": "npm test",
+    "postinstall": "node src/postinstall.js"
+  },
+  "keywords": [
+    "yeeap",
+    "cursor",
+    "agent",
+    "cli",
+    "device-fingerprint"
+  ],
+  "license": "MIT",
+  "author": "Yeepay",
+  "homepage": "https://www.npmjs.com/package/yeeap-cli",
+  "bugs": {
+    "url": "https://github.com/Yeepay-Open-Platform/yeeap-wallet/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yeepay-Open-Platform/yeeap-wallet.git",
+    "directory": "cli"
+  }
+}

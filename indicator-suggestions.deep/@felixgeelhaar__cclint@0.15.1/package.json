@@ -1,0 +1,95 @@
+{
+  "name": "@felixgeelhaar/cclint",
+  "version": "0.15.1",
+  "description": "Catch CLAUDE.md drift before Claude misbehaves. Lints CLAUDE.md, skills, subagents, and hooks for Claude Code projects.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "cclint": "dist/cli/index.js",
+    "cclint-mcp": "dist/mcp/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/cli/index.ts",
+    "build": "tsc",
+    "build:action": "tsc && ncc build dist/action/index.js -o dist/action",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "test:mutation": "stryker run",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts",
+    "docs": "typedoc",
+    "docs:serve": "npx http-server docs/api -p 8080 -o",
+    "install:hooks": "node scripts/install-hooks.js",
+    "prepare": "command -v warden >/dev/null 2>&1 && warden init --hooks=pre-commit,pre-push || true",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "claude",
+    "linter",
+    "markdown",
+    "typescript",
+    "cli",
+    "validation",
+    "claude-ai",
+    "context-files",
+    "ai-development",
+    "developer-tools",
+    "code-quality",
+    "multi-language",
+    "security-validation",
+    "best-practices"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixgeelhaar/cclint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/felixgeelhaar/cclint/issues"
+  },
+  "homepage": "https://github.com/felixgeelhaar/cclint#readme",
+  "author": "Felix Geelhaar <felix@felixgeelhaar.de>",
+  "license": "MIT",
+  "devDependencies": {
+    "@stryker-mutator/core": "^9.6.1",
+    "@stryker-mutator/typescript-checker": "^9.6.1",
+    "@stryker-mutator/vitest-runner": "^9.6.1",
+    "@types/node": "^25.0.9",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
+    "@typescript-eslint/parser": "^8.53.0",
+    "@vitest/coverage-v8": "^4.0.17",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.3.2",
+    "tsx": "^4.16.2",
+    "typedoc": "^0.28.16",
+    "typescript": "^5.5.3",
+    "vitest": "^4.0.17"
+  },
+  "dependencies": {
+    "@actions/core": "^2.0.2",
+    "@actions/glob": "^0.5.0",
+    "@eslint/js": "^9.39.2",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "chokidar": "^5.0.0",
+    "commander": "^14.0.2",
+    "typescript-eslint": "^8.53.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "overrides": {
+    "undici": "^7.18.2",
+    "qs": "^6.15.2",
+    "brace-expansion": "^5.0.6"
+  }
+}

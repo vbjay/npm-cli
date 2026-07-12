@@ -1,0 +1,96 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "78fb06eca4bc4cc1",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "e981ad35bc44736491dd80f9ada5269423d8ebd616fba7b1aa0d860d13a20ff3",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `extension-fs`  -  C/C++ sources",
+            "items": [
+              "addon.cpp",
+              "nullfunction.cpp",
+              "exif_reader.cpp",
+              "get_line_count_worker.cpp",
+              "get_lines_worker.cpp",
+              "text_reader.cpp",
+              "get_drives_worker.cpp",
+              "get_icon_worker.cpp",
+              "get_file_version_worker.cpp",
+              "create_directory_worker.cpp",
+              "get_conflicts_worker.cpp",
+              "get_net_shares_worker.cpp",
+              "rename_worker.cpp",
+              "delete_files_worker.cpp",
+              "copy_worker.cpp",
+              "std_utils.cpp",
+              "windows/utils.cpp",
+              "windows/get_icon.cpp",
+              "windows/shell.cpp",
+              "windows/get_conflicts.cpp",
+              "windows/services.cpp",
+              "windows/get_files_worker.cpp",
+              "windows/get_exif_date_worker.cpp",
+              "linux/get_files_worker.cpp",
+              "linux/get_exif_date_worker.cpp"
+            ]
+          },
+          {
+            "label": "Target `extension-fs`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<!@(node -p \"var a = require('node-addon-api').include; var b = a.substr(0, a.length - 15); b + 'event-source-base' + a[a.length-1]\")"
+            ]
+          },
+          {
+            "label": "Target `extension-fs`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:50.293Z"
+  },
+  "hash": "sha256:1122182a960b0bce68b95f7f5049b4966fed019758610f920c87cec5feaa6d27"
+}

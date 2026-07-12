@@ -1,0 +1,86 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.OmsClientReactNativeSdk = [
+    kotlinVersion: "2.1.20",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36,
+    omsClientKotlinSdkVersion: "0.1.0-alpha.4",
+    kotlinxCoroutinesVersion: "1.10.2",
+    kotlinxSerializationJsonVersion: "1.8.1"
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return OmsClientReactNativeSdk[prop]
+  }
+
+  repositories {
+    mavenLocal()
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.omsclientreactnativesdk"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  mavenLocal()
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "io.github.0xsequence:oms-client-kotlin-sdk:${getExtOrDefault('omsClientKotlinSdkVersion')}"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${getExtOrDefault('kotlinxCoroutinesVersion')}"
+  implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:${getExtOrDefault('kotlinxSerializationJsonVersion')}"
+}

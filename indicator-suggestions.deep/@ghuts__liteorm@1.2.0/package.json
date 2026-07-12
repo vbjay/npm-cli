@@ -1,0 +1,83 @@
+{
+  "name": "@ghuts/liteorm",
+  "version": "1.2.0",
+  "description": "Zero-dependency native SQLite ORM for Node.js with query builder, migrations, relations, schema builder, FTS5, encryption, audit logs, and CLI.",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "gypfile": true,
+  "bin": {
+    "lite-orm": "bin/lite-orm.js"
+  },
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "install": "node-gyp rebuild",
+    "test": "node --test test/*.test.js",
+    "test:examples": "node examples/todo/index.js && node examples/blog/index.js && node examples/auth/index.js",
+    "prepack": "npm test && npm run test:types && npm run test:examples",
+    "test:types": "tsc --noEmit --strict --module Node16 --target es2020 --moduleResolution node16 test/types-smoke.ts test/types-first-smoke.ts",
+    "bench": "node benchmarks/bench.js",
+    "publish:dry": "npm publish --dry-run --access public"
+  },
+  "keywords": [
+    "sqlite",
+    "sqlite3",
+    "orm",
+    "native",
+    "napi",
+    "node-addon",
+    "query-builder",
+    "migrations",
+    "fts5",
+    "zero-dependency"
+  ],
+  "license": "MIT",
+  "files": [
+    "lib/",
+    "src/",
+    "bin/",
+    "types/",
+    "examples/",
+    "benchmarks/",
+    "docs/",
+    "deps/sqlite/",
+    "binding.gyp",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": {
+    "name": "Lsow",
+    "url": "https://github.com/yeweroooo"
+  },
+  "contributors": [
+    {
+      "name": "Lsow",
+      "url": "https://github.com/yeweroooo"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeweroooo/lite-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yeweroooo/lite-orm/issues"
+  },
+  "homepage": "https://github.com/yeweroooo/lite-orm#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

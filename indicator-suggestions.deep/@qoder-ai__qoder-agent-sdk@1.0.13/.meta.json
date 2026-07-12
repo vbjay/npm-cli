@@ -1,0 +1,118 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7f0288c6f3468c17",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6b265382cf3b030dc6becabab1475b18c07a75dc35ba724b073fe3cbe6063bd0",
+        "sizeBytes": 26587,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://download.qoder.com/qodercli/releases",
+            "classification": "download"
+          },
+          {
+            "url": "https://qs-cli-dev.oss-cn-hangzhou.aliyuncs.com/qodercli/dev/releases",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://static.qoder.com.cn/qoder-cli-cn/releases",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://static.qoder.com.cn/qoder-cli-cn/dev/releases",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/postinstall.cjs",
+        "sha256": "d2386cca6c6642ba9dd47f120c681d2823632cfeb062099012195abfb2b730d7",
+        "sizeBytes": 5363,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:44.629Z"
+  },
+  "hash": "sha256:e751c6c7ba46f135927fa11b793a072493d2a928591b7c5d577fb5a42ef54af4"
+}

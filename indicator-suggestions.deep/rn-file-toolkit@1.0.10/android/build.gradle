@@ -1,0 +1,63 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def FileToolkitConfig = [
+  kotlinVersion: "2.0.21",
+  minSdkVersion: 24,
+  compileSdkVersion: 35,
+  targetSdkVersion: 35
+]
+
+def getExtOrDefault(prop) {
+  return rootProject.ext.has(prop) ? rootProject.ext.get(prop) : FileToolkitConfig[prop]
+}
+
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
+  }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.filetoolkit"
+
+  compileSdk getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdk getExtOrDefault("minSdkVersion")
+    targetSdk getExtOrDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+}

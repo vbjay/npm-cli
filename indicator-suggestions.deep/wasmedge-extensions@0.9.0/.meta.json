@@ -1,0 +1,112 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1c47e0304f4e9b1a",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/postinstall.sh",
+      "scripts/preinstall.sh"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "374ed2b19f41b362b66a60a462404aaeabd6fb1389e9b315bd37248834345454",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `<(module_name)`  -  C/C++ sources",
+            "items": [
+              "src/wasmedgeaddon.cc",
+              "src/addon.cc",
+              "src/bytecode.cc",
+              "src/options.cc",
+              "src/utils.cc"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "src",
+              "$(HOME)/.wasmedge/include"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/preinstall.sh",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "fa74d2285cd2a44ceb9bf8f01052b6bf50bd01accdc5f02181226fa1ada0afd2",
+        "sizeBytes": 1246,
+        "signals": [
+          "shell-network-fetch",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://raw.githubusercontent.com/WasmEdge/WasmEdge/0.9.0/utils/install.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/WasmEdge/WasmEdge/0.9.0/utils/uninstall.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall.sh",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e7ec80fd20f1a33dc9beca38d9a56db211ceb645d442e8eacd6f00e689cc135b",
+        "sizeBytes": 963,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:28.743Z"
+  },
+  "hash": "sha256:29ef8ccec383774ca4d5c9d0f9d649da00406138c4f1615053eabf73ec0c41f2"
+}

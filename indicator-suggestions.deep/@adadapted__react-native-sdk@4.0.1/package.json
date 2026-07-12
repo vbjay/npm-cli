@@ -1,0 +1,166 @@
+{
+  "name": "@adadapted/react-native-sdk",
+  "version": "4.0.1",
+  "description": "The AdAdapted react-native SDK.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.tsx",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "android/",
+    "ios/",
+    "adadapted-react-native-sdk.podspec"
+  ],
+  "scripts": {
+    "prettier-fix": "prettier --write \"*.{ts,tsx,js,jsx,json,css,scss,md}\" \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\" \"example/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
+    "lint": "eslint --version && eslint ./",
+    "compile": "tsc --version && tsc --project tsconfig.json --noEmit --noErrorTruncation --pretty",
+    "test-coverage": "rm -rf coverage && jest --version --clearCache && jest --coverage --clearCache",
+    "enable-pre-commit": "pre-commit install",
+    "test": "jest --version --clearCache && jest --passWithNoTests",
+    "prettier": "prettier --list-different \"*.{ts,tsx,js,jsx,json,css,scss,md}\" \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
+    "prepack": "bob build",
+    "example-app-install-pods": "cd example/ios && pod install",
+    "npm-check-outdated": "npm outdated",
+    "check-peer-dependencies": "npx check-peer-dependencies --npm",
+    "update-packages-semver-safe": "npm update",
+    "update-packages-latest-available": "npx npm-check-updates -u",
+    "install-packages": "npm install",
+    "audit-fix-packages": "npm audit fix",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "adadapted",
+    "sdk",
+    "ad",
+    "ads"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adadaptedinc/adadapted-react-native-sdk"
+  },
+  "author": "Jeramy Usher <jusher@adadapted.com> (https://github.com/adadaptedinc/adadapted-react-native-sdk)",
+  "license": "AdAdapted Platform License",
+  "bugs": {
+    "url": "https://github.com/adadaptedinc/adadapted-react-native-sdk/issues"
+  },
+  "homepage": "https://github.com/adadaptedinc/adadapted-react-native-sdk",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "react-native-base64": "^0.2.2",
+    "type-zoo": "3.4.1"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": "*",
+    "react-native-webview": "*"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@eslint/eslintrc": "^3.0.0",
+    "@eslint/js": "^9.0.0",
+    "@react-native/jest-preset": "^0.86.0",
+    "@react-native/typescript-config": "^0.86.0",
+    "@types/react": "^19.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@types/react-native-base64": "^0.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.59.0",
+    "@typescript-eslint/parser": "^8.59.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jest": "^29.15.0",
+    "eslint-plugin-jsdoc": "^63.0.0",
+    "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-prefer-arrow": "1.2.3",
+    "eslint-plugin-promise": "^7.3.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-native": "^5.0.0",
+    "globals": "^17.0.0",
+    "jest": "^30.3.0",
+    "prettier": "^3.8.3",
+    "react": "^19.0.0",
+    "react-native": "^0.86.0",
+    "react-native-builder-bob": "^0.43.0",
+    "react-native-webview": "^13.16.1",
+    "ts-jest": "^29.4.9",
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.59.0"
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "setupFiles": [
+      "<rootDir>/jest.setup.ts"
+    ],
+    "transform": {
+      "^.+\\.[j|t]sx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!react-native)/.+"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "modulePaths": [
+      "<rootDir>/node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(s?css)$": "<rootDir>/__mocks__/styleMock.js",
+      "^src/(.*)$": "<rootDir>/src/$1"
+    },
+    "collectCoverage": false,
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/api/**/*.*",
+      "!src/**/*.d.ts",
+      "!src/index.tsx"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 5,
+        "functions": 5,
+        "lines": 5,
+        "statements": 5
+      }
+    },
+    "watchPathIgnorePatterns": [
+      "<rootDir>/jest.json"
+    ],
+    "globals": {
+      "BUILD_ENV": "dev"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "source": "src/index.tsx",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  }
+}

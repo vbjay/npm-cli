@@ -1,0 +1,118 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3902495474df128e",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "npm/platform.js",
+      "npm/postinstall.js",
+      "npm/resolve-binary.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "a9668931e29a8bb5ad83c944c2df7621411eba6634db9552dd1373226563a1d3",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate version",
+            "items": [
+              "0.5.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "deb9a01e0ba45c4d0fe21c90ed41edcd26b5e9335cdf0f0f3019a04d155313ab",
+        "sizeBytes": 1931,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/platform.js",
+          "npm/resolve-binary.js"
+        ],
+        "urls": [
+          {
+            "url": "https://rustup.rs/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "npm/platform.js",
+        "reason": "required by ./npm/postinstall.js; required by ./npm/resolve-binary.js",
+        "sha256": "6b9540f1f5f3dd9d9a61dd74234df8278b33cdd9a9ce0160507a66c1501ea75c",
+        "sizeBytes": 977,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "npm/resolve-binary.js",
+        "reason": "required by ./npm/postinstall.js",
+        "sha256": "ec985eadda6b1f591456338b84ef279ae9a8c56621212f620f0c3a78551f20ec",
+        "sizeBytes": 1006,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/platform.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:17.869Z"
+  },
+  "hash": "sha256:8b507bbdccb9801e35edf9a214b5af38099f9be86bf83d9bebf9cd12cbf26971"
+}

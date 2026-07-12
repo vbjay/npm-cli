@@ -1,0 +1,86 @@
+{
+  "name": "@freshpaint/freshpaint-react-native",
+  "version": "0.4.0",
+  "description": "The Freshpaint react native integration.",
+  "main": "dist/Freshpaint.js",
+  "types": "dist/Freshpaint.d.ts",
+  "keywords": [
+    "freshpaint",
+    "react-native",
+    "analytics",
+    "tracking",
+    "mobile-analytics"
+  ],
+  "files": [
+    "dist",
+    "plugin.js",
+    "ios",
+    "android",
+    "freshpaint-react-native.podspec"
+  ],
+  "react-native": {
+    "sourceDir": "android",
+    "packageImportPath": "import io.freshpaint.attribution.FreshpaintAttributionPackage;",
+    "packageInstance": "new FreshpaintAttributionPackage()"
+  },
+  "scripts": {
+    "test": "jest --reporters=default --reporters=jest-junit",
+    "test-instrumentor": "node_modules/.bin/mocha -r @babel/register test/",
+    "compile": "tsc -p .",
+    "prepare": "npm run-script compile",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --quiet",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\" \"plugin.js\""
+  },
+  "author": "Freshpaint <freshpaint.io>",
+  "peerDependencies": {
+    "react-native": ">=0.70.0"
+  },
+  "dependencies": {
+    "@amplitude/ua-parser-js": "^0.7.33",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "babel-plugin-add-react-displayname": "0.0.5",
+    "blueimp-md5": "2.19.0",
+    "flat": "6.0.1",
+    "hoist-non-react-statics": "^3.3.2",
+    "lodash": "4.17.21"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.28.3",
+    "@babel/core": "7.28.5",
+    "@babel/preset-env": "7.28.5",
+    "@babel/preset-typescript": "7.28.5",
+    "@babel/register": "7.28.3",
+    "@eslint/compat": "^1.4.1",
+    "@types/jest": "30.0.0",
+    "@types/lodash": "^4.17.20",
+    "@types/node": "^20.19.24",
+    "@types/react": "^19.2.9",
+    "@types/react-reconciler": "^0.28.8",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "babel-jest": "30.2.0",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-native": "^5.0.0",
+    "jest": "30.2.0",
+    "jest-junit": "^16.0.0",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "mocha": "11.7.5",
+    "prettier": "^3.6.2",
+    "react": "19.2.3",
+    "react-native": "^0.79.2",
+    "react-test-renderer": "19.2.3",
+    "should": "^13.2.3",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "resolutions": {
+    "brace-expansion": "^2.0.2",
+    "@eslint/plugin-kit": ">=0.4.1"
+  }
+}

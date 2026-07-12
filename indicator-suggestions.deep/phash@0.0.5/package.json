@@ -1,0 +1,35 @@
+{
+  "name": "phash",
+  "version": "0.0.5",
+  "description": "Bindings for node.js to pHash",
+  "main": "index",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/aaronm67/node-phash.git"
+  },
+  "devDependencies": {
+    "node-gyp": "*",
+    "should": "1.0.0",
+    "mocha": "1.3.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "script": {
+    "preinstall": "node-gyp configure build",
+    "preuninstall": "rm -rf build/*"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node-gyp configure build && mocha"
+  },
+  "keywords": ["pHash", "phash", "libpHash", "native", "binding", "addon"],
+  "author": "Aaron Marasco <agm257@mail.missouri.edu>",
+  "contributors": [
+    "Aaron Marasco <agm257@mail.missouri.edu>",
+    "Taeho Kim <xissysnd@gmail.com>",
+    "Jeremy Dowell <jeremy@codevinsky.com>"
+  ]
+}

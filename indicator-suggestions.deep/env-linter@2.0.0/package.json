@@ -1,0 +1,124 @@
+{
+  "name": "env-linter",
+  "description": "Ensures that all developers on your project use the same node version, install dependencies in an unambiguous manner and utilize githooks.",
+  "version": "2.0.0",
+  "author": "Merkle",
+  "bin": {
+    "env-linter": "./bin/index.js"
+  },
+  "bugs": "https://github.com/merkle-open/env-linter/issues/new",
+  "commitlint": {
+    "extends": [
+      "@merkle-open/commitlint-conventional-changelog"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@merkle-open/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "18.6.0",
+    "@merkle-open/commitlint-conventional-changelog": "1.0.7",
+    "@merkle-open/cz-conventional-changelog": "1.1.0",
+    "@merkle-open/eslint-config": "3.0.0",
+    "@merkle-open/prettier-config": "1.2.0",
+    "@merkle-open/ts-config": "1.1.0",
+    "@types/fs-extra": "11.0.4",
+    "@types/jest": "29.5.11",
+    "@types/node": "20.11.10",
+    "@types/node-fetch": "2.6.11",
+    "@types/semver": "7.5.6",
+    "@types/zen-observable": "0.8.7",
+    "chalk": "4.1.2",
+    "ci-info": "3.9.0",
+    "clean-webpack-plugin": "4.0.0",
+    "commander": "9.5.0",
+    "commitizen": "4.3.0",
+    "eslint": "8.56.0",
+    "eslint-plugin-import": "2.29.1",
+    "execa": "5.1.1",
+    "find-packages": "8.0.14",
+    "fs-extra": "10.1.0",
+    "globby": "11.1.0",
+    "husky": "8.0.3",
+    "jest": "29.7.0",
+    "license-checker": "25.0.1",
+    "lint-staged": "15.2.0",
+    "log-symbols": "4.1.0",
+    "node-fetch": "2.7.0",
+    "npm-check-updates": "16.14.14",
+    "npm-run-all": "4.1.5",
+    "prettier": "3.2.4",
+    "rimraf": "5.0.5",
+    "semver": "7.5.4",
+    "standard-version": "9.5.0",
+    "terminal-link": "2.1.1",
+    "ts-config-webpack-plugin": "2.0.3",
+    "ts-jest": "29.1.2",
+    "tslib": "2.6.2",
+    "typescript": "5.3.3",
+    "webpack": "4.47.0",
+    "webpack-cli": "4.10.0",
+    "zen-observable": "0.10.0"
+  },
+  "engines": {
+    "node": ">=18.12.0"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "bin",
+    "build",
+    "dist"
+  ],
+  "homepage": "https://github.com/merkle-open/env-linter",
+  "keywords": [
+    "cli",
+    "env",
+    "hooks installed",
+    "merkle",
+    "node version",
+    "save exact"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md}": [
+      "prettier --write"
+    ],
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --ext .jsx,.js,.ts,.tsx"
+    ]
+  },
+  "main": "./dist/index.js",
+  "private": false,
+  "repository": "https://github.com/merkle-open/env-linter",
+  "scripts": {
+    "build": "npm-run-all build:*",
+    "build:bundle": "webpack --mode=\"production\"",
+    "build:definitions": "tsc",
+    "clean": "npx -y rimraf lerna-debug.log npm-debug.log package-lock.json node_modules",
+    "commit": "git-cz",
+    "lint": "npm-run-all lint:*",
+    "lint:license": "license-checker --production --summary --exclude \"Apache-2.0, BSD, ISC, LGPL, MIT, MPL\" --failOn \"AGPL; EPL; GPL\"",
+    "lint:ts": "eslint . --ext .jsx,.js,.ts,.tsx",
+    "postbuild": "rimraf --glob build/*.js build/*js.map",
+    "prepare": "husky install",
+    "prebuild": "rimraf build dist",
+    "prepublishOnly": "npm-run-all prepublishOnly:*",
+    "prepublishOnly:lint": "npm run lint",
+    "prepublishOnly:test": "npm test",
+    "prepublishOnly:build": "npm run build",
+    "prepublishOnly:pkg": "npx -y pkg-ok@2.3.1",
+    "prerelease": "npm-run-all lint test build",
+    "prettier": "prettier --write \"**/*.*(js|jsx|ts|tsx|json|md)\"",
+    "release": "standard-version",
+    "test": "jest --coverage",
+    "update-dependencies": "npm-check-updates -u --deprecated",
+    "watch": "run-p watch:*",
+    "watch-test": "jest --watchAll --coverage --notify --notifyMode=failure-change",
+    "watch:bundle": "webpack --watch --mode=\"development\"",
+    "watch:definitions": "tsc -w"
+  },
+  "typings": "./build/index.d.ts"
+}

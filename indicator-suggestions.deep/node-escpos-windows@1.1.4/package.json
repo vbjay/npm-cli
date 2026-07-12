@@ -1,0 +1,31 @@
+{
+  "name": "node-escpos-windows",
+  "version": "1.1.4",
+  "description": "a cpp escpos plugin for nodejs and electron",
+  "main": "./index.js",
+  "scripts": {
+    "test": "node test.js",
+    "build-addon": "node-gyp rebuild",
+    "build-addon-debug": "node-gyp rebuild --debug",
+    "build-addon-electron": "node-gyp  rebuild --target=1.7.9 --arch=ia32 --dist-url=https://atom.io/download/electron",
+    "config": "node-gyp configure --nodedir=\"F:\\node\""
+  },
+  "keywords": [
+    "windows",
+    "cpp",
+    "escpos",
+    "addon",
+    "electron",
+    "nodejs"
+  ],
+  "author": "vidy",
+  "license": "ISC",
+  "dependencies": {
+    "iconv-lite": "^0.4.23",
+    "nan": "^2.10.0"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/boneVidy/node-escpos-windows"
+  }
+}

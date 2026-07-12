@@ -1,0 +1,66 @@
+{
+  "name": "wp-typia",
+  "version": "0.24.13",
+  "description": "Canonical CLI package for wp-typia scaffolding and project workflows",
+  "packageManager": "bun@1.3.11",
+  "type": "module",
+  "bin": {
+    "wp-typia": "bin/wp-typia.js"
+  },
+  "files": [
+    "bin/",
+    "dist/",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "generate": "bun scripts/build-runtime.ts",
+    "build": "bun run generate",
+    "build:standalone": "bun scripts/build-standalone-runtime.ts --targets native --outdir ./dist-standalone",
+    "build:standalone:release": "bun scripts/build-standalone-runtime.ts --targets darwin-arm64,darwin-x64,linux-arm64,linux-x64,windows-x64 --outdir ./.cache/standalone/raw",
+    "dev": "bun run build && node bin/wp-typia.js",
+    "standalone:prepare-release-assets": "bun scripts/prepare-standalone-release-assets.ts --input-dir ./.cache/standalone/raw --outdir ./.cache/standalone/release-assets",
+    "test": "cd ../wp-typia-project-tools && bun run build && cd ../wp-typia && bun run build && bun test tests/*.test.ts",
+    "test:coverage": "cd ../wp-typia-project-tools && bun run build && cd ../wp-typia && bun run build && bun test tests/*.test.ts --coverage --coverage-reporter=lcov --coverage-dir=coverage",
+    "clean": "rm -rf .cache/standalone .pack-backup dist dist-standalone",
+    "prepack": "bun run build && node ./scripts/publish-runtime-maps.mjs prepare",
+    "postpack": "node ./scripts/publish-runtime-maps.mjs restore"
+  },
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "typia",
+    "cli",
+    "scaffold",
+    "templates"
+  ],
+  "author": "imjlk",
+  "license": "GPL-2.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imjlk/wp-typia.git",
+    "directory": "packages/wp-typia"
+  },
+  "bugs": {
+    "url": "https://github.com/imjlk/wp-typia/issues"
+  },
+  "homepage": "https://github.com/imjlk/wp-typia/tree/main/packages/wp-typia#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "bun": ">=1.3.11",
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "@gunshi/plugin-completion": "0.32.0",
+    "@wp-typia/api-client": "^0.4.6",
+    "@wp-typia/project-tools": "0.24.11",
+    "gunshi": "0.32.0",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

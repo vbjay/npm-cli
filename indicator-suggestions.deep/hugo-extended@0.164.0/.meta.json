@@ -1,0 +1,152 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "17ee088b4590a441",
+    "fetchedFiles": [
+      "dist/lib/env.mjs",
+      "dist/lib/install.mjs",
+      "dist/lib/utils.mjs",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "process.env",
+        "versionSpec": null
+      },
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.17"
+      },
+      {
+        "name": "tar",
+        "versionSpec": "^7.5.15"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18",
+      "tar@7.5.19"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c35fdeeb2e30297851acc1a01dfb71a9a141850b8e8fca5eed596017909b1f82",
+        "sizeBytes": 1956,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/install.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/install.mjs",
+        "reason": "required by ./postinstall.js",
+        "sha256": "04f9f3f8bd982563ad21476ed0ab863f37f9efbec5228e49e195f3ab88f1fdcd",
+        "sizeBytes": 8546,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/env.mjs",
+          "dist/lib/utils.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/gohugoio/hugo/releases/tag/v${version}",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "dist/lib/env.mjs",
+        "reason": "required by ./dist/lib/install.mjs; required by ./dist/lib/utils.mjs",
+        "sha256": "cd8949461059261ccbe040db8339ad911575247a96a144a3221469659794eb6c",
+        "sizeBytes": 5820,
+        "signals": [
+          "reads-process-env",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/utils.mjs",
+        "reason": "required by ./dist/lib/install.mjs",
+        "sha256": "0364813701f402ef2466b1e320af620b41cb689af5f582b2adb74bcab9daab3b",
+        "sizeBytes": 7717,
+        "signals": [
+          "uses-child-process",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/env.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/gohugoio/hugo/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:58.975Z"
+  },
+  "hash": "sha256:67640c58b09201853b2e67f2da2edb8b5f4f9a7e7a961fda50f0feae6bfc918d"
+}

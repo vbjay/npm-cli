@@ -1,0 +1,189 @@
+{
+  "name": "react-native-zoom-toolkit",
+  "version": "5.1.0",
+  "description": "Most complete set of pinch to zoom utilites for React Native",
+  "main": "./lib/module/index",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-zoom-toolkit-example",
+    "docs": "yarn workspace react-native-zoom-toolkit-docs",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "release": "release-it --only-version",
+    "test": "jest"
+  },
+  "keywords": [
+    "zoom",
+    "zoomable",
+    "zoomable-view",
+    "pan",
+    "pinch",
+    "pinch-to-zoom",
+    "double-tap",
+    "gallery",
+    "lightbox",
+    "image-gallery",
+    "image-cropper",
+    "react-native",
+    "react-native-zoomable",
+    "react-native-image-zoom",
+    "react-native-zoomable-view"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Glazzes/react-native-zoom-toolkit.git"
+  },
+  "author": "glazzes <santiagop1@protonmail.com> (https://github.com/Glazzes)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Glazzes/react-native-zoom-toolkit/issues"
+  },
+  "homepage": "https://glazzes.github.io/react-native-zoom-toolkit/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@jest/globals": "^30.0.0",
+    "@react-native/babel-preset": "0.85.0",
+    "@react-native/eslint-config": "0.85.0",
+    "@react-native/jest-preset": "0.85.0",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@types/react": "^19.2.0",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "lefthook": "^2.1.4",
+    "prettier": "^3.8.1",
+    "react": "19.2.0",
+    "react-native": "0.83.6",
+    "react-native-builder-bob": "^0.41.0",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-reanimated": "~4.1.1",
+    "react-native-worklets": "0.5.1",
+    "release-it": "^19.2.4",
+    "turbo": "^2.8.21",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example",
+    "docs"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "jest": {
+    "preset": "react-native",
+    "testTimeout": 10000,
+    "setupFilesAfterEnv": [
+      "./jest-setup.js"
+    ],
+    "setupFiles": [
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!react-native-reanimated)\\/.*$"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "create-react-native-library": {
+    "type": "library",
+    "languages": "js",
+    "tools": [
+      "eslint",
+      "lefthook",
+      "release-it",
+      "jest"
+    ],
+    "version": "0.62.0"
+  }
+}

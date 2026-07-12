@@ -1,0 +1,84 @@
+{
+  "name": "@etchteam/storybook-addon-marker",
+  "version": "7.0.0",
+  "description": "Add a Marker.io feedback button to the storybook UI",
+  "type": "module",
+  "main": "dist/manager.js",
+  "exports": {
+    "./manager": "./dist/manager.js",
+    "./preview": "./dist/preview.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "manager.js",
+    "preview.js"
+  ],
+  "scripts": {
+    "prebuild": "node -e \"fs.rmSync('./dist', { recursive: true, force: true })\"",
+    "prepare": "tsup",
+    "storybook": "npm run prepare && storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etchteam/storybook-addon-marker.git"
+  },
+  "keywords": [
+    "storybook",
+    "addon",
+    "storybook-addon",
+    "marker",
+    "feedback"
+  ],
+  "author": "etchteam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/etchteam/storybook-addon-marker/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "storybook": {
+    "displayName": "Marker.io",
+    "icon": "https://raw.githubusercontent.com/etchteam/storybook-addon-marker/master/marker-storybook-logo.png"
+  },
+  "dependencies": {
+    "@marker.io/browser": "^0.19.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@etchteam/eslint-config": "^2.2.60",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^11.0.2",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@storybook/addon-docs": "^10.0.0-rc.0",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.2",
+    "@storybook/icons": "^1.2.9",
+    "@storybook/react-webpack5": "^10.0.0-rc.0",
+    "@swc/core": "^1.4.17",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "eslint": "8.57.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "semantic-release": "^23.0.0",
+    "storybook": "^10.0.0-rc.0",
+    "swc-loader": "^0.2.6",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "storybook": "^10.0.0"
+  }
+}

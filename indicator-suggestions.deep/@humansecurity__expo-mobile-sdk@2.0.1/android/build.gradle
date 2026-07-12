@@ -1,0 +1,69 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    // Simple helper that allows the root project to override versions declared by this library.
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url 'https://jfrog.humansecurity.com/artifactory/human-android-sdk/'
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url 'https://jfrog.humansecurity.com/artifactory/human-android-sdk/'
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+group = 'expo.modules.humansdk'
+version = '2.0.1'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+// If you want to use the managed Android SDK versions from expo-modules-core, set this to true.
+// The Android SDK versions will be bumped from time to time in SDK releases and may introduce breaking changes in your module code.
+// Most of the time, you may like to manage the Android SDK versions yourself.
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+  useDefaultAndroidSdkVersions()
+} else {
+  project.android {
+    compileSdkVersion safeExtGet("compileSdkVersion", 36)
+    defaultConfig {
+      minSdkVersion safeExtGet("minSdkVersion", 21)
+      targetSdkVersion safeExtGet("targetSdkVersion", 36)
+    }
+  }
+}
+
+dependencies {
+    implementation 'com.humansecurity:sdk:5.0.1'
+    // HUMAN SDK v5 pulls OkHttp 5 through Ktor; keep React Native's cookie jar artifact on the same major.
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:5.3.2'
+}
+
+android {
+  namespace "expo.modules.humansdk"
+  defaultConfig {
+    versionCode 201
+    versionName "2.0.1"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}

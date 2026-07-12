@@ -1,0 +1,123 @@
+{
+  "name": "customerio-expo-plugin",
+  "version": "3.6.2",
+  "description": "Expo config plugin for the Customer IO React Native SDK",
+  "main": "plugin/lib/commonjs/index",
+  "module": "plugin/lib/module/index",
+  "types": "plugin/lib/typescript/index.d.ts",
+  "source": "plugin/src/index",
+  "react-native": "plugin/src/index",
+  "license": "MIT",
+  "files": [
+    "plugin/app.plugin.js",
+    "plugin/src",
+    "plugin/lib/**/*"
+  ],
+  "exports": {
+    "./app.plugin.js": "./plugin/app.plugin.js",
+    ".": "./plugin/lib/commonjs/index.js",
+    "./postinstall": "./plugin/src/postInstallHelper.js"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf lib",
+    "expo-module": "expo-module",
+    "lint": "eslint plugin --config plugin/eslint.config.js",
+    "lint:fix": "npm run lint -- --fix",
+    "typescript": "tsc --noEmit",
+    "prepare": "npm run clean && bob build",
+    "postinstall": "node plugin/src/postInstall.js",
+    "test": "jest",
+    "test:scenarios": "jest --selectProjects scenarios",
+    "compatibility:create-test-app": "node scripts/compatibility/create-test-app.js",
+    "compatibility:setup-test-app": "node scripts/compatibility/setup-test-app.js",
+    "compatibility:configure-plugin": "node scripts/compatibility/configure-plugin.js",
+    "compatibility:validate-plugin": "node scripts/compatibility/validate-plugin.js",
+    "compatibility:run-compatibility-tests": "node scripts/compatibility/run-compatibility-tests.js",
+    "setup-test-app": "bash scripts/setup-test-app.sh",
+    "setup-test-app-pnpm": "bash scripts/setup-test-app-pnpm.sh",
+    "setup-test-app-pnpm-monorepo": "bash scripts/setup-test-app-pnpm-monorepo.sh",
+    "test-plugin": "bash scripts/test-plugin.sh",
+    "cleanAll": "bash scripts/clean-all.sh",
+    "buildAll": "bash scripts/build-all.sh",
+    "cleanAndBuildAll": "npm run cleanAll && npm run buildAll",
+    "cleanAllPnpm": "bash scripts/clean-all-pnpm.sh",
+    "buildAllPnpm": "bash scripts/build-all-pnpm.sh",
+    "cleanAndBuildAllPnpm": "npm run cleanAllPnpm && npm run buildAllPnpm",
+    "verify-pnpm-dev-apps": "bash scripts/verify-pnpm-dev-apps.sh",
+    "generate-api-docs": "bash scripts/generate-api-docs.sh"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "https://github.com/customerio/customerio-expo-plugin",
+  "author": "CustomerIO Team <win@customer.io> (https://customer.io/)",
+  "bugs": {
+    "url": "https://github.com/customerio/customerio-expo-plugin/issues"
+  },
+  "homepage": "https://github.com/customerio/customerio-expo-plugin#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "customerio-reactnative": "6.5.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "@eslint/js": "^9.33.0",
+    "@expo/config-plugins": "^10.0.0",
+    "@expo/config-types": "^53.0.0",
+    "@microsoft/api-extractor": "^7.52.9",
+    "@types/jest": "^29.5.14",
+    "eslint": "^9.17.0",
+    "expo-build-properties": "^0.14.6",
+    "expo-module-scripts": "^3.5.4",
+    "gradle-to-js": "^2.0.1",
+    "jest": "^29.2.1",
+    "jest-environment-jsdom": "^29.7.0",
+    "prettier": "^2.8.8",
+    "react-native-builder-bob": "^0.18.3",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.0",
+    "xcode": "^3.0.1"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "plugin/lib/",
+    "ci-test-apps/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "plugin/src",
+    "output": "plugin/lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "find-package-json": "^1.2.0",
+    "fs-extra": "^11.2.0",
+    "semver": "^7.7.2"
+  }
+}

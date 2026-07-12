@@ -1,0 +1,164 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+buildscript {
+    // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+    def kotlin_version = project.properties["Didomi_kotlinVersion"]
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.11.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+def getExtOrDefault(name) {
+    return project.properties["Didomi_" + name].toString()
+}
+
+def getExtOrIntegerDefault(name) {
+    return project.properties["Didomi_" + name].toInteger()
+}
+
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+def parsedPackage = new JsonSlurper().parseText(file("../package.json").text)
+
+android {
+    compileSdk getExtOrIntegerDefault("compileSdkVersion")
+    namespace "io.didomi.reactnative"
+
+    defaultConfig {
+        minSdk getExtOrIntegerDefault("minSdkVersion")
+        targetSdk getExtOrIntegerDefault("targetSdkVersion")
+        versionCode 1
+        versionName "${parsedPackage.version}"
+
+        multiDexEnabled = true
+
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/newarch/java']
+            } else {
+                java.srcDirs += ['src/oldarch/java']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lint {
+        disable "GradleCompatible"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+
+}
+
+react {
+    jsRootDir = file("../src/specs")
+    libraryName = "RNDidomiSpec"
+    codegenJavaPackageName = "io.didomi.reactnative"
+}
+
+repositories {
+    google()
+    mavenLocal()
+    mavenCentral()
+
+    def found = false
+    def defaultDir = null
+    def androidSourcesName = "React Native sources"
+
+    if (rootProject.ext.has("reactNativeAndroidRoot")) {
+        defaultDir = rootProject.ext.get("reactNativeAndroidRoot")
+    } else {
+        defaultDir = new File(projectDir, "/../../../node_modules/react-native/android")
+    }
+
+    if (defaultDir.exists()) {
+        maven {
+            url defaultDir.toString()
+            name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${defaultDir.canonicalPath}")
+        found = true
+    } else {
+        def parentDir = rootProject.projectDir
+
+        1.upto(5, {
+            if (found) return true
+            parentDir = parentDir.parentFile
+
+            def androidSourcesDir = new File(parentDir, "node_modules/react-native")
+
+            def androidPrebuiltBinaryDir = new File(parentDir, "node_modules/react-native/android")
+
+            if (androidPrebuiltBinaryDir.exists()) {
+                maven {
+                    url androidPrebuiltBinaryDir.toString()
+                    name androidSourcesName
+                }
+
+                logger.info(":${project.name}:reactNativeAndroidRoot ${androidPrebuiltBinaryDir.canonicalPath}")
+                found = true
+            } else if (androidSourcesDir.exists()) {
+                maven {
+                    url androidSourcesDir.toString()
+                    name androidSourcesName
+                }
+
+                logger.info(":${project.name}:reactNativeAndroidRoot ${androidSourcesDir.canonicalPath}")
+                found = true
+            }
+        })
+    }
+
+    if (!found) {
+        throw new GradleException(
+                "${project.name}: unable to locate React Native android sources. " +
+                        "Ensure you have you installed React Native as a dependency in your project and try again."
+        )
+    }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+    // noinspection GradleDynamicVersion
+    api "com.facebook.react:react-native:+"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation("com.google.code.gson:gson:2.13.1")
+    implementation "io.didomi.sdk:android:2.45.0"
+}

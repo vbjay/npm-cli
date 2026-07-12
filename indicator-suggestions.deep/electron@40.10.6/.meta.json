@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "057f0232fee02cae",
+    "fetchedFiles": [
+      "checksums.json",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "@electron/get",
+        "versionSpec": "^5.0.0"
+      },
+      {
+        "name": "@electron-internal/extract-zip",
+        "versionSpec": "^1.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@electron-internal/extract-zip@1.0.4",
+      "@electron/get@5.0.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "647982ca958a3e51b5af71bdc077c1e39c9f20205fc0f00133ecf9b049bd8728",
+        "sizeBytes": 3339,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "checksums.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "checksums.json",
+        "reason": "required by ./install.js",
+        "sha256": "d2bbb42ae5bd67eadf8fb216f5fb0a86b4806b239a3b4d7097b7feaf8a921ac0",
+        "sizeBytes": 8208,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:40.765Z"
+  },
+  "hash": "sha256:4a3cfb59fefdf7c4d18d36c0dab9bf2e94c44b6119581b2861ccdb88bf5ea414"
+}

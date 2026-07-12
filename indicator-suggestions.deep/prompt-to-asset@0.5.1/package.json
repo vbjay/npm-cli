@@ -1,0 +1,88 @@
+{
+  "name": "prompt-to-asset",
+  "version": "0.5.1",
+  "mcpName": "io.github.MohamedAbdallah-14/prompt-to-asset",
+  "description": "Prompt enhancer + asset pipeline for developers. One brief → a validated bundle (iOS AppIconSet, Android adaptive, PWA, favicon, OG, visionOS) via routed image models. Three modes: inline_svg (zero-key), external_prompt_only (paste into your subscription), api (server-driven). MCP + CLI.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "p2a": "dist/index.js",
+    "prompt-to-asset": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "data",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohamedAbdallah-14/prompt-to-asset.git",
+    "directory": "packages/mcp-server"
+  },
+  "homepage": "https://github.com/MohamedAbdallah-14/prompt-to-asset#readme",
+  "bugs": {
+    "url": "https://github.com/MohamedAbdallah-14/prompt-to-asset/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "codex",
+    "gemini-cli",
+    "prompt-engineering",
+    "image-generation",
+    "logo",
+    "app-icon",
+    "favicon",
+    "og-image",
+    "svg",
+    "transparent-png",
+    "flutter",
+    "react-native",
+    "expo",
+    "ideogram",
+    "recraft",
+    "flux",
+    "gpt-image-1",
+    "nano-banana",
+    "pollinations"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/index.js",
+    "smoke": "node dist/smoke.js",
+    "prepack": "node scripts/prepack.mjs",
+    "prepublishOnly": "npm run build && node scripts/prepack.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
+  },
+  "optionalDependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@resvg/resvg-js": "^2.6.2",
+    "png-to-ico": "^3.0.1",
+    "satori": "^0.26.0",
+    "sharp": "^0.34.5",
+    "svgo": "^4.0.1",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

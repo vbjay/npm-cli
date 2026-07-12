@@ -1,0 +1,53 @@
+{
+  "name": "@rosh100yx/outlier",
+  "version": "0.10.2",
+  "description": "AI Code Governance & Capability Auditing for the Terminal. Measures AI reliance, context waste, and enforces local CI/CD policies.",
+  "bin": {
+    "outlier": "bin/outlier.js"
+  },
+  "files": [
+    "bin/outlier.js",
+    "bin/postinstall.js",
+    "src",
+    "data"
+  ],
+  "scripts": {
+    "build": "bunx tsc --noEmit && bun build ./src/cli.ts --target=node --outfile bin/outlier.js",
+    "test": "bun test",
+    "start": "bun run src/cli.ts",
+    "postinstall": "node bin/postinstall.js",
+    "prepublishOnly": "npm run build"
+  },
+  "type": "module",
+  "private": false,
+  "author": "Roshan Abraham",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rosh100yx/outlier.git"
+  },
+  "keywords": [
+    "ai-governance",
+    "ai-safety",
+    "deskilling",
+    "claude-code",
+    "cursor",
+    "git-hook",
+    "pre-commit",
+    "telemetry",
+    "carbon-footprint",
+    "zero-trust",
+    "authorship",
+    "cli"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.6.0",
+    "picocolors": "^1.1.1"
+  }
+}

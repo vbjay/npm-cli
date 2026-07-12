@@ -1,0 +1,77 @@
+{
+  "name": "sms-otp-autofill",
+  "version": "0.2.1",
+  "description": "Cross-platform SMS OTP auto-read. Web (WebOTP), iOS (QuickType), Android (User Consent), msite.",
+  "license": "MIT",
+  "keywords": [
+    "otp",
+    "autofill",
+    "sms",
+    "web",
+    "react-native",
+    "expo",
+    "ios",
+    "android"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.esm.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./logging": {
+      "require": "./dist/logging.js",
+      "import": "./dist/logging.esm.js",
+      "types": "./dist/logging.d.ts"
+    },
+    "./copy": {
+      "require": "./dist/copy.js",
+      "import": "./dist/copy.esm.js",
+      "types": "./dist/copy.d.ts"
+    },
+    "./setup": {
+      "require": "./dist/setup.js",
+      "import": "./dist/setup.esm.js",
+      "types": "./dist/setup.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "android/",
+    "expo-module.config.json",
+    "README.md",
+    "QUICKSTART.md",
+    "STRUCTURE.md",
+    "PUBLISHING.md",
+    "SEPARATION_CHECKLIST.md"
+  ],
+  "scripts": {
+    "build": "node build.js",
+    "dev": "tsc --watch",
+    "prepare": "npm run build",
+    "publish:dry": "npm publish --dry-run",
+    "publish:github": "npm publish"
+  },
+  "peerDependencies": {
+    "react": "^16.8 || ^17 || ^18",
+    "react-native": "^0.61.0 || >=0.71.0",
+    "expo": "^48.0.0 || >=52.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    },
+    "expo": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.72.0",
+    "typescript": "^5.0.0"
+  }
+}

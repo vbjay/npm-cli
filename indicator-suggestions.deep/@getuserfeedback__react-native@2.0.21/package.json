@@ -1,0 +1,59 @@
+{
+  "name": "@getuserfeedback/react-native",
+  "version": "2.0.21",
+  "description": "getuserfeedback React Native SDK",
+  "keywords": [
+    "getuserfeedback",
+    "feedback",
+    "widget",
+    "react-native",
+    "expo"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getuserfeedback/getuserfeedback.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "node scripts/prepack.cjs",
+    "postpack": "node scripts/postpack.cjs",
+    "pack:verify": "node ../../scripts/pack-and-verify.cjs --expect-dependency @getuserfeedback/protocol:../protocol/package.json --expect-dependency @getuserfeedback/sdk:../sdk/package.json",
+    "publish:dry-run": "node ../../scripts/publish-package.cjs . --expect-dependency @getuserfeedback/protocol:../protocol/package.json --expect-dependency @getuserfeedback/sdk:../sdk/package.json -- --dry-run",
+    "publish:npm": "node ../../scripts/publish-package.cjs . --expect-dependency @getuserfeedback/protocol:../protocol/package.json --expect-dependency @getuserfeedback/sdk:../sdk/package.json",
+    "build": "bun scripts/build.ts",
+    "typecheck": "tsc -b tsconfig.json",
+    "test": "bun test --dots",
+    "test:changed": "bun test --changed=${TEST_CHANGED_BASE:-HEAD} --pass-with-no-tests --dots",
+    "lint": "biome check ."
+  },
+  "dependencies": {
+    "@getuserfeedback/protocol": "^3.1.9",
+    "@getuserfeedback/sdk": "^0.8.26",
+    "robot3": "^1.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.73.0",
+    "react-native-webview": ">=13.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

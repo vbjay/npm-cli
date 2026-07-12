@@ -1,0 +1,97 @@
+{
+  "name": "codesight",
+  "version": "1.18.0",
+  "description": "See your codebase clearly. Universal AI context generator that maps routes, schema, components, dependencies, and more for Claude Code, Cursor, Copilot, Codex, and any AI coding tool.",
+  "main": "dist/index.js",
+  "bin": {
+    "codesight": "dist/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./plugins": "./dist/plugins/index.js",
+    "./plugins/cicd": "./dist/plugins/cicd/index.js",
+    "./plugins/githooks": "./dist/plugins/githooks/index.js",
+    "./plugins/skills": "./dist/plugins/skills/index.js",
+    "./plugins/terraform": "./dist/plugins/terraform/index.js",
+    "./dist/*": "./dist/*"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "tsc",
+    "dev": "tsx src/index.ts",
+    "build:reference": "asc --config reference/ast-plugin/asconfig.json",
+    "checksums:reference": "node reference/ast-plugin/gen-checksums.mjs",
+    "test": "pnpm build && tsx --test tests/*.test.ts",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "context",
+    "codebase",
+    "claude",
+    "cursor",
+    "copilot",
+    "codex",
+    "windsurf",
+    "cline",
+    "developer-tools",
+    "code-analysis",
+    "llm",
+    "anthropic",
+    "openai",
+    "mcp",
+    "context-engineering",
+    "token-savings",
+    "repo-map"
+  ],
+  "author": {
+    "name": "Kailesk Khumar",
+    "email": "kailesk@houseofmvps.com",
+    "url": "https://www.kailxlabs.co"
+  },
+  "contributors": [
+    {
+      "name": "HouseofMVPs",
+      "url": "https://houseofmvps.com"
+    },
+    {
+      "name": "Kailxlabs",
+      "url": "https://www.kailxlabs.co"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Houseofmvps/codesight"
+  },
+  "homepage": "https://github.com/Houseofmvps/codesight#readme",
+  "bugs": {
+    "url": "https://github.com/Houseofmvps/codesight/issues"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/Houseofmvps"
+    },
+    {
+      "type": "individual",
+      "url": "https://www.kailxlabs.co"
+    }
+  ],
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "assemblyscript": "0.28.19",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "eval",
+    "assets"
+  ]
+}

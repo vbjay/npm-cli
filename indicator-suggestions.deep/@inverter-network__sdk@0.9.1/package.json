@@ -1,0 +1,108 @@
+{
+  "name": "@inverter-network/sdk",
+  "description": "INVERTER typescript SDK",
+  "version": "0.9.1",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "typings": "./dist/types/index.d.ts",
+  "sideEffects": false,
+  "directories": {
+    "tool": "tools",
+    "test": "tests"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon",
+    "type-check": "tsc-files --pretty --project ./tsconfig.build.json --noEmit --module ESNext --declaration",
+    "build": "bun clean && bun build:cjs && bun build:esm && bun build:types",
+    "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --outDir ./dist/cjs --removeComments --verbatimModuleSyntax false && printf '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json && tsc-alias --outDir ./dist/cjs && ts-add-js-extension --dir=dist/cjs --showchanges=false",
+    "build:esm": "tsc --project ./tsconfig.build.json --module ESNext --outDir ./dist/esm && printf '{\"type\": \"module\",\"sideEffects\":false}' > ./dist/esm/package.json && tsc-alias --outDir ./dist/esm && ts-add-js-extension --dir=dist/esm --showchanges=false",
+    "build:types": "tsc --project ./tsconfig.build.json --module ESNext --declarationDir ./dist/types --emitDeclarationOnly --declaration --declarationMap && tsc-alias --outDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo tsconfig.build.tsbuildinfo",
+    "postinstall": "husky || true",
+    "prepack": "pinst --disable",
+    "package": "bun run build && npm pack",
+    "postpack": "pinst --enable",
+    "pre-push": "bun run build",
+    "release": "standard-version -a",
+    "release:alpha": "standard-version -a --prerelease alpha --skip.changelog",
+    "release:beta": "standard-version -a --prerelease beta --skip.changelog",
+    "release:pub": "git push --follow-tags origin $(git rev-parse --abbrev-ref HEAD)",
+    "protocol-rpc": "scripts/protocol-rpc.sh --wait"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "bun type-check",
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.21",
+    "abitype": "^1.0.5",
+    "typescript": "^5.6.2",
+    "viem": "^2.24.2"
+  },
+  "dependencies": {
+    "@inverter-network/abis": "0.3.43",
+    "debug": "^4.4.0",
+    "type-fest-4": "npm:type-fest@^4.26.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@genql/cli": "^6.3.3",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "@types/bun": "^1.1.8",
+    "@types/debug": "^4.1.12",
+    "@types/lodash": "^4.17.20",
+    "eslint-plugin-import-x": "^4.3.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "nodemon": "^3.1.7",
+    "pinst": "^3.0.0",
+    "prettier": "^3.3.3",
+    "standard-version": "^9.5.0",
+    "ts-add-js-extension": "^1.6.4",
+    "tsc-alias": "^1.8.10",
+    "tsc-files": "^1.1.4",
+    "typescript-eslint": "^8.6.0"
+  },
+  "license": "LGPL-3.0",
+  "homepage": "https://inverter.network",
+  "repository": "InverterNetwork/sdk",
+  "authors": [
+    "mguleryuz",
+    "fabianschu"
+  ],
+  "bugs": {
+    "url": "https://github.com/InverterNetwork/sdk"
+  },
+  "keywords": [
+    "InverterNetwork",
+    "npm",
+    "bun",
+    "contracts",
+    "web3",
+    "ethereum",
+    "solidity",
+    "evm",
+    "sdk"
+  ]
+}

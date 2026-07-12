@@ -1,0 +1,101 @@
+{
+  "name": "@magrinj/expo-quick-look",
+  "version": "0.4.0",
+  "description": "Native file preview for Expo — QuickLook on iOS, Intent chooser on Android",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": "./build/index.js",
+    "./mock": "./mocks/ExpoQuickLook.ts"
+  },
+  "files": [
+    "build",
+    "ios",
+    "android/build.gradle",
+    "android/src",
+    "src",
+    "mocks",
+    "expo-module.config.json",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit && tsc --noEmit -p example",
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "docs": "cd website && bun run build",
+    "docs:dev": "cd website && bun start",
+    "release": "release-it"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}",
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true,
+      "publishArgs": [
+        "--access",
+        "public"
+      ]
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "@magrinj/expo-quick-look",
+    "ExpoQuickLook",
+    "FilePreview",
+    "quicklook",
+    "file-viewer",
+    "document-preview",
+    "qlpreviewcontroller",
+    "native-module",
+    "file-preview",
+    "document-viewer"
+  ],
+  "repository": "https://github.com/magrinj/expo-quick-look.git",
+  "bugs": {
+    "url": "https://github.com/magrinj/expo-quick-look/issues"
+  },
+  "author": "Jérémy Magrin <contact@magrin.fr> (magrinj)",
+  "license": "MIT",
+  "homepage": "https://github.com/magrinj/expo-quick-look#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@types/react": "~19.1.1",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~55.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "expo": "^55.0.5",
+    "expo-module-scripts": "^55.0.2",
+    "prettier": "^3.8.1",
+    "react-native": "0.82.1",
+    "release-it": "^19.2.4"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "packageManager": "yarn@1.22.19+sha512.ff4579ab459bb25aa7c0ff75b62acebe576f6084b36aa842971cf250a5d8c6cd3bc9420b22ce63c7f93a0857bc6ef29291db39c3e7a23aab5adfd5a4dd6c5d71"
+}

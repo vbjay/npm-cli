@@ -1,0 +1,70 @@
+{
+  "name": "ilabs-flir",
+  "version": "2.4.12",
+  "description": "FLIR Thermal SDK for React Native - iOS & Android (bundled at compile time via postinstall)",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "postinstall": "node scripts/fetch-binaries.js",
+    "fetch-binaries": "node scripts/fetch-binaries.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": [
+    "src/",
+    "android/Flir/src/",
+    "android/Flir/build.gradle.kts",
+    "ios/Flir/src/",
+    "ios/Flir/SDKLoader/",
+    "app.plugin.js",
+    "Flir.podspec",
+    "sdk-manifest.json",
+    "scripts/",
+    "expo-module.config.json",
+    "react-native.config.js"
+  ],
+  "keywords": [
+    "flir",
+    "thermal",
+    "thermal-camera",
+    "react-native",
+    "expo",
+    "expo-plugin",
+    "config-plugin",
+    "flir-one",
+    "thermal-imaging",
+    "infrared",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PraveenOjha/flir.git"
+  },
+  "homepage": "https://github.com/PraveenOjha/flir#readme",
+  "bugs": {
+    "url": "https://github.com/PraveenOjha/flir/issues"
+  },
+  "author": "Praveen Ojha",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.60.0"
+  },
+  "dependencies": {
+    "@expo/config-plugins": "^7.0.0",
+    "adm-zip": "^0.5.10"
+  },
+  "devDependencies": {
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "typescript": "^5.0.0"
+  },
+  "react-native": {
+    "ios": {
+      "podspec": "./Flir.podspec"
+    },
+    "android": {
+      "sourceDir": "./android/Flir"
+    }
+  }
+}

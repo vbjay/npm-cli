@@ -1,0 +1,96 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ba54341507f4f43c",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install-banner.js",
+      "scripts/patch-openapi-schemas.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/patch-openapi-schemas.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "2709d958d076ab362be368152e41399257061c62e927efab391ec6fedce498ee",
+        "sizeBytes": 3992,
+        "signals": [
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/install-banner.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7534e9d5f890e01de7b02bca0bf2c75f13b04c4f955c957fd3b0549bde69053b",
+        "sizeBytes": 3479,
+        "signals": [
+          "reads-process-env",
+          "obfuscation-pattern",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:02.464Z"
+  },
+  "hash": "sha256:a1057f6e1c1cb27b56694732fbd3f8a126f4345492f3d597c2c2c57d22926e89"
+}

@@ -1,0 +1,132 @@
+{
+  "name": "moflo",
+  "version": "4.11.1",
+  "description": "MoFlo — AI agent orchestration for Claude Code. A standalone, opinionated toolkit with semantic memory, learned routing, gates, spells, and the /flo issue-execution skill.",
+  "main": "dist/src/cli/index.js",
+  "type": "module",
+  "bin": {
+    "flo": "bin/cli.js",
+    "flo-setup": "bin/setup-project.mjs",
+    "flo-codemap": "bin/generate-code-map.mjs",
+    "flo-search": "bin/semantic-search.mjs",
+    "flo-embeddings": "bin/build-embeddings.mjs",
+    "flo-index": "bin/index-guidance.mjs",
+    "flo-testmap": "bin/index-tests.mjs",
+    "moflo": "bin/cli.js",
+    "claude-flow": "bin/cli.js"
+  },
+  "homepage": "https://github.com/eric-cielo/moflo#readme",
+  "bugs": {
+    "url": "https://github.com/eric-cielo/moflo/issues"
+  },
+  "files": [
+    "bin/**",
+    "dist/src/cli/**/*.js",
+    "dist/src/cli/**/*.yaml",
+    "!dist/**/*.map",
+    "src/cli/agents/**",
+    "src/cli/data/**",
+    "src/cli/spells/definitions/**/*.yaml",
+    "!**/*.test.js",
+    "!**/*.spec.js",
+    "!**/*.perf.js",
+    "!**/__tests__/**",
+    ".claude/commands/**/*.md",
+    ".claude/agents/**/*.md",
+    ".claude/helpers/**",
+    ".claude/guidance/shipped/**",
+    ".claude/skills/**/*.md",
+    "!.claude/**/*.db",
+    "!.claude/**/*.map",
+    "README.md",
+    "LICENSE",
+    "retired-files.json",
+    "scripts/prune-native-binaries.mjs",
+    "scripts/post-install-notice.mjs",
+    "scripts/post-install-bootstrap.mjs"
+  ],
+  "scripts": {
+    "dev": "tsx watch src/cli/index.ts",
+    "prebuild": "node scripts/sync-version.mjs && node scripts/clean-dist.mjs",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/prune-native-binaries.mjs && node scripts/post-install-notice.mjs && node scripts/post-install-bootstrap.mjs",
+    "test": "node scripts/test-runner.mjs",
+    "test:ui": "vitest --ui",
+    "test:smoke": "node harness/consumer-smoke/run.mjs",
+    "test:smoke:populated": "node harness/consumer-smoke/run-populated.mjs",
+    "bench": "vitest run --config vitest.bench.config.ts",
+    "lint": "eslint src/ bin/ .claude/scripts/ --ext .ts,.tsx,.mts,.cts,.js,.mjs,.cjs --max-warnings 0",
+    "security:audit": "npm audit --omit=dev --audit-level high",
+    "security:fix": "npm audit fix",
+    "version": "node scripts/sync-version.mjs && git add src/cli/version.ts",
+    "flo": "node bin/cli.js"
+  },
+  "dependencies": {
+    "@anush008/tokenizers": "^0.6.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "js-yaml": "^5.2.0",
+    "lru-cache": "^11.3.5",
+    "onnxruntime-node": "^1.27.0",
+    "semver": "^7.7.4",
+    "tar": "^7.5.16",
+    "valibot": "^1.3.1"
+  },
+  "peerDependencies": {
+    "imapflow": "^1.0.0",
+    "mailparser": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "imapflow": {
+      "optional": true
+    },
+    "mailparser": {
+      "optional": true
+    }
+  },
+  "overrides": {
+    "hono": ">=4.12.25",
+    "picomatch": ">=2.3.2",
+    "protobufjs": ">=7.5.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.0.0",
+    "moflo": "^4.11.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eric-cielo/moflo.git"
+  },
+  "keywords": [
+    "moflo",
+    "claude",
+    "claude-code",
+    "anthropic",
+    "ai-agents",
+    "agent-orchestration",
+    "mcp",
+    "model-context-protocol",
+    "cli",
+    "developer-tools",
+    "workflow",
+    "orchestration"
+  ],
+  "author": {
+    "name": "Eric Cielo",
+    "url": "https://github.com/eric-cielo"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  }
+}

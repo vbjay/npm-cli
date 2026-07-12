@@ -1,0 +1,149 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['zixflow.reactnative.kotlinVersion']
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: "com.facebook.react"
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['zixflow.reactnative.' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['zixflow.reactnative.' + name]).toInteger()
+}
+
+ext.zixflowLocationEnabled = rootProject.findProperty("zixflow_location_enabled")?.toBoolean() ?: false
+
+android {
+  namespace = 'com.zixflow.reactnative.sdk'
+  compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+    targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+    buildConfigField "boolean", "ZIXFLOW_LOCATION_ENABLED", "${project.zixflowLocationEnabled}"
+    consumerProguardFiles 'consumer-rules.pro'
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+
+  def found = false
+  def defaultDir = null
+  def androidSourcesName = 'React Native sources'
+
+  if (rootProject.ext.has('reactNativeAndroidRoot')) {
+    defaultDir = rootProject.ext.get('reactNativeAndroidRoot')
+  } else {
+    defaultDir = new File(
+            projectDir,
+            '/../../../node_modules/react-native/android'
+    )
+  }
+
+  if (defaultDir.exists()) {
+    maven {
+      url defaultDir.toString()
+      name androidSourcesName
+    }
+
+    logger.info(":${project.name}:reactNativeAndroidRoot ${defaultDir.canonicalPath}")
+    found = true
+  } else {
+    def parentDir = rootProject.projectDir
+
+    1.upto(5, {
+      if (found) return true
+      parentDir = parentDir.parentFile
+
+      def androidSourcesDir = new File(
+              parentDir,
+              'node_modules/react-native'
+      )
+
+      def androidPrebuiltBinaryDir = new File(
+              parentDir,
+              'node_modules/react-native/android'
+      )
+
+      if (androidPrebuiltBinaryDir.exists()) {
+        maven {
+          url = androidPrebuiltBinaryDir.toString()
+          name = androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidPrebuiltBinaryDir.canonicalPath}")
+        found = true
+      } else if (androidSourcesDir.exists()) {
+        maven {
+          url = androidSourcesDir.toString()
+          name = androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidSourcesDir.canonicalPath}")
+        found = true
+      }
+    })
+  }
+
+  if (!found) {
+    throw new GradleException(
+            "${project.name}: unable to locate React Native android sources. " +
+                    "Ensure you have you installed React Native as a dependency in your project and try again."
+    )
+  }
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+ext.zixflowAndroidSDKVersion = getExtOrDefault('sdkVersionAndroid')
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += [
+                '-Xopt-in=kotlin.RequiresOptIn',
+                '-Xopt-in=com.zixflow.base.internal.InternalZixflowApi',
+                '-Xskip-metadata-version-check',
+        ]
+    }
+}
+
+apply from: "./zixflow-core.gradle"
+
+dependencies {
+  // noinspection GradleDynamicVersion
+  api 'com.facebook.react:react-native:+'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}

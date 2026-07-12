@@ -1,0 +1,69 @@
+{
+  "name": "@react-native-karte/core",
+  "version": "2.2.0",
+  "description": "KARTE SDK Core for React Native.",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "keywords": [
+    "react-native",
+    "karte",
+    "core",
+    "ios",
+    "android"
+  ],
+  "author": "PLAID, Inc.",
+  "homepage": "https://karte.io",
+  "license": "Apache-2.0",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "RNKRTCore.podspec",
+    "!**/__tests__"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plaidev/karte-react-native.git",
+    "directory": "packages/core"
+  },
+  "scripts": {
+    "prepare": "yarn run build",
+    "build": "bob build && yarn run build:version",
+    "build:version": "genversion --semi lib/version.js && node ./scripts/genversion-ios && node ./scripts/genversion-android",
+    "build:clean": "del lib",
+    "docs": "typedoc src/index.tsx --excludePrivate",
+    "docs:clean": "del docs",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/plaidev/karte-react-native/issues"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "del-cli": "^3.0.1",
+    "genversion": "^2.2.1",
+    "react-native": "^0.79.6",
+    "react-native-builder-bob": "^0.18.3",
+    "typescript": "~5.0.4"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "gitHead": "281a6abf5b918ba4f880cc600d6fe62fe90fb785"
+}

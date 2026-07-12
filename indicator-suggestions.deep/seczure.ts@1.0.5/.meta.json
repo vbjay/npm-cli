@@ -1,0 +1,96 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2695bc9a9ca0882b",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "6017f4a582244379232f404b637527995d03d69b3bc06941981d8cfa1cbe9131",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `seczure_native`  -  C/C++ sources",
+            "items": [
+              "src/native/fs_shell_lib.cc",
+              "src/native/binding.cc"
+            ]
+          },
+          {
+            "label": "Target `seczure_native`  -  libraries",
+            "items": [
+              "<(module_root_dir)/lib/win64/libfsshellc.dll",
+              "-L<(module_root_dir)/lib/linux/x86_64",
+              "-lfsshellc",
+              "-L<(module_root_dir)/lib/linux/loongarch64",
+              "-lfsshellc",
+              "-L<(module_root_dir)/lib/mac",
+              "-lfsshellc"
+            ]
+          },
+          {
+            "label": "Target `seczure_native`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              ".",
+              "include"
+            ]
+          },
+          {
+            "label": "Target `seczure_native`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:09.103Z"
+  },
+  "hash": "sha256:869938a8f4d5f0490670919c3afbf0e0d2845a9c60a7a290a4a78c39fb3e69d0"
+}

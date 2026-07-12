@@ -1,0 +1,49 @@
+{
+  "name": "@irisverse/nebula",
+  "version": "0.1.0",
+  "description": "Nebula - Native Vue 3 runtime powered by Rust + WebGPU (iris-engine)",
+  "type": "commonjs",
+  "bin": {
+    "nebula": "./bin/nebula.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "prepare-binaries": "node scripts/prepare-binaries.js"
+  },
+  "keywords": [
+    "irisverse",
+    "nebula",
+    "vue",
+    "vue3",
+    "native",
+    "runtime",
+    "webgpu",
+    "rust"
+  ],
+  "author": "Iris Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itszzl-sudo/iris.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "os": ["win32", "darwin", "linux"],
+  "cpu": ["x64", "arm64"],
+  "dependencies": {
+    "commander": "^11.0.0",
+    "chalk": "^4.1.2",
+    "which": "^3.0.1"
+  },
+  "files": [
+    "bin/nebula.js",
+    "binaries/",
+    "scripts/",
+    "README.md"
+  ],
+  "preferUnplugged": true,
+  "publishConfig": {
+    "access": "public"
+  }
+}

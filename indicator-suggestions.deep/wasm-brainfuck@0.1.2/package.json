@@ -1,0 +1,60 @@
+{
+  "name": "wasm-brainfuck",
+  "version": "0.1.2",
+  "description": "Blazing-fast Brainfuck compiler for WebAssembly",
+  "license": "MIT",
+  "repository": "eoin-obrien/fuck",
+  "author": {
+    "name": "Eoin O'Brien",
+    "email": "eoin@tracworx.ai",
+    "url": "https://eoin.ai"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "brainfuck",
+    "webassemably",
+    "wasm",
+    "compiler",
+    "esolang"
+  ],
+  "scripts": {
+    "build": "del dist && tsc",
+    "test": "xo && ava --node-arguments=\"--no-warnings\"",
+    "prepare": "npm run build",
+    "benchmark": "npm run build && node ./benchmarks/benchmark.js",
+    "codegen": "ts-node-esm scripts/gen-dts-signatures"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--loader=ts-node/esm"
+    ]
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "@jonahsnider/benchmark": "5.0.0",
+    "@sindresorhus/tsconfig": "^2.0.0",
+    "@types/glob": "7.2.0",
+    "@types/node": "^16.0.30",
+    "ava": "^4.2.0",
+    "del-cli": "^4.0.1",
+    "glob": "8.0.1",
+    "ts-node": "^10.7.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.3",
+    "xo": "^0.48.0"
+  },
+  "dependencies": {
+    "binaryen": "^106.0.0",
+    "chevrotain": "^10.1.2"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "name": "react-native-usesense",
+  "version": "2.3.5",
+  "description": "React Native plugin for human presence verification. Wraps the native UseSense iOS and Android SDKs.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "react-native-usesense.podspec",
+    "README.md",
+    "LICENSE",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/*.test.ts",
+    "!**/*.test.tsx"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "test": "jest --passWithNoTests",
+    "prepare": "bob build",
+    "clean": "del-cli lib"
+  },
+  "keywords": [
+    "react-native",
+    "usesense",
+    "identity-verification",
+    "kyc",
+    "aml",
+    "liveness",
+    "biometric",
+    "face-verification",
+    "deepfake-detection",
+    "presence-verification"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qudusadeyemi/react-native-usesense.git"
+  },
+  "homepage": "https://github.com/qudusadeyemi/react-native-usesense#readme",
+  "bugs": {
+    "url": "https://github.com/qudusadeyemi/react-native-usesense/issues"
+  },
+  "author": "UseSense Technologies Ltd.",
+  "license": "SEE LICENSE IN LICENSE",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-native": ">=0.73.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "react": "^18.2.0",
+    "react-native": "^0.73.0",
+    "react-native-builder-bob": "^0.23.0",
+    "ts-jest": "^29.4.11",
+    "typescript": "^5.3.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

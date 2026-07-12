@@ -1,0 +1,85 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7d1458e0eff03419",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install-wasm.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-wasm.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "2fd3073d6b7e79999b0b38becde82144581ed65c87d7d0d00853244bc1dcdc17",
+        "sizeBytes": 3290,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "obfuscation-pattern",
+          "binary-download",
+          "runtime-installer",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/AnEntrypoint/plugkit-bin/releases/latest",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/AnEntrypoint/plugkit-bin/releases/download/",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:06.382Z"
+  },
+  "hash": "sha256:80ea8fa8a94299f2178a580c4d05fefcb9a0436d1522aa915fde4066eb2c2c4d"
+}

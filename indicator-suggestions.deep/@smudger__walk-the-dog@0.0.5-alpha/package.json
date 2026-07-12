@@ -1,0 +1,32 @@
+{
+  "author": "Louis Smith <15144861+smudger@users.noreply.github.com> (https://github.com/smudger)",
+  "name": "@smudger/walk-the-dog",
+  "version": "v0.0.5-alpha",
+  "description": "An endless runner game about a boy walking his dog.",
+  "keywords": [
+    "game",
+    "rust",
+    "wasm"
+  ],
+  "homepage": "https://github.com/smudger/walk-the-dog",
+  "bugs": "https://github.com/smudger/walk-the-dog/issues",
+  "license": "(MIT OR Apache-2.0)",
+  "repository": "github:smudger/walk-the-dog",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist pkg && webpack",
+    "start": "rimraf dist pkg && webpack-dev-server --open -d",
+    "test": "cargo test && wasm-pack test --headless --chrome",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@wasm-tool/wasm-pack-plugin": "^1.1.0",
+    "copy-webpack-plugin": "^5.0.3",
+    "rimraf": "^3.0.0",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.3",
+    "webpack-dev-server": "^3.7.1"
+  }
+}

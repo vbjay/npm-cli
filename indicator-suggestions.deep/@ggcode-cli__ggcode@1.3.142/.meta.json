@@ -1,0 +1,101 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6eb5224d6b4dbc75",
+    "fetchedFiles": [
+      "lib/install.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e4fed1c50a787500daf05bc0b4de9bd52417a44f7c4de471c85f6304b8849073",
+        "sizeBytes": 814,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/install.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/install.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "8252222a6ae359d74dbdf900529ed5003ea5372500fc18d3ac404f3448cc0ef9",
+        "sizeBytes": 19614,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-file",
+          "makes-executable",
+          "modifies-shell-config",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:07.182Z"
+  },
+  "hash": "sha256:ade2e16b8c9045ea57c1b73771d3ac8f727db33f0489a6842a8fe817a3857d91"
+}

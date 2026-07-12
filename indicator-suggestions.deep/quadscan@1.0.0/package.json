@@ -1,0 +1,46 @@
+{
+  "name": "quadscan",
+  "version": "1.0.0",
+  "description": "ML-powered document scanner for the browser. Detects four corners + perspective-corrects via DocAligner ONNX.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Sebastian Torrealba",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/storrealbac/quadscan.git"
+  },
+  "keywords": ["document", "scanner", "perspective", "onnx", "docaligner", "webgpu", "wasm"],
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts",
+    "models/lcnet100_h_e_bifpn_256_fp32.onnx",
+    "licenses",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/quadscan.js"
+    },
+    "./models/lcnet": "./models/lcnet100_h_e_bifpn_256_fp32.onnx"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "cd site && npm run dev",
+    "build": "vite build && QUADSCAN_BUILD=iife vite build && tsc -p tsconfig.build.json",
+    "check": "biome check . && tsc --noEmit",
+    "format": "biome format --write .",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run check"
+  },
+  "dependencies": {
+    "onnxruntime-web": "~1.20.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@changesets/cli": "^2.31.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.4.0"
+  }
+}

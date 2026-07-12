@@ -1,0 +1,97 @@
+{
+  "name": "@nolrm/contextkit",
+  "version": "1.1.7",
+  "description": "ContextKit - Context Engineering + Agentic AI Pipelines. Scaffold structured standards for AI assistants and run autonomous multi-role pipelines (PO → Architect → Dev → Test → Review → Doc) grounded by that same context layer. Works with Cursor, Claude Code, Copilot, Codex, Gemini, Aider, and more.",
+  "main": "lib/index.js",
+  "bin": {
+    "contextkit": "bin/contextkit.js",
+    "ck": "bin/contextkit.js"
+  },
+  "scripts": {
+    "format": "prettier --write \"lib/**/*.js\" \"bin/**/*.js\" \"__tests__/**/*.js\"",
+    "lint": "eslint lib/ bin/ __tests__/",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepare": "git config core.hooksPath .contextkit/hooks"
+  },
+  "keywords": [
+    "contextkit",
+    "context-engineering",
+    "ai-context",
+    "ai-development",
+    "ai",
+    "development",
+    "toolkit",
+    "standards",
+    "typescript",
+    "testing",
+    "quality",
+    "workflow",
+    "cli",
+    "code-quality",
+    "ai-guidelines",
+    "cursor",
+    "cursor-ai",
+    "claude",
+    "aider",
+    "continodev",
+    "vscode-copilot",
+    "ai-assistant",
+    "context-engineering-for-ai",
+    "structured-context",
+    "markdown-standards",
+    "project-standards",
+    "code-patterns",
+    "agentic-pipeline",
+    "agentic-ai",
+    "squad-workflow",
+    "ai-agents",
+    "autonomous-agents",
+    "multi-agent",
+    "claude-code"
+  ],
+  "author": {
+    "name": "Marlon Maniti",
+    "email": "lonmaniti@gmail.com",
+    "url": "https://github.com/nolrm"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nolrm/contextkit.git"
+  },
+  "homepage": "https://github.com/nolrm/contextkit#readme",
+  "bugs": {
+    "url": "https://github.com/nolrm/contextkit/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "fs-extra": "^11.1.1",
+    "inquirer": "^8.2.6",
+    "js-yaml": "^4.1.0",
+    "ora": "^5.4.1",
+    "update-notifier": "^5.1.0"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "LICENSE",
+    "install-fallback.sh"
+  ],
+  "preferGlobal": true,
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/jest": "^30.0.0",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.8.1"
+  }
+}

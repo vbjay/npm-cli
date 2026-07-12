@@ -1,0 +1,99 @@
+{
+  "name": "react-native-tour-pilot",
+  "version": "1.0.3",
+  "description": "A flexible, customizable tour/walkthrough library for React Native with multi-tour support, mask shapes, and Portal-based rendering",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "clean": "rm -rf lib"
+  },
+  "keywords": [
+    "react-native",
+    "tour",
+    "walkthrough",
+    "onboarding",
+    "guide",
+    "spotlight",
+    "tooltip",
+    "tutorial",
+    "copilot",
+    "intro",
+    "coach-mark",
+    "feature-discovery",
+    "tour-pilot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karamalie/react-native-tour-pilot.git"
+  },
+  "author": "Karam Ali <karam7898@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karamalie/react-native-tour-pilot/issues"
+  },
+  "homepage": "https://github.com/karamalie/react-native-tour-pilot#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-react": "^7.24.0",
+    "@babel/preset-typescript": "^7.24.0",
+    "@react-native/eslint-config": "^0.74.0",
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.72.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.0",
+    "prettier": "^3.2.0",
+    "react": "^18.2.0",
+    "react-native": "^0.74.0",
+    "react-native-builder-bob": "^0.23.0",
+    "react-native-svg": "^15.0.0",
+    "typescript": "^5.4.0"
+  },
+  "peerDependencies": {
+    "@gorhom/portal": ">=1.0.0",
+    "react": ">=17.0.0",
+    "react-native": ">=0.64.0",
+    "react-native-svg": ">=12.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@gorhom/portal": {
+      "optional": true
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
+}

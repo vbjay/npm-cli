@@ -1,0 +1,178 @@
+{
+  "name": "@vadiun/react-native-eevee",
+  "version": "3.2.1",
+  "description": "Eevee components",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.tsx",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "android",
+    "ios",
+    "cpp",
+    "vadiun-react-native-eevee.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!node_modules"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "http://vadiun.net",
+  "author": "vadiun <vadiun.desarrollo@gmail.com> (http://vadiun.net)",
+  "license": "MIT",
+  "bugs": {
+    "url": "http://vadiun.net/issues"
+  },
+  "homepage": "http://vadiun.net#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^11.0.0",
+    "@react-native-community/datetimepicker": "3.5.2",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@release-it/conventional-changelog": "^2.0.0",
+    "@types/jest": "^26.0.0",
+    "@types/react": "^16.9.19",
+    "@types/react-is": "^17.0.3",
+    "@types/react-native": "^0.66.4",
+    "@types/react-native-vector-icons": "^6.4.10",
+    "@types/styled-components": "^5.1.15",
+    "@types/styled-components-react-native": "^5.1.3",
+    "commitlint": "^11.0.0",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "expo": "43.0.4",
+    "expo-font": "~10.0.3",
+    "expo-image-picker": "~11.0.3",
+    "expo-video-thumbnails": "^6.2.0",
+    "formik": "^2.2.9",
+    "husky": "^6.0.0",
+    "jest": "^26.0.1",
+    "lottie-react-native": "^5.0.1",
+    "moment": "^2.29.3",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "16.13.1",
+    "react-is": "^17.0.2",
+    "react-native": "0.66.3",
+    "react-native-builder-bob": "^0.18.2",
+    "react-native-gesture-handler": "^2.0.0",
+    "react-native-modal": "^13.0.1",
+    "react-native-modalfy": "^3.2.0",
+    "react-native-vector-icons": "^9.0.0",
+    "release-it": "^14.2.2",
+    "styled-components": "^5.3.3",
+    "typescript": "^4.1.3"
+  },
+  "peerDependencies": {
+    "@react-native-community/datetimepicker": "3.5.2",
+    "expo": "43.0.4",
+    "expo-font": "~10.0.3",
+    "expo-image-picker": "~11.0.3",
+    "expo-video-thumbnails": "~6.0.3",
+    "lottie-react-native": "^5.0.1",
+    "moment": "^2.29.3",
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": "^2.0.0",
+    "react-native-vector-icons": "^9.0.0",
+    "styled-components": "^5.3.3",
+    "react-native-modal": "^13.0.1"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

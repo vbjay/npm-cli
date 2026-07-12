@@ -1,0 +1,116 @@
+{
+  "name": "react-native-scan-aadhaar-card",
+  "version": "0.3.5",
+  "description": "High-accuracy native Aadhaar (UIDAI) QR code scanner for React Native. Supports the dense Secure QR (2019+) and legacy XML formats, gallery import, torch, pinch-to-zoom and tap-to-focus.",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "react-native": "./lib/module/index.js",
+  "source": "src/index.tsx",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "lib",
+    "src/NativeScanAadhaarCard.ts",
+    "ios/ScanAadhaarCard.xcframework",
+    "android",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!android/build",
+    "!android/libs",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties"
+  ],
+  "scripts": {
+    "typecheck": "tsc",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "obfuscate:js": "node scripts/obfuscate-lib.js",
+    "prepare": "bob build && npm run obfuscate:js",
+    "prepack": "bash ../scripts/build-native.sh --ios"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "aadhaar",
+    "uidai",
+    "qr",
+    "qrcode",
+    "scanner",
+    "secure-qr",
+    "kyc",
+    "india"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/techlimo102/react-native-scan-aadhaar-card.git"
+  },
+  "author": "Techlimo (techlimo102@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/techlimo102/react-native-scan-aadhaar-card/issues"
+  },
+  "homepage": "https://github.com/techlimo102/react-native-scan-aadhaar-card#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.44",
+    "del-cli": "^5.1.0",
+    "react": "18.3.1",
+    "react-native": "0.76.5",
+    "react-native-builder-bob": "^0.30.3",
+    "terser": "^5.31.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "RNScanAadhaarCardSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.scanaadhaarcard"
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "esm": true
+        }
+      ]
+    ]
+  }
+}

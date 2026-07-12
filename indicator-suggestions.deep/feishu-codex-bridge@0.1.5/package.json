@@ -1,0 +1,66 @@
+{
+  "name": "feishu-codex-bridge",
+  "version": "0.1.5",
+  "description": "Bridge Feishu/Lark messenger with local Codex CLI",
+  "type": "module",
+  "bin": {
+    "feishu-codex-bridge": "bin/feishu-codex-bridge.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node bin/feishu-codex-bridge.mjs start",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepack": "node tools/npm-readme.mjs prepack",
+    "postpack": "node tools/npm-readme.mjs postpack",
+    "prepublishOnly": "npm run typecheck && npm run build && node tools/npm-readme.mjs prepublish",
+    "postpublish": "node tools/npm-readme.mjs postpublish"
+  },
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.65.0",
+    "commander": "^12.1.0",
+    "https-proxy-agent": "^9.0.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/qrcode-terminal": "^0.12.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "protobufjs"
+    ]
+  },
+  "keywords": [
+    "feishu",
+    "lark",
+    "codex",
+    "codex-cli",
+    "cli",
+    "channel",
+    "bridge"
+  ],
+  "license": "MIT",
+  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd"
+}

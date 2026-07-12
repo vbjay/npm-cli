@@ -1,0 +1,84 @@
+{
+	"name": "stargazed",
+	"version": "3.4.0",
+	"description": "Creating your own Awesome List of GitHub Stars!",
+	"license": "MIT",
+	"repository": "https://github.com/abhijithvijayan/stargazed.git",
+	"author": {
+		"name": "abhijithvijayan",
+		"email": "email@abhijithvijayan.in",
+		"url": "https://abhijithvijayan.in"
+	},
+	"engines": {
+		"node": ">=10.0.0"
+	},
+	"bin": "./source/index.js",
+	"files": [
+		"/source"
+	],
+	"scripts": {
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"test": "jest",
+		"pack:list": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
+		"prepare": "rm -rf README.md"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.js": [
+			"yarn run lint:fix"
+		]
+	},
+	"keywords": [
+		"awesome",
+		"github",
+		"stars",
+		"markdown",
+		"cli-app",
+		"cli"
+	],
+	"dependencies": {
+		"@types/jest": "^24.9.1",
+		"chalk": "^4.1.0",
+		"ejs": "^3.1.3",
+		"emoji-log": "^1.0.2",
+		"gh-got": "^9.0.0",
+		"lodash.unescape": "^4.0.1",
+		"meow": "^7.0.1",
+		"ora": "^4.0.4",
+		"validate.io-boolean-primitive": "^1.0.0",
+		"validate.io-object": "^1.0.4",
+		"validate.io-string-primitive": "^1.0.1"
+	},
+	"devDependencies": {
+		"@abhijithvijayan/eslint-config": "2.5.4",
+		"@abhijithvijayan/eslint-config-airbnb": "^1.0.2",
+		"@babel/core": "^7.9.0",
+		"@babel/preset-env": "^7.9.0",
+		"@testing-library/jest-dom": "^4.2.4",
+		"@typescript-eslint/eslint-plugin": "^3.5.0",
+		"@typescript-eslint/parser": "^3.5.0",
+		"babel-eslint": "^10.1.0",
+		"babel-jest": "^24.9.0",
+		"eslint": "^7.4.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-import": "^2.22.0",
+		"eslint-plugin-jsx-a11y": "^6.3.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"eslint-plugin-react": "^7.20.3",
+		"eslint-plugin-react-hooks": "^4.0.5",
+		"husky": "^4.2.3",
+		"jest": "^24.9.0",
+		"lint-staged": "^10.2.11",
+		"prettier": "^2.0.5"
+	},
+	"jest": {
+		"verbose": true,
+		"collectCoverage": true
+	}
+}

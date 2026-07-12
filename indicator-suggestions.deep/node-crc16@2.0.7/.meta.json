@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c333bf4e1e66ebcc",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "preinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "ed46864cf0aea8c2ec070087ad91f9ac55fc0f7b3dd899544d2a67efb392b98c",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `crc16`  -  C/C++ sources",
+            "items": [
+              "./src/crc16_node.cc"
+            ]
+          },
+          {
+            "label": "Target `crc16`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\node-crc16@2.0.7\\Makefile'",
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "preinstall.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "bf49957873443d7e6ce1dab7cbd511136227aa59c469b7a9d17cda8a45196c39",
+        "sizeBytes": 859,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:15.984Z"
+  },
+  "hash": "sha256:e2bd3f792aaa83e0885439935342f4acf45e24f8b462f374f21bbe60a9f056bf"
+}

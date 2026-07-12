@@ -1,0 +1,93 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "82f0089c6e00a4a0",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "90dfbb01437244d01d6442d85e270dcc23c788649d1b4318f4d714114c4c85d4",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `processlist`  -  C/C++ sources",
+            "items": [
+              "src/main.cpp",
+              "src/snapshot.cpp",
+              "src/win/tasklist.cpp",
+              "src/unix/tasklist.cpp"
+            ]
+          },
+          {
+            "label": "Target `processlist`  -  include directories",
+            "items": [
+              "src",
+              "<!(node -e \"require('nan')\")"
+            ]
+          },
+          {
+            "label": "Target `processlist`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "70c468c089ba0151718e07b3b14413afa6090b85d5d0966a62cf3283db04c34d",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked",
+            "items": [
+              "python"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:27.383Z"
+  },
+  "hash": "sha256:79751a9e0b5017b5ab85619a5d83aa2fb3deece8f7409e17b10f3138c7483b60"
+}

@@ -1,0 +1,50 @@
+{
+    "name": "mac-accessibility-check",
+    "version": "1.0.4",
+    "description": "Check macOS Accessibility (AXIsProcessTrusted) from Node/Electron with MAS environment support",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "gypfile": true,
+    "license": "MIT",
+    "keywords": [
+        "macos",
+        "accessibility",
+        "axistrusted",
+        "electron",
+        "native",
+        "addon",
+        "mas",
+        "mac-app-store",
+        "sandbox"
+    ],
+    "author": {
+        "name": "AI Generated"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-username/mac-accessibility-check.git"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "os": [
+        "darwin"
+    ],
+    "cpu": [
+        "arm64",
+        "x64"
+    ],
+    "scripts": {
+        "clean": "node-gyp clean && rm -rf build",
+        "build:universal": "npm run clean && node ./scripts/build-universal.js"
+    },
+    "dependencies": {
+        "node-addon-api": "^7.1.1"
+    },
+    "devDependencies": {
+        "electron-rebuild": "^3.2.9",
+        "node-gyp": "^11.2.0",
+        "node-gyp-build": "^4.8.4",
+        "prebuild": "^11.0.0"
+    }
+}

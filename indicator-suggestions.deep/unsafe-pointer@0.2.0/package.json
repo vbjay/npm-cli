@@ -1,0 +1,61 @@
+{
+  "name": "unsafe-pointer",
+  "version": "0.2.0",
+  "description": "Unsafely turn ArrayBuffers into raw pointers and raw pointers into ArrayBuffers. Warning: arbitrary memory access can lead to attackers controlling your users' computers.",
+  "type": "commonjs",
+  "repository": {
+    "url": "https://github.com/justjake/node-unsafe-pointer"
+  },
+  "author": {
+    "name": "Jake Teton-Landis",
+    "url": "https://jake.tl"
+  },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "types": "./index.d.ts",
+    "import": "./index.mjs",
+    "require": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "binding.gyp",
+    "src/",
+    "prebuilds/"
+  ],
+  "scripts": {
+    "install": "node-gyp-build",
+    "rebuild": "node-gyp rebuild",
+    "build": "bun run build:js && bun run build:c",
+    "build:js": "./scripts/codegen-index-mjs.mts",
+    "build:c": "./scripts/zig-build-prebuilds.mts",
+    "test": "node --test ./index.test.js",
+    "typecheck": "tsc --pretty -p jsconfig.json"
+  },
+  "keywords": [
+    "napi",
+    "node-api",
+    "ffi",
+    "pointer",
+    "native",
+    "unsafe"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "node-gyp": "^11.5.0",
+    "typescript": "^5",
+    "zig-build": "github:solarwinds/zig-build#fa7428c0a607e4075172346e4d22f7a19ba68fe0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

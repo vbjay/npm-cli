@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9ddd725a842cc671",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "ce9b14d72e791dd1683731408e97ef67c00f6dff4bcd3f60fa5c0465fca11e24",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `tourbox`  -  C/C++ sources",
+            "items": [
+              "src/tourbox_addon.cc",
+              "src/tourbox_server.cc",
+              "src/tourbox_client.cc"
+            ]
+          },
+          {
+            "label": "Target `tourbox`  -  libraries",
+            "items": [
+              "-lws2_32.lib",
+              "-luser32.lib",
+              "-lgdi32.lib"
+            ]
+          },
+          {
+            "label": "Target `tourbox`  -  include directories",
+            "items": [
+              "node_modules/node-addon-api",
+              "src"
+            ]
+          },
+          {
+            "label": "Target `tourbox`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:20.709Z"
+  },
+  "hash": "sha256:f70a07fac492bda3327ba58e21112157a062a5edb0276f01e67f02f2712368b9"
+}

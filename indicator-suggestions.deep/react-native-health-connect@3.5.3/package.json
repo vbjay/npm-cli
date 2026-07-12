@@ -1,0 +1,181 @@
+{
+  "name": "react-native-health-connect",
+  "version": "3.5.3",
+  "description": "React native library for health connect (Android only)",
+  "funding": "https://github.com/matinzd/react-native-health-connect?sponsor=1",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "repository": "https://github.com/matinzd/react-native-health-connect",
+  "author": "matinzd <me@matinzd.dev> (https://github.com/matinzd)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matinzd/react-native-health-connect/issues"
+  },
+  "homepage": "https://github.com/matinzd/react-native-health-connect#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "android": "yarn workspace example android",
+    "start": "yarn workspace example start",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ./src",
+    "prepack": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install",
+    "clean": "rm -rf android/build example/android/build example/android/app/build example/ios/build"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.4.2",
+    "@evilmartians/lefthook": "^1.2.8",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@react-native/babel-preset": "0.81.1",
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@types/jest": "^28.1.2",
+    "@types/react": "~17.0.21",
+    "commitlint": "^17.4.2",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.3",
+    "jest": "^29.6.3",
+    "prettier": "^2.8.4",
+    "react": "19.1.0",
+    "react-native": "0.81.1",
+    "react-native-builder-bob": "^0.20.0",
+    "react-native-monorepo-config": "^0.1.9",
+    "release-it": "^15.11.0",
+    "typescript": "^4.9.5"
+  },
+  "keywords": [
+    "react-native",
+    "health-connect",
+    "health-sdk",
+    "android",
+    "fitness"
+  ],
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "!lib/typescript/example",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "app.plugin.js"
+  ],
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "@expo/config-plugins": ">= 6.0.2",
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "packageManager": "yarn@4.9.4",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version} [skip ci]",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    },
+    "github": {
+      "release": true,
+      "comments": {
+        "submit": true,
+        "issue": ":rocket: _This issue has been resolved in v${version}. See [${releaseName}](${releaseUrl}) for release notes._",
+        "pr": ":rocket: _This pull request is included in v${version}. See [${releaseName}](${releaseUrl}) for release notes._"
+      }
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "workspaces": [
+    "example",
+    "docs"
+  ],
+  "codegenConfig": {
+    "name": "RNHealthConnectSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "ios": {}
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

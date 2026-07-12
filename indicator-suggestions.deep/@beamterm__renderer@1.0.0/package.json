@@ -1,0 +1,68 @@
+{
+  "name": "@beamterm/renderer",
+  "version": "1.0.0",
+  "description": "High-performance WebGL2 terminal renderer with sub-millisecond render times",
+  "author": "Adrian Papari",
+  "license": "MIT",
+  "main": "./dist/bundler/beamterm_renderer.js",
+  "types": "./dist/bundler/beamterm_renderer.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/bundler/beamterm_renderer.d.ts",
+      "import": "./dist/bundler/beamterm_renderer.js",
+      "require": "./dist/bundler/beamterm_renderer.js",
+      "default": "./dist/bundler/beamterm_renderer.js"
+    },
+    "./web": {
+      "types": "./dist/web/beamterm_renderer.d.ts",
+      "default": "./dist/web/beamterm_renderer.js"
+    },
+    "./cdn": {
+      "default": "./dist/cdn/beamterm.min.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "terminal",
+    "webgl",
+    "webgl2",
+    "wasm",
+    "renderer",
+    "gpu",
+    "performance",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junkdog/beamterm.git",
+    "directory": "js"
+  },
+  "bugs": {
+    "url": "https://github.com/junkdog/beamterm/issues"
+  },
+  "homepage": "https://github.com/junkdog/beamterm#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "build:examples": "node scripts/build-examples.js",
+    "test": "node test/test-node.js",
+    "test:e2e": "playwright test",
+    "prepack": "echo 'Preparing package for distribution...'"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.1",
+    "@playwright/test": "^1.40.0",
+    "jsdom": "^29.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

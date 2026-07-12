@@ -1,0 +1,101 @@
+{
+  "name": "mdsvr",
+  "version": "2.3.2",
+  "description": "Full-featured documentation website server with MDX support, site settings, SEO, and navigation",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "mdsvr": "bin/mdsvr.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc && cp -r src/assets dist/assets",
+    "build:test": "tsc -p tsconfig.test.json && cp -r src/assets dist-test/src/assets",
+    "dev": "tsc --watch",
+    "start": "node bin/mdsvr.js",
+    "build:start": "npm run build && node bin/mdsvr.js",
+    "test": "npm run build && npm run build:test && node --test dist-test/test/*.test.js",
+    "docs:generate": "npm run start -- ./docs -e ./gh-pages/docs",
+    "docs:deploy": "npm run docs:generate && gh-pages -d gh-pages",
+    "prepublishOnly": "npm run build && npm test",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
+    "release": "npm run release:patch",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+    "docker:release": "bash docker-release.sh",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^3.1.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.10.0",
+    "katex": "^0.17.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-katex": "^7.0.1",
+    "rehype-slug": "^6.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0",
+    "remark-mdx-frontmatter": "^4.0.0",
+    "satori": "^0.26.0",
+    "sharp": "^0.35.1",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@types/katex": "^0.16.8",
+    "@types/markdown-it": "^14.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "gh-pages": "^6.3.0",
+    "husky": "^9.1.7",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "markdown",
+    "server",
+    "docs",
+    "documentation",
+    "mdx",
+    "static-site-generator",
+    "zero-config",
+    "serve",
+    "cli",
+    "dark-mode",
+    "search",
+    "seo",
+    "docusaurus-alternative",
+    "nextra-alternative",
+    "markdown-server"
+  ],
+  "files": [
+    "dist/**/*",
+    "bin/**/*",
+    "README.md"
+  ],
+  "author": "Truong Ngoc Vuong <vuongtr56@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satoshiman/mdsvr.git"
+  }
+}

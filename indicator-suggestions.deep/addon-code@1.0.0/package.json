@@ -1,0 +1,91 @@
+{
+  "_args": [
+    [
+      "@tracymcaruso/addon-notes@1.0.0",
+      "/Users/tracy.caruso/ProjectWork/premier-components-angular"
+    ]
+  ],
+  "_development": true,
+  "_from": "@storybook/addon-notes@1.0.0",
+  "_id": "@storybook/addon-notes@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-SbxBi6rN6AQ2QcjOfO87pVvRfkxS0hcIV5PhXDT4I7b0jP0bt2P9NcQoGhzOSyHyCmzoS+lQRvkVwVQgTj1tCQ==",
+  "_location": "/@storybook/addon-notes",
+  "_phantomChildren": {
+    "@storybook/components": "1.0.0",
+    "global": "4.3.2",
+    "util-deprecate": "1.0.2"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@storybook/addon-notes@1.0.0",
+    "name": "@storybook/addon-notes",
+    "escapedName": "@storybook%2faddon-notes",
+    "scope": "@storybook",
+    "rawSpec": "1.0.0",
+    "saveSpec": null,
+    "fetchSpec": "1.0.0"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_spec": "1.0.0",
+  "_where": "/Users/tracy.caruso/ProjectWork/premier-components-angular",
+  "dependencies": {
+    "@emotion/styled": "^0.10.6",
+    "@storybook/addons": "1.0.0",
+    "marked": "^0.5.1",
+    "prismjs": "^1.15.0",
+    "prop-types": "^15.6.2",
+    "react-highlight": "^0.12.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-options": "^4.0.8",
+    "@storybook/addon-storyshots": "^4.0.9",
+    "@storybook/addons": "^4.0.9",
+    "@storybook/channels": "^4.0.8",
+    "@storybook/react": "^4.0.9",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "jest": "test",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.15.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-test-renderer": "^16.6.3",
+    "regenerator-runtime": "^0.13.1",
+    "rimraf": "^2.6.2"
+  },
+  "jsnext:main": "src/index.js",
+  "keywords": [
+    "addon",
+    "notes",
+    "storybook"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "addon-code",
+  "peerDependencies": {
+    "@babel/core": "^7.1.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "babel src --out-dir lib --ignore spec.js,test.js",
+    "build:dev": "babel -w src --out-dir lib --ignore spec.js,test.js",
+    "prepare": "npm run-script build"
+  },
+  "version": "1.0.0"
+}

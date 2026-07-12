@@ -1,0 +1,52 @@
+{
+  "name": "cano-cli",
+  "version": "0.6.0",
+  "description": "Official CLI for installing, managing, and exploring the Cano UI design system.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "cano": "./bin/cano.js",
+    "cano-ui": "./bin/cano.js",
+    "cano-cli": "./bin/cano.js",
+    "canoui": "./bin/cano.js",
+    "canocli": "./bin/cano.js",
+    "uicano": "./bin/cano.js",
+    "ui-cano": "./bin/cano.js",
+    "cli-cano": "./bin/cano.js",
+    "clicano": "./bin/cano.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "registry",
+    "scripts"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "build": "rm -rf dist && tsc",
+    "dev": "tsx src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cano",
+    "cano-ui",
+    "cli",
+    "tui",
+    "ink",
+    "design-system",
+    "components"
+  ],
+  "dependencies": {
+    "ink": "^6.0.0",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.0.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

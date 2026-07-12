@@ -1,0 +1,101 @@
+{
+  "name": "waforth",
+  "version": "0.20.1",
+  "description": "Small but complete Forth interpreter and dynamic compiler for and in WebAssembly",
+  "license": "MIT",
+  "repository": "github:remko/waforth",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/file-saver": "^2.0.5",
+    "@types/lodash": "^4.14.182",
+    "@types/marked": "^4.0.7",
+    "@types/node": "^17.0.31",
+    "@types/vscode": "^1.73.1",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "chai": "^4.3.6",
+    "esbuild": "^0.14.36",
+    "eslint": "^8.13.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "file-saver": "^2.0.5",
+    "immutability-helper": "^3.1.1",
+    "lodash": "^4.17.21",
+    "marked": "^4.2.2",
+    "mocha": "^9.2.2",
+    "prettier": "^2.6.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "simple-eval": "^1.0.0",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.6.4"
+  },
+  "types": "dist/waforth.d.ts",
+  "main": "dist/index.js",
+  "bin": "./src/web/notebook/dist/wafnb2html",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node build-web.js",
+    "dev": "node build-web.js --watch --development",
+    "test": "node test-web.js",
+    "test-watch": "node test-web.js --watch",
+    "lint": "eslint . && tsc --noEmit",
+    "prepare": "node build-package.js && cd src/web/notebook && node build.js"
+  },
+  "keywords": [
+    "forth",
+    "webassembly",
+    "wasm",
+    "compiler",
+    "interpreter"
+  ],
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "sourceType": "module"
+    },
+    "plugins": [
+      "prettier",
+      "react",
+      "@typescript-eslint"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "prettier/prettier": "error",
+      "react/display-name": 0,
+      "react/prop-types": 0,
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-non-null-assertion": 0
+    },
+    "ignorePatterns": [
+      "public/waforth/dist",
+      "build/",
+      "dist/",
+      "src/web/benchmarks/sieve/sieve-c.js",
+      "src/standalone/wasm-micro-runtime"
+    ]
+  }
+}

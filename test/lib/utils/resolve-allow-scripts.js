@@ -119,7 +119,7 @@ t.test('package.json wins over .npmrc setting (RFC layer 2 > layer 3)', async t 
   t.equal(result.source, 'package.json')
   t.strictSame(result.policy, { sharp: true })
   t.match(
-    mock.logs.warn.byTitle('allow-scripts'),
+    mock.logs.warn.byTitle('install-scripts'),
     [/\.npmrc allow-scripts setting is being ignored because package.json/]
   )
 })
@@ -150,7 +150,7 @@ t.test('--allow-scripts CLI flag is accepted via skipProjectConfig (npm exec)', 
   t.equal(result.source, 'cli')
   t.strictSame(result.policy, { sharp: true })
   t.match(
-    mock.logs.warn.byTitle('allow-scripts'),
+    mock.logs.warn.byTitle('install-scripts'),
     [/\.npmrc allow-scripts setting is being ignored because --allow-scripts/]
   )
 })
@@ -224,7 +224,7 @@ t.test('drops package.json entries with forbidden semver ranges and warns', asyn
     'also-good': true,
     'disjunction@1.0.0 || 2.0.0': true,
   })
-  const warnings = mock.logs.warn.byTitle('allow-scripts')
+  const warnings = mock.logs.warn.byTitle('install-scripts')
   t.equal(warnings.filter(m => /semver ranges/.test(m)).length, 3)
 })
 
@@ -245,7 +245,7 @@ t.test('drops package.json entries with dist-tag specs and warns', async t => {
   const result = await resolveAllowScripts(mock.npm)
   t.equal(result.source, 'package.json')
   t.strictSame(result.policy, { 'good@1.2.3': true })
-  const warnings = mock.logs.warn.byTitle('allow-scripts')
+  const warnings = mock.logs.warn.byTitle('install-scripts')
   t.equal(warnings.filter(m => /dist-tag specs/.test(m)).length, 2)
 })
 
@@ -260,7 +260,7 @@ t.test('drops .npmrc forbidden ranges (and warns) but keeps valid entries', asyn
   const result = await resolveAllowScripts(mock.npm)
   t.equal(result.source, '.npmrc')
   t.strictSame(result.policy, { canvas: true, 'lodash@4.17.21': true })
-  const warnings = mock.logs.warn.byTitle('allow-scripts')
+  const warnings = mock.logs.warn.byTitle('install-scripts')
   t.ok(warnings.some(m => /sharp@\^0\.33\.0/.test(m) && /semver ranges/.test(m)))
 })
 
@@ -280,7 +280,7 @@ t.test('drops package.json entries that fail npa parse', async t => {
   const result = await resolveAllowScripts(mock.npm)
   t.equal(result.source, 'package.json')
   t.strictSame(result.policy, { good: true })
-  t.ok(mock.logs.warn.byTitle('allow-scripts').some(m => /unparseable/.test(m)))
+  t.ok(mock.logs.warn.byTitle('install-scripts').some(m => /unparseable/.test(m)))
 })
 
 t.test('returns null when all package.json entries are dropped as invalid', async t => {
@@ -344,4 +344,57 @@ t.test('skipProjectConfig: returns null when only package.json is set', async t 
   const resolveAllowScripts = loadResolver(t)
   const result = await resolveAllowScripts(npm, { skipProjectConfig: true })
   t.strictSame(result, { policy: null, source: null })
+})
+
+// --- git committish minimum length validation ---------------------------
+
+t.test('drops git committish shorter than 7 hex chars and warns', async t => {
+  const mock = await mockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'p',
+        allowScripts: {
+          'github:owner/repo#abc': true,    // 3 chars — too short, dropped
+          'github:owner/repo#abcdef': true, // 6 chars — too short, dropped
+          'github:owner/repo#abcdefg': true, // exactly 7 — kept
+          'github:owner/repo#deadbeef': true, // 8 chars — kept
+          'github:owner/repo': true,          // no committish — kept (name-only)
+        },
+      }),
+    },
+  })
+  const resolveAllowScripts = loadResolver(t)
+  const result = await resolveAllowScripts(mock.npm)
+  t.equal(result.source, 'package.json')
+  t.strictSame(result.policy, {
+    'github:owner/repo#abcdefg': true,
+    'github:owner/repo#deadbeef': true,
+    'github:owner/repo': true,
+  })
+  const warnings = mock.logs.warn.byTitle('allow-scripts')
+  t.equal(
+    warnings.filter(m => /too short/.test(m)).length, 2,
+    'two warnings for the two too-short committishes'
+  )
+})
+
+t.test('non-hex committish (branch name) is not subject to length check', async t => {
+  // Branch names like `main` or `feature/x` contain non-hex characters and
+  // are not comparable to SHA prefixes, so the minimum-length rule must not
+  // apply to them.
+  const { npm } = await mockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'p',
+        allowScripts: {
+          'github:owner/repo#main': true,
+        },
+      }),
+    },
+  })
+  const resolveAllowScripts = loadResolver(t)
+  const result = await resolveAllowScripts(npm)
+  t.equal(result.source, 'package.json')
+  t.strictSame(result.policy, { 'github:owner/repo#main': true },
+    'branch-name committish is kept without a length warning')
 })

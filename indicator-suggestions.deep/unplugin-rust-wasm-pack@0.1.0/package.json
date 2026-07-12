@@ -1,0 +1,97 @@
+{
+  "name": "unplugin-rust-wasm-pack",
+  "version": "0.1.0",
+  "description": "Unplugin that runs wasm-pack on virtual Cargo.toml imports for Vite, Rollup, Rolldown, and Webpack",
+  "type": "module",
+  "license": "MIT",
+  "author": "Karolis K. <https://github.com/Karolis2011>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Karolis2011/unplugin-rust-wasm-pack.git"
+  },
+  "homepage": "https://github.com/Karolis2011/unplugin-rust-wasm-pack#readme",
+  "bugs": {
+    "url": "https://github.com/Karolis2011/unplugin-rust-wasm-pack/issues"
+  },
+  "keywords": [
+    "unplugin",
+    "vite",
+    "rollup",
+    "rolldown",
+    "webpack",
+    "wasm",
+    "wasm-pack",
+    "rust",
+    "webassembly",
+    "wasm-bindgen"
+  ],
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=18.12"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./vite": {
+      "import": "./dist/vite.js",
+      "require": "./dist/vite.cjs"
+    },
+    "./rollup": {
+      "import": "./dist/rollup.js",
+      "require": "./dist/rollup.cjs"
+    },
+    "./rolldown": {
+      "import": "./dist/rolldown.js",
+      "require": "./dist/rolldown.cjs"
+    },
+    "./webpack": {
+      "import": "./dist/webpack.js",
+      "require": "./dist/webpack.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepack": "pnpm run build",
+    "test": "vitest run",
+    "test:ci": "pnpm run typecheck && pnpm test",
+    "test:smoke": "vitest run --config vitest.smoke.config.ts",
+    "typecheck": "tsc --noEmit",
+    "examples:build": "pnpm -r --filter './examples/*' run build"
+  },
+  "peerDependencies": {
+    "vite-plugin-top-level-await": ">=1.4.0",
+    "vite-plugin-wasm": ">=3.1.0"
+  },
+  "peerDependenciesMeta": {
+    "vite-plugin-top-level-await": {
+      "optional": true
+    },
+    "vite-plugin-wasm": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "execa": "^9.5.2",
+    "pathe": "^2.0.3",
+    "tinyglobby": "^0.2.10",
+    "toml": "^3.0.0",
+    "unplugin": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "playwright": "^1.61.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.2",
+    "vitest": "^3.0.9"
+  }
+}

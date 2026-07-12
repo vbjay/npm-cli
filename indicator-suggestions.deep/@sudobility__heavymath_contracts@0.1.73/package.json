@@ -1,0 +1,232 @@
+{
+  "name": "@sudobility/heavymath_contracts",
+  "version": "0.1.73",
+  "type": "module",
+  "main": "dist/unified/src/unified/index.js",
+  "types": "dist/unified/src/unified/index.d.ts",
+  "browser": "dist/unified/src/unified/index.js",
+  "react-native": "dist/react-native/src/react-native/index.js",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./dist/react-native/src/react-native/index.d.ts",
+        "default": "./dist/react-native/src/react-native/index.js"
+      },
+      "browser": {
+        "types": "./dist/unified/src/unified/index.d.ts",
+        "default": "./dist/unified/src/unified/index.js"
+      },
+      "node": {
+        "types": "./dist/unified/src/unified/index.d.ts",
+        "default": "./dist/unified/src/unified/index.js"
+      },
+      "default": {
+        "types": "./dist/unified/src/unified/index.d.ts",
+        "default": "./dist/unified/src/unified/index.js"
+      }
+    },
+    "./evm": {
+      "types": "./dist/unified/src/evm/index.d.ts",
+      "default": "./dist/unified/src/evm/index.js"
+    },
+    "./solana": {
+      "types": "./dist/unified/src/solana/index.d.ts",
+      "default": "./dist/unified/src/solana/index.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native/src/react-native/index.d.ts",
+      "default": "./dist/react-native/src/react-native/index.js"
+    }
+  },
+  "scripts": {
+    "build": "bun run build:evm && bun run build:unified && bun run build:react-native",
+    "build:ci": "bun run compile:evm && bun run build:unified && bun run build:react-native",
+    "build:evm": "npx hardhat compile && tsc --project tsconfig.evm.json",
+    "build:solana": "cargo build --manifest-path programs/prediction-market/Cargo.toml && tsc --project tsconfig.solana.json",
+    "build:unified": "tsc --project tsconfig.unified.json",
+    "build:react-native": "tsc --project tsconfig.react-native.json",
+    "pretest": "npx hardhat compile",
+    "test": "bun run test:evm",
+    "test:run": "bun run test:evm",
+    "test:ci": "bun run build:unified && bun run test:unified:direct",
+    "test:evm": "node --import tsx/esm ./node_modules/.bin/hardhat test",
+    "test:solana": "cd programs/prediction-market && cargo test",
+    "test:unified": "mocha dist/test/unified/**/*.test.js",
+    "test:unified:direct": "node scripts/run-unified-tests.mjs",
+    "compile": "bun run compile:evm",
+    "compile:evm": "npx hardhat compile",
+    "compile:solana": "anchor build",
+    "clean": "npx hardhat clean",
+    "prepublishOnly": "bun run clean && bun run compile && bun run build",
+    "prepack": "bun run build",
+    "deploy:evm:local": "npx hardhat run scripts/evm/deploy.ts --network hardhat",
+    "deploy:solana:local": "anchor deploy --provider.cluster localnet",
+    "deploy:solana:devnet": "anchor deploy --provider.cluster devnet",
+    "deploy:solana:mainnet": "anchor deploy --provider.cluster mainnet-beta",
+    "deploy:unified": "bun run deploy:evm:local && bun run deploy:solana:local",
+    "deploy:evm:localhost": "npx hardhat run scripts/evm/deploy.ts --network localhost",
+    "deploy:evm:mainnet": "npx hardhat run scripts/evm/deploy.ts --network mainnet",
+    "deploy:evm:sepolia": "npx hardhat run scripts/evm/deploy.ts --network sepolia",
+    "upgrade:evm:sepolia": "npx hardhat run scripts/evm/upgrade.ts --network sepolia",
+    "upgrade:evm:mainnet": "npx hardhat run scripts/evm/upgrade.ts --network mainnet",
+    "verify:evm:mainnet": "npx hardhat run scripts/evm/verify.ts --network mainnet",
+    "verify:evm:sepolia": "npx hardhat run scripts/evm/verify.ts --network sepolia",
+    "prepare-upgrade:evm": "npx hardhat run scripts/evm/prepare-upgrade.ts",
+    "lint": "eslint --ext .ts,.js .",
+    "lint:fix": "eslint --ext .ts,.js . --fix",
+    "pretypecheck": "npx hardhat compile",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
+  },
+  "keywords": [
+    "solidity",
+    "rust",
+    "smart-contract",
+    "ethereum",
+    "solana",
+    "anchor",
+    "multi-chain",
+    "prediction-market",
+    "web3",
+    "defi",
+    "usdc",
+    "hardhat",
+    "typechain",
+    "typescript",
+    "uups",
+    "upgradeable",
+    "react-native",
+    "mobile"
+  ],
+  "author": "HeavyMath Team",
+  "license": "BUSL-1.1",
+  "description": "Multi-chain prediction market system with UUPS upgradeable contracts, dual-boundary market splits, and a unified TypeScript client for EVM chains and Solana.",
+  "homepage": "https://github.com/heavymath/heavymath_contracts#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnqh/heavymath_contracts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/heavymath/heavymath_contracts/issues"
+  },
+  "engines": {
+    "node": ">=20.18.0",
+    "npm": ">=10.0.0"
+  },
+  "files": [
+    "dist/",
+    "typechain-types/",
+    "artifacts/contracts/",
+    "target/idl/",
+    "target/types/",
+    "programs/",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "peerDependencies": {
+    "@solana/spl-token": ">=0.4.0",
+    "@solana/web3.js": ">=1.95.0",
+    "@sudobility/configs": "^0.0.73",
+    "@sudobility/heavymath_types": "^0.0.34",
+    "@sudobility/types": "^1.9.62",
+    "@tanstack/react-query": ">=5.0.0",
+    "buffer": ">=6.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-native": ">=0.70.0",
+    "react-native-get-random-values": ">=1.8.0",
+    "react-native-url-polyfill": ">=2.0.0",
+    "text-encoding": ">=0.7.0",
+    "viem": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@solana/spl-token": {
+      "optional": true
+    },
+    "@solana/web3.js": {
+      "optional": true
+    },
+    "@sudobility/configs": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-get-random-values": {
+      "optional": true
+    },
+    "react-native-url-polyfill": {
+      "optional": true
+    },
+    "buffer": {
+      "optional": true
+    },
+    "text-encoding": {
+      "optional": true
+    },
+    "@tanstack/react-query": {
+      "optional": true
+    },
+    "viem": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.1.2",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@nomicfoundation/hardhat-viem": "^2.0.0",
+    "@openzeppelin/contracts": "^5.4.0",
+    "@openzeppelin/hardhat-upgrades": "^3.9.1",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/wallet-adapter-base": "^0.9.27",
+    "@solana/web3.js": "^1.98.4",
+    "@sudobility/configs": "^0.0.73",
+    "@sudobility/heavymath_types": "^0.0.34",
+    "@sudobility/types": "^1.9.62",
+    "@tanstack/react-query": "^5.90.1",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.18.12",
+    "@types/react": "^19.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "chai": "^4.5.0",
+    "chai-as-promised": "^7.1.2",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.19.0",
+    "ethers": "^6.16.0",
+    "hardhat": "^2.26.3",
+    "hardhat-gas-reporter": "^2.2.0",
+    "mocha": "^11.7.4",
+    "prettier": "^3.6.2",
+    "react": "^19.0.0",
+    "ts-mocha": "^11.1.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typechain": "^8.3.2",
+    "typescript": "^5.9.3",
+    "viem": "^2.38.4"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^1.3.0",
+    "@openzeppelin/contracts-upgradeable": "^5.0.0"
+  },
+  "overrides": {
+    "bigint-buffer": "^1.1.5"
+  },
+  "resolutions": {
+    "bigint-buffer": "^1.1.5",
+    "@solana/buffer-layout-utils/bigint-buffer": "^1.1.5"
+  }
+}

@@ -1,0 +1,65 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def DEFAULT_MIN_SDK_VERSION                 = 21
+def DEFAULT_COMPILE_SDK_VERSION             = 36
+def DEFAULT_BUILD_TOOLS_VERSION             = "36.0.0"
+def DEFAULT_TARGET_SDK_VERSION              = 36
+def DEFAULT_BATCH_SDK_VERSION               = "3.3.+"
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            mavenCentral()
+            google()
+        }
+
+        dependencies {
+            classpath("com.android.tools.build:gradle:8.2.2")
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.facebook.react'
+
+android {
+    namespace 'com.batch.batch_rn'
+
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+    api "com.batch.android:batch-sdk:${safeExtGet('batchSdkVersion', DEFAULT_BATCH_SDK_VERSION)}"
+}
+
+react {
+    jsRootDir = file("../src/")
+    libraryName = "RNBatch"
+    codegenJavaPackageName = "com.batch.batch_rn"
+}

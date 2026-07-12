@@ -1,0 +1,81 @@
+{
+  "name": "@getvouch/react-native-sdk",
+  "version": "0.9.4",
+  "description": "React Native turbo module for Vouch SDK",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "vouch-rn.podspec",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "build": "bob build",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "vouch",
+    "turbomodule",
+    "identity-verification"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlayer-xyz/vouch-react-native-sdk.git"
+  },
+  "author": "Vouch <https://getvouch.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vlayer-xyz/vouch-react-native-sdk/issues"
+  },
+  "homepage": "https://github.com/vlayer-xyz/vouch-react-native-sdk#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@react-native/babel-preset": "^0.81.0",
+    "@types/react": "^19.0.0",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.30.0",
+    "typescript": "^5.9.0"
+  },
+  "codegenConfig": {
+    "name": "RNVouchSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "ios": {
+      "modulesProvider": {
+        "VouchRN": "VouchRN"
+      }
+    },
+    "android": {
+      "javaPackageName": "io.getvouch.rn"
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      ["commonjs", {"babelrc": false}],
+      ["module", {"babelrc": false}],
+      ["typescript", {"project": "tsconfig.build.json"}]
+    ]
+  }
+}

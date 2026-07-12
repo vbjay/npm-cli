@@ -1,0 +1,127 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "253d555a746264bd",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "f861ae35a82611099994aa56db45916036da7c9fc5a3ab98a5a7a2a58540a1dd",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `PaymoActiveWindow`  -  C/C++ sources",
+            "items": [
+              "module/windows/napi/main.cpp",
+              "module/windows/napi/module.cpp",
+              "module/windows/src/ActiveWindow.cpp",
+              "module/windows/src/IconCache.cpp",
+              "module/windows/src/base64/base64.cpp",
+              "module/windows/src/GdiPlusUtils.cpp",
+              "module/linux/napi/main.cpp",
+              "module/linux/napi/module.cpp",
+              "module/linux/src/ActiveWindow.cpp",
+              "module/linux/src/IconCache.cpp",
+              "module/linux/src/base64/base64.cpp",
+              "module/linux/src/SimpleIni/ConvertUTF.c",
+              "module/linux/src/lodepng/lodepng.cpp",
+              "module/macos/napi/main.mm",
+              "module/macos/napi/module.mm",
+              "module/macos/src/ActiveWindow.mm",
+              "module/macos/src/IconCache.cpp",
+              "module/macos/src/base64/base64.cpp"
+            ]
+          },
+          {
+            "label": "Target `PaymoActiveWindow`  -  libraries",
+            "items": [
+              "User32.lib",
+              "Shell32.lib",
+              "Version.lib",
+              "Shlwapi.lib",
+              "Gdi32.lib",
+              "Gdiplus.lib",
+              "Windowsapp.lib",
+              "-lX11",
+              "-lpthread",
+              "-static-libstdc++",
+              "-lc++",
+              "-framework Foundation",
+              "-framework AppKit",
+              "-framework ApplicationServices"
+            ]
+          },
+          {
+            "label": "Target `PaymoActiveWindow`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `PaymoActiveWindow`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:40.809Z"
+  },
+  "hash": "sha256:e57d840c3c1fc0a0f83fc5bad9cc8d49ea438fb191be56059938aa6e9fd5bf51"
+}

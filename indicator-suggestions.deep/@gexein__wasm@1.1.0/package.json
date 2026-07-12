@@ -1,0 +1,101 @@
+{
+  "name": "@gexein/wasm",
+  "version": "1.1.0",
+  "description": "WebAssembly modules for high-performance media processing",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "compiled/",
+    "wrappers/",
+    "types/",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    },
+    "./compiled/audio_processor.js": {
+      "types": "./compiled/audio_processor.d.ts",
+      "import": "./compiled/audio_processor.js",
+      "default": "./compiled/audio_processor.js"
+    },
+    "./compiled/image_processor.js": {
+      "types": "./compiled/image_processor.d.ts",
+      "import": "./compiled/image_processor.js",
+      "default": "./compiled/image_processor.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist compiled",
+    "create-mocks": "node scripts/create-mocks.js",
+    "build": "npm run clean && npm run build:wasm && npm run build:ts && npm run copy-to-root",
+    "build:wasm": "mkdir -p compiled && npm run build:image-processor && npm run build:audio-processor && npm run create-wasm-types",
+    "build:image-processor": "emcc src/cpp/image_processor.cpp -o compiled/image_processor.js -s WASM=1 -s EXPORTED_FUNCTIONS='[\"_resize_image\",\"_apply_brightness\",\"_apply_contrast\",\"_convert_to_grayscale\",\"_apply_blur\",\"_process_image\",\"_free_memory\",\"_malloc\",\"_free\"]' -s EXPORTED_RUNTIME_METHODS='[\"ccall\",\"cwrap\",\"HEAPU8\",\"HEAPF32\"]' -s ALLOW_MEMORY_GROWTH=1 -s MODULARIZE=1 -s EXPORT_ES6=1 -s EXPORT_NAME='createImageProcessor' -s SINGLE_FILE=1 -O3",
+    "build:audio-processor": "emcc src/cpp/audio_processor.cpp -o compiled/audio_processor.js -s WASM=1 -s EXPORTED_FUNCTIONS='[\"_adjust_volume\",\"_normalize_audio\",\"_trim_audio\",\"_apply_fade_in\",\"_apply_fade_out\",\"_change_speed\",\"_apply_echo\",\"_apply_reverb\",\"_process_audio\",\"_free_audio_memory\",\"_malloc\",\"_free\"]' -s EXPORTED_RUNTIME_METHODS='[\"ccall\",\"cwrap\",\"HEAPU8\",\"HEAPF32\"]' -s ALLOW_MEMORY_GROWTH=1 -s MODULARIZE=1 -s EXPORT_ES6=1 -s EXPORT_NAME='createAudioProcessor' -s SINGLE_FILE=1 -O3",
+    "create-wasm-types": "node scripts/create-wasm-types.js",
+    "build:ts": "tsc",
+    "copy-to-root": "cp dist/index.js ./ && cp dist/index.d.ts ./ && cp dist/types.d.ts ./ 2>/dev/null || true && cp -r dist/wrappers ./ 2>/dev/null || true",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "webassembly",
+    "wasm",
+    "image-processing",
+    "audio-processing",
+    "media-processing",
+    "performance",
+    "digital-workshop"
+  ],
+  "author": "Digital Workshop Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/digital-workshop-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/digital-workshop-wasm/issues"
+  },
+  "homepage": "https://github.com/your-org/digital-workshop-wasm#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.50.0",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.0.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.2.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

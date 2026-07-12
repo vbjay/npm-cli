@@ -1,0 +1,76 @@
+{
+  "name": "@pmate/cli",
+  "version": "0.25.5",
+  "description": "CLI utilities for the pMate project",
+  "license": "MIT",
+  "bin": {
+    "pmate": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsup --config tsup.config.ts && node scripts/copy-templates.js",
+    "clean": "rimraf dist",
+    "dev": "ts-node src/index.ts",
+    "release": "npm publish",
+    "start": "node dist/index.js",
+    "test": "vitest run src/tests",
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "typescript",
+    "pmate"
+  ],
+  "author": "",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@alicloud/alidns20150109": "^4.0.0",
+    "@alicloud/cdn20180510": "^8.0.0",
+    "@alicloud/fc20230330": "^4.7.4",
+    "@alicloud/openapi-client": "^0.4.15",
+    "@alicloud/sts20150401": "^1.2.0",
+    "@linear/sdk": "^70.0.0",
+    "@pmate/chat-sdk": "^0.1.10",
+    "@types/ali-oss": "^6.16.13",
+    "ajv": "^8.17.1",
+    "ali-oss": "^6.23.0",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.6.1",
+    "jsqr": "^1.4.0",
+    "openai": "^6.16.0",
+    "playwright": "^1.58.2",
+    "png-to-ico": "^3.0.1",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.34.5",
+    "tslib": "^2.8.1",
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "@pmate/agent-sdk": "^1.1.16",
+    "@pmate/meta": "^1.1.15",
+    "@pmate/utils": "^1.1.4",
+    "@types/node": "^25.0.3",
+    "@types/pngjs": "^6.0.5",
+    "rimraf": "^6.1.2",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.17"
+  },
+  "pnpm": {
+    "overrides": {
+      "@pmate/meta": "^1.1.15",
+      "@pmate/utils": "^1.1.4"
+    }
+  }
+}

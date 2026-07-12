@@ -1,0 +1,51 @@
+{
+  "name": "ollama-bridge",
+  "version": "0.1.7",
+  "description": "High-performance Node.js bindings for Ollama integration",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/",
+    "native/",
+    "scripts/install.js",
+    "binding.gyp"
+  ],
+  "scripts": {
+    "build": "tsc && node-gyp rebuild",
+    "install": "node scripts/install.js",
+    "test": "node test/test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ollama",
+    "ai",
+    "llm",
+    "bindings",
+    "rust",
+    "native",
+    "machine-learning",
+    "chatbot"
+  ],
+  "author": "Anthony Umbriac <anthonyumbriac@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aumbriac/ollama-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aumbriac/ollama-bridge/issues"
+  },
+  "homepage": "https://github.com/aumbriac/ollama-bridge#readme",
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "node-gyp": "^10.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

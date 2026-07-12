@@ -1,0 +1,112 @@
+{
+  "name": "@cookieinformation/react-native-sdk",
+  "version": "2.0.0",
+  "description": "Cookie Information consent management SDK for React Native",
+  "private": false,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "build/",
+    "android/build.gradle",
+    "android/src/",
+    "ios/",
+    "react-native.config.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build",
+    "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{js,ts,tsx}\" --fix",
+    "typescript": "tsc --noEmit",
+    "test": "jest",
+    "test:ios": "bash scripts/test-ios.sh",
+    "test:android": "bash scripts/test-android.sh",
+    "build:example:android": "npm run build && npm ci --prefix example && bash scripts/build-example-android.sh",
+    "build:example:ios": "npm run build && npm ci --prefix example && bash scripts/build-example-ios.sh",
+    "prepare": "husky && tsc",
+    "prepublishOnly": "tsc"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-cookie-information-consents-sdk",
+    "CookieInformationRNSDK"
+  ],
+  "repository": "https://github.com/cookie-information/react-native-sdk",
+  "bugs": {
+    "url": "https://github.com/cookie-information/react-native-sdk/issues"
+  },
+  "author": "CookieInformation",
+  "license": "MIT",
+  "homepage": "https://github.com/cookie-information/react-native-sdk#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/eslint-parser": "^7.28.6",
+    "@react-native-community/eslint-config": "^3.1.0",
+    "@types/jest": "^30.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.8.1",
+    "react": "19.2.6",
+    "react-native": "0.85.3",
+    "ts-jest": "^29.4.11",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0 <20",
+    "react-native": ">=0.79.0 <0.87.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "build/",
+    "example/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx}": "eslint --fix"
+  }
+}

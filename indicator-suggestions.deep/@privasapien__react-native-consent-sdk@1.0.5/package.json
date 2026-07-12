@@ -1,0 +1,73 @@
+{
+  "name": "@privasapien/react-native-consent-sdk",
+  "version": "1.0.5",
+  "description": "React Native bridge for the Privasapien Consent SDK — delegates all consent UI to native Android and iOS SDKs.",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "publishConfig": {
+  "access": "public"
+},
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/.gradle",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "build": "bob build",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "consent",
+    "privacy",
+    "gdpr",
+    "privasapien",
+    "ios",
+    "android"
+  ],
+  "author": "Privasapien <support@privasapien.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://privasapien.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.privasapien.com/privagalaxy/consent-manager-sdk.git",
+    "directory": "react-native-sdk"
+  },
+  "bugs": {
+    "url": "https://gitlab.privasapien.com/privagalaxy/consent-manager-sdk/-/issues"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.73.0",
+    "react": "18.2.0",
+    "react-native": "0.73.0",
+    "typescript": "^5.0.4",
+    "react-native-builder-bob": "^0.23.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      ["typescript", { "project": "tsconfig.build.json" }]
+    ]
+  }
+}

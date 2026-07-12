@@ -1,0 +1,94 @@
+{
+  "name": "@survicate/react-native-survicate",
+  "title": "React Native Survicate Bindings",
+  "version": "8.3.0",
+  "description": "React Native bindings for Survicate Mobile SDK",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "react-native": "src/index.ts",
+  "types": "lib/typescript/index.d.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "app.plugin.js",
+    "react-native-survicate.podspec",
+    "!android/build",
+    "!ios/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bob build",
+    "prepare": "bob build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Survicate/survicate-react-native-sdk.git",
+    "baseUrl": "https://github.com/Survicate/survicate-react-native-sdk"
+  },
+  "keywords": [
+    "react-native",
+    "expo"
+  ],
+  "author": "Survicate <support@survicate.com> (https://survicate.com/)",
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://survicate.com"
+  },
+  "peerDependencies": {
+    "expo": ">=49",
+    "react": ">=16.8.6",
+    "react-native": ">=0.60.0"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@tsconfig/react-native": "^3.0.9",
+    "@types/jest": "^29.5.4",
+    "@types/react": "^19.2.8",
+    "@types/react-test-renderer": "^19.1.0",
+    "expo": "^54.0.31",
+    "react": "^19.2.3",
+    "react-native": "^0.83.1",
+    "react-native-builder-bob": "^0.40.17",
+    "typescript": "^5.9.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNSurvicateSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.survicate.react"
+    }
+  }
+}

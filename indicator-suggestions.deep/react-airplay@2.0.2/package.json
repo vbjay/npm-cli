@@ -1,0 +1,144 @@
+{
+  "name": "react-airplay",
+  "version": "2.0.2",
+  "description": "Airplay bridge for React Native",
+  "packageManager": "yarn@4.12.0",
+  "volta": {
+    "node": "24.14.0",
+    "yarn": "4.12.0"
+  },
+  "workspaces": [
+    ".",
+    "example"
+  ],
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios/ReactAirplay/**/*",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build/**",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "_postinstall": "husky",
+    "prepack": "yarn build && pinst --disable",
+    "postpack": "pinst --enable",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "build": "bob build",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\" && clang-format -i ios/ReactAirplay/**/*.{h,mm}",
+    "format:check": "prettier --check \"**/*.{js,ts,tsx,json,md}\" && clang-format --dry-run -Werror ios/ReactAirplay/**/*.{h,mm}",
+    "publish:packages": "yarn build && yarn changeset publish"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "airplay",
+    "cast"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tien/react-airplay.git"
+  },
+  "author": "Tiến Nguyễn Khắc <tien.nguyenkhac@icloud.com> (https://tien.zone/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tien/react-airplay/issues"
+  },
+  "homepage": "https://github.com/tien/react-airplay#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@react-native-community/cli": "^20.1.2",
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@react-native/babel-preset": "^0.84.1",
+    "@react-native/eslint-config": "^0.84.1",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-native": "0.73.0",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
+    "jest": "^30.3.0",
+    "pinst": "^3.0.0",
+    "prettier": "^3.8.1",
+    "react": "19.2.4",
+    "react-native": "0.84.1",
+    "react-native-builder-bob": "^0.40.18",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "type": "fabric-view",
+    "languages": "kotlin-objc",
+    "tools": [
+      "lefthook",
+      "eslint"
+    ],
+    "version": "0.57.2"
+  },
+  "codegenConfig": {
+    "name": "ReactAirplaySpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "ios": {
+      "componentProvider": {
+        "AirplayButton": "AirplayButton"
+      }
+    }
+  }
+}

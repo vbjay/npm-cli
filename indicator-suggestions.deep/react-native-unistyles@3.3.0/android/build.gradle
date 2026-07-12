@@ -1,0 +1,99 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.safeExtGet = {prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+    repositories {
+        google()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.2.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
+    }
+}
+
+def reactNativeArchitectures() {
+    def value = rootProject.getProperties().get("reactNativeArchitectures")
+    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply from: '../nitrogen/generated/android/unistyles+autolinking.gradle'
+
+def resolveBuildType() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests()['args'].toString()
+
+    return tskReqStr.contains('Release') ? 'release' : 'debug'
+}
+
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', 35)
+    namespace "com.unistyles"
+
+    defaultConfig {
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        minSdkVersion safeExtGet('minSdkVersion', 24)
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+                abiFilters (*reactNativeArchitectures())
+            }
+        }
+    }
+
+    buildFeatures {
+        prefab true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    packagingOptions {
+        doNotStrip resolveBuildType() == 'debug' ? "**/**/*.so" : ''
+        excludes = [
+            "META-INF",
+            "META-INF/**",
+            "**/libjsi.so",
+            "**/libc++_shared.so",
+            "**/libreactnative.so",
+            "**/libreact_nativemodule_core.so",
+            "**/libturbomodulejsijni.so",
+            "**/libfbjni.so"
+        ]
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native'
+    implementation project(":react-native-nitro-modules")
+}
+
+tasks.register("checkNativeTurboUnistylesSpec") {
+    doLast {
+        if (!isNewArchitectureEnabled()) {
+            throw new GradleException("Unistyles 3.0 requires your project to have New Architecture enabled.")
+        }
+    }
+}
+
+preBuild.dependsOn checkNativeTurboUnistylesSpec

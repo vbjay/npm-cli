@@ -1,0 +1,89 @@
+{
+  "name": "@svton/cli",
+  "version": "2.5.8",
+  "description": "Svton CLI - Create full-stack applications with NestJS, Next.js, and Taro",
+  "keywords": [
+    "cli",
+    "scaffold",
+    "full-stack",
+    "nestjs",
+    "nextjs",
+    "taro",
+    "typescript",
+    "monorepo"
+  ],
+  "author": "SVTON Team",
+  "license": "MIT",
+  "homepage": "https://github.com/751848178/svton#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/751848178/svton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/751848178/svton/issues"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "svton": "bin/svton.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "templates",
+    "features.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prebuild": "node scripts/sync-templates.mjs",
+    "prepack": "node scripts/sync-templates.mjs",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "test": "jest",
+    "prepublishOnly": "npm run build",
+    "release": "changeset publish"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.29.0",
+    "@babel/parser": "^7.29.0",
+    "@babel/traverse": "^7.29.0",
+    "@babel/types": "^7.29.0",
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "cross-spawn": "^7.0.3",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.2.12",
+    "jiti": "^1.21.0",
+    "mustache": "^4.2.0",
+    "ora": "^8.0.1",
+    "validate-npm-package-name": "^5.0.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/cross-spawn": "^6.0.6",
+    "@types/fs-extra": "^11.0.4",
+    "@types/jest": "^29.5.12",
+    "@types/inquirer": "^9.0.7",
+    "@types/mustache": "^4.2.5",
+    "@types/node": "^20.10.0",
+    "@types/validate-npm-package-name": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

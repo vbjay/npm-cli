@@ -1,0 +1,156 @@
+{
+  "name": "agora-react-native-rtm",
+  "version": "2.2.6",
+  "description": "React Native around the Agora RTM SDKs for Android and iOS agora",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "!**/*.xcframework",
+    "!ios/AgoraRtmWrapper.podspec",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "example": "yarn workspace agora-react-native-rtm-example",
+    "terra": "cd scripts/terra && yarn terra",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{cjs,js,ts,tsx}\"",
+    "lint:fix": "eslint --fix \"**/*.{cjs,js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it",
+    "doc": "typedoc src --exclude \"example/**\""
+  },
+  "keywords": [
+    "react-native",
+    "agora",
+    "rtm",
+    "realtime",
+    "message",
+    "im"
+  ],
+  "repository": "https://github.com/AgoraIO-Extensions/agora-react-native-rtm",
+  "author": "AgoraIO-Extensions",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgoraIO-Extensions/agora-react-native-rtm/issues"
+  },
+  "homepage": "https://github.com/AgoraIO-Extensions/agora-react-native-rtm#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "^0.77.1",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.2",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "0.70.0",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-auto-import": "^0.1.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.1",
+    "pod-install": "^0.2.0",
+    "prettier": "^2.8.8",
+    "react": "18.3.1",
+    "react-native": "0.77.1",
+    "react-native-builder-bob": "^0.20.0",
+    "release-it": "^15.0.0",
+    "turbo": "^1.10.7",
+    "typedoc": "^0.24.1",
+    "typescript": "5.1.6"
+  },
+  "resolutions": {
+    "@types/react": "18.3.1",
+    "eslint@^8.4.1": "patch:eslint@npm%3A8.53.0#./.yarn/patches/eslint-npm-8.53.0-2fc5c501d2.patch",
+    "eslint-plugin-auto-import@^0.1.1": "patch:eslint-plugin-auto-import@patch%3Aeslint-plugin-auto-import@npm%253A0.1.1%23./.yarn/patches/eslint-plugin-auto-import-npm-0.1.1-79fd8c84dd.patch%3A%3Aversion=0.1.1&hash=92ca79&locator=agora-react-native-rtm%2540workspace%253A.#./.yarn/patches/eslint-plugin-auto-import-patch-fcaa39e038.patch"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.0.1",
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/example/e2e"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "tsc": "./node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "eventemitter3": "^5.0.1"
+  },
+  "codegenConfig": {
+    "name": "AgoraRtmNgSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/specs",
+    "android": {
+      "javaPackageName": "io.agora.rtm.ng.react"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "@broxus/locklift-network",
+  "version": "2.0.1",
+  "description": "In-memory TVM-blockchain emulator for locklift",
+  "keywords": [
+    "Everscale",
+    "TON",
+    "Venom",
+    "blockchain",
+    "smart-contracts",
+    "javascript",
+    "solidity",
+    "dapps",
+    "ethereum",
+    "tools"
+  ],
+  "files": [
+    "internal/",
+    "src/",
+    "types/",
+    "README.md",
+    "*.d.ts",
+    "*.d.ts.map",
+    "*.js",
+    "*.js.map",
+    "tsconfig-base.json",
+    "tsconfig.json"
+  ],
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc --build .",
+    "lint": "npx eslint .",
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky install"
+  },
+  "author": "30mb1 <steam.30mb1@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@ton/core": "^0.63.1",
+    "@ton/crypto": "^3.3.0",
+    "@ton/sandbox": "^0.41.0",
+    "@ton/ton": "^16.2.2",
+    "@tychosdk/emulator": "^0.2.6",
+    "everscale-inpage-provider": "^0.6.6",
+    "everscale-standalone-client": "^3.0.2",
+    "heap-js": "2.3.0",
+    "lodash": "^4.17.21",
+    "nekoton-wasm": "npm:nekoton-wasm-locklift@^1.29.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.195",
+    "@types/node": "^17.0.45",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0",
+    "prettier": "^2.7.1"
+  }
+}

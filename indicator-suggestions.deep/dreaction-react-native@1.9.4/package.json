@@ -1,0 +1,56 @@
+{
+  "name": "dreaction-react-native",
+  "version": "1.9.4",
+  "private": false,
+  "description": "DReaction client for React Native applications with draggable debug ball and powerful debugging tools",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "prepare": "bun run tsc",
+    "release": "bun publish --ignore-scripts --registry=https://registry.npmjs.com/",
+    "test": "vitest"
+  },
+  "files": [
+    "assets",
+    "lib",
+    "src"
+  ],
+  "keywords": [
+    "dreaction",
+    "react-native",
+    "debug",
+    "debugger",
+    "monitoring",
+    "logging",
+    "network",
+    "performance"
+  ],
+  "author": "moonrailgun <moonrailgun@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moonrailgun/dreaction.git",
+    "directory": "packages/dreaction-react-native"
+  },
+  "bugs": {
+    "url": "https://github.com/moonrailgun/dreaction/issues"
+  },
+  "homepage": "https://github.com/moonrailgun/dreaction#readme",
+  "dependencies": {
+    "dreaction-client-core": "1.4.1",
+    "dreaction-protocol": "1.0.11",
+    "mitt": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.73.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@react-native-async-storage/async-storage": "*",
+    "react": ">=18",
+    "react-native": ">=0.70"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "12236aeb4abef00c",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "script/build.mjs",
+      "script/get-target-archs.mjs",
+      "script/verify-binaries.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "e53ef883418d3301f6cc64478ff15642566079972183907e0ae36057d0f380d2",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `process-proxy-<(platform)-<(target_arch)`  -  C/C++ sources",
+            "items": [
+              "native/main.c"
+            ]
+          },
+          {
+            "label": "Target `process-proxy-<(platform)-<(target_arch)`  -  libraries",
+            "items": [
+              "-lws2_32"
+            ]
+          },
+          {
+            "label": "Target `process-proxy-<(platform)-<(target_arch)`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "script/verify-binaries.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "e8a7b18a2dae8bb27cea94424b814cc11724c406a3a0cad315e518c14d412be7",
+        "sizeBytes": 1000,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "script/get-target-archs.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "script/get-target-archs.mjs",
+        "reason": "required by ./script/verify-binaries.mjs; required by ./script/build.mjs",
+        "sha256": "0524c1c85f3d587f49b452873214beee8180666f3c5465f8dbb9a60ee6dd5b1e",
+        "sizeBytes": 561,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "script/build.mjs",
+        "reason": "referenced by lifecycle script: `build:native`",
+        "sha256": "3e9666ffcee6d5ed5298a65527c44c8fd3fd257dfb1243e75106bced79698f4d",
+        "sizeBytes": 2090,
+        "signals": [
+          "uses-child-process",
+          "native-build",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "script/get-target-archs.mjs"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:27.386Z"
+  },
+  "hash": "sha256:3181916a838cbee0ab4148e5f2d8a512d19d5f0d922002c3756b769f67acb27e"
+}

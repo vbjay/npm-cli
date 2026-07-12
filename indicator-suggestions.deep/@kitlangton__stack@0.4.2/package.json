@@ -1,0 +1,67 @@
+{
+  "name": "@kitlangton/stack",
+  "version": "0.4.2",
+  "description": "Squash-safe stacked PR/MR repair CLI for GitHub and GitLab",
+  "keywords": [
+    "cli",
+    "git",
+    "github",
+    "gitlab",
+    "merge-requests",
+    "node",
+    "pull-requests",
+    "stacked-prs"
+  ],
+  "homepage": "https://github.com/kitlangton/stack#readme",
+  "bugs": {
+    "url": "https://github.com/kitlangton/stack/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitlangton/stack.git"
+  },
+  "bin": {
+    "stack": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "bun run dev/build-cli.ts",
+    "changeset": "npm exec --package @changesets/cli@2.31.0 -- changeset",
+    "changeset:status": "npm exec --package @changesets/cli@2.31.0 -- changeset status",
+    "changeset:version": "npm exec --package @changesets/cli@2.31.0 -- changeset version",
+    "dev": "bun src/cli.ts status",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint",
+    "package:smoke": "bun run build && npm pack --dry-run",
+    "prepack": "bun run build",
+    "release": "bun run package:smoke && npm exec --package @changesets/cli@2.31.0 -- changeset publish",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@effect/platform-node": "4.0.0-beta.64",
+    "effect": "4.0.0-beta.64"
+  },
+  "devDependencies": {
+    "@effect/vitest": "4.0.0-beta.64",
+    "@types/bun": "latest",
+    "oxfmt": "^0.51.0",
+    "oxlint": "^1.66.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
+  }
+}

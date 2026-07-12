@@ -1,0 +1,75 @@
+{
+  "name": "threadroot",
+  "version": "0.3.1",
+  "description": "Codex Context Optimizer for smaller prompts, JSONL flight recording, tokens-to-green scoring, verification, and repo-local tuning.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "threadroot": "dist/index.js",
+    "tr": "dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sevan1211/threadroot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sevan1211/threadroot/issues"
+  },
+  "homepage": "https://github.com/Sevan1211/threadroot#readme",
+  "keywords": [
+    "ai",
+    "codex",
+    "openai",
+    "mcp",
+    "repo-context",
+    "tokens-to-green",
+    "codex-cli",
+    "developer-tools",
+    "cli",
+    "skills"
+  ],
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "tsx src/index.ts",
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm typecheck && pnpm lint && pnpm test",
+    "pack:check": "node scripts/pack-check.mjs",
+    "package:smoke": "node scripts/package-smoke.mjs",
+    "release:check": "pnpm typecheck && pnpm lint && pnpm test && pnpm pack:check && pnpm package:smoke",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9",
+    "@types/node": "^22.10.2",
+    "eslint": "^9",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.12.0"
+}

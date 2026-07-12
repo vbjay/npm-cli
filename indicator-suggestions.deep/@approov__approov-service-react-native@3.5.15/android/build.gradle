@@ -1,0 +1,191 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// android/build.gradle
+
+// based on:
+//
+// * https://github.com/facebook/react-native/blob/0.60-stable/template/android/build.gradle
+//   original location:
+//   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/build.gradle
+//
+// * https://github.com/facebook/react-native/blob/0.60-stable/template/android/app/build.gradle
+//   original location:
+//   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
+
+buildscript {
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    // ref: https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:build_script_external_dependencies
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'com.android.tools.build:gradle:8.5.2'
+        }
+    }
+}
+
+plugins {
+    id 'com.gradleup.shadow' version '8.3.11'
+}
+
+def DEFAULT_COMPILE_SDK_VERSION = 34
+def DEFAULT_BUILD_TOOLS_VERSION = '34.0.0'
+def DEFAULT_MIN_SDK_VERSION = 25
+def DEFAULT_TARGET_SDK_VERSION = 34
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: 'com.android.library'
+
+def candidateMiniSdkRoots = [
+    new File(projectDir, '../../core-service-layers-testing/mini-sdk/android'),
+    new File(projectDir, '../core-service-layers-testing/mini-sdk/android'),
+]
+def miniSdkAndroidRoot = candidateMiniSdkRoots.find { it.exists() }?.absoluteFile
+def miniSdkApproovJar = miniSdkAndroidRoot ? new File(miniSdkAndroidRoot, 'approov-sdk/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar') : null
+
+android {
+    namespace = "io.approov.reactnative"
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.all {
+            jvmArgs '-Dnet.bytebuddy.experimental=true', '-XX:+EnableDynamicAgentLoading'
+        }
+    }
+    sourceSets {
+        test {
+            if (miniSdkAndroidRoot != null) {
+                java.srcDirs += [
+                    new File(miniSdkAndroidRoot, 'test-support/src/main/java').absolutePath,
+                ]
+            } else {
+                java.exclude 'io/approov/reactnative/ApproovServiceMiniSdkTest.java'
+            }
+        }
+    }
+}
+
+if (android.hasProperty("lint")) {
+    android.lint.abortOnError = false
+} else if (android.hasProperty("lintOptions")) {
+    android.lintOptions.abortOnError = false
+}
+
+allprojects {
+    repositories {
+        // ref: https://www.baeldung.com/maven-local-repository
+        mavenLocal()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        maven {
+            // Android JSC is installed from npm
+            url "$rootDir/../node_modules/jsc-android/dist"
+
+            // Obsolete: Approov SDK installed via jitpack
+            // We use mavenCentral() instead
+            //url "https://jitpack.io"
+        }
+        google()
+        mavenCentral()
+    }
+}
+
+configurations {
+    shadowed
+}
+
+tasks.register('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+    archiveClassifier.set('shadow')
+    configurations = [project.configurations.shadowed]
+    relocate 'org.bouncycastle', 'io.approov.internal.reactnative.bouncycastle'
+    exclude 'META-INF/**'
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation fileTree(dir: "libs", include: ["*.aar"])
+    implementation 'com.facebook.react:react-android:+'
+    api 'io.approov:approov-android-sdk:3.5.3'
+    if (findProject(':rn-fetch-blob') != null) {
+        implementation project(path: ':rn-fetch-blob')  // From node_modules
+    } else {
+        println 'optional rn-fetch-blob dependency not found'
+    }
+    shadowed 'org.bouncycastle:bcprov-jdk15to18:1.84'
+    compileOnly files(tasks.named('shadowJar'))
+    implementation files(tasks.named('shadowJar'))
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.11.0'
+    testImplementation 'org.mockito:mockito-inline:4.11.0'
+    testImplementation 'org.json:json:20231013'
+    testImplementation 'androidx.test:core:1.6.1'
+    testImplementation 'org.robolectric:robolectric:4.11.1'
+    if (miniSdkApproovJar != null) {
+        testImplementation files(miniSdkApproovJar)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    dependsOn tasks.named('shadowJar')
+}
+
+if (miniSdkAndroidRoot != null) {
+    def prepareMiniSdkTestJars = tasks.register('prepareMiniSdkTestJars', Exec) {
+        workingDir projectDir
+        commandLine './gradlew',
+            '-I', new File(projectDir, 'mini-sdk-init.gradle').absolutePath,
+            '-p', miniSdkAndroidRoot.absolutePath,
+            ':approov-sdk:bundleLibRuntimeToJarDebug'
+    }
+
+    tasks.matching { it.name in ['compileDebugUnitTestJavaWithJavac', 'compileReleaseUnitTestJavaWithJavac'] }.configureEach {
+        dependsOn prepareMiniSdkTestJars
+    }
+} else {
+    println 'Approov Mini-SDK not found, skipping mini-sdk tests setup'
+}
+
+def configureReactNativePom(def pom) {
+    def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
+
+    pom.project {
+        name packageJson.title
+        artifactId packageJson.name
+        version = packageJson.version
+        group = "com.criticalblue.reactnative"
+        description packageJson.description
+        url packageJson.repository.baseUrl
+
+        licenses {
+            license {
+                name packageJson.license
+                url packageJson.repository.baseUrl + '/blob/master/' + packageJson.licenseFilename
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id packageJson.author.username
+                name packageJson.author.name
+            }
+        }
+    }
+}

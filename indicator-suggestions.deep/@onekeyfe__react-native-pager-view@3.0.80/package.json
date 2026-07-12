@@ -1,0 +1,102 @@
+{
+  "name": "@onekeyfe/react-native-pager-view",
+  "version": "3.0.80",
+  "description": "React Native wrapper for Android and iOS ViewPager",
+  "source": "./src/index.tsx",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "react-native-pager-view.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "!**/*.map"
+  ],
+  "scripts": {
+    "clean": "del-cli lib",
+    "prepare": "rm -rf lib && bob build",
+    "typecheck": "tsc -b",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest",
+    "release": "yarn prepare && npm whoami && npm publish --access public"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholasxuu/app-modules.git",
+    "directory": "native-views/react-native-pager-view"
+  },
+  "author": "OneKey",
+  "homepage": "https://github.com/nicholasxuu/app-modules#readme",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "react": "19.2.0",
+    "react-native": "patch:react-native@npm%3A0.83.0#~/.yarn/patches/react-native-npm-0.83.0-577d0f2d83.patch",
+    "react-native-builder-bob": "^0.40.13",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "pagerview",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.reactnativepagerview"
+    },
+    "ios": {
+      "componentProvider": {
+        "RNCViewPager": "RNCPagerViewComponentView"
+      }
+    }
+  }
+}

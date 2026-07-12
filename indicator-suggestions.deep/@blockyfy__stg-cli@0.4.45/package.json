@@ -1,0 +1,90 @@
+{
+  "name": "@blockyfy/stg-cli",
+  "version": "0.4.45",
+  "description": "AI firewall CLI -- protect code before LLM API calls",
+  "type": "module",
+  "bin": {
+    "pretest": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "dependencies": {
+    "@hono/node-server": "^1.8.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "hono": "^4.0.0",
+    "nanoid": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@yao-pkg/pkg": "^5.16.1",
+    "tree-sitter": "^0.21.1",
+    "tree-sitter-typescript": "^0.21.2",
+    "tree-sitter-python": "^0.21.0",
+    "tree-sitter-go": "^0.21.2",
+    "tree-sitter-java": "^0.21.0",
+    "tree-sitter-c-sharp": "^0.21.3",
+    "tree-sitter-ruby": "^0.21.0",
+    "tree-sitter-rust": "^0.21.0",
+    "tsup": "^8.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.0.0",
+    "@blockyfy/pretest-core": "0.1.0",
+    "@blockyfy/pretest-scanner": "0.1.0",
+    "@blockyfy/pretest-mutator": "0.1.0",
+    "@blockyfy/pretest-compliance-engine": "0.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "ai",
+    "security",
+    "llm",
+    "firewall",
+    "pretest",
+    "cli"
+  ],
+  "homepage": "https://www.npmjs.com/package/@blockyfy/stg-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blockyfy/stg-cli.git"
+  },
+  "author": "Jimmy Malhan",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/tree-sitter/build/Release/*.node",
+      "node_modules/tree-sitter/prebuilds/**/*.node",
+      "node_modules/tree-sitter-typescript/build/Release/*.node",
+      "node_modules/tree-sitter-typescript/prebuilds/**/*.node",
+      "node_modules/tree-sitter-python/build/Release/*.node",
+      "node_modules/tree-sitter-python/prebuilds/**/*.node",
+      "node_modules/tree-sitter-go/build/Release/*.node",
+      "node_modules/tree-sitter-go/prebuilds/**/*.node",
+      "node_modules/tree-sitter-java/build/Release/*.node",
+      "node_modules/tree-sitter-java/prebuilds/**/*.node",
+      "node_modules/tree-sitter-c-sharp/build/Release/*.node",
+      "node_modules/tree-sitter-c-sharp/prebuilds/**/*.node",
+      "node_modules/tree-sitter-ruby/build/Release/*.node",
+      "node_modules/tree-sitter-ruby/prebuilds/**/*.node",
+      "node_modules/tree-sitter-rust/build/Release/*.node",
+      "node_modules/tree-sitter-rust/prebuilds/**/*.node"
+    ]
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:binary": "tsup --config tsup.binary.ts",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "lint": "tsc --noEmit",
+    "postinstall": "node -e \"try{require('./dist/postinstall.js')}catch(e){}\""
+  }
+}

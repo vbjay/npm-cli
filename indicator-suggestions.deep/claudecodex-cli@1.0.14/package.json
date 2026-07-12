@@ -1,0 +1,62 @@
+{
+  "name": "claudecodex-cli",
+  "version": "1.0.14",
+  "description": "Manage multiple Codex and Claude Code logins as named sessions, with a live sticky dashboard of remaining 5-hour and weekly limits.",
+  "type": "module",
+  "bin": {
+    "claudecodex": "bin/claudecodex.mjs",
+    "ccx": "bin/claudecodex.mjs"
+  },
+  "keywords": [
+    "codex",
+    "claude",
+    "claude-code",
+    "chatgpt",
+    "cli",
+    "session-manager",
+    "account-switcher",
+    "rate-limit",
+    "usage",
+    "openai",
+    "anthropic",
+    "ink",
+    "tui"
+  ],
+  "author": "Numan",
+  "files": [
+    "bin",
+    "dist",
+    "assets"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch --preserveWatchOutput",
+    "run": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "prepare": "tsc",
+    "publish:npm": "npm version patch && npm publish --access public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@ngrok/ngrok": "^1.7.0",
+    "ink": "^5.0.1",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.12",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/numandev1/claude-codex.git"
+  },
+  "homepage": "https://github.com/numandev1/claude-codex#readme",
+  "bugs": {
+    "url": "https://github.com/numandev1/claude-codex/issues"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,63 @@
+{
+  "name": "belt-charts",
+  "version": "1.8.1",
+  "description": "A CLI tool for generating charts from verbose data from belt",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist && ncc build ./src/index.ts -o dist --no-cache --external skia-canvas && node -e \"require('fs').writeFileSync('dist/package.json', JSON.stringify({}, null, 2))\"",
+    "start": "node dist/index.js",
+    "dev": "rm -rf dist && ncc build ./src/index.ts -w -o dist/ --external skia-canvas",
+    "prepublishOnly": "npm run build",
+    "test:install": "npm pack && npm install -g belt-charts-*.tgz",
+    "prepack": "npm run build",
+    "test": "vitest run"
+  },
+  "bin": {
+    "belt-charts": "./bin/belt-charts.cjs"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "cli",
+    "charts",
+    "belt",
+    "benchmark",
+    "visualization",
+    "metrics"
+  ],
+  "author": "abucnasty",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abucnasty/belt-charts.git"
+  },
+  "homepage": "https://github.com/abucnasty/belt-charts#readme",
+  "bugs": {
+    "url": "https://github.com/abucnasty/belt-charts/issues"
+  },
+  "dependencies": {
+    "@sgratzl/chartjs-chart-boxplot": "^4.4.4",
+    "chart.js": "^4.5.0",
+    "chartjs-plugin-annotation": "^3.1.0",
+    "commander": "^14.0.0",
+    "csv-parser": "^3.2.0",
+    "csv-writer": "^1.6.0",
+    "glob": "^11.0.3",
+    "skia-canvas": "^3.0.6"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^22.18.8",
+    "@vercel/ncc": "^0.38.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "vitest": "^4.1.9"
+  }
+}

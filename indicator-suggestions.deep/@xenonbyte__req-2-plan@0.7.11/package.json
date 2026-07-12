@@ -1,0 +1,47 @@
+{
+  "name": "@xenonbyte/req-2-plan",
+  "version": "0.7.11",
+  "description": "Requirement-to-PLAN workflow CLI and agent integration installer.",
+  "bin": {
+    "r2p": "bin/r2p.js"
+  },
+  "files": [
+    "bin/",
+    "tools/r2p",
+    "tools/r2p-*",
+    "tools/workflow_cli/**/*.py",
+    "tools/workflow_cli/**/*.yaml",
+    "tools/workflow_cli/**/*.md",
+    "tools/workflow_cli/**/*.toml",
+    "requirements.txt",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "python -m pytest",
+    "test:local": ".venv/bin/python -m pytest",
+    "prepack": "node bin/r2p.js version >/dev/null"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xenonbyte/req-2-plan.git"
+  },
+  "keywords": [
+    "workflow",
+    "requirements",
+    "plan",
+    "agent",
+    "cli"
+  ],
+  "author": "xenonbyte",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "bugs": {
+    "url": "https://github.com/xenonbyte/req-2-plan/issues"
+  },
+  "homepage": "https://github.com/xenonbyte/req-2-plan#readme"
+}

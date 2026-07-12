@@ -1,0 +1,67 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6905587bd56dd7b3",
+    "fetchedFiles": [
+      "bin/wow-migrator.js",
+      "package.json",
+      "scripts/sync-skills.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/wow-migrator.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a89c2c77a9bf9ddd8b5cec608b22f0f538213eb2a3ace50477a479f0b72dccd9",
+        "sizeBytes": 14876,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "obfuscation-pattern",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/sync-skills.js",
+        "reason": "referenced by lifecycle script: `prepare`; referenced by lifecycle script: `prepack`",
+        "sha256": "90db2006a7d9ad07ff58621da7c1ecbf85245cd43e2f1d9e53b8fd956228f2c1",
+        "sizeBytes": 2257,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:52.233Z"
+  },
+  "hash": "sha256:6b08e13fc1e715af0903ddf1455b49aa12bb71dcde56c31c194c658243143f87"
+}

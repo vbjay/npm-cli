@@ -1,0 +1,79 @@
+{
+  "name": "open-secure-viewer",
+  "version": "0.1.0",
+  "description": "Zero-cost secure document viewer — PDFium WASM + Express security gateway. Drop-in replacement for Apryse/PDFTron WebViewer with no license fees.",
+  "keywords": [
+    "pdf",
+    "viewer",
+    "secure",
+    "document",
+    "pdfium",
+    "wasm",
+    "drm",
+    "watermark"
+  ],
+  "license": "Apache-2.0",
+  "author": "Prabhakar Kumar <pkumar4in@gmail.com>",
+  "homepage": "https://github.com/prabhakar713/open-secure-viewer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prabhakar713/open-secure-viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prabhakar713/open-secure-viewer/issues",
+    "email": "pkumar4in@gmail.com"
+  },
+  "bin": {
+    "osv": "bin/osv.js"
+  },
+  "files": [
+    "bin/",
+    "packages/gateway/dist/",
+    "packages/gateway/src/",
+    "packages/gateway/package.json",
+    "packages/gateway/tsconfig.json",
+    "packages/converter/dist/",
+    "packages/converter/src/",
+    "packages/converter/package.json",
+    "packages/converter/tsconfig.json",
+    "packages/viewer/overlay/",
+    "packages/viewer/webpack.config.js",
+    "packages/viewer/webpack.pdfium.config.js",
+    "packages/viewer/dev-server.js",
+    "packages/viewer/package.json",
+    "scripts/",
+    "setup.js",
+    "setup.bat",
+    "setup.sh",
+    "package.json",
+    "README.md"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "setup": "node setup.js",
+    "postinstall": "node setup.js --skip-upstream",
+    "dev": "concurrently -n viewer,gateway,converter -c cyan,green,yellow \"cross-env PORT=3000 npm run dev -w packages/viewer\" \"cross-env PORT=4000 npm run dev -w packages/gateway\" \"cross-env PORT=3200 npm run dev -w packages/converter\"",
+    "dev:viewer": "cross-env PORT=3000 npm run dev -w packages/viewer",
+    "dev:gateway": "cross-env PORT=4000 npm run dev -w packages/gateway",
+    "dev:converter": "cross-env PORT=3200 npm run dev -w packages/converter",
+    "build": "npm run build  -w packages/viewer && npm run build -w packages/gateway && npm run build -w packages/converter",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "install:upstream": "npm install --legacy-peer-deps --prefix packages/viewer/upstream",
+    "update:upstream": "node scripts/update-upstream.js",
+    "check:viewer": "node scripts/check-viewer.js http://localhost:3000/ 8000",
+    "check:viewer:auth": "cross-env AUTO_AUTH=1 node scripts/check-viewer.js http://localhost:3000/ 10000",
+    "regression": "node scripts/regression-test.js",
+    "regression:full": "node scripts/regression-test.js && node scripts/check-viewer.js http://localhost:3000/ 8000"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "cross-env": "^10.1.0",
+    "puppeteer": "^25.0.4",
+    "puppeteer-core": "^25.0.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

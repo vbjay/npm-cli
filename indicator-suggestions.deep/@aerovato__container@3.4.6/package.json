@@ -1,0 +1,76 @@
+{
+  "name": "@aerovato/container",
+  "version": "3.4.6",
+  "description": "Manage isolated Docker containers for running coding tools on different projects",
+  "main": "dist/js/main.js",
+  "bin": {
+    "container": "dist/js/main.js"
+  },
+  "files": [
+    "dist/js",
+    "dist/package.json"
+  ],
+  "scripts": {
+    "build": "npm run build:js && npm run build:binary",
+    "build:js": "sh scripts/build-js.sh",
+    "build:binary": "sh scripts/build-binary.sh",
+    "package:release": "sh scripts/package-release.sh",
+    "release-notes": "sh scripts/generate-release-notes.sh",
+    "release": "sh scripts/release.sh",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --project tsconfig.test.json",
+    "test": "vitest run",
+    "start": "node dist/js/main.js",
+    "lint": "eslint .",
+    "format": "prettier --write --ignore-unknown .",
+    "precommit": "bash scripts/precommit.sh",
+    "prepare": "husky",
+    "install-local": "npm run clean && npm run build && npm link"
+  },
+  "author": "kevinMEH",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aerovato/container.git"
+  },
+  "bugs": "https://github.com/aerovato/container/issues",
+  "homepage": "https://github.com/aerovato/container",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^20.19.37",
+    "eslint": "^10.3.0",
+    "husky": "^9.1.7",
+    "memfs": "^4.57.3",
+    "prettier": "^3.8.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.1",
+    "vitest": "^4.1.5"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.4.0",
+    "zod": "^4.3.6"
+  },
+  "keywords": [
+    "docker",
+    "container",
+    "development",
+    "cli",
+    "opencode",
+    "open code",
+    "claude code",
+    "claude",
+    "codex",
+    "openai",
+    "anthropic",
+    "chatbot",
+    "harness",
+    "vibe coding",
+    "gemini",
+    "gemini cli",
+    "copilot",
+    "github copilot"
+  ]
+}

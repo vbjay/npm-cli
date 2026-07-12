@@ -1,0 +1,106 @@
+{
+  "name": "@junobuild/functions",
+  "version": "0.9.0",
+  "description": "JavaScript and TypeScript utilities for Juno Serverless Functions",
+  "author": "David Dal Busco (https://daviddalbusco.com)",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./sdk": {
+      "types": "./sdk.d.ts",
+      "import": "./sdk.js"
+    },
+    "./ic-cdk": {
+      "types": "./ic-cdk.d.ts",
+      "import": "./ic-cdk.js"
+    },
+    "./canisters": {
+      "types": "./canisters/index.d.ts",
+      "import": "./canisters/index.js"
+    },
+    "./canisters/ckbtc": {
+      "types": "./canisters/ckbtc/index.d.ts",
+      "import": "./canisters/ckbtc/index.js"
+    },
+    "./canisters/cketh": {
+      "types": "./canisters/cketh/index.d.ts",
+      "import": "./canisters/cketh/index.js"
+    },
+    "./canisters/cmc": {
+      "types": "./canisters/cmc/index.d.ts",
+      "import": "./canisters/cmc/index.js"
+    },
+    "./canisters/ic-management": {
+      "types": "./canisters/ic-management/index.d.ts",
+      "import": "./canisters/ic-management/index.js"
+    },
+    "./canisters/ledger/cycles": {
+      "types": "./canisters/ledger/cycles/index.d.ts",
+      "import": "./canisters/ledger/cycles/index.js"
+    },
+    "./canisters/ledger/icp": {
+      "types": "./canisters/ledger/icp/index.d.ts",
+      "import": "./canisters/ledger/icp/index.js"
+    },
+    "./canisters/ledger/icrc": {
+      "types": "./canisters/ledger/icrc/index.d.ts",
+      "import": "./canisters/ledger/icrc/index.js"
+    },
+    "./canisters/nns": {
+      "types": "./canisters/nns/index.d.ts",
+      "import": "./canisters/nns/index.js"
+    },
+    "./canisters/sns": {
+      "types": "./canisters/sns/index.d.ts",
+      "import": "./canisters/sns/index.js"
+    }
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "**/*.js",
+    "**/*.js.map",
+    "**/*.d.ts",
+    "**/*.d.ts.map"
+  ],
+  "scripts": {
+    "clean": "git ls-files --others --ignored --exclude-standard | grep -v \"LICENSE\" | xargs rm -rf",
+    "copy-did-d-ts": "rsync -a --include='*/' --include='*.d.ts' --exclude='*' src/canisters/declarations/ canisters/declarations/",
+    "ts-declaration": "tsc --emitDeclarationOnly -outDir . && cp -R src/*.d.ts ./ && npm run copy-did-d-ts",
+    "build": "npm run clean && tsc --noEmit && node esbuild.mjs && npm run ts-declaration",
+    "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junobuild/juno-js.git",
+    "directory": "packages/functions"
+  },
+  "bugs": {
+    "url": "https://github.com/junobuild/juno-js"
+  },
+  "keywords": [
+    "serverless",
+    "serverless-functions",
+    "wasm",
+    "self-hosted",
+    "cloud",
+    "auth",
+    "storage",
+    "database",
+    "hosting"
+  ],
+  "homepage": "https://juno.build",
+  "peerDependencies": {
+    "@icp-sdk/core": "^5",
+    "@junobuild/schema": "^1.2.4",
+    "@junobuild/utils": "^1.0.2",
+    "zod": "^4.3"
+  }
+}

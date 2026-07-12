@@ -1,0 +1,74 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5003020a89ac9a59",
+    "fetchedFiles": [
+      "package.json",
+      "platform-install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "which",
+        "versionSpec": "^1.3.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "which@1.3.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "platform-install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "4f031b5dbd49f8b1eebb95f07c80f1a06a43655b3928d9831f0fca2d399f613a",
+        "sizeBytes": 4589,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./platform-install.js",
+        "sha256": "6ac55b7f9cdbcad5a72aa968be306a0cbb9a24a215616b67c4909f24fba2a582",
+        "sizeBytes": 1130,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:54.878Z"
+  },
+  "hash": "sha256:a1dd7599ceea956725f4915111ad98cb827d4dc959d75e224458b2dfdbb2028f"
+}

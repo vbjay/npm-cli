@@ -1,0 +1,53 @@
+{
+  "name": "rust-ts-guide",
+  "version": "1.0.0",
+  "description": "A complete guide and example for creating Rust-based Node.js native addons with TypeScript support using NAPI-RS",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "napi build --release --cargo-cwd core",
+    "dev": "npm run build",
+    "test": "node demo.js",
+    "clean": "rm -rf dist target core/target",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run dev && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suren-atoyan/rust-ts-package.git"
+  },
+  "keywords": [
+    "rust",
+    "typescript",
+    "napi",
+    "native",
+    "addon",
+    "bindings",
+    "example",
+    "guide",
+    "tutorial",
+    "napi-rs"
+  ],
+  "author": "Suren Atoyan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suren-atoyan/rust-ts-package/issues"
+  },
+  "homepage": "https://github.com/suren-atoyan/rust-ts-package#readme",
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.4"
+  },
+  "files": [
+    "index.d.ts",
+    "index.node",
+    "dist/index.js",
+    "dist/index.d.ts",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

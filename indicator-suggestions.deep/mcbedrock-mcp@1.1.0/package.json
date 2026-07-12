@@ -1,0 +1,61 @@
+{
+  "name": "mcbedrock-mcp",
+  "version": "1.1.0",
+  "description": "MCP server for Minecraft Bedrock Edition scripting and addon documentation. Gives AI assistants access to Bedrock scripting API docs via search tools.",
+  "main": "dist/src/index.js",
+  "bin": {
+    "mcbedrock-mcp": "./dist/src/index.js"
+  },
+  "files": [
+    "dist/",
+    "config.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "index-docs": "node dist/scripts/indexDocs.js",
+    "start": "node dist/src/index.js",
+    "rebuild-db": "node -e \"const fs=require('fs');if(fs.existsSync('./data/bedrock-docs.db'))fs.unlinkSync('./data/bedrock-docs.db');\" && npm run index-docs",
+    "postinstall": "node dist/scripts/indexDocs.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "minecraft",
+    "bedrock",
+    "mcp",
+    "model-context-protocol",
+    "scripting",
+    "addon",
+    "ai",
+    "claude",
+    "opencode"
+  ],
+  "author": "abhaymalav",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AbhayMalav/mcbedrock-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AbhayMalav/mcbedrock-mcp/issues"
+  },
+  "homepage": "https://github.com/AbhayMalav/mcbedrock-mcp#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "better-sqlite3": "^12.9.0",
+    "cheerio": "^1.1.0",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.6.0",
+    "@types/node-fetch": "^2.6.13",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "waifu2x-node",
+  "version": "0.3.0",
+  "description": "Image Super-Resolution in NodeJS using libw2xc from waifu2x-converter-cpp.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:build": "npx typedoc --out ./docs --includeDeclarations --excludeExternals ./src/lib",
+    "docs:serve": "npx serve docs",
+    "docs:clean": "rm -rf docs",
+    "build:lib": "npx tsc",
+    "build": "node-gyp build",
+    "install": "node install/vendor && node-gyp configure && node-gyp build",
+    "prepublishOnly": "npx tsc",
+    "clean": "node-gyp clean && rm -r vendor && rm $(find lib/ -type f -name \"*\" ! -name \"constructor.*\")"
+  },
+  "author": "Daniel Wykerd <danielwykerd@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.0.1",
+    "@types/npmlog": "^4.1.2",
+    "typedoc": "^0.17.6",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "nan": "^2.14.1",
+    "npmlog": "^4.1.2",
+    "simple-get": "^4.0.0"
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "example",
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wykerd/waifu2x-node.git"
+  },
+  "keywords": [
+    "waifu2x",
+    "image processing",
+    "image",
+    "scale",
+    "resize",
+    "c++",
+    "native",
+    "addon",
+    "bindings",
+    "cnn",
+    "super resolution",
+    "upscaling",
+    "anime"
+  ],
+  "bugs": {
+    "url": "https://github.com/Wykerd/waifu2x-node/issues"
+  },
+  "homepage": "https://github.com/Wykerd/waifu2x-node#readme"
+}

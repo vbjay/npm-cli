@@ -1,0 +1,67 @@
+{
+  "name": "node-interception",
+  "version": "2.0.4",
+  "description": "A windows library for intercepting and controlling keyboards and mouses with multiple devices support.",
+  "repository": "https://github.com/Rami-Sabbagh/node-interception.git",
+  "homepage": "https://rami-sabbagh.github.io/node-interception/",
+  "bugs": "https://github.com/Rami-Sabbagh/node-interception/issues",
+  "author": "Rami Sabbagh <ramilego4game@gmail.com> (https://rami-sabbagh.github.io/)",
+  "keywords": [
+    "interception",
+    "automation",
+    "keyboard",
+    "mouse",
+    "addon",
+    "windows",
+    "binding",
+    "hid"
+  ],
+  "main": "dist/cjs/lib/index.js",
+  "module": "dist/esm/lib/index.js",
+  "types": "dist/esm/lib/index.d.ts",
+  "license": "LGPL-3.0-or-later",
+  "private": false,
+  "gypfile": true,
+  "sideEffects": false,
+  "scripts": {
+    "install": "node-gyp-build",
+    "docs": "typedoc",
+    "build-lib": "tsc -p tsconfig.json && tsc -p tsconfig-esm.json",
+    "build-addon": "prebuildify --napi --arch=ia32 && prebuildify --napi --arch=x64 && node-gyp clean",
+    "prepublishOnly": "yarn build-addon && yarn build-lib"
+  },
+  "bin": {
+    "install-interception": "./interception/driver/install-interception.exe"
+  },
+  "files": [
+    "dist/",
+    "prebuilds/",
+    "binding.gyp",
+    "src/",
+    "interception/driver",
+    "interception/LICENSE",
+    "interception/README.md"
+  ],
+  "devDependencies": {
+    "@types/node": "^16.4.13",
+    "node-gyp": "^8.1.0",
+    "prebuildify": "^4.2.0",
+    "ts-node": "^10.2.0",
+    "typedoc": "^0.21.5",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "node-addon-api": "^4.0.0",
+    "node-gyp-build": "^4.2.3"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "ia32"
+  ]
+}

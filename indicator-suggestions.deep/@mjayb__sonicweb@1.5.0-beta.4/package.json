@@ -1,0 +1,96 @@
+{
+  "name": "@mjayb/sonicweb",
+  "version": "1.5.0-beta.4",
+  "description": "SonicWeb — browser-native Sonic Pi with real SuperCollider synthesis via WebAssembly",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./browser": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/browser.mjs"
+    }
+  },
+  "bin": {
+    "sonicweb": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "dist/index.js",
+    "dist/index.js.map",
+    "dist/index.cjs",
+    "dist/index.cjs.map",
+    "dist/browser.mjs",
+    "dist/browser.mjs.map",
+    "dist/tree-sitter-*.js",
+    "dist/tree-sitter-*.js.map",
+    "dist/tree-sitter-*.cjs",
+    "dist/tree-sitter-*.cjs.map",
+    "dist/types"
+  ],
+  "scripts": {
+    "start": "node bin/cli.js",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:all": "vitest run && playwright test",
+    "test:watch": "vitest",
+    "test:update-fx-parity": "npx tsx tools/test-update-fx-parity.ts",
+    "typecheck": "tsc --noEmit",
+    "dev": "vite",
+    "build": "vite build",
+    "build:single": "vite build --config vite.build.config.ts",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json && npm run build:browser",
+    "build:browser": "node tools/build-browser-bundle.mjs",
+    "verify:604": "tsx tools/verify-604-bare-consumer.ts",
+    "build:docs": "vitepress build docs",
+    "dev:docs": "vitepress dev docs",
+    "dashboard:audio": "node tools/build-dashboard-audio.mjs",
+    "dashboard:serve": "npm run dashboard:audio && node tools/serve-dashboards.mjs 5180",
+    "build:all": "npm run build:single && npm run build:docs",
+    "inspect:build": "npx tsx tools/build-test-results.ts",
+    "inspect": "npx tsx tools/build-test-results.ts && python3 -m http.server -d test_results 8080",
+    "postinstall": "cp node_modules/web-tree-sitter/web-tree-sitter.wasm public/tree-sitter.wasm 2>/dev/null; cp node_modules/tree-sitter-wasms/out/tree-sitter-ruby.wasm public/tree-sitter-ruby.wasm 2>/dev/null; true",
+    "ingest:tutorial": "tsx tools/ingest-tutorial.ts"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "sonic-pi",
+    "live-coding",
+    "music",
+    "web-audio",
+    "supercollider",
+    "scheduler",
+    "webaudio",
+    "wasm"
+  ],
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "marked": "^18.0.3",
+    "tree-sitter-wasms": "^0.1.13",
+    "typescript": "^6.0.2",
+    "vite": "^7.3.1",
+    "vite-plugin-singlefile": "^2.3.2",
+    "vitepress": "^1.6.4",
+    "vitest": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrityunjayBhardwaj/SonicWeb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MrityunjayBhardwaj/SonicWeb/issues"
+  },
+  "homepage": "https://sonicweb.cc",
+  "license": "MIT",
+  "dependencies": {
+    "web-tree-sitter": "^0.24.3"
+  }
+}

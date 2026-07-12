@@ -1,0 +1,152 @@
+{
+  "name": "@react-native-kakao/core",
+  "description": "React Native Kakao Core SDK",
+  "version": "2.4.5",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "expo-config-plugin/build",
+    "app.plugin.js"
+  ],
+  "author": "MJ Studio <mym0404@gmail.com> (https://github.com/mym0404)",
+  "homepage": "https://rnkakao.mjstudio.net",
+  "scripts": {
+    "test": "jest",
+    "prepare": "husky",
+    "release": "./script/release.sh",
+    "codegen:android": "cd ../../example/android && ./gradlew generateCodegenArtifactsFromSchema",
+    "codegen:ios": "react-native codegen --path example/ --outputPath ../../example/ios",
+    "codegen": "yarn codegen:android && yarn codegen:ios",
+    "build:expo-config-plugin": "tsc --project ./expo-config-plugin",
+    "prepack": "yarn build:expo-config-plugin && bob build",
+    "clean": "del-cli android/ lib"
+  },
+  "keywords": [
+    "react-native",
+    "kakao",
+    "kakao-sdk",
+    "typescript",
+    "javascript",
+    "react",
+    "expo",
+    "kakao-login",
+    "kakao-auth",
+    "kakao-core",
+    "kakao-navi",
+    "kakao-channel",
+    "kakaotalk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mym0404/react-native-kakao.git",
+    "directory": "packages/core"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.2.44",
+    "del-cli": "^5.1.0",
+    "expo": "^52.0.39",
+    "jest": "^29.7.0",
+    "react": "18.2.0",
+    "react-native": "0.74.0",
+    "react-native-builder-bob": "^0.20.0",
+    "typescript": "5.1.6"
+  },
+  "peerDependencies": {
+    "expo": ">=47.0.0",
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "workspaces": [
+    "example",
+    "packages/*"
+  ],
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNCKakaoCoreSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "net.mjstudio.rnkakao.core"
+    }
+  },
+  "sdkVersions": {
+    "ios": {
+      "core": "2.22.0",
+      "share": "2.22.0",
+      "user": "2.22.0",
+      "navi": "2.22.0",
+      "friend": "2.22.0",
+      "talk": "2.22.0"
+    },
+    "android": {
+      "minSdk": 21,
+      "targetSdk": 33,
+      "compileSdk": 33,
+      "kotlin": "1.7.0",
+      "ndk": "21.4.7075529",
+      "androidGradlePlugin": "7.2.1",
+      "core": "2.20.1",
+      "share": "2.20.1",
+      "user": "2.20.1",
+      "navi": "2.20.1",
+      "friend": "2.20.1",
+      "talk": "2.20.1"
+    }
+  },
+  "gitHead": "6b3c63345cd5d150800f7ab3ec4d88c5a2abbee9",
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "query-string": "^9.0.0",
+    "return-fetch": "^0.4.5"
+  }
+}

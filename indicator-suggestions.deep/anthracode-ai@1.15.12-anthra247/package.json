@@ -1,0 +1,26 @@
+{
+  "name": "anthracode-ai",
+  "version": "1.15.12-anthra247",
+  "description": "AnthraCode — AI coding agent for the terminal",
+  "keywords": ["ai", "cli", "coding-agent", "llm", "terminal", "tui"],
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "anthracode": "./bin/anthracode"
+  },
+  "scripts": {
+    "postinstall": "node ./postinstall.mjs"
+  },
+  "optionalDependencies": {
+    "anthracode-windows-x64": "1.15.12-anthra247",
+    "anthracode-linux-x64": "1.15.12-anthra247",
+    "anthracode-linux-arm64": "1.15.12-anthra247",
+    "anthracode-linux-x64-musl": "1.15.12-anthra247",
+    "anthracode-linux-arm64-musl": "1.15.12-anthra247",
+    "anthracode-darwin-arm64": "1.15.12-anthra247",
+    "anthracode-darwin-x64": "1.15.12-anthra247"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["anthracode-ai"]
+  }
+}

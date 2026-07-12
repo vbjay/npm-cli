@@ -1,0 +1,116 @@
+{
+  "name": "@hasna/projects",
+  "version": "0.1.89",
+  "description": "High-level project management CLI, MCP server, SDK, and AI SDK agent loop for coding agents",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "projects": "dist/cli/index.js",
+    "projects-mcp": "dist/mcp/index.js",
+    "projects-serve": "dist/serve/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./dashboard": {
+      "types": "./dist/project-dashboard.d.ts",
+      "import": "./dist/project-dashboard.js"
+    },
+    "./project-store": {
+      "types": "./dist/project-store.d.ts",
+      "import": "./dist/project-store.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    },
+    "./serve": {
+      "types": "./dist/serve/app.d.ts",
+      "import": "./dist/serve/app.js"
+    }
+  },
+  "files": [
+    "dist",
+    "migrations",
+    "hasna.contract.json",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "docs",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    ".cursor/hooks.json",
+    ".cursor/hooks/goal-continue.sh"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && bun build src/cli/index.ts --outdir dist/cli --target bun --external pg --external @hasna/contracts --external @hasna/contracts/auth --external @hasna/contracts/schemas && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk --external pg --external @hasna/contracts --external @hasna/contracts/auth --external @hasna/contracts/schemas && bun build src/serve/index.ts --outdir dist/serve --target bun --external pg --external @hasna/contracts --external @hasna/contracts/auth --external @hasna/contracts/sdk && bun build src/serve/app.ts --outdir dist/serve --target bun --external pg --external @hasna/contracts --external @hasna/contracts/auth --external @hasna/contracts/sdk && bun build src/sdk/index.ts --outdir dist/sdk --target bun && bun build src/index.ts src/project-store.ts src/project-dashboard.ts --outdir dist --target bun --external pg --external @hasna/contracts --external @hasna/contracts/auth --external @hasna/contracts/schemas && tsc --emitDeclarationOnly --outDir dist",
+    "sdk:generate": "bun run scripts/generate-sdk.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "dev:cli": "bun run src/cli/index.ts",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "prepack": "bun run build",
+    "prepublishOnly": "bun run typecheck && bun test",
+    "postinstall": "mkdir -p $HOME/.hasna/projects 2>/dev/null || true"
+  },
+  "keywords": [
+    "projects",
+    "project-management",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "agentic",
+    "openrouter",
+    "ai-sdk",
+    "cli",
+    "tmux"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/projects.git"
+  },
+  "homepage": "https://github.com/hasna/projects",
+  "bugs": {
+    "url": "https://github.com/hasna/projects/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/contracts": "0.4.2",
+    "@hasna/events": "0.1.3",
+    "@json-render/core": "0.19.0",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@openrouter/ai-sdk-provider": "^2.9.0",
+    "ai": "^6.0.197",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "nanoid": "^5.0.9",
+    "pg": "^8.13.3",
+    "zod": "3.25.76"
+  },
+  "peerDependencies": {
+    "@hasna/loops": ">=0.3.0"
+  },
+  "peerDependenciesMeta": {
+    "@hasna/loops": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@hasna/mcp-harness": "file:../open-mcp",
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.11.11",
+    "typescript": "^5.7.3"
+  }
+}

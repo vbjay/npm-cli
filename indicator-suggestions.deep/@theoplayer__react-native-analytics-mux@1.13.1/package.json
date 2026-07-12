@@ -1,0 +1,87 @@
+{
+  "name": "@theoplayer/react-native-analytics-mux",
+  "version": "1.13.1",
+  "description": "Mux analytics connector for @theoplayer/react-native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "*.tgz",
+    "CHANGELOG.md",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "typescript": "tsc --noEmit",
+    "build": "bob build",
+    "manifest": "node manifest.js > src/manifest.json",
+    "prepare": "npm run manifest && npm run build",
+    "clean": "rimraf lib android/build example/android/build example/android/app/build example/ios/build"
+  },
+  "keywords": [
+    "react-native",
+    "THEOplayer",
+    "ios",
+    "android",
+    "mux"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:THEOplayer/react-native-connectors.git"
+  },
+  "author": "Dolby Laboratories, Inc.",
+  "license": "BSD-3-Clause-Clear",
+  "homepage": "https://github.com/THEOplayer/react-native-connectors/tree/main/mux#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@mux/mux-data-theoplayer": "^4.17.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-theoplayer": "^7 || ^8 || ^9 || ^10 || ^11",
+    "theoplayer": "^7 || ^8 || ^9 || ^10 || ^11"
+  },
+  "peerDependenciesMeta": {
+    "theoplayer": {
+      "optional": true
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

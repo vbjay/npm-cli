@@ -1,0 +1,74 @@
+{
+  "name": "@zally-sdk/sdk-react-native",
+  "version": "1.6.2",
+  "description": "React Native SDK for zally – one npm package that wraps the native iOS and Android zally SDKs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "ios",
+    "android",
+    "app.plugin.js",
+    "ZallySdk.podspec",
+    "!**/__tests__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "build": "npm run build:ts",
+    "build:ts": "tsc",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [
+    "react-native",
+    "zally",
+    "sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zally-ltd/zally-react-native-sdk.git"
+  },
+  "author": "zally",
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "@expo/config-plugins": "*",
+    "react": ">=17.0.0",
+    "react-native": ">=0.72.0"
+  },
+  "peerDependenciesMeta": {
+    "@expo/config-plugins": {
+      "optional": true
+    }
+  },
+  "expo": {
+    "plugins": [
+      "./app.plugin.js"
+    ]
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^55.0.9",
+    "@types/react": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.4",
+    "@typescript-eslint/parser": "^8.59.4",
+    "@vitest/coverage-v8": "^4.0.0",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.3",
+    "react": "^18.2.0",
+    "react-native": "^0.74.0",
+    "typescript": "^5.3.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

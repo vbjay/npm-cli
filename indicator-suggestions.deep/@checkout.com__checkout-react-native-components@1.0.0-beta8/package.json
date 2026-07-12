@@ -1,0 +1,147 @@
+{
+  "name": "@checkout.com/checkout-react-native-components",
+  "version": "1.0.0-beta8",
+  "description": "React Native wrapper for native iOS & Android Checkout components",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "expo": "./plugin/withCheckout.js",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./app.plugin.js": "./app.plugin.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "plugin",
+    "app.plugin.js",
+    "src/native",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!ios/Mocks",
+    "!ios/Tests",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!android/src/test",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "author": "payment.experience@checkout.com",
+  "homepage": "https://www.npmjs.com/package/@checkout.com/checkout-react-native-components",
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "typecheck:build": "node ./scripts/typecheck-build.js",
+    "typecheck:examples": "tsc -p examples/CheckoutExpoNewArch/tsconfig.json --noEmit && tsc -p examples/CheckoutExpoOldArch/tsconfig.json --noEmit",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check": "biome check .",
+    "check:ci": "biome ci .",
+    "lint:fix": "biome check --write .",
+    "prepare": "bob build",
+    "postinstall": "node -e \"const fs=require('fs'); const cp=require('child_process'); if (!process.env.CI && fs.existsSync('lefthook.yml') && fs.existsSync('.git')) cp.execSync('yarn lefthook install', {stdio: 'inherit'});\"",
+    "commitlint": "commitlint"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.8",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@expo/config-plugins": "^9.0.16",
+    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native/babel-preset": "0.79.2",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@testing-library/react-hooks": "8.0.1",
+    "@testing-library/react-native": "13.3.0",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.0.0",
+    "commitlint": "^19.6.1",
+    "del-cli": "^5.1.0",
+    "jest": "^29.7.0",
+    "lefthook": "^2.1.0",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-builder-bob": "^0.40.13",
+    "react-test-renderer": "19.0.0",
+    "release-it": "^17.10.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "examples/*"
+  ],
+  "packageManager": "yarn@3.6.4",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true,
+          "sourceMaps": false
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "CheckoutReactNativeComponents",
+    "type": "all",
+    "jsSrcsDir": "src/native",
+    "android": {
+      "javaPackageName": "com.checkoutreactnativecomponents"
+    },
+    "ios": {
+      "componentProvider": {
+        "ApplePay": "ApplePay",
+        "Card": "Card",
+        "Flow": "Flow"
+      },
+      "modulesProvider": {
+        "CheckoutModule": "CheckoutModule"
+      }
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "version": "0.52.0"
+  },
+  "dependencies": {
+    "neverthrow": "^8.2.0"
+  }
+}

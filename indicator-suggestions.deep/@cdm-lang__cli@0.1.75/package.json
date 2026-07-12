@@ -1,0 +1,53 @@
+{
+  "name": "@cdm-lang/cli",
+  "version": "0.1.75",
+  "description": "CDM (Common Data Model) - A language for defining data models and generating code",
+  "main": "index.js",
+  "bin": {
+    "cdm": "./bin/cdm.js"
+  },
+  "scripts": {
+    "prepack": "chmod +x bin/cdm.js",
+    "postinstall": "node scripts/install.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cdm",
+    "data-model",
+    "schema",
+    "code-generation",
+    "cli",
+    "rust"
+  ],
+  "author": "CDM Lang",
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdm-lang/cdm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdm-lang/cdm/issues"
+  },
+  "homepage": "https://github.com/cdm-lang/cdm#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin/cdm.js",
+    "scripts/",
+    "index.js",
+    "README.npm.md"
+  ]
+}

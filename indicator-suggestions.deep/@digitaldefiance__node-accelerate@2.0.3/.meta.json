@@ -1,0 +1,115 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2446e185babe3abe",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/check-platform.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "ff31b1ada3d95383e7be807e3135744bed142ee2fa67944efd5f773c1562c011",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `accelerate`  -  C/C++ sources",
+            "items": [
+              "accelerate.cc"
+            ]
+          },
+          {
+            "label": "Target `accelerate`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check-platform.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "2dc576456b76c120d938e707730f25f7558b65caef7178562b08f6fdc89b2d33",
+        "sizeBytes": 3481,
+        "signals": [
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://www.openblas.net/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://eigen.tuxfamily.org/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/flame/blis",
+            "classification": "reference"
+          },
+          {
+            "url": "https://nodejs.org/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:58.064Z"
+  },
+  "hash": "sha256:1d1b494b7b84f4dc68090135e3732bffb2c661d7346277331d732903f8960181"
+}

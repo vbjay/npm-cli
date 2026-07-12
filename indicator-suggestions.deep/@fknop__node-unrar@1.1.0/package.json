@@ -1,0 +1,51 @@
+{
+  "name": "@fknop/node-unrar",
+  "version": "1.1.0",
+  "description": "Native NodeJS rar addon",
+  "main": "lib/index.js",
+  "files": [
+    "src",
+    "lib",
+    "tsconfig.json",
+    "vendor",
+    "binding.gyp"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build",
+    "tsc": "tsc -p tsconfig.json",
+    "prepublish": "npm run tsc"
+  },
+  "keywords": [
+  	"node",
+    "addon",
+    "rar",
+    "unrar",
+    "fknop",
+    "native"
+  ],
+  "author": "Florian Knop",
+  "license": "MIT",
+  "gypfile": true,
+  "dependencies": {
+    "bindings": "^1.2.1",
+    "nan": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/es6-promise": "0.0.32",
+    "@types/node": "0.0.1",
+    "typescript": "^2.0.10"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fknop/node-unrar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fknop/node-unrar/issues"
+  },
+  "homepage": "https://github.com/fknop/node-unrar#readme"
+}

@@ -1,0 +1,64 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6efccd37f212346a",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/build-native.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build-native.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`; referenced by lifecycle script: `build:native`",
+        "sha256": "c5f9ac04f091de8127da6f5498f8818c1db2eeedfb96df1ad6c01af265419519",
+        "sizeBytes": 1144,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/vendor-rust.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:54.640Z"
+  },
+  "hash": "sha256:7c7bdd4403183ea685981c18f9c035e306044bee7b27f30714c8b53059723b2a"
+}

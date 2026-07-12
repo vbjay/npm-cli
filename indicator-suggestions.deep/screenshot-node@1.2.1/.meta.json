@@ -1,0 +1,76 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fae5f761638df086",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "10837ee47072658ee0dc4a21ff0880c9ebd261e3af2b46f82b048f68f55ab685",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `screenshot`  -  C/C++ sources",
+            "items": [
+              "src/linux/screenshot_linux.cpp",
+              "src/linux/prtscn_linux.c",
+              "src/osx/screenshot_osx.cpp",
+              "src/osx/prtscn_osx.mm",
+              "src/windows/screenshot_windows.cpp",
+              "src/windows/prtscn_windows.cpp"
+            ]
+          },
+          {
+            "label": "Target `screenshot`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")"
+            ]
+          },
+          {
+            "label": "Target `screenshot`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:08.762Z"
+  },
+  "hash": "sha256:0e254ed67c31943d9a5e321e080ed2f0f3b4f5980b995dec76c7b930c99f7b48"
+}

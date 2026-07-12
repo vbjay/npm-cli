@@ -1,0 +1,64 @@
+{
+  "name": "wasm-gerber-renderer",
+  "version": "0.5.0",
+  "description": "Browser and Node WebGL2 Gerber renderer powered by wasm-gerber-viewer",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./node": {
+      "types": "./node.d.ts",
+      "default": "./node.js"
+    }
+  },
+  "bin": {
+    "gerber-renderer": "bin/wasm-gerber-renderer.js"
+  },
+  "homepage": "https://github.com/dsafdsaf132/wasm-gerber-viewer#readme",
+  "bugs": {
+    "url": "https://github.com/dsafdsaf132/wasm-gerber-viewer/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "index.js",
+    "index.d.ts",
+    "node.js",
+    "node.d.ts",
+    "shared.js",
+    "README.md",
+    "SKILL.md",
+    "LICENSE",
+    "wasm/**/*"
+  ],
+  "scripts": {
+    "build:wasm": "../../scripts/vercel-build.sh",
+    "stage:wasm": "node scripts/stage-wasm.mjs",
+    "clean:wasm": "node scripts/clean-wasm.mjs",
+    "prepack": "npm run build:wasm && npm run stage:wasm",
+    "postpack": "npm run clean:wasm",
+    "prepublishOnly": "npm run check",
+    "check": "node --check index.js && node --check node.js && node --check shared.js && node --check bin/wasm-gerber-renderer.js && node --check scripts/stage-wasm.mjs && node --check scripts/clean-wasm.mjs && node --test test/*.test.mjs",
+    "verify:publish": "npm run check && npm pack --dry-run"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsafdsaf132/wasm-gerber-viewer.git",
+    "directory": "packages/wasm-gerber-renderer"
+  },
+  "keywords": [
+    "gerber",
+    "rs-274x",
+    "webgl",
+    "wasm",
+    "pcb"
+  ],
+  "sideEffects": false
+}

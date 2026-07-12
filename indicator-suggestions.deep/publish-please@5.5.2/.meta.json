@@ -1,0 +1,102 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "da0ad6b44f0dd7b7",
+    "fetchedFiles": [
+      "lib/post-install.js",
+      "lib/pre-install.js",
+      "lib/utils/fluent-syntax.js",
+      "lib/utils/get-npm-args.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/pre-install.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "71f7b133cd1d9e05ada75e4714ab84862bcf18e15c5fde875452eabf60bf7579",
+        "sizeBytes": 435,
+        "signals": [
+          "dynamic-require"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/post-install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4b709c938260b3e84d0708edebef4e21d53d4c1e2211aebbea6cbb229a7b8f4c",
+        "sizeBytes": 680,
+        "signals": [
+          "reads-process-env",
+          "dynamic-require",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/utils/get-npm-args.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/utils/get-npm-args.js",
+        "reason": "required by ./lib/post-install.js",
+        "sha256": "5ae2320f76f2cec23760c7595a40d22ac197bff98fa7846153512f7b7eb26bbf",
+        "sizeBytes": 1787,
+        "signals": [
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/utils/fluent-syntax.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/utils/fluent-syntax.js",
+        "reason": "required by ./lib/utils/get-npm-args.js",
+        "sha256": "5d07cc101c208a1ec41937d2ea8c793a958fd0161dc6d3a0a5b206bd8e5632f8",
+        "sizeBytes": 670,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:28.219Z"
+  },
+  "hash": "sha256:6c541a2c16eb34cecab8ece99707ae46cf4eaa8b81c038219b7033e271d9c447"
+}

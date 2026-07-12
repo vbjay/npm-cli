@@ -1,0 +1,126 @@
+{
+  "name": "ztrack",
+  "version": "1.2.0",
+  "description": "A typechecker for your issue tracker — every checked acceptance criterion must cite a real commit and proof, verified by `ztrack check` (and enforced on coding agents via a loop gate).",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "files": [
+    "ARCHITECTURE.md",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "ROADMAP.md",
+    "scripts/build-node-cli.mjs",
+    "SECURITY.md",
+    "SUPPORT.md",
+    "boilerplates/README.md",
+    "boilerplates/presets",
+    "!boilerplates/presets/*.test.ts",
+    "demos",
+    "docs",
+    "!docs/demo.gif",
+    "dist",
+    "hooks",
+    "plugins",
+    "visualizer",
+    "!visualizer/node_modules",
+    "!dist/src/**/*.test.*"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/src/sdk.d.ts",
+      "default": "./dist/src/sdk.js"
+    },
+    "./preset-kit": {
+      "types": "./dist/src/presetKit.d.ts",
+      "require": "./dist/preset-kit.cjs",
+      "default": "./dist/src/presetKit.js"
+    },
+    "./check": {
+      "types": "./dist/src/check.d.ts",
+      "default": "./dist/src/check.js"
+    },
+    "./world-annotations": {
+      "types": "./dist/src/worldAnnotations.d.ts",
+      "default": "./dist/src/worldAnnotations.js"
+    },
+    "./world-source-books": {
+      "types": "./dist/src/worldSourceBooks.d.ts",
+      "default": "./dist/src/worldSourceBooks.js"
+    }
+  },
+  "bin": {
+    "ztrack": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "npm run build:node-cli",
+    "build:node-cli": "node scripts/build-node-cli.mjs",
+    "cli": "bun run src/cli.ts",
+    "visualizer": "bun run visualizer/server.ts",
+    "prepack": "npm run build:node-cli",
+    "test": "bun test",
+    "test:parallel": "node scripts/test-parallel.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "mdast-util-from-markdown": "2.0.3",
+    "mdast-util-gfm": "3.1.0",
+    "mdast-util-to-markdown": "2.1.2",
+    "micromark-extension-gfm": "3.0.0",
+    "zod": "4.4.2"
+  },
+  "peerDependencies": {
+    "@volter-ai-dev/twin": "^0.1.0",
+    "@volter-ai-dev/twin-github": "^0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@volter-ai-dev/twin": {
+      "optional": true
+    },
+    "@volter-ai-dev/twin-github": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.20",
+    "@types/node": "^24.0.0",
+    "@volter-ai-dev/twin": "^0.1.0",
+    "@volter-ai-dev/twin-github": "^0.1.0",
+    "typescript": "^5.9.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volter-ai/ztrack.git"
+  },
+  "homepage": "https://ztrack.dev",
+  "bugs": {
+    "url": "https://github.com/volter-ai/ztrack/issues"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "ai-agents",
+    "cli",
+    "developer-tools",
+    "task-management",
+    "issue-tracker",
+    "mcp",
+    "zod",
+    "verification",
+    "ci",
+    "markdown",
+    "acceptance-criteria",
+    "agent-verification",
+    "sources"
+  ]
+}

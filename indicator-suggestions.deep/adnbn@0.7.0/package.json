@@ -1,0 +1,227 @@
+{
+  "name": "adnbn",
+  "type": "module",
+  "version": "0.7.0",
+  "description": "Addon Bone - Cross-browser web extension framework with shared code base",
+  "homepage": "https://addonbone.com",
+  "author": "Anjey Tsibylskij (https://github.com/atldays)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/addon-stack/addon-bone.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "bugs": {
+    "url": "https://github.com/addon-stack/addon-bone/issues"
+  },
+  "keywords": [
+    "addon",
+    "extension",
+    "browser",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera",
+    "safari"
+  ],
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "bin",
+    "dist",
+    "scripts",
+    "types"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "bin": {
+    "adnbn": "bin/adnbn.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./entry/*": {
+      "types": "./dist/entry/*/index.d.ts",
+      "default": "./dist/entry/*/index.js"
+    },
+    "./entry/content/*": {
+      "types": "./dist/entry/content/adapters/*/index.d.ts",
+      "default": "./dist/entry/content/adapters/*/index.js"
+    },
+    "./entry/view/*": {
+      "types": "./dist/entry/view/adapters/*/index.d.ts",
+      "default": "./dist/entry/view/adapters/*/index.js"
+    },
+    "./locale": {
+      "types": "./dist/locale/index.d.ts",
+      "default": "./dist/locale/index.js"
+    },
+    "./locale/*": {
+      "types": "./dist/locale/adapters/*/index.d.ts",
+      "default": "./dist/locale/adapters/*/index.js"
+    },
+    "./message": {
+      "types": "./dist/message/index.d.ts",
+      "default": "./dist/message/index.js"
+    },
+    "./message/*": {
+      "types": "./dist/message/adapters/*/index.d.ts",
+      "default": "./dist/message/adapters/*/index.js"
+    },
+    "./offscreen": {
+      "types": "./dist/offscreen/index.d.ts",
+      "default": "./dist/offscreen/index.js"
+    },
+    "./relay": {
+      "types": "./dist/relay/index.d.ts",
+      "default": "./dist/relay/index.js"
+    },
+    "./sandbox": {
+      "types": "./dist/sandbox/index.d.ts",
+      "default": "./dist/sandbox/index.js"
+    },
+    "./service": {
+      "types": "./dist/service/index.d.ts",
+      "default": "./dist/service/index.js"
+    },
+    "./transport": {
+      "types": "./dist/transport/index.d.ts",
+      "default": "./dist/transport/index.js"
+    },
+    "./client-types": {
+      "types": "./types/client.d.ts"
+    }
+  },
+  "scripts": {
+    "adnbn": "tsx ./src/cli/index.ts",
+    "prepare": "husky",
+    "preinstall": "npm run check:node-version",
+    "prepublishOnly": "npm run build",
+    "build": "tsup && tsc -p tsconfig.build.json && node ./scripts/copy-dts.js && tsc-alias -p tsconfig.build.json -f -fe .js",
+    "format": "prettier --write .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "check:node-version": "node ./scripts/check-node-version.js",
+    "test": "jest",
+    "test:ci": "jest --ci --passWithNoTests --coverage",
+    "test:watch": "jest --watch",
+    "test:offscreen": "jest --testPathPatterns=Offscreen",
+    "test:message": "jest --testPathPatterns=src/message",
+    "test:service": "jest --testPathPatterns=Service",
+    "test:relay": "jest --testPathPatterns=Relay",
+    "test:locale": "jest --testPathPatterns=Locale",
+    "test:manifest": "jest --testPathPatterns=src/cli/builders/manifest",
+    "test:entrypoint": "jest --testPathPatterns=src/cli/entrypoint",
+    "test:plugins": "jest --testPathPatterns=src/cli/plugins",
+    "release": "release-it",
+    "release:preview": "release-it --no-github.release --no-npm.publish --no-git.tag --ci"
+  },
+  "dependencies": {
+    "@addon-core/browser": "^0.6.0",
+    "@addon-core/inject-script": "^0.3.1",
+    "@addon-core/storage": "^0.6.0",
+    "@rsdoctor/rspack-plugin": "^1.5.1",
+    "@rspack/cli": "^1.7.5",
+    "@rspack/core": "^1.7.5",
+    "@svgr/webpack": "^8.1.0",
+    "await-lock": "^3.0.0",
+    "c12": "^3.3.2",
+    "cac": "^6.7.14",
+    "consola": "^3.4.2",
+    "css-loader": "^7.1.2",
+    "debounce": "^2.2.0",
+    "file-loader": "^6.2.0",
+    "get-value": "^4.0.1",
+    "html-rspack-tags-plugin": "^0.0.3",
+    "js-yaml": "^4.1.1",
+    "json-stringify-deterministic": "^1.0.12",
+    "lodash": "4.18.1",
+    "mini-css-extract-plugin": "^2.9.2",
+    "nanoid": "^5.1.4",
+    "pluralize": "^8.0.0",
+    "postcss": "^8.5.15",
+    "postcss-scss": "^4.0.9",
+    "rspack-plugin-virtual-module": "^1.0.1",
+    "sass": "^1.83.4",
+    "sass-loader": "^16.0.4",
+    "semver": "^7.7.3",
+    "source-modifier-loader": "^1.0.2",
+    "tsconfig-paths": "^4.2.0",
+    "type-fest": "^4.37.0",
+    "typescript": "^5.7.3",
+    "webpack-merge": "^6.0.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@microsoft/api-extractor": "^7.53.1",
+    "@release-it/conventional-changelog": "^10.0.4",
+    "@swc/core": "^1.11.7",
+    "@swc/jest": "^0.2.36",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/chrome": "^0.1.3",
+    "@types/jest": "^29.5.14",
+    "@types/js-yaml": "^4.0.9",
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.13.1",
+    "@types/pluralize": "^0.0.33",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@types/semver": "^7.7.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "esbuild": "^0.25.10",
+    "esbuild-fix-imports-plugin": "^1.0.22",
+    "esbuild-plugin-raw": "^0.3.0",
+    "fs-extra": "^11.3.0",
+    "glob": "^13.0.1",
+    "globby": "^14.1.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.0.0",
+    "jest-webextension-mock": "^4.0.0",
+    "prettier": "^3.6.2",
+    "release-it": "^19.2.3",
+    "ts-node": "10.9.2",
+    "tsc-alias": "^1.8.17",
+    "tsup": "^8.5.0",
+    "tsx": "^4.19.2",
+    "uglify-js": "^3.19.3",
+    "utility-types": "^3.11.0"
+  },
+  "optionalDependencies": {
+    "@esbuild/darwin-arm64": "0.20.2"
+  },
+  "peerDependencies": {
+    "@types/chrome": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+    "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    }
+  },
+  "overrides": {
+    "glob": "$glob",
+    "jsdom": "27.4.0",
+    "test-exclude": "^7.0.1",
+    "tsup": {
+      "source-map": "^0.7.4"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "lc-workflow",
+  "version": "0.4.0",
+  "description": "面向团队的本地 AI 开发工作流框架",
+  "type": "module",
+  "bin": {
+    "lc": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run typecheck && npm run build && npm pack --dry-run"
+  },
+  "keywords": [
+    "ai-workflow",
+    "claude-code",
+    "cursor",
+    "trellis",
+    "developer-tools",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "fs-extra": "^11.3.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.5",
+    "@types/prompts": "^2.4.9",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}

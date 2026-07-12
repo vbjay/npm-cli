@@ -1,0 +1,94 @@
+{
+  "name": "@sundaeswap/sprinkles",
+  "version": "0.9.0",
+  "description": "A TypeScript library for building interactive CLI menus and TUI applications with TypeBox schema validation",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engineStrict": true,
+  "engines": {
+    "node": "^22"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "build:esm": "cross-env BABEL_ENV=esmUnbundled babel src --extensions '.ts,.tsx' --out-dir './dist/esm' --source-maps",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel src --extensions '.ts,.tsx' --out-dir 'dist/cjs' --source-maps",
+    "types": "tsc --project ./tsconfig.build.json",
+    "build": "bun clean && bun types && bun build:esm && bun build:cjs && bun set-cjs",
+    "watch": "bun clean && bun run build && bun build:esm --watch",
+    "set-cjs": "echo '{ \"type\": \"commonjs\" }' > ./dist/cjs/package.json",
+    "test": "bun test src/",
+    "prepublishOnly": "bun run build",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "bun run build && changeset publish",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "cli",
+    "tui",
+    "terminal",
+    "interactive",
+    "menu",
+    "typebox",
+    "inquirer",
+    "cardano"
+  ],
+  "author": "SundaeSwap Labs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SundaeSwap-finance/sprinkles.git"
+  },
+  "homepage": "https://github.com/SundaeSwap-finance/sprinkles#readme",
+  "bugs": {
+    "url": "https://github.com/SundaeSwap-finance/sprinkles/issues"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3",
+    "@blaze-cardano/sdk": "^0.2.33",
+    "@blaze-cardano/query": "^0.5.0",
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@modelcontextprotocol/sdk": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.4",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-typescript": "^7.27.1",
+    "@changesets/cli": "^2.27.1",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@types/bun": "latest",
+    "@types/node": "^20.0.0",
+    "cross-env": "^7.0.3",
+    "husky": "^9.1.7",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.5.3",
+    "@sinclair/typebox": "^0.34.41",
+    "clipboardy": "^5.2.1"
+  }
+}

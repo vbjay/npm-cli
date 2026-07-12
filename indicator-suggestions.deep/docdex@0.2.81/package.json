@@ -1,0 +1,67 @@
+{
+  "name": "docdex",
+  "version": "0.2.81",
+  "mcpName": "io.github.bekirdag/docdex",
+  "description": "Local-first documentation and code indexer with HTTP/MCP search, AST, and agent memory.",
+  "bin": {
+    "docdex": "lib/cli_entry.js",
+    "docdexd": "lib/cli_entry.js",
+    "docdex-mcp-stdio": "lib/mcp_stdio_cli.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "assets",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node ./lib/install.js",
+    "preuninstall": "node ./lib/uninstall.js",
+    "postuninstall": "node ./lib/uninstall.js",
+    "test": "node --test",
+    "pack:verify": "node --test test/packaging_guardrails.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bekirdag/docdex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bekirdag/docdex/issues"
+  },
+  "homepage": "https://docdex.org",
+  "license": "MIT",
+  "author": "bekir dağ",
+  "keywords": [
+    "docdex",
+    "documentation",
+    "search",
+    "index",
+    "code-search",
+    "mcp",
+    "ai",
+    "agent",
+    "rag",
+    "knowledge-base",
+    "cli"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "tar": "^6.2.1"
+  }
+}

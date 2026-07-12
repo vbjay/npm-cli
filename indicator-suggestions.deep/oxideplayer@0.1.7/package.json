@@ -1,0 +1,75 @@
+{
+  "name": "oxideplayer",
+  "version": "0.1.7",
+  "description": "OxidePlayer - a small React video player with optional WASM processing",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "video-player",
+    "video",
+    "player",
+    "wasm",
+    "webassembly",
+    "rust",
+    "frame-processing",
+    "media-player",
+    "react-component",
+    "typescript",
+    "vite",
+    "video-component",
+    "html5-video",
+    "custom-controls"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "dist/oxideplayer.cjs",
+  "module": "dist/oxideplayer.esm.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/oxideplayer.esm.js",
+      "require": "./dist/oxideplayer.cjs",
+      "default": "./dist/oxideplayer.esm.js"
+    },
+    "./style.css": "./dist/oxideplayer.css"
+  },
+  "sideEffects": [
+    "./dist/oxideplayer.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PaulSpaurgen/video-player"
+  },
+  "homepage": "https://github.com/PaulSpaurgen/video-player"
+}

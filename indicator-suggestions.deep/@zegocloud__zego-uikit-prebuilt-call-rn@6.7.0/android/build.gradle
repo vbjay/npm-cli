@@ -1,0 +1,83 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext {
+        DEFAULT_BUILD_TOOLS_VERSION = "31.0.0"
+        DEFAULT_MIN_SDK_VERSION = 21
+        DEFAULT_COMPILE_SDK_VERSION = 31
+        DEFAULT_TARGET_SDK_VERSION = 31
+        DEFAULT_KOTLIN_VERSION = "1.8.0"
+
+        safeExtGet = {prop, fallback ->
+            rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+        }
+    }
+    
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${safeExtGet('kotlinVersion', (DEFAULT_KOTLIN_VERSION))}"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+        /*ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+        }*/
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    // sourceSets { main { jniLibs.srcDirs = ['libs'] } }
+    // tag-add-jni-dir: Do not remove me
+}
+
+repositories {
+    // ref: https://www.baeldung.com/maven-local-repository
+    mavenLocal()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url "$rootDir/../node_modules/react-native/android"
+    }
+    maven {
+        // Android JSC is installed from npm
+        url "$rootDir/../node_modules/jsc-android/dist"
+    }
+    google()
+}
+
+rootProject.allprojects {
+    repositories {
+        maven { url 'https://maven.zego.im' }
+        google()
+    }
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+'
+    // api fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+
+    implementation "com.elvishew:xlog:1.11.1"
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+}

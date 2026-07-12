@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "43453b4c12520188",
+    "fetchedFiles": [
+      "index.js",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "zx",
+        "versionSpec": "^8.1.8"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "zx@8.8.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6d08701576d1824622d3fa01ba0ad1e973b5f81e085277d3d9f04a7ec5710eb8",
+        "sizeBytes": 2089,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "f90a7ef2672d3d5c68dd5d46755f141a718c3e815a4ea0908fdde4efe0b163e8",
+        "sizeBytes": 2335,
+        "signals": [
+          "network-access",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://ziglang.org/download/index.json",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:15.872Z"
+  },
+  "hash": "sha256:28d776f3d0c3dd1b8924a0dfdc6d38e2625d8f8041a40b58c2bad326dc325176"
+}

@@ -1,0 +1,65 @@
+{
+  "name": "@lifeaitools/clauth",
+  "version": "1.19.4",
+  "description": "Hardware-bound credential vault for the LIFEAI infrastructure stack",
+  "type": "module",
+  "bin": {
+    "clauth": "./cli/index.js"
+  },
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "test": "node --test cli/commands/scrub.test.js cli/api.classify.test.js && node test-auth-verdict.mjs",
+    "test:agent-pool": "node test/agent-pool.test.mjs",
+    "test:call-agent-10": "node test/call-agent-10-skills.test.mjs",
+    "test:call-agent-guard": "node test/call-agent-guard.test.mjs",
+    "postinstall": "node scripts/postinstall.js",
+    "worker:start": "node cli/index.js serve",
+    "worker:stop": "curl -s http://127.0.0.1:52437/shutdown 2>nul || taskkill /F /IM cloudflared.exe 2>nul & exit 0",
+    "worker:restart": "npm run worker:stop && timeout /t 3 /nobreak >nul && npm run worker:start"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "conf": "^13.0.0",
+    "inquirer": "^10.1.0",
+    "node-fetch": "^3.3.2",
+    "ora": "^8.1.0",
+    "@vscode/ripgrep": "^1.15.9",
+    "fast-glob": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "lifeai",
+    "credentials",
+    "vault",
+    "cli",
+    "prt"
+  ],
+  "author": "Dave Ladouceur <dave@life.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LIFEAI/clauth.git"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^5.3.0"
+  },
+  "files": [
+    "cli/",
+    "scripts/bin/",
+    "scripts/bootstrap.cjs",
+    "scripts/build.sh",
+    "scripts/postinstall.js",
+    "supabase/",
+    ".clauth-skill/",
+    "install.sh",
+    "install.ps1",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/LIFEAI/clauth"
+}

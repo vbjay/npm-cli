@@ -1,0 +1,59 @@
+{
+  "name": "@kishannareshpal/expo-pdf",
+  "version": "0.3.2",
+  "author": "Kishan Jadav <kishan_jadav@hotmail.com> (https://github.com/kishannareshpal)",
+  "repository": "https://github.com/kishannareshpal/expo-pdf",
+  "main": "build/index.js",
+  "devDependencies": {
+    "@types/react": "~19.1.0",
+    "expo": "^54.0.27",
+    "expo-module-scripts": "^5.0.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "react-native": "0.81.5"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/kishannareshpal/expo-pdf/issues"
+  },
+  "description": "A cross-platform, performant PDF viewer component for React Native and Expo",
+  "homepage": "https://github.com/kishannareshpal/expo-pdf#readme",
+  "keywords": [
+    "react-native",
+    "expo",
+    "@kishannareshpal/expo-pdf",
+    "rn-pdf",
+    "react-native-pdf",
+    "expo-pdf",
+    "pdf",
+    "expopdf"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.{java,kt,swift,h,m,mm}": [
+      "prettier --write"
+    ]
+  },
+  "scripts": {
+    "build": "bun run em build",
+    "clean": "bun run em clean",
+    "lint": "bun run em lint",
+    "test": "bun run em test",
+    "prepublishOnly": "bun run em prepublishOnly",
+    "em": "bunx expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "format": "bunx prettier --write .",
+    "format:check": "bunx prettier --check .",
+    "prepare": "bunx husky; bun run em prepare"
+  },
+  "types": "build/index.d.ts"
+}

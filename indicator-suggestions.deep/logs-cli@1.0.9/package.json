@@ -1,0 +1,61 @@
+{
+  "name": "logs-cli",
+  "version": "1.0.9",
+  "description": "Turns AI coding sessions into a clear, portable work trail. Git has the diff. Logs has the session.",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "cli",
+    "session",
+    "trail",
+    "git",
+    "code-review",
+    "developer-tools"
+  ],
+  "license": "MIT",
+  "author": "wclinchard",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wclinchard/logs.git"
+  },
+  "homepage": "https://github.com/wclinchard/logs#readme",
+  "bugs": {
+    "url": "https://github.com/wclinchard/logs/issues"
+  },
+  "bin": {
+    "logs": "dist/cli.js"
+  },
+  "files": [
+    "dist/cli.js",
+    "dist/types.js",
+    "dist/commands/",
+    "dist/core/",
+    "scripts/postinstall.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && ./node_modules/typescript/bin/tsc",
+    "postinstall": "node scripts/postinstall.js",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node dist/test-parser.js",
+    "release": "npm version patch -m \"release v%s\" && npm publish && git push --follow-tags",
+    "release:minor": "npm version minor -m \"release v%s\" && npm publish && git push --follow-tags",
+    "release:major": "npm version major -m \"release v%s\" && npm publish && git push --follow-tags"
+  },
+  "dependencies": {
+    "node-pty": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.9.3"
+  }
+}

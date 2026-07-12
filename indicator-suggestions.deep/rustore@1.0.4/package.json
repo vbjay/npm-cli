@@ -1,0 +1,87 @@
+{
+  "name": "rustore",
+  "version": "1.0.4",
+  "description": "CLI для работы с RuStore API",
+  "license": "MIT",
+  "homepage": "https://github.com/romankurnovskii/rustore#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romankurnovskii/rustore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/romankurnovskii/rustore/issues"
+  },
+  "keywords": [
+    "rustore",
+    "api",
+    "cli",
+    "android",
+    "app-store",
+    "apk",
+    "aab"
+  ],
+  "author": {
+    "name": "Roman Kurnovskii",
+    "email": "r.kurnovskii@gmail.com",
+    "url": "https://romankurnovskii.com"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "rustore": "./dist/bin.js"
+  },
+  "scripts": {
+    "start": "tsx src/bin.ts",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint \"{src,tests,example/src}/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"{src,tests,example/src}/**/*.{ts,tsx}\"",
+    "format": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
+    "format:check": "prettier --check \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
+    "test": "jest --config jestconfig.json",
+    "test:watch": "jest --config jestconfig.json --watch",
+    "test:coverage": "jest --config jestconfig.json --coverage",
+    "prepare": "husky",
+    "prepublishOnly": "npm run type-check && npm run build && npm test -- --runInBand && npm run format:check && npm run lint"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "commander": "^14.0.2"
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^5.5.4",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
+    "@typescript-eslint/parser": "^8.50.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "ts-jest": "^29.4.6",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

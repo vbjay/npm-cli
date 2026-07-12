@@ -1,0 +1,43 @@
+{
+  "name": "agentswarm-cli",
+  "version": "1.4.39",
+  "type": "module",
+  "license": "MIT",
+  "description": "Agent Swarm CLI for the terminal.",
+  "homepage": "https://github.com/VRSEN/agentswarm-cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VRSEN/agentswarm-cli.git"
+  },
+  "keywords": [
+    "agent-swarm",
+    "agents",
+    "cli",
+    "tui",
+    "terminal"
+  ],
+  "bin": {
+    "agentswarm": "./bin/agentswarm"
+  },
+  "scripts": {
+    "postinstall": "bun ./postinstall.mjs || node ./postinstall.mjs"
+  },
+  "optionalDependencies": {
+    "@vrsen/agentswarm-cli-windows-arm64": "1.4.39",
+    "@vrsen/agentswarm-cli-windows-x64": "1.4.39",
+    "@vrsen/agentswarm-cli-linux-arm64-musl": "1.4.39",
+    "@vrsen/agentswarm-cli-linux-x64-baseline-musl": "1.4.39",
+    "@vrsen/agentswarm-cli-darwin-x64": "1.4.39",
+    "@vrsen/agentswarm-cli-linux-arm64": "1.4.39",
+    "@vrsen/agentswarm-cli-windows-x64-baseline": "1.4.39",
+    "@vrsen/agentswarm-cli-linux-x64-baseline": "1.4.39",
+    "@vrsen/agentswarm-cli-linux-x64-musl": "1.4.39",
+    "@vrsen/agentswarm-cli-darwin-arm64": "1.4.39",
+    "@vrsen/agentswarm-cli-linux-x64": "1.4.39",
+    "@vrsen/agentswarm-cli-darwin-x64-baseline": "1.4.39"
+  },
+  "platformScope": "@vrsen",
+  "publishConfig": {
+    "access": "public"
+  }
+}

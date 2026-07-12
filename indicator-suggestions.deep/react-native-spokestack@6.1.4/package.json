@@ -1,0 +1,183 @@
+{
+  "name": "react-native-spokestack",
+  "version": "6.1.4",
+  "description": "React Native plugin for adding voice using Spokestack",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "scripts": {
+    "bootstrap": "concurrently --raw \"npm i\" \"cd example && npm i\" && npm run pods",
+    "build": "bob build",
+    "docs": "typedoc --excludePrivate --tsconfig tsconfig.typedoc.json --plugin typedoc-plugin-markdown --hideBreadcrumbs --out docs --readme none src/index.ts && node tasks/docs.js",
+    "format": "prettier --write \"**/*.tsx\" \"**/*.ts\" \"**/*.js\" \"**/*.md\" \"**/*.json\"",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" && prettier --check \"**/*.md\" \"**/*.json\"",
+    "pods": "cd example && npx pod-install --quiet",
+    "prepare": "husky install && npm run build",
+    "release": "release-it",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "jest --runInBand",
+    "test:watch": "jest --coverage --watchAll",
+    "typescript": "tsc -p tsconfig.json --noEmit"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "EVENTS.md",
+    "react-native-spokestack.podspec",
+    "!lib/typescript/example",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "speech",
+    "voice",
+    "asr",
+    "tts"
+  ],
+  "repository": "https://github.com/spokestack/react-native-spokestack",
+  "contributors": [
+    "Noel Weichbrodt <noel@spokestack.io>",
+    "Timmy Willison <4timmywil@gmail.com>"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/spokestack/react-native-spokestack/issues"
+  },
+  "homepage": "https://github.com/spokestack/react-native-spokestack#readme",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.60.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/config-conventional": "^13.1.0",
+    "@react-native-community/eslint-config": "^3.0.0",
+    "@release-it/conventional-changelog": "^3.2.0",
+    "@types/jest": "^27.0.1",
+    "@types/react": "^17.0.18",
+    "@types/react-native": "^0.64.13",
+    "commitlint": "^13.1.0",
+    "concurrently": "^6.2.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.1",
+    "jest": "^27.0.6",
+    "pod-install": "^0.1.26",
+    "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "react-native": "^0.65.0",
+    "react-native-builder-bob": "^0.18.1",
+    "release-it": "^14.11.5",
+    "typedoc": "^0.21.5",
+    "typedoc-plugin-markdown": "^3.10.4",
+    "typescript": "^4.3.5"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/example/",
+      "/tasks/",
+      "/test/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "ignore"
+        }
+      ],
+      "no-fallthrough": "off",
+      "no-shadow": "off",
+      "prettier/prettier": "error",
+      "react-native/no-inline-styles": "off",
+      "react-hooks/exhaustive-deps": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "coverage/",
+    "lib/",
+    "docs/"
+  ],
+  "prettier": {
+    "arrowParens": "always",
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "release-it": {
+    "hooks": {
+      "after:bump": "npm run build && npm run docs && git add README.md"
+    },
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "SPOKESTACK_GITHUB_TOKEN"
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "perf",
+              "section": "Performance Improvements"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

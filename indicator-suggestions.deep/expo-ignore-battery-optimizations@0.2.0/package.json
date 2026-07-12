@@ -1,0 +1,54 @@
+{
+  "name": "expo-ignore-battery-optimizations",
+  "version": "0.2.0",
+  "description": "android ignore battery optimizations",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "changeset": "changeset",
+    "changeset:publish": "yarn build && changeset publish",
+    "changeset:version": "changeset version && yarn --lockfile-only",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "format": "biome format --write"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-ignore-battery-optimizations",
+    "ExpoIgnoreBatteryOptimizations"
+  ],
+  "repository": "https://github.com/fe-dudu/expo-ignore-battery-optimizations",
+  "bugs": {
+    "url": "https://github.com/fe-dudu/expo-ignore-battery-optimizations/issues"
+  },
+  "author": "fe-dudu <ehehwhdwhd@naver.com> (https://github.com/fe-dudu)",
+  "license": "MIT",
+  "homepage": "https://github.com/fe-dudu/expo-ignore-battery-optimizations#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.2",
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.3",
+    "@types/react": "~19.0.0",
+    "expo": "~53.0.0",
+    "expo-module-scripts": "^4.1.6",
+    "react-native": "0.79.1"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "yarn@1.22.22"
+}

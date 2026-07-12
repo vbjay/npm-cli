@@ -1,0 +1,54 @@
+{
+  "name": "@as-pect/assembly",
+  "version": "9.0.0",
+  "description": "Write AssemblyScript tests at blazing fast speeds",
+  "types": "types/as-pect.d.ts",
+  "type": "module",
+  "scripts": {
+    "asp:ci": "node --experimental-wasi-unstable-preview1 ../cli/lib/test.js --summary",
+    "asp": "node --experimental-wasi-unstable-preview1 ../cli/lib/test.js --verbose",
+    "test:ci": "asp --summary",
+    "test": "asp --verbose --output-binary",
+    "tsc:all": "npm run asbuild:release && npm run package:check",
+    "test:update-snapshots": "exit 0",
+    "asbuild:debug": "asc assembly/index.ts --target debug",
+    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release",
+    "bench:reflect": "npm run bench:reflect:build && npm run bench:reflect:run",
+    "bench:reflect:build": "node -e \"require('node:fs').mkdirSync('bench/build',{recursive:true})\" && asc bench/assembly/reflect-equality.ts --outFile bench/build/reflect-equality.wasm --textFile bench/build/reflect-equality.wat --optimizeLevel 3 --shrinkLevel 0 --transform @as-pect/transform",
+    "bench:reflect:run": "node bench/reflect-equality.bench.mjs",
+    "package:check": "node scripts/validate-package-shape.mjs",
+    "prepack": "npm run tsc:all",
+    "start": "npx serve ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jtenner/as-pect/tree/master/packages/assembly"
+  },
+  "author": "Joshua Tenner <tenner.joshua@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "wasm",
+    "assemblyscript",
+    "testing"
+  ],
+  "bugs": {
+    "url": "https://github.com/jtenner/aspect/issues"
+  },
+  "homepage": "https://github.com/jtenner/as-pect#readme",
+  "files": [
+    "assembly/internal/",
+    "assembly/index.ts",
+    "types/",
+    "build/"
+  ],
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

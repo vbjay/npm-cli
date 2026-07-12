@@ -1,0 +1,68 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:9.2.1'
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.0"
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: "kotlin-android"
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    namespace "com.azerion.bluestack.react"
+    compileSdkVersion safeExtGet('BluestackModule_compileSdkVersion', 35)
+    defaultConfig {
+        minSdkVersion safeExtGet('BluestackModule_minSdkVersion', 21)
+        targetSdkVersion safeExtGet('BluestackModule_targetSdkVersion', 35)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lint {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+         maven {
+            url 'https://packagecloud.io/smartadserver/android/maven2'
+        }
+        mavenCentral()
+        google()
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    api "com.facebook.react:react-native:+"  // From node_modules
+    implementation "com.azerion:bluestack-sdk-core:6.0.6"
+}

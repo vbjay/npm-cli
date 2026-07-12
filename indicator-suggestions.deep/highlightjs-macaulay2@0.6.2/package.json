@@ -1,0 +1,57 @@
+{
+  "name": "highlightjs-macaulay2",
+  "version": "0.6.2",
+  "author": "Doug Torrance",
+  "description": "highlight.js syntax definition for Macaulay2",
+  "main": "src/languages/macaulay2.js",
+  "types": "types/highlightjs-macaulay2.d.ts",
+  "scripts": {
+    "build": "node build.mjs",
+    "prepack": "npm run build",
+    "test": "npm run typecheck && make check",
+    "typecheck": "tsc --project test/types",
+    "update": "make update",
+    "format": "prettier --write .",
+    "lint": "prettylint . && eslint ."
+  },
+  "files": [
+    "dist/macaulay2.min.js",
+    "dist/macaulay2.es.min.js",
+    "src/languages/macaulay2.js",
+    "types/highlightjs-macaulay2.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d-torrance/highlightjs-macaulay2.git"
+  },
+  "keywords": [
+    "macaulay2",
+    "javascript",
+    "highlight",
+    "highlight.js",
+    "highlightjs",
+    "syntax"
+  ],
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/d-torrance/highlightjs-macaulay2/issues"
+  },
+  "homepage": "https://github.com/d-torrance/highlightjs-macaulay2",
+  "peerDependencies": {
+    "highlight.js": "^11.11.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^2.0.0",
+    "@eslint/markdown": "^8.0.1",
+    "eslint": "^10.0.2",
+    "globals": "^17.0.0",
+    "jiti": "^2.6.1",
+    "node": "^25.3.0",
+    "prettier": "^3.7.4",
+    "prettylint": "^2.0.0",
+    "rollup": "^4.55.1",
+    "terser": "^5.44.1",
+    "typescript-eslint": "^8.51.0"
+  }
+}

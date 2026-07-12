@@ -1,0 +1,82 @@
+{
+  "name": "@zendesk/zcli",
+  "description": "Zendesk CLI is a single command line tool for all your zendesk needs",
+  "version": "1.1.2",
+  "author": "@wattle",
+  "npmRegistry": "https://registry.npmjs.org",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "zcli": "./bin/run"
+  },
+  "dependencies": {
+    "@oclif/plugin-autocomplete": "=1.3.10",
+    "@oclif/plugin-help": "=5.1.23",
+    "@oclif/plugin-not-found": "=2.3.16",
+    "@oclif/plugin-update": "=3.0.13",
+    "@oclif/plugin-warn-if-update-available": "=2.0.20",
+    "@zendesk/zcli-apps": "^1.1.0",
+    "@zendesk/zcli-connectors": "^1.1.2",
+    "@zendesk/zcli-core": "^1.1.0",
+    "@zendesk/zcli-themes": "^1.1.0",
+    "chalk": "^4.1.2",
+    "tslib": "^2.4.0"
+  },
+  "files": [
+    "/bin",
+    "/src",
+    "/dist",
+    "/oclif.manifest.json",
+    "/npm-shrinkwrap.json"
+  ],
+  "engines": {
+    "node": ">=20.17.0"
+  },
+  "keywords": [
+    "zcli",
+    "zendesk",
+    "command",
+    "cli"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "oclif": {
+    "commands": "./dist/commands",
+    "bin": "zcli",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-not-found",
+      "@oclif/plugin-warn-if-update-available",
+      "@zendesk/zcli-apps",
+      "@zendesk/zcli-themes",
+      "@zendesk/zcli-connectors"
+    ],
+    "warn-if-update-available": {
+      "timeoutInDays": 7,
+      "message": "<%= config.name %> update available from <%= chalk.greenBright(config.version) %> to <%= chalk.greenBright(latest) %>."
+    },
+    "topics": {
+      "apps": {
+        "description": "manage Zendesk apps workflow"
+      },
+      "themes": {
+        "description": "manage Zendesk themes workflow"
+      },
+      "profiles": {
+        "description": "manage cli user profiles"
+      },
+      "connectors": {
+        "description": "manage Zendesk connectors workflow [Early Access - Limited Availability]"
+      }
+    }
+  },
+  "scripts": {
+    "prepack": "tsc && ../../scripts/prepack.sh",
+    "postpack": "rm -f oclif.manifest.json npm-shrinkwrap.json && rm -rf ./dist && git checkout ./package.json",
+    "type:check": "tsc"
+  },
+  "types": "src/index.d.ts",
+  "gitHead": "41945dc0eef545d345d283248bba531fd9965bda"
+}

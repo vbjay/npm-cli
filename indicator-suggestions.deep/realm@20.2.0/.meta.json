@@ -1,0 +1,147 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d1885507cb2cd8a4",
+    "fetchedFiles": [
+      "binding.gyp",
+      "dist/scripts/submit-analytics.js",
+      "package.json",
+      "scripts/submit-analytics.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "node-machine-id",
+        "versionSpec": "^1.1.12"
+      },
+      {
+        "name": "debug",
+        "versionSpec": "^4.3.4"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "debug@4.4.3",
+      "node-machine-id@1.1.12"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "121b6567d1a593cd7b11955714985688a8b8c0e52a11dd79388b8562ecde0339",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Targets",
+            "items": [
+              "(no targets declared)"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/submit-analytics.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c3cd42dd43c2519218ede46e56bff777398942f82c67594fab9f86a4567d2086",
+        "sizeBytes": 1057,
+        "signals": [
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/scripts/submit-analytics.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/scripts/submit-analytics.js",
+        "reason": "required by ./scripts/submit-analytics.js",
+        "sha256": "9dc9949afa75147507951bf6581a56fc74a4cec8379878607b8620b147a25d36",
+        "sizeBytes": 13833,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "runtime-installer",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://data.mongodb-api.com/app/realmsdkmetrics-zmhtm/endpoint/metric_webhook/metric",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:02.271Z"
+  },
+  "hash": "sha256:7690ed4dfe10ed5c77f8a3ed6d7e1a227055471d5f4add3162600ad5737465cf"
+}

@@ -1,0 +1,73 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5c987bf8c3666f77",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/ensure-dependencies.js",
+      "scripts/install-warning.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-warning.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7bdcab723d708baa9f6f3a21607c5d0e23afc61dec74c74b206853c69f0cedf2",
+        "sizeBytes": 227,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/ensure-dependencies.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6ecc658d046bf1bd098d4fa92e8d864382a98310f3b3675d30d4b4a6e27b0f88",
+        "sizeBytes": 2534,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:09.628Z"
+  },
+  "hash": "sha256:b4e715099817a5ccc173576e82e844e74bc6fc08ad1281b1b3a5487acd1baa86"
+}

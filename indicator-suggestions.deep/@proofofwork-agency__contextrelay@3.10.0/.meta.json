@@ -1,0 +1,70 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "63aaadf4a887d107",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "71fdf1c757162b8241cb382309965775dc7dd04494270a487422416920f03030",
+        "sizeBytes": 5405,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "shell-network-fetch",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://bun.sh/install",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:43.731Z"
+  },
+  "hash": "sha256:8bb5135ceabd9c68232c63b307ae9d7ccbc45726fe430e742cc02f95e39731bd"
+}

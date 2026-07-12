@@ -1,0 +1,126 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "092c830b68482984",
+    "fetchedFiles": [
+      "lib/download.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "35a8d6d74ba256468781c6239576d88b03d56b2849b55909327b7e6f4b66e1fa",
+        "sizeBytes": 684,
+        "signals": [
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/download.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/download.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "99fb9a0b905208f6231368edab5820072c6c42c60cc6c86b15d9b3b7b5eeefe4",
+        "sizeBytes": 3640,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/${REPO}/releases",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./lib/download.js",
+        "sha256": "ceb52667027923cc6e17aa52c90a28cd1d568d88c9fd3c7710173a9921324e6d",
+        "sizeBytes": 839,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:18.490Z"
+  },
+  "hash": "sha256:041070f75449e953b6b0c8a72a4d7c2e64f82f81b3953882d509c961d56ea53a"
+}

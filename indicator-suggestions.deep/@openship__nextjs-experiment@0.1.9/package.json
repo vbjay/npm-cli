@@ -1,0 +1,22 @@
+{
+    "name": "@openship/nextjs-experiment",
+    "version": "0.1.9",
+    "description": "[Experimenting] An implementation of OpenShip for Next.js",
+    "scripts": {
+      "build": "cargo build --target wasm32-wasi --release",
+      "copy-wasm": "mkdir -p dist && cp target/wasm32-wasi/release/openship_nextjs_experiment.wasm dist/openship_nextjs_plugin.wasm",
+      "prepare": "npm run build && npm run copy-wasm"
+    },
+    "files": [
+      "dist/openship_nextjs_plugin.wasm"
+    ],
+    "keywords": ["swc", "plugin", "nextjs", "wasm", "openship"],
+    "author": "Gilles Pirio",
+    "license": "MIT",
+    "devDependencies": {
+      "@swc/core": "^1.3.0"
+    },
+    "peerDependencies": {
+      "next": "15.0.0-canary.171"
+    }
+  }

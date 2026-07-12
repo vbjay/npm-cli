@@ -1,0 +1,157 @@
+{
+  "name": "@leonsilicon/react-native-list",
+  "version": "2.0.0-alpha.2",
+  "description": "React Native List",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "metro",
+    "metro-config.js",
+    "metro-config.d.ts",
+    "react-native.config.js",
+    "lib",
+    "nitrogen",
+    "cpp",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "app.plugin.js",
+    "nitro.json",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "lint-ci": "eslint \"**/*.{js,ts,tsx}\" -f @jamesacarr/github-actions",
+    "typescript": "tsc",
+    "specs": "nitrogen --logLevel=\"debug\"",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "bundle:js": "bun run react-bundler/bundle.ts",
+    "bundle:js:prod": "NODE_ENV=production bun run react-bundler/bundle.ts",
+    "build": "rm -rf lib && tsc",
+    "prepack": "bun run build && cp ../README.md ./README.md",
+    "postpack": "rm ./README.md",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "nitro"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hannojg/react-native-list.git"
+  },
+  "author": "Hanno Gödecke <hanno@margelo.com> (https://github.com/hannojg)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hannojg/react-native-list/issues"
+  },
+  "homepage": "https://github.com/hannojg/react-native-list#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "0.83.6",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "flow-remove-types": "^2.299.0",
+    "nitrogen": "catalog:",
+    "prettier": "^3.3.3",
+    "react": "catalog:",
+    "react-native": "catalog:",
+    "react-native-nitro-modules": "catalog:",
+    "react-native-worklets": "catalog:",
+    "react-reconciler": "^0.33.0",
+    "release-it": "^20.0.1",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-worklets": ">=0.10.0",
+    "react-native-nitro-modules": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "no-restricted-syntax": [
+        "error",
+        {
+          "selector": "ImportDeclaration[source.value=/ReactFabricMirror(\\.bundle)?(\\.[jt]sx?)?$/]",
+          "message": "Import React Fabric mirror through src/renderer/react/ReactFabricRenderer instead."
+        },
+        {
+          "selector": "ExportNamedDeclaration[source.value=/ReactFabricMirror(\\.bundle)?(\\.[jt]sx?)?$/]",
+          "message": "Export React Fabric mirror through src/renderer/react/ReactFabricRenderer instead."
+        },
+        {
+          "selector": "ExportAllDeclaration[source.value=/ReactFabricMirror(\\.bundle)?(\\.[jt]sx?)?$/]",
+          "message": "Export React Fabric mirror through src/renderer/react/ReactFabricRenderer instead."
+        },
+        {
+          "selector": "CallExpression[callee.name='require'][arguments.0.value=/ReactFabricMirror(\\.bundle)?(\\.[jt]sx?)?$/]",
+          "message": "Require React Fabric mirror through src/renderer/react/ReactFabricRenderer instead."
+        },
+        {
+          "selector": "TSImportType Literal[value=/ReactFabricMirror(\\.bundle)?(\\.[jt]sx?)?$/]",
+          "message": "Reference React Fabric mirror types through src/renderer/react/ReactFabricRenderer instead."
+        }
+      ],
+      "prettier/prettier": [
+        "warn",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "src/renderer/react/ReactFabricRenderer.ts"
+        ],
+        "rules": {
+          "no-restricted-syntax": "off"
+        }
+      }
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false,
+    "semi": false
+  },
+  "patchedDependencies": {}
+}

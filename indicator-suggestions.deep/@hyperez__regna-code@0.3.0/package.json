@@ -1,0 +1,43 @@
+{
+  "name": "@hyperez/regna-code",
+  "version": "0.3.0",
+  "description": "Regna Code. A terminal coding agent on Regna. Install with `npm i -g @hyperez/regna-code` and run `regna`. Works with the Regna cloud API and on-premise deployments.",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "private": false,
+  "type": "module",
+  "keywords": [
+    "regna",
+    "coding-agent",
+    "ai",
+    "cli",
+    "terminal"
+  ],
+  "homepage": "https://github.com/HyperEZ/regna-code#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HyperEZ/regna-code.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HyperEZ/regna-code/issues"
+  },
+  "bin": {
+    "regna": "dist/bin/regna.mjs"
+  },
+  "scripts": {
+    "postinstall": "node dist/postinstall.mjs"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "0.80.2",
+    "@earendil-works/pi-tui": "0.80.2",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "typebox": "^1.3.1"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

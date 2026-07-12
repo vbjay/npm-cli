@@ -1,0 +1,123 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "aeaa9e991527a126",
+    "fetchedFiles": [
+      "binding.gyp",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "5a38f6575fc2c1bc920f23b17cf3348def36353a4246574fb394a0e89f41762e",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `zigpug`  -  C/C++ sources",
+            "items": [
+              "binding.c"
+            ]
+          },
+          {
+            "label": "Target `zigpug`  -  libraries",
+            "items": [
+              "<(module_root_dir)/prebuilts/win32-<(target_arch)/zig-pug.lib",
+              "-lm",
+              "../prebuilts/darwin-<(target_arch)/libzig-pug.a",
+              "-lm",
+              "../prebuilts/linux-<(target_arch)/libzig-pug.a",
+              "-lm",
+              "../prebuilts/linux-<(target_arch)/libzig-pug.a"
+            ]
+          },
+          {
+            "label": "Target `zigpug`  -  include directories",
+            "items": [
+              "include"
+            ]
+          },
+          {
+            "label": "Target `zigpug`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `install`; referenced by lifecycle script: `postinstall`",
+        "sha256": "69b3a1729f9f04d0fe7cab345251d6933ab63a1d347978e539712f4b100db477",
+        "sizeBytes": 2242,
+        "signals": [
+          "uses-child-process",
+          "native-build",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/nodejs/node-gyp#installation",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:33.759Z"
+  },
+  "hash": "sha256:34bbf64f44a10197db438eb223e6ce982dbac91e847d53f4eed4e8a1759d7c14"
+}

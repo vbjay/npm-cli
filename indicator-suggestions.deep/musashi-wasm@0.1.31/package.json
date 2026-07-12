@@ -1,0 +1,91 @@
+{
+  "name": "musashi-wasm",
+  "version": "0.1.31",
+  "description": "WebAssembly port of the Musashi M68000 CPU emulator with optional Perfetto tracing support",
+  "type": "module",
+  "files": [
+    "dist/**",
+    "dist/musashi-perfetto-loader.mjs",
+    "dist/musashi-perfetto.wasm",
+    "lib/**",
+    "perf.mjs",
+    "musashi.out.mjs",
+    "musashi.out.wasm",
+    "musashi.out.wasm.map",
+    "musashi-node.out.mjs",
+    "musashi-node.out.wasm",
+    "musashi-node.out.wasm.map",
+    "musashi-node.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "types": "./lib/index.d.ts"
+    },
+    "./perf": {
+      "import": "./perf.mjs",
+      "types": "./lib/index.d.ts"
+    },
+    "./perfetto": {
+      "import": "./perf.mjs",
+      "types": "./lib/index.d.ts"
+    },
+    "./browser": {
+      "import": "./lib/index.mjs",
+      "types": "./lib/index.d.ts"
+    },
+    "./node": {
+      "import": "./musashi-node.out.mjs",
+      "types": "./musashi-node.d.ts"
+    },
+    "./core": {
+      "import": "./lib/core/index.js",
+      "types": "./lib/core/index.d.ts"
+    },
+    "./memory": {
+      "import": "./lib/memory/index.js",
+      "types": "./lib/memory/index.d.ts"
+    },
+    "./musashi.out.mjs": "./musashi.out.mjs",
+    "./musashi.out.wasm": "./musashi.out.wasm",
+    "./musashi.out.wasm.map": "./musashi.out.wasm.map",
+    "./musashi-node.out.mjs": "./musashi-node.out.mjs",
+    "./musashi-node.out.wasm": "./musashi-node.out.wasm",
+    "./musashi-node.out.wasm.map": "./musashi-node.out.wasm.map"
+  },
+  "types": "./lib/index.d.ts",
+  "main": "./lib/index.mjs",
+  "keywords": [
+    "m68k",
+    "m68000",
+    "motorola",
+    "emulator",
+    "cpu",
+    "wasm",
+    "webassembly",
+    "perfetto",
+    "tracing"
+  ],
+  "author": "Musashi Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mblsha/musashi-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mblsha/musashi-wasm/issues"
+  },
+  "homepage": "https://github.com/mblsha/musashi-wasm#readme",
+  "scripts": {
+    "build": "node ./scripts/generate-wrapper.js",
+    "prepare": "npm run build",
+    "test:browser": "playwright test"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

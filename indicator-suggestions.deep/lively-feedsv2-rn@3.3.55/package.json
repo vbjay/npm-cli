@@ -1,0 +1,160 @@
+{
+  "name": "lively-feedsv2-rn",
+  "version": "3.3.55",
+  "description": "lively",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace lively-feeds-rn-example",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://www.lively.li"
+  },
+  "author": "lively <support@lively.li> (https://www.lively.li)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://www.lively.li/issues"
+  },
+  "homepage": "https://www.lively.li#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-community/slider": "^4.5.6",
+    "@react-native/eslint-config": "^0.72.2",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
+    "@types/react-native-video": "^5.0.20",
+    "axios": "^0.25.0",
+    "babel-plugin-react-native-web": "^0.20.0",
+    "patch-package": "^8.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.73.8",
+    "react-native-builder-bob": "^0.20.0",
+    "react-native-device-info": "^10.13.1",
+    "react-native-fast-image": "^8.6.3",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-render-html": "^6.3.4",
+    "react-native-svg": "^14.1.0",
+    "react-native-url-polyfill": "^2.0.0",
+    "react-native-video": "5.2.0",
+    "release-it": "^15.0.0",
+    "typescript": "^5.0.2",
+    "video.js": "^8.22.0"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "@react-native-async-storage/async-storage": "*",
+    "axios": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-device-info": "*",
+    "react-native-linear-gradient": "*",
+    "react-native-render-html": "*",
+    "react-native-svg": "*",
+    "react-native-video": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "@hitrading/ctp-node",
+  "version": "2.0.0",
+  "description": "High-performance, type-safe CTP (Chinese futures) binding for Node.js",
+  "keywords": [
+    "ctp",
+    "futures",
+    "trading",
+    "quant",
+    "上期技术",
+    "期货",
+    "napi",
+    "addon",
+    "market-data"
+  ],
+  "homepage": "https://github.com/hitrading/ctp-node#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hitrading/ctp-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hitrading/ctp-node/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "ctpsdk/",
+    "prebuilds/",
+    "binding.gyp"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "gen": "node scripts/codegen/generate.mjs && node scripts/codegen/generate-trader.mjs",
+    "build:native": "node-gyp rebuild",
+    "build:ts": "tsc && node scripts/bundle-cjs.mjs",
+    "build": "npm run gen && npm run build:native && npm run build:ts",
+    "prebuild": "prebuildify --napi --strip",
+    "install": "node-gyp-build",
+    "test": "node scripts/test-codec.mjs && node scripts/test-md.mjs && node scripts/test-trader.mjs && node scripts/test-arm.mjs && node scripts/test-gbk.mjs && node scripts/test-lifecycle.mjs && node scripts/test-backpressure.mjs && node scripts/test-codec-edge.mjs && node scripts/test-md-unit.mjs && node scripts/test-client-unit.mjs && node scripts/test-trader-unit.mjs && node scripts/smoke-cjs.cjs",
+    "coverage": "c8 --config .c8rc.json npm test",
+    "test:cpp": "node scripts/test-cpp.mjs",
+    "test:integration": "node scripts/integration/run.mjs",
+    "bench": "node scripts/bench-decode.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "c8": "^11.0.0",
+    "esbuild": "^0.28.1",
+    "prebuildify": "^6.0.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.3.0",
+    "node-gyp": "^11.2.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "license": "Apache-2.0"
+}

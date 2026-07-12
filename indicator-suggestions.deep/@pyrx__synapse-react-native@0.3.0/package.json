@@ -1,0 +1,198 @@
+{
+  "name": "@pyrx/synapse-react-native",
+  "version": "0.3.0",
+  "description": "PYRX Synapse SDK — React Native wrapper for events, identity, push, in-app messaging, and privacy controls (iOS + Android). Thin TurboModule bridge around the published PYRXSynapse (iOS) and tech.pyrx.synapse:synapse-{core,push,inapp} (Android) native SDKs.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "pyrx-synapse-react-native-source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./app.plugin.js": "./app.plugin.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "plugin/build",
+    "app.plugin.js",
+    "*.podspec",
+    "react-native.config.js",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "clean": "del-cli android/build lib plugin/build",
+    "prepare": "yarn build:plugin && bob build",
+    "build:plugin": "tsc -p plugin/tsconfig.json",
+    "typecheck": "tsc && tsc -p plugin/tsconfig.json --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest",
+    "prepublishOnly": "yarn clean && yarn typecheck && yarn lint && yarn test && yarn prepare && node scripts/verify-package.js",
+    "release": "release-it --only-version"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "pyrx",
+    "synapse",
+    "push-notifications",
+    "analytics",
+    "customer-engagement",
+    "turbomodule"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PYRX-Tech/pyrx-synapse-react-native.git"
+  },
+  "author": "PYRX <support@pyrx.tech> (https://pyrx.tech)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PYRX-Tech/pyrx-synapse-react-native/issues"
+  },
+  "homepage": "https://github.com/PYRX-Tech/pyrx-synapse-react-native#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^21.0.2",
+    "@eslint/compat": "^2.1.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@expo/config-plugins": "^56.0.9",
+    "@jest/globals": "^29.7.0",
+    "@react-native/babel-preset": "0.85.0",
+    "@react-native/eslint-config": "0.85.0",
+    "@react-native/jest-preset": "0.85.0",
+    "@release-it/conventional-changelog": "^11.0.1",
+    "@testing-library/react-native": "^14.0.1",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-test-renderer": "^19",
+    "commitlint": "^21.0.2",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.6",
+    "jest": "^29.7.0",
+    "lefthook": "^2.1.9",
+    "prettier": "^3.8.3",
+    "react": "19.2.3",
+    "react-native": "0.85.0",
+    "react-native-builder-bob": "^0.43.0",
+    "react-test-renderer": "19.2.0",
+    "release-it": "^20.2.0",
+    "test-renderer": "^1.2.0",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.3.0",
+    "react-native": ">=0.76.0"
+  },
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "PyrxSynapseSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.pyrx.synapse"
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "testEnvironmentOptions": {
+      "customExportConditions": [
+        "require",
+        "react-native"
+      ]
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/__tests__/helpers/jest.setup.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/src/__tests__/helpers/"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
+    "tools": [
+      "eslint",
+      "jest",
+      "lefthook",
+      "release-it"
+    ],
+    "version": "0.63.0"
+  }
+}

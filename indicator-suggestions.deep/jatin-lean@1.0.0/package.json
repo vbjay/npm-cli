@@ -1,0 +1,76 @@
+{
+  "name": "jatin-lean",
+  "version": "1.0.0",
+  "description": "Universal System Optimization Platform with native N-API bindings - Enterprise-grade node_modules optimization, system tuning, and hardware-level performance features",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "jatin-lean": "bin/jatin-lean.js"
+  },
+  "napi": {
+    "name": "jatin-lean",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-gnu",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin",
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "./build.sh",
+    "build:debug": "cargo build --features napi",
+    "test": "node test.js",
+    "prepublishOnly": "npm run build",
+    "install": "npm run build"
+  },
+  "keywords": [
+    "node-modules",
+    "optimization",
+    "performance",
+    "system-tuning",
+    "native-bindings",
+    "napi",
+    "rust",
+    "simd",
+    "ebpf",
+    "io-uring",
+    "pruning",
+    "cleanup",
+    "disk-space",
+    "dependencies",
+    "npm",
+    "cli",
+    "treeshake",
+    "dedup",
+    "health-check",
+    "benchmarking"
+  ],
+  "author": "Jatin Jalandhra <jatinjalandhra@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/decodejatin/jatin-lean.git"
+  },
+  "bugs": {
+    "url": "https://github.com/decodejatin/jatin-lean/issues"
+  },
+  "homepage": "https://github.com/decodejatin/jatin-lean#readme",
+  "engines": {
+    "node": ">= 14"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "index.node",
+    "build.sh",
+    "Cargo.toml",
+    "Cargo.lock",
+    "src/**/*.rs",
+    "README.md",
+    "LICENSE"
+  ]
+}

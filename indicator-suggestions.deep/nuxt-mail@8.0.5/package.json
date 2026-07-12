@@ -1,0 +1,87 @@
+{
+  "name": "nuxt-mail",
+  "version": "8.0.5",
+  "description": "Adds email sending capability to a Nuxt.js app. Adds a server route, an injected variable, and uses nodemailer to send emails.",
+  "keywords": [
+    "email",
+    "express",
+    "frontend",
+    "inject",
+    "javascript",
+    "mail",
+    "nodemailer",
+    "npm",
+    "npm-package",
+    "nuxt",
+    "nuxt-module",
+    "nuxtjs",
+    "nuxtjs-module",
+    "server",
+    "webdevelopment"
+  ],
+  "repository": "dword-design/nuxt-mail",
+  "funding": "https://github.com/sponsors/dword-design",
+  "license": "MIT",
+  "author": "Sebastian Landwehr <info@sebastianlandwehr.com>",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/module.js",
+      "types": "./dist/module.d.ts"
+    }
+  },
+  "main": "dist/module.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "checkUnknownFiles": "base checkUnknownFiles",
+    "commit": "base commit",
+    "depcheck": "base depcheck",
+    "dev": "base dev",
+    "lint": "base lint",
+    "prepare": "base prepare",
+    "prepublishOnly": "base prepublishOnly",
+    "test": "base test",
+    "typecheck": "base typecheck",
+    "verify": "base verify"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^4.2.2",
+    "@types/lodash-es": "^4.17.12",
+    "@types/nodemailer": "^8.0.0",
+    "defu": "^6.1.4",
+    "lodash-es": "^4.17.22",
+    "nodemailer": "^8.0.0",
+    "type-fest": "^5.3.1"
+  },
+  "devDependencies": {
+    "@dword-design/base": "^16.2.6",
+    "@dword-design/base-config-nuxt-module": "^5.0.3",
+    "@playwright/browser-chromium": "^1.57.0",
+    "@playwright/test": "^1.57.0",
+    "@types/fs-extra": "^11.0.4",
+    "axios": "^1.13.2",
+    "endent": "npm:@dword-design/endent@^1.4.7",
+    "execa": "^9.6.1",
+    "get-port": "^7.1.0",
+    "nuxt": "^4.2.2",
+    "nuxt-dev-ready": "^5.0.1",
+    "output-files": "^3.0.0",
+    "port-ready": "npm:@dword-design/port-ready-fork@^0.0.3",
+    "smtp-tester": "npm:@dword-design/smtp-tester-fork@^0.0.1",
+    "tree-kill-promise": "^4.0.0"
+  },
+  "peerDependencies": {
+    "h3": "*",
+    "nitropack": "*",
+    "ofetch": "*"
+  },
+  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

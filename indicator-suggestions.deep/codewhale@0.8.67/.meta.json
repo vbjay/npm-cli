@@ -1,0 +1,169 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "817d0251f8375962",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/artifacts.js",
+      "scripts/install.js",
+      "scripts/preflight-glibc.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`; referenced by lifecycle script: `prepack`",
+        "sha256": "91a7f75141ca1aa455e9c55d49c3dc717bdee8c1eba412cc2781aa8ba90f0e14",
+        "sizeBytes": 38705,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/artifacts.js",
+          "scripts/preflight-glibc.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/artifacts.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "e89a0a165ae8e0ca6f17865ac070bd537a66daa15b3dd098a29c6c52660c7c70",
+        "sizeBytes": 4890,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/Hmbown/CodeWhale.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/Hmbown/CodeWhale/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          },
+          {
+            "url": "https://cnb.cool/Hmbown/CodeWhale/-/releases/v",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/preflight-glibc.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "1bea8f7340b3372379bff9dd954ad11a7f3101bf34b52dd554154a75683249e7",
+        "sizeBytes": 4140,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/Hmbown/CodeWhale.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/Hmbown/CodeWhale/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "38baa6181a3e290ad0a20beffadb48ac412879d82d7cd27e7ff87ea9ee1e1a5d",
+        "sizeBytes": 1469,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:33.099Z"
+  },
+  "hash": "sha256:0e1bc1533b8f392c3766b3105e2862961a8d53234b18ccb1f6c76576ed6bcb01"
+}

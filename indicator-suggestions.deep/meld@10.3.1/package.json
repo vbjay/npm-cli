@@ -1,0 +1,107 @@
+{
+  "name": "meld",
+  "version": "10.3.1",
+  "description": "Meld: A template language for LLM prompts",
+  "type": "commonjs",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.ts", 
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
+  "bin": {
+    "meld": "./bin/meld-wrapper.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "reinstall": "npm run build && npm uninstall meld && npm install -g .",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint . --ext .ts",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "postinstall": "node scripts/install-warning.js && node scripts/ensure-dependencies.js",
+    "ast": "npx ts-node scripts/ast-diagnostics.mjs",
+    "var-ast": "npx ts-node scripts/variable-ast-analysis.mjs",
+    "meld": "node scripts/process-meld.js",
+    "debug": "node dist/cli.cjs debug-resolution",
+    "debug:resolution": "node dist/cli.cjs debug-resolution",
+    "debug:context": "node dist/cli.cjs debug-context",
+    "debug:transform": "node dist/cli.cjs debug-transform",
+    "debug:test-file": "npm run build && node dist/cli.cjs debug-resolution _dev/scripts/debug/test-files/debug-test.meld",
+    "debug:test-import": "npm run build && node dist/cli.cjs debug-resolution _dev/scripts/debug/test-files/debug-imported.meld",
+    "debug:test-context": "npm run build && node dist/cli.cjs debug-context _dev/scripts/debug/test-files/debug-test.meld --variable-name testVar --viz-type variable-propagation",
+    "debug:test-fixed": "npm run build && node dist/cli.cjs debug-resolution _dev/scripts/debug/test-files/debug-test-fixed.meld",
+    "debug:test-fixed-context": "npm run build && node dist/cli.cjs debug-context _dev/scripts/debug/test-files/debug-test-fixed.meld --variable-name testVar --viz-type variable-propagation",
+    "debug:test-fixed-transform": "npm run build && node dist/cli.cjs debug-transform _dev/scripts/debug/test-files/debug-test-fixed.meld",
+    "prepare-main": "node scripts/prepare-main.js",
+    "sync-dev": "node scripts/sync-dev-branch.js",
+    "sync-main-to-dev": "node scripts/sync-main-to-dev.js",
+    "bump": "node scripts/bump-version.js",
+    "bump:patch": "node scripts/bump-version.js patch",
+    "bump:minor": "node scripts/bump-version.js minor",
+    "bump:major": "node scripts/bump-version.js major"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamavenir/meld.git"
+  },
+  "keywords": [
+    "meld",
+    "interpreter",
+    "language",
+    "llm",
+    "prompt",
+    "cli"
+  ],
+  "author": "Adam Avenir",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adamavenir/meld/issues"
+  },
+  "homepage": "https://github.com/adamavenir/meld#readme",
+  "dependencies": {
+    "@types/uuid": "^10.0.0",
+    "@types/xmldom": "^0.1.34",
+    "chalk": "^4.1.2",
+    "commander": "^13.1.0",
+    "fs-extra": "^11.3.0",
+    "glob": "^11.0.1",
+    "llmxml": "^1.4.0",
+    "marked": "^4.0.12",
+    "meld-ast": "^3.4.3",
+    "meld-spec": "^0.4.1",
+    "minimatch": "^3.0.4",
+    "peggy": "^4.2.0",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0",
+    "xmldom": "^0.6.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/yargs": "^17.0.33",
+    "eslint": "^9.18.0",
+    "memfs": "^4.7.0",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.7.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.9"
+  }
+}

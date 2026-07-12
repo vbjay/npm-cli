@@ -1,0 +1,79 @@
+{
+  "name": "@mixedbread/cli",
+  "version": "2.4.0",
+  "description": "CLI tool for managing the Mixedbread platform.",
+  "author": "Mixedbread <support@mixedbread.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "github:mixedbread-ai/openbread",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://www.mixedbread.com/cli",
+  "keywords": [
+    "mixedbread",
+    "cli",
+    "store",
+    "embeddings",
+    "command-line"
+  ],
+  "bugs": {
+    "url": "https://github.com/mixedbread-ai/openbread/issues"
+  },
+  "bin": {
+    "mxbai": "./dist/bin/mxbai.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "scripts",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.0.1",
+    "@mixedbread/sdk": "^0.77.0",
+    "@pnpm/tabtab": "^0.5.4",
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.3",
+    "glob": "^13.0.3",
+    "mime-types": "^3.0.2",
+    "minimatch": "^10.2.0",
+    "p-limit": "^7.3.0",
+    "yaml": "^2.8.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "@types/jest": "^30.0.0",
+    "@types/mime-types": "^3.0.1",
+    "@types/minimatch": "^6.0.0",
+    "@types/mock-fs": "^4.13.4",
+    "@types/node": "^25.2.3",
+    "jest": "^30.2.0",
+    "mock-fs": "^5.5.0",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
+    "tsc-multi": "https://github.com/stainless-api/tsc-multi/releases/download/v1.1.8/tsc-multi.tgz",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "build": "bash ./build",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "test": "jest",
+    "lint": "biome lint --write .",
+    "format": "biome format --write .",
+    "check-types": "tsc --noEmit",
+    "mxbai": "node ./dist/bin/mxbai.js",
+    "postinstall": "node ./scripts/postinstall.js",
+    "setup-cli": "node ./scripts/setup-cli.js"
+  }
+}

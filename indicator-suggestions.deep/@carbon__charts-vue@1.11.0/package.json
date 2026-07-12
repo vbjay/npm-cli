@@ -1,0 +1,117 @@
+{
+  "name": "@carbon/charts-vue",
+  "version": "1.11.0",
+  "description": "Carbon Charts component library for Vue",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles.min.css": "./dist/styles.min.css",
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "postinstall": "carbon-telemetry collect --install",
+    "file:styles": "cp ../core/dist/styles.* dist",
+    "file:downlevel:dts": "downlevel-dts dist dist",
+    "postbundle": "concurrently \"yarn:file:*\"",
+    "build:package": "vite build && yarn postbundle",
+    "demo:mdx:vue": "cp ../core/src/stories/getting-started/vue.stories.mdx src/stories",
+    "demo:mdx:tutorials": "cp ../core/src/stories/tutorials/* src/stories",
+    "demo:mdx": "concurrently \"yarn:demo:mdx:*\"",
+    "build:demo": "yarn demo:mdx && storybook build -o demo/bundle --quiet",
+    "build": "yarn build:package && yarn build:demo",
+    "storybook": "storybook dev -p 9006",
+    "start": "yarn storybook",
+    "lint": "eslint . --ext .vue,.js,.cjs,.mjs,.ts --fix --ignore-path ../../.eslintignore",
+    "format": "prettier --write src/ --ignore-path ../../.eslintignore",
+    "clean": "rm -rf dist demo/bundle"
+  },
+  "peerDependencies": {
+    "vue": "^2.7.0"
+  },
+  "dependencies": {
+    "@carbon/charts": "1.11.0",
+    "@carbon/telemetry": "~0.1.0",
+    "vue": "^2.7.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@rushstack/eslint-patch": "^1.3.2",
+    "@stackblitz/sdk": "^1.9.0",
+    "@storybook/addon-essentials": "^7.0.24",
+    "@storybook/addon-interactions": "^7.0.24",
+    "@storybook/addon-links": "^7.0.24",
+    "@storybook/blocks": "^7.0.24",
+    "@storybook/manager-api": "^7.0.24",
+    "@storybook/testing-library": "^0.2.0",
+    "@storybook/theming": "^7.0.24",
+    "@storybook/vue-vite": "^7.0.24",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "concurrently": "^8.2.0",
+    "d3": "^7.8.5",
+    "d3-cloud": "^1.2.5",
+    "d3-sankey": "^0.12.3",
+    "downlevel-dts": "^0.11.0",
+    "eslint": "^8.43.0",
+    "eslint-plugin-storybook": "^0.6.12",
+    "eslint-plugin-vue": "^9.15.1",
+    "prettier": "^2.8.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.0.24",
+    "typescript": "^5.1.5",
+    "vite": "^4.3.9",
+    "vite-plugin-dts": "^2.3.0",
+    "vite-plugin-vue2": "^2.0.3",
+    "vue-template-compiler": "^2.7.14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:carbon-design-system/carbon-charts.git",
+    "homepage": "https://carbon-design-system.github.io/carbon-charts/vue/"
+  },
+  "license": "Apache-2.0",
+  "author": "IBM",
+  "keywords": [
+    "carbon",
+    "charts",
+    "vue",
+    "dataviz",
+    "data-visualization",
+    "visualizations",
+    "d3",
+    "svg",
+    "component",
+    "components",
+    "css",
+    "html",
+    "ibm",
+    "typescript",
+    "javascript",
+    "js",
+    "library",
+    "pattern",
+    "patterns",
+    "sass",
+    "scss"
+  ],
+  "gitHead": "d91dc80410f9eb6f90bf8df7b93de14fef182261"
+}

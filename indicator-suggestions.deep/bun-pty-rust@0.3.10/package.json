@@ -1,0 +1,71 @@
+{
+	"name": "bun-pty-rust",
+	"version": "0.3.10",
+	"description": "Fork of `bun-pty` - cross-platform pseudoterminal (PTY) implementation for Bun with native performance",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/shunkakinoki/bun-pty-rust.git"
+	},
+	"homepage": "https://github.com/shunkakinoki/bun-pty-rust#readme",
+	"bugs": {
+		"url": "https://github.com/shunkakinoki/bun-pty-rust/issues"
+	},
+	"author": {
+		"name": "Dilip Thapa",
+		"url": "https://github.com/sursaone"
+	},
+	"license": "MIT",
+	"keywords": [
+		"bun",
+		"pty",
+		"terminal",
+		"pseudoterminal",
+		"shell",
+		"tty",
+		"ffi",
+		"rust",
+		"console",
+		"cli",
+		"node-pty",
+		"cross-platform",
+		"native",
+		"performance"
+	],
+	"scripts": {
+		"prepare": "bun run build:ts",
+		"prepack": "bun run build",
+		"build:rust": "cd rust-pty && cargo build --release",
+		"build:ts": "bun build ./src/index.ts --outdir ./dist --target bun --declaration --external bun:ffi && tsc --emitDeclarationOnly --declaration --outDir dist",
+		"build": "bun run build.ts",
+		"build:publish": "bun run copy-libs-to-dist && bun run build:ts",
+		"test": "cd rust-pty && cargo build --release && cd .. && bun test src/",
+		"test:integration": "cd rust-pty && cargo build --release && cd .. && RUN_INTEGRATION_TESTS=true bun test src/terminal.integration.test.ts",
+		"check": "bun run type-check",
+		"format": "bun run format:check",
+		"format:check": "bun run biome check --write",
+		"lint": "bun run biome check",
+		"type-check": "tsc --noEmit",
+		"clean": "rm -rf ./dist && cd rust-pty && cargo clean"
+	},
+	"engines": {
+		"bun": ">=1.0.0"
+	},
+	"files": [
+		"dist/**/*",
+		"README.md",
+		"LICENSE",
+		"CHANGELOG.md"
+	],
+	"devDependencies": {
+		"@biomejs/biome": "2.2.6",
+		"@types/bun": "^1.2.13",
+		"@types/node": "^22.15.18",
+		"typescript": "^5.8.3"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

@@ -1,0 +1,50 @@
+{
+    "name": "@rio-cloud/audit-filter",
+    "version": "2.0.1",
+    "description": "Filters npm audit JSON output using project-local audit exclusions",
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [
+        "audit",
+        "npm",
+        "security"
+    ],
+    "author": "TB Digital Services GmbH",
+    "license": "Apache-2.0",
+    "homepage": "https://bitbucket.collaboration-man.com/projects/RIODEV/repos/rio-audit-filter/browse",
+    "type": "module",
+    "scripts": {
+        "build": "tsc && tsdown",
+        "dev": "tsdown --watch ./src",
+        "format": "biome format --write .",
+        "check": "biome check",
+        "test": "vitest run",
+        "test-dev": "vitest",
+        "prepare": "husky",
+        "audit": "npm audit --registry https://registry.npmjs.org --json | node ./dist/index.js --audit-level=moderate"
+    },
+    "bin": {
+        "rio-audit-filter": "dist/index.js"
+    },
+    "files": [
+        "dist",
+        "CHANGELOG.md"
+    ],
+    "dependencies": {
+        "temporal-polyfill": "0.3.2"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.5.0",
+        "@rio-cloud/biome-config": "1.2.0",
+        "@types/node": "24.13.2",
+        "husky": "9.1.7",
+        "tsdown": "0.22.3",
+        "typescript": "6.0.3",
+        "vitest": "4.1.9"
+    },
+    "engines": {
+        "node": ">=24",
+        "npm": ">=11"
+    }
+}

@@ -1,0 +1,100 @@
+{
+  "name": "@atlashub/smartstack-cli",
+  "version": "5.9.0",
+  "description": "SmartStack Claude Code automation toolkit - GitFlow, EF Core migrations, prompts and more",
+  "author": {
+    "name": "SmartStack",
+    "email": "contact@smartstack.app",
+    "url": "https://smartstack.app"
+  },
+  "license": "MIT",
+  "private": false,
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "smartstack": "./dist/index.js",
+    "ss": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "config",
+    "scripts",
+    ".documentation"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://dev.azure.com/AtlasHub/SmartStack/_git/SmartStack.cli"
+  },
+  "homepage": "https://smartstack.app",
+  "keywords": [
+    "smartstack",
+    "claude",
+    "claude-code",
+    "gitflow",
+    "efcore",
+    "entity-framework",
+    "migrations",
+    "cli",
+    "automation",
+    "anthropic",
+    "dotnet",
+    "prompts",
+    "ai-tools"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js || exit 0",
+    "dev": "tsup --watch",
+    "build": "npx tsup",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build",
+    "test": "node --test",
+    "test:cli": "vitest run src",
+    "link": "npm run build && npm link",
+    "install:local": "npm run build && node dist/index.js install --local --force",
+    "install:global": "npm run build && node dist/index.js install --force",
+    "status:local": "node dist/index.js status --local --verbose",
+    "status:global": "node dist/index.js status --verbose",
+    "doctor": "node dist/index.js doctor",
+    "ralph:start": "node dist/index.js ralph start",
+    "ralph:status": "node dist/index.js ralph status",
+    "ralph:logs": "node dist/index.js ralph logs",
+    "health": "node dist/index.js doctor --json"
+  },
+  "dependencies": {
+    "axios": "^1.7.0",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.3",
+    "commander": "^12.0.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^13.0.1",
+    "handlebars": "^4.7.8",
+    "inquirer": "^9.2.12",
+    "jsonwebtoken": "^9.0.3",
+    "ora": "^8.0.1",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "@vitest/coverage-v8": "^2.1.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^2.1.0"
+  }
+}

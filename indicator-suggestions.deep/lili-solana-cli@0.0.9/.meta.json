@@ -1,0 +1,133 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1a024bc53ea837cc",
+    "fetchedFiles": [
+      "install.sh",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.sh",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "132ca67323b4f99aa5711a7060a4ca964ccaa7c024014df9f9375017b5218066",
+        "sizeBytes": 13740,
+        "signals": [
+          "makes-executable",
+          "binary-download",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://nodejs.org/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://release.solana.com/stable/install",
+            "classification": "download"
+          },
+          {
+            "url": "https://sh.rustup.rs",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/solana-labs/cargo-build-sbf",
+            "classification": "reference"
+          },
+          {
+            "url": "https://release.solana.com/$ver/solana-release-$triple.tar.bz2",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/solana-labs/solana/releases/download/$ver/solana-release-$triple.tar.bz2",
+            "classification": "download"
+          },
+          {
+            "url": "https://release.solana.com/{sys.argv[1]}/solana-release-{sys.argv[2]}.tar.bz2",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/solana-labs/solana/releases/download/{sys.argv[1]}/solana-release-{sys.argv[2]}.tar.bz2",
+            "classification": "download"
+          },
+          {
+            "url": "https://api.devnet.solana.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "makes-executable"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:06.635Z"
+  },
+  "hash": "sha256:947cf2bc78adca879a9711d5ec7b342d38e2c8d91687cb2d094205cb1b6f1d80"
+}

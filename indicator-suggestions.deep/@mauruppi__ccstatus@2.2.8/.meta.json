@@ -1,0 +1,70 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "03f50db9765a4985",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.js",
+      "scripts/update-settings.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f40cad651cfe5b4b5ea8218938932688a5e6475f70176cd040f31b752fbe28b2",
+        "sizeBytes": 4605,
+        "signals": [
+          "reads-process-env",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/update-settings.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/update-settings.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "401055c1301f3ca08dc062f54a0d2f2f3988a12348d0c63246b93bf8f4ec14b7",
+        "sizeBytes": 2416,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:28.125Z"
+  },
+  "hash": "sha256:8a45a81fd07a4846b0da2626ce673c797edf49c5325de5eff73b2a048880408c"
+}

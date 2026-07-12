@@ -1,0 +1,133 @@
+{
+  "name": "lbundle",
+  "version": "1.6.0",
+  "private": false,
+  "description": "Small zero-configuration bundler build on top of Rollup.js and SWC for NPM libraries",
+  "keywords": [
+    "lbundle",
+    "bundle",
+    "bundler",
+    "compile",
+    "compiler",
+    "rollup",
+    "rollupjs",
+    "swc",
+    "rust"
+  ],
+  "homepage": "https://github.com/AbdUlHamedMaree/lbundle#readme",
+  "bugs": {
+    "url": "https://github.com/AbdUlHamedMaree/lbundle/issues",
+    "email": "hmidmrii@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbdUlHamedMaree/lbundle.git"
+  },
+  "license": "MIT",
+  "author": "AbdUlHameed Murie <hmidmrii@gmail.com> (https://www.linkedin.com/in/abd-ul-hameed-maree/)",
+  "contributors": [
+    "AbdUlHameed Murie <hmidmrii@gmail.com> (https://www.linkedin.com/in/abd-ul-hameed-maree/)"
+  ],
+  "exports": {
+    ".": {
+      "browser": {
+        "require": "./dist/index.js",
+        "import": "./dist/index.mjs"
+      },
+      "node": {
+        "require": "./dist/index.js",
+        "import": "./dist/index.mjs"
+      },
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "source": "./src/index.ts",
+  "bin:source": "./src/cli.ts",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "lbundle": "./dist/cli.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "bunx --bun rimraf dist",
+    "build": "bun run ./src/cli",
+    "test": "bun test --timeout 15000",
+    "lint": "eslint . --quiet",
+    "lint:fix": "bun run lint --fix",
+    "format": "bunx --bun prettier . --write",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@rollup/plugin-url": "^8.0.2",
+    "@svgr/rollup": "^8.1.0",
+    "@swc/core": "^1.10.15",
+    "change-case": "^5.4.4",
+    "commander": "^13.1.0",
+    "compare-versions": "^6.1.1",
+    "lodash.merge": "^4.6.2",
+    "postcss": "^8.5.1",
+    "postcss-import": "^16.1.0",
+    "resolve": "^1.22.10",
+    "resolve.exports": "^2.0.3",
+    "rollup": "^4.34.6",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-styler": "^2.0.0",
+    "rollup-plugin-swc3": "^0.12.1",
+    "rollup-plugin-typescript-paths": "^1.5.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@sebbo2002/semantic-release-jsr": "^1.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/bun": "^1.2.2",
+    "@types/lodash.merge": "^4.6.9",
+    "@types/node": "^22.13.1",
+    "@types/postcss-import": "^14.0.3",
+    "@types/react": "^19.1.12",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.5",
+    "eslint": "^8.57.0",
+    "eslint-config-react-ts-hero": "^1",
+    "husky": "^9.1.7",
+    "less": "^4.2.2",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.0",
+    "rimraf": "^6.0.1",
+    "sass": "^1.84.0",
+    "semantic-release": "^24.2.2",
+    "stylus": "^0.64.0",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "less": ">=4.0.0",
+    "sass": ">=1.0.0",
+    "stylus": ">=0.50.0"
+  },
+  "peerDependenciesMeta": {
+    "less": {
+      "optional": true
+    },
+    "sass": {
+      "optional": true
+    },
+    "stylus": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

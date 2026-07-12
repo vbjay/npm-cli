@@ -1,0 +1,103 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d8aa05245e1b6d03",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/prune-claude-runtime-binary.mjs",
+      "scripts/prune-claude-sdk-deps.mjs",
+      "scripts/prune-codex-runtime-binary.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "@anthropic-ai/sdk",
+        "versionSpec": null
+      },
+      {
+        "name": "@modelcontextprotocol/sdk",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@anthropic-ai/sdk@0.111.0",
+      "@modelcontextprotocol/sdk@1.29.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/prune-codex-runtime-binary.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e36bdc979cbed948a6bb6b15d81ad29a5e41fe6691ce78520f0b904b763e515c",
+        "sizeBytes": 4893,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/prune-claude-runtime-binary.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5fcdd848d86805e2c4b05263f5583636de90fdc5d3d08e5f625e3daf7cb4a8d6",
+        "sizeBytes": 5660,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/prune-claude-sdk-deps.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "37103926e02e28a589e0f409dfad5d2765a08668653252c7664ab83e70bb46b0",
+        "sizeBytes": 8053,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:51.703Z"
+  },
+  "hash": "sha256:67cc5bf16dd5c9caaa67e8a6f5289e33f5f51dacdc1469e7830aa7cab905f627"
+}

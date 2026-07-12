@@ -1,0 +1,66 @@
+{
+  "name": "capsulectx",
+  "version": "0.4.1",
+  "private": false,
+  "description": "Markdown context packs that help coding agents reduce repeated repository-discovery tokens.",
+  "mcpName": "io.github.dawitlabs/capsule",
+  "license": "MIT",
+  "author": "Dawit Worku",
+  "type": "module",
+  "bin": {
+    "capsule": "bin/capsule.js",
+    "capsulectx": "bin/capsule.js",
+    "capsule-mcp": "bin/capsule-mcp.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "demo": "node scripts/build-demo.mjs",
+    "dev": "tsx src/cli.ts",
+    "format": "biome format --write .",
+    "lint": "biome check .",
+    "prepack": "npm run build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "coding-agents",
+    "context",
+    "llm",
+    "tokens",
+    "cli",
+    "markdown"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dawitlabs/capsule.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dawitlabs/capsule/issues"
+  },
+  "homepage": "https://github.com/dawitlabs/capsule#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "commander": "^12.1.0",
+    "fast-glob": "^3.3.2",
+    "js-tiktoken": "^1.0.21",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

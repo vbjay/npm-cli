@@ -1,0 +1,95 @@
+{
+  "name": "@spatius/avatarkit",
+  "type": "module",
+  "version": "1.3.0",
+  "packageManager": "pnpm@10.18.2",
+  "description": "AvatarKit SDK - Real-time Avatar Rendering SDK for Web",
+  "author": "AvatarKit Team",
+  "license": "UNLICENSED",
+  "keywords": [
+    "avatar",
+    "3d",
+    "webgl",
+    "webgpu",
+    "wasm"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./vite.d.ts",
+      "import": "./vite.js"
+    },
+    "./next": {
+      "types": "./next.d.ts",
+      "import": "./next.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "README.md",
+    "CHANGELOG.md",
+    "dist",
+    "vite.js",
+    "vite.d.ts",
+    "next.js",
+    "next.d.ts"
+  ],
+  "scripts": {
+    "build": "SDK_BUILD=true vite build --mode library && npm run build:vite-plugin && npm run build:next-plugin",
+    "build:vite-plugin": "tsc vite.ts --outDir . --module esnext --target es2020 --moduleResolution bundler --esModuleInterop --skipLibCheck --declaration --declarationMap",
+    "build:next-plugin": "tsc next.ts --outDir . --module esnext --target es2020 --moduleResolution bundler --esModuleInterop --skipLibCheck --declaration --declarationMap",
+    "prepare": "npm run build",
+    "dev": "vite build --mode library --watch",
+    "demo": "vite --config demo/vite.config.mjs",
+    "demo:benchmark": "vite --config benchmark-demo/vite.config.mjs",
+    "test:integration": "vite --config tests/integration-runner/vite.config.mjs",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "cd tests && pnpm test",
+    "test:watch": "cd tests && pnpm run test:watch",
+    "test:e2e": "cd tests && pnpm run test:e2e",
+    "test:perf": "cd tests && pnpm run test:perf"
+  },
+  "peerDependencies": {
+    "@webgpu/types": "*",
+    "next": ">=13.0.0",
+    "vite": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    },
+    "next": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.10.0",
+    "@guiiai/logg": "^1.2.4",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/api-logs": "^0.218.0",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.218.0",
+    "@opentelemetry/resources": "^2.7.1",
+    "@opentelemetry/sdk-logs": "^0.218.0",
+    "@opentelemetry/semantic-conventions": "^1.41.1",
+    "nanoid": "^5.1.6",
+    "posthog-js": "^1.310.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@webgpu/types": "^0.1.65",
+    "tsx": "^4.20.6",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

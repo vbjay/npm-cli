@@ -1,0 +1,102 @@
+{
+  "name": "kakaotalk-chat-analyzer",
+  "version": "0.24.84",
+  "description": "카카오톡 CSV 보내기 → 한글 리포트 → 선택적 임시 공유. npx 한 줄로 실행 가능한 CLI.",
+  "type": "module",
+  "homepage": "https://claudianus.github.io/kakaotalk-chat-analyzer/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/claudianus/kakaotalk-chat-analyzer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/claudianus/kakaotalk-chat-analyzer/issues"
+  },
+  "bin": {
+    "kca": "dist/src/cli.js",
+    "kakaotalk-chat-analyzer": "dist/src/cli.js"
+  },
+  "files": [
+    "dist/src",
+    "data/benchmark-cohort-v1.json",
+    "data/korean-profanity.txt",
+    "data/ml-models/manifest.json",
+    "scripts/ensure-ml-bundles.mjs",
+    "scripts/ml-bundle-install.mjs",
+    "scripts/ml-bundle-lib.mjs",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "scripts": {
+    "build": "node scripts/sync-version.mjs && node scripts/bundle-report-css.mjs && tsc -p tsconfig.json",
+    "prepack": "node scripts/sync-version.mjs && npm run build",
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "test:llm": "npm run build && node --test 'dist/test/llm-*.test.js'",
+    "bench:stream": "npm run build && node scripts/bench-stream.mjs",
+    "bench:semantic": "npm run build && node scripts/bench-semantic.mjs",
+    "bench:preset": "npm run build && node scripts/bench-preset.mjs",
+    "audit:shop-search": "npm run build && node scripts/shop-search-audit.mjs",
+    "convert:embedding-onnx": "node scripts/convert-embedding-onnx.mjs",
+    "convert:sentiment-onnx": "node scripts/convert-sentiment-onnx.mjs",
+    "sync:ml-models": "node scripts/sync-ml-models.mjs",
+    "bench:sentiment": "npm run build && node scripts/bench-sentiment.mjs",
+    "bench:llm-json": "npm run build && node scripts/bench-llm-json.mjs",
+    "check:sentiment-hub": "npm run build && node scripts/check-sentiment-hub-access.mjs",
+    "keyword:diff": "npm run build && node scripts/keyword-diff.mjs",
+    "keyword:audit": "npm run build && node scripts/keyword-audit.mjs",
+    "sync-docs-version": "node scripts/sync-docs-version.mjs",
+    "sync-demo-manifest": "node scripts/sync-demo-manifest.mjs",
+    "sync-docs-all": "node scripts/sync-docs-version.mjs && node scripts/sync-demo-manifest.mjs",
+    "check:docs-version": "node scripts/check-docs-version.mjs",
+    "report:qa": "npm run build && node scripts/report-visual-qa.mjs",
+    "report:quality-audit": "npm run build && node scripts/report-quality-audit.mjs",
+    "report:quality-matrix": "npm run build && node scripts/report-quality-matrix.mjs",
+    "report:qa:serve": "node scripts/qa-serve.mjs",
+    "report:viewport": "npm run build && node scripts/report-viewport-check.mjs",
+    "report:screenshots": "node scripts/report-viewport-screenshots.mjs",
+    "docs:capture-demo": "node scripts/capture-docs-demo.mjs",
+    "docs:open": "node scripts/docs-open-preview.mjs",
+    "smoke": "node dist/src/cli.js --help",
+    "lint": "eslint src/",
+    "format": "prettier --write 'src/**/*.ts'",
+    "gh:sync-npm-secret": "bash scripts/sync-npm-token-to-gh.sh",
+    "postinstall": "node scripts/ensure-ml-bundles.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.2.0",
+    "ajv": "^8.20.0",
+    "commander": "^14.0.3",
+    "csv-parse": "^6.2.1",
+    "iconv-lite": "^0.7.2",
+    "jsonrepair": "^3.14.0",
+    "kiwi-nlp": "^0.23.0"
+  },
+  "optionalDependencies": {
+    "kakaotalk-chat-analyzer-models": "^0.2.1",
+    "node-llama-cpp": "^3.18.1",
+    "onnxruntime-node": "^1.21.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.19.19",
+    "eslint": "^10.4.0",
+    "open-props": "^1.7.15",
+    "playwright": "^1.52.0",
+    "prettier": "^3.8.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4"
+  },
+  "keywords": [
+    "kakaotalk",
+    "chat",
+    "analyzer",
+    "cli",
+    "privacy",
+    "npx",
+    "korean"
+  ],
+  "license": "MIT"
+}

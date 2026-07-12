@@ -1,0 +1,27 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.thermsdevicetracker'
+version = '0.1.0'
+
+android {
+  namespace "expo.modules.thermsdevicetracker"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  implementation 'com.google.android.gms:play-services-location:21.0.1'
+  // Required for opt-in native background HTTP sync (SyncProvider + SyncWorker using WorkManager for periodic/one-time tasks).
+  // Matches iOS URLSession bg support. Consumer apps get this transitively via the module.
+  implementation "androidx.work:work-runtime-ktx:2.9.0"
+}

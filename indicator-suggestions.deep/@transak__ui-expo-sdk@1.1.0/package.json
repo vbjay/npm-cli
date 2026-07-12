@@ -1,0 +1,72 @@
+{
+  "name": "@transak/ui-expo-sdk",
+  "version": "1.1.0",
+  "description": "An Expo SDK for decentralized applications to onboard their global user base with fiat currency",
+  "type": "module",
+  "types": "lib/index.d.ts",
+  "main": "lib/index.cjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      },
+      "require": {
+        "types": "./lib/index.d.cts",
+        "default": "./lib/index.cjs"
+      }
+    }
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.16.1+sha512.0e155aa2629db8672b49e8475da6226aa4bdea85fdcdfdc15350874946d4f3c91faaf64cbdc4a5d1ab8002f473d5c3fcedcd197989cf0390f9badd3c04678706",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "eslint": "eslint . --ext .ts,.tsx --fix",
+    "build": "tsc && tsup",
+    "prepack": "pnpm build",
+    "packDev": "pnpm pack"
+  },
+  "author": "Transak",
+  "license": "ISC",
+  "homepage": "https://docs.transak.com/docs/react-native-integration#transak-react-native-sdk",
+  "peerDependencies": {
+    "@react-native-community/netinfo": "*",
+    "@types/react": "*",
+    "react": "*",
+    "react-native": "*",
+    "expo-web-browser": "*",
+    "react-native-webview": "*"
+  },
+  "dependencies": {
+    "query-string": "^9.3.0"
+  },
+  "devDependencies": {
+    "eslint": "~8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-no-relative-import-paths": "^1.6.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-promise": "^7.2.1",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "~5.5.4"
+  },
+  "keywords": [
+    "crypto",
+    "cryptocurrency",
+    "fiat",
+    "on",
+    "off",
+    "ramp",
+    "sdk",
+    "react-native",
+    "expo"
+  ]
+}

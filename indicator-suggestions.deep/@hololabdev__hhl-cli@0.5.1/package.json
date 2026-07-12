@@ -1,0 +1,51 @@
+{
+  "name": "@hololabdev/hhl-cli",
+  "version": "0.5.1",
+  "description": "CLI for orchestrating local development across a multi-app workspace",
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "hhl": "./bin/hhl.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "docker",
+    "hhl.config.example.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "pnpm run build",
+    "start": "node bin/hhl.js",
+    "dev:cli": "tsx src/index.ts",
+    "dev": "node bin/hhl.js dev",
+    "link:global": "pnpm link --global"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "hololab",
+    "cli",
+    "dev",
+    "orchestrator"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "execa": "^9.5.2",
+    "tree-kill": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "tsx": "^4.22.4",
+    "typescript": "^5.8.3"
+  }
+}

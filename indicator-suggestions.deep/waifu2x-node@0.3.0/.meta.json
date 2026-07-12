@@ -1,0 +1,191 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "50b88ee6fdcf0fc2",
+    "fetchedFiles": [
+      "binding.gyp",
+      "install/vendor",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "npmlog",
+        "versionSpec": "^4.1.2"
+      },
+      {
+        "name": "simple-get",
+        "versionSpec": "^4.0.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "npmlog@4.1.2",
+      "simple-get@4.0.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "2289b8597d61e9dd8f1ee30281172208b56e01a548dd3a479b4e5b35886f3b06",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `w2xcjs`  -  C/C++ sources",
+            "items": [
+              "src/main.cc",
+              "src/w2xcjs.cc",
+              "src/conv.cc"
+            ]
+          },
+          {
+            "label": "Target `w2xcjs`  -  libraries",
+            "items": [
+              "../vendor/opencv/build/x64/vc15/lib/opencv_world430.lib",
+              "../vendor/w2xc/w2xc.lib",
+              "-lw2xc",
+              "-lopencv_core",
+              "-lopencv_imgproc",
+              "-lopencv_imgcodecs"
+            ]
+          },
+          {
+            "label": "Target `w2xcjs`  -  include directories",
+            "items": [
+              "vendor/w2xc/include",
+              "vendor/opencv/build/include",
+              "<!(node -e \"require('nan')\")",
+              "/usr/include/opencv4",
+              "<!(node -e \"require('nan')\")"
+            ]
+          },
+          {
+            "label": "Target `w2xcjs`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "install/vendor",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "7692d1c12048c54ae244bc0719ef343efe381fa4e6f0728832b5f67a599e9f8a",
+        "sizeBytes": 4737,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://sourceforge.net/projects/opencvlibrary/files/4.3.0/opencv-4.3.0-vc14_vc15.exe/download",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/DeadSix27/waifu2x-converter-cpp/releases/download/v5.3.3/waifu2x-DeadSix27-win64_v533.zip",
+            "classification": "download"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/DeadSix27/waifu2x-converter-cpp/master/src/w2xconv.h",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/DeadSix27/waifu2x-converter-cpp/master/models_rgb/noise0_model.json",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/DeadSix27/waifu2x-converter-cpp/master/models_rgb/noise1_model.json",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/DeadSix27/waifu2x-converter-cpp/master/models_rgb/noise2_model.json",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/DeadSix27/waifu2x-converter-cpp/master/models_rgb/noise3_model.json",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/DeadSix27/waifu2x-converter-cpp/master/models_rgb/scale2.0x_model.json",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:27.900Z"
+  },
+  "hash": "sha256:8a7c60bb6df013908a40abcda159a0126aa20a645e7718a4f2544d7b771ffb83"
+}

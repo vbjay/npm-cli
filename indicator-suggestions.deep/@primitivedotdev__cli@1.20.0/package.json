@@ -1,0 +1,180 @@
+{
+  "name": "@primitivedotdev/cli",
+  "version": "1.20.0",
+  "description": "Official Primitive CLI: deploy Primitive Functions, send and inspect mail, manage endpoints, all from the terminal. Wraps the @primitivedotdev/sdk runtime client with one-shot commands.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "bin",
+    "dist",
+    "man"
+  ],
+  "bin": {
+    "primitive": "./bin/run.js",
+    "prim": "./bin/run.js"
+  },
+  "man": [
+    "./man/primitive.1"
+  ],
+  "oclif": {
+    "bin": "primitive",
+    "commands": {
+      "strategy": "explicit",
+      "target": "./dist/oclif/index.js",
+      "identifier": "COMMANDS"
+    },
+    "dirname": "primitive",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-warn-if-update-available"
+    ],
+    "warn-if-update-available": {
+      "timeoutInDays": 1,
+      "frequency": 1,
+      "frequencyUnit": "days",
+      "message": "Primitive CLI update available from <%= chalk.greenBright(config.version) %> to <%= chalk.greenBright(latest) %>. Run `npm install -g @primitivedotdev/cli@latest` to update."
+    },
+    "topics": {
+      "chat": {
+        "description": "Chat with agents over email. Use `primitive chat <email> <message>` to start, `primitive chat reply <message>` to continue the active chat, or `primitive chat reply <id> <message>` to reply in a specific local chat."
+      },
+      "cli": {
+        "description": "CLI authentication"
+      },
+      "config": {
+        "description": "Manage local Primitive CLI request environments",
+        "hidden": true
+      },
+      "account": {
+        "description": "Manage your account settings, storage, and webhook secret"
+      },
+      "agent": {
+        "description": "Agent signup and authentication API operations"
+      },
+      "domains": {
+        "description": "Claim, verify, manage email domains, and download DNS zone files"
+      },
+      "registries": {
+        "description": "Create and manage agent registries, publish and resolve agents by handle, and moderate publication requests"
+      },
+      "inbox": {
+        "description": "Check inbound email setup and processing readiness. Prefer `primitive inbox setup` for a guided setup path and `primitive inbox status` for the readiness table."
+      },
+      "emails": {
+        "description": "List, inspect, and wait for received emails. Prefer task aliases like `primitive emails list`, `primitive emails get`, `primitive emails latest`, `primitive emails wait`, and `primitive emails watch`; generated API names remain available for compatibility."
+      },
+      "search": {
+        "description": "Cross-corpus semantic search. Prefer `primitive search <query>` for lexical inbound search and `primitive semantic-search <query>` for meaning-aware ranking across inbound and outbound.",
+        "hidden": true
+      },
+      "sending": {
+        "description": "Send outbound emails. Prefer `primitive send` for fresh sends and `primitive reply --id <inbound-id>` for replies. Use `primitive domains list` or `primitive inbox status` to find usable sender domains for --from; `primitive sending permissions` lists recipient-scope destinations you may send to."
+      },
+      "signin": {
+        "description": "Sign in to an existing Primitive account"
+      },
+      "login": {
+        "description": "Log in to an existing Primitive account"
+      },
+      "otp": {
+        "description": "Authenticate with an emailed one-time code"
+      },
+      "sent": {
+        "description": "Short aliases for outbound sent-email history: `primitive sent list` and `primitive sent get`."
+      },
+      "threads": {
+        "description": "Inspect conversation threads spanning received and sent emails. Prefer `primitive threads get --id <thread-id>`; generated API name `primitive threads get-thread --id <thread-id>` remains available."
+      },
+      "endpoints": {
+        "description": "Manage webhook endpoints that receive email events"
+      },
+      "filters": {
+        "description": "Manage whitelist and blocklist filter rules"
+      },
+      "webhook-deliveries": {
+        "description": "View and replay webhook delivery attempts. Prefer `primitive webhook-deliveries list` and `primitive webhook-deliveries replay`."
+      },
+      "deliveries": {
+        "description": "Short aliases for webhook delivery attempts: `primitive deliveries list` and `primitive deliveries replay`."
+      },
+      "functions": {
+        "description": "Deploy JavaScript handlers that run on inbound mail. Prefer `primitive functions templates`, `primitive functions init`, `primitive functions deploy`, `primitive functions redeploy`, `primitive functions list`, `primitive functions get`, `primitive functions logs`, and `primitive functions set-secret`; generated API names remain available for compatibility."
+      },
+      "memories": {
+        "description": "Store durable JSON memories by key. Use `primitive memories set|get|delete|search`; pass `--function <function-id>` for function-scoped memories."
+      },
+      "templates": {
+        "description": "Browse and install Function templates. Use `primitive templates list-templates`, `primitive templates get-template`, `primitive templates install-template`, and `primitive templates get-template-install`."
+      },
+      "org": {
+        "description": "Manage org-level (global) resources shared across functions"
+      },
+      "org:secrets": {
+        "description": "Global secrets shared across every function. Use `primitive org secrets list|set|remove`. Changes land in a function on its next redeploy; a function secret of the same name overrides the global."
+      },
+      "payments": {
+        "description": "Collect and pay x402 stablecoin (USDC) payments. Start with `primitive payments register-payout-address`, then `primitive payments create-challenge` to request a payment and `primitive payments pay` to settle one. Settlement is non-custodial; signing happens locally with your wallet key. Manage caps with `primitive payments get-policy|update-spend-policy`."
+      },
+      "routes": {
+        "description": "Manage recipient routes. Bind an address pattern to an endpoint or function: `primitive routes add alice@d --function <id>`, `primitive routes list`, `primitive routes test <recipient>`, `primitive routes remove <id>`."
+      },
+      "wake": {
+        "description": "Schedule and send wake commands to your own functions over signed email, and manage which senders may wake them. Use `primitive wake schedules list|create|get|update|delete|run`, `primitive wake authorizations list|create|update|delete`, and `primitive wake dispatches list`."
+      }
+    },
+    "topicSeparator": " "
+  },
+  "scripts": {
+    "build": "pnpm --filter @primitivedotdev/sdk build && tsdown && node scripts/assert-bundled.mjs",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
+    "lint": "biome check --error-on-warnings src tests",
+    "lint:fix": "biome check --write --error-on-warnings src tests",
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "primitive",
+    "cli",
+    "email",
+    "functions",
+    "webhook"
+  ],
+  "author": "Primitive <support@primitive.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/primitivedotdev/sdks.git",
+    "directory": "cli-node"
+  },
+  "bugs": {
+    "url": "https://github.com/primitivedotdev/sdks/issues"
+  },
+  "homepage": "https://primitive.dev",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@oclif/core": "^4.10.5",
+    "@oclif/plugin-autocomplete": "^3.2.45",
+    "@oclif/plugin-help": "^6.2.44",
+    "@oclif/plugin-warn-if-update-available": "^3.1.65",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@primitivedotdev/api-core": "workspace:*",
+    "@primitivedotdev/sdk": "workspace:*",
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "^4.1.4",
+    "oclif": "^4.23.0",
+    "tsdown": "^0.21.10",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.2",
+    "vite": "^8.0.8",
+    "vitest": "^4.1.4"
+  }
+}

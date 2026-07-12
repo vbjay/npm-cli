@@ -1,0 +1,80 @@
+{
+  "name": "pgpm",
+  "version": "4.36.1",
+  "author": "Constructive <developers@constructive.io>",
+  "description": "PostgreSQL Package Manager - Database migration and package management CLI",
+  "main": "index.js",
+  "module": "esm/index.js",
+  "types": "index.d.ts",
+  "homepage": "https://github.com/constructive-io/constructive",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
+  "bin": {
+    "pgpm": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/constructive-io/constructive"
+  },
+  "bugs": {
+    "url": "https://github.com/constructive-io/constructive/issues"
+  },
+  "scripts": {
+    "clean": "makage clean",
+    "prepack": "npm run build",
+    "build": "makage build",
+    "build:dev": "makage build --dev",
+    "dev": "ts-node ./src/index.ts",
+    "lint": "eslint . --fix",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@inquirerer/test": "^1.4.3",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.19.11",
+    "@types/pg": "^8.20.0",
+    "@types/semver": "^7.5.8",
+    "@types/shelljs": "^0.10.0",
+    "glob": "^13.0.6",
+    "makage": "^0.3.0",
+    "pg": "^8.21.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@inquirerer/utils": "^3.3.9",
+    "@pgpmjs/core": "^6.28.1",
+    "@pgpmjs/env": "^2.26.4",
+    "@pgpmjs/export": "^0.26.8",
+    "@pgpmjs/logger": "^2.13.1",
+    "@pgpmjs/types": "^2.33.1",
+    "@pgsql/quotes": "^17.1.0",
+    "appstash": "^0.7.0",
+    "find-and-require-package-json": "^0.9.1",
+    "genomic": "^5.6.2",
+    "inquirerer": "^4.9.1",
+    "js-yaml": "^4.1.0",
+    "pg-cache": "^3.14.3",
+    "pg-env": "^1.17.1",
+    "pgsql-deparser": "^17.18.3",
+    "semver": "^7.8.1",
+    "shelljs": "^0.10.0",
+    "yanse": "^0.2.1"
+  },
+  "keywords": [
+    "cli",
+    "command-line",
+    "tool",
+    "postgres",
+    "postgresql",
+    "migration",
+    "package-manager",
+    "database",
+    "pg",
+    "pgsql"
+  ],
+  "gitHead": "43b73b3014cb9388ca3218611455c7e0f202f042"
+}

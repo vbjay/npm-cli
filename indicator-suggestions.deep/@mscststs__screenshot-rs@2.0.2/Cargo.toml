@@ -1,0 +1,20 @@
+[package]
+name = "screenshot_rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <you@example.com>"]
+description = "Rust-based screen capture library exposed to Node via N-API"
+license = "MIT"
+
+[lib]
+name = "screenshot_rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "2", features = ["napi4"] }
+napi-derive = "2"
+screenshots = "0.8"
+image = { version = "0.24", default-features = false, features = ["png"] }
+
+[build-dependencies]
+napi-build = "2" 

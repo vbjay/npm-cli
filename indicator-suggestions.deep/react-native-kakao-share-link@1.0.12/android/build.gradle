@@ -1,0 +1,71 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['KakaoShareLink_' + name]
+  }
+
+  repositories {
+    mavenCentral()
+    google()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:${getExtOrDefault('gradleVersion')}"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+
+android {
+  compileSdkVersion getExtOrDefault('compileSdkVersion').toInteger()
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault('minSdkVersion').toInteger()
+    targetSdkVersion getExtOrDefault('targetSdkVersion').toInteger()
+    versionCode 1
+    versionName "1.0"
+
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+def kakaoSdkVersion = getExtOrDefault('kakaoSdkVersion')
+
+dependencies {
+  // noinspection GradleDynamicVersion
+  api 'com.facebook.react:react-native:+'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "com.kakao.sdk:v2-share:$kakaoSdkVersion"
+}
+
+rootProject.allprojects {
+  repositories {
+    maven {
+      url 'https://devrepo.kakao.com/nexus/content/groups/public/'
+    }
+  }
+}
+

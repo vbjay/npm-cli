@@ -1,0 +1,164 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['RiveReactNative_kotlinVersion']
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("com.android.tools.build:gradle")
+    classpath("com.facebook.react:react-native-gradle-plugin")
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['RiveReactNative_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['RiveReactNative_' + name]).toInteger()
+}
+
+android {
+  // Conditional for compatibility with AGP <4.2.
+  if (project.android.hasProperty("namespace")) {
+    namespace = "com.rivereactnative"
+  }
+  compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+  buildToolsVersion getExtOrDefault('buildToolsVersion')
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+    versionCode 1
+    versionName "1.0"
+
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+  google()
+
+  def found = false
+  def defaultDir = null
+  def androidSourcesName = 'React Native sources'
+
+  if (rootProject.ext.has('reactNativeAndroidRoot')) {
+    defaultDir = rootProject.ext.get('reactNativeAndroidRoot')
+  } else {
+    defaultDir = new File(
+            projectDir,
+            '/../../../node_modules/react-native/android'
+    )
+  }
+
+  if (defaultDir.exists()) {
+    maven {
+      url defaultDir.toString()
+      name androidSourcesName
+    }
+
+    logger.info(":${project.name}:reactNativeAndroidRoot ${defaultDir.canonicalPath}")
+    found = true
+  } else {
+    def parentDir = rootProject.projectDir
+
+    1.upto(5, {
+      if (found) return true
+      parentDir = parentDir.parentFile
+
+      def androidSourcesDir = new File(
+              parentDir,
+              'node_modules/react-native'
+      )
+
+      def androidPrebuiltBinaryDir = new File(
+              parentDir,
+              'node_modules/react-native/android'
+      )
+
+      if (androidPrebuiltBinaryDir.exists()) {
+        maven {
+          url androidPrebuiltBinaryDir.toString()
+          name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidPrebuiltBinaryDir.canonicalPath}")
+        found = true
+      } else if (androidSourcesDir.exists()) {
+        maven {
+          url androidSourcesDir.toString()
+          name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidSourcesDir.canonicalPath}")
+        found = true
+      }
+    })
+  }
+
+  if (!found) {
+    throw new GradleException(
+            "${project.name}: unable to locate React Native android sources. " +
+                    "Ensure you have you installed React Native as a dependency in your project and try again."
+    )
+  }
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+
+def getRiveAndroidVersion() {
+  if (project.hasProperty("Rive_RiveRuntimeAndroidVersion")) {
+    return project.property("Rive_RiveRuntimeAndroidVersion")
+  }
+
+  def packageJsonFile = new File(projectDir, '../package.json')
+  if (packageJsonFile.exists()) {
+    def packageJson = new groovy.json.JsonSlurper().parseText(packageJsonFile.text)
+    if (packageJson.runtimeVersions?.android) {
+      return packageJson.runtimeVersions.android
+    }
+  }
+
+  throw new GradleException("Could not determine Rive Android SDK version. Please add 'runtimeVersions.android' to package.json")
+}
+
+def riveAndroidVersion = getRiveAndroidVersion()
+println "rive-react-native: Using Rive Android SDK ${riveAndroidVersion}"
+
+dependencies {
+  // noinspection GradleDynamicVersion
+  def lifecycle_version = "2.6.1"
+
+  api 'com.facebook.react:react-native:+'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+  implementation 'androidx.core:core-ktx:1.12.0'
+  implementation 'androidx.appcompat:appcompat:1.6.1'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+  implementation "app.rive:rive-android:${riveAndroidVersion}"
+  implementation 'com.android.volley:volley:1.2.0'
+}

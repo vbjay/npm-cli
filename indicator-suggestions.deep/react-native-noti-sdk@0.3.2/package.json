@@ -1,0 +1,79 @@
+{
+  "name": "react-native-noti-sdk",
+  "version": "0.3.2",
+  "description": "SDK lấy FCM token và nhận/hiển thị thông báo cho React Native (bọc @react-native-firebase/messaging + @notifee/react-native), hỗ trợ Android + iOS.",
+  "author": "haonc <haodev.01@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haonc/react-native-noti-sdk.git"
+  },
+  "homepage": "https://github.com/haonc/react-native-noti-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/haonc/react-native-noti-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.tsx",
+  "source": "src/index.tsx",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "react-native-noti-sdk.podspec",
+    "!android/build",
+    "!**/__tests__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "prepublishOnly": "bob build",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "react-native",
+    "fcm",
+    "firebase",
+    "push-notification",
+    "messaging",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@notifee/react-native": ">=7.8.0",
+    "@react-native-clipboard/clipboard": ">=1.0.0",
+    "@react-native-firebase/app": ">=18.0.0",
+    "@react-native-firebase/messaging": ">=18.0.0",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@notifee/react-native": "^9.1.8",
+    "@react-native-clipboard/clipboard": "^1.16.3",
+    "@react-native-firebase/app": "^21.6.1",
+    "@react-native-firebase/messaging": "^21.6.1",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-builder-bob": "^0.30.0",
+    "typescript": "^5.8.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

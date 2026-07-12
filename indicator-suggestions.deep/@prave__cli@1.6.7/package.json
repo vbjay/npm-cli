@@ -1,0 +1,76 @@
+{
+  "name": "@prave/cli",
+  "version": "1.6.7",
+  "description": "Prave CLI — discover, install, version, test, and ship Claude Skills. The developer platform for the complete Skill lifecycle.",
+  "type": "module",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "claude-skills",
+    "skills",
+    "anthropic",
+    "ai",
+    "llm",
+    "agent",
+    "agents",
+    "ai-agent",
+    "agentic",
+    "cli",
+    "developer-tools",
+    "prompt-engineering",
+    "code-generation",
+    "skill-marketplace",
+    "skill-registry",
+    "prave"
+  ],
+  "homepage": "https://prave.app",
+  "bugs": {
+    "url": "https://github.com/eppstudio/prave/issues",
+    "email": "hello@epplab-studio.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eppstudio/prave.git",
+    "directory": "apps/cli"
+  },
+  "author": "EppLab Studio <hello@epplab-studio.de> (https://epplab-studio.de)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "prave": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "scripts/postinstall.mjs"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "open": "^10.1.0",
+    "ora": "^8.0.1",
+    "tar": "^7.4.3",
+    "undici": "^6.18.0",
+    "@prave/shared": "1.5.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/tar": "^6.1.13",
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts --help",
+    "cli": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json && node scripts/inject-config.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "postinstall": "node -e \"const fs=require('node:fs');if(fs.existsSync('scripts/postinstall.mjs'))require('node:child_process').execFileSync(process.execPath,['scripts/postinstall.mjs'],{stdio:'inherit'})\""
+  }
+}

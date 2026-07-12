@@ -1,0 +1,71 @@
+{
+  "name": "runtime-proof-kit",
+  "version": "0.5.5",
+  "description": "Runtime proof CLI for AI coding agents: browser screenshots, logs, and PR-ready proof reports.",
+  "type": "module",
+  "bin": {
+    "runtime-proof": "dist/cli.js"
+  },
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "docs",
+    "examples",
+    "assets/readme"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "node scripts/mark-cli-executable.mjs",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "check": "npm run build && npm run test",
+    "prepare": "npm run build",
+    "prepack": "npm run build",
+    "proof:example": "npm run dev -- check --config examples/config/runtime-proof.config.json",
+    "proof:multi": "npm run dev -- check --config examples/config/multi-check.config.json",
+    "assets:readme": "node scripts/capture-readme-assets.mjs"
+  },
+  "keywords": [
+    "ai-agents",
+    "coding-agents",
+    "agentic-coding",
+    "vibe-coding",
+    "ai-coding",
+    "runtime-verification",
+    "runtime-proof",
+    "proof",
+    "playwright",
+    "playwright-testing",
+    "cli",
+    "ci",
+    "developer-tools",
+    "qa",
+    "screenshots",
+    "verification",
+    "smoke-test",
+    "pr-review"
+  ],
+  "author": "Orcun Ozbay",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozbayorcun/runtime-proof-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ozbayorcun/runtime-proof-kit/issues"
+  },
+  "homepage": "https://github.com/ozbayorcun/runtime-proof-kit#readme",
+  "dependencies": {
+    "playwright": "^1.57.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

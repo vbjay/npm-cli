@@ -1,0 +1,159 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ec3f5206ef761015",
+    "fetchedFiles": [
+      "binding.gyp",
+      "examples/_shared/db.js",
+      "examples/_shared/liteorm.js",
+      "examples/auth/index.js",
+      "examples/blog/index.js",
+      "examples/todo/index.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "b205739ae80cb6ec48b08224d84ee2c05f460fab5e386ba370ff27d2f177c1af",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `lite_orm`  -  C/C++ sources",
+            "items": [
+              "src/addon.cc",
+              "deps/sqlite/sqlite3.c"
+            ]
+          },
+          {
+            "label": "Target `lite_orm`  -  include directories",
+            "items": [
+              "deps/sqlite",
+              "<!@(node -p \"require('node:path').dirname(process.execPath) + '/../include/node'\")"
+            ]
+          },
+          {
+            "label": "Target `lite_orm`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "examples/todo/index.js",
+        "reason": "referenced by lifecycle script: `test:examples`",
+        "sha256": "e0fee1de8412810346ea0adf186c755e4d3639178abda734e2003ccbb8a39543",
+        "sizeBytes": 2422,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "examples/_shared/liteorm.js",
+          "examples/_shared/db.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "examples/_shared/liteorm.js",
+        "reason": "required by ./examples/todo/index.js; required by ./examples/_shared/db.js; required by ./examples/blog/index.js; required by ./examples/auth/index.js",
+        "sha256": "ff78db183badb0e754341c61cb497f7153b0759a7f359c3ea4386bc755f6339a",
+        "sizeBytes": 108,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "examples/_shared/db.js",
+        "reason": "required by ./examples/todo/index.js; required by ./examples/blog/index.js; required by ./examples/auth/index.js",
+        "sha256": "391f362c934c7754aaaea189ab3b7a35ee066041e0f8e90ce8ea86aa3ed125ae",
+        "sizeBytes": 703,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "examples/_shared/liteorm.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "examples/blog/index.js",
+        "reason": "referenced by lifecycle script: `test:examples`",
+        "sha256": "aa6d00a307650b46e66ad82e4ae8e6fca0fccc0e790edefacc98c6759ff9d16c",
+        "sizeBytes": 3609,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "examples/_shared/liteorm.js",
+          "examples/_shared/db.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "examples/auth/index.js",
+        "reason": "referenced by lifecycle script: `test:examples`",
+        "sha256": "89f9d4bbab0c56a459fd2e4823c65eb97c61aea1fbe529b0b8febf7cd5be905c",
+        "sizeBytes": 3603,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "examples/_shared/liteorm.js",
+          "examples/_shared/db.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:07.367Z"
+  },
+  "hash": "sha256:8bc8a3ac9ce965418d069888ac6ea69d1cbb25ef116f6081fc5d63ab066c14b6"
+}

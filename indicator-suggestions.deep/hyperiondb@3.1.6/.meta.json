@@ -1,0 +1,137 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ecc8811bb0dbbacb",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "build.rs",
+      "package.json",
+      "scripts/check_rust.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "07b9cc1fa4d4ab6fca158ce357830ff2dc4cf83ef4c3d68be7683ef9ebde912e",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "hyperiondb"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.0.0"
+            ]
+          },
+          {
+            "label": "Crate output type",
+            "items": [
+              "\"cdylib\""
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.rs",
+        "label": "Rust build script",
+        "sha256": "71b61de74caafb5f27db3d24d197b64282f49f807b969e140ca8ce181e5464fc",
+        "parseError": null,
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check_rust.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "2092a47ce1c4c21b70771b91b303a2c74302133f2cf2694d5c8e3b3604ae494a",
+        "sizeBytes": 2783,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "modifies-shell-config",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://win.rustup.rs",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://rustup.rs",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://sh.rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:59.294Z"
+  },
+  "hash": "sha256:a0df53f6ae5770cc608e738cc4784f4d6957b331f8fac86969681f560c6f72bf"
+}

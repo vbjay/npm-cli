@@ -1,0 +1,113 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6b8a63d2c9c2b09b",
+    "fetchedFiles": [
+      "index.js",
+      "package.json",
+      "src/collector.js",
+      "src/config.js",
+      "src/sender.js",
+      "src/tracker.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "index.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "04043c1da60345d9c44b28b6257a0c590a6bafa104fc1279b5e9704086bf44d4",
+        "sizeBytes": 934,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/tracker.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/tracker.js",
+        "reason": "required by ./index.js",
+        "sha256": "5674212e892d3459509ca607ac7b48544df8e65779587954f06734da9e914580",
+        "sizeBytes": 1864,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/config.js",
+          "src/collector.js",
+          "src/sender.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/config.js",
+        "reason": "required by ./src/tracker.js",
+        "sha256": "1b741d030fe798de686cbaceea271b3ba783773f429167ee061f9c2dba8e3623",
+        "sizeBytes": 6775,
+        "signals": [
+          "reads-process-env",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://telemetry.reo.dev/data",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "src/collector.js",
+        "reason": "required by ./src/tracker.js",
+        "sha256": "336d026d3e4ec70c896847fa6adcea64cc28ef4264fec203ef9f16694529439a",
+        "sizeBytes": 9505,
+        "signals": [
+          "reads-process-env",
+          "modifies-shell-config",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/sender.js",
+        "reason": "required by ./src/tracker.js",
+        "sha256": "3bc27efc2d9c1b937ddb39ca352b893d72a180c8fa260f8f133e38ccba39ae98",
+        "sizeBytes": 3907,
+        "signals": [
+          "network-access"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:03.468Z"
+  },
+  "hash": "sha256:aae8d5e2c558361d23db36a5d5c246235b382c171813b13a0984b847fde76a7d"
+}

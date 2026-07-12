@@ -1,0 +1,125 @@
+{
+  "name": "@contentsquare/react-native-bridge",
+  "title": "Contentsquare's React Native bridge",
+  "version": "6.4.1",
+  "description": "A JavaScript bridge to the native iOS and Android Contentsquare SDKs, for React Native apps.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./src/index.ts",
+  "files": [
+    "/README.md",
+    "/LICENSE",
+    "/ContentsquareBridgeModule.podspec",
+    "/src",
+    "/dist",
+    "/android/build.gradle",
+    "/android/gradle.properties",
+    "/android/gradlew",
+    "/android/gradlew.bat",
+    "/android/src/**",
+    "/android/gradle/**",
+    "/android/config/**",
+    "/ios/ContentsquareBridgeModule/**",
+    "/ios/ContentsquareBridgeModule.xcodeproj/**",
+    "/plugin/**",
+    "app.plugin.js",
+    "/babel/**"
+  ],
+  "keywords": [
+    "react-native",
+    "android",
+    "ios",
+    "contentsquare",
+    "contentsquare-bridge"
+  ],
+  "author": {
+    "name": "Contentsquare Mobile Team",
+    "email": "mobile@contentsquare.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "init-bridge-and-test-apps": "f(){ (cd scripts; ./init_bridge_and_test_apps.sh $*) };f",
+    "update-project": "ts-node ./ts-scripts/updateProject.ts",
+    "scripts": "ts-node ./ts-scripts/main.ts",
+    "setup-react-native": "f(){ (cd scripts; ./setup_react_native.sh $*) };f",
+    "ios-pod": "(cd ios; pod deintegrate; pod install --repo-update)",
+    "pack": "f(){ (cd scripts; ./pack.sh $*) };f",
+    "install-sdks": "f(){ (cd scripts; ./install_sdks.sh $*) };f",
+    "update-cli": "ts-node ./ts-scripts/updateCLI.ts",
+    "publish-cli": "ts-node ./ts-scripts/publishCLI.ts",
+    "is-bridge-version-published": "f(){ (cd scripts; ./ci/is_bridge_version_published.sh $*) };f",
+    "set-version-tag-to-current-commit": "f(){ (cd scripts; ./ci/set_version_tag_to_current_commit.sh $*) };f",
+    "build-jsbundle": "f(){ (cd scripts; ./update_ios_jsbundle.sh $*) };f",
+    "build-jsbundle-ts": "ts-node ./ts-scripts/updateIosJsBundle.ts",
+    "build-versions-file": "f(){ (cd scripts; ./update_version_constants.sh $*) };f",
+    "release": "f(){ yarn install && rm -rf ./yarn.lock && rm -rf ./package-lock.json && np && rm -rf node_modules ;};f",
+    "prepare-for-publish": "f(){ (cd scripts; ./prepare_for_publish.sh $*) };f",
+    "bridge-name": "echo \"${npm_package_name}\"",
+    "bridge-version": "echo \"${npm_package_version}\"",
+    "bridge-tgz-name": "echo \"${npm_package_name}-v${npm_package_version}.tgz\" | sed 's#/#-#g' | sed 's#@##g'",
+    "prepare": "expo-module prepare && husky install",
+    "expo-module": "expo-module",
+    "prettify": "prettier -w .",
+    "test": "jest ./src/__tests__",
+    "test:format": "prettier -c .",
+    "test:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "ios-coverage": "f(){ (./scripts/ios_coverage.sh $*) };f",
+    "android-coverage": "f(){ (./scripts/android_coverage.sh $*) };f",
+    "update-changelog": "ts-node ./ts-scripts/updateChangelog.ts $*",
+    "create-test-app": "ts-node ./ts-scripts/src/testAppCreation/createNewTestApp.ts"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-native": ">=0.71"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@react-native/babel-preset": "^0.83.0",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^12.9.0",
+    "@types/inquirer": "8.1.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.5",
+    "@types/react": "^19",
+    "@types/react-test-renderer": "^19",
+    "@typescript-eslint/eslint-plugin": "5.60.1",
+    "@typescript-eslint/parser": "5.60.1",
+    "commander": "11.1.0",
+    "eslint": "8.43.0",
+    "eslint-plugin-react": "7.32.2",
+    "expo-module-scripts": "2.0.0",
+    "husky": "^8.0.0",
+    "inquirer": "8.1.0",
+    "jest": "^29.7.0",
+    "prettier": "2.8.8",
+    "react": "^19.1.0",
+    "react-native": "0.80.1",
+    "react-native-webview": "13.6.4",
+    "react-test-renderer": "19.2.0",
+    "ts-node": "10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "yarn@4.2.2",
+  "codegenConfig": {
+    "name": "ContentsquareBridge",
+    "type": "all",
+    "jsSrcsDir": "src/core/specs",
+    "android": {
+      "javaPackageName": "com.contentsquare.rn"
+    },
+    "ios": {
+      "componentProvider": {
+        "CSMaskedView": "CSMaskedView",
+        "CSUnmaskedView": "CSUnmaskedView",
+        "CSQMaskedView": "CSQMaskedView",
+        "CSQUnmaskedView": "CSQUnmaskedView"
+      }
+    }
+  },
+  "dependencies": {
+    "@contentsquare/react-native-autocapture": "^0.0.3",
+    "@heap/heap-javascript-bridge-support": "^0.6.0"
+  }
+}

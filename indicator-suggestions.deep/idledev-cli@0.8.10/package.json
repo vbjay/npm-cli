@@ -1,0 +1,45 @@
+{
+  "name": "idledev-cli",
+  "version": "0.8.10",
+  "description": "IdleDev CLI — earn while your AI agent thinks. Runs a live sponsor status bar alongside Claude Code, Codex, Gemini, OpenCode, and any terminal agent.",
+  "license": "BUSL-1.1",
+  "type": "module",
+  "bin": {
+    "idledev": "bin/idledev.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idledev/cli.git"
+  },
+  "keywords": [
+    "idledev",
+    "ai",
+    "claude-code",
+    "codex",
+    "gemini",
+    "opencode",
+    "ads",
+    "cli"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "dependencies": {
+    "@xterm/headless": "^5.5.0",
+    "sixel": "^0.16.0"
+  },
+  "optionalDependencies": {
+    "node-pty": "^1.0.0",
+    "sharp": "^0.33.5"
+  }
+}

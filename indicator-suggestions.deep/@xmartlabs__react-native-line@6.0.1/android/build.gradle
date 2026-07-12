@@ -1,0 +1,48 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : "2.1.20"
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle"
+        classpath "com.facebook.react:react-native-gradle-plugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+apply plugin: "com.android.library"
+apply plugin: "com.facebook.react"
+apply plugin: "kotlin-android"
+
+android {
+    namespace "com.xmartlabs.line"
+    compileSdk safeExtGet("compileSdkVersion", 36)
+
+    defaultConfig {
+        minSdk safeExtGet("minSdkVersion", 24)
+        targetSdk safeExtGet("targetSdkVersion", 36)
+        versionCode 1
+        versionName "6.0.1"
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += ["${layout.buildDirectory.get().asFile}/generated/source/codegen/java"]
+        }
+    }
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+    implementation "com.linecorp.linesdk:linesdk:5.12.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
+}

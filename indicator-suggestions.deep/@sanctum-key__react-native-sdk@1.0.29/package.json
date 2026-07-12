@@ -1,0 +1,75 @@
+{
+  "name": "@sanctum-key/react-native-sdk",
+  "version": "1.0.29",
+  "description": "Sanctum Key React Native SDK",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "scripts": {
+    "build": "expo-module build && copyfiles -u 1 \"src/**/*.gif\" build/",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare && bash scripts/copy-assets.sh",
+    "postprepare": "bash scripts/copy-assets.sh",
+    "prepublishOnly": "expo-module prepublishOnly && bash scripts/copy-assets.sh",
+    "prepack": "bash scripts/copy-assets.sh",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "sanctum-key",
+    "sanctum-key-react-native-sdk",
+    "kyc",
+    "identity-verification"
+  ],
+  "repository": "https://github.com/SanctumKeyOrg/KYC-User-Frontend",
+  "bugs": {
+    "url": "https://github.com/SanctumKeyOrg/KYC-User-Frontend/issues"
+  },
+  "author": "mesha-SanctumKey <loic.lontchi@SanctumKey.com> (https://github.com/mesha-SanctumKey)",
+  "license": "MIT",
+  "homepage": "https://github.com/SanctumKey/KYC-User-Frontend#readme",
+  "files": [
+    "build",
+    "src",
+    "android",
+    "ios",
+    "plugin",
+    "plugin.js",
+    "expo-module.config.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@zxing/browser": "^0.2.0",
+    "@zxing/library": "^0.22.0",
+    "axios": "^1.11.0",
+    "expo-blur": "~15.0.8",
+    "i18n-js": "4.5.1",
+    "iconsax-react-nativejs": "^0.0.8",
+    "react-native-qrcode-svg": "^6.3.21",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.0",
+    "copyfiles": "^2.4.1",
+    "expo": "~54.0.0",
+    "expo-module-scripts": "^4.1.10",
+    "react-native": "0.81.5"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "expo-image-manipulator": "*",
+    "expo-location": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "*",
+    "react-native-vision-camera": "^4.7.1"
+  }
+}

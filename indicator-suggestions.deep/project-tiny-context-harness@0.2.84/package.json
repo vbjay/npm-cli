@@ -1,0 +1,69 @@
+{
+  "name": "project-tiny-context-harness",
+  "version": "0.2.84",
+  "description": "Minimal project memory and validation harness for AI coding agents.",
+  "license": "MIT",
+  "author": "Seven128",
+  "homepage": "https://github.com/Seven128/project-tiny-context-harness#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seven128/project-tiny-context-harness.git",
+    "directory": "packages/ty-context"
+  },
+  "bugs": {
+    "url": "https://github.com/Seven128/project-tiny-context-harness/issues"
+  },
+  "keywords": [
+    "ai-agents",
+    "coding-agent",
+    "codex",
+    "claude-code",
+    "cursor",
+    "gemini-cli",
+    "opencode",
+    "agent-context",
+    "context-engineering",
+    "context-management",
+    "agents-md",
+    "project-memory",
+    "agent-memory",
+    "ai-coding",
+    "multi-agent",
+    "llm",
+    "developer-tools",
+    "developer-productivity",
+    "cli",
+    "ty-context",
+    "workflow"
+  ],
+  "type": "module",
+  "bin": {
+    "ty-context": "dist/cli.js"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "assets",
+    "migrations",
+    "source-mappings.yaml"
+  ],
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:built": "node --test ../../tests/ty-context/*.test.mjs",
+    "test": "npm run build && node --test ../../tests/ty-context/*.test.mjs",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@google/design.md": "^0.3.0",
+    "impeccable": "^3.1.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^5.5.0"
+  }
+}

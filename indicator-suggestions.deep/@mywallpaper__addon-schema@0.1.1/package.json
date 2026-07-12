@@ -1,0 +1,42 @@
+{
+  "name": "@mywallpaper/addon-schema",
+  "version": "0.1.1",
+  "description": "JSON Schema and Ajv validator for MyWallpaper addon manifests. Source of truth generated from the Rust api-contracts crate.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schema.json": "./schema.json"
+  },
+  "bin": {
+    "mywallpaper-validate-manifest": "./bin/validate.mjs"
+  },
+  "files": [
+    "dist",
+    "schema.json",
+    "bin",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:schema": "node scripts/build.mjs",
+    "check:schema": "node scripts/check.mjs",
+    "prepack": "npm run check:schema && npm run build",
+    "test": "npm run build && node --test scripts/test.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "@types/node": "^22.10.0"
+  },
+  "keywords": ["mywallpaper", "addon", "schema", "json-schema", "manifest", "validator"],
+  "license": "MIT"
+}

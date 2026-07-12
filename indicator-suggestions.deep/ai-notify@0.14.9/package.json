@@ -1,0 +1,54 @@
+{
+  "name": "ai-notify",
+  "version": "0.14.9",
+  "description": "Desktop, sound, and spoken notifications for terminal AI coding agents (Claude Code, Codex, Gemini, ...) — with one mute switch that covers all of them, across every terminal.",
+  "type": "module",
+  "bin": {
+    "ai-notify": "src/cli.mjs"
+  },
+  "exports": "./src/cli.mjs",
+  "files": [
+    "src",
+    "recipes",
+    "menubar/AiNotifyMenuBar.swift",
+    "menubar/build.sh",
+    "menubar/README.md",
+    "menubar/dist",
+    "README.md",
+    "README.ja.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "scrub": "node scripts/scrub.mjs",
+    "build:menubar": "bash menubar/build.sh",
+    "release": "node scripts/release.mjs",
+    "prepack": "bash menubar/build.sh 2>/dev/null || true"
+  },
+  "keywords": [
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "ai-agent",
+    "notifications",
+    "desktop-notification",
+    "hooks",
+    "cli",
+    "terminal",
+    "productivity"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "unoryota",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unoryota/ai-notify.git"
+  },
+  "homepage": "https://github.com/unoryota/ai-notify#readme",
+  "bugs": {
+    "url": "https://github.com/unoryota/ai-notify/issues"
+  },
+  "dependencies": {}
+}

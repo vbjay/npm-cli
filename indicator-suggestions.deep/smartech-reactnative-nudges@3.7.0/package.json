@@ -1,0 +1,107 @@
+{
+  "name": "smartech-reactnative-nudges",
+  "title": "Smartech Nudges React Native Module",
+  "version": "3.7.0",
+  "description": "This package contains bridges to integrate SmartechNudges native sdk in React Native App.",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "README.md",
+    "Smartech-Reactnative-Nudges.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "release": "release-it",
+    "bootstrap": "yarn && yarn pods"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NetcoreSolutions/Smartech-ReactNative-Nudges.git",
+    "baseUrl": "https://github.com/NetcoreSolutions/Smartech-ReactNative-Nudges"
+  },
+  "keywords": [
+    "smartech",
+    "netcore",
+    "nudges",
+    "react-native",
+    "turbomodule"
+  ],
+  "author": {
+    "name": "Netcore Solutions"
+  },
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/jest": "^26.0.0",
+    "@types/react": "^16.9.19",
+    "@types/react-native": "0.73.0",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "react": "*",
+    "react-native": "*",
+    "react-native-builder-bob": "^0.18.0",
+    "release-it": "^14.2.2",
+    "typescript": "^5.8.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "NativeSmartechNudgesSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/specs",
+    "android": {
+      "javaPackageName": "io.hansel.react"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@risemaxi/api-client",
+  "version": "0.5.0",
+  "description": "Client Library for Rise",
+  "type": "module",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "bin",
+    "tsconfig.build.json"
+  ],
+  "keywords": [
+    "api",
+    "rise",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/risevest/rise-api.git"
+  },
+  "bugs": "https://github.com/risevest/rise-api/issues",
+  "contributors": [
+    "Rise Developers"
+  ],
+  "bin": {
+    "rise-api": "./bin/cli.cjs"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc --project tsconfig.build.json",
+    "cli": "./bin/cli.cjs"
+  },
+  "peerDependencies": {
+    "@sinclair/typebox": ">=0.33.4",
+    "@tanstack/react-query": ">5.0.0"
+  },
+  "devDependencies": {
+    "@sinclair/typebox": "^0.33.4",
+    "@tanstack/react-query": "^5.8.4",
+    "commander": "^13.1.0",
+    "typed-openapi": "^0.8.0",
+    "typescript": "^5.8.3"
+  }
+}

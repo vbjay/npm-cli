@@ -1,0 +1,86 @@
+{
+  "name": "mindexec-ai",
+  "version": "0.2.1149",
+  "description": "MindExec local runtime and bridge CLI",
+  "main": "server.js",
+  "type": "module",
+  "files": [
+    "start-bridge.bat",
+    "start-bridge.sh",
+    "launch-bridge.cjs",
+    "server.js",
+    "ai-task-headless-runtime.js",
+    "ai-task-headless-route-runtime.js",
+    "ai-task-js-sandbox.js",
+    "remote-hub.js",
+    "codex-runtime.js",
+    "port-guard.cjs",
+    "remote-fast/",
+    "wwwroot/",
+    "scripts/",
+    "tree-sitter-grammars/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node launch-bridge.cjs",
+    "dev": "node launch-bridge.cjs --watch",
+    "test:syntax": "node --check server.js && node --check ai-task-headless-runtime.js && node --check ai-task-headless-route-runtime.js && node --check ai-task-js-sandbox.js && node --check remote-hub.js && node --check codex-runtime.js && node --check launch-bridge.cjs && node --check port-guard.cjs && node --check scripts/setup-tree-sitter-grammars.mjs && node --check scripts/codex-model-catalog-smoke.mjs && node --check scripts/ai-task-js-sandbox-smoke.mjs && node --check scripts/ai-task-headless-runtime-smoke.mjs && node --check scripts/ai-task-headless-route-runtime-smoke.mjs && node --check scripts/ai-task-headless-scheduler-smoke.mjs && node --check scripts/ai-task-schedule-smoke.mjs && node --check scripts/marketing-connectors-smoke.mjs && node --check scripts/auth-session-smoke.mjs && node --check scripts/remote-hub-smoke.mjs && node --check scripts/remote-hub-scale-smoke.mjs && node --check scripts/remote-fleet-render-smoke.mjs && node --check scripts/remote-http-smoke.mjs && node --check scripts/remote-frame-ws-smoke.mjs && node --check scripts/remote-input-ws-smoke.mjs && node --check scripts/remote-agent-ws-smoke.mjs && node --check scripts/remote-agent-managed-smoke.mjs && node --check scripts/remote-registry-follower-smoke.mjs && node --check scripts/remote-agent-package-smoke.mjs && node --check scripts/remote-fast-live-rate-smoke.mjs && node --check scripts/remote-fast-mdm-browser-smoke.mjs",
+    "test:auth": "node scripts/auth-session-smoke.mjs",
+    "test:remote": "node scripts/remote-hub-smoke.mjs",
+    "test:remote:scale": "node scripts/remote-hub-scale-smoke.mjs",
+    "test:remote:render": "node scripts/remote-fleet-render-smoke.mjs",
+    "test:remote:http": "node scripts/remote-http-smoke.mjs",
+    "test:remote:frame-ws": "node scripts/remote-frame-ws-smoke.mjs",
+    "test:remote:input-ws": "node scripts/remote-input-ws-smoke.mjs",
+    "test:remote:agent-ws": "node scripts/remote-agent-ws-smoke.mjs",
+    "test:remote:managed": "node scripts/remote-agent-managed-smoke.mjs",
+    "test:remote:registry": "node scripts/remote-registry-follower-smoke.mjs",
+    "test:remote:package": "node scripts/remote-agent-package-smoke.mjs",
+    "test:remote:live-rate": "node scripts/remote-fast-live-rate-smoke.mjs",
+    "test:remote:mdm-browser": "node scripts/remote-fast-mdm-browser-smoke.mjs",
+    "pack:dry": "npm pack --dry-run",
+    "setup:grammars": "node scripts/setup-tree-sitter-grammars.mjs",
+    "postinstall": "npm run setup:grammars",
+    "smoke:ai-task-schedule": "node scripts/ai-task-schedule-smoke.mjs",
+    "smoke:marketing-connectors": "node scripts/marketing-connectors-smoke.mjs",
+    "smoke:codex-model-catalog": "node scripts/codex-model-catalog-smoke.mjs",
+    "smoke:ai-task-headless": "node scripts/ai-task-js-sandbox-smoke.mjs && node scripts/ai-task-headless-runtime-smoke.mjs && node scripts/ai-task-headless-route-runtime-smoke.mjs && node scripts/ai-task-headless-scheduler-smoke.mjs"
+  },
+  "keywords": [
+    "mindexec",
+    "mindcanvas",
+    "cli",
+    "bridge",
+    "local",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@mindexec/remote": "^0.1.17",
+    "@openai/codex": "0.144.1",
+    "@openai/codex-sdk": "0.144.1",
+    "@supabase/supabase-js": "2.108.2",
+    "chokidar": "^3.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "multer": "^2.2.0",
+    "playwright-core": "^1.53.0",
+    "sharp": "^0.33.2",
+    "web-tree-sitter": "^0.22.6",
+    "ws": "^8.16.0"
+  },
+  "bin": {
+    "mindexec": "launch-bridge.cjs",
+    "mind-bridge": "launch-bridge.cjs"
+  },
+  "devDependencies": {
+    "tree-sitter-wasms": "^0.1.13"
+  }
+}

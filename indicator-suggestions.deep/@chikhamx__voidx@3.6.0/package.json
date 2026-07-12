@@ -1,0 +1,36 @@
+{
+  "name": "@chikhamx/voidx",
+  "version": "3.6.0",
+  "description": "npm launcher for voidx, a terminal AI coding agent.",
+  "license": "MIT",
+  "bin": {
+    "voidx": "bin/voidx.js"
+  },
+  "files": [
+    "bin/",
+    "LICENSE",
+    "*.whl"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "keywords": [
+    "ai",
+    "agent",
+    "coding-agent",
+    "cli"
+  ],
+  "scripts": {
+    "postinstall": "node bin/postinstall.js",
+    "check": "node --check bin/voidx.js && node --check bin/postinstall.js"
+  }
+}

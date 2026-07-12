@@ -1,0 +1,52 @@
+{
+  "name": "@dongowu/git-ai-cli",
+  "version": "2.0.5",
+  "description": "Generate git commit messages using AI - Rust Edition",
+  "main": "bin/git-ai.cjs",
+  "bin": {
+    "git-ai": "bin/git-ai.cjs"
+  },
+  "scripts": {
+    "postinstall": "node install.cjs",
+    "build:rust": "cargo build --release",
+    "test": "cargo test",
+    "release": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags",
+    "release:major": "npm version major && git push --follow-tags"
+  },
+  "keywords": [
+    "git",
+    "ai",
+    "commit",
+    "cli",
+    "openai",
+    "deepseek",
+    "ollama",
+    "rust",
+    "style-learning",
+    "git-hook",
+    "productivity"
+  ],
+  "author": "dongowu <dongowu@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dongowu/git-ai-cli"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "bin/git-ai.cjs",
+    "install.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "optionalDependencies": {
+    "@dongowu/git-ai-cli-linux-x64": "2.0.5",
+    "@dongowu/git-ai-cli-linux-arm64": "2.0.5",
+    "@dongowu/git-ai-cli-darwin-x64": "2.0.5",
+    "@dongowu/git-ai-cli-darwin-arm64": "2.0.5",
+    "@dongowu/git-ai-cli-win32-x64": "2.0.5"
+  }
+}

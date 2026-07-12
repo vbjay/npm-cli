@@ -1,0 +1,82 @@
+{
+  "name": "openai-harmony-js",
+  "version": "1.0.0",
+  "description": "TypeScript/JavaScript utilities for the GPT‑OSS Harmony format: renderers, parsers, tokenizers, and streaming helpers",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepack": "npm run build && npm run test",
+    "prepublishOnly": "npm run typecheck && npm run lint",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "harmony",
+    "openai",
+    "gpt-oss",
+    "parser",
+    "renderer",
+    "tokenizer",
+    "streaming",
+    "typescript",
+    "javascript",
+    "llm",
+    "ai",
+    "conversation",
+    "format",
+    "tool-calls"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fredrikalindh/openai-harmony-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fredrikalindh/openai-harmony-js/issues"
+  },
+  "homepage": "https://github.com/fredrikalindh/openai-harmony-js#readme",
+  "author": "Fredrika Lindh",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.3.3",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "lint-staged": {
+    "*.{ts,js,json,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.ts": [
+      "eslint --fix"
+    ]
+  }
+}

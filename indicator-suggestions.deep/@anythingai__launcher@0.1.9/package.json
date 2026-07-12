@@ -1,0 +1,54 @@
+{
+  "name": "@anythingai/launcher",
+  "version": "0.1.9",
+  "description": "My new module",
+  "main": "build/index.js",
+  "module": "build/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./build/index.mjs",
+      "require": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf build",
+    "lint": "expo lint --quiet",
+    "test": "expo-module test",
+    "prepare": "tsup",
+    "prepublishOnly": "tsup",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "@anything/launcher",
+    "AnythingLauncher"
+  ],
+  "repository": "https://github.com/Create-Inc/anything-mobile-monorepo",
+  "bugs": {
+    "url": "https://github.com/Create-Inc/anything-mobile-monorepo/issues"
+  },
+  "author": "Zobeir Hamid <zobeirhamid@berkeley.edu> (zobeirhamid)",
+  "license": "MIT",
+  "homepage": "https://github.com/Create-Inc/anything-mobile-monorepo#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/invariant": "^2.2.37",
+    "@types/react": "~19.0.0",
+    "expo": "^54.0.0",
+    "expo-module-scripts": "^4.1.10",
+    "react-native": "0.81.4",
+    "tsup": "^8.5.1"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

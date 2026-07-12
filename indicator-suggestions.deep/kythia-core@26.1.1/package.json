@@ -1,0 +1,106 @@
+{
+	"name": "kythia-core",
+	"version": "26.1.1",
+	"description": "Core library for the Kythia main Discord bot: extensible, modular, and scalable foundation for commands, components, and event management.",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist",
+		"src/lang",
+		"LICENSE",
+		"README.md"
+	],
+	"scripts": {
+		"format": "biome format --write .",
+		"fix": "biome check --write .",
+		"prepare": "husky",
+		"build": "tsc && cp -r src/lang dist/lang",
+		"postbuild": "echo '[build] Dev build complete. Run build:prod for production.'",
+		"build:prod": "tsc && cp -r src/lang dist/lang && node scripts/gen-integrity.mjs && bun run obfuscate",
+		"obfuscate": "javascript-obfuscator dist --output dist --config obfuscator.config.json",
+		"watch": "tsc -w && cp -r src/lang dist/lang",
+		"dev": "bun format && rm -rf dist && bun run build:prod && yalc push",
+		"test": "vitest run",
+		"test:ui": "vitest --ui",
+		"test:watch": "vitest",
+		"prepublishOnly": "rm -rf dist && bun run build:prod"
+	},
+	"lint-staged": {
+		"*.{ts,js,json}": [
+			"biome check --write --no-errors-on-unmatched"
+		]
+	},
+	"bin": {
+		"kythia": "./dist/cli/index.js"
+	},
+	"keywords": [
+		"kythia",
+		"discord",
+		"bot",
+		"core",
+		"framework",
+		"addon",
+		"commands",
+		"components",
+		"extensible",
+		"modular"
+	],
+	"author": {
+		"name": "kenndeclouv",
+		"email": "kenndeclouv@gmail.com"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"type": "commonjs",
+	"dependencies": {
+		"@babel/parser": "^7.29.3",
+		"@babel/traverse": "^7.29.0",
+		"@dotenvx/dotenvx": "^1.64.0",
+		"@google/genai": "^1.52.0",
+		"@sentry/node": "^10.51.0",
+		"async-exit-hook": "^2.0.1",
+		"async-mutex": "^0.5.0",
+		"axios": "^1.16.0",
+		"bullmq": "^5.78.1",
+		"cli-color": "^2.0.4",
+		"commander": "^14.0.3",
+		"figlet": "^1.11.0",
+		"glob": "^13.0.6",
+		"ioredis": "^5.10.1",
+		"json-stable-stringify": "^1.3.0",
+		"lru-cache": "^11.3.6",
+		"node-cron": "^3.0.3",
+		"picocolors": "^1.1.1",
+		"prom-client": "^15.1.3",
+		"sequelize": "^6.37.8",
+		"umzug": "^3.8.3",
+		"winston": "^3.19.0",
+		"winston-daily-rotate-file": "^5.0.0"
+	},
+	"peerDependencies": {
+		"discord.js": "^14.22.1"
+	},
+	"homepage": "https://kythia.my.id",
+	"bugs": {
+		"url": "https://dsc.gg/kythia"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.14",
+		"@types/async-exit-hook": "^2.0.2",
+		"@types/babel__traverse": "^7.28.0",
+		"@types/cli-color": "^2.0.6",
+		"@types/figlet": "^1.7.0",
+		"@types/fs-extra": "^11.0.4",
+		"@types/glob": "^9.0.0",
+		"@types/node": "^24.12.2",
+		"@types/node-cron": "^3.0.11",
+		"@types/sequelize": "^4.28.20",
+		"@vitest/coverage-v8": "^4.1.5",
+		"husky": "^9.1.7",
+		"javascript-obfuscator": "^5.4.2",
+		"lint-staged": "^16.4.0",
+		"ts-node-dev": "^2.0.0",
+		"typescript": "^5.9.3",
+		"vite-tsconfig-paths": "^6.1.1",
+		"vitest": "^4.1.5"
+	}
+}

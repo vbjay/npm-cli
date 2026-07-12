@@ -1,0 +1,57 @@
+{
+  "name": "journeykits",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "CLI for the Journey Agent Kit Registry - search, install, and publish reusable agent workflow kits",
+  "main": "dist/index.cjs",
+  "bin": {
+    "journeykits": "dist/index.cjs",
+    "journey": "dist/index.cjs",
+    "akit": "dist/index.cjs"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "agent",
+    "kit",
+    "registry",
+    "workflow",
+    "cli",
+    "journey"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mberman84/journey.git",
+    "directory": "apps/cli"
+  },
+  "homepage": "https://github.com/mberman84/journey/tree/main/apps/cli#readme",
+  "bugs": {
+    "url": "https://github.com/mberman84/journey/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run typecheck && npm run test",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@agent-kit/bundle": "workspace:*",
+    "@agent-kit/schema": "workspace:*",
+    "@agent-kit/sdk": "workspace:*",
+    "commander": "^14.0.3",
+    "tsup": "^8.5.1"
+  }
+}

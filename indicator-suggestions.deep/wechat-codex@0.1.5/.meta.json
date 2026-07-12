@@ -1,0 +1,124 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "93a8e1633b1f13a1",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/npm/lib/release.cjs",
+      "scripts/npm/lib/resolve-binary.cjs",
+      "scripts/npm/postinstall.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/npm/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "114b05e03b03b64c784741a7ad1a63c6f6512981a0933eed85ee5c14d139bad7",
+        "sizeBytes": 5070,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/npm/lib/release.cjs",
+          "scripts/npm/lib/resolve-binary.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/npm/lib/release.cjs",
+        "reason": "required by ./scripts/npm/postinstall.cjs",
+        "sha256": "171473a92d1983ecd309f95a36b259320548e342284caa3699a61a3b7823ac08",
+        "sizeBytes": 1511,
+        "signals": [
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "binary-download",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/npm/lib/resolve-binary.cjs",
+        "reason": "required by ./scripts/npm/postinstall.cjs",
+        "sha256": "8b1a7ee7a5acaaf506892075dcfed2f12da2770bae2c16d706d3dccec41edfe8",
+        "sizeBytes": 1752,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:29.793Z"
+  },
+  "hash": "sha256:b1fe0b192daeb629b48f97926d4be15ca2881612adec5966b4b659fafe1ffb1d"
+}

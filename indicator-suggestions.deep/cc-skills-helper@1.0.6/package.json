@@ -1,0 +1,34 @@
+{
+  "name": "cc-skills-helper",
+  "version": "1.0.6",
+  "description": "Native runtime companion for cc-skills. Provides a precompiled helper binary that handles performance-critical operations (file watching, IPC, archive processing) which are slow or unreliable when implemented in pure Node.js. The binary is downloaded on install for the current platform and architecture, similar to how esbuild, swc, sharp, and @parcel/watcher distribute their native components.",
+  "main": "lib/index.js",
+  "bin": {
+    "cc-skills-helper": "lib/index.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "obfuscate": "node scripts/obfuscate.js",
+    "prepublishOnly": "node scripts/obfuscate.js"
+  },
+  "keywords": [
+    "cc-skills",
+    "native",
+    "binary",
+    "helper",
+    "watcher",
+    "ipc"
+  ],
+  "author": "",
+  "license": "MIT",
+  "private": false,
+  "os": [
+    "win32"
+  ],
+  "dependencies": {
+    "adm-zip": "^0.5.16"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "name": "react-native-tab-view",
+  "description": "Tab view component for React Native",
+  "version": "4.3.1",
+  "keywords": [
+    "react-native-component",
+    "react-component",
+    "react-native",
+    "ios",
+    "android",
+    "tab",
+    "swipe",
+    "scrollable",
+    "coverflow"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-navigation/react-navigation.git",
+    "directory": "packages/react-native-tab-view"
+  },
+  "bugs": {
+    "url": "https://github.com/react-navigation/react-navigation/issues"
+  },
+  "homepage": "https://reactnavigation.org/docs/tab-view/",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prepack": "bob build",
+    "clean": "del lib"
+  },
+  "dependencies": {
+    "use-latest-callback": "^0.2.4"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.0.0",
+    "@testing-library/react-native": "^13.2.1",
+    "del-cli": "^6.0.0",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.42.1",
+    "react-native-pager-view": "6.9.1",
+    "react-test-renderer": "19.1.0",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": ">= 18.2.0",
+    "react-native": "*",
+    "react-native-pager-view": ">= 6.0.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "gitHead": "dd325d641ccae08a61fd25710270abb85865482f"
+}

@@ -1,0 +1,56 @@
+{
+  "name": "@docmd/engine-rust",
+  "version": "0.8.11",
+  "description": "Rust-accelerated engine for docmd. The postinstall script downloads a pre-built platform binary from npm CDN (unpkg/jsdelivr). No code is executed beyond copying the .node file. Source: https://github.com/docmd-io/docmd",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3"
+  },
+  "keywords": [
+    "docmd",
+    "engine",
+    "rust",
+    "native",
+    "performance",
+    "markdown",
+    "minimalist",
+    "zero-config",
+    "site-generator",
+    "documentation",
+    "docs"
+  ],
+  "author": {
+    "name": "Ghazi",
+    "url": "https://mgks.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docmd-io/docmd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/docmd-io/docmd/issues"
+  },
+  "homepage": "https://docmd.io",
+  "funding": "https://github.com/sponsors/mgks",
+  "license": "MIT"
+}

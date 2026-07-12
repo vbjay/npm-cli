@@ -1,0 +1,145 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "047349ec9080b500",
+    "fetchedFiles": [
+      "dist/core/completions/command-registry.js",
+      "dist/core/completions/factory.js",
+      "dist/core/completions/generators/zsh-generator.js",
+      "dist/core/completions/installers/zsh-installer.js",
+      "dist/utils/file-system.js",
+      "dist/utils/shell-detection.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6268507dfbd03797ad9a4b19a7d78fd011cb37c2620ae4689a06df6e508c3db1",
+        "sizeBytes": 4329,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/shell-detection.js",
+          "dist/core/completions/factory.js",
+          "dist/core/completions/command-registry.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/shell-detection.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "0b7a5ebc520d854dc5b25db09d739994c68510a3ab6bc961284305b5e84907bc",
+        "sizeBytes": 1741,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/factory.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "95e458f6a6eb77ed02de34bf57a64ce8e2efbdeb9c005cda28b96a8bb13c5449",
+        "sizeBytes": 1747,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/core/completions/generators/zsh-generator.js",
+          "dist/core/completions/installers/zsh-installer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/generators/zsh-generator.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "ac269b998cb2a6a4603b7f6ba31ffce8f09f33a233476b4a18fe86d73dd5822b",
+        "sizeBytes": 12300,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/installers/zsh-installer.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "c89ac523e7fd0f5e18b3165b7747caaa825106836e908779a5f174cc780038f3",
+        "sizeBytes": 16857,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "modifies-shell-config",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/file-system.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/file-system.js",
+        "reason": "required by ./dist/core/completions/installers/zsh-installer.js",
+        "sha256": "196105c11c900281450d53edaac8b5f85994af9801058d795f944bc47f6a42e1",
+        "sizeBytes": 7330,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/command-registry.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "ce067abcbd0554951ae6d425bc2d581b2e1e203574a496d509991c8dbad9feb3",
+        "sizeBytes": 13790,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:15.887Z"
+  },
+  "hash": "sha256:7d3c9e7d80bf76fda08feae06da1f71f1d60ab9479f154119927481b8bedc0c9"
+}

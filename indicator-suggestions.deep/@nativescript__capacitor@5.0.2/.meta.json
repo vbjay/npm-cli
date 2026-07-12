@@ -1,0 +1,125 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d1e27ca8c90b7bfd",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "dist/esm/postinstall.mjs",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "fs-extra",
+        "versionSpec": "^11.1.0"
+      },
+      {
+        "name": "typescript",
+        "versionSpec": "~5.1.6"
+      },
+      {
+        "name": "yargs",
+        "versionSpec": "17.6.0"
+      },
+      {
+        "name": "strip-json-comments",
+        "versionSpec": "^5.0.0"
+      },
+      {
+        "name": "xmldom",
+        "versionSpec": "^0.6.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "fs-extra@11.3.6",
+      "strip-json-comments@5.0.3",
+      "typescript@5.1.6",
+      "xmldom@0.6.0",
+      "yargs@17.6.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "e5a6ae3d27c8d6e561f0da3062791ad69ee1e99046b52db842082be7df38e267",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@nativescript__capacitor@5.0.2\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/esm/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c17762641ba54caa6c332fb7f269245ce529ab7817956a6a4cd0ce07b6a5a6c6",
+        "sizeBytes": 31389,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "writes-outside-package",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://capacitor.nativescript.org/getting-started.html",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:32.691Z"
+  },
+  "hash": "sha256:d4285283289a0b4116ede8d52cffd10b660b52fd8477843eb4f26fd76e30703d"
+}

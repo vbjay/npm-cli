@@ -1,0 +1,70 @@
+{
+  "name": "tree-sitter-graphql-grammar-wasm",
+  "version": "1.1.0",
+  "type": "module",
+  "description": "Pre-built WASM binary for tree-sitter GraphQL grammar",
+  "author": "Jason Kuhrt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonkuhrt/tree-sitter-graphql-grammar-wasm.git"
+  },
+  "keywords": [
+    "tree-sitter",
+    "graphql",
+    "wasm",
+    "grammar",
+    "parser"
+  ],
+  "scripts": {
+    "gen": "pnpm run '/^gen:.*/'",
+    "pregen:parser": "pnpm build:grammar",
+    "gen:parser": "tree-sitter generate --output parser/src grammar-definition-js/grammar.js",
+    "postgen:parser": "pnpm gen:grammar-lib",
+    "gen:grammar-lib": "tsx scripts/gen-grammar-lib.ts",
+    "prebuild:wasm": "pnpm run gen:parser",
+    "build:grammar": "tsc --project tsconfig.build.json --noCheck",
+    "build:wasm": "tree-sitter build --docker --wasm --output grammar.wasm parser",
+    "build": "pnpm build:wasm",
+    "prepack": "pnpm build",
+    "check:types": "tsc --noEmit",
+    "format": "dprint fmt",
+    "format:check": "dprint check",
+    "pretest": "test -f grammar.wasm || pnpm run build",
+    "test": "vitest"
+  },
+  "exports": {
+    ".": "./grammar-lib/$.js",
+    "./grammar.wasm": "./grammar.wasm"
+  },
+  "files": [
+    "grammar.wasm",
+    "grammar-lib",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "web-tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "web-tree-sitter": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@dprint/formatter": "^0.4.1",
+    "@tsconfig/node24": "^24.0.1",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/node": "^22.10.5",
+    "dprint": "^0.50.1",
+    "tree-sitter-cli": "^0.25.8",
+    "tsx": "^4.20.3",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4",
+    "web-tree-sitter": "^0.25.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "tree-sitter-cli"
+    ]
+  }
+}

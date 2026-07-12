@@ -1,0 +1,111 @@
+{
+  "name": "@comapeo/core-react-native",
+  "version": "1.0.0-pre.1",
+  "description": "CoMapeo Core for React Native",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "default": "./build/index.js"
+    },
+    "./sentry": {
+      "types": "./build/sentry.d.ts",
+      "import": "./build/sentry.js",
+      "default": "./build/sentry.js"
+    },
+    "./app.plugin": "./app.plugin.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "comapeo-rn-upload-sourcemaps": "./build/cli/upload-sourcemaps.js"
+  },
+  "files": [
+    "expo-module.config.json",
+    "app.plugin.js",
+    "android/build.gradle",
+    "android/CMakeLists.txt",
+    "android/src/debug/",
+    "android/src/main/",
+    "android/libnode/",
+    "build/",
+    "ios/*.{h,m,mm,swift,hpp,cpp}",
+    "!ios/Package.swift",
+    "ios/ComapeoCore.podspec",
+    "ios/NodeMobile.xcframework",
+    "ios/Frameworks/",
+    "ios/nodejs-project/",
+    "ios/nodejs-sourcemaps/",
+    "src/"
+  ],
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": "^11",
+      "onFail": "warn"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "^24",
+      "onFail": "warn"
+    }
+  },
+  "scripts": {
+    "build": "expo-module build --watch false",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint --cache .",
+    "test": "expo-module test",
+    "prepare": "node scripts/write-version.mjs && node scripts/check-sentry-cocoa-pin.mjs && expo-module build --watch false",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "prepack": "node scripts/write-version.mjs && npm run backend:build",
+    "postinstall": "patch-package",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "download:nodejs-mobile": "./scripts/download-nodejs-mobile.sh",
+    "backend:install": "npm ci --ignore-scripts --prefix backend && npm --prefix backend run postinstall",
+    "prebackend:build": "npm run backend:install",
+    "backend:build": "node ./scripts/build-backend.ts"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "@comapeo/core-react-native",
+    "ComapeoCore"
+  ],
+  "repository": "https://github.com/digidem/comapeo-core-react-native",
+  "bugs": {
+    "url": "https://github.com/digidem/comapeo-core-react-native/issues"
+  },
+  "author": "Awana Digital <developer@awana.digital> (https://github.com/digidem)",
+  "license": "MIT",
+  "homepage": "https://github.com/digidem/comapeo-core-react-native#readme",
+  "devDependencies": {
+    "@eslint/compat": "2.0.5",
+    "@eslint/js": "9.39.4",
+    "@sentry/react-native": "^8.13.0",
+    "@types/node": "24.12.2",
+    "@types/react": "19.2.14",
+    "eslint": "9.39.4",
+    "execa": "9.6.1",
+    "expo": "^56.0.12",
+    "expo-module-scripts": "56.0.3",
+    "globals": "17.5.0",
+    "patch-package": "8.0.1",
+    "prettier": "3.8.3",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "type-fest": "5.6.0",
+    "typescript-eslint": "8.59.0"
+  },
+  "peerDependencies": {
+    "@sentry/react-native": "^8.13.0",
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "dependencies": {
+    "@comapeo/ipc": "^9.0.0-pre.2"
+  }
+}

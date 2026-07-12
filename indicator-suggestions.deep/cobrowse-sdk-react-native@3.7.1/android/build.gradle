@@ -1,0 +1,43 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+def supportsNamespace() {
+  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+  def major = parsed[0].toInteger()
+  def minor = parsed[1].toInteger()
+
+  // Namespace support was added in 7.3.0
+  if (major == 7 && minor >= 3) {
+    return true
+  }
+
+  return major >= 8
+}
+
+android {
+    if (supportsNamespace()) {
+        namespace "io.cobrowse.reactnative"
+    }
+    compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 34
+    buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.ext.buildToolsVersion : "34.0.0"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 34
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+' // support react-native-v0.22-rc+
+    implementation 'io.cobrowse:cobrowse-sdk-android:3.14.3'
+    implementation 'androidx.webkit:webkit:1.4.0'
+    implementation 'androidx.activity:activity:1.6.0'
+}

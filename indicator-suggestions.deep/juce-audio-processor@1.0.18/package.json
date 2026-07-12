@@ -1,0 +1,80 @@
+{
+  "name": "juce-audio-processor",
+  "version": "1.0.18",
+  "description": "JUCE audio processor native addon for Node.js applications",
+  "main": "index.js",
+  "keywords": [
+    "juce",
+    "audio",
+    "processor",
+    "node",
+    "native",
+    "addon",
+    "dj",
+    "audio-effects",
+    "flanger",
+    "filter",
+    "pitch-shift"
+  ],
+  "author": "Iago Martins <iagomartinsgamedesign@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/iagomartins/juce-audio-processor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iagomartins/juce-audio-processor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iagomartins/juce-audio-processor/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "npm run build:node && npm run build:electron",
+    "build:node": "cmake-js build --runtime node --runtime-version 18.0.0",
+    "build:electron": "cmake-js build --runtime electron --runtime-version 38.1.0",
+    "install": "node scripts/install-auto.js",
+    "rebuild": "cmake-js rebuild",
+    "prepublishOnly": "npm run build",
+    "test": "node test/test.js",
+    "test:electron": "npx electron test/electron-test.js",
+    "test:electron-mock": "npx electron test/electron-mock-test.js",
+    "example": "node example/node-example.js",
+    "clean": "rimraf build",
+    "build:auto": "node scripts/build-auto.js"
+  },
+  "dependencies": {
+    "node-addon-api": "^7.1.1"
+  },
+  "devDependencies": {
+    "cmake-js": "^7.0.0",
+    "electron": "^38.1.0",
+    "electron-rebuild": "^3.2.9",
+    "rimraf": "^5.0.0"
+  },
+  "cmake-js": {
+    "runtime": "electron",
+    "runtimeVersion": "38.1.0",
+    "arch": "x64",
+    "generator": "Visual Studio 17 2022",
+    "generatorPlatform": "x64"
+  },
+  "files": [
+    "index.js",
+    "src/",
+    "CMakeLists.txt",
+    "build/Release/juce_audio_processor.node",
+    "README.md",
+    "LICENSE.md",
+    "scripts/"
+  ],
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

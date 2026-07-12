@@ -1,0 +1,49 @@
+{
+  "name": "@oxide-js/core",
+  "version": "1.1.0",
+  "type": "module",
+  "description": "Oxide-JS Core: Matrix operations and Rust native acceleration.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Akhyar11/Oxide-JS.git",
+    "directory": "packages/core"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "napi": {
+    "name": "oxide-native"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:rust": "napi build --platform --release --cargo-cwd src-rust",
+    "postinstall": "node -e \"try{require('child_process').execSync('npm run build:rust',{stdio:'inherit'})}catch(e){console.warn('[oxide-js] Core Rust native build skipped — native acceleration unavailable.')}\"",
+    "test": "vitest run --root ../..",
+    "test:watch": "vitest --root ../..",
+    "test:coverage": "vitest run --root ../.. --coverage"
+  },
+  "keywords": [
+    "matrix",
+    "rust",
+    "napi",
+    "oxide-js"
+  ],
+  "author": "Akhyar",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@napi-rs/cli": "^2.18.0",
+    "@napi-rs/wasm-runtime": "^0.2.4"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@daily-co/config-plugin-rn-daily-js",
+  "version": "0.0.12",
+  "description": "Config plugin to setup react-native-daily-js on prebuild",
+  "main": "build/withDaily.js",
+  "types": "build/withDaily.d.ts",
+  "files": [
+    "build",
+    "app.plugin.js"
+  ],
+  "scripts": {
+    "copy-files": "copyfiles -f src/static/* build/static",
+    "build": "yarn copy-files && expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare && yarn copy-files",
+    "prepublishOnly": "expo-module prepublishOnly && yarn copy-files",
+    "expo-module": "expo-module"
+  },
+  "keywords": [
+    "react-native",
+    "expo"
+  ],
+  "jest": {
+    "preset": "expo-module-scripts"
+  },
+  "peerDependencies": {
+    "expo": "^55.0.0"
+  },
+  "devDependencies": {
+    "expo-module-scripts": "^55.0.2",
+    "copyfiles": "^2.4.1"
+  },
+  "dependencies": {
+    "expo-build-properties": "~55.0.11",
+    "@expo/config-plugins": "^55.0.7"
+  },
+  "resolutions": {
+    "brace-expansion": ">=5.0.5",
+    "picomatch": ">=4.0.4",
+    "@xmldom/xmldom": ">=0.8.12",
+    "lodash": ">=4.18.0",
+    "@tootallnate/once": ">=3.0.1"
+  }
+}

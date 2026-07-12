@@ -1,0 +1,37 @@
+{
+  "name": "dll_inject-addon",
+  "version": "1.0.0",
+  "description": "Node.js addon for Chrome App-Bound Encryption DLL injection",
+  "main": "index.js",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild",
+    "test": "node test.js",
+    "start-api": "node api-server-example.js",
+    "start-server": "node express-server-example.js",
+    "start-production": "node production-server.js",
+    "example": "node usage-example.js",
+    "dev": "node express-server-example.js",
+    "prod": "NODE_ENV=production node production-server.js"
+  },
+  "keywords": [
+    "chrome",
+    "injection",
+    "dll",
+    "encryption",
+    "addon"
+  ],
+  "author": "DLL Inject Addon",
+  "license": "MIT",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "node-addon-api": "^7.0.0",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0"
+  },
+  "gypfile": true
+}

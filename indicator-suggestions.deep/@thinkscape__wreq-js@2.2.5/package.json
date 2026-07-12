@@ -1,0 +1,129 @@
+{
+  "name": "@thinkscape/wreq-js",
+  "version": "2.2.5",
+  "description": "Node.js/TypeScript HTTP client with browser TLS fingerprint impersonation (JA3/JA4). Bypass Cloudflare and anti-bot detection. Rust-powered, fetch()-compatible.",
+  "type": "module",
+  "main": "./dist/wreq-js.cjs",
+  "types": "./dist/wreq-js.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/wreq-js.d.ts",
+      "bun": "./dist/wreq-js.cjs",
+      "require": "./dist/wreq-js.cjs",
+      "import": "./dist/wreq-js.js",
+      "default": "./dist/wreq-js.js"
+    }
+  },
+  "scripts": {
+    "build": "npm run build:rust && npm run build:ts",
+    "build:rust": "napi build --platform --release --manifest-path rust/Cargo.toml",
+    "build:ts": "tsup",
+    "artifacts": "napi artifacts",
+    "verify:release-artifacts": "node scripts/verify-release-artifacts.cjs",
+    "smoke:tls": "node scripts/smoke-tls.cjs",
+    "pack:release": "npm run verify:release-artifacts && npm run build:ts && npm pack --json",
+    "test": "npm run test:run",
+    "test:run": "tsx src/test/run-with-local-server.ts",
+    "test:build": "npm run build && npm run test:run",
+    "test:coverage": "npm run test:coverage:run",
+    "test:coverage:run": "c8 --reporter=html --reporter=text --reporter=lcov tsx src/test/run-with-local-server.ts",
+    "test:coverage:ci": "npm run build && npm run test:coverage:run",
+    "build:bench-server": "cargo build --release --manifest-path rust/bench-server/Cargo.toml",
+    "bench": "npm run build:rust && npm run build:bench-server && tsx --expose-gc src/bench/run.ts",
+    "bench:run": "tsx --expose-gc src/bench/run.ts",
+    "bench:quick": "npm run build:rust && tsx --expose-gc src/bench/run.ts --scenario wreq.session.get.small",
+    "perf:aws:setup-iam": "bash ./scripts/aws-perf/setup-iam.sh",
+    "perf:aws:compare": "bash ./scripts/aws-perf/ec2-compare.sh",
+    "perf:aws:cleanup": "bash ./scripts/aws-perf/cleanup-stale.sh",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "typecheck": "tsgo --noEmit -p tsconfig.json",
+    "typecheck:tsc": "tsc --noEmit -p tsconfig.json",
+    "clean": "rimraf dist rust/target rust/*.node",
+    "clean:dist": "rimraf dist",
+    "ci:biome": "biome ci .",
+    "docs:dev": "cd docs && mint dev",
+    "prepare": "husky",
+    "prepublishOnly": "npm run verify:release-artifacts && npm run build:ts"
+  },
+  "keywords": [
+    "cloudflare",
+    "cloudflare-bypass",
+    "anti-bot",
+    "bypass",
+    "tls-fingerprint",
+    "browser-fingerprint",
+    "ja3",
+    "ja4",
+    "impersonation",
+    "browser-emulation",
+    "tls",
+    "http2",
+    "fetch",
+    "http-client",
+    "web-scraping",
+    "web-scraper",
+    "crawler",
+    "typescript",
+    "nodejs",
+    "rust",
+    "wreq",
+    "browser"
+  ],
+  "author": "Thinkscape",
+  "contributors": [
+    "will-work-for-meal"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thinkscape/wreq-js-temp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Thinkscape/wreq-js-temp/issues"
+  },
+  "homepage": "https://github.com/Thinkscape/wreq-js-temp#readme",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@napi-rs/cli": "^3.6.0",
+    "@types/node": "^24.12.0",
+    "@typescript/native-preview": "^7.0.0-dev.20260403.1",
+    "c8": "^11.0.0",
+    "husky": "^9.1.7",
+    "mint": "^4.2.475",
+    "rimraf": "^6.1.3",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "dist",
+    "rust/*.node"
+  ],
+  "napi": {
+    "binaryName": "wreq-js",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "x86_64-pc-windows-msvc"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

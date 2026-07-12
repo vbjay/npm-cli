@@ -1,0 +1,120 @@
+{
+  "name": "react-native-glass-effect-view",
+  "version": "1.0.0",
+  "description": "A native liquid glass view for iOS, with fallbacks for older versions and Android.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-glass-effect-view-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tschoffelen/react-native-glass-effect-view.git"
+  },
+  "author": "Thomas Schoffelen <thomas@schof.co> (https://github.com/tschoffelen)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tschoffelen/react-native-glass-effect-view/issues"
+  },
+  "homepage": "https://github.com/tschoffelen/react-native-glass-effect-view#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native/babel-preset": "0.79.2",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-builder-bob": "^0.40.12",
+    "semantic-release": "^24.0.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "prettier": {},
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "GlassEffectViewSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.glasseffectview"
+    },
+    "ios": {
+      "componentProvider": {
+        "GlassEffectView": "GlassEffectView"
+      }
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "version": "0.51.0"
+  }
+}

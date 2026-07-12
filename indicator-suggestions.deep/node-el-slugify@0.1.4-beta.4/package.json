@@ -1,0 +1,52 @@
+{
+  "name": "node-el-slugify",
+  "version": "0.1.4-beta.4",
+  "description": "Slugifies a String - transliterate and sanitize. Fast and efficient node module written in Rust.",
+  "main": "index.node",
+  "keywords": [
+    "slug",
+    "slugify",
+    "neon",
+    "rust",
+    "node",
+    "transliterate"
+  ],
+  "files": [
+    "src/**",
+    "Cargo.toml",
+    "package.json",
+    "README.md",
+    "LICENSE-MIT"
+  ],
+  "homepage": "https://github.com/eisberg-labs/el-slugify",
+  "bugs": {
+    "url": "https://github.com/eisberg-labs/el-slugify/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eisberg-labs/el-slugify.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Ana Bujan - Eisberg Labs",
+    "email": "ana@eisberg-labs.com",
+    "url": "https://www.eisberg-labs.com"
+  },
+  "scripts": {
+    "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
+    "build-debug": "npm run build --",
+    "build-release": "npm run build -- --release",
+    "install": "npm run build-release",
+    "test": "mocha",
+    "prepublishOnly": "rm index.node"
+  },
+  "dependencies": {
+    "cargo-cp-artifact": "^0.1"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

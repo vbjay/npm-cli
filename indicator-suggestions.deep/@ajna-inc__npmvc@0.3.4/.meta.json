@@ -1,0 +1,991 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d7be946a97289478",
+    "fetchedFiles": [
+      "dist/anchor/merkle.js",
+      "dist/bundle/digest.js",
+      "dist/bundle/extract.js",
+      "dist/bundle/pack.js",
+      "dist/cli.js",
+      "dist/commands/anchor.js",
+      "dist/commands/attest.js",
+      "dist/commands/audit.js",
+      "dist/commands/credential.js",
+      "dist/commands/index.js",
+      "dist/commands/init.js",
+      "dist/commands/install-hook.js",
+      "dist/commands/policy.js",
+      "dist/commands/register.js",
+      "dist/commands/verify.js",
+      "dist/commands/wallet.js",
+      "dist/credentials/audits-dir.js",
+      "dist/credentials/envelope.js",
+      "dist/credentials/issue.js",
+      "dist/credentials/types.js",
+      "dist/credentials/verify.js",
+      "dist/did/resolver.js",
+      "dist/did/webvh-create.js",
+      "dist/did/webvh-update.js",
+      "dist/lockfile/detect.js",
+      "dist/lockfile/npm.js",
+      "dist/lockfile/pnpm.js",
+      "dist/lockfile/yarn.js",
+      "dist/policy/defaults.js",
+      "dist/policy/duration.js",
+      "dist/policy/engine.js",
+      "dist/policy/io.js",
+      "dist/policy/trust-root.js",
+      "dist/policy/types.js",
+      "dist/registry/npm.js",
+      "dist/registry/npmvc.js",
+      "dist/sbom/cyclonedx.js",
+      "dist/sbom/index.js",
+      "dist/util/aes.js",
+      "dist/util/env.js",
+      "dist/util/pkg.js",
+      "dist/util/url.js",
+      "dist/wallet/env.js",
+      "dist/wallet/factory.js",
+      "dist/wallet/hsm.js",
+      "dist/wallet/keystore.js",
+      "dist/wallet/local.js",
+      "dist/wallet/recovery.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "picocolors",
+        "versionSpec": "^1.1.1"
+      },
+      {
+        "name": "multiformats",
+        "versionSpec": "^13.3.1"
+      },
+      {
+        "name": "cwd",
+        "versionSpec": null
+      },
+      {
+        "name": "@noble/ed25519",
+        "versionSpec": "^2.2.3"
+      },
+      {
+        "name": "canonicalize",
+        "versionSpec": "^2.0.0"
+      },
+      {
+        "name": "@noble/hashes",
+        "versionSpec": "^1.6.1"
+      },
+      {
+        "name": "zod",
+        "versionSpec": "^3.23.8"
+      },
+      {
+        "name": "warn",
+        "versionSpec": null
+      },
+      {
+        "name": "yaml",
+        "versionSpec": "^2.6.1"
+      },
+      {
+        "name": "commander",
+        "versionSpec": "^12.1.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@noble/ed25519@2.3.0",
+      "@noble/hashes@1.8.0",
+      "canonicalize@2.1.0",
+      "commander@12.1.0",
+      "cwd@0.10.0",
+      "multiformats@13.4.2",
+      "picocolors@1.1.1",
+      "warn@1.0.1",
+      "yaml@2.9.0",
+      "zod@3.25.76"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://npmvc.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/cli.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "a85e32ff2636b8b240c56db22be42e93a298893a8a91bc30dc7a814979501254",
+        "sizeBytes": 10827,
+        "signals": [
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/commands/index.js"
+        ],
+        "urls": [
+          {
+            "url": "https://npmvc.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/commands/index.js",
+        "reason": "required by ./dist/cli.js",
+        "sha256": "0421ca853ad655661a2ef7eef21e0af11cdba58b8622e947a3ac98c9005179dc",
+        "sizeBytes": 899,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/commands/init.js",
+          "dist/commands/attest.js",
+          "dist/commands/verify.js",
+          "dist/commands/policy.js",
+          "dist/commands/install-hook.js",
+          "dist/commands/audit.js",
+          "dist/commands/wallet.js",
+          "dist/commands/anchor.js",
+          "dist/commands/register.js",
+          "dist/commands/credential.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/init.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "4a2923c2da5a2ff41c728ae842b80cc9b811d6b31a38acd8ad95a3567314127f",
+        "sizeBytes": 9302,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/local.js",
+          "dist/wallet/factory.js",
+          "dist/did/webvh-create.js",
+          "dist/wallet/recovery.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/wallet/local.js",
+        "reason": "required by ./dist/commands/init.js; required by ./dist/wallet/factory.js; required by ./dist/credentials/verify.js; required by ./dist/policy/trust-root.js; required by ./dist/commands/audit.js; required by ./dist/commands/wallet.js; required by ./dist/commands/anchor.js; required by ./dist/commands/register.js; required by ./dist/commands/credential.js",
+        "sha256": "a0cf494224470069bfa7383a8111e86f4809b0adf8241922c7bd4f03c1211f09",
+        "sizeBytes": 8549,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/keystore.js",
+          "dist/util/aes.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/wallet/keystore.js",
+        "reason": "required by ./dist/wallet/local.js; required by ./dist/wallet/env.js; required by ./dist/wallet/hsm.js",
+        "sha256": "3d8214fa72a37d83ab41c06edcb8e051e01e8955349e9a7d36c5be1362e338d9",
+        "sizeBytes": 734,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/util/aes.js",
+        "reason": "required by ./dist/wallet/local.js; required by ./dist/registry/npmvc.js",
+        "sha256": "5a672db706f02dda0e7c493082f9070d43b8763bb2740e2a62b6418e683c1875",
+        "sizeBytes": 5970,
+        "signals": [
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/wallet/factory.js",
+        "reason": "required by ./dist/commands/init.js; required by ./dist/commands/attest.js; required by ./dist/commands/audit.js; required by ./dist/commands/wallet.js; required by ./dist/commands/anchor.js; required by ./dist/commands/register.js; required by ./dist/commands/credential.js",
+        "sha256": "84bea04f36eb9be08256bc8c3e10a320db38245818c0d708dc2557e235ef4db5",
+        "sizeBytes": 1431,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/local.js",
+          "dist/wallet/env.js",
+          "dist/wallet/hsm.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/wallet/env.js",
+        "reason": "required by ./dist/wallet/factory.js",
+        "sha256": "b676b61484412c41ca548a116b59d32c0b3cf12ae1387caad1aa70e035ce9fd4",
+        "sizeBytes": 2621,
+        "signals": [
+          "base64-decode-exec",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/keystore.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/wallet/hsm.js",
+        "reason": "required by ./dist/wallet/factory.js",
+        "sha256": "150bd1979eed7e54126c381fd3bbc82e84bc91aa60a074ee265e61a6bcbf4c89",
+        "sizeBytes": 870,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/keystore.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/did/webvh-create.js",
+        "reason": "required by ./dist/commands/init.js; required by ./dist/commands/wallet.js; required by ./dist/did/webvh-update.js",
+        "sha256": "2271b834af2f1b97ee45086ca94be334661de914fa115d8252dcc88d4510fca7",
+        "sizeBytes": 6942,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://www.w3.org/ns/did/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://w3id.org/security/multikey/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/wallet/recovery.js",
+        "reason": "required by ./dist/commands/init.js; required by ./dist/commands/wallet.js",
+        "sha256": "0fdee5f55b75073d887003ce3396efcf834f831c778825cefc75f150c3828b0f",
+        "sizeBytes": 6179,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "base64-decode-exec",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/did/resolver.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/did/resolver.js",
+        "reason": "required by ./dist/wallet/recovery.js; required by ./dist/credentials/verify.js; required by ./dist/policy/trust-root.js",
+        "sha256": "4c5f96e90cc9bf45c8c4590286c1807fd33aa62ce7247621561a0fb9f8f03404",
+        "sizeBytes": 6778,
+        "signals": [
+          "network-access",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/attest.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "3680a9b01994be38462314f463f38711b4707e06147608d791a9103284124a6f",
+        "sizeBytes": 10422,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/factory.js",
+          "dist/registry/npmvc.js",
+          "dist/util/pkg.js",
+          "dist/util/env.js",
+          "dist/credentials/issue.js",
+          "dist/bundle/pack.js",
+          "dist/sbom/index.js",
+          "dist/bundle/digest.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/registry/npmvc.js",
+        "reason": "required by ./dist/commands/attest.js; required by ./dist/policy/engine.js; required by ./dist/commands/register.js; required by ./dist/commands/credential.js",
+        "sha256": "4ef0186fde87623f916a2b8f69e0ce81b1581be0a6b3069858d73ae938faf985",
+        "sizeBytes": 13324,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/util/url.js",
+          "dist/util/aes.js"
+        ],
+        "urls": [
+          {
+            "url": "https://npmvc.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/util/url.js",
+        "reason": "required by ./dist/registry/npmvc.js",
+        "sha256": "70756e0af795bc172efc2a437ba14a6f40ba2936e9fa7c0ed8e96dff1ff793f0",
+        "sizeBytes": 2070,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/util/pkg.js",
+        "reason": "required by ./dist/commands/attest.js; required by ./dist/commands/install-hook.js",
+        "sha256": "23a9f272b8aa0517ec4a320219bf2e26b8a4417b16bce9530a30d1e07f5cb5d6",
+        "sizeBytes": 451,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/util/env.js",
+        "reason": "required by ./dist/commands/attest.js",
+        "sha256": "51b86123ac69e59ad416938e853927297bfbaa404e1ce1f732d2a81898ff8269",
+        "sizeBytes": 867,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/credentials/issue.js",
+        "reason": "required by ./dist/commands/attest.js; required by ./dist/commands/audit.js",
+        "sha256": "efb6731d8d7eb0df33be4a0e2301fddc27b7aa160026e9aa40b30c64004676c7",
+        "sizeBytes": 2172,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/credentials/envelope.js",
+          "dist/credentials/types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/credentials/envelope.js",
+        "reason": "required by ./dist/credentials/issue.js; required by ./dist/credentials/verify.js; required by ./dist/commands/credential.js",
+        "sha256": "dec7217fade9126418e383d99702bfd12db69ecb1c7458d32e8611f3ea0f9baf",
+        "sizeBytes": 2576,
+        "signals": [
+          "base64-decode-exec",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/credentials/types.js",
+        "reason": "required by ./dist/credentials/issue.js",
+        "sha256": "24dcff0ef8deb1559c2da83adcc6e0662463e98621d46136bd314b5043213b92",
+        "sizeBytes": 897,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://www.w3.org/ns/credentials/v2",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://npmvc.com/schemas/supplychain/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/bundle/pack.js",
+        "reason": "required by ./dist/commands/attest.js",
+        "sha256": "b5ed7c917fad5e0661ab7f541baa7deea577c11a42438a0e6bc45bc1f8425f59",
+        "sizeBytes": 942,
+        "signals": [
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://npmvc.com/schemas/attestation-bundle/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/sbom/index.js",
+        "reason": "required by ./dist/commands/attest.js",
+        "sha256": "9cfbe74d0855e3248c5f4f38eb5627b58b4efff71798cc3a213bb20406d0fcf7",
+        "sizeBytes": 154,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/sbom/cyclonedx.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/sbom/cyclonedx.js",
+        "reason": "required by ./dist/sbom/index.js",
+        "sha256": "d4929c3e7d0a9d85c49b6fa65f925d4af88f7f100f0338697d4168b03431db58",
+        "sizeBytes": 6324,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lockfile/pnpm.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lockfile/pnpm.js",
+        "reason": "required by ./dist/sbom/cyclonedx.js; required by ./dist/lockfile/detect.js",
+        "sha256": "bdf5b6307b80079fa47983f51e2badb2c583f772e6f2e52aa90c23e10a201141",
+        "sizeBytes": 3965,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/bundle/digest.js",
+        "reason": "required by ./dist/commands/attest.js; required by ./dist/policy/engine.js",
+        "sha256": "0ba490d442d072593afc9c5d2c1f9c3e2c23fb6ea15bef74ef0ddd8819b34cf0",
+        "sizeBytes": 5145,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/verify.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "c7ece1ad1ba06a3b9fd9e4a69348debeb2d7965140182fb149405cf07588f019",
+        "sizeBytes": 2543,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lockfile/detect.js",
+          "dist/policy/engine.js",
+          "dist/policy/io.js",
+          "dist/registry/npm.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lockfile/detect.js",
+        "reason": "required by ./dist/commands/verify.js",
+        "sha256": "3cc0f3c66bf37ee0922131758641974167ccd6574324e44a55fbc15aece18d7f",
+        "sizeBytes": 1049,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lockfile/npm.js",
+          "dist/lockfile/pnpm.js",
+          "dist/lockfile/yarn.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lockfile/npm.js",
+        "reason": "required by ./dist/lockfile/detect.js",
+        "sha256": "4457aeb03f7b77ca72b04b9722609a130d8ce75f81a875d645f250682c8786e7",
+        "sizeBytes": 1869,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lockfile/yarn.js",
+        "reason": "required by ./dist/lockfile/detect.js",
+        "sha256": "09e00a40b34b145a18e62d9318e18626bae3db1d76cb7943a408c25e005524bd",
+        "sizeBytes": 3998,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/policy/engine.js",
+        "reason": "required by ./dist/commands/verify.js",
+        "sha256": "68eac41e761a130e0ff91dbf7017a4400a51c3dbf24c9430b522478fd04cadaf",
+        "sizeBytes": 31016,
+        "signals": [
+          "writes-outside-package",
+          "base64-decode-exec",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/policy/duration.js",
+          "dist/bundle/extract.js",
+          "dist/bundle/digest.js",
+          "dist/credentials/verify.js",
+          "dist/credentials/audits-dir.js",
+          "dist/registry/npmvc.js",
+          "dist/policy/trust-root.js"
+        ],
+        "urls": [
+          {
+            "url": "https://npmvc.com/schemas/attestation-bundle/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/policy/duration.js",
+        "reason": "required by ./dist/policy/engine.js",
+        "sha256": "f924e63dd308da9b658f028922d976036dad67ff055647cdb45373cd49a2f95e",
+        "sizeBytes": 1229,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/bundle/extract.js",
+        "reason": "required by ./dist/policy/engine.js",
+        "sha256": "cb35fc5dae1cea6f405a245939d2bf7a0363fe9e1e829bfd9ae9a742660aa728",
+        "sizeBytes": 1454,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://npmvc.com/schemas/attestation-bundle/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/credentials/verify.js",
+        "reason": "required by ./dist/policy/engine.js; required by ./dist/credentials/audits-dir.js",
+        "sha256": "d6922f79e3f22039f255b3797e39bba17ef2d95d5e61f5edde43a4ec808d7f16",
+        "sizeBytes": 2060,
+        "signals": [
+          "writes-outside-package",
+          "base64-decode-exec",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/local.js",
+          "dist/credentials/envelope.js",
+          "dist/did/resolver.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/credentials/audits-dir.js",
+        "reason": "required by ./dist/policy/engine.js",
+        "sha256": "3f04c356bb08c98d202e0071b5e34785c3efc1342f343efc9239c0e1fae0c5e4",
+        "sizeBytes": 1661,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/credentials/verify.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/policy/trust-root.js",
+        "reason": "required by ./dist/policy/engine.js",
+        "sha256": "b26d63e5d4085a52e84201a2ac3ecdec11d960c03cd9969ff785764579a29497",
+        "sizeBytes": 3991,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "base64-decode-exec",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/local.js",
+          "dist/did/resolver.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/policy/io.js",
+        "reason": "required by ./dist/commands/verify.js; required by ./dist/commands/policy.js; required by ./dist/commands/install-hook.js",
+        "sha256": "1014cee3b47923c1fbdf3f81ca8a71a6f6b9efb57220adbc67c071d3afb86e61",
+        "sizeBytes": 891,
+        "signals": [
+          "writes-file",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/policy/defaults.js",
+          "dist/policy/types.js"
+        ],
+        "urls": [
+          {
+            "url": "https://npmvc.com/schemas/policy/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/policy/defaults.js",
+        "reason": "required by ./dist/policy/io.js; required by ./dist/commands/policy.js; required by ./dist/commands/install-hook.js",
+        "sha256": "83b59e2387b0ad0f9a5a47237fe767742c055deb0b3244830dd41a7970360126",
+        "sizeBytes": 2729,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://npmvc.com/trust-root.json",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://npmvc.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/policy/types.js",
+        "reason": "required by ./dist/policy/io.js",
+        "sha256": "2ebd3e6200d1461884e1260600c2dcf31571dc07b1bc8352d2d3472ec9c27928",
+        "sizeBytes": 5123,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://npmvc.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/registry/npm.js",
+        "reason": "required by ./dist/commands/verify.js",
+        "sha256": "e70aa1c17125e05eaac49c644704a03ccd56883cd87465be194157702c5ebffb",
+        "sizeBytes": 1995,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://registry.npmjs.org",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "dist/commands/policy.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "36f94272e6005b1a4fdb58540eb7effdf52b487ab628138e9139d396ef7d05cc",
+        "sizeBytes": 1121,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/policy/defaults.js",
+          "dist/policy/io.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/install-hook.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "a54112bb81feb5c6423c319b268430225848de768e7e58986ca21af2b4b8a72b",
+        "sizeBytes": 5280,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/util/pkg.js",
+          "dist/policy/io.js",
+          "dist/policy/defaults.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/audit.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "3340a4723659e8305b6c44ed844843f61c71c5260c444fdc21c6bcad86c8b817",
+        "sizeBytes": 3235,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/factory.js",
+          "dist/wallet/local.js",
+          "dist/credentials/issue.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/wallet.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "3d433a155d59a05b3fe0b79b7a6a8bf1aa99f6e86deb3f642650e8cbcb26534c",
+        "sizeBytes": 19866,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/factory.js",
+          "dist/wallet/local.js",
+          "dist/did/webvh-create.js",
+          "dist/did/webvh-update.js",
+          "dist/wallet/recovery.js"
+        ],
+        "urls": [
+          {
+            "url": "https://npmvc.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/did/webvh-update.js",
+        "reason": "required by ./dist/commands/wallet.js",
+        "sha256": "e9177c8a1e38374cfbfa11e4a4ae4aed6ff3cfcd2f73a5c4daefa2562db4b092",
+        "sizeBytes": 7171,
+        "signals": [
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/did/webvh-create.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/anchor.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "287bbcacaa1e4ffb93fbc8a710f331ff584a7fb6fa3ab3d6d8203ff5ee761216",
+        "sizeBytes": 3252,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "base64-decode-exec",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/factory.js",
+          "dist/wallet/local.js",
+          "dist/anchor/merkle.js"
+        ],
+        "urls": [
+          {
+            "url": "https://npmvc.com/schemas/anchor/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "dist/anchor/merkle.js",
+        "reason": "required by ./dist/commands/anchor.js",
+        "sha256": "f405feb17f27ef7fefd34ab8118144c7d096445d7119219ad205a07b69c51c30",
+        "sizeBytes": 2085,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/register.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "1e5ca7bbe0e482243719255978df3c032bdff6ea2066b75bef02b6fec71abaaa",
+        "sizeBytes": 2963,
+        "signals": [
+          "writes-outside-package",
+          "shell-network-fetch",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/factory.js",
+          "dist/wallet/local.js",
+          "dist/registry/npmvc.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/commands/credential.js",
+        "reason": "required by ./dist/commands/index.js",
+        "sha256": "a59f7f6843d25a5ee9a36fb6de2efcf65b1debc042714e4283810bf88b8b9c89",
+        "sizeBytes": 4718,
+        "signals": [
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/wallet/factory.js",
+          "dist/wallet/local.js",
+          "dist/registry/npmvc.js",
+          "dist/credentials/envelope.js"
+        ],
+        "urls": [
+          {
+            "url": "https://w3id.org/security/data-integrity/v2",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://www.w3.org/ns/credentials/v2",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://npmvc.com/schemas/supplychain/v1",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "makes-executable"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:37.834Z"
+  },
+  "hash": "sha256:6811985077fdfbcdefc07a95627cec76ebfae827011b15306fc1168342857e74"
+}

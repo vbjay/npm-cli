@@ -1,0 +1,41 @@
+{
+	"name": "pbkdf2-wasm",
+	"version": "0.9.0",
+	"description": "WASM implementation of pbkdf2",
+	"keywords": [
+		"hash",
+		"pbkdf2",
+		"hmac",
+		"wasm"
+	],
+	"homepage": "https://github.com/ARitz-Cracker/pbkdf2-wasm#readme",
+	"bugs": {
+		"url": "https://github.com/ARitz-Cracker/pbkdf2-wasm/issues"
+	},
+	"scripts": {
+		"postinstall": "bash scripts/postinstall.sh"
+	},
+	"license": "CC-BY-SA-4.0",
+	"author": "Aritz Beobide-Cardinal <aritz@aritzcracker.ca>",
+	"main": "index.js",
+	"browser": "browser.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ARitz-Cracker/pbkdf2-wasm.git"
+	},
+	"peerDependencies": {
+		"buffer-lite": "^0.1.4"
+	},
+	"browserRequirifier": {
+		"include": [
+			"pbkdf2.js",
+			"pbkdf2Wasm.js"
+		],
+		"copyVerbatim": [
+			"bin"
+		]
+	},
+	"dependencies": {
+		"@aritz-cracker/cryptowasm": "^1.18.0"
+	}
+}

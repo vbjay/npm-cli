@@ -1,0 +1,108 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// ----------------------------------------------------------------------------
+// android/build.gradle
+//
+// Gradle build script for the @renesis/gameanalytics-rn native library.
+//
+// Responsibilities:
+//   • Configure the Android library plugin and Kotlin support.
+//   • Apply the React Native (com.facebook.react) plugin so the TurboModule
+//     codegen runs automatically — it generates the abstract Kotlin spec
+//     (NativeGameanalyticsRnSpec) that our module class extends.
+//   • Pull in the official GameAnalytics Android SDK (7.x) so the Kotlin
+//     module can call GameAnalytics.* APIs.
+//
+// Consumers (the host React Native app) do NOT need to add anything to their
+// own android/build.gradle — autolinking discovers this module and inherits
+// the SDK transitively.
+// ----------------------------------------------------------------------------
+
+buildscript {
+  // Default tool versions used when this library is built standalone.
+  // When built inside an example/host app, the host's rootProject ext values
+  // win via getExtOrDefault below.
+  ext.GameanalyticsRn = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+    return GameanalyticsRn[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+// GameAnalytics ships its Android SDK on a custom Maven server, not Maven
+// Central. We add that repo here so the library's own gradle build can
+// resolve `com.gameanalytics.sdk:gameanalytics-android` without the host
+// app having to add anything. (The host app build also needs this repo
+// added to its rootProject — see CONTRIBUTING / README.)
+repositories {
+  google()
+  mavenCentral()
+  maven { url "https://maven.gameanalytics.com/release" }
+}
+
+android {
+  namespace "com.renesis.gameanalyticsrn"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  // React Native runtime — provides ReactApplicationContext, TurboModule base
+  // classes, the generated Spec class, etc.
+  implementation "com.facebook.react:react-android"
+
+  // GameAnalytics Android SDK, pinned. The dynamic `:+` selector
+  // forced consumer Gradle to revalidate maven-metadata.xml against
+  // maven.gameanalytics.com on every build — that server has flaky
+  // CloudFront edges in some regions and caused 30+ minute hangs.
+  // Bump this string when you intend to upgrade the SDK.
+  // Hosted on the custom maven repo declared above.
+  implementation "com.gameanalytics.sdk:gameanalytics-android:7.0.2"
+}

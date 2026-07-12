@@ -1,0 +1,27 @@
+{
+  "name": "stormlib",
+  "version": "0.0.3",
+  "description": "NodeJS wrapper for StormLib",
+  "main": "lib/JStormLib.js",
+  "scripts": {
+    "build-stormlib": "node ./scripts/build",
+    "dev": "node-gyp build",
+    "electron": "node-gyp rebuild --target=2.0.8 --arch=x64 --dist-url=https://atom.io/download/electron",
+    "prepublish": "node ./scripts/prepublish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuantau/JStormLib.git"
+  },
+  "keywords": [
+    "StormLib",
+    "mpq"
+  ],
+  "author": "yuantao",
+  "license": "ISC",
+  "devDependencies": {
+    "fs-extra": "^7.0.0",
+    "nan": "^2.11.0",
+    "npmlog": "^4.1.2"
+  }
+}

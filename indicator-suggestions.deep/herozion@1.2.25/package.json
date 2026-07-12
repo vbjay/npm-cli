@@ -1,0 +1,50 @@
+{
+  "name": "herozion",
+  "version": "1.2.25",
+  "description": "Security audit and performance analysis CLI tool for developers",
+  "keywords": [
+    "security",
+    "audit",
+    "vulnerability",
+    "cli",
+    "owasp"
+  ],
+  "homepage": "https://herozion.io",
+  "bugs": {
+    "url": "https://github.com/Herozion/scanner/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Herozion/scanner.git"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bin": {
+    "herozion": "bin/herozion.js"
+  },
+  "files": [
+    "bin/herozion.js",
+    "bin/checksums.json",
+    "install.js",
+    "uninstall.js",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node install.js",
+    "preuninstall": "node uninstall.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

@@ -1,0 +1,317 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6b674ff9ed5b3164",
+    "fetchedFiles": [
+      "dist/core/completions/command-registry.js",
+      "dist/core/completions/factory.js",
+      "dist/core/completions/generators/bash-generator.js",
+      "dist/core/completions/generators/fish-generator.js",
+      "dist/core/completions/generators/powershell-generator.js",
+      "dist/core/completions/generators/zsh-generator.js",
+      "dist/core/completions/installers/bash-installer.js",
+      "dist/core/completions/installers/fish-installer.js",
+      "dist/core/completions/installers/powershell-installer.js",
+      "dist/core/completions/installers/zsh-installer.js",
+      "dist/core/completions/templates/bash-templates.js",
+      "dist/core/completions/templates/fish-templates.js",
+      "dist/core/completions/templates/powershell-templates.js",
+      "dist/core/completions/templates/zsh-templates.js",
+      "dist/utils/file-system.js",
+      "dist/utils/shell-detection.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0bb19a6baf6d052d3fd74dfd82311e89ca2d465aa368fcb978f1866b7c0e5b8d",
+        "sizeBytes": 4603,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/shell-detection.js",
+          "dist/core/completions/factory.js",
+          "dist/core/completions/command-registry.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/shell-detection.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "0b7a5ebc520d854dc5b25db09d739994c68510a3ab6bc961284305b5e84907bc",
+        "sizeBytes": 1741,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/factory.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "12e020688e74839221f217ea54aa76aad288c5f5dd025aa0dd45e730990b3c6a",
+        "sizeBytes": 2623,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/core/completions/generators/zsh-generator.js",
+          "dist/core/completions/generators/bash-generator.js",
+          "dist/core/completions/generators/fish-generator.js",
+          "dist/core/completions/generators/powershell-generator.js",
+          "dist/core/completions/installers/zsh-installer.js",
+          "dist/core/completions/installers/bash-installer.js",
+          "dist/core/completions/installers/fish-installer.js",
+          "dist/core/completions/installers/powershell-installer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/generators/zsh-generator.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "d0c3b1d6e1081250827a3e973135a7fc5dbba0f7dfb588f969553e245c7173d8",
+        "sizeBytes": 9038,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/core/completions/templates/zsh-templates.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/templates/zsh-templates.js",
+        "reason": "required by ./dist/core/completions/generators/zsh-generator.js",
+        "sha256": "dd75c17a330944000b0866fbbd40ccdaaac763e82fcc3b8818a4f262b3c67091",
+        "sizeBytes": 1286,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/generators/bash-generator.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "583eefbe441c8d804cee550b28207b8db104fd527720b189189fdd49dfdb3f9c",
+        "sizeBytes": 6635,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/core/completions/templates/bash-templates.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/templates/bash-templates.js",
+        "reason": "required by ./dist/core/completions/generators/bash-generator.js",
+        "sha256": "10de145c66af840b0cf365c859fb2408c05d6e4089d29a96e8ada98dbadf453c",
+        "sizeBytes": 942,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/generators/fish-generator.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "953cf997c0c0b35f738f0770ad42819e78cc621714d4fad04a65132719506823",
+        "sizeBytes": 7422,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/core/completions/templates/fish-templates.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/templates/fish-templates.js",
+        "reason": "required by ./dist/core/completions/generators/fish-generator.js",
+        "sha256": "ca515cbb3d4be1244d67673e5c16ff560f7d0c69e875f4d114acfa71915ce05d",
+        "sizeBytes": 1269,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/generators/powershell-generator.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "70fff7ed29d1985354b677e82cf7aae9c946649143e78a1f366f86aecc150794",
+        "sizeBytes": 10027,
+        "signals": [
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/core/completions/templates/powershell-templates.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/templates/powershell-templates.js",
+        "reason": "required by ./dist/core/completions/generators/powershell-generator.js",
+        "sha256": "e251f4fd6af7ac372807569d73254e8a428fcc1f1326f1f7e5ce74463d844e82",
+        "sizeBytes": 771,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/installers/zsh-installer.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "72fc7ca0888b201ff23a4739f332018dd594cea5a53970e8de09211d10d3b7fb",
+        "sizeBytes": 16978,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "modifies-shell-config",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/file-system.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/file-system.js",
+        "reason": "required by ./dist/core/completions/installers/zsh-installer.js; required by ./dist/core/completions/installers/bash-installer.js",
+        "sha256": "3554273a9dd522da5d3ad0af1c7b65fd57b60e664e93c58b7d57702cb77557dc",
+        "sizeBytes": 11786,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/installers/bash-installer.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "0f158f3bb3930c560a7d2d279d3ad31caeb8a02134ef1a64d455543931783ec4",
+        "sizeBytes": 12385,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "modifies-shell-config",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/file-system.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/installers/fish-installer.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "eccce1457b456679fc2ccb23d3a7c0c6193041f5b2db78bceaf2c8de6b2fa13c",
+        "sizeBytes": 5441,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/installers/powershell-installer.js",
+        "reason": "required by ./dist/core/completions/factory.js",
+        "sha256": "8f62da7c0e8330b6b5165079ceb6baf3a05d58d7408cda4fa4b15cd442ba34ea",
+        "sizeBytes": 13152,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/core/completions/command-registry.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "0e4a112e4275849f08c2522264db0a16096a26b5ed7f5a8ce772d242e6aa9a07",
+        "sizeBytes": 17843,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build:clean`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build.js",
+        "reason": "referenced by lifecycle script: `build:clean`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:18.167Z"
+  },
+  "hash": "sha256:7f5b97887a187e730df7d3c88238c3e1e6cbc97c8e9b83c5e90bb6f72ff75371"
+}

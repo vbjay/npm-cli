@@ -1,0 +1,56 @@
+{
+  "name": "@weavr-io/secure-components-react-native",
+  "version": "5.5.1",
+  "description": "Secure components for embedding financial services into your app",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "scripts": {
+    "build:watch:sdk": "expo-module build",
+    "build:watch:plugin": "expo-module build plugin",
+    "build": "CI=1 expo-module build && CI=1 expo-module build plugin",
+    "typecheck": "CI=1 expo-module typecheck",
+    "clean": "expo-module clean",
+    "lint": "echo \"Skipping lint because it hangs CI. TODO\" || true || expo-module lint",
+    "test": "CI=1 expo-module test",
+    "test:watch": "expo-module test",
+    "test:rsc": "jest --config jest-rsc.config.js",
+    "prepare": "yarn build && expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed ../../../apps/example/ios",
+    "open:android": "open -a \"Android Studio\" ../../../apps/example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "@weavr-io/secure-components-react-native",
+    "WeavrIoSecureComponentsReactNative"
+  ],
+  "repository": "https://github.com/weavr-io",
+  "bugs": {
+    "url": "https://github.com/weavr-io/issues"
+  },
+  "author": "Weavr<support@weavr.io> (https://www.weavr.io)",
+  "license": "MIT",
+  "homepage": "https://www.weavr.io",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/react": "~19.1.17",
+    "eslint": "^9.39.2",
+    "expo": "~54.0.32",
+    "expo-module-scripts": "^5.0.8",
+    "jest": "^30.2.0",
+    "react": "19.2.3",
+    "react-native": "~0.81.5",
+    "ts-jest": "^29.4.6",
+    "typescript": "~5.9.3"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "jest": {
+    "preset": "expo-module-scripts"
+  }
+}

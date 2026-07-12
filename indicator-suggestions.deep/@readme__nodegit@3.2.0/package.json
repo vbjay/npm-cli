@@ -1,0 +1,85 @@
+{
+  "name": "@readme/nodegit",
+  "description": "Node.js libgit2 asynchronous native bindings",
+  "version": "3.2.0",
+  "homepage": "http://nodegit.org",
+  "keywords": [
+    "libgit2",
+    "git2",
+    "git",
+    "native"
+  ],
+  "license": "MIT",
+  "author": "Tim Branyen (@tbranyen)",
+  "contributors": [
+    {
+      "name": "Bill Mill",
+      "email": "bill@billmill.org"
+    },
+    {
+      "name": "John Haley",
+      "email": "john@haley.io"
+    },
+    {
+      "name": "Max Korp",
+      "email": "maxkorp@8bytealchemy.com"
+    },
+    {
+      "name": "Tyler Ang-Wanek",
+      "email": "tylerw@axosoft.com"
+    }
+  ],
+  "main": "lib/nodegit.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/readmeio/nodegit.git"
+  },
+  "directories": {
+    "build": "./build",
+    "lib": "./lib"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "dependencies": {
+    "@axosoft/nan": "^2.22.0-gk.1",
+    "fs-extra": "^7.0.0",
+    "json5": "^2.1.0",
+    "lodash": "^4.17.14",
+    "node-gyp": "^12.1.0",
+    "node-gyp-build": "^4.8.1",
+    "tar-fs": "^3.0.9"
+  },
+  "devDependencies": {
+    "clean-for-publish": "~1.0.2",
+    "combyne": "~0.8.1",
+    "got": "^14.4.7",
+    "js-beautify": "~1.5.10",
+    "jshint": "^2.10.0",
+    "lcov-result-merger": "^3.1.0",
+    "mocha": "^11.4.0",
+    "nyc": "^17.1.0",
+    "walk": "^2.3.9"
+  },
+  "scripts": {
+    "cov": "npm run cppcov && npm run filtercov && npm run mergecov",
+    "cppcov": "mkdir -p test/coverage/cpp && ./lcov-1.10/bin/lcov --gcov-tool /usr/bin/gcov-4.9 --capture --directory build/Release/obj.target/nodegit/src --output-file test/coverage/cpp/lcov_full.info",
+    "filtercov": "./lcov-1.10/bin/lcov --extract test/coverage/cpp/lcov_full.info $(pwd)/src/* $(pwd)/src/**/* $(pwd)/include/* $(pwd)/include/**/* --output-file test/coverage/cpp/lcov.info && rm test/coverage/cpp/lcov_full.info",
+    "generateJson": "node generate/scripts/generateJson",
+    "generateMissingTests": "node generate/scripts/generateMissingTests",
+    "generateNativeCode": "node generate/scripts/generateNativeCode",
+    "install": "node lifecycleScripts/preinstall.js && node-gyp-build && node lifecycleScripts/install",
+    "installDebug": "BUILD_DEBUG=true npm install",
+    "lint": "jshint lib test/tests test/utils lifecycleScripts",
+    "mergecov": "lcov-result-merger 'test/**/*.info' 'test/coverage/merged.lcov' && ./lcov-1.10/bin/genhtml test/coverage/merged.lcov --output-directory test/coverage/report",
+    "mocha": "mocha --expose-gc test/runner test/tests --timeout 15000",
+    "mochaDebug": "mocha --expose-gc --inspect-brk test/runner test/tests --timeout 15000",
+    "postinstall": "node lifecycleScripts/postinstall",
+    "rebuild": "node generate && node-gyp configure build",
+    "rebuildDebug": "node generate && node-gyp configure --debug build",
+    "recompile": "node-gyp configure build",
+    "recompileDebug": "node-gyp configure --debug build",
+    "test": "npm run lint && node --expose-gc test",
+    "xcodeDebug": "node-gyp configure -- -f xcode"
+  }
+}

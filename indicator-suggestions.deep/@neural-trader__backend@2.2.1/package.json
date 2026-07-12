@@ -1,0 +1,77 @@
+{
+  "name": "@neural-trader/backend",
+  "version": "2.2.1",
+  "description": "High-performance Neural Trader backend with native Rust bindings via NAPI-RS",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruvnet/neural-trader.git",
+    "directory": "neural-trader-rust/packages/neural-trader-backend"
+  },
+  "author": "Neural Trader Team",
+  "license": "MIT",
+  "keywords": [
+    "trading",
+    "neural-network",
+    "rust",
+    "napi",
+    "high-performance",
+    "finance",
+    "algorithmic-trading"
+  ],
+  "engines": {
+    "node": ">= 16"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "build:release": "napi build --platform --release --strip",
+    "build:all": "node scripts/build-all-platforms.js",
+    "test": "node test/smoke-test.js",
+    "test:advanced": "node test/advanced-test.js",
+    "universal": "napi universal",
+    "version": "napi version",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "scripts/postinstall.js",
+    "*.node"
+  ],
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0",
+    "dotenv": "^17.2.3"
+  },
+  "napi": {
+    "name": "neural-trader-backend",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "aarch64-apple-darwin",
+        "x86_64-pc-windows-msvc",
+        "aarch64-pc-windows-msvc"
+      ]
+    }
+  },
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "@cagovweb/state-template",
+  "version": "6.5.5",
+  "description": "California State Web Template NPM Package",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Office-of-Digital-Services/California-State-Web-Template-Development.git"
+  },
+  "bugs": "https://github.com/Office-of-Digital-Services/California-State-Web-Template-Development/issues",
+  "homepage": "https://template.webstandards.ca.gov/",
+  "keywords": [
+    "California",
+    "State",
+    "CA",
+    "Government",
+    "gov",
+    "Template",
+    "state-template",
+    "ca.gov",
+    "state of California",
+    "ca web template",
+    "css",
+    "javascript",
+    "js",
+    "react",
+    "reactjs",
+    "bootstrap",
+    "11ty",
+    "eleventy",
+    "CDT",
+    "department of technology"
+  ],
+  "author": {
+    "name": "Carter Medlin",
+    "email": "carter.medlin@state.ca.gov",
+    "url": "https://github.com/carterm"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "beta"
+  },
+  "scripts": {
+    "NPM login": "npm login",
+    "NPM Publish (dry run)": "npm publish --dry-run",
+    "NPM Publish (view package)": "npm pack",
+    "NPM publish": "npm publish",
+    "NPM set latest": "npm dist-tag add @cagovweb/state-template@6.5.4 latest",
+    "NPM remove beta tag": "npm dist-tag rm @cagovweb/state-template beta",
+    "NPM deprecate old version": "npm deprecate @cagovweb/state-template@1.0.0 \"Version no longer supported. Upgrade to @latest\"",
+    "prepack": "mkdir -p dist && cp -r ../_site/ca_state_template/* ./dist",
+    "postpack": "rm -rf ./dist"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "index.mjs"
+}

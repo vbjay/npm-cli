@@ -1,0 +1,89 @@
+{
+  "name": "siluzan-tso-cli",
+  "version": "1.1.36",
+  "description": "Siluzan 广告账户管理 CLI — 查询账户、余额、消耗数据，管理绑定关系与充值。",
+  "keywords": [
+    "ad-account",
+    "ads",
+    "ai-skill",
+    "cli",
+    "cursor",
+    "openclaw",
+    "recharge",
+    "siluzan"
+  ],
+  "license": "UNLICENSED",
+  "bin": {
+    "siluzan-tso": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "eval/cases",
+    "eval/stub-fixtures",
+    "README.md",
+    "scripts/postinstall.mjs",
+    "assets/siluzan-ads/references/hosted-automation-user-catalog.md"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@sentry/node": "9",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "open": "^10.1.0",
+    "proper-lockfile": "^4.1.2",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/qrcode": "^1.5.6",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.2",
+    "siluzan-cli-common": "1.0.0"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
+  },
+  "skillRequirements": {
+    "binaries": [
+      "node",
+      "npm"
+    ],
+    "configFiles": [
+      "~/.siluzan/config.json"
+    ],
+    "credentials": [
+      "apiKey or token in ~/.siluzan/config.json"
+    ],
+    "networkEndpoints": [
+      "tso-api.siluzan.com",
+      "googleapi.mysiluzan.com",
+      "www.siluzan.com",
+      "o605862.ingest.us.sentry.io",
+      "registry.npmjs.org"
+    ],
+    "optionalEnvVars": [
+      "SILUZAN_GOOGLE_API",
+      "SILUZAN_API_KEY"
+    ]
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs",
+    "build": "node scripts/write-defaults.mjs --env production && tsup && node scripts/copy-skill-assets.mjs --env production",
+    "build:prod": "node scripts/write-defaults.mjs --env production && tsup && node scripts/copy-skill-assets.mjs --env production",
+    "build:test": "node scripts/write-defaults.mjs --env test && tsup && node scripts/copy-skill-assets.mjs --env test",
+    "gen:skill-docs": "node scripts/gen-skill-docs.mjs",
+    "geo:generate": "node scripts/generate-geo-dictionaries.mjs",
+    "geo:check": "node scripts/generate-geo-dictionaries.mjs --check",
+    "geo:fetch": "node scripts/fetch-google-ads-geo.mjs",
+    "test:ad-read": "node scripts/test-ad-api-read.mjs",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "eval:export-cases": "tsx eval/scripts/export-scenarios.mts"
+  }
+}

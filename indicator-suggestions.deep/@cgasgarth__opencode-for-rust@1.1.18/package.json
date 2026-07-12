@@ -1,0 +1,75 @@
+{
+  "name": "@cgasgarth/opencode-for-rust",
+  "version": "1.1.18",
+  "description": "OpenCode plugin for Rust",
+  "keywords": [
+    "opencode",
+    "plugin",
+    "rust"
+  ],
+  "author": {
+    "name": "Sisyphus",
+    "email": "sisyphus@opencode.ai"
+  },
+  "type": "module",
+  "main": "./cgasgarth/opencode-for-rust/index.js",
+  "types": "./cgasgarth/opencode-for-rust/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./cgasgarth/opencode-for-rust/index.d.ts",
+      "default": "./cgasgarth/opencode-for-rust/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cgasgarth/opencode-for-rust"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "cgasgarth"
+  ],
+  "dependencies": {
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "^1.1.1",
+    "@eslint/js": "^9.39.1",
+    "@types/bun": "latest",
+    "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "8.47.0",
+    "@typescript-eslint/parser": "8.47.0",
+    "bun-types": "latest",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.3.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.47.0",
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "test": "bun test tests/",
+    "typecheck": "tsc --noEmit",
+    "build": "esbuild ./src/index.ts --bundle --format=esm --platform=node --target=node16 --outdir=cgasgarth/opencode-for-rust --external:fsevents --external:@opencode-ai/* && tsc --project tsconfig.build.json",
+    "lint": "eslint src --max-warnings 0",
+    "format": "prettier --check .",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --max-warnings 0",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "trustedDependencies": []
+}

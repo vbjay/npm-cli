@@ -1,0 +1,114 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7d2e9ac7f114ec34",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "574b185281f8c704128537b9b00ce98cf2d12ea1b54f37c26b9d98988558fb24",
+        "sizeBytes": 17028,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/onebrain-ai/onebrain-cli/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/onebrain-ai/onebrain-cli/releases/latest",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/onebrain-ai/onebrain-cli",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.js",
+        "sha256": "07a5dd755ecdc5ec41601d68f0b2bd183bd7df2a7ef98ce472c0d9b400e156bb",
+        "sizeBytes": 987,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:36.417Z"
+  },
+  "hash": "sha256:faff9dc791ea8aa62b6f41dfe8b6d40244e0cd98f57eb9ae68ca4dc4d64904d3"
+}

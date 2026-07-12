@@ -1,0 +1,42 @@
+{
+  "name": "@videosdk.live/expo-ios-screen-share",
+  "version": "0.0.3",
+  "description": "Expo config plugin for iOS screen sharing with VideoSDK",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build && npm run copy-static",
+    "clean": "expo-module clean",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare && npm run copy-static",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "copy-static": "node -e \"const fs=require('fs');const path=require('path');const srcStatic=path.join(__dirname,'src','static');const buildStatic=path.join(__dirname,'build','static');if(fs.existsSync(srcStatic)){if(!fs.existsSync(buildStatic))fs.mkdirSync(buildStatic,{recursive:true});fs.readdirSync(srcStatic).forEach(file=>{const srcFile=path.join(srcStatic,file);const buildFile=path.join(buildStatic,file);if(fs.statSync(srcFile).isFile()){fs.copyFileSync(srcFile,buildFile);}});console.log('Static files copied successfully');}else{console.log('No static files found');}\""
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "ios",
+    "screen-sharing",
+    "broadcast",
+    "replaykit",
+    "videosdk",
+    "config-plugin"
+  ],
+  "author": "VideoSDK Team",
+  "license": "MIT",
+  "homepage": "https://docs.videosdk.live/react-native/guide/video-and-audio-calling-api-sdk/react-native-expo-setup",
+  "peerDependencies": {
+    "expo": ">=49.0.0"
+  },
+  "devDependencies": {
+    "expo-module-scripts": "^3.0.0",
+    "@expo/config-plugins": "^7.0.0",
+    "@expo/plist": "^0.0.20",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@expo/config-plugins": "^7.0.0",
+    "@expo/plist": "^0.0.20"
+  }
+} 

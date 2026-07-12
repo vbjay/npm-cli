@@ -1,0 +1,178 @@
+{
+  "name": "react-native-full-responsive",
+  "version": "2.4.5",
+  "description": "Create a fully responsive React Native app for all supported platforms",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.tsx",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "jest",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!lib/typescript/macos-example",
+    "!lib/typescript/tv-example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepack": "bob build",
+    "release": "release-it --only-version",
+    "example": "yarn --cwd example",
+    "macos-example": "yarn --cwd macos-example",
+    "tv-example": "yarn --cwd tv-example",
+    "bootstrap": "yarn example && yarn macos-example && yarn tv-example && yarn install",
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
+  },
+  "keywords": [
+    "react-native",
+    "responsive",
+    "responsive-ui",
+    "responsive-font",
+    "full-responsive",
+    "responsive-scale",
+    "responsive-layout",
+    "responsive-font-size",
+    "responsive-dimensions",
+    "react-native-full-responsive",
+    "react native media query",
+    "media query",
+    "responsive size",
+    "responsiveness",
+    "responsiveness react native",
+    "useStyle",
+    "react native useStyle"
+  ],
+  "repository": "https://github.com/Mhp23/react-native-full-responsive",
+  "author": "mhp23 <hpousty@gmail.com> (https://github.com/Mhp23)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mhp23/react-native-full-responsive/issues"
+  },
+  "homepage": "https://github.com/Mhp23/react-native-full-responsive#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "18.4.4",
+    "@commitlint/config-conventional": "18.4.4",
+    "@evilmartians/lefthook": "^1.2.2",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/jest": "^28.1.2",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "0.70.0",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^9.0.10",
+    "jest": "^28.1.1",
+    "lint-staged": "^15.2.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "18.2.0",
+    "react-native": "0.73.4",
+    "react-native-builder-bob": "^0.20.4",
+    "release-it": "^17.10.0",
+    "typescript": "^4.5.2"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "packageManager": "yarn@1.22.21",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/macos-example/node_modules",
+      "<rootDir>/tv-example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "dependencies": {}
+}

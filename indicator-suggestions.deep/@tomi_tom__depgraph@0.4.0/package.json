@@ -1,0 +1,45 @@
+{
+  "name": "@tomi_tom/depgraph",
+  "version": "0.4.0",
+  "description": "Visualiseur de graphe de dépendances interactif et 100% local pour projets JS/TS, avec détection actionnable des dépendances circulaires. Zéro Graphviz, zéro dépendance runtime.",
+  "type": "module",
+  "bin": {
+    "depgraph": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node --experimental-strip-types src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "dependency-graph",
+    "circular-dependencies",
+    "visualization",
+    "typescript",
+    "cli"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tomi-Tom/depgraph.git"
+  },
+  "homepage": "https://github.com/Tomi-Tom/depgraph#readme",
+  "bugs": {
+    "url": "https://github.com/Tomi-Tom/depgraph/issues"
+  },
+  "author": "Tom Bariteau-Peter",
+  "engines": {
+    "node": ">=18"
+  }
+}

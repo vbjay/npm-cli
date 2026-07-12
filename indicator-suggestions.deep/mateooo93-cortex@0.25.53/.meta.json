@@ -1,0 +1,166 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a0fbb79d3cd7924c",
+    "fetchedFiles": [
+      "lib/download.js",
+      "lib/install.js",
+      "lib/path-check.js",
+      "lib/paths.js",
+      "lib/platform.js",
+      "lib/symlink.js",
+      "lib/version.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "498cadbedb20b8a29eba532c52aef790767782b6c5f7ee4f89a49f270f732280",
+        "sizeBytes": 3535,
+        "signals": [
+          "reads-process-env",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/download.js",
+          "lib/path-check.js",
+          "lib/platform.js",
+          "lib/paths.js",
+          "lib/symlink.js",
+          "lib/version.js"
+        ],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "lib/download.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "3a8b089ada2cda01e181c090be25bea1eb05424207a1ffb273a1275540dcc8b0",
+        "sizeBytes": 2674,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/path-check.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "7cd5a01b82da8e6fe21da8fd2dd003a4c9aabc18cb4f6a2fdabfa59ff2b55f12",
+        "sizeBytes": 3167,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/platform.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "5ed90750ff1c6a5d2987322d3a7456e9a18adc2d37ebb9ef3e1bfc9da86df507",
+        "sizeBytes": 1522,
+        "signals": [
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/Mateooo93/cortex-cli/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/paths.js",
+        "reason": "required by ./lib/install.js; required by ./lib/symlink.js",
+        "sha256": "224129fe15e819080086317cf9615de253a87483131cdb20a09aa6d03c0bb3cf",
+        "sizeBytes": 1057,
+        "signals": [
+          "reads-process-env",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/symlink.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "6ee1f7d4d7ef5dd654cf146af2138ba77d4a28dbac30c698dd8562e42a9b6d94",
+        "sizeBytes": 689,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/paths.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/version.js",
+        "reason": "required by ./lib/install.js",
+        "sha256": "862ee334128ad4b142cbd5f68457afab793af84db4804bb6cc5c77d84355cad4",
+        "sizeBytes": 2545,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:08.921Z"
+  },
+  "hash": "sha256:29775e68e35f21e275b64003c4a2d6fbe5cca25bf66e974870c6b7034b378a17"
+}

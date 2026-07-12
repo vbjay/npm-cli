@@ -1,0 +1,73 @@
+{
+  "name": "react-localization",
+  "version": "2.0.6",
+  "description": "Simple module to localize the React interface using the same syntax used in the ReactNativeLocalization module",
+  "type": "module",
+  "main": "./lib/react-localization.umd.js",
+  "module": "./lib/react-localization.es.js",
+  "types": "./lib/react-localization.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/react-localization.es.js",
+      "types": "./lib/react-localization.d.ts",
+      "import": "./lib/react-localization.es.js"
+    }
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest",
+    "prepare": "npm run build",
+    "build:vite": "vite build",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build": "npm run build:vite && npm run build:types"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefalda/react-localization.git"
+  },
+  "keywords": [
+    "react-component",
+    "react",
+    "localization",
+    "internationalization",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Stefano Falda <stefano.falda@gmail.com> (http://www.babisoft.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stefalda/react-localization/issues"
+  },
+  "homepage": "https://github.com/stefalda/react-localization#readme",
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8",
+    "jsdom": "^26.0.0"
+  },
+  "dependencies": {
+    "localized-strings": "^2.0.3"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  }
+}

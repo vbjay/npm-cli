@@ -1,0 +1,134 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0f497d72884ca637",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/build-skills.cjs",
+      "scripts/lib/build/factory.cjs",
+      "scripts/lib/build/harness-configs.cjs",
+      "scripts/lib/manifest/index.cjs",
+      "scripts/lib/manifest/loader.cjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "scripts",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "scripts@0.1.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build-skills.cjs",
+        "reason": "referenced by lifecycle script: `prepare`; referenced by lifecycle script: `build:skills`",
+        "sha256": "b4be401a5470be95bf0cf0e3514e0c02ebe30f20c2b5a2830a1204bdb4366409",
+        "sizeBytes": 6178,
+        "signals": [
+          "uses-child-process",
+          "writes-file",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/build/factory.cjs",
+          "scripts/lib/build/harness-configs.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/build/factory.cjs",
+        "reason": "required by ./scripts/build-skills.cjs",
+        "sha256": "bfcbf701ae3b813ac9ac49becfd173946c3c635de667039e51d7db3a67b778ff",
+        "sizeBytes": 2700,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/build/harness-configs.cjs",
+        "reason": "required by ./scripts/build-skills.cjs",
+        "sha256": "3dbcbf6aa8fe0effbd80098f8339c800e95de96d362dfc047041647f328409b8",
+        "sizeBytes": 3999,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/manifest/index.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/manifest/index.cjs",
+        "reason": "required by ./scripts/lib/build/harness-configs.cjs",
+        "sha256": "7faa80cc3296ae7d43db1757ebbe52db393b8c201f38847ed5b5c3bd497966e5",
+        "sizeBytes": 1182,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/manifest/loader.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/manifest/loader.cjs",
+        "reason": "required by ./scripts/lib/manifest/index.cjs",
+        "sha256": "e5564f19d93d6e82adf1a0d21f5e2eb3b5e29e727d049e094bf2995980bf64f2",
+        "sizeBytes": 2616,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/build-sdk-bins.cjs",
+        "reason": "referenced by lifecycle script: `build:sdk`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:13.401Z"
+  },
+  "hash": "sha256:84d8502a02b710b40708623ac37eeaa8d29f466fdbce1e7e38897ff2900c83bc"
+}

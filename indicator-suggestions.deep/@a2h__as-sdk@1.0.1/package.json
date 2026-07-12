@@ -1,0 +1,84 @@
+{
+    "name": "@a2h/as-sdk",
+    "version": "1.0.1",
+    "description": "Assemblyscript SDK",
+    "sideEffects": false,
+    "main": "./wasm-re/cjs/index.js",
+    "module": "./wasm-re/esm/index.mjs",
+    "types": "./wasm-re/types/index.d.ts",
+    "exports": {
+        "./sdk": {
+            "import": "./sdk/index.ts"
+        },
+        "./visitor-as": {
+            "import": "./visitor-as/index.mjs",
+            "types": "./visitor-as/index.d.ts"
+        },
+        "./transformer": {
+            "import": "./transformer/index.mjs",
+            "types": "./transformer/index.d.ts"
+        },
+        ".": {
+            "require": "./wasm-re/cjs/index.js",
+            "import": "./wasm-re/esm/index.mjs",
+            "types": "./wasm-re/types/index.d.ts"
+        }
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "files": [
+        "boilerplate",
+        "sdk",
+        "transformer",
+        "visitor-as",
+        "wasm-re",
+        "CHANGELOG.md",
+        "init.js",
+        "README.md"
+    ],
+    "bin": {
+        "as-sdk-init": "./init.js"
+    },
+    "scripts": {
+        "clean:build": "rimraf ./visitor-as && rimraf ./wasm-re && rimraf ./transformer",
+        "clean:docs": "rimraf ./docs",
+        "clean": "npm run clean:build && npm run clean:docs",
+
+        "build:transformer": "tsc -p ./src/tsconfig.transformer.json && ./helper-scripts/fix-visitor-as-esm.sh && ./helper-scripts/fix-transformer-esm.sh",
+
+        "build:wasmre:cjs": "tsc -p ./src/tsconfig.wasmre.cjs.json",
+        "build:wasmre:esm": "tsc -p ./src/tsconfig.wasmre.esm.json && ./helper-scripts/fix-wasm-re-esm.sh",
+        "build:wasmre": "npm run build:wasmre:cjs && npm run build:wasmre:esm",
+
+        "build": "npm run build:transformer && npm run build:wasmre",
+
+        "docs:sdk": "typedoc --plugin typedoc-plugin-missing-exports --options typedoc.sdk.json --skipErrorChecking",
+        "docs:wasmre": "typedoc --plugin typedoc-plugin-missing-exports --options typedoc.wasmre.json --skipErrorChecking",
+        "docs": "npm run clean:docs && npm run docs:sdk && npm run docs:wasmre",
+
+        "prepack": "npm i && npm run clean && npm run build && npm run docs"
+    },
+    "author": "",
+    "license": "",
+    "keywords": [
+        "assemblyscript",
+        "wasm"
+    ],
+    "dependencies": {
+        "@msgpack/msgpack": "^3.0.0",
+        "assemblyscript": "^0.28.2",
+        "lodash.clonedeep": "^4.0.0",
+        "ts-mixer": "^6.0.0",
+        "yargs": "^18.0.0"
+    },
+    "devDependencies": {
+        "@types/lodash.clonedeep": "^4.0.0",
+        "@types/node": "^24.0.0",
+        "@types/yargs": "^17.0.0",
+        "rimraf": "^6.0.0",
+        "typedoc": "^0.28.5",
+        "typedoc-plugin-missing-exports": "^4.0.0",
+        "typescript": "^5.0.0"
+    }
+}

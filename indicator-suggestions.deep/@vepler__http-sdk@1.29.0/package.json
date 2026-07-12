@@ -1,0 +1,135 @@
+{
+  "name": "@vepler/http-sdk",
+  "version": "1.29.0",
+  "description": "The definitive TypeScript SDK for UK property technology. Access comprehensive property data, school metrics, demographics, planning applications, and more through a single, powerful API.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "author": "Vepler Limited",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vepler/http-sdk.git"
+  },
+  "homepage": "https://github.com/vepler/http-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/vepler/http-sdk/issues"
+  },
+  "scripts": {
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "build": "tsc",
+    "prepare": "husky install",
+    "prepublishOnly": "npm run lint && npm run build",
+    "semantic-release": "semantic-release"
+  },
+  "dependencies": {
+    "@vepler/area-reference-types": "^1.80.1",
+    "@vepler/council-register-types": "^1.6.3",
+    "@vepler/http-client": "^1.0.2",
+    "@vepler/locations-types": "^1.19.0",
+    "@vepler/logger": "^3.0.0",
+    "@vepler/planning-register-types": "^1.1.6",
+    "@vepler/property-predictor-types": "^1.15.2",
+    "@vepler/safety-types": "^3.17.1",
+    "@vepler/schools-types": "^1.11.1",
+    "@vepler/search-types": "^1.10.4",
+    "pino": "^9.6.0"
+  },
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^11.0.2",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.3",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^24.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.34.0",
+    "@typescript-eslint/parser": "^8.34.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "husky": "^9.0.11",
+    "jest": "^29.7.0",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "semantic-release": "^24.2.3",
+    "ts-jest": "^29.3.4",
+    "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint",
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "keywords": [
+    "proptech",
+    "property-technology",
+    "real-estate-technology",
+    "uk-proptech",
+    "property-data",
+    "property-search",
+    "property-filtering",
+    "property-database",
+    "property-api",
+    "property-sdk",
+    "real-estate-data",
+    "real-estate-search",
+    "real-estate-filtering",
+    "real-estate-database",
+    "real-estate-api",
+    "real-estate-sdk",
+    "uk-property-data",
+    "property-technology-uk",
+    "real-estate-uk",
+    "property-developers",
+    "property-startups",
+    "proptech-sdk",
+    "property-platform",
+    "rental-tech",
+    "mortgage-tech",
+    "conveyancing-tech",
+    "property-investment",
+    "landlord-tech",
+    "estate-agent-tech",
+    "uprn",
+    "postcode-api",
+    "address-lookup",
+    "property-valuation",
+    "planning-permission",
+    "school-catchments",
+    "neighbourhood-data",
+    "crime-statistics",
+    "transport-links",
+    "london-property",
+    "manchester-property",
+    "edinburgh-property",
+    "safety-data",
+    "demographics-api",
+    "connectivity-scores",
+    "planning-applications",
+    "council-tax",
+    "typescript",
+    "open-source",
+    "npm"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+}

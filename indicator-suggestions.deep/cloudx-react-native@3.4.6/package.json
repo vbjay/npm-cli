@@ -1,0 +1,72 @@
+{
+  "name": "cloudx-react-native",
+  "version": "3.4.6",
+  "description": "React Native wrapper for CloudX SDK (iOS & Android)",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cloudx-react-native.podspec",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!lib/typescript/example",
+    "!android/build",
+    "!android/.gradle",
+    "!android/.cxx",
+    "!ios/build"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "clean": "rm -rf lib"
+  },
+  "keywords": [
+    "react-native",
+    "cloudx",
+    "ads",
+    "monetization",
+    "banner",
+    "interstitial",
+    "rewarded"
+  ],
+  "author": "CloudX",
+  "license": "Elastic-2.0",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "react": "18.3.1",
+    "react-native": "0.76.2",
+    "react-native-builder-bob": "^0.20.4",
+    "typescript": "^5.2.2"
+  },
+  "codegenConfig": {
+    "name": "CloudXSpec",
+    "type": "all",
+    "jsSrcsDir": "./src/specs"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

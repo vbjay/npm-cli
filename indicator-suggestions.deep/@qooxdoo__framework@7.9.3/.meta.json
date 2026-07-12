@@ -1,0 +1,100 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "46503af7aaea6cf8",
+    "fetchedFiles": [
+      "addGitHook",
+      "bin/tools/utils.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "async",
+        "versionSpec": "^2.6.3"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "async@2.6.4"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "addGitHook",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "b0c39d2feaae4ce7d29aa3ca85597bdb8a8bafe2b0f9f67db270548f1f4dc3cd",
+        "sizeBytes": 369,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/tools/utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/tools/utils.js",
+        "reason": "required by ./addGitHook",
+        "sha256": "2a3035ca3a39ef5fd9ad5f6a0978c26e95a2fd80b3cb83d2ac184c8fcf07f177",
+        "sizeBytes": 14793,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "dynamic-require",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "bootstrap/qx",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:44.988Z"
+  },
+  "hash": "sha256:15d4ca0e5fb40e61d433b7ba5503c6c70dc40b8ec7d6e6c41117c5fc101c3899"
+}

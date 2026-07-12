@@ -1,0 +1,50 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.facebook.react'
+
+android {
+  compileSdkVersion 34
+  namespace "com.sigaprinter"
+
+  defaultConfig {
+    minSdkVersion 21    // Android 5.0 — required for USB Host API on all versions
+    targetSdkVersion 34
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs = ['src/main/java']
+    }
+  }
+}
+
+repositories {
+  maven { url 'https://jitpack.io' }
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  // React Native
+  implementation "com.facebook.react:react-android"
+
+  // USB Serial (for RS-232 via USB adapter)
+  // usb-serial-for-android by mik3y — Apache 2.0
+  implementation 'com.github.mik3y:usb-serial-for-android:3.4.6'
+
+  // ZXing — pure-Java barcode/QR encoder for landscape rasterization
+  implementation 'com.google.zxing:core:3.5.3'
+}

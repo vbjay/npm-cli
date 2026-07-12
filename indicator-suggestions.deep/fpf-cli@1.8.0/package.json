@@ -1,0 +1,49 @@
+{
+  "name": "fpf-cli",
+  "version": "1.8.0",
+  "description": "Cross-platform fuzzy package finder powered by fzf",
+  "bin": {
+    "fpf": "fpf"
+  },
+  "files": [
+    "fpf",
+    "bin/fpf-go-*",
+    "bin/fpf-go-*.exe",
+    "README.md",
+    "LICENSE",
+    "fpf.png"
+  ],
+  "keywords": [
+    "fzf",
+    "package-manager",
+    "cli",
+    "apt",
+    "dnf",
+    "pacman",
+    "zypper",
+    "brew",
+    "winget",
+    "npm",
+    "bun"
+  ],
+  "author": "Timmy6942025 <timothy.thomas2011@hotmail.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timmy6942025/fpf-cli.git"
+  },
+  "homepage": "https://github.com/Timmy6942025/fpf-cli",
+  "bugs": {
+    "url": "https://github.com/Timmy6942025/fpf-cli/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "bash tests/smoke.sh",
+    "prepack": "bash scripts/build-go-binaries.sh"
+  }
+}

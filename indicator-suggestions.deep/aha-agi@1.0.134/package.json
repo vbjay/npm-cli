@@ -1,0 +1,174 @@
+{
+  "name": "aha-agi",
+  "version": "1.0.134",
+  "description": "Mobile and Web client for Claude Code and Codex",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "agent",
+    "multi-agent",
+    "codex",
+    "mobile",
+    "cli"
+  ],
+  "author": "swmtjy",
+  "license": "UNLICENSED",
+  "type": "module",
+  "bin": {
+    "aha": "bin/aha.js",
+    "aha-agi": "bin/aha.js",
+    "aha-mcp": "bin/aha-mcp.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./lib": {
+      "require": {
+        "types": "./dist/lib.d.cts",
+        "default": "./dist/lib.cjs"
+      },
+      "import": {
+        "types": "./dist/lib.d.mts",
+        "default": "./dist/lib.mjs"
+      }
+    },
+    "./codex/ahaMcpStdioBridge": {
+      "require": {
+        "types": "./dist/codex/ahaMcpStdioBridge.d.cts",
+        "default": "./dist/codex/ahaMcpStdioBridge.cjs"
+      },
+      "import": {
+        "types": "./dist/codex/ahaMcpStdioBridge.d.mts",
+        "default": "./dist/codex/ahaMcpStdioBridge.mjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "bin/aha.js",
+    "bin/aha-mcp.js",
+    "bin/bootstrapper.mjs",
+    "scripts/claude_local_launcher.cjs",
+    "scripts/claude_remote_launcher.cjs",
+    "scripts/ripgrep_launcher.cjs",
+    "scripts/unpack-tools.cjs",
+    "scripts/install-git-hooks.cjs",
+    "scripts/check-heavy-op-slot.mjs",
+    "scripts/release-heavy-op-slot.mjs",
+    "scripts/guarded-heavy-op.sh",
+    "scripts/ensure-dist.cjs",
+    "skills/context-mirror/SKILL.md",
+    "tools/archives",
+    "tools/licenses",
+    "schemas",
+    "packages/auth-contract",
+    "packages/self-ui",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "why do we need to build before running tests / dev?": "We need the binary to be built so we run daemon commands which directly run the binary - we don't want them to go out of sync or have custom spawn logic depending how we started aha",
+    "typecheck": "scripts/guarded-heavy-op.sh tsc node --max-old-space-size=16384 ./node_modules/.bin/tsc --noEmit --skipLibCheck --incremental --tsBuildInfoFile .tsbuildinfo",
+    "prebuild": "node scripts/prebuild-warn.mjs",
+    "build": "scripts/guarded-heavy-op.sh pkgroll \"node scripts/versioned-build.mjs\"",
+    "build:strict": "yarn typecheck && yarn build",
+    "lint:agent-legion": "node skills/agent-legion-release/scripts/lint-agent-legion.mjs --all",
+    "lint:agents": "node skills/agent-legion-release/scripts/lint-agent-legion.mjs --agents",
+    "lint:legions": "node skills/agent-legion-release/scripts/lint-agent-legion.mjs --legions",
+    "test": "yarn build && scripts/guarded-heavy-op.sh vitest \"tsx --env-file .env.integration-test node_modules/.bin/vitest run\"",
+    "start": "yarn build && ./bin/aha.mjs",
+    "dev": "tsx src/index.ts",
+    "dev:local-server": "yarn build && tsx --env-file .env.dev-local-server src/index.ts",
+    "dev:integration-test-env": "yarn build && tsx --env-file .env.integration-test src/index.ts",
+    "prepack": "node scripts/smart-prepack.mjs",
+    "postpack": "node scripts/restore-npm-package.mjs",
+    "prepublishOnly": "node scripts/prepublish-tag-gate.mjs",
+    "release": "release-it",
+    "postinstall": "node scripts/ensure-dist.cjs && node scripts/unpack-tools.cjs && node scripts/install-git-hooks.cjs",
+    "install:git-hooks": "node scripts/install-git-hooks.cjs",
+    "prerecommit": "yarn typecheck && npx eslint src/ && yarn test",
+    "lint:agent-docker": "node skills/agent-legion-release/scripts/lint-agent-legion.mjs --all",
+    "lint:agent-docker:strict": "node skills/agent-legion-release/scripts/lint-agent-legion.mjs --all --strict"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-code": "2.1.87",
+    "@anthropic-ai/sdk": "0.76.0",
+    "@modelcontextprotocol/sdk": "1.22.0",
+    "@stablelib/base64": "^2.0.1",
+    "@stablelib/hex": "^2.0.1",
+    "@toon-format/toon": "^2.3.0",
+    "async-mutex": "^0.5.0",
+    "axios": "^1.10.0",
+    "better-sqlite3": "^12.8.0",
+    "chalk": "^5.4.1",
+    "cross-spawn": "^7.0.6",
+    "expo-server-sdk": "^3.15.0",
+    "fastify": "^5.5.0",
+    "fastify-type-provider-zod": "4.0.2",
+    "http-proxy": "^1.18.1",
+    "http-proxy-middleware": "^3.0.5",
+    "ink": "^6.1.0",
+    "open": "^10.2.0",
+    "ps-list": "^8.1.1",
+    "qrcode-terminal": "^0.12.0",
+    "react": "^19.1.1",
+    "socket.io-client": "^4.8.1",
+    "tar": "^7.4.3",
+    "tmp": "^0.2.5",
+    "tweetnacl": "^1.0.3",
+    "ulid": "^3.0.2",
+    "yaml": "^2.5.1",
+    "zod": "^3.23.8"
+  },
+  "bundleDependencies": [],
+  "devDependencies": {
+    "@eslint/compat": "^1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cross-spawn": "^6.0.6",
+    "@types/http-proxy": "^1.17.16",
+    "@types/node": ">=20",
+    "@types/pegjs": "^0.10.6",
+    "@types/ps-list": "^6.2.1",
+    "@types/qrcode-terminal": "^0.12.2",
+    "@types/react": "^19.1.9",
+    "@types/tmp": "^0.2.6",
+    "cross-env": "^10.0.0",
+    "dotenv": "^16.6.1",
+    "eslint": "^9",
+    "eslint-config-prettier": "^10",
+    "javascript-obfuscator": "^4.1.1",
+    "pegjs": "^0.10.0",
+    "pkgroll": "^2.14.2",
+    "release-it": "^19.0.4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "tsx": "^4.20.3",
+    "typescript": "^5",
+    "vitest": "^3.2.4"
+  },
+  "resolutions": {
+    "whatwg-url": "14.2.0",
+    "parse-path": "7.0.3",
+    "@types/parse-path": "7.0.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=22"
+  }
+}

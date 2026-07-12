@@ -1,0 +1,77 @@
+{
+	"name": "@hallaxius/forge",
+	"version": "1.1.2",
+	"description": "Dual-mode CLI for Git and npm with GitHub integration, token encryption, and a beautiful terminal experience",
+	"author": "hallaxius",
+	"license": "MIT",
+	"type": "module",
+	"bin": {
+		"fg": "./dist/cli.js"
+	},
+	"scripts": {
+		"dev": "bun --watch src/cli.ts",
+		"build:version": "bun scripts/gen-version.mjs",
+		"build": "bun run build:version && bun build ./src/cli.ts --outdir dist --target node",
+		"start": "bun src/cli.ts",
+		"test": "bun test",
+		"lint": "bunx @biomejs/biome check --diagnostic-level=error",
+		"format": "bunx @biomejs/biome format --write",
+		"lint:fix": "bunx @biomejs/biome check --write --unsafe",
+		"prepublishOnly": "bun run build && bun run test",
+		"prepack": "bun run build",
+		"patch": "bunx npm version patch && bun publish",
+		"minor": "bunx npm version minor && bun publish",
+		"major": "bunx npm version major && bun publish"
+	},
+	"dependencies": {
+		"@octokit/rest": "^21.1.0",
+		"chalk": "^5.3.0",
+		"commander": "^12.0.0",
+		"conf": "^12.0.0",
+		"diff": "^7.0.0",
+		"isomorphic-git": "^1.38.0",
+		"ora": "^8.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.1",
+		"@types/diff": "^8.0.0",
+		"@types/node": "^26.0.1",
+		"typescript": "^5.3.0"
+	},
+	"files": [
+		"bin",
+		"dist"
+	],
+	"engines": {
+		"node": ">=18.0.0",
+		"bun": ">=1.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hallaxius/forge.git"
+	},
+	"bugs": {
+		"url": "https://github.com/hallaxius/forge/issues"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"homepage": "https://github.com/hallaxius/forge#readme",
+	"keywords": [
+		"git",
+		"npm",
+		"cli",
+		"terminal",
+		"github",
+		"package-manager",
+		"developer-tools",
+		"productivity",
+		"bun",
+		"typescript",
+		"tui",
+		"github-api",
+		"npm-registry",
+		"token-encryption",
+		"workflow"
+	]
+}

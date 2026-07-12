@@ -1,0 +1,80 @@
+{
+  "name": "@journeyapps/react-native-quick-sqlite",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "version": "2.5.2",
+  "description": "Fast SQLite for react-native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "meta.json",
+    "app.plugin.js",
+    "react-native-quick-sqlite.podspec",
+    "!android/build",
+    "!android/.cxx",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "clean": "rm -rf lib tsconfig.tsbuildinfo",
+    "format": "prettier --write .",
+    "typescript": "tsc --noEmit",
+    "prepare": "bob build",
+    "example": "yarn --cwd example",
+    "release": "yarn changeset publish"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "https://github.com/powersync-ja/react-native-quick-sqlite",
+  "author": "JOURNEYAPPS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/powersync-ja/react-native-quick-sqlite/issues"
+  },
+  "homepage": "https://github.com/powersync-ja/react-native-quick-sqlite#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.26.2",
+    "@expo/config-plugins": "^9.0.17",
+    "prettier": "^3.3.3",
+    "react": "18.3.1",
+    "react-native": "0.76.2",
+    "react-native-builder-bob": "^0.30.1",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.19+sha512.ff4579ab459bb25aa7c0ff75b62acebe576f6084b36aa842971cf250a5d8c6cd3bc9420b22ce63c7f93a0857bc6ef29291db39c3e7a23aab5adfd5a4dd6c5d71"
+}

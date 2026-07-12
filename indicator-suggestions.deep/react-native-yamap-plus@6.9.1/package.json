@@ -1,0 +1,83 @@
+{
+  "name": "react-native-yamap-plus",
+  "version": "6.9.1",
+  "description": "Yandex MapKit for React Native",
+  "source": "src/index.ts",
+  "main": "src/index.ts",
+  "scripts": {
+    "example": "yarn workspace react-native-yamap-example",
+    "prepare": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "build": "tsc",
+    "release": "release-it"
+  },
+  "homepage": "https://github.com/Qudaeo/react-native-yamap-plus",
+  "repository": {
+    "url": "https://github.com/Qudaeo/react-native-yamap-plus"
+  },
+  "keywords": [
+    "react-native",
+    "component",
+    "yandex",
+    "mapkit",
+    "sdk",
+    "map",
+    "maps",
+    "mapview",
+    "yamap",
+    "geo",
+    "geocoder",
+    "geosearch",
+    "яндекс",
+    "карты"
+  ],
+  "author": "Aleksey Pekhterev",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "del-cli": "7.0.0",
+    "release-it": "20.0.1",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "app.plugin.js",
+    "*.podspec",
+    "tsconfig.json",
+    "!ios/build",
+    "!android/build",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "workspaces": [
+    "example"
+  ],
+  "codegenConfig": {
+    "name": "RNYamapPlusSpec",
+    "type": "all",
+    "jsSrcsDir": "./src/spec",
+    "android": {
+      "javaPackageName": "ru.yamap"
+    },
+    "ios": {
+      "componentProvider": {
+        "ClusteredYamapView": "ClusteredYamapView",
+        "CircleView": "CircleView",
+        "MarkerView": "MarkerView",
+        "PolygonView": "PolygonView",
+        "PolylineView": "PolylineView",
+        "YamapView": "YamapView"
+      }
+    }
+  },
+  "packageManager": "yarn@4.15.0"
+}

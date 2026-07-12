@@ -1,0 +1,94 @@
+{
+  "name": "@sveltium/native-addons",
+  "version": "0.2.0",
+  "description": "Native C++ addons for NW.js applications (dual NAN/N-API backend)",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./clipboard": "./clipboard/index.js",
+    "./folder-dialog": "./folder-dialog/index.js",
+    "./ipc": "./ipc/index.js",
+    "./nw-sqlite3": "./nw-sqlite3/index.js",
+    "./tinycc": "./tinycc/index.js",
+    "./call-dll": "./call-dll/index.js",
+    "./csv-parser": "./csv-parser/index.js",
+    "./rss-parser": "./rss-parser/index.js",
+    "./sdl2-input": "./sdl2-input/index.js"
+  },
+  "files": [
+    "index.js",
+    "install.js",
+    "CMakeLists.txt",
+    "src",
+    "clipboard",
+    "folder-dialog",
+    "ipc",
+    "nw-sqlite3",
+    "tinycc",
+    "call-dll",
+    "csv-parser",
+    "rss-parser",
+    "sdl2-input",
+    "build/Release/nwjs_addons.node"
+  ],
+  "scripts": {
+    "install": "node install.js",
+    "build": "cmake-js compile --runtime nw --runtime-version 0.12.3 --arch ia32 -G \"Visual Studio 14 2015\" -t v140_xp",
+    "build:xp": "cmake-js compile --runtime nw --runtime-version 0.12.3 --arch ia32 -G \"Visual Studio 14 2015\" -t v140_xp",
+    "build:modern": "cmake-js compile --runtime nw --runtime-version 0.89.0 --arch x64",
+    "build:debug": "cmake-js build --runtime nw --runtime-version 0.12.3 --arch ia32 -G \"Visual Studio 14 2015\" -t v140_xp -D",
+    "rebuild": "cmake-js rebuild --runtime nw --runtime-version 0.12.3 --arch ia32 -G \"Visual Studio 14 2015\" -t v140_xp",
+    "rebuild:modern": "cmake-js rebuild --runtime nw --runtime-version 0.89.0 --arch x64",
+    "build:napi": "cmake-js compile --runtime nw --runtime-version 0.89.0 --arch x64 --CDUSE_NAPI=ON",
+    "rebuild:napi": "cmake-js rebuild --runtime nw --runtime-version 0.89.0 --arch x64 --CDUSE_NAPI=ON",
+    "clean": "cmake-js clean",
+    "build:node": "cmake-js rebuild --runtime node --arch x64 --CDUSE_NAPI=ON && node -e \"require('fs').copyFileSync('tinycc/lib/x64/libtcc.dll','build/Release/libtcc.dll')\"",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "keywords": [
+    "nwjs",
+    "native",
+    "addon",
+    "clipboard",
+    "folder-dialog",
+    "ipc",
+    "sqlite3",
+    "tinycc",
+    "ffi",
+    "dll",
+    "csv",
+    "csv-parser",
+    "rss",
+    "rss-parser",
+    "atom",
+    "feed",
+    "sdl2",
+    "joystick",
+    "gamepad",
+    "controller",
+    "input",
+    "rumble",
+    "windows-xp"
+  ],
+  "author": {
+    "name": "Oosuke Ren",
+    "email": "oosukeren@gmail.com",
+    "url": "https://github.com/OosukeRen"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OosukeRen/Sveltium",
+    "directory": "packages/nwjs-addons"
+  },
+  "devDependencies": {
+    "cmake-js": "4.0.0",
+    "nan": "2.5.1",
+    "node-addon-api": "^3.0.0"
+  },
+  "cmake-js": {
+    "runtime": "nw",
+    "runtimeVersion": "0.12.3",
+    "arch": "ia32"
+  }
+}

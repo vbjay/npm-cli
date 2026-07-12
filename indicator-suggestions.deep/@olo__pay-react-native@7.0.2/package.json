@@ -1,0 +1,174 @@
+{
+  "name": "@olo/pay-react-native",
+  "version": "7.0.2",
+  "description": "Olo Pay React Native SDK",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "olopaysdk-react-native.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/pods/**",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "workflow-test": "jest --forceExit --detectOpenHandles",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "docgen": "docgen --api IOloPaySDK --source src/index.tsx src/definitions.ts --output-readme README.md --output-json dist/docs.json",
+    "build": "npm run prepare && npm run docgen && npm pack && mv olo-pay-react-native-${npm_package_version}.tgz olopaysdk-react-native.tgz"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "native",
+    "olo",
+    "olo pay",
+    "apple pay",
+    "google pay",
+    "digital wallets"
+  ],
+  "homepage": "git+https://github.com/ololabs/olo-pay-react-native-releases.git",
+  "repository": "https://github.com/ololabs/olo-pay-react-native-releases",
+  "author": "Olo <developersupport@olo.com> (https://github.com/ololabs/olo-pay-react-native-releases)",
+  "license": "SEE LICENSE IN README",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.9",
+    "@babel/plugin-transform-class-properties": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@capacitor/docgen": "^0.2.1",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@react-native/babel-preset": "^0.81.0",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.1.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "jest": "^29.7.0",
+    "pod-install": "^0.3.0",
+    "prettier": "^3.3.3",
+    "react": "^19.1.0",
+    "react-native": "^0.81.4",
+    "react-native-builder-bob": "^0.18.3",
+    "rimraf": "^5.0.7",
+    "ts-jest": "^29.2.5",
+    "typescript": "~5.9.2"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.72.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": [
+        "babel-jest",
+        {
+          "presets": [
+            "@react-native/babel-preset"
+          ]
+        }
+      ]
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "\\.snap$",
+      "<rootDir>/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/setup-jest.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|@react-native|@olo)/)"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@babel/eslint-parser",
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "OlopaysdkReactNativeSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.olopaysdkreactnative"
+    },
+    "ios": {
+      "moduleName": "OlopaysdkReactNative"
+    }
+  },
+  "buildType": "Public"
+}

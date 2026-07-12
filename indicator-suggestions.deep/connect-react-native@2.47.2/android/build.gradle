@@ -1,0 +1,106 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.kotlin_version = '1.8.20'
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+    }
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ReactNativeDapiConnect_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ReactNativeDapiConnect_' + name]).toInteger()
+}
+
+plugins {
+    id "com.adarshr.test-logger" version "3.2.0"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace 'com.dapi'
+
+    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+    buildToolsVersion getExtOrDefault('buildToolsVersion')
+
+    defaultConfig {
+        minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+        multiDexEnabled true
+
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    packagingOptions {
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+    }
+
+    testlogger {
+        theme 'standard'
+        showExceptions true
+        showStackTraces true
+        showFullStackTraces false
+        showCauses true
+        slowThreshold 2000
+        showSummary true
+        showSimpleNames false
+        showPassed true
+        showSkipped true
+        showFailed true
+        showStandardStreams false
+        showPassedStandardStreams true
+        showSkippedStandardStreams true
+        showFailedStandardStreams true
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url "$projectDir/../node_modules/react-native/android"
+    }
+    maven {
+        url "$projectDir/../node_modules/jsc-android/dist"
+    }
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"
+    implementation 'co.dapi:connect:2.37.5'
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation "androidx.core:core-ktx:1.12.0"
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation "org.mockito:mockito-android:5.1.1"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.mockito:mockito-inline:3.5.15"
+    testImplementation "org.mockito:mockito-core:5.1.1"
+    testImplementation 'org.json:json:20180813'
+    testImplementation "com.google.truth:truth:1.1"
+    testImplementation 'org.skyscreamer:jsonassert:1.2.3'
+    testImplementation "org.robolectric:robolectric:4.9.2"
+}

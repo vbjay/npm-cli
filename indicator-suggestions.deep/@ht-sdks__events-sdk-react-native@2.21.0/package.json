@@ -1,0 +1,84 @@
+{
+  "name": "@ht-sdks/events-sdk-react-native",
+  "version": "2.21.0",
+  "description": "The hassle-free way to add Hightouch analytics to your React-Native app.",
+  "keywords": [
+    "hightouch",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "homepage": "https://github.com/ht-sdks/events-sdk-react-native#readme",
+  "bugs": {
+    "url": "https://github.com/ht-sdks/events-sdk-react-native/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ht-sdks/events-sdk-react-native.git",
+    "directory": "packages/core"
+  },
+  "license": "MIT",
+  "author": "Hightouch <hello@hightouch.com> (https://hightouch.com/)",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "source": "src/index",
+  "react-native": "src/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "hightouch-events-sdk-react-native.podspec",
+    "package.json",
+    "!src/**/*.e2e.mock.js",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "prebuild": "node constants-generator.js && eslint --fix ./src/info.ts",
+    "build": "yarn prebuild && bob build",
+    "clean": "rimraf lib node_modules ./src/info.ts",
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "prepack": "yarn prebuild"
+  },
+  "dependencies": {
+    "@segment/tsub": "^2",
+    "deepmerge": "^4.3.1",
+    "js-base64": "^3.7.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@ht-sdks/sovran-react-native": "^1.1.0",
+    "@types/uuid": "^9.0.7",
+    "jest": "^29.7.0",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "@ht-sdks/sovran-react-native": "^1.1.0",
+    "@react-native-async-storage/async-storage": "1.x",
+    "react": "*",
+    "react-native": "*",
+    "react-native-get-random-values": "1.x"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-async-storage/async-storage": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  }
+}

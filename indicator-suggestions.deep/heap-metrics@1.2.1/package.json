@@ -1,0 +1,45 @@
+{
+  "name": "heap-metrics",
+  "version": "1.2.1",
+  "description": "Dump heap metrics after test to be tracked over all commits for the life of the branch.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjhowell44/node-heap-metrics.git"
+  },
+  "author": "Robert Howell <rjhowell44@gmail.com>",
+  "main": "./index.js",
+  "engines": {
+    "node": "4 || 5 || 6 || 7"
+  },
+  "gypfile": true,
+  "dependencies": {
+    "node-gyp": "~3.6.1",
+    "bindings": "~1.2.1"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "mocha-junit-reporter": "~1.13.0"
+  },
+  "bin": {
+    "heap-metrics": "./bin/mochaDumpHeapMetrics.js"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "test": "mocha  ./test/ --reporter mocha-junit-reporter"
+  },
+  "keywords": [
+    "heap",
+    "memory",
+    "metrics",
+    "native",
+    "addon",
+    "profiler",
+    "v8",
+    "Testspace"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rjhowell44/node-heap-metrics/issues"
+  },
+  "homepage": "https://github.com/rjhowell44/node-heap-metrics#readme"
+}

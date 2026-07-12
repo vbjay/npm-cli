@@ -1,0 +1,83 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+group = 'expo.modules.gaodemap.search'
+version = '1.3.15'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+// 与核心模块保持一致的 SDK 版本配置
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+  useDefaultAndroidSdkVersions()
+} else {
+  buildscript {
+    // Simple helper that allows the root project to override versions declared by this library.
+    ext.safeExtGet = { prop, fallback ->
+      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+  }
+  project.android {
+    compileSdkVersion safeExtGet("compileSdkVersion", 36)
+    defaultConfig {
+      minSdkVersion safeExtGet("minSdkVersion", 24)
+      targetSdkVersion safeExtGet("targetSdkVersion", 36)
+    }
+  }
+}
+
+logger.warn("[expo-gaode-map-search] Thank you for using expo-gaode-map-search ❤️")
+logger.warn("[expo-gaode-map-search] If you enjoy using expo-gaode-map-search, please consider sponsoring this project: https://github.com/TomWq")
+
+
+
+android {
+  namespace "expo.modules.gaodemap.search"
+  defaultConfig {
+    versionCode 1
+    versionName "1.3.15"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+
+dependencies {
+    def customSdkPath = null
+    println "ExpoGaodeMapSearch: Checking for custom SDK property in rootProject: ${rootProject.name}"
+    if (rootProject.hasProperty("EXPO_GAODE_MAP_CUSTOM_SDK_PATH")) {
+        customSdkPath = rootProject.property("EXPO_GAODE_MAP_CUSTOM_SDK_PATH")
+        println "ExpoGaodeMapSearch: Found custom SDK path property: ${customSdkPath}"
+    }
+
+    if (customSdkPath) {
+        def sdkFile = rootProject.file(customSdkPath)
+        if (!sdkFile.exists()) {
+             sdkFile = new File(rootProject.projectDir.parentFile, customSdkPath)
+        }
+        
+        if (sdkFile.exists()) {
+            println "ExpoGaodeMapSearch: Detected custom SDK at ${sdkFile.absolutePath}, using compileOnly to avoid duplication."
+            // 使用 compileOnly 避免 Duplicate class 冲突，因为核心模块已经 implementation 了该 SDK
+            compileOnly files(sdkFile)
+        } else {
+             println "ExpoGaodeMapSearch: Custom SDK path configured but file not found, falling back to Maven dependency."
+             compileOnly('com.amap.api:search:9.4.0')
+        }
+    } else {
+        // 旧独立包仅保留兼容；运行时由 expo-gaode-map 或 expo-gaode-map-navigation 的组合 SDK 提供。
+        compileOnly('com.amap.api:search:9.4.0')
+    }
+}

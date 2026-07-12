@@ -1,0 +1,98 @@
+{
+  "name": "@generac/react-native-local-network-permission",
+  "version": "1.3.0",
+  "description": "A React Native / Expo module to request permission to access local network on iOS",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "open -a \"Xcode\" example/ios",
+    "commit": "cz"
+  },
+  "keywords": [
+    "react-native",
+    "local-network-permission",
+    "expo",
+    "react-native-local-network-permission",
+    "ReactNativeLocalNetworkPermission"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neurio/react-native-local-network-permission.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neurio/react-native-local-network-permission/issues"
+  },
+  "author": "Generac Power Systems <benjamin.komen@generac.com> (https://github.com/neurio)",
+  "license": "MIT",
+  "homepage": "https://github.com/neurio/react-native-local-network-permission#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "~19.2.0",
+    "eslint": "~9.39.4",
+    "expo-module-scripts": "~56.0.3",
+    "expo-modules-core": "~56.0.14",
+    "prettier": "^3.0.0",
+    "typescript": "~5.9.2",
+    "@commitlint/cli": "21.0.2",
+    "@commitlint/config-conventional": "21.0.2",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "commitizen": "4.3.1",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "9.1.7",
+    "semantic-release": "25.0.3"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogTitle": "# Change log"
+        }
+      ],
+      "@semantic-release/github",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "yarn.lock",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "@duanluan/codex-plus-plus-launcher",
+  "version": "1.2.34",
+  "description": "Install and launch Codex++ from npm",
+  "bin": {
+    "cxpp": "npm/cxpp.js",
+    "codexpp": "npm/cxpp.js"
+  },
+  "scripts": {
+    "build:sidecars-local": "node npm/build-local-binary.cjs",
+    "prepack": "node npm/verify-package.cjs",
+    "postinstall": "node install-npm.cjs",
+    "smoke:npm-local": "node npm/smoke-install.cjs"
+  },
+  "files": [
+    "codex_plus_plus_launcher/*.py",
+    "codex_plus_plus_launcher/assets/*",
+    "patches/**",
+    "upstream-bin/**",
+    "install-npm.cjs",
+    "npm/cxpp.js",
+    "npm/i18n.js",
+    "npm/launcher.js",
+    "npm/install.js",
+    "npm/plugin-auth-unlocked.js",
+    "npm/build-local-binary.cjs",
+    "npm/verify-package.cjs",
+    "npm/smoke-install.cjs",
+    "README.md",
+    "README_EN.md",
+    "install.sh",
+    "install.ps1"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duanluan/codex-plus-plus-launcher.git"
+  },
+  "homepage": "https://github.com/duanluan/codex-plus-plus-launcher",
+  "bugs": {
+    "url": "https://github.com/duanluan/codex-plus-plus-launcher/issues"
+  },
+  "keywords": [
+    "codex",
+    "codexplusplus",
+    "launcher",
+    "installer",
+    "npm"
+  ],
+  "license": "MIT"
+}

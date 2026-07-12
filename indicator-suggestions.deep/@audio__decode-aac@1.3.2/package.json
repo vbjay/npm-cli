@@ -1,0 +1,63 @@
+{
+  "name": "@audio/decode-aac",
+  "version": "1.3.2",
+  "description": "Decode AAC/M4A (FAAD2 WASM) and ALAC/Apple Lossless (pure JS) to PCM samples",
+  "type": "module",
+  "main": "decode-aac.js",
+  "types": "decode-aac.d.ts",
+  "exports": {
+    ".": "./decode-aac.js",
+    "./meta": "./meta.js",
+    "./audio": {
+      "types": "./audio.d.ts",
+      "default": "./audio.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "bash build.sh",
+    "prepack": "npm run build",
+    "test": "node test.js"
+  },
+  "files": [
+    "decode-aac.js",
+    "alac.js",
+    "meta.js",
+    "decode-aac.d.ts",
+    "src/aac.wasm.cjs",
+    "LICENSE",
+    "audio.js",
+    "audio.d.ts"
+  ],
+  "keywords": [
+    "aac",
+    "m4a",
+    "mp4",
+    "audio",
+    "decode",
+    "decoder",
+    "wasm",
+    "faad2",
+    "alac",
+    "apple lossless",
+    "lossless"
+  ],
+  "license": "GPL-2.0",
+  "author": "audiojs",
+  "homepage": "https://github.com/audiojs/decode-aac#readme",
+  "bugs": "https://github.com/audiojs/decode-aac/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/audiojs/decode-aac.git",
+    "directory": "packages/decode-aac"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "audio": "./audio.js",
+  "sideEffects": false,
+  "funding": "https://github.com/sponsors/audiojs"
+}

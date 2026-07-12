@@ -1,0 +1,59 @@
+{
+  "name": "@audio/encode-mp3",
+  "version": "1.2.2",
+  "description": "Encode PCM audio samples to MP3 format via WASM",
+  "type": "module",
+  "main": "mp3-encode.js",
+  "types": "mp3-encode.d.ts",
+  "exports": {
+    ".": "./mp3-encode.js",
+    "./meta": "./meta.js",
+    "./audio": {
+      "types": "./audio.d.ts",
+      "default": "./audio.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "mp3-encode.js",
+    "mp3-encode.d.ts",
+    "meta.js",
+    "LICENSE",
+    "audio.js",
+    "audio.d.ts"
+  ],
+  "keywords": [
+    "mp3",
+    "lame",
+    "audio",
+    "encode",
+    "encoder",
+    "wasm"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "author": "audiojs",
+  "homepage": "https://github.com/audiojs/encode/tree/main/packages/encode-mp3",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/audiojs/encode.git",
+    "directory": "packages/encode-mp3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "bugs": "https://github.com/audiojs/encode/issues",
+  "scripts": {
+    "test": "node test.js",
+    "build": "bash build.sh",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "wasm-media-encoders": "^0.7.0"
+  },
+  "audio": "./audio.js",
+  "sideEffects": false,
+  "funding": "https://github.com/sponsors/audiojs"
+}

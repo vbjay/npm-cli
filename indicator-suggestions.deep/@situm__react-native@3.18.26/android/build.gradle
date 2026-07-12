@@ -1,0 +1,59 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://repo.situm.es/artifactory/libs-release-local" }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.situm.plugin'
+    }
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+}
+
+def getAndroidSDKVersion() {
+    // Get Android version from file package.json.
+    // Use the parent folder of this build script as reference.
+    def inputFile = new File("${buildscript.sourceFile.parent}/../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["sdkVersions"]["android"]
+}
+
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    implementation("es.situm:situm-sdk:${getAndroidSDKVersion()}") {
+        transitive = true
+    }
+    implementation 'org.locationtech.jts:jts-core:1.16.1'
+}

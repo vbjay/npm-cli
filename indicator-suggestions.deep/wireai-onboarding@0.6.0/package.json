@@ -1,0 +1,171 @@
+{
+  "name": "wireai-onboarding",
+  "version": "0.6.0",
+  "private": false,
+  "description": "Premium, fully-themable drop-in AI onboarding kit for React Native / Expo, on top of the open-source wireai-rn SDK.",
+  "author": "Malik Chohra <malik@getwireai.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/chohra-med/wireai-onboarding#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chohra-med/wireai-onboarding.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chohra-med/wireai-onboarding/issues"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "onboarding",
+    "ai",
+    "generative-ui",
+    "wireai",
+    "wireai-rn",
+    "dynamic-onboarding"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "react-native": "src/index.ts",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./dist/index.d.ts",
+        "default": "./src/index.ts"
+      },
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./coachmarks": {
+      "react-native": {
+        "types": "./dist/coachmarks/index.d.ts",
+        "default": "./src/coachmarks/index.ts"
+      },
+      "import": {
+        "types": "./dist/coachmarks/index.d.mts",
+        "default": "./dist/coachmarks/index.mjs"
+      },
+      "require": {
+        "types": "./dist/coachmarks/index.d.ts",
+        "default": "./dist/coachmarks/index.js"
+      }
+    },
+    "./showcase": {
+      "react-native": {
+        "types": "./dist/showcase/index.d.ts",
+        "default": "./src/showcase/index.ts"
+      },
+      "import": {
+        "types": "./dist/showcase/index.d.mts",
+        "default": "./dist/showcase/index.mjs"
+      },
+      "require": {
+        "types": "./dist/showcase/index.d.ts",
+        "default": "./dist/showcase/index.js"
+      }
+    },
+    "./reviews": {
+      "react-native": {
+        "types": "./dist/reviews/index.d.ts",
+        "default": "./src/reviews/index.ts"
+      },
+      "import": {
+        "types": "./dist/reviews/index.d.mts",
+        "default": "./dist/reviews/index.mjs"
+      },
+      "require": {
+        "types": "./dist/reviews/index.d.ts",
+        "default": "./dist/reviews/index.js"
+      }
+    },
+    "./questionnaire": {
+      "react-native": {
+        "types": "./dist/questionnaire/index.d.ts",
+        "default": "./src/questionnaire/index.ts"
+      },
+      "import": {
+        "types": "./dist/questionnaire/index.d.mts",
+        "default": "./dist/questionnaire/index.mjs"
+      },
+      "require": {
+        "types": "./dist/questionnaire/index.d.ts",
+        "default": "./dist/questionnaire/index.js"
+      }
+    },
+    "./metro": {
+      "types": "./metro/index.d.ts",
+      "default": "./metro/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "metro",
+    "README.md",
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "llms.txt",
+    "INTEGRATION_PROMPT.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types --import ./test/register-ts-resolver.mjs \"src/**/*.test.ts\" \"test/canary/**/*.test.tsx\"",
+    "pack:tarball": "npm pack"
+  },
+  "peerDependencies": {
+    "@blazejkustra/react-native-onboarding": ">=1",
+    "expo-blur": ">=13",
+    "expo-store-review": ">=6",
+    "react": ">=18.0.0",
+    "react-native": ">=0.73.0",
+    "react-native-reanimated": ">=3",
+    "react-native-safe-area-context": ">=4.0.0",
+    "wireai-rn": ">=0.2.3",
+    "zod": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "zod": {
+      "optional": false
+    },
+    "react-native-reanimated": {
+      "optional": true
+    },
+    "expo-blur": {
+      "optional": true
+    },
+    "expo-store-review": {
+      "optional": true
+    },
+    "@blazejkustra/react-native-onboarding": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@blazejkustra/react-native-onboarding": "^1.0.1",
+    "@types/react": "^19.0.0",
+    "expo-blur": "^15.0.0",
+    "react": "^19.2.7",
+    "react-native": "^0.86.0",
+    "react-native-reanimated": "^4.1.1",
+    "react-native-safe-area-context": "^4.14.1",
+    "react-test-renderer": "^19.2.7",
+    "sucrase": "^3.35.1",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  }
+}

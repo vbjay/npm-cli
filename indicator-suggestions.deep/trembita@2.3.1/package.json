@@ -1,0 +1,91 @@
+{
+  "name": "trembita",
+  "version": "2.3.1",
+  "description": "Request wrapper core for consuming third party services",
+  "license": "MIT",
+  "author": "Oleg Koval <kvl.olg@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oleg-koval/trembita.git"
+  },
+  "bugs": "https://github.com/oleg-koval/trembita/issues",
+  "keywords": [
+    "API",
+    "API consumer",
+    "API wrapper",
+    "agent skill",
+    "ai agent",
+    "fetch",
+    "functional",
+    "nodejs",
+    "npm",
+    "result pattern",
+    "skill",
+    "skill.md",
+    "third party API",
+    "typescript"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "files": [
+    "dist",
+    "SKILL.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "postinstall": "node scripts/patch-npm-vendored.mjs",
+    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --treeshake && npm run build --workspace=@trembita/openapi",
+    "prepack": "npm run build",
+    "clean": "rm -rf node_modules dist coverage",
+    "coverage": "npm run test -- --coverage",
+    "format": "prettier --check \"**/*.{ts,md,json,yml,yaml,js,mjs}\"",
+    "format:fix": "prettier --write \"**/*.{ts,md,json,yml,yaml,js,mjs}\"",
+    "typecheck": "tsc --noEmit && npm run typecheck --workspace=@trembita/openapi",
+    "lint": "eslint . && npm run lint --workspace=@trembita/openapi",
+    "lint:fix": "eslint . --fix && npm run lint:fix --workspace=@trembita/openapi",
+    "test": "npm run build && vitest run --coverage && npm run test --workspace=@trembita/openapi",
+    "test:watch": "vitest",
+    "docs": "typedoc",
+    "spike:openapi": "npm run build && npm run spike:bundle --workspace=@trembita/openapi",
+    "check:openapi-fetch-types": "node scripts/check-openapi-fetch-types.mjs",
+    "verify:openapi-dogfood": "cd examples/openapi-dogfood && npm install && node main.mjs",
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "@vitest/coverage-v8": "^4.1.5",
+    "brace-expansion": "5.0.5",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "eslint": "^10.2.1",
+    "happy-dom": "^20.8.9",
+    "ip-address": "^10.2.0",
+    "picomatch": "4.0.4",
+    "prettier": "^3.5.3",
+    "semantic-release": "^25.0.3",
+    "semantic-release-npm-github-publish": "^1.7.3",
+    "tsup": "^8.4.0",
+    "typedoc": "^0.28.19",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.29.1",
+    "vitest": "^4.1.5"
+  },
+  "private": false,
+  "workspaces": [
+    "packages/openapi"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "use-colors",
+  "version": "0.1.0",
+  "description": "ANSI terminal styling.",
+  "keywords": [
+    "ansi",
+    "terminal",
+    "colors",
+    "cli",
+    "chalk",
+    "terminal-colors",
+    "console-colors",
+    "ansi-colors",
+    "gradient",
+    "cli-style",
+    "terminal-style",
+    "node-cli",
+    "terminal-formatting",
+    "colorize",
+    "console-style",
+    "truecolor",
+    "ansi-256"
+  ],
+  "homepage": "https://teneplaysofficial.github.io/use-colors",
+  "repository": "git+https://github.com/teneplaysofficial/use-colors.git",
+  "bugs": "https://github.com/teneplaysofficial/use-colors/issues",
+  "funding": "https://github.com/sponsors/teneplaysofficial",
+  "license": "Apache-2.0",
+  "author": "Sriman",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": false
+  },
+  "packageManager": "pnpm@10.30.3",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.cts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm run test && pnpm run build",
+    "test": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "js-utils-kit": "^2.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.6",
+    "@tenedev/prettier-config": "^1.2.0",
+    "@types/node": "^25.3.5",
+    "@vitest/coverage-v8": "4.0.18",
+    "echo-banner": "^0.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "prettier": "^3.8.1",
+    "tsdown": "^0.20.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "prettier": "@tenedev/prettier-config",
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown",
+    "*.{js,ts}": "pnpm run lint:fix"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "name": "@luckydraw/cumulus",
+  "version": "0.31.34",
+  "description": "RLM-based CLI chat wrapper for Claude with external history context management",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp/index.d.ts",
+      "import": "./dist/mcp/index.js"
+    },
+    "./mcp/proxy": {
+      "import": "./dist/mcp/proxy.js"
+    },
+    "./gateway": {
+      "types": "./dist/gateway/server.d.ts",
+      "import": "./dist/gateway/server.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "package.json",
+    "CHANGELOG.md"
+  ],
+  "bin": {
+    "cumulus": "./dist/cli/cumulus.js",
+    "cumulus-mcp": "./dist/mcp/index.js",
+    "cumulus-gateway": "./dist/gateway/daemon.js"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && cp -r src/gateway/static dist/gateway/static && cp node_modules/@luckydraw/blex/dist/blex.min.global.js dist/gateway/static/blex.min.js && cp node_modules/@luckydraw/blex/dist/blex-chart.min.global.js dist/gateway/static/blex-chart.min.js",
+    "dev": "tsc --watch",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,json,md}\"",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "version": "bash scripts/generate-changelog.sh || true",
+    "prepublishOnly": "npm run build && npm run type-check",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "claude",
+    "cli",
+    "chat",
+    "rlm",
+    "context",
+    "mcp"
+  ],
+  "author": "",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,json,md}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.0.10",
+    "@types/react": "^18.3.27",
+    "@types/web-push": "^3.6.4",
+    "@types/ws": "^8.18.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^9.39.2",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "globals": "^17.2.0",
+    "husky": "^9.1.7",
+    "ink-testing-library": "^4.0.0",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.82.0",
+    "@huggingface/transformers": "^3.8.1",
+    "@luckydraw/blex": "^0.1.16",
+    "@modelcontextprotocol/sdk": "^1.25.3",
+    "@slack/bolt": "^4.6.0",
+    "commander": "^14.0.2",
+    "discord.js": "^14.25.1",
+    "ink": "^5.2.1",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^6.0.0",
+    "nanoid": "^5.1.6",
+    "pdfjs-dist": "^5.4.624",
+    "react": "^18.3.1",
+    "web-push": "^3.6.7",
+    "ws": "^8.19.0"
+  }
+}

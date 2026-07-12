@@ -1,0 +1,134 @@
+{
+  "name": "karajan-code",
+  "version": "3.8.0",
+  "description": "Local multi-agent coding orchestrator with TDD, SonarQube, and code review pipeline",
+  "type": "module",
+  "license": "AGPL-3.0",
+  "author": "Manu Fosela <mjfosela@gmail.com>",
+  "homepage": "https://github.com/manufosela/karajan-code#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manufosela/karajan-code.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manufosela/karajan-code/issues"
+  },
+  "keywords": [
+    "ai",
+    "orchestrator",
+    "code-review",
+    "tdd",
+    "sonarqube",
+    "multi-agent",
+    "mcp",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=22.22.1"
+  },
+  "kj": {
+    "harden": {
+      "exclude": [
+        "wrappers",
+        "packages"
+      ]
+    }
+  },
+  "workspaces": [
+    "packages/ai-trash",
+    "packages/core",
+    "packages/hu-board"
+  ],
+  "imports": {
+    "#utils/*": "./src/utils/*",
+    "#session/*": "./src/session/*",
+    "#hu/*": "./src/hu/*",
+    "#skills/*": "./src/skills/*"
+  },
+  "files": [
+    "src/",
+    "bin/",
+    "templates/",
+    "scripts/",
+    "vendor/tree-sitter-grammars/",
+    "packages/hu-board/src/",
+    "packages/hu-board/public/",
+    "packages/hu-board/package.json",
+    "packages/ai-trash/src/",
+    "packages/ai-trash/bin/",
+    "packages/ai-trash/package.json",
+    "docs/karajan-code-logo-small.png",
+    "docs/README.es.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "bin": {
+    "kj": "bin/kj.js",
+    "kj-tail": "bin/kj-tail",
+    "kj-trash": "packages/ai-trash/bin/kj-trash.js",
+    "karajan-mcp": "bin/karajan-mcp.js",
+    "kj-rag-mcp": "bin/kj-rag-mcp.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "setup": "node scripts/install.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "lint:syntax": "((command -v rg >/dev/null 2>&1 && rg --files src tests | rg '\\.js$') || find src tests -type f -name '*.js') | while IFS= read -r f; do node --check \"$f\"; done",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "typecheck": "npx -p typescript@5 tsc --noEmit -p tsconfig.json",
+    "validate": "npm run lint && npm run lint:syntax && npm test",
+    "mcp": "node src/mcp/server.js",
+    "audit:test-diet": "node scripts/audit-test-diet.mjs",
+    "verify-pack": "node scripts/verify-pack.mjs",
+    "prepublishOnly": "node scripts/verify-pack.mjs"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.js": "eslint --max-warnings=999"
+  },
+  "overrides": {
+    "fast-uri": "^3.1.2"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.29.7",
+    "@karajan/core": "*",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "better-sqlite3": "^12.10.0",
+    "chokidar": "^5.0.0",
+    "commander": "^15.0.0",
+    "execa": "^9.6.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.5.0",
+    "helmet": "^8.1.0",
+    "js-yaml": "^4.2.0",
+    "knip": "^6.15.0",
+    "madge": "^8.0.0",
+    "sqlite-vec": "^0.1.9",
+    "valibot": "^1.4.1",
+    "web-tree-sitter": "^0.26.9"
+  },
+  "bundleDependencies": [
+    "@karajan/core"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.1.8",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.4.1",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-security": "^4.0.0",
+    "globals": "^17.6.0",
+    "lint-staged": "^17.0.7",
+    "postject": "^1.0.0-alpha.6",
+    "prettier": "^3.4.2",
+    "simple-git-hooks": "^2.13.1",
+    "vitest": "^4.1.8"
+  }
+}

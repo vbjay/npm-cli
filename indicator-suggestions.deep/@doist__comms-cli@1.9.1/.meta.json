@@ -1,0 +1,207 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "853ba43e3ce357fb",
+    "fetchedFiles": [
+      "dist/lib/errors.js",
+      "dist/lib/skills/content.js",
+      "dist/lib/skills/create-installer.js",
+      "dist/lib/skills/index.js",
+      "dist/lib/skills/update-installed.js",
+      "dist/postinstall.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "@doist/cli-core",
+        "versionSpec": "0.26.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@doist/cli-core@0.26.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0620528eaa186efbe27488277340b1fe0c567d7abea5873b1401b5a11c2a468d",
+        "sizeBytes": 444,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/postinstall.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/postinstall.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "17722c9274aa526ce0ced5e0eae9842e3dfb83dfe7b63e800c294fefcf1af88b",
+        "sizeBytes": 277,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/skills/update-installed.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/update-installed.js",
+        "reason": "required by ./dist/postinstall.js",
+        "sha256": "694d2e2228cbcacd40d84318e99a66b83db9df942a77ee140535c6c9afb1e82a",
+        "sizeBytes": 745,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/skills/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/index.js",
+        "reason": "required by ./dist/lib/skills/update-installed.js",
+        "sha256": "86ebbbd8712fba016767d60434880566f1c6cfcfe2e9dfadd38471f6bd33ef78",
+        "sizeBytes": 1652,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/skills/create-installer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/create-installer.js",
+        "reason": "required by ./dist/lib/skills/index.js",
+        "sha256": "1201353543dd772db338d9ecd368cf361b24930fdb2a62d18d1e3abc3fc4ae49",
+        "sizeBytes": 2697,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/lib/errors.js",
+          "dist/lib/skills/content.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/errors.js",
+        "reason": "required by ./dist/lib/skills/create-installer.js",
+        "sha256": "521eb79e46181d34b9a26402735f38f27ee7427c3578cb69b6f0860ba73a071b",
+        "sizeBytes": 2020,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/lib/skills/content.js",
+        "reason": "required by ./dist/lib/skills/create-installer.js",
+        "sha256": "fbcc2997b8c21c909a601deb71a3dc2bfac7684f97f7d6400f18572f46597d08",
+        "sizeBytes": 28673,
+        "signals": [
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://comms.todoist.com/{workspaceId}/...\\",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://comms.todoist.com/a/{workspaceId}/...\\",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://twist.com/a/1/ch/2/t/3,https://twist.com/a/1/ch/2/t/4",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://twist.com/a/1/ch/2/t/3",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://comms.todoist.com/...\\",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://comms.todoist.com/1585/ch/100/t/200",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://comms.todoist.com/a/1585/ch/100/t/200",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://comms.todoist.com/a/1585/ch/100/t/200/c/300",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://comms.todoist.com/a/1585/msg/400",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://comms.todoist.com/a/1585/msg/400/m/500",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./dist/lib/skills/content.js",
+        "sha256": "f1a8ad7920834f893bf66ee875cf2ba74012e9a282d4b31c7d787d9029bcae44",
+        "sizeBytes": 2296,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:58.599Z"
+  },
+  "hash": "sha256:0276c62f7dccf2f3e8a33c4b981540fc05257162554314d92e44a6f32f15794d"
+}

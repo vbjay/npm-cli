@@ -1,0 +1,129 @@
+{
+  "name": "ttx-wasm",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "A dual-runtime FontTools TTX library for browser (WebAssembly) and Node.js (native Python) environments",
+  "main": "dist/ttx-wasm.cjs.js",
+  "module": "dist/ttx-wasm.esm.js",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/ttx-wasm.esm.js",
+      "require": "./dist/ttx-wasm.cjs.js",
+      "types": "./types/index.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/ttx-wasm.esm.js",
+      "types": "./types/index.d.ts"
+    },
+    "./node": {
+      "import": "./dist/ttx-wasm-node.esm.js",
+      "require": "./dist/ttx-wasm-node.cjs.js",
+      "types": "./types/universal-ttx.d.ts"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "types/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:js",
+    "build:js": "rollup -c && powershell -Command \"if (Test-Path 'dist/types') { if (!(Test-Path 'types')) { mkdir types } ; Copy-Item -Recurse 'dist/types/src/js/*' 'types/' -Force ; Remove-Item -Recurse 'dist/types' }\" && powershell -Command \"Copy-Item dist/ttx-wasm.esm.js demo/\" && powershell -Command \"Copy-Item -Recurse dist/pyodide demo/ -Force\"",
+    "build:dual": "npm run clean && rollup -c rollup-dual.config.js && npm run build:types && npm run build:demo",
+    "build:types": "powershell -Command \"if (Test-Path 'dist/types') { if (!(Test-Path 'types')) { mkdir types } ; Copy-Item -Recurse 'dist/types/src/js/*' 'types/' -Force ; Remove-Item -Recurse 'dist/types' }\"",
+    "build:demo": "powershell -Command \"Copy-Item dist/ttx-wasm.esm.js demo/\" && powershell -Command \"Copy-Item -Recurse dist/pyodide demo/ -Force\"",
+    "build:dev": "npm run build:js",
+    "test": "jest",
+    "test:node": "jest --testPathPattern=\"node|universal\" --testEnvironment=node",
+    "test:browser": "jest --testPathPattern=\"browser|pyodide\"",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:round-trip": "node scripts/simple-cli-test.js",
+    "test:round-trip:verbose": "node scripts/simple-cli-test.js --verbose",
+    "test:multi-round-trip": "node scripts/multi-round-trip-test.js",
+    "test:multi-round-trip:verbose": "node scripts/multi-round-trip-test.js --verbose",
+    "lint": "eslint src/**/*.{ts,js} --fix",
+    "lint:check": "eslint src/**/*.{ts,js}",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write src/**/*.{ts,js,json}",
+    "format:check": "prettier --check src/**/*.{ts,js,json}",
+    "dev": "rollup -c -w",
+    "clean": "rimraf dist coverage types",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "publish:safe": "npm run test:browser && npm run build && npm publish",
+    "docs": "typedoc src/js/index.ts --out docs/_build",
+    "docs:generate": "npm run docs",
+    "start:demo": "npm run build:dev && npx http-server demo -p 8080 -c-1 -o",
+    "start:browser": "npm run build:dev && npx http-server demo -p 8080 -c-1 -o"
+  },
+  "keywords": [
+    "fonts",
+    "typography",
+    "webassembly",
+    "wasm",
+    "ttx",
+    "fonttools",
+    "opentype",
+    "truetype",
+    "otf",
+    "ttf",
+    "font-conversion",
+    "xml",
+    "nodejs",
+    "browser",
+    "universal",
+    "dual-runtime"
+  ],
+  "author": "Matt LaGrandeur <matt@lagrandeur.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattlag/ttx-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mattlag/ttx-wasm/issues"
+  },
+  "homepage": "https://github.com/mattlag/ttx-wasm#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint": "^8.54.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "prettier": "^3.1.0",
+    "puppeteer": "^21.5.0",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.5.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "serve-handler": "^6.1.5",
+    "ts-jest": "^29.1.1",
+    "tslib": "^2.8.1",
+    "typedoc": "^0.25.4",
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.6.3",
+    "pyodide": "^0.28.2"
+  },
+  "peerDependencies": {
+    "fonttools": "*"
+  },
+  "peerDependenciesMeta": {
+    "fonttools": {
+      "optional": true
+    }
+  }
+}

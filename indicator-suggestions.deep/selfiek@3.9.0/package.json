@@ -1,0 +1,44 @@
+{
+  "name": "selfiek",
+  "version": "3.9.0",
+  "description": "SelfieK CLI: Rust+TypeScript orchestration for the K/Kate selfie pipeline",
+  "license": "MIT",
+  "author": "bsbofmusic",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bsbofmusic/selfiek.git"
+  },
+  "homepage": "https://github.com/bsbofmusic/selfiek#readme",
+  "bugs": {
+    "url": "https://github.com/bsbofmusic/selfiek/issues"
+  },
+  "type": "module",
+  "bin": {
+    "selfiek": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/build-core.mjs",
+    "test": "node dist/cli.js --version && node dist/cli.js status --json",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "selfie",
+    "chatgpt",
+    "cdp",
+    "rust",
+    "cli",
+    "selfiek"
+  ]
+}

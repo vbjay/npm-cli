@@ -1,0 +1,137 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['SolarengineAnalysisReactNative_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: "com.android.library"
+/**
+ * Applies the Kotlin Android plugin to enable Kotlin language support for Android development.
+ * This plugin provides Kotlin compilation and Android-specific features integration.
+ */
+apply plugin: "kotlin-android"
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["SolarengineAnalysisReactNative_" + name]).toInteger()
+}
+
+android {
+  namespace "com.solarengineanalysisreactnative"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+    if(SolarengineAnalysisGradleProperties_EnableRemoteConfig.toBoolean()) {
+      buildConfigField "boolean", "ENABLE_REMOTECONFIG", "true"
+    }else{
+      buildConfigField "boolean", "ENABLE_REMOTECONFIG", "false"
+    }
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+
+  getRepositories()
+  maven {
+    url "https://maven-android.solar-engine.com/repository/se_sdk_for_android/"
+  }
+  maven {
+    url 'https://developer.huawei.com/repo/'
+  }
+  maven {
+    url 'https://developer.hihonor.com/repo'
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+def solarengine_version = SolarengineAnalysisGradleProperties_SDKVersion
+
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+
+
+  println("**************[SolarEngine] You are using sdkversion: $solarengine_version . " +
+    "**************")
+
+
+  if(SolarengineAnalysisGradleProperties_BuildOverSeaChannel.toBoolean()){
+    //oversea
+    println("**************[SolarEngine] You are using Oversea sdk. **************")
+    implementation "com.reyun.solar.engine.oversea:solar-engine-core:${solarengine_version}"
+
+    // if you want to use oaid plugin, open here
+    implementation "com.reyun.solar.engine:se-plugin-oaid:${solarengine_version}"
+
+  }else {
+    //china
+    println("**************[SolarEngine] You are using China sdk. **************")
+    implementation "com.reyun.solar.engine.china:solar-engine-core:${solarengine_version}"
+
+
+
+  }
+}
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "SolarengineAnalysisReactNative"
+  codegenJavaPackageName = "com.solarengineanalysisreactnative"
+}

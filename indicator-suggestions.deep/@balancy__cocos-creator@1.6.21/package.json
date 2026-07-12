@@ -1,0 +1,88 @@
+{
+  "$schema": "./@types/schema/package/index.json",
+  "package_version": 2,
+  "name": "@balancy/cocos-creator",
+  "version": "1.6.21",
+  "author": "Balancy Team",
+  "editor": ">=3.8.3",
+  "scripts": {
+    "postinstall": "[ -f ./dist/hooks/post-install.js ] && node ./dist/hooks/post-install.js || exit 0",
+    "build": "tsc",
+    "start": "tsc -w",
+    "balancy": "balancy",
+    "publish:next": "npm publish --tag next --access public",
+    "publish:latest": "npm publish --tag latest --access public"
+  },
+  "main": "./dist/main.js",
+  "files": [
+    "dist",
+    "static",
+    "assets",
+    "@types"
+  ],
+  "keywords": [
+    "gamedev",
+    "liveops",
+    "gaming",
+    "wasm"
+  ],
+  "dependencies": {
+    "@balancy/cli": "~1.6.21",
+    "fs-extra": "^10.0.0"
+  },
+  "devDependencies": {
+    "@cocos/creator-types": "^3.8.3",
+    "@types/fs-extra": "^9.0.5",
+    "@types/node": "^14.18.63",
+    "typescript": "^5.5.4"
+  },
+  "main-menu": {
+    "Balancy/Config": {
+      "message": "@balancy/cocos-creator:configPanel"
+    }
+  },
+  "panels": {
+    "config": {
+      "title": "Balancy",
+      "type": "dockable",
+      "main": "dist/panels/config/index.js",
+      "size": {
+        "min-width": 400,
+        "min-height": 300,
+        "width": 400,
+        "height": 300
+      },
+      "width": 400,
+      "height": 300
+    },
+    "login": {
+      "title": "Log in",
+      "type": "dockable",
+      "main": "dist/panels/login/index.js",
+      "size": {
+        "min-width": 400,
+        "min-height": 300,
+        "width": 400,
+        "height": 300
+      },
+      "width": 400,
+      "height": 300
+    }
+  },
+  "contributions": {
+    "menu": [
+      {
+        "path": "i18n:Tools/Balancy",
+        "label": "Config",
+        "message": "balancy:configPanel"
+      }
+    ],
+    "messages": {
+      "balancy:configPanel": {
+        "methods": [
+          "configPanel"
+        ]
+      }
+    }
+  }
+}

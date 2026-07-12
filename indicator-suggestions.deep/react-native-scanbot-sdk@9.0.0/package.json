@@ -1,0 +1,129 @@
+{
+  "name": "react-native-scanbot-sdk",
+  "title": "Scanbot Document and Barcode Scanner SDK for React Native",
+  "version": "9.0.0",
+  "description": "Scanbot Document and Barcode Scanner SDK React Native Plugin for Android and iOS",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "README.md",
+    "Libraries.txt",
+    "LICENSE",
+    "plugin",
+    "app.plugin.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --fix --ext .ts,.tsx src",
+    "format": "prettier src --write ",
+    "docgen": "typedoc",
+    "expo:plugin": "tsc --project plugin",
+    "build": "bob build",
+    "prepare": "bob build && npm run expo:plugin"
+  },
+  "keywords": [
+    "android",
+    "app",
+    "document-scanner",
+    "document-scanning",
+    "document-reader",
+    "document-detection",
+    "mobile-scanner",
+    "mobile-scanning",
+    "pdf",
+    "scanner",
+    "scanning",
+    "scan",
+    "scanbot",
+    "sdk",
+    "jpg",
+    "tiff",
+    "image-detection",
+    "mrz",
+    "ocr",
+    "react native",
+    "plugin",
+    "native",
+    "machine-readable zone",
+    "optical character recognition",
+    "edge detection"
+  ],
+  "author": "Scanbot SDK GmbH <sdk@scanbot.io> (https://scanbot.io)",
+  "license": "Commercial",
+  "readmeFilename": "README.md",
+  "homepage": "https://scanbot.io/developer/react-native-document-scanner",
+  "contributors": [
+    {
+      "name": "Scanbot SDK GmbH",
+      "email": "sdk@scanbot.io",
+      "url": "https://scanbot.io"
+    }
+  ],
+  "dependencies": {
+    "@expo/config-plugins": "9.0.14"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.0.1",
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
+    "@react-native-community/cli": "20.1.0",
+    "@react-native/eslint-config": "0.83.0",
+    "@types/react": "^19.2.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.4",
+    "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "4.2.0",
+    "react": "19.2.0",
+    "react-native": "0.83.0",
+    "react-native-builder-bob": "^0.40.17",
+    "typedoc": "0.25.13",
+    "typedoc-plugin-rename-defaults": "0.7.3",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.73"
+  },
+  "packageManager": "yarn@3.6.1",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNScanbotScannerViewSpec",
+    "type": "components",
+    "jsSrcsDir": "src/components/spec",
+    "ios": {
+      "componentProvider": {
+        "ScanbotDocumentScannerView": "RNScanbotDocumentScannerView",
+        "ScanbotBarcodeScannerView": "RNScanbotBarcodeScannerView",
+        "ScanbotCroppingView": "RNScanbotCroppingView"
+      }
+    }
+  }
+}

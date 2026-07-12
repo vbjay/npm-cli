@@ -1,0 +1,97 @@
+{
+  "name": "@revenuecat/purchases-capacitor-ui",
+  "version": "13.2.2",
+  "packageManager": "yarn@1.22.22",
+  "description": "UI components for RevenueCat Capacitor SDK",
+  "main": "dist/esm/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "RevenuecatPurchasesCapacitorUI.podspec",
+    "ios/Sources",
+    "Package.swift"
+  ],
+  "author": "RevenueCat, Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RevenueCat/purchases-capacitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RevenueCat/purchases-capacitor/issues"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native",
+    "revenuecat",
+    "purchases",
+    "subscriptions",
+    "iap",
+    "in-app-purchases",
+    "ui",
+    "paywall",
+    "customer-center"
+  ],
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
+  "scripts": {
+    "prepare": "cd .. && husky",
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "verify:ios": "xcodebuild -scheme RevenuecatPurchasesCapacitorUi -destination generic/platform=iOS && npm run verify:ios:cocoapods",
+    "verify:ios:cocoapods": "cd ios/CocoapodsInstallationTest && pod install && xcodebuild -workspace CocoapodsInstallationTest.xcworkspace -scheme CocoapodsInstallationTest -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=\"\" build",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "npm run build",
+    "lint": "npm run eslint && npm run prettier -- --check",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write",
+    "eslint": "eslint . --ext ts",
+    "prettier": "prettier \"**/*.{css,html,js,java,json,md,ts,tsx}\"",
+    "docgen": "docgen --api RevenueCatUIPlugin --output-readme README.md",
+    "build": "npm run clean && tsc && rollup -c ../rollup.config.js",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "apitest": "yarn build && cd apitesters && yarn install && tsc -p .",
+    "prepublishOnly": "npm run build",
+    "extract-api": "api-extractor run --local --verbose"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.0.0",
+    "@revenuecat/purchases-typescript-internal-esm": "18.19.0"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=8.0.0",
+    "@revenuecat/purchases-capacitor": "13.2.2"
+  },
+  "lint-staged": {
+    "*.{ts,js,java,html,css}": [
+      "eslint --fix",
+      "prettier --write --plugin=prettier-plugin-java"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/docgen": "^0.3.1",
+    "@ionic/eslint-config": "^0.4.0",
+    "@ionic/prettier-config": "^4.0.0",
+    "@types/node": "^24.10.1",
+    "eslint": "^8.57.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-java": "^2.7.7",
+    "rimraf": "^6.1.0",
+    "rollup": "^4.53.2",
+    "@microsoft/api-extractor": "^7.43.1",
+    "typescript": "^5.9.3"
+  }
+}

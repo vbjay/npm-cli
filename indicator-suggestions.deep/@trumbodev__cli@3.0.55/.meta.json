@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c8775f47f67852b3",
+    "fetchedFiles": [
+      "local-binary-cache.mjs",
+      "package.json",
+      "postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "706ae7f894f5b59aaf546e97bce0e0a1010e77d3d6286ece099a4a0783f49ca1",
+        "sizeBytes": 2982,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "local-binary-cache.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "local-binary-cache.mjs",
+        "reason": "required by ./postinstall.mjs",
+        "sha256": "8c002edd598b3dfb5dccbd65740b9bd68a4027d85a62cc66be75e1e268c2a60b",
+        "sizeBytes": 2336,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:07.298Z"
+  },
+  "hash": "sha256:725db59f35a019f1ab1333741eada0b9ff135e0d7832a61dfc0699c166f6e813"
+}

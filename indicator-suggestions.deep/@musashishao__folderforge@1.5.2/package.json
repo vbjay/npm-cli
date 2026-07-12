@@ -1,0 +1,77 @@
+{
+  "name": "@musashishao/folderforge",
+  "version": "1.5.2",
+  "description": "FolderForge - the all-in-one MCP-native local development control plane for AI coding agents.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-agents",
+    "coding-agent",
+    "claude",
+    "cursor",
+    "codex",
+    "developer-tools",
+    "workspace",
+    "filesystem",
+    "stdio",
+    "cli"
+  ],
+  "homepage": "https://github.com/roronoazoroshao369/FolderForge#readme",
+  "bugs": {
+    "url": "https://github.com/roronoazoroshao369/FolderForge/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roronoazoroshao369/FolderForge.git"
+  },
+  "license": "Apache-2.0",
+  "author": "",
+  "type": "module",
+  "bin": {
+    "folderforge": "./dist/main.js"
+  },
+  "main": "./dist/main.js",
+  "files": [
+    "dist",
+    "examples",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "tsx src/main.ts",
+    "build": "tsc -p tsconfig.json && chmod +x dist/main.js",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "node dist/main.js",
+    "postinstall": "node -e \"try{require('child_process').execSync('npx --yes playwright install chromium',{stdio:'inherit'})}catch(e){console.warn('[folderforge] Skipped Playwright browser download:',e&&e.message)}\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run clean && npm run build && npm test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@playwright/mcp": "^0.0.41",
+    "execa": "^9.0.0",
+    "fast-glob": "^3.3.0",
+    "ignore": "^6.0.0",
+    "pino": "^9.0.0",
+    "playwright": "^1.48.0",
+    "simple-git": "^3.25.0",
+    "yaml": "^2.5.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

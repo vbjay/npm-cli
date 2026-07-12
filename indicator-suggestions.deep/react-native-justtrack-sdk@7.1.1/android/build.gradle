@@ -1,0 +1,62 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'com.facebook.react'
+
+buildscript {
+  ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+  repositories {
+    google()
+    gradlePluginPortal()
+  }
+  dependencies {
+    classpath("com.android.tools.build:gradle:8.5.2")
+  }
+}
+
+def isNewArchitectureEnabled = project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+
+android {
+  compileSdk = safeExtGet('compileSdkVersion', 35)
+  namespace "io.justtrack.reactnative"
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  defaultConfig {
+    minSdk = safeExtGet('minSdkVersion', 24)
+    targetSdk = safeExtGet('targetSdkVersion', 34)
+    buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled.toString())
+  }
+}
+
+if (project.parent != null) {
+  project.parent.allprojects {
+    repositories {
+      maven { url 'https://sdk.justtrack.io/maven' }
+    }
+  }
+} else {
+  allprojects {
+    repositories {
+      maven { url 'https://sdk.justtrack.io/maven' }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+  repositories {
+    maven { url 'https://sdk.justtrack.io/maven' }
+  }
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native'
+  // expose the sdk to the users of the wrapper, no need to import it twice
+  api 'io.justtrack:justtrack-android-sdk:7.1.1'
+}

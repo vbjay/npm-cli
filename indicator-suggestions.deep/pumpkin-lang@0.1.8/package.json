@@ -1,0 +1,47 @@
+{
+  "name": "pumpkin-lang",
+  "version": "0.1.8",
+  "main": "dist/src/index.js",
+  "type": "module",
+  "bin": {
+    "pumpkin": "./dist/src/cli.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:wasm": "cd pumpkin_core && wasm-pack build --target nodejs --out-dir ../dist/pumpkin_core/pkg && rm -f ../dist/pumpkin_core/pkg/.gitignore",
+    "build:ts": "tsc && cp -r grammar dist/",
+    "build": "npm run clean && npm run build:wasm && npm run build:ts",
+    "prepublishOnly": "npm run build",
+    "start": "npm run build && node dist/src/cli.js repl",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "echo \"\n🎃 Pumpkin Language installed! \n💡 To get file icons and syntax highlighting in VS Code, run: pumpkin install-extension\n\""
+  },
+  "keywords": [
+    "pumpkin",
+    "language",
+    "interpreter",
+    "education",
+    "wasm"
+  ],
+  "author": "Pumpkin Team",
+  "license": "(MIT OR GPL-3.0)",
+  "description": "A friendly, interpreted language designed for education.",
+  "dependencies": {
+    "@types/node": "^25.0.3",
+    "@types/readline-sync": "^1.4.8",
+    "ohm-js": "^17.3.0",
+    "readline-sync": "^1.4.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3"
+  }
+}

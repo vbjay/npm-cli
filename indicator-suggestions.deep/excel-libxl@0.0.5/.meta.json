@@ -1,0 +1,121 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3b9381af61ae50f4",
+    "fetchedFiles": [
+      "binding.gyp",
+      "install-libxl.sh",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "56993bde7e5f90dde495d128932de00f9e2d354549de3d3e28fcd4635f778f20",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `liblibxl_bindings`  -  C/C++ sources",
+            "items": [
+              "src/libxl_bindings.cc",
+              "src/libxl_book.cc",
+              "src/libxl_sheet.cc",
+              "src/libxl_format.cc",
+              "src/libxl_font.cc",
+              "src/string_utils.cc"
+            ]
+          },
+          {
+            "label": "Target `liblibxl_bindings`  -  libraries",
+            "items": [
+              "-lxl"
+            ]
+          },
+          {
+            "label": "Target `liblibxl_bindings`  -  include directories",
+            "items": [
+              "deps/libxl/include_cpp"
+            ]
+          },
+          {
+            "label": "Target `liblibxl_bindings`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install-libxl.sh",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "89f20a494fff663b0abffd8db93498d9ea1f90343783cb1d98b9e8cd3ac0c09e",
+        "sizeBytes": 479,
+        "signals": [
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "http://www.libxl.com/download/libxl.tar.gz",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:44.575Z"
+  },
+  "hash": "sha256:94cc99aa72ed115d63da2334c7bd0d5bd97bc2c751aec849762a6c2f94c7c3a3"
+}

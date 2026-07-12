@@ -1,0 +1,91 @@
+{
+  "name": "capcut-cli",
+  "version": "0.13.2",
+  "description": "Independent, unofficial CLI to create and edit CapCut projects — build drafts from scratch, add video/audio/text, subtitles, timing, speed, volume, templates, cut long-form to shorts. No API needed. Not affiliated with ByteDance.",
+  "type": "module",
+  "bin": {
+    "capcut": "dist/index.js",
+    "capcut-cli": "dist/index.js"
+  },
+  "main": "./dist/lib.js",
+  "types": "./dist/lib.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib.d.ts",
+      "import": "./dist/lib.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "examples",
+    "templates",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"import('node:fs').then(fs=>fs.copyFileSync('src/enums.json','dist/enums.json'))\"",
+    "prepublishOnly": "npm run build",
+    "dev": "node --import tsx src/index.ts",
+    "extract-enums": "python3 scripts/extract-enums.py",
+    "test": "npm run build && node --test --test-reporter=spec",
+    "test:fast": "node --test --test-reporter=spec",
+    "lint": "biome check --error-on-warnings src/ test/",
+    "lint:fix": "biome check --write src/ test/",
+    "format": "biome format --write src/ test/",
+    "docs:commands": "npm run build && node scripts/generate-command-docs.mjs",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "biome check --write --no-errors-on-unmatched"
+    ],
+    "test/**/*.mjs": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "keywords": [
+    "capcut",
+    "capcut-editor",
+    "capcut-draft",
+    "capcut-srt",
+    "capcut-subtitles",
+    "capcut-json",
+    "capcut-template",
+    "capcut-automation",
+    "capcut-api",
+    "capcut-project",
+    "jianying",
+    "draft_content",
+    "draft_info",
+    "srt-export",
+    "subtitle-editor",
+    "video-to-shorts",
+    "long-video-to-shorts",
+    "batch-edit",
+    "video-editing",
+    "video-automation",
+    "ai-video-editor",
+    "mcp",
+    "cli"
+  ],
+  "author": "René Zander",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renezander030/capcut-cli.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.15",
+    "@types/node": "^25.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.4",
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "simple-keyboard-input-mask",
+  "version": "3.0.526",
+  "description": "Input mask module for simple-keyboard",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "jest",
+    "prepare": "npm run build",
+    "trypublish": "npm publish || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hodgef/simple-keyboard-input-mask"
+  },
+  "author": "Francisco Hodge <hello@franciscohodge.com> (https://github.com/hodgef)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hodgef/simple-keyboard-input-mask/issues"
+  },
+  "homepage": "https://virtual-keyboard.js.org/",
+  "keywords": [
+    "input-mask",
+    "javascript",
+    "es6",
+    "digital",
+    "keyboard",
+    "onscreen",
+    "virtual",
+    "component",
+    "virtual-keyboard",
+    "touchscreen",
+    "touch-screen",
+    "layout",
+    "keyboard-layout"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.19.4",
+    "babel-loader": "^8.2.5",
+    "babel-preset-minify": "^0.5.2",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.26.0",
+    "file-loader": "^6.2.0",
+    "jest": "^26.6.3",
+    "prettier": "^1.19.1",
+    "prettier-webpack-plugin": "^1.2.0",
+    "simple-keyboard": "3.4.178",
+    "style-loader": "^3.3.1",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {},
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/scripts/testMock.js",
+      "\\.(css|less)$": "<rootDir>/scripts/testMock.js"
+    }
+  }
+}

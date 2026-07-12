@@ -1,0 +1,86 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "11bb0ac0cc4df0d1",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "1bcd3b495a721299b7e8a43dc8fd379354797e436440e8aa74975d63d0a1a90b",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android SDK configuration",
+            "items": [
+              "minSdkVersion 19"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "com.android.support:support-v4:28.0.0",
+              "com.android.support:appcompat-v7:28.0.0",
+              "com.google.android.gms:play-services-wallet:$googlePlayServicesVersion",
+              "com.google.firebase:firebase-core:$firebaseVersion",
+              "com.stripe:stripe-android:16.10.0",
+              "com.github.tipsi:CreditCardEntry:1.5.1"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0ccd0572530d8ea3adc89d71a7dd28edaebdf8179ff1dc46f174422cfc3592f9",
+        "sizeBytes": 295,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/stripe/stripe-react-native",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:20.093Z"
+  },
+  "hash": "sha256:e86325ee4448b89859d9a40c1128a20322e35d0c317833f065c0570b9472d339"
+}

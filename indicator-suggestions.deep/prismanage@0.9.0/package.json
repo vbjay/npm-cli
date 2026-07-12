@@ -1,0 +1,50 @@
+{
+  "name": "prismanage",
+  "version": "0.9.0",
+  "description": "prismanage CLI — pipeline determinístico de desenvolvimento com agentes: issues-playbook, gates declarados, filas por dependência e releases multi-target (GitHub como fonte única)",
+  "type": "module",
+  "license": "MIT",
+  "author": "Matheus Maiberg",
+  "keywords": [
+    "cli",
+    "ai-agents",
+    "github",
+    "workflow",
+    "release",
+    "conventional-commits",
+    "deterministic"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matheusmaiberg/prismanage.ai",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/matheusmaiberg/prismanage.ai",
+  "files": [
+    "bin/",
+    "src/",
+    "hooks/",
+    "templates/",
+    "scripts/generate-plugin-manifest.mjs"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "prismanage": "./bin/prismanage.mjs"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node --test",
+    "postinstall": "node scripts/generate-plugin-manifest.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "imports": {
+    "#lib/*": "./src/lib/*.mjs"
+  },
+  "dependencies": {
+    "smol-toml": "^1.7.0"
+  }
+}

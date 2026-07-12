@@ -1,0 +1,153 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5118eb5c9f39ddb3",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/install-native.js",
+      "scripts/prepack.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "f392c6c7483da5d56afc85f67d936b4f56b111a48138b3ef5ff7c5648f536dcb",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `polygrad_napi`  -  C/C++ sources",
+            "items": [
+              "napi_api.c",
+              "csrc/src/alu.c",
+              "csrc/src/arena.c",
+              "csrc/src/autograd.c",
+              "csrc/src/bundle.c",
+              "csrc/vendor/cjson/cJSON.c",
+              "csrc/src/codegen.c",
+              "csrc/src/ctx.c",
+              "csrc/src/device.c",
+              "csrc/src/dtype.c",
+              "csrc/src/engine/jit.c",
+              "csrc/src/engine/realize.c",
+              "csrc/src/utils.c",
+              "csrc/src/engine/schedule.c",
+              "csrc/src/frontend.c",
+              "csrc/src/tensor.c",
+              "csrc/src/hashmap.c",
+              "csrc/src/schedule/indexing.c",
+              "csrc/src/instance.c",
+              "csrc/src/interp.c",
+              "csrc/src/ir.c",
+              "csrc/src/nn.c",
+              "csrc/src/optim.c",
+              "csrc/src/ops.c",
+              "csrc/src/pat.c",
+              "csrc/src/placer.c",
+              "csrc/src/schedule/rangeify.c",
+              "csrc/src/simplify.c",
+              "csrc/src/render_c.c",
+              "csrc/src/runtime_wasm.c",
+              "csrc/src/runtime_webgpu.c",
+              "csrc/src/runtime_cpu.c",
+              "csrc/src/safetensors.c",
+              "csrc/src/shape.c",
+              "csrc/src/sym.c",
+              "csrc/src/uop.c",
+              "csrc/src/wlrn.c",
+              "csrc/src/models/mlp.c",
+              "csrc/src/models/nam.c",
+              "csrc/src/models/tabm.c",
+              "csrc/src/models/registry.c",
+              "csrc/src/models/hf_loader.c",
+              "csrc/src/models/gpt2.c",
+              "csrc/src/models/qwen3.c",
+              "csrc/src/loaders/decoded.c",
+              "csrc/src/loaders/import_error.c",
+              "csrc/src/loaders/bind.c",
+              "csrc/src/loaders/hf_decode.c",
+              "csrc/src/loaders/gguf_decode.c",
+              "csrc/src/loaders/gguf_loader.c",
+              "csrc/src/loaders/import_desc.c",
+              "csrc/src/tokenizer.c",
+              "csrc/src/render_x86.c",
+              "csrc/src/render_cuda.c",
+              "csrc/src/runtime_cuda.c",
+              "csrc/src/render_hip.c",
+              "csrc/src/runtime_hip.c"
+            ]
+          },
+          {
+            "label": "Target `polygrad_napi`  -  libraries",
+            "items": [
+              "-ldl",
+              "-lm",
+              "-ldl",
+              "-lm"
+            ]
+          },
+          {
+            "label": "Target `polygrad_napi`  -  include directories",
+            "items": [
+              "csrc/src",
+              "csrc/vendor/cjson"
+            ]
+          },
+          {
+            "label": "Target `polygrad_napi`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install-native.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "cc6166fd5714895e6babddf5301e38cd4ee88ad1a70aacc01b1de7f21fdac697",
+        "sizeBytes": 883,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/prepack.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "021ab19156c2479c52b716c1d965db417f766a4d66268e68ae2b39ed1aebba2c",
+        "sizeBytes": 1669,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:26.193Z"
+  },
+  "hash": "sha256:ee38195d98908c62e3e69c1ea798cd6ac56025481bac9be92d87046895a31a69"
+}

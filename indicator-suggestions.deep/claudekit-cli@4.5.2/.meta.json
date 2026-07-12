@@ -1,0 +1,100 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d2ea18d94bc38cdf",
+    "fetchedFiles": [
+      "bin/postinstall-hook-restore.cjs",
+      "bin/postinstall-self-heal.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall-self-heal.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ea9f7f6572ef22e56c87eb4efb8f810eb212194825336ddeb2ef6bd13cd3a8ed",
+        "sizeBytes": 4467,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/postinstall-hook-restore.cjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/postinstall-hook-restore.cjs",
+        "reason": "required by ./bin/postinstall-self-heal.cjs",
+        "sha256": "e0e8f0170780c193341af3009f18b14efd18fcc9c140ee4de3b9f2c37a8fc2d6",
+        "sizeBytes": 6600,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:30.883Z"
+  },
+  "hash": "sha256:948241ca1c029b98c8fe5a68bc213edebaecfe0a87a52f5a37a06bbca28ffd50"
+}

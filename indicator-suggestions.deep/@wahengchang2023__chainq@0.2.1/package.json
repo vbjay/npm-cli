@@ -1,0 +1,68 @@
+{
+  "name": "@wahengchang2023/chainq",
+  "version": "0.2.1",
+  "type": "module",
+  "description": "Run multi-step prompt chains on local CLI models, defined in one YAML file.",
+  "keywords": [
+    "ai",
+    "llm",
+    "prompt",
+    "prompt-chaining",
+    "workflow",
+    "cli",
+    "claude",
+    "codex",
+    "yaml",
+    "dag"
+  ],
+  "license": "MIT",
+  "author": "wahengchang",
+  "homepage": "https://github.com/wahengchang/chainq#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wahengchang/chainq.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wahengchang/chainq/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "chainq": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "!**/._*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && mkdir -p dist/web/ui && cp src/web/app.html dist/web/app.html && cp src/web/ui/*.js dist/web/ui/ && find dist -name '._*' -delete",
+    "prepack": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "bun src/cli/index.ts",
+    "ui": "bun src/cli/index.ts ui",
+    "typecheck": "tsc --noEmit && npm run typecheck:ui",
+    "typecheck:ui": "tsc -p src/web/ui/tsconfig.json",
+    "e2e": "vitest run --config vitest.e2e.config.ts",
+    "e2e:cli": "vitest run --config vitest.e2e.config.ts",
+    "e2e:demo": "tsx e2eCli/demo.ts",
+    "e2e:ui": "playwright test --ui",
+    "e2e:ui:headless": "playwright test",
+    "e2e:ui:headed": "playwright test --headed",
+    "e2e:ui:demo": "SLOWMO=${SLOWMO:-900} playwright test --headed -g editor",
+    "e2e:ui:debug": "playwright test --debug -g editor"
+  },
+  "dependencies": {
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

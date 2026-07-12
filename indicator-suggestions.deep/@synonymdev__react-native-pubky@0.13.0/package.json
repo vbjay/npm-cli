@@ -1,0 +1,205 @@
+{
+  "name": "@synonymdev/react-native-pubky",
+  "version": "0.13.0",
+  "description": "React Native Implementation of Pubky",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "react-native": "src/index",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "rm -rf android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "corepack enable && npm install -g react-native-builder-bob && bob build",
+    "release": "release-it",
+    "example:ios": "cd example && cd ios && rm -rf Pods && cd ../ && npm i && bundle install && npm run build:ios && npm run ios",
+    "example:android": "cd example && npm i && npm run build:android && npm run android",
+    "reinstall": "yarn install && npm run clean && npm run prepare",
+    "cargo-build": "yarn install && node setup-rust.js && cd rust && cargo build && cd ../",
+    "update-local-bindings:ios": "npm run cargo-build && cd rust && ./build.sh ios && cd ../ && node setup-local-ios-bindings.js && npm run reinstall",
+    "update-local-bindings:android": "npm run cargo-build && cd rust && ./build.sh android && cd ../ && node setup-local-android-bindings.js && npm run reinstall",
+    "update-local-bindings": "npm run reinstall && npm run cargo-build && npm run update-local-bindings:ios && npm run update-local-bindings:android",
+    "rebuild-local": "rm -rf node_modules && cd example && rm -rf node_modules && cd ios && rm -rf Pods Podfile.lock build && cd ../../ && npm run cargo-build && yarn install && npm run update-local-bindings && cd example && yarn install && bundle install && cd ios && pod install && cd ../ && yarn build:ios && yarn ios",
+    "update-remote-bindings:ios": "npm run reinstall && node setup-remote-ios-bindings.js && npm run reinstall",
+    "update-remote-bindings:android": "npm run reinstall && node setup-remote-android-bindings.js && npm run reinstall",
+    "update-remote-bindings": "npm run reinstall && npm run update-remote-bindings:ios && npm run update-remote-bindings:android",
+    "rebuild-remote": "rm -rf node_modules && cd example && rm -rf node_modules && cd ios && rm -rf Pods Podfile.lock build && cd ../../ && yarn install && npm run update-remote-bindings && cd example && yarn install && bundle install && cd ios && pod install && cd ../ && yarn build:ios && yarn ios --simulator 'iPhone 16 Pro'"
+  },
+  "keywords": [
+    "pubky",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pubky/react-native-pubky.git"
+  },
+  "author": "coreyphillips <corey@synonym.to> (https://github.com/coreyphillips)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pubky/react-native-pubky/issues"
+  },
+  "homepage": "https://github.com/pubky/react-native-pubky#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@synonymdev/result": "^0.0.2"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native/eslint-config": "0.82.1",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.1.1",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react": "19.1.1",
+    "react-native": "0.82.1",
+    "react-native-builder-bob": "^0.30.2",
+    "release-it": "^15.0.0",
+    "simple-git": "^3.27.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "resolutions": {
+    "@types/react": "^19.1.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "type": "module-legacy",
+    "languages": "kotlin-swift",
+    "version": "0.41.2"
+  }
+}

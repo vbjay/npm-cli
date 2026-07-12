@@ -1,0 +1,123 @@
+{
+  "name": "quantex-cli",
+  "version": "0.29.0",
+  "description": "Agent-friendly lifecycle CLI for AI coding assistant CLIs: install, inspect, update, uninstall, run, and automate Codex, Claude Code, Gemini, Cursor, OpenCode, and more",
+  "keywords": [
+    "agent-cli",
+    "agent-lifecycle",
+    "ai",
+    "ai-agent",
+    "ai-coding",
+    "ai-coding-assistant",
+    "automation",
+    "claude-code",
+    "cli",
+    "codex",
+    "coding-agent",
+    "coding-assistant",
+    "cursor-cli",
+    "developer-tools",
+    "gemini-cli",
+    "machine-readable",
+    "opencode",
+    "qtx",
+    "quantex",
+    "self-upgrade"
+  ],
+  "homepage": "https://github.com/Drswith/quantex-cli#readme",
+  "bugs": "https://github.com/Drswith/quantex-cli/issues",
+  "license": "Apache-2.0",
+  "author": "Drswith <drswith@outlook.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Drswith/quantex-cli.git"
+  },
+  "bin": {
+    "qtx": "./dist/cli.mjs",
+    "quantex": "./dist/cli.mjs"
+  },
+  "files": [
+    "dist",
+    "!dist/bin",
+    "!dist/bin/**"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "agent-catalog:generate": "bun run agent-catalog:manifest && bun run agent-catalog:schema",
+    "agent-catalog:manifest": "bun run scripts/write-agent-catalog-manifest.ts",
+    "agent-catalog:schema": "bun run scripts/write-agent-catalog-schema.ts",
+    "build": "tsdown",
+    "build:bin": "bun run scripts/write-build-metadata.ts && bun run scripts/build-bin.ts",
+    "dev": "bun run src/cli.ts",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "memory:check": "bun run scripts/check-project-memory.ts",
+    "openspec:archive": "openspec archive --yes",
+    "openspec:archive-closure": "bun run scripts/openspec-archive-closure.ts",
+    "openspec:instructions": "openspec instructions --json",
+    "openspec:list": "openspec list",
+    "openspec:new": "openspec new change",
+    "openspec:show": "openspec show --no-interactive",
+    "openspec:status": "openspec status --json",
+    "openspec:validate": "openspec validate --all --no-interactive",
+    "package:check": "bun run scripts/verify-package-distribution.ts",
+    "pr:body:check": "bun run scripts/pr-body-policy.ts",
+    "prebuild": "bun run scripts/write-build-metadata.ts",
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "bun run build",
+    "release:artifacts": "bun run scripts/write-release-checksums.ts && bun run scripts/generate-release-manifest.ts && bun run scripts/verify-release-artifacts.ts",
+    "release:smoke": "bun run scripts/verify-release-smoke.ts",
+    "test": "vitest run",
+    "test:container": "bun run scripts/test-container.ts",
+    "test:sandbox": "bun run scripts/test-sandbox.ts",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "picocolors": "^1.1.1",
+    "prompts": "^2.4.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@fission-ai/openspec": "1.3.1",
+    "@types/bun": "^1.3.11",
+    "@types/node": "^25.0.1",
+    "@types/prompts": "^2.4.9",
+    "lint-staged": "^16.2.7",
+    "oxfmt": "0.47.0",
+    "oxlint": "^1.62.0",
+    "simple-git-hooks": "^2.13.1",
+    "tsdown": "^0.21.7",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.3"
+  },
+  "simple-git-hooks": {
+    "commit-msg": "bun run scripts/strip-cursor-coauthor.ts \"$1\"",
+    "pre-commit": "bun install --frozen-lockfile && npx lint-staged",
+    "pre-push": "bun run format:check && bun run typecheck && bun run openspec:validate && bun run memory:check"
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
+      "oxfmt --write",
+      "oxlint --fix"
+    ],
+    "*.{json,jsonc,json5,html,css,scss,less}": [
+      "oxfmt --write"
+    ]
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "bun@1.3.11"
+}

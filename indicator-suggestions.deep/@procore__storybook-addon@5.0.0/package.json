@@ -1,0 +1,102 @@
+{
+  "name": "@procore/storybook-addon",
+  "version": "5.0.0",
+  "description": "Procore Storybook Configuration",
+  "author": "Procore Technologies",
+  "homepage": "https://github.com/procore/frontend-tooling#readme",
+  "repository": "procore/frontend-tooling.git",
+  "bugs": "https://github.com/procore/frontend-tooling/issues",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "addon",
+    "appearance",
+    "react",
+    "storybook",
+    "storybook-addons",
+    "theming"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/modern/index.d.ts",
+        "default": "./dist/modern/index.js"
+      },
+      "require": {
+        "types": "./dist/modern/index.d.cts",
+        "default": "./dist/modern/index.cjs"
+      }
+    },
+    "./preset": {
+      "types": "./dist/modern/preset.d.cts",
+      "default": "./dist/modern/preset.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/legacy/index.cjs",
+  "module": "dist/legacy/index.js",
+  "types": "dist/legacy/index.d.ts",
+  "files": [
+    "dist",
+    "preset.js"
+  ],
+  "scripts": {
+    "build": "hammer lib:build",
+    "format": "prettier --ignore-unknown --write .",
+    "format:check": "prettier --cache --ignore-unknown --check .",
+    "lint": "hammer lint:code",
+    "prepack": "hammer lib:build",
+    "test": "hammer test --coverage"
+  },
+  "peerDependencies": {
+    "sass": "^1.3.0"
+  },
+  "peerDependenciesMeta": {
+    "sass": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.23.9",
+    "@babel/preset-env": "^7.23.3",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@babel/runtime": "^7.26.10",
+    "@storybook/addon-a11y": "^10.1.5",
+    "@storybook/addon-docs": "^10.1.5",
+    "@storybook/addon-styling-webpack": "^3.0.0",
+    "@svgr/webpack": "^6.5.1",
+    "babel-plugin-named-asset-import": "^0.3.8",
+    "babel-plugin-styled-components": "^2.1.4",
+    "core-js": "^3.35.1",
+    "css-loader": "^7.1.2",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@procore/eslint-config": "^15.3.2",
+    "@procore/hammer": "^1.2.0",
+    "@procore/hammer-lib-tsup": "^1.0.0",
+    "@procore/hammer-lint-eslint": "^1.0.1",
+    "@procore/hammer-test-vitest": "^1.0.0",
+    "@procore/prettier-config": "^1.1.1",
+    "@procore/typescript-config": "^2.1.0",
+    "@types/react": "^18.2.37",
+    "@types/react-dev-utils": "^9.0.15",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.31.0",
+    "pathe": "^1.1.2",
+    "prettier": "^2.8.8",
+    "react": "^18.2.0",
+    "react-dev-utils": "^12.0.1",
+    "react-dom": "^18.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^5.5.2",
+    "vitest": "^3.2.4"
+  },
+  "sideEffects": false
+}

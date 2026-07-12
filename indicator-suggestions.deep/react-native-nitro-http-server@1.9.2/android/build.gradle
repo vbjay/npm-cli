@@ -1,0 +1,67 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+def reactNativeArchitectures() {
+    def value = rootProject.getProperties().get("reactNativeArchitectures")
+    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+def getExtOrDefault(name, defaultValue) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : defaultValue
+}
+
+android {
+    namespace "com.margelo.nitro.http_server"
+    compileSdkVersion getExtOrDefault('compileSdkVersion', 35)
+    ndkVersion getExtOrDefault("ndkVersion", "27.1.12297006")
+
+    defaultConfig {
+        minSdkVersion getExtOrDefault('minSdkVersion', 21)
+        targetSdkVersion getExtOrDefault('targetSdkVersion', 35)
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-fexceptions", "-frtti", "-std=c++20"
+                arguments "-DANDROID_STL=c++_shared"
+                // Enable 16KB page size support for NDK r28+ toolchain (optional; CMakeLists.txt linker flag ensures alignment on older NDK)
+                arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+                abiFilters (*reactNativeArchitectures())
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    buildFeatures {
+        prefab true
+    }
+
+    packagingOptions {
+        excludes += [
+            "**/libc++_shared.so",
+            "**/libjsi.so",
+            "**/libreactnativejni.so",
+            "**/libreact_nativemodule_core.so",
+            "**/libturbomodulejsijni.so"
+        ]
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+'
+    implementation project(':react-native-nitro-modules')
+}
+
+apply from: "../nitrogen/generated/android/RNHttpServer+autolinking.gradle"

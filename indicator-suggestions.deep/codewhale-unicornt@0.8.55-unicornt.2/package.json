@@ -1,0 +1,53 @@
+{
+  "name": "codewhale-unicornt",
+  "version": "0.8.55-unicornt.2",
+  "codewhaleBinaryVersion": "0.8.55-unicornt",
+  "deepseekBinaryVersion": "0.8.55-unicornt",
+  "description": "CodeWhale TUI fork — install and run the forked CodeWhale TUI from GitHub release artifacts.",
+  "author": "unicornt",
+  "license": "MIT",
+  "homepage": "https://github.com/unicornt/CodeWhale",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unicornt/CodeWhale.git"
+  },
+  "bugs": {
+    "url": "https://github.com/unicornt/CodeWhale/issues"
+  },
+  "keywords": [
+    "codewhale",
+    "deepseek",
+    "cli",
+    "tui",
+    "rust",
+    "binary",
+    "terminal"
+  ],
+  "type": "commonjs",
+  "bin": {
+    "codewhale": "bin/codewhale.js",
+    "codew": "bin/codew.js",
+    "codewhale-tui": "bin/codewhale-tui.js"
+  },
+  "scripts": {
+    "release:check": "node scripts/verify-release-assets.js",
+    "postinstall": "node scripts/install.js --optional",
+    "prepublishOnly": "node scripts/verify-release-assets.js",
+    "prepack": "node scripts/install.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "preferGlobal": true,
+  "files": [
+    "bin/*.js",
+    "scripts/*.js",
+    "test/*.js",
+    "README.md",
+    "package.json"
+  ]
+}

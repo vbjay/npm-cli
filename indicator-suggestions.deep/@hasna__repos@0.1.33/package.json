@@ -1,0 +1,91 @@
+{
+  "name": "@hasna/repos",
+  "version": "0.1.33",
+  "description": "Local repo intelligence platform for AI agents — track all repos, search commits, PRs, branches across your machine. CLI + MCP + Web dashboard.",
+  "type": "module",
+  "workspaces": [
+    "dashboard"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "repos": "dist/cli/index.js",
+    "repos-mcp": "dist/mcp/index.js",
+    "repos-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "dashboard/dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist dashboard/dist",
+    "build": "bun run clean && cd dashboard && bun run build && cd .. && bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk --external pg && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk --external pg && bun build src/server/index.ts --outdir dist/server --target bun --external pg && bun build src/index.ts --outdir dist --target bun --external pg && tsc --emitDeclarationOnly --outDir dist",
+    "build:dashboard": "cd dashboard && bun run build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "prepublishOnly": "bun run typecheck && bun test && bun run build",
+    "postinstall": "mkdir -p $HOME/.hasna/repos 2>/dev/null || true"
+  },
+  "keywords": [
+    "repos",
+    "git",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "claude",
+    "codex",
+    "gemini",
+    "search",
+    "commits",
+    "pull-requests",
+    "branches",
+    "cli",
+    "dashboard"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/repos.git"
+  },
+  "homepage": "https://github.com/hasna/repos",
+  "bugs": {
+    "url": "https://github.com/hasna/repos/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "cli-progress": "^3.12.0",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "pg": "^8.22.0",
+    "react": "^18.3.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/cli-progress": "^3.11.6",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^18.3.18",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "@ionyx-apps/cli",
+  "version": "0.5.15",
+  "description": "Ionyx Framework CLI - High-performance desktop apps with Rust and WebGPU, featuring detailed template architectures",
+  "main": "index.js",
+  "type": "commonjs",
+  "bin": {
+    "ionyx": "bin/ionyx.js"
+  },
+  "scripts": {
+    "ionyx": "node bin/ionyx.js",
+    "dev": "cd ionyx-cli && cargo run --bin ionyx",
+    "build": "cd ionyx-cli && cargo build --release",
+    "build:all": "npm run build && npm run copy-binary",
+    "copy-binary": "node -e \"const fs=require('fs'),path=require('path');const platform=require('os').platform();const arch=require('os').arch();let binaryName='ionyx';if(platform==='linux'){binaryName=arch==='arm64'?'ionyx-linux-arm64':'ionyx-linux-x64';}else if(platform==='darwin'){binaryName=arch==='arm64'?'ionyx-macos-arm64':'ionyx-macos-x64';}else if(platform==='win32'){binaryName='ionyx-win.exe';}const src=path.join('ionyx-cli/target/release','ionyx'+(platform==='win32'?'.exe':''));const dest=path.join('bin',binaryName);if(fs.existsSync(src)){fs.copyFileSync(src,dest);console.log('✅ CLI binary copied to:'+dest);}else{console.error('❌ Source binary not found:'+src);process.exit(1);}\"",
+    "clean:templates": "node clean-templates.js",
+    "prepack": "npm run clean:templates && npm run build:all && (upx --best --lzma bin/ionyx* || echo 'UPX not available, skipping compression')",
+    "postinstall": "node -e \"const fs=require('fs'),path=require('path');const platform=require('os').platform();const arch=require('os').arch();let binaryName='ionyx';if(platform==='linux'){binaryName=arch==='arm64'?'ionyx-linux-arm64':'ionyx-linux-x64';}else if(platform==='darwin'){binaryName=arch==='arm64'?'ionyx-macos-arm64':'ionyx-macos-x64';}else if(platform==='win32'){binaryName='ionyx-win.exe';}const src=path.join('bin',binaryName);const destPath=path.join('/usr/lib/node_modules/@ionyx-apps/cli/bin','ionyx');if(fs.existsSync(src)&&process.platform!=='win32'){require('child_process').spawnSync('sudo',['mkdir','-p','/usr/lib/node_modules/@ionyx-apps/cli/bin'],{stdio:'inherit'});require('child_process').spawnSync('sudo',['cp',src,destPath],{stdio:'inherit'});console.log('✅ Global CLI binary installed');}\"",
+    "test": "node test-framework.js"
+  },
+  "files": [
+    "bin/index.js",
+    "bin/ionyx.js",
+    "bin/ionyx.exe",
+    "bin/ionyx-linux-x64",
+    "bin/ionyx-linux-arm64",
+    "bin/ionyx-macos-x64",
+    "bin/ionyx-macos-arm64",
+    "bin/ionyx-win.exe",
+    "!bin/cargo-ionyx*",
+    "ionyx-cli/Cargo.toml",
+    "ionyx-cli/src/",
+    "!ionyx-cli/src/templates/**/target/**",
+    "!ionyx-cli/src/templates/**/node_modules/**",
+    "!ionyx-cli/src/templates/**/*.lock",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ionyx",
+    "cli",
+    "rust",
+    "webgpu",
+    "desktop",
+    "framework",
+    "frontend-native",
+    "tauri",
+    "electron"
+  ],
+  "author": "Ionyx Apps <info@ionyx.app>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionyx-apps/ionyx-cli.git"
+  },
+  "homepage": "https://ionyx.app",
+  "bugs": {
+    "url": "https://github.com/ionyx-apps/ionyx/issues"
+  },
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "dependencies": {}
+}

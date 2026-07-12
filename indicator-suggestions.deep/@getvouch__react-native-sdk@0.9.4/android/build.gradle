@@ -1,0 +1,52 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.10.1"
+  }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace "io.getvouch.rn"
+  compileSdkVersion safeExtGet("compileSdkVersion", 36)
+
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 33)
+    targetSdkVersion safeExtGet("targetSdkVersion", 36)
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile "src/main/AndroidManifest.xml"
+      java.srcDirs = ["src/main/java"]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
+  implementation "io.getvouch:android-sdk:0.9.4"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "@rryando/arcs",
+  "version": "3.8.0",
+  "description": "ARCS — DAG-based task orchestration for AI agents. Persistent workflow continuity via graph-structured context.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "arcs": "scripts/arcs-cli.mjs"
+  },
+  "files": [
+    "dist/",
+    "scripts/",
+    "templates/",
+    "skills/",
+    "opencode/"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rryando/arcs.git"
+  },
+  "keywords": [
+    "arcs",
+    "dag",
+    "ai-agents",
+    "task-orchestration",
+    "graph",
+    "workflow",
+    "cli"
+  ],
+  "author": "rryando",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:opencode-bundle": "npm run build && node scripts/build-opencode-bundle.mjs",
+    "prepack": "npm run build:opencode-bundle",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "init": "node dist/index.js init",
+    "lint": "biome check src/ test/",
+    "lint:fix": "biome check --fix src/ test/",
+    "format": "biome format --write src/ test/",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.1.0",
+    "picocolors": "^1.1.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.8",
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.4.1",
+    "vitest": "^3.2.4",
+    "@types/bun": "latest"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true
+  }
+}

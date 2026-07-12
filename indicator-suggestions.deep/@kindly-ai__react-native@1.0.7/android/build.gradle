@@ -1,0 +1,135 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// Kindly React Native SDK — Android plugin build script.
+//
+// Architecture mirrors `flutter-sdk/android/build.gradle`:
+//
+// 1. Kotlin / AGP / JVM versions match the bundled Kindly Android SDK
+//    (currently Kotlin 2.3.20 / AGP 8.6.0 / JVM 17). The bundled AAR was
+//    compiled against those, and Kotlin metadata is NOT forward-compatible:
+//    older compilers throw "Module was compiled with an incompatible
+//    version of Kotlin" when they encounter 2.3.x metadata. Bumping in
+//    lockstep with `kindly-ai/sdk-chat-android-sources` is mandatory.
+//
+// 2. Local Maven repo (`maven-repo/`) inside this package's `android/`.
+//    Populated at bundle time by `scripts/bundle-native-sdks.yml` from
+//    `kindly-ai/sdk-chat-android` raw URLs. Customer apps pick it up
+//    transparently via the `allprojects { repositories { ... } }` block —
+//    strict-mode (`FAIL_ON_PROJECT_REPOS`) builds work without extra
+//    configuration since the path is local.
+//
+// 3. JitPack is NOT used. JitPack rejected `1.0.100`+ with opaque "Error
+//    building" messages and is generally flaky for arbitrary projects.
+//    The bundled-Maven approach has zero external dependencies.
+
+buildscript {
+  ext.kotlin_version = "2.3.20"
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath("com.android.tools.build:gradle:8.6.0")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+  }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+    // Local Maven repo bundled INSIDE this RN package. Contains the signed
+    // Kindly Android SDK AAR + its full POM (= every transitive dep the
+    // SDK needs: Compose, Coil, Pusher, OkHttp, etc.). Populated at
+    // bundle time by `scripts/bundle-native-sdks.yml`, which fetches both
+    // files from the public release repo `kindly-ai/sdk-chat-android` and
+    // writes them under standard Maven layout.
+    maven { url "$projectDir/maven-repo" }
+  }
+}
+
+android {
+  namespace "com.kindlyai.reactnative"
+
+  // RN 0.85 template default is 36 — kept in lockstep so the codegen-
+  // generated abstract class compiles with the same ABI customers use.
+  compileSdkVersion 36
+
+  defaultConfig {
+    minSdkVersion 24       // RN's minimum since 0.74
+    targetSdkVersion 36
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  // JVM 17 — required by Kotlin 2.3.20 (which defaults to 21 unless
+  // overridden, and would fail with "Inconsistent JVM-target compatibility"
+  // if Java compile sat at 1.8). 17 is also the AGP 8.x default and what
+  // GitHub Actions / CI runners standardize on.
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+
+    // The bundled Kindly AAR (ai.kindly:sdk:1.0.x) is compiled with
+    // Kotlin 2.3.20 (lockstep with kindly-ai/sdk-chat-android-sources).
+    // Customer apps frequently still ship with an older Kotlin compiler
+    // (RN 0.85 ships 2.2.x by default; some apps stay on 2.1.x). When
+    // those compilers read the AAR's 2.3.0 metadata they bail with:
+    //   "Module was compiled with an incompatible version of Kotlin.
+    //    The binary version of its metadata is 2.3.0, expected version
+    //    is 2.1.0."
+    // (reported by Scandic 2026-06 — `:kindly-ai_react-native:compileDebugKotlin FAILED`).
+    //
+    // -Xskip-metadata-version-check tells THIS module's compile step to
+    // ignore the version mismatch when reading dependencies. We don't
+    // re-expose any Kindly types in our public API surface (customer
+    // apps interact via TS/TurboModule, never directly importing
+    // `no.kindly.chatsdk.chat.*`), so the metadata in OUR compiled
+    // output is whatever the customer's compiler emits — fully
+    // forward-compatible with their app code. Customer needs no Kotlin
+    // bump on their side.
+    freeCompilerArgs += ["-Xskip-metadata-version-check"]
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  sourceSets {
+    main.java.srcDirs += "src/main/kotlin"
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+
+  // Kindly Android SDK resolved from the bundled `maven-repo/` (declared
+  // above in `allprojects`). The POM there lists the full transitive dep
+  // set so Gradle pulls everything automatically — no need to re-declare
+  // deps here. The version string is rewritten by
+  // `scripts/bundle-native-sdks.yml` at bundle time to match the just-
+  // released Android SDK version (`git describe --tags --abbrev=0` on
+  // the public release repo).
+  implementation "ai.kindly:sdk:2.0.7"
+
+  // Required by the AuthTokenCallback bridge in KindlyReactNativeModule.kt
+  // (`CompletableDeferred`, `runBlocking`, `withTimeoutOrNull`).
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+}

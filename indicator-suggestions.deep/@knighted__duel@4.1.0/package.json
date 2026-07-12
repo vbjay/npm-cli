@@ -1,0 +1,118 @@
+{
+  "name": "@knighted/duel",
+  "version": "4.1.0",
+  "description": "TypeScript dual packages.",
+  "type": "module",
+  "main": "dist/esm/duel.js",
+  "bin": {
+    "duel": "dist/esm/duel.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/duel.js",
+      "require": "./dist/cjs/duel.cjs",
+      "default": "./dist/esm/duel.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22.21.1 <23 || >=24 <25 || >=26 <27"
+  },
+  "engineStrict": true,
+  "scripts": {
+    "prettier": "prettier -w *.js *.md *.json *.yml docs/*.md src/*.js test/*.js scripts/*.js",
+    "prettier:check": "prettier --check --ignore-unknown *.js *.md *.json *.yml docs/*.md src/*.js test/*.js scripts/*.js",
+    "lint": "eslint src/*.js test/*.js scripts/*.js",
+    "test:unit": "c8 --reporter=text --reporter=text-summary --reporter=lcov node --test --test-reporter=spec test/unit.js",
+    "test:integration": "node --test --test-reporter=spec test/integration.js",
+    "test:monorepos": "node --test --test-reporter=spec test/monorepos.js",
+    "test:cleanup": "node --test --test-reporter=spec test/cleanup.integration.js",
+    "test": "c8 --reporter=text --reporter=text-summary --reporter=lcov node --trace-deprecation --test --test-reporter=spec test/*.js",
+    "clean:fixtures": "node scripts/clean-fixtures.js",
+    "pretest": "npm run clean:fixtures",
+    "build": "node src/duel.js --dirs --mode globals",
+    "prepack": "npm run build",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "dual package",
+    "es module",
+    "commonjs",
+    "esm",
+    "cjs",
+    "build",
+    "tsc",
+    "cts",
+    "mts",
+    "mjs"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "KCM <knightedcodemonkey@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knightedcodemonkey/duel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/knightedcodemonkey/duel/issues"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.5.0 <7",
+    "typescript-next": "npm:typescript@next"
+  },
+  "peerDependenciesMeta": {
+    "typescript-next": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tsconfig/recommended": "^1.0.10",
+    "@types/node": "^25.9.1",
+    "c8": "^11.0.0",
+    "cross-spawn": "^7.0.6",
+    "eslint": "^10.4.0",
+    "eslint-plugin-n": "^18.0.1",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "node-module-type": "^1.0.4",
+    "prettier": "^3.6.2",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3",
+    "vite": "^7.3.2"
+  },
+  "dependencies": {
+    "@jridgewell/gen-mapping": "^0.3.13",
+    "@jridgewell/trace-mapping": "^0.3.31",
+    "@knighted/module": "^1.6.0",
+    "find-up": "^8.0.0",
+    "get-tsconfig": "^4.14.0",
+    "magic-string": "^0.30.21",
+    "read-package-up": "^12.0.0"
+  },
+  "overrides": {
+    "c8": {
+      "yargs": ">17.7.2 <19"
+    }
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,ts,cts,mts,jsx,tsx}": [
+      "eslint --max-warnings=0 --no-warn-ignored",
+      "prettier --check --ignore-unknown"
+    ],
+    "*.{md,json,yml,yaml}": [
+      "prettier --check --ignore-unknown"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "printWidth": 90,
+    "semi": false,
+    "singleQuote": true
+  }
+}

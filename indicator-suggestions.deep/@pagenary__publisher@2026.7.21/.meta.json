@@ -1,0 +1,427 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "995f3dc18647e282",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/build-site.js",
+      "scripts/build-tenants.js",
+      "scripts/lib/accessibility-linter.js",
+      "scripts/lib/accessibility-report.js",
+      "scripts/lib/collections-generator.js",
+      "scripts/lib/frontmatter.js",
+      "scripts/lib/search-index-generator.js",
+      "scripts/lib/seo-generator.js",
+      "src/lib/categories.js",
+      "src/lib/form-providers.js",
+      "src/lib/fortemi-corpus.js",
+      "src/lib/layout.js",
+      "src/lib/search.js",
+      "src/lib/share.js",
+      "src/lib/templates.js",
+      "src/vendor/fortemi-aiwg-index.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build-tenants.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "54d14119806a6eb3a7e5ff249647e50758651848fe11cc32b63c171c211d8c47",
+        "sizeBytes": 234580,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "external-url",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/seo-generator.js",
+          "scripts/lib/collections-generator.js",
+          "scripts/lib/frontmatter.js",
+          "scripts/lib/accessibility-linter.js",
+          "scripts/lib/accessibility-report.js",
+          "scripts/lib/search-index-generator.js",
+          "src/lib/fortemi-corpus.js",
+          "src/vendor/fortemi-aiwg-index.js",
+          "src/lib/layout.js",
+          "src/lib/templates.js",
+          "src/lib/form-providers.js",
+          "src/lib/share.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/org/docs.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://www.youtube-nocookie.com/embed/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.youtube.com/watch?v=",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://player.vimeo.com/video/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://vimeo.com/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/lib/seo-generator.js",
+        "reason": "required by ./scripts/build-tenants.js; required by ./scripts/lib/collections-generator.js; required by ./scripts/lib/search-index-generator.js",
+        "sha256": "a2f441063f029c5b8d2a2e3797d2af1ce6afad6823fcf0b678278790b40828f5",
+        "sizeBytes": 33826,
+        "signals": [
+          "uses-eval",
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/share.js"
+        ],
+        "urls": [
+          {
+            "url": "http://www.sitemaps.org/schemas/sitemap/0.9",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://schema.org",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "src/lib/share.js",
+        "reason": "required by ./scripts/lib/seo-generator.js; required by ./scripts/build-tenants.js",
+        "sha256": "ef3fccbc2339c330f0b74ccd091c85d10a44c67948855860117fa8e863434435",
+        "sizeBytes": 10480,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://twitter.com/intent/tweet?url={url}&text={title}",
+            "classification": "reference"
+          },
+          {
+            "url": "https://www.linkedin.com/sharing/share-offsite/?url={url}",
+            "classification": "reference"
+          },
+          {
+            "url": "https://www.facebook.com/sharer/sharer.php?u={url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.threads.net/intent/post?text={title}%20{url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://bsky.app/intent/compose?text={title}%20{url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.reddit.com/submit?url={url}&title={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://news.ycombinator.com/submitlink?u={url}&t={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://lobste.rs/stories/new?url={url}&title={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.producthunt.com/posts/new?url={url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://slashdot.org/submission?url={url}&title={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://wa.me/?text={title}%20{url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://t.me/share/url?url={url}&text={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://mastodon.social/share?text={title}%20{url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://misskey.io/share?text={title}%20{url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://lemmy.world/create_post?url={url}&title={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.instapaper.com/edit?url={url}&title={title}&description={description}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://pinboard.in/add?url={url}&title={title}&description={description}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://app.raindrop.io/add?link={url}&title={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://teams.microsoft.com/share?href={url}&msgText={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.notion.so/web-clipper?url={url}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://trello.com/add-card?url={url}&name={title}&desc={description}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.pinterest.com/pin/create/button/?url={url}&description={title}",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://www.tumblr.com/widgets/share/tool?canonicalUrl={url}&title={title}&caption={description}",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/lib/collections-generator.js",
+        "reason": "required by ./scripts/build-tenants.js",
+        "sha256": "fd60b7e53170035fe11c77d57e15bac32346cd57351a56f5609c3dad3bf985c2",
+        "sizeBytes": 7660,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/seo-generator.js",
+          "scripts/lib/frontmatter.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/frontmatter.js",
+        "reason": "required by ./scripts/lib/collections-generator.js; required by ./scripts/build-tenants.js; required by ./scripts/lib/accessibility-linter.js",
+        "sha256": "cb9a7a47a8c64ecced63da5cff55c3e800210f869182db4dc5df47f203c172ff",
+        "sizeBytes": 10303,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/accessibility-linter.js",
+        "reason": "required by ./scripts/build-tenants.js; required by ./scripts/lib/accessibility-report.js",
+        "sha256": "6b94408bf855584d1cc918a02baa057736e975c2e1cf550e1a720f34e8f41945",
+        "sizeBytes": 13615,
+        "signals": [
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/frontmatter.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/accessibility-report.js",
+        "reason": "required by ./scripts/build-tenants.js",
+        "sha256": "f50267b0e8af5810ac0302546506e1a4d378fa4dc573947891c6cf8b0d6b0264",
+        "sizeBytes": 5385,
+        "signals": [
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/lib/accessibility-linter.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/lib/search-index-generator.js",
+        "reason": "required by ./scripts/build-tenants.js",
+        "sha256": "9d75c788676fde92b471f7f6c972f9d0fd59e641c9475a368f3a882c08a224bf",
+        "sizeBytes": 7559,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/fortemi-corpus.js",
+          "scripts/lib/seo-generator.js",
+          "src/vendor/fortemi-aiwg-index.js",
+          "src/lib/search.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/fortemi-corpus.js",
+        "reason": "required by ./scripts/lib/search-index-generator.js; required by ./src/lib/search.js; required by ./scripts/build-tenants.js",
+        "sha256": "f9576b9090fb2e6eec9fdfbfb7e9e0b18c11d1348cb592656e4a5a6102c8c64a",
+        "sizeBytes": 19237,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/vendor/fortemi-aiwg-index.js",
+        "reason": "required by ./scripts/lib/search-index-generator.js; required by ./src/lib/search.js; required by ./scripts/build-tenants.js",
+        "sha256": "03391622bbbac704b6528e0ecb5cda811fbc3e6a91329c63dc7c08d84cc4490d",
+        "sizeBytes": 36277,
+        "signals": [
+          "network-access",
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/lib/search.js",
+        "reason": "required by ./scripts/lib/search-index-generator.js",
+        "sha256": "f1da15325d6730c94d311f82bef4bf523287cf668760504f9381316c624b99a8",
+        "sizeBytes": 15722,
+        "signals": [
+          "network-access",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/vendor/fortemi-aiwg-index.js",
+          "src/lib/fortemi-corpus.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/layout.js",
+        "reason": "required by ./scripts/build-tenants.js",
+        "sha256": "da08833f48b91dc219b8c78cb1ba584944e296e88f020dbef346a07764b0fc83",
+        "sizeBytes": 5027,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/lib/templates.js",
+        "reason": "required by ./scripts/build-tenants.js",
+        "sha256": "b5ea54c3bdb65892a9fb6f4858913c1039fb422adc9596f34b8ecf5e16879be8",
+        "sizeBytes": 6215,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/categories.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/categories.js",
+        "reason": "required by ./src/lib/templates.js",
+        "sha256": "1fbdad4719248c97ff68fd71417bf4ad9e241017369520aedac5ac077540ec30",
+        "sizeBytes": 2071,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/lib/form-providers.js",
+        "reason": "required by ./scripts/build-tenants.js",
+        "sha256": "21d79b0e5a6709427be315337f199c2e52450ebc4d6bf747b794ba05a1404ac6",
+        "sizeBytes": 6644,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://tally.so/widgets/embed.js",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://tally.so/r/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://tally.so/embed/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/build-site.js",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "4ebaea77d33ffa000b3ffff410f8bff25c372a9c1f8355736f0be415b699bd2f",
+        "sizeBytes": 2920,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:40.165Z"
+  },
+  "hash": "sha256:80ee85623ef7eee9ce787d4aff0a921cc7f4d0f27267c8ae475f3316164bc300"
+}

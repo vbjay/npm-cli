@@ -1,0 +1,114 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f81247226f6dd818",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/config.js",
+      "scripts/plugin-autosetup.js",
+      "scripts/postinstall.js",
+      "scripts/setup.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "3950ab399b1030a5e1ddcba7f84aa8bb296f9afe0219aac3cb86e9d0357eb289",
+        "sizeBytes": 1794,
+        "signals": [
+          "reads-process-env",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/setup.js",
+          "scripts/plugin-autosetup.js",
+          "scripts/config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/setup.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "c7a37890a2d0cc9516430a7696cc5b05c36ce000654169b1fae0841fa600dd8a",
+        "sizeBytes": 8701,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/config.js",
+        "reason": "required by ./scripts/setup.js; required by ./scripts/plugin-autosetup.js; required by ./scripts/postinstall.js",
+        "sha256": "c1601aa88fe95c8f107414b05f7da2976825ea88aeb427733a558162161845d4",
+        "sizeBytes": 2629,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "obfuscation-pattern",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/plugin-autosetup.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "3b99a61735864ebc0f0846331e3364753088d4fe78f2558084629da077a548c2",
+        "sizeBytes": 1498,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/config.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:42:02.584Z"
+  },
+  "hash": "sha256:2a6f03639252b40cb0226544a862044d54dc6b6343bb7880238fd4e326656134"
+}

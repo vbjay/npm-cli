@@ -1,0 +1,137 @@
+{
+  "name": "@ua/react-native-airship",
+  "version": "26.7.0",
+  "description": "Airship plugin for React Native apps.",
+  "source": "./src/index.tsx",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "react-native": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "example": "npm run --prefix example ${COMMAND}",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "docs": "typedoc --tsconfig ./tsconfig.build.json --out docs src/index.tsx"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "airship"
+  ],
+  "repository": "https://github.com/urbanairship/react-native-airship",
+  "author": "Airship <support@airship.com> (https://docs.airship.com/)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/urbanairship/react-native-airship/issues"
+  },
+  "homepage": "https://github.com/urbanairship/react-native-airship#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.3.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
+    "@react-native-community/cli": "20.0.2",
+    "@react-native/babel-preset": "0.84.0",
+    "@react-native/eslint-config": "0.84.0",
+    "@types/react": "^19.2.0",
+    "commitlint": "^19.6.1",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "react-native-builder-bob": "^0.40.16",
+    "typedoc": "^0.28.15",
+    "turbo": "^2.5.6",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNAirshipSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.urbanairship.reactnative"
+    },
+    "ios": {
+      "componentProvider": {
+        "RNAirshipMessageView": "RNAirshipMessageView",
+        "RNAirshipEmbeddedView": "RNAirshipEmbeddedView"
+      }
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "tools": [
+      "eslint"
+    ],
+    "version": "0.55.1"
+  }
+}

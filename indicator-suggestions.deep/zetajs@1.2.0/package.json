@@ -1,0 +1,56 @@
+{
+  "name": "zetajs",
+  "version": "1.2.0",
+  "description": "Access ZetaOffice in the Browser from JavaScript via UNO",
+  "exports": {
+    "./zeta.js": "./source/zeta.js",
+    "./zetaHelper.js": "./source/zetaHelper.js",
+    "./zetaHelper.ts": "./source/zetaHelper.ts"
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "files": [
+    "/CHANGELOG.md",
+    "/LICENSE",
+    "/source/zeta.js",
+    "/source/zetaHelper.js"
+  ],
+  "keywords": [
+    "typescript",
+    "libreoffice",
+    "office"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "jest test/e2e/",
+    "test:convertpdf": "cd examples/convertpdf && npm install && npm run start-nobrowser"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allotropia/zetajs.git"
+  },
+  "keywords": [
+    "libreoffice",
+    "zetaoffice",
+    "wasm",
+    "lowa"
+  ],
+  "author": "allotropia software GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/allotropia/zetajs/issues"
+  },
+  "homepage": "https://github.com/allotropia/zetajs#readme",
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "concurrently": "^9.1.0",
+    "jest": "^29.7.0",
+    "jest-puppeteer": "^11.0.0",
+    "puppeteer": "^23.11.1",
+    "typescript": "^5.8.2"
+  }
+}

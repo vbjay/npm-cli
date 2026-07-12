@@ -1,0 +1,55 @@
+{
+  "name": "@graphox/cli",
+  "version": "0.7.1",
+  "description": "Graphox CLI - High-performance GraphQL toolset",
+  "bin": {
+    "graphox": "./bin/graphox.js"
+  },
+  "optionalDependencies": {
+    "@graphox/darwin-arm64": "0.7.1",
+    "@graphox/darwin-x64": "0.7.1",
+    "@graphox/linux-arm64": "0.7.1",
+    "@graphox/linux-x64": "0.7.1",
+    "@graphox/win32-arm64": "0.7.1",
+    "@graphox/win32-x64": "0.7.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soundtrackyourbrand/graphox",
+    "directory": "npm/graphox-cli"
+  },
+  "keywords": [
+    "graphql",
+    "lsp",
+    "language-server",
+    "codegen",
+    "typescript",
+    "rust"
+  ],
+  "author": "soundtrackyourbrand",
+  "license": "UNLICENSED",
+  "files": [
+    "bin/graphox.js",
+    "postinstall.js",
+    "README.md",
+    "graphox.schema.json"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "scripts": {
+    "postinstall": "node postinstall.js"
+  }
+}

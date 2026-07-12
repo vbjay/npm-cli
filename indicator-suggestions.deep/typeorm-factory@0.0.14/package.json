@@ -1,0 +1,68 @@
+{
+  "name": "typeorm-factory",
+  "version": "0.0.14",
+  "description": "A factory library for typeorm",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "repository": "https://github.com/antonversal/typeorm-factory.git",
+  "bugs": {
+    "url": "https://github.com/antonversal/typeorm-factory/issues"
+  },
+  "author": "Anton Versal <anton.versal@gmail.com>",
+  "keywords": [
+    "typeorm",
+    "factory",
+    "test",
+    "tests",
+    "testing",
+    "unit",
+    "typescript",
+    "javascript",
+    "orm"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "lint": "tslint -p .",
+    "build": "yarn tsc -p tsconfigBuild.json",
+    "test:ci": "jest --ci --testResultsProcessor=\"./node_modules/jest-junit-reporter\" --coverage",
+    "test": "jest",
+    "test:watch": "yarn test --watch",
+    "prepare": "yarn build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc --noEmit && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "server/**/*.ts": [
+      "yarn lint --fix",
+      "git add"
+    ],
+    "*.{js,ts,md}": [
+      "yarn prettier --write",
+      "git add"
+    ]
+  },
+  "peerDependencies": {
+    "typeorm": "^0.2.18"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.14",
+    "@types/node": "^12.0.8",
+    "coveralls": "^3.0.4",
+    "husky": "^2.4.1",
+    "jest-cli": "^24.8.0",
+    "jest-junit-reporter": "^1.1.0",
+    "jest-watch-typeahead": "^0.3.1",
+    "lint-staged": "^8.2.1",
+    "pg": "^7.11.0",
+    "prettier": "^1.18.2",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typeorm": "^0.2.7",
+    "typescript": "^3.5.2"
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "25a61642b4d3a260",
+    "fetchedFiles": [
+      "npm/scripts/lib.js",
+      "npm/scripts/pathfix.js",
+      "npm/scripts/postinstall.js",
+      "npm/scripts/preflight.js",
+      "npm/scripts/shortcut.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "23542deae5a4e40ed8837ca1dff01638fb13ecc2d163b6be9dbc8b3ef93002ae",
+        "sizeBytes": 5573,
+        "signals": [
+          "uses-child-process",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/scripts/lib.js",
+          "npm/scripts/preflight.js",
+          "npm/scripts/pathfix.js",
+          "npm/scripts/shortcut.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/scripts/lib.js",
+        "reason": "required by ./npm/scripts/postinstall.js; required by ./npm/scripts/preflight.js; required by ./npm/scripts/shortcut.js",
+        "sha256": "d6b1a67e2c6ec03eb863e034b27a44bbbde9b5151bc8885b524172f66b62ca6a",
+        "sizeBytes": 1538,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "npm/scripts/preflight.js",
+        "reason": "required by ./npm/scripts/postinstall.js",
+        "sha256": "dbd99f17eea14e4531108c71a6f0bb682c0fd537b98feddd9374ae18836de7e1",
+        "sizeBytes": 2490,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/scripts/lib.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/scripts/pathfix.js",
+        "reason": "required by ./npm/scripts/postinstall.js",
+        "sha256": "d1049fce1da525db3e0add910d3517309f4d95bc29915fd719b2ef6227bdb532",
+        "sizeBytes": 4908,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "modifies-shell-config",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "npm/scripts/shortcut.js",
+        "reason": "required by ./npm/scripts/postinstall.js",
+        "sha256": "d5d277e882a07d9890e4ad1395562347ee2fc10def7bc37d49e016c7411c422a",
+        "sizeBytes": 4202,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/scripts/lib.js"
+        ],
+        "urls": [
+          {
+            "url": "http://www.apple.com/DTDs/PropertyList-1.0.dtd",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:18.141Z"
+  },
+  "hash": "sha256:22c53a4a4b76a5754ad3f3dafd9c571e161f48d1c11e324a9aea75512a530f5a"
+}

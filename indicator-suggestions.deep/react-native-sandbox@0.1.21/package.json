@@ -1,0 +1,43 @@
+{
+  "name": "react-native-sandbox",
+  "version": "0.1.21",
+  "description": "A sandbox environment for building, documenting, and presenting components in React Native",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpenfold/react-native-sandbox.git"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  },
+  "bin": {
+    "sandbox-loader": "scripts/loadSandboxes.cjs"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-native": ">=0.60"
+  },
+  "keywords": [
+    "sandbox",
+    "components",
+    "react-native"
+  ],
+  "author": "Ryan Penfold",
+  "license": "ISC",
+  "dependencies": {
+    "react-native-collapsible": "1.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.20",
+    "@types/react-native": "0.70.3",
+    "glob": "7.1.6",
+    "typescript": "4.8.3"
+  },
+  "bugs": {
+    "url": "https://github.com/rpenfold/react-native-sandbox/issues"
+  },
+  "homepage": "https://github.com/rpenfold/react-native-sandbox#readme"
+}

@@ -1,0 +1,146 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2057f6f16c962542",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/download-binary.js",
+      "scripts/download-cloudflared.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "1349d4cc90f3b196141e5d31ed29395f8bda67917e097f55e5a63964d1341d2f",
+        "sizeBytes": 3685,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/download-binary.js",
+          "scripts/download-cloudflared.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/download-binary.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "031850a2ceab4712243d31cf54a68fa5db546731a68a7fd6e22c8ef0d6c749f8",
+        "sizeBytes": 10018,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/${REPO}/issues",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/download-cloudflared.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "99782a9d5ff49f12ad3d3f79f2eb48bdbdecf32a04f262b731dc0d1881500904",
+        "sizeBytes": 9170,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/cloudflare/cloudflared/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:31.365Z"
+  },
+  "hash": "sha256:42b04ee8316377bd8f2f65d1fbed688b0e069e2cd4fb6fd68a1371a80d6cf196"
+}

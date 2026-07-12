@@ -1,0 +1,162 @@
+{
+  "name": "react-native-fast-confetti",
+  "version": "2.0.1",
+  "description": "The fastest confetti animation library in react native",
+  "sideEffects": false,
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!coverage",
+    "!coverage/**",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "bun --cwd example run",
+    "kitchen-sink": "bun --cwd kitchen-sink run",
+    "test": "jest --passWithNoTests",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlirezaHadjar/react-native-fast-confetti.git"
+  },
+  "author": "Alireza Hadjar <asiahadjar@gmail.com> (https://github.com/AlirezaHadjar)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlirezaHadjar/react-native-fast-confetti/issues"
+  },
+  "homepage": "https://github.com/AlirezaHadjar/react-native-fast-confetti#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native/babel-preset": "0.85.3",
+    "@react-native/jest-preset": "0.85.3",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@shopify/react-native-skia": "2.6.2",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.0",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "^56.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react-compiler": "^19.1.0-rc.2",
+    "hermes-eslint": "^0.34.0",
+    "jest": "^30.3.0",
+    "prettier": "^3.8.1",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-builder-bob": "^0.40.9",
+    "react-native-reanimated": "4.3.1",
+    "react-native-worklets": "0.8.3",
+    "release-it": "^19.2.4",
+    "typescript": "~6.0.3"
+  },
+  "peerDependencies": {
+    "@shopify/react-native-skia": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "*",
+    "react-native-worklets": "*"
+  },
+  "workspaces": [
+    "example",
+    "kitchen-sink"
+  ],
+  "packageManager": "bun@1.2.19",
+  "overrides": {
+    "zod-validation-error": "4.0.2"
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/kitchen-sink/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.50.2"
+  }
+}

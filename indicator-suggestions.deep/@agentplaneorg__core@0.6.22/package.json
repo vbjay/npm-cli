@@ -1,0 +1,111 @@
+{
+  "name": "@agentplaneorg/core",
+  "version": "0.6.22",
+  "description": "Core libraries for Agentplane repository-native task, policy, and verification workflows.",
+  "keywords": [
+    "agentplane",
+    "agentplane-framework",
+    "coding-agent",
+    "agent-audit",
+    "git-workflow",
+    "core",
+    "tasks",
+    "workflow",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "Basilisk Labs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basilisk-labs/agentplane.git"
+  },
+  "homepage": "https://agentplane.org",
+  "bugs": {
+    "url": "https://github.com/basilisk-labs/agentplane/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20.5.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./commit": {
+      "types": "./dist/commit/index.d.ts",
+      "import": "./dist/commit/index.js",
+      "default": "./dist/commit/index.js"
+    },
+    "./config": {
+      "types": "./dist/config/index.d.ts",
+      "import": "./dist/config/index.js",
+      "default": "./dist/config/index.js"
+    },
+    "./fs": {
+      "types": "./dist/fs/index.d.ts",
+      "import": "./dist/fs/index.js",
+      "default": "./dist/fs/index.js"
+    },
+    "./git": {
+      "types": "./dist/git/index.d.ts",
+      "import": "./dist/git/index.js",
+      "default": "./dist/git/index.js"
+    },
+    "./logger": {
+      "types": "./dist/logger.d.ts",
+      "import": "./dist/logger.js",
+      "default": "./dist/logger.js"
+    },
+    "./process": {
+      "types": "./dist/process/index.d.ts",
+      "import": "./dist/process/index.js",
+      "default": "./dist/process/index.js"
+    },
+    "./project": {
+      "types": "./dist/project/index.d.ts",
+      "import": "./dist/project/index.js",
+      "default": "./dist/project/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas/index.d.ts",
+      "import": "./dist/schemas/index.js",
+      "default": "./dist/schemas/index.js"
+    },
+    "./tasks": {
+      "types": "./dist/tasks/index.d.ts",
+      "import": "./dist/tasks/index.js",
+      "default": "./dist/tasks/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "schemas",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true}); require('node:fs').rmSync('tsconfig.tsbuildinfo',{force:true});\"",
+    "build": "node ../../scripts/checks/run-typescript-build.mjs && bun run build:bundle",
+    "build:bundle": "node ../../scripts/release/prune-package-js.mjs dist && node ../../scripts/checks/run-tsup-build.mjs && node ../../scripts/release/manifest.mjs build .",
+    "typecheck": "tsc -b",
+    "test": "cd ../.. && vitest --config vitest.workspace.ts run --project core",
+    "prepack": "bun run clean && bun run build && node ../../scripts/release/manifest.mjs sanitize .",
+    "postpack": "node ../../scripts/release/manifest.mjs build .",
+    "prepublishOnly": "node ../../scripts/release/enforce-github-publish.mjs && npm run prepack"
+  },
+  "dependencies": {
+    "canonicalize": "^3.0.0",
+    "execa": "^9.6.1",
+    "yaml": "^2.8.2",
+    "zod": "^4.4.3",
+    "zod-validation-error": "^5.0.0"
+  }
+}

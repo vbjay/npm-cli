@@ -1,0 +1,52 @@
+{
+  "name": "optimize-wasm-webpack-plugin",
+  "version": "1.0.12",
+  "description": "Webpack plugin for optimizing the size of wasm files",
+  "main": "lib/plugin.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "rm -rf ./lib && tsc",
+    "serve": "yarn test && cd src/test_output/$1 && npx http-server",
+    "prepare": "yarn test --no-cache && yarn build",
+    "release": "node ./hack/release"
+  },
+  "author": "Jacob LeGrone <npm@jacob.work> (https://jacoblegrone.com)",
+  "keywords": [
+    "webassembly",
+    "wasm",
+    "webpack"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/jlegrone/optimize-wasm-webpack-plugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jlegrone/optimize-wasm-webpack-plugin.git"
+  },
+  "release": {
+    "master": "stable"
+  },
+  "engines": {
+    "node": ">= 6.11.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/webpack": "^4.4.22",
+    "codecov": "^3.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.1.0",
+    "rimraf": "^2.6.2",
+    "semantic-release": "^15.13.3",
+    "ts-jest": "^24.0.0",
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "binaryen": "^85.0.0",
+    "webpack-sources": "^1.3.0"
+  }
+}

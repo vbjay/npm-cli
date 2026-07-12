@@ -1,0 +1,83 @@
+{
+  "name": "@lateos/npm-scan",
+  "version": "1.2.9",
+  "description": "Production-grade npm supply chain vulnerability scanner. Detects 100% of 3 real May 2026 supply chain campaigns (dependency confusion, obfuscation, impersonation) with 0% false positive rate on top 1,000 npm packages.",
+  "main": "backend/index.js",
+  "bin": {
+    "npm-scan": "cli/cli.js"
+  },
+  "type": "module",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lateos-ai/npm-scan.git"
+  },
+  "readme": "README.md",
+  "keywords": [
+    "npm",
+    "security",
+    "supply-chain",
+    "malware-detection",
+    "typosquat",
+    "dependency-confusion",
+    "obfuscation-detection",
+    "validated-detectors"
+  ],
+  "scripts": {
+    "dev": "node cli/cli.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "npm run lint && npm run format:check && npm test",
+    "test": "node --test",
+    "test:coverage": "node --experimental-test-coverage --test",
+    "test:verbose": "node --test --test-reporter spec",
+    "prepare": "husky",
+    "build": "echo 'Build stub'",
+    "corpus": "node tests/corpus/run.js",
+    "validate:campaigns": "node backend/scripts/validate-detectors.js all",
+    "validate:analyze": "node backend/scripts/analyze-validation.js",
+    "calibrate:fetch": "node backend/scripts/fetch-top-packages.js",
+    "calibrate:fps": "node backend/scripts/detect-false-positives.js",
+    "calibrate:analyze": "node backend/scripts/analyze-false-positives.js"
+  },
+  "lint-staged": {
+    "**/package{,-lock}.json": "sh -c 'node cli/cli.js scan-lockfile --fail-on high'",
+    "**/yarn.lock": "sh -c 'node cli/cli.js scan-lockfile --fail-on high --yarn'",
+    "**/pnpm-lock.yaml": "sh -c 'node cli/cli.js scan-lockfile --fail-on high --pnpm'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "files": [
+    "backend/",
+    "cli/",
+    "README.md",
+    "VALIDATION.md",
+    "CHANGELOG.md",
+    "LICENSING.md"
+  ],
+  "dependencies": {
+    "acorn": "^8.16.0",
+    "commander": "^14.0.3",
+    "glob": "^13.0.6",
+    "js-yaml": "^4.1.1",
+    "pdf-lib": "^1.17.1",
+    "sql.js": "^1.11.0",
+    "tar": "^7.5.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3"
+  }
+}

@@ -1,0 +1,126 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+// Compose compiler plugin (bundled with Kotlin 2.0). Required because this RN library hosts the
+// Compose `BillingBearPaywall` renderer in a ComposeView (BillingBearPaywallView.kt calls setContent).
+apply plugin: "org.jetbrains.kotlin.plugin.compose"
+// React Native Gradle plugin — runs codegen for this library so the Fabric (New Architecture) spec
+// interfaces (BillingBearPaywallViewManagerInterface / BillingBearPaywallViewManagerDelegate, under
+// com.facebook.react.viewmanagers) are generated from package.json's `codegenConfig`
+// ("BillingBearPaywallViewSpec", type "components"). Applied only when the plugin is on the
+// classpath (the host app's buildscript provides it via @react-native/gradle-plugin); guarded so a
+// bare/standalone Gradle invocation without it doesn't fail to configure. When absent, the generated
+// classes come from the host app's app-level codegen instead (autolinking still picks up the
+// codegenConfig), so the library compiles against them at app-assembly time.
+if (project.findProperty("react.internal.disableLibraryCodegen") != "true") {
+  pluginManager.withPlugin("com.facebook.react") {
+    react {
+      // The JS spec dir (relative to this android/ dir → ../src). Mirrors package.json jsSrcsDir.
+      jsRootDir = file("../src")
+      libraryName = "BillingBearPaywallViewSpec"
+      codegenJavaPackageName = "io.billingbear.rn"
+    }
+  }
+  // Apply the plugin if the host app put it on the buildscript classpath. `plugins {}`/`apply` is a
+  // no-op when the id isn't resolvable, so we apply it defensively under a try so a standalone
+  // `./gradlew` (no RN plugin available) still configures and compiles against host-generated specs.
+  try {
+    apply plugin: "com.facebook.react"
+  } catch (Throwable ignored) {
+    logger.lifecycle("@billingbear/purchases: com.facebook.react plugin not on classpath; " +
+      "Fabric spec codegen will run from the host app instead.")
+  }
+}
+
+// Resolve SDK levels from the host app's root ext when present, with sane fallbacks for a
+// standalone build. The app's buildscript provides the Android Gradle Plugin + Kotlin classpath
+// (this is an autolinked library inside an RN app), so we deliberately do NOT declare a
+// buildscript/AGP/Kotlin classpath here.
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+  namespace "io.billingbear.rn"
+  // compileSdk 34 is the minimum that satisfies the Compose BOM + Media3 transitive deps pulled in
+  // by the Android renderer module; fall back to it if the host pins something lower.
+  compileSdkVersion Math.max(safeExtGet("compileSdkVersion", 34) as int, 34)
+
+  defaultConfig {
+    // The Compose `BillingBearPaywall` renderer (sdk/android) requires minSdk 24.
+    minSdkVersion Math.max(safeExtGet("minSdkVersion", 24) as int, 24)
+    targetSdkVersion safeExtGet("targetSdkVersion", 34)
+  }
+
+  buildFeatures {
+    compose true
+  }
+
+  // Kotlin 2.0 + Compose require JVM target 17 (matches the renderer module).
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  // Huawei Maven repo — hosts com.huawei.hms:iap (HmsBillingCore). Only needed by AppGallery builds;
+  // a no-op for others. Hosts that already integrate HMS (e.g. @hmscore) have this repo too.
+  maven { url 'https://developer.huawei.com/repo/' }
+  // The BillingBear Android renderer (io.billingbear:purchases) is consumed from the local Maven
+  // repo. In a monorepo, publish it first with:  (cd ../../android && ./gradlew publishToMavenLocal)
+  // For a published SDK this resolves from the configured remote Maven repo instead.
+  mavenLocal()
+}
+
+dependencies {
+  // Provided by the host app's React Native (autolinking); version is resolved from the app.
+  implementation "com.facebook.react:react-android"
+  // The native Compose paywall renderer (the standalone Android SDK module, sdk/android), consumed
+  // via Maven so it resolves whether published to mavenLocal (monorepo) or a remote repo. Brings
+  // Compose, Coil, Media3, Lottie-compose, kotlinx-serialization (with the generated
+  // PaywallResponse.serializer()) transitively.
+  implementation "io.billingbear:purchases:0.7.0"
+
+  // kotlinx-serialization-json used directly here to decode the documentJson prop into the renderer's
+  // @Serializable PaywallResponse / PaywallDocument. The renderer exposes it only as `implementation`,
+  // so we declare it directly (same version as the renderer module to avoid a classpath split).
+  implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
+
+  // Compose used directly by this library (ComposeView host + setContent). The BOM keeps versions
+  // in lockstep with the renderer module's BOM.
+  implementation platform("androidx.compose:compose-bom:2024.09.03")
+  implementation "androidx.compose.runtime:runtime"
+  implementation "androidx.compose.ui:ui"
+  // ViewTree lifecycle / saved-state owners required for a ComposeView to compose inside an RN view.
+  implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.6"
+  implementation "androidx.savedstate:savedstate:1.2.1"
+
+  // IAP bridge (BillingBearIap) — Play Billing + coroutines, same versions as the native Android SDK.
+  implementation "com.android.billingclient:billing-ktx:7.0.0"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+  // Amazon Appstore In-App Purchasing (com.amazon.device.iap) — used by AmazonBillingCore on Amazon
+  // Appstore builds. Bundled in every APK but only exercised when the host configures store="amazon"
+  // (Google devices never call into it). Verify the coordinate/version against the current Amazon
+  // Appstore SDK before shipping (older integrations ship the in-app-purchasing jar in libs/).
+  implementation "com.amazon.device:amazon-appstore-sdk:3.0.4"
+  // Huawei AppGallery In-App Purchases (com.huawei.hms.iap) — used by HmsBillingCore on AppGallery
+  // builds. Only exercised when the host configures store="huawei"; a no-op on Google/Amazon devices.
+  // Verify the version against the current HMS IAP SDK before shipping.
+  implementation "com.huawei.hms:iap:6.13.0.300"
+
+  // Pure-JVM unit tests for the IAP bridge pure logic (mapping, dedup key, finish idempotency).
+  // No Robolectric/emulator required — they only touch the extracted pure helpers + Play's
+  // BillingResult POJO. Run with `./gradlew :<module>:testDebugUnitTest`.
+  testImplementation "junit:junit:4.13.2"
+}

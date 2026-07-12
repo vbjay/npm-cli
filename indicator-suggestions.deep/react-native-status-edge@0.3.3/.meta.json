@@ -1,0 +1,152 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "89fdb7cda4c4d03a",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/postinstall.js",
+      "scripts/utils.js",
+      "scripts/wizard.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "start",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "start@5.1.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "9b14f47832cfd9d4874286435ebfb29c90927ca3e2810abbe00038507c8c9e2c",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "631b45760bd74b350770cdbeec85735e6c62dbe3501a85701a1cf98eadebcc67",
+        "sizeBytes": 828,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/utils.js",
+          "scripts/wizard.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/utils.js",
+        "reason": "required by ./scripts/postinstall.js; required by ./scripts/wizard.js",
+        "sha256": "c9cea00433579c82f706824f63289202613b158bc82556b4fc2161eb30a70995",
+        "sizeBytes": 4254,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "obfuscation-pattern",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/wizard.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "b091cb8e34e77ac32133c6aa4e851a273649527e97b0e505d15b24b292ba2488",
+        "sizeBytes": 13321,
+        "signals": [
+          "uses-child-process",
+          "native-build",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/utils.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:55.500Z"
+  },
+  "hash": "sha256:1d3e8ffc09ef46c063a5c39a82db747d449de688b15196e28c185c9d573b0584"
+}

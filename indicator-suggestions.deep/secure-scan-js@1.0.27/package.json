@@ -1,0 +1,71 @@
+{
+  "name": "secure-scan-js",
+  "version": "1.0.27",
+  "description": "A JavaScript implementation of Yelp's detect-secrets tool - no Python required",
+  "type": "commonjs",
+  "main": "wasm-version/dist/index.js",
+  "bin": {
+    "secure-scan-js": "wasm-version/bin/cli.js",
+    "secure-scan-js-dev": "wasm-version/bin/cli-dev.js"
+  },
+  "scripts": {
+    "build": "cd wasm-version && npm ci && npm run build",
+    "test": "cd wasm-version && npm run build && node test/test.js",
+    "prepublishOnly": "npm run build",
+    "start": "ts-node wasm-version/bin/cli.js",
+    "scan-dev": "ts-node wasm-version/bin/cli-dev.js",
+    "postinstall": "node wasm-version/scripts/install-gitleaks.js",
+    "custom:login": "node wasm-version/scripts/login.js",
+    "custom:status": "node wasm-version/scripts/status.js",
+    "custom:logout": "node wasm-version/scripts/logout.js",
+    "version": "node -e \"console.log(require('./package.json').version)\""
+  },
+  "keywords": [
+    "security",
+    "secrets",
+    "scanner",
+    "detect-secrets",
+    "api-keys",
+    "credentials",
+    "security-scanner",
+    "secret-detection",
+    "webassembly",
+    "wasm",
+    "yelp"
+  ],
+  "author": "Your Name <your.email@example.com> (https://your-website.com)",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "chalk": "^4.1.2",
+    "commander": "^9.4.0",
+    "configstore": "^6.0.0",
+    "express": "^4.18.2",
+    "open": "^8.4.2",
+    "ora": "^5.4.1",
+    "pyodide": "^0.23.4",
+    "secure-scan-js": "^1.0.9"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "ia32",
+    "arm64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Expedey/secure-scan-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Expedey/secure-scan-js/issues"
+  },
+  "homepage": "https://github.com/Expedey/secure-scan-js#readme",
+  "engineStrict": true
+}

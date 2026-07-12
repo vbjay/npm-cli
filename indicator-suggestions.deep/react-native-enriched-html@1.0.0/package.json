@@ -1,0 +1,235 @@
+{
+  "name": "react-native-enriched-html",
+  "version": "1.0.0",
+  "description": "HTML-based Rich Text solution for React Native",
+  "source": "./src/index.tsx",
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "react-native": {
+        "source": "./src/index.native.tsx",
+        "types": "./lib/typescript/src/index.native.d.ts",
+        "default": "./lib/module/index.native.js"
+      },
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-enriched-example",
+    "example-web": "yarn workspace react-native-enriched-web-example",
+    "test": "jest --passWithNoTests",
+    "typecheck": "yarn typecheck:lib && yarn typecheck:example && yarn typecheck:example-web",
+    "typecheck:lib": "tsc -p tsconfig.build.json",
+    "typecheck:example": "tsc -p apps/example/tsconfig.json",
+    "typecheck:example-web": "tsc -p apps/example-web/tsconfig.app.json",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:android": "cd apps/example/android && ./gradlew lintVerify",
+    "lint:android:fix": "cd apps/example/android && ./gradlew lintFormat",
+    "lint-clang:ios": "find ios/ \\( -iname \"*.h\" -o -iname \"*.m\" -o -iname \"*.mm\" \\) | grep -v -e Pods -e build -e generated | xargs npx clang-format -i -n --Werror",
+    "lint-clang:ios:fix": "find ios/ \\( -iname \"*.h\" -o -iname \"*.m\" -o -iname \"*.mm\" \\) | grep -v -e Pods -e build -e generated | xargs npx clang-format -i",
+    "lint-clang:android": "find android/ \\( -iname \"*.h\" -o -iname \"*.cpp\" \\) | grep -v -e build -e generated | xargs npx clang-format -i -n --Werror",
+    "lint-clang:android:fix": "find android/ \\( -iname \"*.h\" -o -iname \"*.cpp\" \\) | grep -v -e build -e generated | xargs npx clang-format -i",
+    "lint-clang": "yarn lint-clang:ios && yarn lint-clang:android",
+    "lint-clang:fix": "yarn lint-clang:ios:fix && yarn lint-clang:android:fix",
+    "clean": "./scripts/git-clean.sh",
+    "prepare": "bob build",
+    "release": "release-it",
+    "android-studio": "open -a 'Android Studio' apps/example/android",
+    "xcode": "open -a 'Xcode' apps/example/ios/EnrichedTextInputExample.xcworkspace",
+    "test:e2e:mobile": ".maestro/scripts/run-tests-all.sh",
+    "test:e2e:android": ".maestro/scripts/run-tests.sh --platform android",
+    "test:e2e:ios": ".maestro/scripts/run-tests.sh --platform ios",
+    "test:e2e:web": ".playwright/scripts/run-tests.sh",
+    "test:e2e": "bash -c '.maestro/scripts/run-tests-all.sh \"$@\" && .playwright/scripts/run-tests.sh \"$@\"' _"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/software-mansion/react-native-enriched-html.git"
+  },
+  "author": "Software Mansion <contact@swmansion.com> (https://swmansion.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/software-mansion/react-native-enriched-html/issues"
+  },
+  "homepage": "https://github.com/software-mansion/react-native-enriched-html#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@tiptap/core": "3.20.4",
+    "@tiptap/extension-blockquote": "3.20.4",
+    "@tiptap/extension-bold": "3.20.4",
+    "@tiptap/extension-code": "3.20.4",
+    "@tiptap/extension-document": "3.20.4",
+    "@tiptap/extension-heading": "3.20.4",
+    "@tiptap/extension-history": "3.20.4",
+    "@tiptap/extension-image": "3.20.4",
+    "@tiptap/extension-italic": "3.20.4",
+    "@tiptap/extension-link": "3.20.4",
+    "@tiptap/extension-list": "3.20.4",
+    "@tiptap/extension-paragraph": "3.20.4",
+    "@tiptap/extension-strike": "3.20.4",
+    "@tiptap/extension-text": "3.20.4",
+    "@tiptap/extension-underline": "3.20.4",
+    "@tiptap/extensions": "3.20.4",
+    "@tiptap/pm": "3.20.4",
+    "@tiptap/react": "3.20.4"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@playwright/test": "1.58.2",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native/eslint-config": "^0.81.0",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "clang-format": "^1.8.0",
+    "commitlint": "^19.6.1",
+    "del-cli": "^5.1.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^29.7.0",
+    "playwright": "1.58.2",
+    "prettier": "^3.0.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.0",
+    "react-native-builder-bob": "^0.40.18",
+    "release-it": "^17.10.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "apps/example",
+    "apps/example-web"
+  ],
+  "packageManager": "yarn@4.13.0",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/apps/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/.playwright/",
+      "<rootDir>/apps/example-web/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "codegen",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "ReactNativeEnrichedSpec",
+    "type": "components",
+    "jsSrcsDir": "src/spec",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.swmansion.enriched"
+    },
+    "ios": {
+      "componentProvider": {
+        "EnrichedTextView": "EnrichedTextView",
+        "EnrichedTextInputView": "EnrichedTextInputView"
+      }
+    },
+    "includesGeneratedCode": true
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "version": "0.49.8"
+  }
+}

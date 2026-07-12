@@ -1,0 +1,44 @@
+{
+  "name": "node-enigo",
+  "version": "1.3.0",
+  "description": "Node.js binding for Rust enigo library - keyboard and mouse automation",
+  "main": "index.js",
+  "scripts": {
+    "build": "cargo build --release",
+    "postbuild": "node scripts/copy-binary.js",
+    "test": "node test.js",
+    "prepublishOnly": "npm run build",
+    "install": "node scripts/download-binary.js || npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "enigo",
+    "automation",
+    "keyboard",
+    "mouse",
+    "input",
+    "typing",
+    "rust"
+  ],
+  "files": [
+    "index.js",
+    "index.node",
+    "node-enigo-linux-x64.node",
+    "node-enigo-macos-arm64.node",
+    "README.md",
+    "scripts/download-binary.js",
+    "scripts/copy-binary.js"
+  ],
+  "engines": {
+    "node": ">= 10.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "download": "^8.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/node-enigo.git"
+  }
+}

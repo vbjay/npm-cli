@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "82482072588c80c2",
+    "fetchedFiles": [
+      "local-binary-cache.mjs",
+      "package.json",
+      "postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "3a0be46738b5142ddba9ee4a0eb6fa177d4ad104bff845b23e7c8f6ec7fd6a12",
+        "sizeBytes": 4115,
+        "signals": [
+          "writes-file",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "local-binary-cache.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "local-binary-cache.mjs",
+        "reason": "required by ./postinstall.mjs",
+        "sha256": "8c002edd598b3dfb5dccbd65740b9bd68a4027d85a62cc66be75e1e268c2a60b",
+        "sizeBytes": 2336,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:07.298Z"
+  },
+  "hash": "sha256:46528c4594d7a97dae2f72be79456cb78ac0bb03a81db2cb3669c5b6d2cc803a"
+}

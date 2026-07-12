@@ -1,0 +1,73 @@
+{
+  "name": "outdated-plus",
+  "version": "1.3.3",
+  "description": "CLI tool to check npm outdated packages with dates, colors, and markdown support",
+  "main": "dist/index.js",
+  "bin": {
+    "outdated-plus": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -w",
+    "start": "node dist/index.js",
+    "test": "npm run build && vitest run",
+    "test:watch": "npm run build && vitest",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format:check": "prettier --check src tests",
+    "format:write": "prettier --write src tests",
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix",
+    "audit:signatures": "npm audit signatures",
+    "security:check": "npm run audit && npm run audit:signatures",
+    "deps:check": "npm run build && node dist/index.js",
+    "deps:check-all": "npm run build && node dist/index.js --check-all",
+    "ci": "npm ci",
+    "ci:local": "npm run lint && npm run format:check && npm run test && npm run build && npm run security:check",
+    "ci:local:all": "zsh scripts/ci-local-all.sh",
+    "install:clean": "rm -rf node_modules package-lock.json && npm install",
+    "postinstall": "chmod +x dist/index.js || true",
+    "prepublishOnly": "npm run lint && npm run format:check && npm run test && npm run build"
+  },
+  "keywords": [
+    "npm",
+    "outdated",
+    "dependencies",
+    "cli",
+    "dates",
+    "package-management"
+  ],
+  "author": "AlexF090",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexF090/outdated-plus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexF090/outdated-plus/issues"
+  },
+  "homepage": "https://github.com/AlexF090/outdated-plus#readme",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.0.1",
+    "@typescript-eslint/eslint-plugin": "8.62.1",
+    "@typescript-eslint/parser": "8.62.1",
+    "eslint": "10.6.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.6",
+    "prettier": "3.9.4",
+    "typescript": "6.0.3",
+    "vitest": "4.1.9"
+  }
+}

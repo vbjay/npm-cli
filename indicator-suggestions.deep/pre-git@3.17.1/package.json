@@ -1,0 +1,124 @@
+{
+  "name": "pre-git",
+  "description": "Automatically install pre-commit / pre-git hooks for your npm modules.",
+  "version": "3.17.1",
+  "author": "Arnout Kazemier <opensource@observe.it>",
+  "bin": {
+    "_pre-git-helpers": "bin/_pre-git-helpers",
+    "commit-msg": "bin/commit-msg",
+    "commit-wizard": "bin/commit-wizard",
+    "post-commit": "bin/post-commit",
+    "post-checkout": "bin/post-checkout",
+    "post-merge": "bin/post-merge",
+    "pre-commit": "bin/pre-commit",
+    "pre-push": "bin/pre-push"
+  },
+  "bugs": {
+    "url": "https://github.com/bahmutov/pre-git/issues"
+  },
+  "config": {
+    "next-update": {
+      "skip": [
+        "grunt",
+        "grunt-cli"
+      ]
+    },
+    "pre-git": {
+      "commit-msg": "simple",
+      "demo": [
+        "echo this is command 1",
+        "echo this is command 2",
+        "echo this is command 3"
+      ],
+      "demo-error": [
+        "echo this is command 1",
+        "echo \"this is failing command 2\" && exit -1",
+        "echo this is command 3"
+      ],
+      "pre-commit": [
+        "npm run build"
+      ]
+    }
+  },
+  "contributors": [
+    "Arnout Kazemier <opensource@observe.it>",
+    "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+    "Tauren Mills http://tauren.com"
+  ],
+  "dependencies": {
+    "bluebird": "3.5.1",
+    "chalk": "2.3.2",
+    "check-more-types": "2.24.0",
+    "conventional-commit-message": "1.1.0",
+    "cz-conventional-changelog": "2.1.0",
+    "debug": "3.1.0",
+    "ggit": "2.4.2",
+    "inquirer": "3.3.0",
+    "lazy-ass": "1.6.0",
+    "require-relative": "0.8.7",
+    "shelljs": "0.8.1",
+    "simple-commit-message": "4.0.3",
+    "validate-commit-msg": "2.14.0",
+    "word-wrap": "1.2.3"
+  },
+  "devDependencies": {
+    "git-issues": "1.3.1",
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-jshint": "1.1.0",
+    "grunt-deps-ok": "0.9.0",
+    "grunt-nice-package": "0.10.4",
+    "jshint-summary": "0.4.0",
+    "matchdep": "1.0.1",
+    "mocha": "5.0.4",
+    "next-update-travis": "1.7.1",
+    "semantic-release": "15.0.3",
+    "travis-deploy-once": "4.4.0"
+  },
+  "engines": {
+    "node": "> 0.8.*"
+  },
+  "files": [
+    "bin",
+    "src/*.js",
+    "!src/*-spec.js",
+    "hooks",
+    "CHANGELOG.md"
+  ],
+  "homepage": "https://github.com/bahmutov/pre-git",
+  "keywords": [
+    "git",
+    "hooks",
+    "npm",
+    "pre-commit",
+    "pre-push",
+    "precommit",
+    "test"
+  ],
+  "license": "MIT",
+  "main": "src/pre-git.js",
+  "release": {
+    "analyzeCommits": "simple-commit-message"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bahmutov/pre-git.git"
+  },
+  "scripts": {
+    "build": "grunt",
+    "demo": "DEBUG=pre-git node --harmony src/pre-git.js",
+    "demo-commit-message": "TEST_GIT_MESSAGE='chore(test): test message' DEBUG=pre-git NODE_PATH=.. node bin/commit-msg.js",
+    "demo-commit-wizard": "DEBUG=pre-git NODE_PATH=.. node bin/commit-wizard.js",
+    "e2e": "./test/e2e.sh",
+    "e2e-pre-git-disabled": "./test/e2e-pre-git-disabled.sh",
+    "issues": "git-issues",
+    "mocha": "mocha --harmony src/*-spec.js",
+    "postinstall": "node src/install.js",
+    "semantic-release": "semantic-release",
+    "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
+    "test": "grunt",
+    "test-allow-untracked-files": "./test/e2e-allow-untracked-files.sh",
+    "test-no-commit-on-test-fail": "./test/e2e-test-fails.sh",
+    "travis-deploy-once": "travis-deploy-once"
+  }
+}

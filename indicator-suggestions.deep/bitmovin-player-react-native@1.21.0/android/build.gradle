@@ -1,0 +1,115 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import groovy.json.JsonSlurper
+
+// Read version from package.json
+def packageJsonFile = new File("$rootDir/../package.json")
+def packageJson = new JsonSlurper().parseText(packageJsonFile.text)
+def packageVersion = packageJson.version
+
+buildscript {
+    // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+    def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["BitmovinPlayerReactNative_kotlinVersion"]
+    def ktlint_version = rootProject.ext.has("ktlintVersion") ? rootProject.ext.get("ktlintVersion") : project.properties["BitmovinPlayerReactNative_ktlintVersion"]
+    def android_plugin_version = rootProject.ext.has("androidPluginVersion") ? rootProject.ext.get("androidPluginVersion") : project.properties["BitmovinPlayerReactNative_androidPluginVersion"]
+
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$android_plugin_version"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlint_version"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+
+group = 'com.bitmovin.player.reactnative'
+version = packageVersion
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+// If you want to use the managed Android SDK versions from expo-modules-core, set this to true.
+// The Android SDK versions will be bumped from time to time in SDK releases and may introduce breaking changes in your module code.
+// Most of the time, you may like to manage the Android SDK versions yourself.
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+  useDefaultAndroidSdkVersions()
+} else {
+  buildscript {
+    // Simple helper that allows the root project to override versions declared by this library.
+    ext.safeExtGet = { prop, fallback ->
+      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+  }
+  project.android {
+    compileSdkVersion safeExtGet("compileSdkVersion", 34)
+    defaultConfig {
+      minSdkVersion safeExtGet("minSdkVersion", 24)
+      targetSdkVersion safeExtGet("targetSdkVersion", 35)
+    }
+  }
+}
+
+android {
+  namespace "com.bitmovin.player.reactnative"
+  
+  defaultConfig {
+    versionCode 1
+    versionName packageVersion
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+    abortOnError false
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  maven {
+    url "https://artifacts.bitmovin.com/artifactory/public-releases"
+  }
+}
+
+dependencies {
+  // React Native (needed for hybrid bridge modules)
+  //noinspection GradleDynamicVersion
+  implementation 'com.facebook.react:react-native:+' // From node_modules
+  
+  implementation "androidx.concurrent:concurrent-futures:1.1.0"
+  implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0"
+
+  // Google IMA
+  implementation 'com.google.ads.interactivemedia.v3:interactivemedia:3.38.0'
+
+  // Bitmovin
+  implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+  implementation 'com.bitmovin.player:player:3.155.1+jason'
+  implementation 'com.bitmovin.player:player-media-session:3.155.1+jason'
+}

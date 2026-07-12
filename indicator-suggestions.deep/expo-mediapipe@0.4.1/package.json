@@ -1,0 +1,79 @@
+{
+  "name": "expo-mediapipe",
+  "version": "0.4.1",
+  "description": "Zero-setup bridge between Google MediaPipe Tasks and Expo / React Native",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "bin": {
+    "expo-mediapipe": "build/cli/cli.js"
+  },
+  "files": [
+    "build",
+    "android/src",
+    "android/build.gradle",
+    "android/CMakeLists.txt",
+    "ios/ExpoMediapipe.podspec",
+    "ios/*.swift",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "CHANGELOG.md",
+    "docs/HELPERS.md",
+    "docs/RECIPES.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p plugin/tsconfig.json && tsc -p tsconfig.cli.json",
+    "prepare": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "expo",
+    "mediapipe",
+    "react-native",
+    "hand-tracking",
+    "face-detection",
+    "pose-estimation",
+    "object-detection",
+    "machine-learning",
+    "vision"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.35",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "expo": ">=49.0.0",
+    "expo-file-system": "*",
+    "expo-modules-core": ">=1.0.0",
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo-file-system": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^9.0.0",
+    "@testing-library/react-native": "^12.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "expo-modules-core": "^3.0.0",
+    "jest": "^29.0.0",
+    "react": "^19.0.0",
+    "react-native": "^0.81.0",
+    "react-test-renderer": "^19.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "expo": {
+    "name": "expo-mediapipe",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+[package]
+name = "ui-build-compression"
+version = "1.1.4"
+edition = "2024"
+description = "A compressor for static files producing gzip, brotli, deflate, and zstdandard file variants"
+license = "MIT"
+readme = "README.md"
+
+[[bin]]
+name = "ui-build-compression"
+path = "internals/main.rs"
+
+[lib]
+name = "ui_build_compression"
+path = "internals/lib.rs"
+
+[dependencies]
+brotli = "8.0.2"
+colored = "3.1.1"
+flate2 = "1.1.8"
+futures = "0.3.31"
+jwalk = "0.8.1"
+tokio = "1.49.0"
+tokio-thread-pool = "1.0.0"
+zstd = "0.13.3"

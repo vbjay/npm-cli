@@ -1,0 +1,83 @@
+{
+  "name": "@agents-dev/cli",
+  "version": "0.8.9",
+  "description": "One config to rule them all — sync MCP servers, skills, and AGENTS.md across Codex, Claude Code/Desktop, Gemini CLI, Cursor, Copilot VS Code/CLI, Antigravity, Windsurf, OpenCode, and Junie.",
+  "main": "dist/cli.js",
+  "scripts": {
+    "build": "node -e \"const fs=require('node:fs'); fs.rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:fast": "vitest run --exclude \"tests/**/*.integration.test.ts\"",
+    "test:integration": "vitest run integration.test.ts",
+    "prepack": "npm run build"
+  },
+  "bin": {
+    "agents": "bin/agents"
+  },
+  "files": [
+    "bin/",
+    "dist/",
+    "templates/",
+    "docs/",
+    "README.md",
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "keywords": [
+    "agents",
+    "mcp",
+    "model-context-protocol",
+    "agents-md",
+    "codex",
+    "claude-code",
+    "claude-desktop",
+    "gemini-cli",
+    "cursor",
+    "copilot",
+    "copilot-cli",
+    "antigravity",
+    "windsurf",
+    "opencode",
+    "junie",
+    "ai-coding",
+    "llm-tools",
+    "config-sync",
+    "multi-llm",
+    "agentic-ai",
+    "cli"
+  ],
+  "author": "amtiYo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amtiYo/agents.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amtiYo/agents/issues"
+  },
+  "homepage": "https://github.com/amtiYo/agents#readme",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.0.0",
+    "@iarna/toml": "^2.2.5",
+    "commander": "^14.0.3",
+    "jsonc-parser": "^3.3.1",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "eslint": "^9.39.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

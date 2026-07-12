@@ -1,0 +1,126 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// @aguacerowx/react-native/android/build.gradle
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.facebook.react:react-native-gradle-plugin")
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven {
+        url 'https://api.mapbox.com/downloads/v2/releases/maven'
+        authentication {
+            basic(BasicAuthentication)
+        }
+        credentials {
+            username = "mapbox"
+            password = project.rootProject.findProperty("MAPBOX_DOWNLOADS_TOKEN") ?: System.getenv("MAPBOX_DOWNLOADS_TOKEN")
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+def isNewArchEnabled = project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+
+if (isNewArchEnabled) {
+    apply plugin: "com.facebook.react"
+}
+
+android {
+    namespace 'com.aguacerowx.reactnative'
+    compileSdk 34 
+
+    defaultConfig {
+        minSdk 23 
+        targetSdk 34
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += new File(projectDir, "../src/main/java/com/facebook/react/viewmanagers")
+        }
+    }
+}
+
+if (isNewArchEnabled) {
+    react {
+        libraryName = "AguaceroWxReactNativeSpec"
+        codegenJavaPackageName = "com.aguacerowx.reactnative"
+    }
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+'
+    api 'org.locationtech.proj4j:proj4j:1.1.5'
+    implementation 'com.github.luben:zstd-jni:1.5.7-6@aar'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}
+
+project.afterEvaluate {
+    // Fix Gradle 9 task dependency issue
+    if (isNewArchEnabled) {
+        tasks.named("generateCodegenArtifactsFromSchema").configure {
+            dependsOn("generateCodegenSchemaFromJavaScript")
+        }
+    }
+
+    // Mapbox version resolution
+    def resolvedMapboxVersion
+    if (project.rootProject.hasProperty('mapboxMapsVersion')) {
+        resolvedMapboxVersion = project.rootProject.mapboxMapsVersion
+        println "[aguacerowx] Found mapboxMapsVersion: ${resolvedMapboxVersion}"
+    } else {
+        resolvedMapboxVersion = "11.15.2" 
+        println "[aguacerowx] WARNING: Could not find 'mapboxMapsVersion' property. Falling back to ${resolvedMapboxVersion}."
+    }
+
+    def rnMapboxIsPresent = project.rootProject.findProject(':rnmapbox_maps') != null
+    def mapboxArtifact
+
+    if (rnMapboxIsPresent) {
+        mapboxArtifact = "android-ndk27"
+        println "[aguacerowx] @rnmapbox/maps detected. Using Mapbox artifact: '${mapboxArtifact}' to ensure compatibility."
+    } else {
+        mapboxArtifact = "android"
+        println "[aguacerowx] @rnmapbox/maps not detected. Using standard Mapbox artifact: '${mapboxArtifact}'."
+    }
+
+    dependencies {
+        implementation "com.mapbox.maps:${mapboxArtifact}:${resolvedMapboxVersion}"
+    }
+}

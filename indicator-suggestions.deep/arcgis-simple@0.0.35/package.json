@@ -1,0 +1,47 @@
+{
+  "name": "arcgis-simple",
+  "version": "0.0.35",
+  "description": "arcgis for js 4.35.5",
+  "main": "dist/bundle.js",
+  "type": "module",
+  "scripts": {
+    "build": "rollup --config",
+    "copy": "ncp ./node_modules/@arcgis/core ./src/assets",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "start": "git-cz"
+  },
+  "keywords": [
+    "node",
+    "javascript",
+    "arcgis",
+    "vue"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LsyAi/arcgis-simple.git"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "git-cz": "^4.9.0",
+    "husky": "^8.0.3",
+    "rollup": "^3.20.2",
+    "rollup-plugin-typescript2": "^0.34.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "zw",
+  "license": "MIT",
+  "dependencies": {
+    "@arcgis/core": "4.31.5",
+    "@turf/turf": "^6.5.0"
+  }
+}

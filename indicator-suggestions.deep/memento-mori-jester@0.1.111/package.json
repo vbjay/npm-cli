@@ -1,0 +1,93 @@
+{
+  "name": "memento-mori-jester",
+  "version": "0.1.111",
+  "description": "A local court-jester sidecar for AI coding agents: review plans, commands, diffs, and final claims before they get too pleased with themselves.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Martin123132/Memento-Mori.git"
+  },
+  "homepage": "https://github.com/Martin123132/Memento-Mori#readme",
+  "bugs": {
+    "url": "https://github.com/Martin123132/Memento-Mori/issues"
+  },
+  "main": "./dist/core.js",
+  "types": "./dist/core.d.ts",
+  "bin": {
+    "jester": "dist/cli.js",
+    "memento-mori-jester": "dist/cli.js",
+    "memento-mori-jester-mcp": "dist/server.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "docs",
+    "examples",
+    "scripts",
+    "CHANGELOG.md",
+    "COMMERCIAL-LICENSE.md",
+    "LICENSE",
+    "NOTICE.md",
+    "SECURITY.md",
+    "README.md",
+    "ROADMAP.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "start:mcp": "node dist/server.js",
+    "test": "npm run build && node scripts/run-tests.mjs && npm run fixtures:check && npm run fixtures:report && npm run framework:tuning:check && npm run framework:tuning:doctor && npm run ci:adoption:check && npm run consumer:quickstart:check && npm run reports:check && npm run support:check && npm run promo:check && npm run site:check && npm run pack:contents:check && npm run production:check",
+    "doctor": "node dist/cli.js doctor",
+    "demo:svg": "node scripts/render-demo-svg.mjs",
+    "demo:svg:check": "node scripts/render-demo-svg.mjs --check",
+    "fixtures:check": "node scripts/check-fixtures.mjs",
+    "fixtures:report": "node scripts/report-fixtures.mjs",
+    "framework:tuning:check": "node scripts/check-framework-tuning.mjs",
+    "framework:tuning:doctor": "node scripts/doctor-framework-tuning.mjs",
+    "ci:adoption:check": "node scripts/check-ci-adoption.mjs",
+    "consumer:quickstart:check": "node scripts/check-consumer-quickstart.mjs",
+    "reports:check": "node scripts/check-report-gallery.mjs",
+    "support:check": "node scripts/check-support-triage.mjs",
+    "promo:card": "node scripts/render-social-card.mjs",
+    "promo:card:check": "node scripts/render-social-card.mjs --check",
+    "promo:check": "node scripts/check-promo-freshness.mjs",
+    "site:check": "node scripts/check-site.mjs",
+    "production:check": "node scripts/check-production-readiness.mjs",
+    "pack:contents:check": "node scripts/check-package-contents.mjs",
+    "pack:dry": "npm pack --dry-run && npm run pack:contents:check",
+    "audit:high": "npm audit --audit-level=high",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run audit:high && npm test && npm run pack:dry"
+  },
+  "keywords": [
+    "mcp",
+    "ai-agent",
+    "coding-agent",
+    "safety",
+    "cli",
+    "code-review",
+    "memento-mori",
+    "court-jester"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}

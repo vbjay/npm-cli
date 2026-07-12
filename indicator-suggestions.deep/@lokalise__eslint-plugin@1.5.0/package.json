@@ -1,0 +1,60 @@
+{
+  "name": "@lokalise/eslint-plugin",
+  "version": "1.5.0",
+  "description": "ESLint plugin for Lokalise",
+  "main": "index.js",
+  "author": "Lokalise",
+  "license": "MIT",
+  "files": [
+    "docs/rules",
+    "rules",
+    "index.js",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lokalise/eslint-plugin.git"
+  },
+  "keywords": [
+    "eslint",
+    "imports",
+    "boundaries",
+    "javascript",
+    "typescript"
+  ],
+  "scripts": {
+    "test": "jest",
+    "prepare-release": "standard-version",
+    "prepare": "husky install"
+  },
+  "standard-version": {
+    "skip": {
+      "commit": true,
+      "tag": true
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/lokalise/eslint-plugin/issues"
+  },
+  "homepage": "https://github.com/lokalise/eslint-plugin#readme",
+  "dependencies": {
+    "eslint-module-utils": "^2.7.3",
+    "eslint-plugin-import": "^2.26.0",
+    "requireindex": "^1.2.0"
+  },
+  "peerDependencies": {
+    "eslint": "^7.0.0 || ^8.0.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-env": "^7.17.12",
+    "@babel/preset-typescript": "^7.17.12",
+    "@commitlint/cli": "^17.0.1",
+    "@commitlint/config-conventional": "^17.0.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.0",
+    "standard-version": "^9.5.0"
+  }
+}

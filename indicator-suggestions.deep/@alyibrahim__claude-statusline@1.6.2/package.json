@@ -1,0 +1,70 @@
+{
+  "name": "@alyibrahim/claude-statusline",
+  "version": "1.6.2",
+  "description": "Rich statusline for Claude Code — model, context bar, real-time token tracking, git branch, rate limits, and session stats. Rust binary, ~5ms startup.",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "anthropic",
+    "statusline",
+    "status-bar",
+    "terminal",
+    "cli",
+    "ai",
+    "llm",
+    "token-tracking",
+    "context-window",
+    "rate-limit",
+    "git",
+    "developer-tools",
+    "productivity",
+    "rust"
+  ],
+  "homepage": "https://github.com/AlyIbrahim1/claude-statusline#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlyIbrahim1/claude-statusline.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlyIbrahim1/claude-statusline/issues"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "bin": {
+    "claude-statusline": "bin/cli.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "preuninstall": "node scripts/preuninstall.js",
+    "test": "jest",
+    "check-versions": "node scripts/check-version-alignment.js"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/.worktrees/"
+    ]
+  },
+  "files": [
+    "statusline.js",
+    "bin/",
+    "scripts/",
+    "hooks/",
+    "README.md"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "open": "^10.1.0"
+  },
+  "optionalDependencies": {
+    "@alyibrahim/claude-statusline-linux-x64": "1.6.2",
+    "@alyibrahim/claude-statusline-linux-arm64": "1.6.2",
+    "@alyibrahim/claude-statusline-darwin-x64": "1.6.2",
+    "@alyibrahim/claude-statusline-darwin-arm64": "1.6.2",
+    "@alyibrahim/claude-statusline-win32-x64": "1.6.2"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}

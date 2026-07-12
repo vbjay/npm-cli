@@ -1,0 +1,50 @@
+{
+  "name": "quality.md",
+  "version": "0.30.0",
+  "description": "Companion CLI for the QUALITY.md file format and /quality agent skill, used to evaluate and improve AI assistant projects and harnesses.",
+  "homepage": "https://getquality.md",
+  "keywords": [
+    "quality",
+    "qualitymd",
+    "quality.md",
+    "quality-model",
+    "quality-evaluation",
+    "quality-improvement",
+    "context-engineering",
+    "harness-engineering",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qualitymd/quality.md.git",
+    "directory": "npm/quality.md"
+  },
+  "bugs": {
+    "url": "https://github.com/qualitymd/quality.md/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepack": "node ../../scripts/sync-npm-readme.mjs"
+  },
+  "bin": {
+    "qualitymd": "bin/qualitymd.js",
+    "quality.md": "bin/qualitymd.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "optionalDependencies": {
+    "@qualitymd/cli-darwin-arm64": "0.30.0",
+    "@qualitymd/cli-darwin-x64": "0.30.0",
+    "@qualitymd/cli-linux-arm64": "0.30.0",
+    "@qualitymd/cli-linux-x64": "0.30.0",
+    "@qualitymd/cli-win32-arm64": "0.30.0",
+    "@qualitymd/cli-win32-x64": "0.30.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

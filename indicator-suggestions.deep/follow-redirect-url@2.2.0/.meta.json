@@ -1,0 +1,70 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "19e5b1c655442e4d",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install_doctor.js",
+      "scripts/postinstall.js",
+      "scripts/verify_pack.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5d3821d16ebb34a3f20b3f5e769b28268d716ca5ed974e4f6deb6e7d9d04e8c2",
+        "sizeBytes": 809,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/install_doctor.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/install_doctor.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "0f86730ef586f81a0ffa56f2858cc8129002b74b75a4d25f8843dce10c7af744",
+        "sizeBytes": 3468,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install_doctor.js",
+        "sha256": "6ddc95416b59271b4874dc4b721687a13ad6c62779d8a35b869bfcd23f69f2f9",
+        "sizeBytes": 1611,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/verify_pack.js",
+        "reason": "referenced by lifecycle script: `verify:pack`",
+        "sha256": "7b16e4eb0fdefd1a93e6afc976cfe3f9faa01672b5e9629c28cd7d60ac58dcdb",
+        "sizeBytes": 2060,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:52.583Z"
+  },
+  "hash": "sha256:e5d417bc10348a2a3650b032e50ebb68a150f116cc6c704dda8264e9c5b6ef47"
+}

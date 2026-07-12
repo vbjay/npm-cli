@@ -1,0 +1,116 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0d9edd97ce10dfbd",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/ensure-os-server-runtime.js",
+      "scripts/materialize-os-server-at4runr-deps.js",
+      "scripts/npm-cli-spawn.js",
+      "scripts/postinstall-os-server.js",
+      "scripts/postinstall-os-tui.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall-os-tui.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c0d4efe3ffe8ee67a3d300d9e85569f3cc02cfc38ed45e3d9623d82159bfa1f4",
+        "sizeBytes": 2337,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall-os-server.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4622a6864c9976bca6cb2491f570b9f5ca0284d4bb99fb2480a06baceb0ecc50",
+        "sizeBytes": 2771,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/ensure-os-server-runtime.js",
+          "scripts/materialize-os-server-at4runr-deps.js",
+          "scripts/npm-cli-spawn.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/ensure-os-server-runtime.js",
+        "reason": "required by ./scripts/postinstall-os-server.js",
+        "sha256": "52dfa3ac66000755d6900751f90635a62dd1f6c54e2f8671bf13e1d1491c38e9",
+        "sizeBytes": 2317,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/materialize-os-server-at4runr-deps.js",
+        "reason": "required by ./scripts/postinstall-os-server.js",
+        "sha256": "07e74923a59a22702c55f0cc4708fb14ead570c51cd3a3cc9659392c63135309",
+        "sizeBytes": 1751,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/npm-cli-spawn.js",
+        "reason": "required by ./scripts/postinstall-os-server.js",
+        "sha256": "20b566f779dfec70059a6d47ef084b34c3587951a37455fadbee31d597e195f0",
+        "sizeBytes": 2486,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:34.553Z"
+  },
+  "hash": "sha256:3da644e710ed7e5052197754f6476a2f116c6a8191580e6232014e6dacec4ebd"
+}

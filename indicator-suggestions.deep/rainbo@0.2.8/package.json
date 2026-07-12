@@ -1,0 +1,47 @@
+{
+  "name": "rainbo",
+  "version": "0.2.8",
+  "description": "Rainbo command line tools for data migration workflows",
+  "keywords": [
+    "rainbo",
+    "cli",
+    "data-migration",
+    "data-validation",
+    "lineage",
+    "ai-agent"
+  ],
+  "homepage": "https://gitlab.clickzetta-inc.com/ee/rainbo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.clickzetta-inc.com/ee/rainbo.git",
+    "directory": "packages/rainbo"
+  },
+  "bugs": {
+    "url": "https://gitlab.clickzetta-inc.com/ee/rainbo/-/issues"
+  },
+  "bin": {
+    "rainbo": "packaging/npm/run.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "optionalDependencies": {
+    "@singdata/rainbo-cli-linux-x64": "0.2.8",
+    "@singdata/rainbo-cli-linux-arm64": "0.2.8",
+    "@singdata/rainbo-cli-darwin-x64": "0.2.8",
+    "@singdata/rainbo-cli-darwin-arm64": "0.2.8",
+    "@singdata/rainbo-cli-win32-x64": "0.2.8",
+    "@singdata/rainbo-cli-win32-arm64": "0.2.8"
+  },
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "node packaging/npm/postinstall.js"
+  },
+  "files": [
+    "packaging/npm/platform.js",
+    "packaging/npm/postinstall.js",
+    "packaging/npm/run.js",
+    "README.md",
+    "LICENSE"
+  ]
+}

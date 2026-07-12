@@ -1,0 +1,69 @@
+{
+  "name": "@urql/storybook-addon",
+  "version": "2.0.1",
+  "description": "Make stories in Storybook with urql",
+  "sideEffects": false,
+  "homepage": "https://github.com/FormidableLabs/urql/tree/main/packages/storybook-addon",
+  "bugs": "https://github.com/FormidableLabs/urql/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FormidableLabs/urql.git",
+    "directory": "packages/storybook-addon"
+  },
+  "keywords": [
+    "addon",
+    "storybook",
+    "urql",
+    "formidablelabs",
+    "preact",
+    "react",
+    "storybook-addon",
+    "data-state"
+  ],
+  "main": "dist/urql-storybook-addon.js",
+  "module": "dist/urql-storybook-addon.es.js",
+  "types": "dist/types/decorator/react.d.ts",
+  "source": "src/decorator/react.ts",
+  "files": [
+    "LICENSE",
+    "CHANGELOG.md",
+    "README.md",
+    "dist/"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "check": "tsc --noEmit",
+    "lint": "eslint --ext=js,jsx,ts,tsx .",
+    "build": "rollup -c ../../scripts/rollup/config.js",
+    "prepare": "node ../../scripts/prepare/index.js",
+    "prepublishOnly": "run-s clean build"
+  },
+  "dependencies": {
+    "@urql/core": "^3.0.0",
+    "wonka": "^6.0.0"
+  },
+  "devDependencies": {
+    "@storybook/preact": ">=6.0.28",
+    "@storybook/react": ">=6.0.28",
+    "@types/webpack-env": "^1.15.3",
+    "@urql/devtools": "^2.0.2",
+    "@urql/preact": ">=3.0.0",
+    "graphql": "^16.0.0",
+    "preact": "^10.5.5",
+    "react": "^17.0.1",
+    "urql": ">=3.0.0",
+    "wonka": "^6.0.0"
+  },
+  "optionalDependencies": {
+    "@storybook/addons": ">=6.0.28",
+    "@urql/devtools": ">=2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "storybook": {
+    "icon": "https://github.com/FormidableLabs/urql/raw/main/packages/site/src/assets/sidebar-badge.svg",
+    "displayName": "urql"
+  }
+}

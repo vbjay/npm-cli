@@ -1,0 +1,96 @@
+{
+  "name": "@myalbum/sheet-modal",
+  "version": "3.1.4",
+  "description": "An interactive sheet modal, fully customizable & performance focused",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "author": "MyAlbum",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyAlbum/sheet-modal.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "modal",
+    "bottom-sheet",
+    "sheet",
+    "expo",
+    "reanimated",
+    "bottom-modal",
+    "modal-sheet"
+  ],
+  "scripts": {
+    "test": "yarn lint && yarn build",
+    "format": "yarn lint --fix",
+    "lint": "eslint src --ext .ts,.tsx",
+    "build": "bob build",
+    "bare-prepare": "cd examples/bare && yarn prepare-ios",
+    "bare": "cd examples/bare && yarn start",
+    "expo": "cd examples/expo && yarn start",
+    "bootstrap": "yarn && yarn build && yarn install-bare && yarn install-expo",
+    "install-bare": "cd examples/bare && yarn && yarn bootstrap",
+    "install-expo": "cd examples/expo && yarn && yarn bootstrap",
+    "version-rc": "npm --no-git-tag-version version prerelease --preid=rc",
+    "version-patch": "npm --no-git-tag-version version patch",
+    "version-minor": "npm --no-git-tag-version version minor",
+    "version-major": "npm --no-git-tag-version version major",
+    "prepare": "husky",
+    "update": "yarn upgrade-interactive",
+    "clean": "git clean -fdX"
+  },
+  "devDependencies": {
+    "@react-native-segmented-control/segmented-control": "^2.5.2",
+    "@react-native/eslint-config": "0.74.81",
+    "@types/react": "^18.3.1",
+    "@types/semver": "^7",
+    "eslint": "^8.19.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "focus-trap-react": "^10.2.3",
+    "husky": "^9.0.11",
+    "prettier": "2.8.8",
+    "react": "^18.3.1",
+    "react-native": "^0.74.0",
+    "react-native-builder-bob": "^0.23.2",
+    "react-native-gesture-handler": "^2.16.1",
+    "react-native-reanimated": "^3.9.0",
+    "semver": "^7.6.2",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "focus-trap-react": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": ">=1.10.1",
+    "react-native-reanimated": ">=2.2.0",
+    "react-native-web": "*"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-native": {
+      "optional": true
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "license": "MIT",
+  "packageManager": "yarn@4.1.1"
+}

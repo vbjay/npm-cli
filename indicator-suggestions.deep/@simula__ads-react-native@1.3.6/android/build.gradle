@@ -1,0 +1,110 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    def kotlinVersion = rootProject.ext.has("kotlinVersion")
+        ? rootProject.ext.get("kotlinVersion")
+        : "2.1.20"
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion"
+    }
+}
+
+def isNewArchitectureEnabled() {
+    // The New Architecture is the default from RN 0.77 (this package's declared minimum)
+    // and mandatory from RN 0.82, where the React Gradle plugin ignores `newArchEnabled`
+    // entirely. So default to new-arch when the property is absent — requiring
+    // `newArchEnabled == "true"` would silently build the oldarch (interop-dependent)
+    // variant inside a Fabric app whose gradle.properties dropped the flag. Explicit
+    // `newArchEnabled=false` (a real opt-out on RN 0.77–0.81) still selects oldarch.
+    return !project.hasProperty("newArchEnabled") || project.newArchEnabled == "true"
+}
+
+// Only applied under New Architecture: this registers the generateCodegenSchemaFromJavaScript
+// / generateCodegenArtifactsFromSchema tasks (driven by package.json's `codegenConfig`) and
+// wires their output into the main source set automatically.
+if (isNewArchitectureEnabled()) {
+    apply plugin: "com.facebook.react"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+
+android {
+    namespace 'com.simulaads.reactnative'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 34
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    def javaVersion = rootProject.ext.has("jvmTarget")
+        ? JavaVersion.toVersion(rootProject.ext.get("jvmTarget"))
+        : JavaVersion.VERSION_17
+
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
+    kotlinOptions {
+        jvmTarget = javaVersion.toString()
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    sourceSets {
+        main {
+            // `+=` (not `=`) so it doesn't clobber the generated codegen source dir that the
+            // `com.facebook.react` plugin adds when New Architecture is enabled.
+            java.srcDirs += ['src/main/java']
+            // Architecture-specific *ViewManagerSpec base classes: the newarch variant
+            // references the codegen-generated ManagerInterface/ManagerDelegate classes
+            // (which only exist when the `com.facebook.react` plugin ran codegen, and whose
+            // generated shape varies across RN versions); the oldarch variant is a plain
+            // SimpleViewManager relying on @ReactProp. This is the RN-documented
+            // backward-compatible library pattern.
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/newarch/java']
+            } else {
+                java.srcDirs += ['src/oldarch/java']
+            }
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    // React Native
+    implementation 'com.facebook.react:react-android:+'
+
+    // Simula Ad SDK (native Kotlin SDK from Maven Central)
+    implementation 'ad.simula:ad-sdk:1.1.3'
+
+    // Jetpack Compose (needed to host MiniGameMenu composable)
+    implementation platform('androidx.compose:compose-bom:2024.02.00')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.foundation:foundation'
+    implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.7.0'
+}

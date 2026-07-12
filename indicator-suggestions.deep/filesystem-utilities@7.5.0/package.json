@@ -1,0 +1,42 @@
+{
+  "name": "filesystem-utilities",
+  "version": "7.5.0",
+  "description": "File system utilities for Node.js",
+  "main": "index.js",
+  "gypfile": true,
+  "scripts": {
+    "start-linux": "node dev/linux.js",
+    "debug-linux": "node --nolazy --inspect-brk=9229 dev/linux.js",
+    "start-windows": "node dev/windows.js",
+    "debug-windows": "node --nolazy --inspect-brk=9229 dev/windows.js",
+    "build-dev": "node-gyp build --debug",
+    "build": "node-gyp build",
+    "rebuild-dev": "node-gyp rebuild --debug",
+    "rebuild": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "do publish": "npm publish",
+    "do publish test": "npm publish --dry-run"
+  },
+  "types": "filesystem-utilities.d.ts",
+  "dependencies": {
+    "node-addon-api": "^8.5.0"
+  },
+  "devDependencies": {
+    "bindings": "^1.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uriegel/filesystem-utils.git"
+  },
+  "keywords": [
+    "node",
+    "addon",
+    "cpp"
+  ],
+  "author": "Uwe Riegel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uriegel/filesystem-utils/issues"
+  },
+  "homepage": "https://github.com/uriegel/filesystem-utils#readme"
+}

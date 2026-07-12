@@ -1,0 +1,153 @@
+{
+  "name": "@getstoryteller/react-native-storyteller-sdk",
+  "version": "11.2.1",
+  "description": "React Native wrapper for Storyteller SDK",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./app.plugin.js": "./app.plugin.js",
+    "./withStoryteller.js": "./withStoryteller.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "withStoryteller.js",
+    "app.plugin.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*",
+    "!**/CLAUDE.md",
+    "!**/AGENTS.md"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "node clean-script.js",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "getStoryteller",
+    "storyteller"
+  ],
+  "author": "Storyteller <support@getstoryteller.com> (https://www.getstoryteller.com)",
+  "license": "SEE LICENSE IN https://github.com/getstoryteller/storyteller-sample-react-native/blob/master/LICENSE",
+  "bugs": {
+    "url": "https://github.com/getstoryteller/storyteller-sample-react-native/issues"
+  },
+  "homepage": "https://github.com/getstoryteller/storyteller-sample-react-native",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@expo/config-plugins": "^9.0.0",
+    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native/babel-preset": "0.79.5",
+    "@react-native/eslint-config": "^0.78.0",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.0.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-builder-bob": "latest",
+    "release-it": "^17.10.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "@expo/config-plugins": {
+      "optional": true
+    }
+  },
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">= 18.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "StorytellerSdkSpec",
+    "type": "all",
+    "jsSrcsDir": "src/specs",
+    "android": {
+      "javaPackageName": "com.storyteller.reactnative"
+    },
+    "ios": {
+      "componentProvider": {
+        "StorytellerStoriesGridView": "RNStorytellerSdkStoriesGridView",
+        "StorytellerStoriesRowView": "RNStorytellerSdkStoriesRowView",
+        "StorytellerClipsRowView": "RNStorytellerSdkClipsRowView",
+        "StorytellerClipsGridView": "RNStorytellerSdkClipsGridView"
+      }
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "turbo-module",
+    "version": "0.52.1"
+  },
+  "expo": {
+    "name": "@getstoryteller/react-native-storyteller-sdk",
+    "version": "11.2.1",
+    "plugins": [
+      "./app.plugin.js"
+    ]
+  }
+}

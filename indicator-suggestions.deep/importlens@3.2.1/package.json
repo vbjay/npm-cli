@@ -1,0 +1,223 @@
+{
+  "name": "importlens",
+  "displayName": "ImportLens",
+  "description": "Intelligent import management with AST-based analysis, organization, and CI/CD integration",
+  "version": "3.2.1",
+  "publisher": "SAMARTHASMG14",
+  "license": "MIT",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DEADSERPENT/importlens"
+  },
+  "homepage": "https://github.com/DEADSERPENT/importlens#readme",
+  "bugs": {
+    "url": "https://github.com/DEADSERPENT/importlens/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Formatters",
+    "Other"
+  ],
+  "keywords": [
+    "import",
+    "cleanup",
+    "unused",
+    "imports",
+    "typescript",
+    "python",
+    "java",
+    "rust",
+    "go",
+    "cpp",
+    "c++",
+    "c",
+    "lsp",
+    "diagnostics",
+    "lens"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/src/extension.js",
+  "bin": {
+    "importlens-cli": "./out/src/cli.js"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "importlens.cleanFile",
+        "title": "ImportLens: Clean Current File"
+      },
+      {
+        "command": "importlens.cleanWorkspace",
+        "title": "ImportLens: Clean Workspace"
+      },
+      {
+        "command": "importlens.showStats",
+        "title": "ImportLens: Show Import Statistics"
+      },
+      {
+        "command": "importlens.showTeamDashboard",
+        "title": "ImportLens: Show Team Dashboard"
+      },
+      {
+        "command": "importlens.toggleSafeMode",
+        "title": "ImportLens: Toggle Safe Mode"
+      },
+      {
+        "command": "importlens.organizeImports",
+        "title": "ImportLens: Organize Imports"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "importlens.cleanFile",
+          "group": "1_modification@1",
+          "when": "editorTextFocus"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "importlens.cleanWorkspace",
+          "group": "7_modification@1"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ImportLens",
+      "properties": {
+        "importlens.enableOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically clean unused imports when saving a file"
+        },
+        "importlens.showExplanationTooltip": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show explanation tooltips for unused imports"
+        },
+        "importlens.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show unused import count in the status bar"
+        },
+        "importlens.safeMode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Preserve side-effect imports (recommended)"
+        },
+        "importlens.aggressiveMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Remove all unused imports including potential side-effects"
+        },
+        "importlens.showDiffBeforeApply": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show diff preview before applying changes"
+        },
+        "importlens.excludedLanguages": {
+          "type": "array",
+          "default": [
+            "markdown",
+            "plaintext"
+          ],
+          "description": "Languages to exclude from import cleaning"
+        },
+        "importlens.excludePatterns": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/out/**",
+            "**/*.min.js"
+          ],
+          "description": "File patterns to exclude from import cleaning"
+        },
+        "importlens.confidence.baseConfidence": {
+          "type": "number",
+          "default": 0.9,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Base confidence score for unused import detection (0-1)"
+        },
+        "importlens.confidence.sideEffectMultiplier": {
+          "type": "number",
+          "default": 0.7,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Multiplier applied when import has potential side effects"
+        },
+        "importlens.confidence.knownSourceMultiplier": {
+          "type": "number",
+          "default": 1.1,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Multiplier for diagnostics from known sources (TypeScript, Pylance, etc.)"
+        },
+        "importlens.confidence.unknownModuleMultiplier": {
+          "type": "number",
+          "default": 0.6,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Multiplier for imports from unknown/unresolved modules"
+        },
+        "importlens.confidence.specificCodeMultiplier": {
+          "type": "number",
+          "default": 1.2,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Multiplier for specific diagnostic codes (e.g., TS 6133)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "prepare": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "test:cli": "mocha ./out/test/cli-integration.test.js --ui tdd --timeout 60000",
+    "test:all": "npm run test && npm run test:cli",
+    "lint": "eslint src --ext ts",
+    "cli": "node ./out/src/cli.js",
+    "package:vscode": "vsce package",
+    "publish:vscode": "vsce publish",
+    "publish:npm": "npm publish",
+    "setup:hooks": "node -e \"require('fs').copyFileSync('./templates/pre-commit-hook.sh', '.git/hooks/pre-commit'); require('fs').chmodSync('.git/hooks/pre-commit', '755'); console.log('Pre-commit hook installed!')\"",
+    "setup:precommit": "cp ./templates/.pre-commit-config.yaml ./.pre-commit-config.yaml && echo 'Pre-commit config installed! Run: pre-commit install'"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
+    "@babel/types": "^7.28.5",
+    "fast-glob": "^3.3.2"
+  },
+  "optionalDependencies": {
+    "tree-sitter": "^0.21.1",
+    "tree-sitter-go": "^0.21.0",
+    "tree-sitter-java": "^0.21.0",
+    "tree-sitter-python": "^0.21.0",
+    "tree-sitter-rust": "^0.21.1"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^8.x",
+    "glob": "^13.0.0",
+    "mocha": "^11.7.5",
+    "typescript": "^5.3.0"
+  }
+}

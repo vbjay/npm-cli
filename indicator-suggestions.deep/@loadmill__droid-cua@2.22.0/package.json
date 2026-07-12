@@ -1,0 +1,82 @@
+{
+  "name": "@loadmill/droid-cua",
+  "version": "2.22.0",
+  "description": "AI-powered Android testing agent using OpenAI's computer-use model and ADB",
+  "main": "build/index.js",
+  "type": "module",
+  "bin": {
+    "droid-cua": "bin/droid-cua"
+  },
+  "files": [
+    "build/**/*",
+    "bin/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "tsx index.js",
+    "bench": "node scripts/benchmark.js",
+    "bench:preflight": "node scripts/benchmark-preflight.js",
+    "bench:run": "tsx index.js --platform android --instructions benchmarks/benchmark.dcua --context benchmarks/context.md --debug",
+    "bench:report": "node scripts/benchmark-report.js",
+    "bench:report:web": "node scripts/benchmark-report-web.js",
+    "obs:droid": "node scripts/obs-droid-demo.mjs",
+    "execution:profile": "node scripts/execution-profile.js",
+    "test": "node --test unit-tests/*.test.js",
+    "test:aws-device-farm:android": "node integration-tests/aws-device-farm-android.test.js",
+    "test:aws-device-farm:ios": "node integration-tests/aws-device-farm-ios.test.js",
+    "build": "tsc",
+    "clean": "rm -rf build",
+    "typecheck": "tsc --noEmit",
+    "typecheck:desktop": "npm --prefix desktop-app run typecheck",
+    "typecheck:all": "npm run typecheck && npm run typecheck:desktop",
+    "prepare": "node scripts/install-git-hooks.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loadmill/droid-cua.git"
+  },
+  "bugs": {
+    "url": "https://github.com/loadmill/droid-cua/issues"
+  },
+  "homepage": "https://github.com/loadmill/droid-cua",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "openai",
+    "adb",
+    "android",
+    "automation",
+    "testing",
+    "ai",
+    "emulator",
+    "agent",
+    "cua",
+    "computer-use",
+    "mobile-testing",
+    "e2e"
+  ],
+  "author": "Loadmill",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@aws-sdk/client-device-farm": "^3.1065.0",
+    "dotenv": "^16.4.7",
+    "ink": "^4.4.1",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^5.0.1",
+    "minimist": "^1.2.8",
+    "openai": "^4.87.3",
+    "playwright-core": "^1.55.1",
+    "react": "^18.3.1",
+    "sharp": "^0.34.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}

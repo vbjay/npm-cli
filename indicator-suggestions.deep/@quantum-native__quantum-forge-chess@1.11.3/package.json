@@ -1,0 +1,60 @@
+{
+  "name": "@quantum-native/quantum-forge-chess",
+  "version": "1.11.3",
+  "description": "Quantum Forge WASM wrapper for Quantum Chess (dimension 2, 64 qubits)",
+  "main": "./dist/cjs/quantum-forge-web-api.js",
+  "module": "./dist/esm/quantum-forge-web-api.mjs",
+  "exports": {
+    "import": "./dist/esm/quantum-forge-web-api.mjs",
+    "require": "./dist/cjs/quantum-forge-web-api.js"
+  },
+  "types": "dist/cjs/quantum-forge-web-api.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quantum-native/quantum-forge.git",
+    "directory": "wrappers/web"
+  },
+  "homepage": "https://github.com/quantum-native/quantum-forge#readme",
+  "bugs": {
+    "url": "https://github.com/quantum-native/quantum-forge/issues"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE.md",
+    "LICENSE-BINARY.md",
+    "llms.txt"
+  ],
+  "keywords": [
+    "quantum",
+    "quantum-computing",
+    "quantum-forge",
+    "game-development",
+    "wasm",
+    "webassembly",
+    "typescript",
+    "javascript"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist packages",
+    "build": "node scripts/build-dist.js && tsup",
+    "build:custom": "node scripts/build-dist.js",
+    "build:small": "node scripts/build-dist.js --max-dimension 2 --max-qudits 5 && tsup",
+    "build:medium": "node scripts/build-dist.js --max-dimension 3 --max-qudits 10 && tsup",
+    "build:large": "node scripts/build-dist.js --max-dimension 5 --max-qudits 50 && tsup",
+    "test": "jest",
+    "pack": "npm run prepack && mkdir -p packages && npm pack --pack-destination packages && npm run postpack",
+    "build:package": "npm run clean && npm run build && npm run pack",
+    "prepack": "if [ -f PACKAGE_README.md ]; then cp README.md README.md.dev && cp PACKAGE_README.md README.md; fi",
+    "postpack": "if [ -f README.md.dev ]; then mv README.md.dev README.md; fi"
+  },
+  "author": "Chris Cantwell",
+  "license": "SEE LICENSE IN LICENSE-BINARY.md",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.4.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.0.0"
+  }
+}

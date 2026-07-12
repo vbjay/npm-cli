@@ -1,0 +1,45 @@
+{
+	"name"            : "@peteanderson/ansi",
+	"version"         : "2.3.0",
+	"description"     : "ANSI escape sequence generation with automatic feature detection",
+	"author"          : {
+		"name"  : "Pete Anderson",
+		"email" : "pete.the.anderson@gmail.com"
+	},
+	"repository"      : {
+		"type" : "git",
+		"url"  : "git+https://github.com/anderson-pete/ansi.git"
+	},
+	"keywords"        : ["ansi", "nodejs", "color", "terminal", "cli"],
+	"engines"         : {"node": ">=18"},
+	"files"           : ["dist", "src"],
+	"main"            : "dist/cjs/index.js",
+	"types"           : "dist/cjs/index.d.ts",
+	"exports"         : {
+		".": {
+			"import": {
+				"types"   : "./dist/esm/index.d.ts",
+				"default" : "./dist/esm/index.js"
+			},
+			"require" : {
+				"types"   : "./dist/cjs/index.d.ts",
+				"default" : "./dist/cjs/index.js"
+			}
+		}
+	},
+	"license"         : "MIT",
+	"scripts"         : {
+		"prebuild" : "tsx --tsconfig scripts/tsconfig.json scripts/clean.ts",
+		"build"    : "tsx --tsconfig scripts/tsconfig.json scripts/build.ts",
+		"prepack"  : "npm run build",
+		"tag"      : "git tag -a v$npm_package_version -m v$npm_package_version",
+		"tag-all"  : "tsx --tsconfig scripts/tsconfig.json scripts/tag-all.ts"
+	},
+	"devDependencies" : {
+		"@types/node" : "^26.0.0",
+		"tsc-alias"   : "^1.8.17",
+		"tsx"         : "^4.22.4",
+		"typescript"  : "^6.0.3"
+	},
+	"dependencies"    : {"@peteanderson/props": "^2.0.0"}
+}

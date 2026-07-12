@@ -1,0 +1,80 @@
+{
+  "name": "unitry",
+  "version": "v0.1.0-alpha.0",
+  "description": "Zero-bloatware and minimalist unit test",
+  "author": "SoTeen Studio",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soteenstudio/unitry.git"
+  },
+  "bugs": {
+    "url": "https://github.com/soteenstudio/unitry/issues"
+  },
+  "homepage": "https://github.com/soteenstudio/unitry#readme",
+  "type": "module",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/core.d.ts",
+      "import": "./dist/core.mjs",
+      "require": "./dist/core.cjs"
+    },
+    "./package.json": "./package.json",
+    "./core-esm": "./dist/core.mjs",
+    "./core-cjs": "./dist/core.cjs"
+  },
+  "bin": {
+    "unitry": "./dist/index.min.js"
+  },
+  "files": [
+    "./dist/core.mjs",
+    "./dist/core.cjs",
+    "./dist/worker.js",
+    "./dist/index.min.js",
+    "./types"
+  ],
+  "scripts": {
+    "build": "node ./esbuild.config.js",
+    "check:deps": "node ./scripts/check-deps.js",
+    "typecheck": "tsc",
+    "prettier": "npx prettier ./**/*.ts --write",
+    "eslint": "npx eslint ./**/*.ts --fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,jsx,tsx}": [
+      "sh -c 'tsc'",
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "keywords": [
+    "lightvm",
+    "virtual machine",
+    "rust",
+    "typescript"
+  ],
+  "dependencies": {
+    "commander": "^15.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "@types/node": "^25.9.1",
+    "@typescript-eslint/parser": "^8.60.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.4.0",
+    "eslint-plugin-headers": "^1.3.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "prettier": "3.8.3",
+    "tsx": "^4.22.3"
+  }
+}

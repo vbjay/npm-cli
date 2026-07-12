@@ -1,0 +1,64 @@
+{
+  "name": "package-run",
+  "version": "3.0.1",
+  "description": "Node API for running package.json scripts. Supports yarn, npm, and pnpm.",
+  "main": ".auto/build/index.js",
+  "author": "Connor White",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bconnorwhite/package-run.git"
+  },
+  "keywords": [
+    "package",
+    "pkg",
+    "run",
+    "yarn",
+    "npm",
+    "pnpm",
+    "manager",
+    "npx",
+    "bin",
+    "node",
+    "api"
+  ],
+  "exports": "./.auto/build/index.js",
+  "types": ".auto/build/index.d.js",
+  "files": [
+    ".auto/build/**/!(tsconfig.tsbuildinfo)"
+  ],
+  "engines": {
+    "node": "^14.13.1 || >=16.0.0"
+  },
+  "scripts": {
+    "build": "auto build",
+    "dev": "auto dev",
+    "lint": "auto lint",
+    "prepack": "yarn build",
+    "release": "auto release",
+    "test": "auto test",
+    "typecheck": "auto typecheck"
+  },
+  "dependencies": {
+    "@bconnorwhite/exec": "^6.0.12",
+    "as-typed-array": "^2.0.0",
+    "has-script": "^2.0.0",
+    "which-pm-lockfile": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/mock-fs": "^4.13.1",
+    "autorepo": "^0.1.7",
+    "mock-fs": "^5.2.0"
+  },
+  "eslintConfig": {
+    "extends": "@autosoft/eslint-config"
+  },
+  "jest": {
+    "preset": "@autosoft/jest-preset"
+  },
+  "npmpackagejsonlint": {
+    "extends": "npm-package-json-lint-config-auto"
+  }
+}

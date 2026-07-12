@@ -1,0 +1,90 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4bf63f0ae0cbbc47",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "76043a2cb42c4925ac93f5fca6f83d642600a3aa5466a9dc8d15d69c131fe70f",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `<(module_name)`  -  C/C++ sources",
+            "items": [
+              "src/utils.cc",
+              "src/luastate.cc",
+              "src/nodelua.cc",
+              "src/MyLuaWorker.cpp",
+              "src/MyWorkerQueue.cpp",
+              "src/MyLuaState.cpp",
+              "3rdlibs/lua-cjson/fpconv.c",
+              "3rdlibs/lua-cjson/lua_cjson.c",
+              "3rdlibs/lua-cjson/strbuf.c"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  libraries",
+            "items": [
+              "lua51.lib",
+              "<(module_root_dir)/maclualib/lib/liblua.a",
+              "<(module_root_dir)/3rdlibs/LuaJIT/src/libluajit.so"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<(module_root_dir)/3rdlibs/LuaJIT/src",
+              "<(module_root_dir)/maclualib/include",
+              "<(module_root_dir)/3rdlibs/LuaJIT/src"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:16.730Z"
+  },
+  "hash": "sha256:a2eed5e23fba4aaf690201b479a6951e96abaf560e3a85b1a56a2154b0a312f6"
+}

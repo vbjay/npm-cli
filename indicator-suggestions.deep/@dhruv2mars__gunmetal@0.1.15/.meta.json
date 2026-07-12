@@ -1,0 +1,112 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "defbccc3e6ace953",
+    "fetchedFiles": [
+      "bin/gunmetal-lib.js",
+      "bin/install-lib.js",
+      "bin/install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "2039014ec225a15a87f814fe81dbac1c229dd8f591b1bcd89c9440f7c8ad63c5",
+        "sizeBytes": 706,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/gunmetal-lib.js",
+          "bin/install-lib.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/gunmetal-lib.js",
+        "reason": "required by ./bin/install.js",
+        "sha256": "c0e1946599d57ab58b480aa83f23ce8a97f57be6055ebc74de1e7a342e90ea75",
+        "sizeBytes": 2716,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/install-lib.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/install-lib.js",
+        "reason": "required by ./bin/gunmetal-lib.js; required by ./bin/install.js",
+        "sha256": "4e9a07e09d74bbc5451f005b1a30e748dfa8cdf8afe89335db2adeb81c8dbde4",
+        "sizeBytes": 9152,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:57.900Z"
+  },
+  "hash": "sha256:ff21c5476926e566f8b78a1dde41ab1e4edd7de71aebdd205a020162016ed13d"
+}

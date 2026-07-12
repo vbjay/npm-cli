@@ -1,0 +1,82 @@
+{
+  "name": "react-native-serial-port-api",
+  "title": "React Native Serial Port API",
+  "version": "1.5.0",
+  "description": "React Native Serial Port API",
+  "main": "lib/commonjs/index.js",
+  "react-native": "src/index.ts",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "android/src/",
+    "android/build.gradle"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-docs": "node_modules/.bin/jsdoc lib/module -r -R README.md -t node_modules/docdash -d ./docs",
+    "generate-docs2": "typedoc --out ./docs2 src/index.ts",
+    "prepack": "bob build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bastengao/react-native-serial-port-api.git",
+    "baseUrl": "https://github.com/bastengao/react-native-serial-port-api"
+  },
+  "keywords": [
+    "react-native",
+    "serial-port",
+    "android"
+  ],
+  "author": {
+    "name": "bastengao",
+    "email": "bastengao@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Alessandro Raffa @ Infobiotech",
+      "email": "a.raffa@infobiotech.com",
+      "url": "https://github.com/infobiotech"
+    }
+  ],
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.60.31",
+    "docdash": "^1.1.1",
+    "jsdoc": "^3.6.3",
+    "react": "^16.8.3",
+    "react-native": "^0.59.10",
+    "react-native-builder-bob": "^0.20.3",
+    "typedoc": "^0.24.8",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "buffer": "^5.4.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
+}

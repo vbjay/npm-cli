@@ -1,0 +1,174 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "373b8ba6b7391603",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "install.js",
+      "package.json",
+      "scripts/sherpa-prebuilt-contract.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "node-fetch",
+        "versionSpec": "2"
+      },
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.16"
+      },
+      {
+        "name": "progress",
+        "versionSpec": "^2.0.3"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18",
+      "node-fetch@2.7.0",
+      "progress@2.0.3"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "883e0db21ef609578f0097f02fb4a0a4d78529ddd15d9c0c1f8b7f29e142ecaf",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "'arm64-v8a', 'armeabi-v7a', 'x86_64'"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${getKotlinVersion()}",
+              "org.jetbrains.kotlin:kotlin-stdlib:${getKotlinVersion()}",
+              "org.jetbrains.kotlin:kotlin-stdlib-common:${getKotlinVersion()}",
+              "org.jetbrains.kotlin:kotlin-reflect:${getKotlinVersion()}",
+              "com.facebook.react:react-native:${REACT_NATIVE_VERSION}",
+              "androidx.annotation:annotation:1.5.0",
+              "androidx.core:core-ktx:1.9.0",
+              "androidx.media:media:1.6.0",
+              "org.apache.commons:commons-compress:1.23.0",
+              "com.squareup.okhttp3:okhttp:4.11.0",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@siteed__sherpa-onnx.rn@1.3.1\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "74ab7b7d48b83e987875d4dc7915890b1336b277137d52aeecdd5fc282654790",
+        "sizeBytes": 7005,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/sherpa-prebuilt-contract.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/sherpa-prebuilt-contract.js",
+        "reason": "required by ./install.js",
+        "sha256": "4551387cc9f6d46f7d81061d3ee0dd234d7a6bd46f8fed8748e773f20d2b530c",
+        "sizeBytes": 3491,
+        "signals": [
+          "binary-download",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/deeeed/audiolab",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "a2fb16ee78917f1967c8a14ea6c4715cbbf8152696b9b5717a81fdf824f3f752",
+        "sizeBytes": 6176,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:56.713Z"
+  },
+  "hash": "sha256:988e8226820ae033da901f7bd2ee1d0a15d6794d9f72d9579f86e93bc1c2887f"
+}

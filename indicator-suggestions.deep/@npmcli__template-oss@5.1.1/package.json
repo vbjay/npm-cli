@@ -1,0 +1,100 @@
+{
+  "name": "@npmcli/template-oss",
+  "version": "5.1.1",
+  "description": "templated files used in npm CLI team oss projects",
+  "main": "lib/content/index.js",
+  "bin": {
+    "template-oss-apply": "bin/apply.js",
+    "template-oss-check": "bin/check.js",
+    "template-oss-release-please": "bin/release-please.js",
+    "template-oss-release-manager": "bin/release-manager.js"
+  },
+  "scripts": {
+    "lint": "npm run eslint && npm run prettier -- --check",
+    "lintfix": "npm run eslint -- --fix && npm run prettier -- --write",
+    "posttest": "npm run lint",
+    "snap": "tap",
+    "test": "tap",
+    "template-oss-apply": "template-oss-apply --force",
+    "postlint": "template-oss-check",
+    "postinstall": "template-oss-apply",
+    "eslint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\"",
+    "prettier": "prettier \"**/*.{js,cjs,ts,mjs,jsx,tsx,json}\"",
+    "test-all": "npm run test --workspaces --include-workspace-root --if-present",
+    "lint-all": "npm run lint --workspaces --include-workspace-root --if-present"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/template-oss.git"
+  },
+  "keywords": [
+    "npm",
+    "oss"
+  ],
+  "author": "GitHub Inc.",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^2.0.0",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@isaacs/string-locale-compare": "^1.1.0",
+    "@npmcli/arborist": "^10.0.0-pre.0.0",
+    "@npmcli/git": "^8.0.0",
+    "@npmcli/map-workspaces": "^5.0.0",
+    "@npmcli/package-json": "^8.0.0",
+    "@octokit/rest": "^22.0.0",
+    "dedent": "^1.5.1",
+    "diff": "^8.0.2",
+    "glob": "^13.0.0",
+    "handlebars": "^4.7.7",
+    "hosted-git-info": "^10.1.1",
+    "ini": "^7.0.0",
+    "json-parse-even-better-errors": "^6.0.0",
+    "just-deep-map-values": "^1.1.1",
+    "just-diff": "^6.0.0",
+    "just-omit": "^2.2.0",
+    "lodash": "^4.17.21",
+    "minimatch": "^10.0.3",
+    "npm-package-arg": "^14.0.0",
+    "proc-log": "^7.0.0",
+    "release-please": "^17.1.1",
+    "semver": "^7.3.5",
+    "yaml": "^2.1.1"
+  },
+  "files": [
+    "bin/",
+    "lib/"
+  ],
+  "devDependencies": {
+    "@github/prettier-config": "0.0.6",
+    "@npmcli/eslint-config": "^6.0.1",
+    "@npmcli/template-oss": "file:./",
+    "eslint-config-prettier": "^10.1.8",
+    "nock": "^14.0.6",
+    "prettier": "^3.2.5",
+    "tap": "^21.0.1"
+  },
+  "tap": {
+    "timeout": 600,
+    "exclude": [
+      "workspace/test-workspace/**"
+    ],
+    "show-full-coverage": true
+  },
+  "templateOSS": {
+    "//@npmcli/template-oss": "This file is partially managed by @npmcli/template-oss. Edits may be overwritten.",
+    "publish": true,
+    "prettier": true
+  },
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
+  "workspaces": [
+    "workspace/test-workspace"
+  ],
+  "nyc": {
+    "exclude": [
+      "workspace/test-workspace/**"
+    ]
+  }
+}

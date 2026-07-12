@@ -1,0 +1,74 @@
+{
+  "name": "rds-analyzer",
+  "version": "0.5.6-alpha",
+  "description": "A memory-efficient dependency analyzer for JavaScript, TypeScript, and Vue projects",
+  "main": "index.js",
+  "bin": {
+    "rds": "./bin/run-rds.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js",
+    "prepare": "husky install",
+    "build": "cargo build --release",
+    "build:targets": "node ./scripts/build-target.js --target x86_64-unknown-linux-gnu && node ./scripts/build-target.js --target x86_64-pc-windows-gnu && node ./scripts/build-target.js --target x86_64-apple-darwin && node ./scripts/build-target.js --target aarch64-unknown-linux-gnu && node ./scripts/build-target.js --target aarch64-apple-darwin",
+    "test": "cargo test"
+  },
+  "keywords": [
+    "dependency",
+    "analyzer",
+    "circular",
+    "dependencies",
+    "typescript",
+    "javascript",
+    "vue",
+    "rust",
+    "cli",
+    "static-analysis"
+  ],
+  "author": "https://github.com/Khallister",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Khallister/rds.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Khallister/rds/issues"
+  },
+  "homepage": "https://github.com/Khallister/rds#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin/run-rds.js",
+    "install.js",
+    "index.js",
+    "plugin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "prettier": "^3.6.2",
+    "lint-staged": "^13.1.0"
+  },
+  "optionalDependencies": {
+    "archiver": "^5.3.1"
+  },
+  "lint-staged": {
+    "test/**/*.{js,ts,tsx,vue,json,md}": [
+      "prettier --write"
+    ]
+  }
+}

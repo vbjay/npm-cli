@@ -1,0 +1,47 @@
+{
+  "name": "@rongjs/rong-skill",
+  "version": "0.5.0",
+  "description": "Self-contained agent skills for Rong runtime scripting and module authoring.",
+  "type": "module",
+  "bin": {
+    "rong-skill": "bin/cli.mjs"
+  },
+  "scripts": {
+    "pack:skills": "node bin/pack.mjs",
+    "check": "node --check bin/cli.mjs && node --check bin/pack.mjs && node bin/pack.mjs --check",
+    "prepack": "node bin/pack.mjs"
+  },
+  "files": [
+    "bin",
+    "assets",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "rong",
+    "rongjs",
+    "agent-skill",
+    "skill",
+    "javascript-engine",
+    "rust",
+    "quickjs",
+    "javascriptcore",
+    "module-authoring",
+    "documentation"
+  ],
+  "homepage": "https://github.com/LingXia-Dev/Rong#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LingXia-Dev/Rong.git",
+    "directory": "packages/skill"
+  },
+  "bugs": {
+    "url": "https://github.com/LingXia-Dev/Rong/issues"
+  },
+  "license": "MIT OR Apache-2.0"
+}

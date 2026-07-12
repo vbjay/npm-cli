@@ -1,0 +1,106 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b2bb57a4bdfe9418",
+    "fetchedFiles": [
+      "binding.gyp",
+      "index.js",
+      "package.json",
+      "test.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "8971066edf06fb0f45ddda4fd08afbe939304dba9806cfcd76dabd63bf994984",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `zstd_native`  -  C/C++ sources",
+            "items": [
+              "zstd_native.cpp"
+            ]
+          },
+          {
+            "label": "Target `zstd_native`  -  libraries",
+            "items": [
+              "-lzstd"
+            ]
+          },
+          {
+            "label": "Target `zstd_native`  -  include directories",
+            "items": [
+              "node_modules/node-addon-api"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "test.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "95b50c234deea551207d32721a698f16df87bd3510dd0e22e588d2719f556c85",
+        "sizeBytes": 5055,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./test.js",
+        "sha256": "f4fbfdaa5e2d241b12d00a10ae885f1ffcaf76629689d6fe983f10cfd266d123",
+        "sizeBytes": 1844,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:34.098Z"
+  },
+  "hash": "sha256:0596eceeb161460bafd31a86a107cf130e61a1883aa142ceb26a9e3e23871775"
+}

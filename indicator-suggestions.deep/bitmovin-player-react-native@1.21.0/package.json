@@ -1,0 +1,99 @@
+{
+  "name": "bitmovin-player-react-native",
+  "version": "1.21.0",
+  "description": "Official React Native bindings for Bitmovin's mobile Player SDKs.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "yarn build:module && yarn build:plugin",
+    "build:module": "EXPO_NONINTERACTIVE=true expo-module build",
+    "build:plugin": "EXPO_NONINTERACTIVE=true expo-module build plugin",
+    "postinstall": "node scripts/check-dependencies.js",
+    "dev:plugin": "expo-module build plugin",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "lint:all": "yarn lint && yarn example lint && yarn lint:ios && yarn lint:android",
+    "lint:all-with-tests": "yarn lint && yarn example lint && yarn integration-test lint && yarn lint:ios && yarn lint:android",
+    "typecheck": "tsc --noEmit",
+    "typecheck:all": "yarn typecheck && yarn example typecheck && yarn integration-test typecheck",
+    "format": "prettier --write '**/*.{ts,tsx,js,jsx,md,json,yml,yaml}'",
+    "format:ios": "./scripts/format-swift.sh",
+    "format:android": "./scripts/format-android.sh",
+    "format:all": "yarn format && yarn format:ios && yarn format:android",
+    "setup-hooks": "./scripts/setup-hooks.sh",
+    "lint:ios": "swiftlint ios --strict --quiet",
+    "lint:android": "cd android && ./gradlew -b ktlint.gradle ktlintCheck --quiet --console=plain",
+    "test:plugin": "yarn build:plugin && node scripts/test-with-app-gradle-dependencies.js",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "module": "expo-module",
+    "example": "yarn --cwd example",
+    "open:ios": "yarn example open:ios",
+    "open:android": "yarn example open:android",
+    "brew": "[ \"$(uname)\" != Darwin ] || brew bundle install",
+    "docs": "typedoc",
+    "pods": "yarn example pods #&& yarn integration-test pods",
+    "bootstrap": "yarn install && yarn brew && yarn build && yarn example bootstrap && yarn integration-test bootstrap && yarn setup-hooks",
+    "integration-test": "yarn --cwd integration_test"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "bitmovin-player-react-native",
+    "ios",
+    "android",
+    "tvos",
+    "androidtv",
+    "bitmovin",
+    "player",
+    "video",
+    "streaming"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bitmovin/bitmovin-player-react-native"
+  },
+  "author": "Bitmovin GmbH <player-sdks@bitmovin.com> (https://github.com/bitmovin)",
+  "license": "MIT",
+  "homepage": "https://bitmovin.com/video-player/react-native-sdk",
+  "dependencies": {
+    "expo-crypto": "~15.0.9",
+    "expo-keep-awake": "~15.0.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@types/react": "~19.1.10",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "~10.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.5.1",
+    "expo": "~54.0.35",
+    "expo-module-scripts": "^4.1.9",
+    "lint-staged": "13.0.3",
+    "prettier": "^3.6.2",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "typedoc": "^0.28.7",
+    "typescript": "~5.9.2"
+  },
+  "peerDependencies": {
+    "expo": ">=54.0.0",
+    "expo-crypto": ">=14.0.0",
+    "react": "*",
+    "react-native": "*"
+  },
+  "lint-staged": {
+    "src/**/*.(ts|tsx)": "eslint --quiet",
+    "example/src/**/*.(ts|tsx)": "eslint --quiet --config example/.eslintrc.js",
+    "integration_test/{src,playertesting,tests}/**/*.(ts|tsx)": "eslint --quiet --config integration_test/.eslintrc.js",
+    "ios/**/*.swift": [
+      "./scripts/format-swift.sh",
+      "./scripts/lint-swift.sh"
+    ],
+    "android/**/*.kt": [
+      "./scripts/format-android.sh",
+      "./scripts/lint-android.sh"
+    ],
+    "*.(ts|tsx|js|jsx|md|json|yml|yaml)": "prettier --write --no-error-on-unmatched-pattern"
+  }
+}

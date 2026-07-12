@@ -1,0 +1,148 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "bd6e62ec3fb9130b",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/fix-better-sqlite3.cjs",
+      "scripts/resolve-node-binary.cjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "better-sqlite3",
+        "versionSpec": "^12.8.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "better-sqlite3@12.11.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/fix-better-sqlite3.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "5bd35acd3e475ba6e85da0c4ad1c3db478d789395a7afdaa812e0a598020e612",
+        "sizeBytes": 13420,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "native-build",
+          "binary-download",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/resolve-node-binary.cjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/WiseLibs/better-sqlite3/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/resolve-node-binary.cjs",
+        "reason": "required by ./scripts/fix-better-sqlite3.cjs",
+        "sha256": "3078a3aa89fa7e2190a24902847458009d6a157df8c2714785030ba1c961f56b",
+        "sizeBytes": 3707,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:01.415Z"
+  },
+  "hash": "sha256:d15d9e03134c6cbafa3a86f3885d16b28e19a1725508f70753884f92fa44908b"
+}

@@ -1,0 +1,73 @@
+{
+  "name": "dnszone",
+  "version": "1.0.1",
+  "description": "High-performance DNS zone file parser as a Node.js/Web Transform stream C++ addon",
+  "main": "index.js",
+  "types": "types.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "types": "./types.d.ts"
+    },
+    "./web": {
+      "require": "./web.js",
+      "types": "./types.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "node-gyp configure build",
+    "rebuild": "node-gyp rebuild",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tugrul/node-dnszone.git"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ],
+    "testTimeout": 15000
+  },
+  "gypfile": true,
+  "files": [
+    "binding.gyp",
+    "src/",
+    "lib/",
+    "index.js",
+    "web.js",
+    "types.d.ts",
+    "README.md"
+  ],
+  "keywords": [
+    "dns",
+    "zone",
+    "zonefile",
+    "parser",
+    "stream",
+    "transform",
+    "addon",
+    "c++",
+    "napi",
+    "idn",
+    "punycode"
+  ],
+  "author": "Tuğrul Topuz <tugrultopuz@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tugrul/node-dnszone/issues"
+  },
+  "homepage": "https://github.com/tugrul/node-dnszone#readme",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^8.3.1"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "node-gyp": "^12.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

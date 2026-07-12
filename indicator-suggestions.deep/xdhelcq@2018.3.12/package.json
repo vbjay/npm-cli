@@ -1,0 +1,44 @@
+{
+  "name": "xdhelcq",
+  "version": "2018.3.12",
+  "author": "Claude SIMON (http://q37.info/contact/)",
+  "description": "'XDHTML' 'Electron' wrapper.",
+  "main": "XDHELCq.js",
+  "binary": {
+    "module_name": "xdhelcq",
+    "module_path": "./",
+    "remote_path": "./epeios-q37/xdhelcq/releases/download/v20180312/",
+    "package_name": "{module_name}-v20180312-{platform}-{arch}.tar.gz",
+    "host": "https://github.com"
+  },
+  "dependencies": {
+    "node-pre-gyp": "0.6.x",
+    "electron": "2.0.0-beta.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "preinstall": "npm install node-pre-gyp@0.6.x",
+    "install": "node-pre-gyp install --fallback-to-build --target=8.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epeios-q37/xdhelcq.git"
+  },
+  "keywords": [
+    "addon",
+    "electron",
+    "XDHTML",
+    "wrapper",
+    "native",
+    "desktop",
+    "ui",
+    "q37",
+    "epeios"
+  ],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/epeios-q37/xdhelcq/issues"
+  },
+  "homepage": "https://github.com/epeios-q37/xdhelcq#readme",
+  "runkitExampleFilename": "runkit.js"
+}

@@ -1,0 +1,97 @@
+{
+  "name": "eventum",
+  "version": "0.1.0-alpha.7",
+  "private": false,
+  "description": "Ultra-fast, low-overhead logger for Node.js powered by Rust and napi-rs",
+  "homepage": "https://github.com/dmytroPolhul/eventum#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "optionalDependencies": {
+    "eventum-darwin-arm64": "0.1.0-alpha.7",
+    "eventum-darwin-x64": "0.1.0-alpha.7",
+    "eventum-linux-arm64-gnu": "0.1.0-alpha.7",
+    "eventum-linux-arm64-musl": "0.1.0-alpha.7",
+    "eventum-linux-x64-gnu": "0.1.0-alpha.7",
+    "eventum-linux-x64-musl": "0.1.0-alpha.7"
+  },
+  "bugs": {
+    "url": "https://github.com/dmytroPolhul/eventum/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmytroPolhul/eventum.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./index.cjs"
+    }
+  },
+  "main": "./index.cjs",
+  "module": "./index.js",
+  "license": "MIT",
+  "author": "Dmytro Polhul",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "build": "napi build --release",
+    "bench": "node benchmarks/compare-targets-bench.js",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "napi": {
+    "name": "eventum",
+    "package": {
+      "name": "eventum"
+    },
+    "triples": {
+      "defaults": false,
+      "additional": [
+        "x86_64-unknown-linux-gnu",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-musl",
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin"
+      ]
+    }
+  },
+  "files": [
+    "index.js",
+    "index.cjs",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "scripts/",
+    "examples/images/",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "src"
+  ],
+  "keywords": [
+    "logger",
+    "logging",
+    "napi",
+    "rust",
+    "nodejs",
+    "performance",
+    "structured-logging",
+    "fast-logger",
+    "batching",
+    "log-rotation"
+  ],
+  "dependencies": {
+    "file-uri-to-path": "^1.0.0"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.4",
+    "@vitest/coverage-v8": "^4.0.17",
+    "bindings": "^1.5.0",
+    "node-addon-api": "^8.3.1",
+    "vitest": "^4.0.17"
+  }
+}

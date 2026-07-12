@@ -1,0 +1,54 @@
+{
+  "name": "@whitespectre/rn-modal-presenter",
+  "version": "1.1.3",
+  "description": "A simple to use library to present modals on top of the app using Root Siblings.",
+  "main": "./build/dist/index.js",
+  "repository": "git@github.com:whitespectre/rn-modal-presenter.git",
+  "author": "Whitespectre - Rui Lu & Lucas Diez de Medina",
+  "license": "MIT",
+  "homepage": "https://github.com/whitespectre/rn-modal-presenter",
+  "bugs": "https://github.com/whitespectre/rn-modal-presenter/issues",
+  "keywords": [
+    "modal",
+    "ios",
+    "android",
+    "popup",
+    "tooltip",
+    "alert",
+    "javascript",
+    "ui-lib",
+    "rn",
+    "react-native"
+  ],
+  "dependencies": {
+    "react-native-root-siblings": "^4.1.1"
+  },
+  "peerDependencies": {
+    "react": ">= 16.x.x",
+    "react-native": ">=0.63.x"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-native": "^0.63.25",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "lint-staged": "^10.4.2",
+    "npm-post-install": "0.0.2",
+    "prettier": "^2.1.2",
+    "prettier-format": "^3.0.3",
+    "react-native-typescript-transformer": "^1.2.13",
+    "typescript": "^4.0.3"
+  },
+  "scripts": {
+    "build": "rm -rf ./build && cd lib && tsc && cp ../package.json ../build/dist/ && Echo Build completed!",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "prettier": "cd lib && npx prettier --write . && git add .",
+    "prepare": "npm run build"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "name": "@miracleufo/react-g-translator",
+  "version": "1.3.4",
+  "description": "A modern, free, lightweight npm package for translating react apps (component wrapper.) No API keys or language list files are required.",
+  "author": "Miracle Ufodiama",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "unpkg": "dist/index.min.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && rollup -c",
+    "semantic-release": "semantic-release",
+    "test": "env-cmd -f .env.development react-scripts test --runInBand --no-cache",
+    "prepack": "npm run build",
+    "lint": "eslint src --ext .js,.jsx,.tsx,.ts --fix",
+    "prepublish": "npm run build"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MiracleUFO/react-g-translator"
+  },
+  "keywords": [
+    "npm",
+    "javascript",
+    "typescript",
+    "esm",
+    "cjs",
+    "umd",
+    "react",
+    "reactjs",
+    "vite",
+    "nextjs",
+    "next",
+    "next13",
+    "nodejs",
+    "commonjs",
+    "ecmascript",
+    "beginner",
+    "demonstration",
+    "localisation",
+    "accessibility",
+    "a11y",
+    "internationalisation",
+    "i18n"
+  ],
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@rollup/plugin-commonjs": "^25.0.5",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/crypto-js": "^4.1.2",
+    "@types/jest": "^29.5.4",
+    "@types/lodash": "^4.14.199",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^9.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "env-cmd": "^10.1.0",
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jsdom": "20.0.3",
+    "jsdom-global": "3.0.2",
+    "prettier": "^3.0.3",
+    "react-scripts": "^5.0.1",
+    "rimraf": "^5.0.5",
+    "rollup": "^3.29.4",
+    "rollup-plugin-dts": "^6.0.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-polyfill-node": "^0.12.0",
+    "semantic-release": "^21.1.1",
+    "ts-node": "^10.9.1"
+  },
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "overrides": {
+    "react-scripts": {
+      "@svgr/webpack": "6.5.1",
+      "postcss": "8.4.31"
+    }
+  },
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@tanstack/react-query": "^5.12.2",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "crypto-js": "^4.2.0",
+    "lodash": "^4.17.21",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^18.2.0"
+  }
+}

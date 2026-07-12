@@ -1,0 +1,122 @@
+{
+  "name": "@lightningtv/solid",
+  "version": "3.2.5",
+  "description": "Lightning Renderer for Solid Universal",
+  "type": "module",
+  "exports": {
+    ".": {
+      "@lightningtv/source": "./src/index.ts",
+      "import": {
+        "types": "./dist/src/index.d.ts",
+        "default": "./dist/src/index.js"
+      }
+    },
+    "./primitives": {
+      "@lightningtv/source": "./src/primitives/index.ts",
+      "import": {
+        "types": "./dist/src/primitives/index.d.ts",
+        "default": "./dist/src/primitives/index.js"
+      }
+    },
+    "./devtools": {
+      "@lightningtv/source": "./src/devtools/index.ts",
+      "import": {
+        "types": "./dist/src/devtools/index.d.ts",
+        "default": "./dist/src/devtools/index.js"
+      }
+    },
+    "./shaders": {
+      "@lightningtv/source": "./src/shaders/index.ts",
+      "import": {
+        "types": "./dist/src/shaders/index.d.ts",
+        "default": "./dist/src/shaders/index.js"
+      }
+    },
+    "./jsx-runtime": {
+      "@lightningtv/source": "./jsx-runtime.d.ts",
+      "default": "./dist/jsx-runtime.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "start": "npm run watch",
+    "test": "vitest",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:fix": "npm run lint:fix:prettier && npm run lint:fix:eslint",
+    "lint:prettier": "prettier --check \"**/*.{ts,js,cjs,md}\"",
+    "lint:fix:prettier": "prettier --write \"**/*.{ts,js,cjs,md}\"",
+    "lint:eslint": "eslint .",
+    "lint:fix:eslint": "eslint --fix .",
+    "build": "rm -rf dist && npm run tsc && cp jsx-runtime.d.ts dist/",
+    "tsc": "tsc",
+    "watch": "tsc -w",
+    "prepare": "husky",
+    "prepack": "npm run build",
+    "release": "release-it",
+    "test:browser": "vitest --config=vitest.browser.config.ts"
+  },
+  "keywords": [
+    "lightning",
+    "javascript",
+    "canvas",
+    "web",
+    "tv"
+  ],
+  "author": "Chris Lorenzo",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@solid-primitives/event-listener": "^2.3.3",
+    "@solid-primitives/list": "^0.1.2",
+    "@solid-primitives/mouse": "^2.0.20",
+    "@solid-primitives/scheduled": "^1.4.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@lightningjs/renderer": "npm:@lightningtv/renderer@3.3.0",
+    "@solid-devtools/debugger": "^0.28.1",
+    "@solidjs/testing-library": "^0.8.10",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vitest/browser-playwright": "^4.0.9",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.13.0",
+    "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.2",
+    "release-it": "^17.10.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.17.0",
+    "vite-plugin-solid": "^2.11.6",
+    "vitest": "^4.0.9"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{js,cjs,md}": "prettier --write"
+  },
+  "peerDependencies": {
+    "@lightningjs/renderer": "^3.0.0",
+    "@solidjs/router": "^0.15.1",
+    "solid-js": "*"
+  },
+  "peerDependenciesMeta": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightning-tv/solid.git"
+  },
+  "files": [
+    "dist",
+    "src",
+    "jsx-runtime.d.ts",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "docs/AI_CODING_GUIDELINES.md"
+  ],
+  "packageManager": "pnpm@10.8.0"
+}

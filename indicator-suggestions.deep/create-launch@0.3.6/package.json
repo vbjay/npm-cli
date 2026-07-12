@@ -1,0 +1,50 @@
+{
+  "name": "create-launch",
+  "version": "0.3.6",
+  "description": "Launch your app to app stores.",
+  "keywords": [
+    "app-store",
+    "google-play",
+    "testflight",
+    "ios",
+    "android",
+    "mobile",
+    "expo",
+    "react-native",
+    "flutter",
+    "cli"
+  ],
+  "homepage": "https://launch.expo.dev",
+  "author": {
+    "name": "Cedric van Putten",
+    "url": "https://cedric.dev",
+    "email": "npm@cedric.dev"
+  },
+  "type": "module",
+  "bin": {
+    "create-launch": "build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "imports": {
+    "#commands/*": "./src/commands/*.ts",
+    "#services/*": "./src/services/*.ts",
+    "#utils/*": "./src/utils/*.ts"
+  },
+  "scripts": {
+    "build": "bun ./scripts/make-build.ts",
+    "lint": "eslint .",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "prepack": "bun run build --clear"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/prompts": "^2.4.9",
+    "debug": "^4.4.1",
+    "multitars": "^1.0.0",
+    "ora": "^9.4.1",
+    "prompts": "^2.4.2"
+  }
+}

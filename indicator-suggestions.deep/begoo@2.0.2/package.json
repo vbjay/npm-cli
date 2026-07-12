@@ -1,0 +1,65 @@
+{
+  "name": "begoo",
+  "version": "2.0.2",
+  "description": "Say something with style ;)",
+  "license": "BSD-2-Clause",
+  "keywords": [
+    "ansi",
+    "app",
+    "begoo",
+    "bin",
+    "box",
+    "cli",
+    "cli-app",
+    "cowsay",
+    "message",
+    "say",
+    "yeoman",
+    "yo"
+  ],
+  "type": "module",
+  "homepage": "https://github.com/shariati/begoo",
+  "author": "Amin Shariati",
+  "repository": "shariati/begoo",
+  "bin": "cli.js",
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "test": "standard && mocha",
+    "readme": "node ./node_modules/.bin/node-readme",
+    "snyk-protect": "snyk-protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "dependencies": {
+    "@snyk/protect": "latest",
+    "ansi-regex": "^6.0.1",
+    "ansi-styles": "^6.1.0",
+    "chalk": "^2.4.2",
+    "cli-boxes": "^2.1.0",
+    "pad-component": "0.0.1",
+    "repeating": "^3.0.0",
+    "string-width": "^4.1.0",
+    "strip-ansi": "^7.0.1",
+    "taketalk": "^1.0.0",
+    "wrap-ansi": "^8.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^9.1.3",
+    "standard": "^16.0.4"
+  },
+  "xo": {
+    "space": true
+  },
+  "snyk": true
+}

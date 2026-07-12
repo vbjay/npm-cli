@@ -1,0 +1,93 @@
+{
+  "name": "@gachlab/capacitor-background-geolocation",
+  "version": "3.0.0",
+  "description": "Capacitor 8+ plugin for accurate background geolocation tracking, driving-event detection, sync queue and OEM diagnostics on iOS and Android.",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "android/src/main/",
+    "android/build.gradle",
+    "android/proguard-rules.pro",
+    "dist/",
+    "ios/Sources",
+    "ios/Tests",
+    "Package.swift",
+    "GachlabCapacitorBackgroundGeolocation.podspec",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "author": "Guillermo Carrillo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gachlab/capacitor-background-geolocation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gachlab/capacitor-background-geolocation/issues"
+  },
+  "homepage": "https://github.com/gachlab/capacitor-background-geolocation#readme",
+  "scripts": {
+    "verify": "npm run verify:web",
+    "verify:ios": "xcodebuild -scheme GachlabCapacitorBackgroundGeolocation -destination generic/platform=iOS",
+    "verify:android": "cd android && ./gradlew clean test && cd ..",
+    "verify:android:example": "cd example-app && npm install && cd android && ./gradlew :gachlab-capacitor-background-geolocation:clean :gachlab-capacitor-background-geolocation:build :gachlab-capacitor-background-geolocation:test && cd ../..",
+    "test": "node --import tsx --test 'src/__tests__/**/*.test.ts'",
+    "test:coverage": "c8 node --import tsx --test 'src/__tests__/**/*.test.ts'",
+    "test:watch": "node --import tsx --test --watch 'src/__tests__/**/*.test.ts'",
+    "e2e:web:build": "esbuild e2e-web/harness.entry.js --bundle --format=iife --outfile=e2e-web/harness.bundle.js",
+    "e2e:web": "npm run build && npm run e2e:web:build && playwright test --config e2e-web/playwright.config.ts",
+    "verify:web": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "prettier --check \"**/*.{css,html,ts,js}\"",
+    "fmt": "prettier --write \"**/*.{css,html,ts,js}\"",
+    "docgen": "docgen --api BackgroundGeolocationPlugin --output-readme README.md --output-json dist/docs.json",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native",
+    "background",
+    "geolocation",
+    "location",
+    "gps",
+    "tracking",
+    "background-location"
+  ],
+  "devDependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "@capacitor/docgen": "^0.3.1",
+    "@capacitor/ios": "^8.4.1",
+    "@ionic/eslint-config": "^0.4.0",
+    "@ionic/prettier-config": "^4.0.0",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^20.0.0",
+    "c8": "^11.0.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.22.0",
+    "tsx": "^4.22.3",
+    "typescript": "7.0.1-rc"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=8.0.0"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  }
+}

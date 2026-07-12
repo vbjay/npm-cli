@@ -1,0 +1,87 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "09d5c06de5c2ba67",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "1c7d8f257bb43c0c08e2d37ed1458ca0f2822a876d81d4ce09f50ce071f07c10",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `elephant`  -  C/C++ sources",
+            "items": [
+              "src/node_elephant.cc",
+              "src/wrapped_elephant.cc",
+              "inc/elephant.cc",
+              "inc/MH3/MurmurHash3.cc"
+            ]
+          },
+          {
+            "label": "Target `elephant`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "9fa3f3c90bd0acdc9d611ac63ea316f6fc760e352debee64987e8ae27ff9e0a5",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked",
+            "items": [
+              "npm",
+              "node"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:41.272Z"
+  },
+  "hash": "sha256:cc4ffc0bad65d1ae7ac63dc1e4a0c62661895c1faf7f7fac4ca7853a07450a60"
+}

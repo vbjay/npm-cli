@@ -1,0 +1,87 @@
+{
+  "name": "@cjser/fullname-native",
+  "version": "3.0.0-cjser.2",
+  "description": "Get the fullname of the current user",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://code.moenext.com/3rdeye/cjser.git"
+  },
+  "funding": "https://github.com/sponsors/sindresorhus",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com"
+  },
+  "type": "module",
+  "exports": {
+    "types": "./index.d.ts",
+    "require": "./dist-cjser/index.cjs",
+    "default": "./index.js"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "gypfile": true,
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "binding.cjs",
+    "binding.gyp",
+    "binding.cc",
+    "dist-cjser"
+  ],
+  "keywords": [
+    "binding",
+    "native",
+    "addon",
+    "name",
+    "fullname",
+    "realname",
+    "user",
+    "gecos",
+    "pwuid",
+    "uid"
+  ],
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "nan": "^2.19.0"
+  },
+  "devDependencies": {
+    "ava": "^6.1.2",
+    "xo": "^0.58.0"
+  },
+  "types": "./index.d.ts",
+  "main": "./dist-cjser/index.cjs",
+  "cjser": {
+    "sourceVersion": "3.0.0",
+    "cjserVersion": 2,
+    "original": {
+      "name": "fullname-native",
+      "version": "3.0.0",
+      "exports": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "repository": "sindresorhus/fullname-native",
+      "dependencies": {
+        "bindings": "^1.5.0",
+        "nan": "^2.19.0"
+      },
+      "files": [
+        "index.js",
+        "index.d.ts",
+        "binding.cjs",
+        "binding.gyp",
+        "binding.cc"
+      ],
+      "scripts": {
+        "test": "xo && ava"
+      }
+    }
+  }
+}

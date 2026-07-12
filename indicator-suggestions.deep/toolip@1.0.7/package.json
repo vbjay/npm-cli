@@ -1,0 +1,75 @@
+{
+  "name": "toolip",
+  "version": "1.0.7",
+  "description": "A TypeScript-powered developer security companion CLI for supply chain security, dependency intelligence, secret detection, security auditing, encrypted local secrets management, Git security checks, and secure development education.",
+  "type": "module",
+  "bin": {
+    "toolip": "dist/src/index.js"
+  },
+  "main": "dist/src/index.js",
+  "files": [
+    "dist/src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "verify:package": "node scripts/verify-package.mjs",
+    "verify": "npm run typecheck && npm test && npm run clean && npm run build && npm run verify:package",
+    "prepack": "npm run verify",
+    "pack:check": "npm pack --dry-run"
+  },
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "cli",
+    "security",
+    "security-tool",
+    "supply-chain-security",
+    "dependency-scanner",
+    "vulnerability-scanner",
+    "secret-scanner",
+    "secrets-management",
+    "devsecops",
+    "developer-tools",
+    "static-analysis",
+    "git-security",
+    "npm",
+    "platform-engineering",
+    "dx",
+    "cybersecurity"
+  ],
+  "author": "Ashibuogwu Williams (wbizmo)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wbizmo/toolip.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wbizmo/toolip/issues"
+  },
+  "homepage": "https://github.com/wbizmo/toolip#readme",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "fast-glob": "^3.3.3",
+    "ignore": "^7.0.3",
+    "ora": "^8.2.0",
+    "pacote": "^21.0.4",
+    "semver": "^7.7.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/semver": "^7.7.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.2.6"
+  }
+}

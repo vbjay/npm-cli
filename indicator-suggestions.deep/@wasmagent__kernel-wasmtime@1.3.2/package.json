@@ -1,0 +1,67 @@
+{
+  "name": "@wasmagent/kernel-wasmtime",
+  "version": "1.3.2",
+  "description": "WasmtimeKernel — true WASM sandbox for wasmagent via Javy (QuickJS→WASM) + Node's native WebAssembly API",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "bun test",
+    "clean": "rm -rf dist .turbo",
+    "postinstall": "node scripts/postinstall.mjs"
+  },
+  "dependencies": {
+    "@wasmagent/core": "^1.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "wasmagent",
+    "wasm",
+    "agent",
+    "portable",
+    "sandbox",
+    "executor",
+    "ai",
+    "llm",
+    "typescript"
+  ],
+  "wasmagent": {
+    "tier": "tier-2",
+    "stability": "stable"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WasmAgent/wasmagent-js.git",
+    "directory": "packages/kernel-wasmtime"
+  },
+  "homepage": "https://github.com/WasmAgent/wasmagent-js/tree/main/packages/kernel-wasmtime#readme",
+  "bugs": {
+    "url": "https://github.com/WasmAgent/wasmagent-js/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "vendor",
+    "LICENSE",
+    "README.md"
+  ],
+  "author": "wasmagent contributors"
+}

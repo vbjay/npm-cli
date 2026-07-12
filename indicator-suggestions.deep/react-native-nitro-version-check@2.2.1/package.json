@@ -1,0 +1,171 @@
+{
+  "name": "react-native-nitro-version-check",
+  "version": "2.2.1",
+  "description": "A lightweight, fast version-checking library for React Native, powered by Nitro Modules",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "react-native.config.js",
+    "nitrogen",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "cpp",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "app.plugin.js",
+    "nitro.json",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "prepack": "cp ../README.md ./README.md",
+    "postpack": "rm ./README.md",
+    "release": "release-it",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "specs": "tsc --noEmit false && nitrogen --logLevel=\"debug\"",
+    "start": "cd ../example && bun start",
+    "pods": "cd ../example && cd ios && bundle exec pod install",
+    "bootstrap": "cd .. && bun install && cd example && bun pods",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "clean:ios": "cd ../example && rm -rf ios/build ios/Pods ios/DerivedData",
+    "clean:android": "cd ../example && rm -rf android/build android/app/build android/.gradle",
+    "clean:all": "bun clean && bun clean:ios && bun clean:android && rm -rf node_modules ../example/node_modules"
+  },
+  "keywords": [
+    "react-native",
+    "nitro",
+    "version-check",
+    "version",
+    "react-native-nitro-version-check",
+    "react-native-version",
+    "react-native-version-check",
+    "expo",
+    "expo-version-check",
+    "expo-version",
+    "nitro-modules",
+    "nitro-modules-version-check",
+    "nitro-modules-version",
+    "app store version",
+    "play store version",
+    "market version",
+    "lightweight"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlshehriAli0/react-native-nitro-version-check.git"
+  },
+  "author": "AlshehriAli0 (https://github.com/AlshehriAli0)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlshehriAli0/react-native-nitro-version-check/issues"
+  },
+  "homepage": "https://alshehriali0.github.io/react-native-nitro-version-check/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true,
+      "publishArgs": [
+        "--provenance --access public"
+      ]
+    },
+    "github": {
+      "release": true
+    },
+    "hooks": {
+      "before:init": "bun run build"
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "perf",
+              "section": "Performance"
+            },
+            {
+              "type": "refactor",
+              "section": "Refactors"
+            },
+            {
+              "type": "docs",
+              "section": "Documentation"
+            },
+            {
+              "type": "style",
+              "section": "Styles"
+            },
+            {
+              "type": "chore",
+              "section": "Chores"
+            },
+            {
+              "type": "test",
+              "section": "Tests"
+            },
+            {
+              "type": "ci",
+              "section": "CI"
+            },
+            {
+              "type": "build",
+              "section": "Build"
+            }
+          ]
+        },
+        "infile": "../CHANGELOG.md"
+      }
+    }
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^10.0.5",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^19.1.03",
+    "jest": "^29.7.0",
+    "nitrogen": "^0.35.2",
+    "react": "19.2.0",
+    "react-native": "0.83.0",
+    "react-native-nitro-modules": "0.35.2",
+    "release-it": "^19.2.4",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": ">=0.35.0"
+  }
+}

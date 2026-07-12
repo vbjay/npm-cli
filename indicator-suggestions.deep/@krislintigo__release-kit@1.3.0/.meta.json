@@ -1,0 +1,255 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a51743120678342d",
+    "fetchedFiles": [
+      "package.json",
+      "src/check.js",
+      "src/cli.js",
+      "src/commitlint.d.ts",
+      "src/commitlint.js",
+      "src/config.js",
+      "src/env.js",
+      "src/hooks.js",
+      "src/index.d.ts",
+      "src/lint.js",
+      "src/release.js",
+      "src/scaffold.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "publint",
+        "versionSpec": "^0.3.21"
+      },
+      {
+        "name": "prepare",
+        "versionSpec": null
+      },
+      {
+        "name": "cosmiconfig",
+        "versionSpec": "^9.0.2"
+      },
+      {
+        "name": "semantic-release",
+        "versionSpec": "^25.0.5"
+      },
+      {
+        "name": "@commitlint/load",
+        "versionSpec": "^21.2.0"
+      },
+      {
+        "name": "@commitlint/read",
+        "versionSpec": "^21.2.0"
+      },
+      {
+        "name": "@commitlint/lint",
+        "versionSpec": "^21.2.0"
+      },
+      {
+        "name": "@commitlint/format",
+        "versionSpec": "^21.2.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@commitlint/format@21.2.0",
+      "@commitlint/lint@21.2.0",
+      "@commitlint/load@21.2.0",
+      "@commitlint/read@21.2.1",
+      "cosmiconfig@9.0.2",
+      "prepare@0.0.6",
+      "publint@0.3.21",
+      "semantic-release@25.0.6"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/cli.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "160f8bd7b472584baa79cbacf1e408f9c7440d8b81020bb76968aa0c2163d974",
+        "sizeBytes": 10770,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/check.js",
+          "src/env.js",
+          "src/hooks.js",
+          "src/lint.js",
+          "src/release.js",
+          "src/scaffold.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/check.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "d961f5d53c6943793d28677fe80dedf275dbd09757a23cd5cba9e32e0dd868b9",
+        "sizeBytes": 1925,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/index.d.ts"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/index.d.ts",
+        "reason": "required by ./src/check.js; required by ./src/env.js; required by ./src/hooks.js; required by ./src/lint.js; required by ./src/config.js; required by ./src/release.js; required by ./src/scaffold.js",
+        "sha256": "cf1b708962ffa144b93c4dc25b953b4f54dcadcef1484e69b149f5f72db537f2",
+        "sizeBytes": 8668,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/env.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "e0df800dffdd330f1362b553217d0941ee29daaadaa24bae79dd1f4ddad7745c",
+        "sizeBytes": 2448,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/index.d.ts"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/hooks.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "c329b28e12a9a858fbec98a5a9664ffe4be0732d59b9152201b7400655312176",
+        "sizeBytes": 3937,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/index.d.ts"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lint.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "c593b95623f1fe86d4a3989635b1e07b10f38007f403ca6dc0d993abeb00c718",
+        "sizeBytes": 3380,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/index.d.ts",
+          "src/commitlint.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/commitlint.js",
+        "reason": "required by ./src/lint.js",
+        "sha256": "4452f7db09621d4d29f0d8cf009a3e5ec322385972971fb4b553dd227a5db9fc",
+        "sizeBytes": 816,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/commitlint.d.ts"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/commitlint.d.ts",
+        "reason": "required by ./src/commitlint.js",
+        "sha256": "781c3c80b4bc98dac3366895b2b0372a5d97f207d73d76e46c9f190a6b615852",
+        "sizeBytes": 613,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/release.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "597e5b283a7198a9012ad80a9761b5b8db4eb64db3747596bd8c56634781e5ca",
+        "sizeBytes": 2907,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/config.js",
+          "src/index.d.ts"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/config.js",
+        "reason": "required by ./src/release.js",
+        "sha256": "16a857d3b75d0832dc40e78a9847c0d8777963ba5112291ae9708a29012a81b3",
+        "sizeBytes": 3625,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/index.d.ts"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/scaffold.js",
+        "reason": "required by ./src/cli.js",
+        "sha256": "0c381c44a5c44d0a476eb557d98c05800e247b114994b63e41c953e37a022738",
+        "sizeBytes": 5608,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/index.d.ts"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./src/cli.js",
+        "sha256": "94a9c9e878556559d2add6459005cc743679da06f0566f8d71e5dbdccbd6af67",
+        "sizeBytes": 2388,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:22.629Z"
+  },
+  "hash": "sha256:f12ddc2413a56ab78c2f4d20a6af071f43050868e4280e6629bc14dce8e4221a"
+}

@@ -1,0 +1,58 @@
+{
+  "author": "aforemendude",
+  "bin": {
+    "upgrade-npm-packages": "./dist/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/aforemendude/upgrade-npm-packages/issues"
+  },
+  "dependencies": {
+    "cross-spawn": "7.0.6",
+    "semver": "7.8.2"
+  },
+  "description": "A CLI tool that recursively upgrades npm package dependencies to the latest eligible versions.",
+  "devDependencies": {
+    "@types/cross-spawn": "6.0.6",
+    "@types/node": "24.12.4",
+    "@types/semver": "7.7.1",
+    "prettier": "3.8.3",
+    "typescript": "6.0.3",
+    "vitest": "4.1.7"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.js"
+  ],
+  "homepage": "https://github.com/aforemendude/upgrade-npm-packages",
+  "keywords": [
+    "npm",
+    "packages",
+    "dependencies",
+    "package-json",
+    "cli"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "@aforemendude/upgrade-npm-packages",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aforemendude/upgrade-npm-packages.git"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && chmod +x dist/index.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepack": "npm run verify",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "verify": "npm install && npm run format:check && npm run build && npm run test"
+  },
+  "version": "2.1.1"
+}

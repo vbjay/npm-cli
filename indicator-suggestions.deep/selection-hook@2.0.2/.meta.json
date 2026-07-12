@@ -1,0 +1,109 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "acbe7e6fe6a4cf1f",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "e3941c5e1978c2e40e9788dd9b69a62ccd9edae4f0cebfa42625eb5ef1bfc9d0",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `selection-hook`  -  C/C++ sources",
+            "items": [
+              "src/windows/selection_hook.cc",
+              "src/windows/lib/string_pool.cc",
+              "src/windows/lib/utils.cc",
+              "src/windows/lib/clipboard.cc",
+              "src/windows/lib/keyboard.cc",
+              "src/mac/selection_hook.mm",
+              "src/mac/lib/utils.mm",
+              "src/mac/lib/clipboard.mm",
+              "src/mac/lib/keyboard.mm",
+              "src/linux/selection_hook.cc",
+              "src/linux/protocols/x11.cc",
+              "src/linux/protocols/wayland.cc",
+              "src/linux/protocols/wayland/ext-data-control-v1-protocol.c",
+              "src/linux/protocols/wayland/wlr-data-control-unstable-v1-protocol.c",
+              "src/linux/lib/keyboard.cc",
+              "src/linux/lib/utils.cc"
+            ]
+          },
+          {
+            "label": "Target `selection-hook`  -  libraries",
+            "items": [
+              "uiautomationcore.lib",
+              "user32.lib",
+              "-levdev",
+              "-lX11",
+              "-lXtst",
+              "-lXfixes",
+              "-lwayland-client"
+            ]
+          },
+          {
+            "label": "Target `selection-hook`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "/usr/include/libevdev-1.0"
+            ]
+          },
+          {
+            "label": "Target `selection-hook`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:09.266Z"
+  },
+  "hash": "sha256:642014103a55cd125033fcd0335b8cc51749b075561d1f8ed3be383699e6768c"
+}

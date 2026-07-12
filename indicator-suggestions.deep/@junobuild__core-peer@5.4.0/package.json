@@ -1,0 +1,67 @@
+{
+  "name": "@junobuild/core-peer",
+  "version": "5.4.0",
+  "description": "JavaScript core client for Juno (deprecated, use @junobuild/core)",
+  "author": "David Dal Busco (https://daviddalbusco.com)",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/node/index.mjs",
+  "module": "./dist/browser/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/browser/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/node/index.mjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "rmdir": "node ../../scripts/rmdir.mjs",
+    "ts-declaration": "tsc --emitDeclarationOnly --outDir dist/types",
+    "copy-src": "rm -rf src && cp -R ../core/src . && rm -rf ./src/tests",
+    "copy": "npm run copy-src",
+    "build": "npm run rmdir && mkdir -p dist && npm run copy && node esbuild.mjs && npm run ts-declaration",
+    "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junobuild/juno-js.git",
+    "directory": "packages/core-peer"
+  },
+  "bugs": {
+    "url": "https://github.com/junobuild/juno-js"
+  },
+  "keywords": [
+    "serverless",
+    "serverless-functions",
+    "wasm",
+    "self-hosted",
+    "cloud",
+    "auth",
+    "storage",
+    "database",
+    "hosting"
+  ],
+  "homepage": "https://juno.build",
+  "dependencies": {
+    "@junobuild/auth": "^4.1",
+    "@junobuild/errors": "*",
+    "@junobuild/ic-client": "^8.1",
+    "@junobuild/storage": "^2.4",
+    "@junobuild/utils": "^1"
+  },
+  "peerDependencies": {
+    "@icp-sdk/auth": "^5",
+    "@icp-sdk/core": "^5"
+  }
+}

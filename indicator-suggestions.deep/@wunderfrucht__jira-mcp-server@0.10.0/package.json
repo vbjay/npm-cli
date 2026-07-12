@@ -1,0 +1,52 @@
+{
+  "name": "@wunderfrucht/jira-mcp-server",
+  "version": "0.10.0",
+  "description": "JIRA MCP Server - AI-friendly JIRA integration via Model Context Protocol",
+  "main": "index.js",
+  "bin": {
+    "jira-mcp-server": "./run.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js",
+    "preuninstall": "node uninstall.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "jira",
+    "server",
+    "rust",
+    "cli"
+  ],
+  "author": "JIRA MCP Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wunderfrucht/gouqi-mcp-server.git"
+  },
+  "homepage": "https://github.com/wunderfrucht/gouqi-mcp-server",
+  "bugs": {
+    "url": "https://github.com/wunderfrucht/gouqi-mcp-server/issues"
+  },
+  "optionalDependencies": {
+    "@wunderfrucht/jira-mcp-server-darwin-arm64": "0.10.0",
+    "@wunderfrucht/jira-mcp-server-darwin-x64": "0.10.0",
+    "@wunderfrucht/jira-mcp-server-linux-x64": "0.10.0",
+    "@wunderfrucht/jira-mcp-server-win32-x64": "0.10.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

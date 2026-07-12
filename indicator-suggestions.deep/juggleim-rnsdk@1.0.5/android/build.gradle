@@ -1,0 +1,55 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.2'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+    
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:0.71.1'
+    implementation 'com.juggle.im:juggle:1.8.46'
+    implementation 'com.juggle.call.zego:juggle:1.8.25'
+    implementation 'im.zego:express-video:3.17.3'
+    implementation("cn.jiguang.sdk:jpush:5.2.4")
+    implementation 'com.juggle.push.jg:juggle:1.8.46'
+
+}

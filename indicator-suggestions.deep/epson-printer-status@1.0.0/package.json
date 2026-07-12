@@ -1,0 +1,64 @@
+{
+  "name": "epson-printer-status",
+  "version": "1.0.0",
+  "description": "EPSON打印机状态监控 - Node.js原生模块，支持实时状态回调和完整ASB状态解析",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "test": "node test.js",
+    "clean": "node-gyp clean",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "epson", 
+    "printer", 
+    "status", 
+    "monitor", 
+    "native", 
+    "addon", 
+    "receipt", 
+    "thermal", 
+    "pos",
+    "asb",
+    "实时监控"
+  ],
+  "author": "v9u",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/v9u/epson-printer-status.git"
+  },
+  "bugs": {
+    "url": "https://github.com/v9u/epson-printer-status/issues"
+  },
+  "homepage": "https://github.com/v9u/epson-printer-status#readme",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "addon.cpp",
+    "binding.gyp",
+    "EpsStmApi.h",
+    "README.md",
+    "LICENSE",
+    "example.js"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.5.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^11.4.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": ["win32"],
+  "cpu": ["x64", "ia32"],
+  "gypfile": true,
+  "binary": {
+    "module_name": "epson_addon",
+    "module_path": "./build/Release/",
+    "host": "https://github.com/yourusername/epson-printer-status/releases/download/"
+  }
+}

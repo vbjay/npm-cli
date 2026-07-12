@@ -1,0 +1,54 @@
+{
+  "name": "novyr",
+  "version": "0.4.8",
+  "description": "Novyr — descreva uma task e um pipeline de agentes leva da ideia ao PR, revisado e testado. Gasta 60-90% menos em IA (compressão nvr + pipeline orquestrado). Economia em tempo real na statusline.",
+  "license": "MIT",
+  "homepage": "https://novyr.dev",
+  "bin": {
+    "novyr": "./bin/cli.js",
+    "nvr": "./bin/cli.js",
+    "rtk": "./bin/cli.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "scripts/postinstall.js",
+    "README.md",
+    "NOTICE",
+    "config/opencode/opencode.json",
+    "config/opencode/tui.json",
+    "config/opencode/AGENTS.md",
+    "config/opencode/agent",
+    "config/opencode/themes",
+    "config/opencode/plugins"
+  ],
+  "optionalDependencies": {
+    "@novyr/nvr-linux-x64": "0.1.2",
+    "@novyr/nvr-linux-arm64": "0.1.2",
+    "@novyr/nvr-darwin-x64": "0.1.2",
+    "@novyr/nvr-darwin-arm64": "0.1.2",
+    "@novyr/nvr-win32-x64": "0.1.2",
+    "@novyr/pilot-linux-x64": "1.17.9-novyr.1",
+    "@novyr/pilot-linux-x64-musl": "1.17.9-novyr.1",
+    "@novyr/pilot-linux-arm64": "1.17.9-novyr.1",
+    "@novyr/pilot-linux-arm64-musl": "1.17.9-novyr.1",
+    "@novyr/pilot-darwin-x64": "1.17.9-novyr.1",
+    "@novyr/pilot-darwin-arm64": "1.17.9-novyr.1",
+    "@novyr/pilot-win32-x64": "1.17.9-novyr.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude-code",
+    "tokens",
+    "token-savings",
+    "nvr",
+    "cli",
+    "statusline",
+    "claude"
+  ]
+}

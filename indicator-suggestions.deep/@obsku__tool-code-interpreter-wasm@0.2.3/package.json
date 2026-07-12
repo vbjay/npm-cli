@@ -1,0 +1,65 @@
+{
+  "name": "@obsku/tool-code-interpreter-wasm",
+  "version": "0.2.3",
+  "description": "WASM sandboxed code interpreter for @obsku/framework",
+  "keywords": [
+    "obsku",
+    "agent",
+    "framework",
+    "tool",
+    "code",
+    "interpreter",
+    "wasm"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obskuai/obsku.git",
+    "directory": "packages/tools/code-interpreter-wasm"
+  },
+  "author": "Obsku Team <team@obsku.dev>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --external @obsku/tool-code-interpreter-agentcore --external @aws-sdk/client-bedrock-agentcore --external @obsku/tool-code-interpreter-wasm && rm -f tsconfig.tsbuildinfo && bunx tsgo --emitDeclarationOnly",
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit",
+    "prepack": "bun run ../../../scripts/resolve-workspace-deps.ts",
+    "postpack": "bun run ../../../scripts/restore-workspace-deps.ts"
+  },
+  "dependencies": {
+    "@obsku/tool-code-interpreter": "1.0.3",
+    "@obsku/framework": "0.2.3",
+    "pyodide": "^0.26.0",
+    "quickjs-emscripten": "^0.29.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^20.0.0",
+    "effect": "*"
+  },
+  "homepage": "https://github.com/obskuai/obsku/tree/main/packages/tools/code-interpreter-wasm",
+  "bugs": {
+    "url": "https://github.com/obskuai/obsku/issues"
+  }
+}

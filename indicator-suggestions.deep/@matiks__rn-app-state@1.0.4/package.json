@@ -1,0 +1,67 @@
+{
+  "name": "@matiks/rn-app-state",
+  "version": "1.0.4",
+  "description": "Nitro-powered native app state module for React Native",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "nitrogen",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.swift",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "cpp/**/*.{hpp,cpp}",
+    "nitro.json",
+    "*.podspec",
+    "react-native.config.js",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf android/build lib",
+    "build": "rm -rf lib && tsc",
+    "specs": "npx nitrogen@0.35.0 --logLevel=\"debug\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "nitro",
+    "app-state",
+    "lifecycle"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matiks-com/rn-app-state.git"
+  },
+  "author": "Matiks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matiks-com/rn-app-state/issues"
+  },
+  "homepage": "https://github.com/matiks-com/rn-app-state#readme",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "^0.35.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.16",
+    "nitrogen": "0.35.0",
+    "react-native-nitro-modules": "0.35.0",
+    "typescript": "^5.9.3"
+  }
+}

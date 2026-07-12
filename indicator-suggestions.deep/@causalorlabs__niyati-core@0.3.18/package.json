@@ -1,0 +1,54 @@
+{
+  "name": "@causalorlabs/niyati-core",
+  "version": "0.3.18",
+  "description": "JavaScript/WebAssembly SDK for Niyati, the hosted engine for reachability, fragility, and decision intelligence",
+  "author": "Nischay Tiwari <nischay@causalorlabs.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "main": "pkg/niyati_wasm.js",
+  "module": "pkg/niyati_wasm.js",
+  "types": "pkg/niyati_wasm.d.ts",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CausalorLabs/Niyati.git",
+    "directory": "niyati-core/crates/niyati-wasm"
+  },
+  "homepage": "https://docs.causalorlabs.com",
+  "bugs": {
+    "url": "https://github.com/CausalorLabs/Niyati/issues"
+  },
+  "keywords": [
+    "niyati",
+    "wasm",
+    "simulation",
+    "strategy",
+    "reachability"
+  ],
+  "exports": {
+    ".": {
+      "types": "./pkg/niyati_wasm.d.ts",
+      "default": "./pkg/niyati_wasm.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "pkg/niyati_wasm_bg.wasm",
+    "pkg/niyati_wasm_bg.js",
+    "pkg/niyati_wasm_bg.wasm.d.ts",
+    "pkg/niyati_wasm.js",
+    "pkg/niyati_wasm.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "wasm-pack build --target bundler --out-dir pkg",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "wasm-pack": "^0.12.1"
+  }
+}

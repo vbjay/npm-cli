@@ -7,7 +7,7 @@ const mockNpm = async (t, opts = {}) => {
   return _mockNpm(t, opts)
 }
 
-const setupProject = ({ allowScripts, withScripts = ['canvas'] } = {}) => {
+const setupProject = ({ allowScripts, withScripts = ['canvas'], noResolved = [] } = {}) => {
   const pkg = {
     name: 'host',
     version: '1.0.0',
@@ -28,11 +28,16 @@ const setupProject = ({ allowScripts, withScripts = ['canvas'] } = {}) => {
         scripts: { install: 'echo install' },
       }),
     }
-    lockPackages[`node_modules/${name}`] = {
+    const lockEntry = {
       version: '1.0.0',
-      resolved: tarUrl,
       hasInstallScript: true,
     }
+    // Some lockfiles omit `resolved` for registry deps. Those nodes have no
+    // trustable version, so they can only be approved by name.
+    if (!noResolved.includes(name)) {
+      lockEntry.resolved = tarUrl
+    }
+    lockPackages[`node_modules/${name}`] = lockEntry
   }
 
   return {
@@ -55,7 +60,7 @@ t.test('approve-scripts --pending lists unreviewed packages', async t => {
   })
   await npm.exec('approve-scripts', [])
   const out = joinedOutput()
-  t.match(out, /2 packages have install scripts blocked because they are not covered by allowScripts/)
+  t.match(out, /# npm Lifecycle Script Approval Review/)
   t.match(out, /canvas@1\.0\.0/)
   t.match(out, /sharp@1\.0\.0/)
 })
@@ -67,7 +72,7 @@ t.test('approve-scripts --pending lists unreviewed packages even with ignore-scr
   })
   await npm.exec('approve-scripts', [])
   const out = joinedOutput()
-  t.match(out, /2 packages have install scripts blocked because they are not covered by allowScripts/)
+  t.match(out, /# npm Lifecycle Script Approval Review/)
   t.match(out, /canvas@1\.0\.0/)
   t.match(out, /sharp@1\.0\.0/)
 })
@@ -117,6 +122,51 @@ t.test('approve-scripts --all approves every unreviewed package', async t => {
     'canvas@1.0.0': true,
     'sharp@1.0.0': true,
   })
+})
+
+t.test('approve-scripts --all approves a dep without a resolved URL by name', async t => {
+  // Regression for npm/cli#9558: a dep with no `resolved` URL can't be
+  // pinned, but must still be approved by name, not silently skipped.
+  const { npm, prefix, logs } = await mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'], noResolved: ['canvas'] }),
+    config: { all: true },
+  })
+  await npm.exec('approve-scripts', [])
+
+  const pkg = JSON.parse(fs.readFileSync(resolve(prefix, 'package.json'), 'utf8'))
+  t.strictSame(pkg.allowScripts, { canvas: true }, 'approved by name, not skipped')
+  t.match(
+    logs.warn.byTitle('approve-scripts').join('\n'),
+    /no "resolved" URL/,
+    'warns that a version pin could not be written'
+  )
+})
+
+t.test('approve-scripts <pkg> approves a dep without a resolved URL by name', async t => {
+  const { npm, prefix } = await mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'], noResolved: ['canvas'] }),
+  })
+  await npm.exec('approve-scripts', ['canvas'])
+
+  const pkg = JSON.parse(fs.readFileSync(resolve(prefix, 'package.json'), 'utf8'))
+  t.strictSame(pkg.allowScripts, { canvas: true })
+})
+
+t.test('approve-scripts --pending is empty after a no-resolved dep is approved by name', async t => {
+  const { npm, joinedOutput } = await mockNpm(t, {
+    prefixDir: setupProject({
+      allowScripts: { canvas: true },
+      withScripts: ['canvas'],
+      noResolved: ['canvas'],
+    }),
+    config: { 'allow-scripts-pending': true },
+  })
+  await npm.exec('approve-scripts', [])
+  t.match(
+    joinedOutput(),
+    /No packages with unreviewed install scripts/,
+    'name-only entry covers the dep even without a resolved URL'
+  )
 })
 
 t.test('approve-scripts errors on unknown package', async t => {
@@ -304,11 +354,9 @@ t.test('approve-scripts --pending --json lists unreviewed packages as JSON', asy
   })
   await npm.exec('approve-scripts', [])
   const parsed = JSON.parse(joinedOutput())
-  const byName = Object.fromEntries(parsed.allowScripts.map((e) => [e.name, e.changes]))
-  t.strictSame(byName, {
-    canvas: [{ key: 'canvas@1.0.0', change: 'pending' }],
-    sharp: [{ key: 'sharp@1.0.0', change: 'pending' }],
-  })
+  const byName = Object.fromEntries(parsed.packages.map((e) => [e.name, e]))
+  t.match(byName.canvas, { name: 'canvas', version: '1.0.0', approvalStatus: 'pending' })
+  t.match(byName.sharp, { name: 'sharp', version: '1.0.0', approvalStatus: 'pending' })
 })
 
 t.test('approve-scripts --pending --json with no unreviewed emits empty list', async t => {
@@ -320,7 +368,50 @@ t.test('approve-scripts --pending --json with no unreviewed emits empty list', a
     config: { 'allow-scripts-pending': true, json: true },
   })
   await npm.exec('approve-scripts', [])
-  t.strictSame(JSON.parse(joinedOutput()), { allowScripts: [] })
+  t.strictSame(JSON.parse(joinedOutput()).packages, [])
+})
+
+t.test('approve-scripts --allow-scripts-report-format=null requires --pending or ls mode', async t => {
+  const { npm } = await mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'] }),
+    argv: ['--allow-scripts-report-format=null'],
+  })
+
+  await t.rejects(npm.exec('approve-scripts', []), { code: 'EUSAGE' })
+})
+
+t.test('approve-scripts --pending with report-format=null falls back to legacy text output', async t => {
+  const { npm, joinedOutput } = await mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'] }),
+    config: {
+      'allow-scripts-pending': true,
+    },
+    argv: ['--allow-scripts-report-format=null'],
+  })
+
+  await npm.exec('approve-scripts', [])
+  const out = joinedOutput()
+  t.notMatch(out, /# npm Lifecycle Script Approval Review/,
+    'legacy fallback does not render markdown review report')
+  t.match(out, /1 package has install scripts blocked because they are not covered by allowScripts:/)
+  t.match(out, /canvas@1\.0\.0 \(install: echo install\)/)
+})
+
+t.test('approve-scripts --pending --json with report-format=null falls back to legacy pending JSON', async t => {
+  const { npm, joinedOutput } = await mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'] }),
+    config: {
+      'allow-scripts-pending': true,
+      json: true,
+    },
+    argv: ['--allow-scripts-report-format=null'],
+  })
+
+  await npm.exec('approve-scripts', [])
+  const parsed = JSON.parse(joinedOutput())
+  t.strictSame(parsed, {
+    allowScripts: [{ name: 'canvas', changes: [{ key: 'canvas@1.0.0', change: 'pending' }] }],
+  })
 })
 
 t.test('approve-scripts --all --json with no unreviewed emits empty list', async t => {
@@ -381,7 +472,8 @@ t.test('approve-scripts --pending with single package uses singular wording', as
     config: { 'allow-scripts-pending': true },
   })
   await npm.exec('approve-scripts', [])
-  t.match(joinedOutput(), /1 package has install scripts/)
+  // Markdown review report includes the package header
+  t.match(joinedOutput(), /canvas@1\.0\.0/)
 })
 
 t.test('approve-scripts --pending lists package with no version', async t => {
@@ -448,22 +540,21 @@ const twoVersionFixture = {
   },
 }
 
-t.test('approve-scripts --pending --json groups multiple versions under one name', async t => {
-  // Two versions of lodash are unreviewed; pendingSummary must collapse
-  // them into a single `lodash` entry (hits the `groups.has(display)`
-  // truthy branch on the second node).
+t.test('approve-scripts --pending --json lists each version as a separate package entry', async t => {
+  // Two versions of lodash are unreviewed; the review report lists each as a
+  // separate entry with its own version (unlike the old pendingSummary which
+  // collapsed them under one name).
   const { npm, joinedOutput } = await _mockNpm(t, {
     prefixDir: twoVersionFixture,
     config: { 'allow-scripts-pending': true, json: true },
   })
   await npm.exec('approve-scripts', [])
   const parsed = JSON.parse(joinedOutput())
-  t.strictSame(parsed.allowScripts.map((e) => e.name), ['lodash'])
-  t.strictSame(parsed.allowScripts[0].changes.map((c) => c.key).sort(), [
-    'lodash@3.10.1',
-    'lodash@4.17.21',
-  ])
-  t.ok(parsed.allowScripts[0].changes.every((c) => c.change === 'pending'))
+  t.equal(parsed.packages.length, 2)
+  t.ok(parsed.packages.every(p => p.name === 'lodash'))
+  t.ok(parsed.packages.every(p => p.approvalStatus === 'pending'))
+  const versions = parsed.packages.map(p => p.version).sort()
+  t.strictSame(versions, ['3.10.1', '4.17.21'])
 })
 
 t.test('approve-scripts groups multiple installed versions of the same package', async t => {
@@ -528,13 +619,14 @@ t.test('approve-scripts --pending handles node with no version', async t => {
     },
   })
   await mockSync.npm.exec('approve-scripts', [])
-  // Output should mention the package without an @version suffix.
-  t.match(mockSync.joinedOutput(), / no-version-pkg \(install: do-stuff\)/)
+  // Markdown review report: package name appears in the header, script in the lifecycle block
+  t.match(mockSync.joinedOutput(), /no-version-pkg/)
+  t.match(mockSync.joinedOutput(), /do-stuff/)
 })
 
 t.test('approve-scripts --pending --json handles node with no version', async t => {
-  // Exercise pendingSummary's `version ? ... : display` falsy branch: the
-  // key is the bare name when the node has no version field.
+  // Exercise the version ? version : null ternary in runReviewReport when the
+  // node has no version field.
   const { npm, joinedOutput } = await _mockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({ name: 'host', version: '1.0.0' }),
@@ -556,10 +648,12 @@ t.test('approve-scripts --pending --json handles node with no version', async t 
     },
   })
   await npm.exec('approve-scripts', [])
-  t.strictSame(JSON.parse(joinedOutput()), {
-    allowScripts: [
-      { name: 'no-version-pkg', changes: [{ key: 'no-version-pkg', change: 'pending' }] },
-    ],
+  const parsed = JSON.parse(joinedOutput())
+  t.equal(parsed.packages.length, 1)
+  t.match(parsed.packages[0], {
+    name: 'no-version-pkg',
+    version: null,
+    approvalStatus: 'pending',
   })
 })
 
@@ -577,7 +671,7 @@ t.test('forbidden semver range in package.json#allowScripts is dropped with a wa
   })
   await mock.npm.exec('approve-scripts', [])
 
-  const warnings = mock.logs.warn.byTitle('allow-scripts')
+  const warnings = mock.logs.warn.byTitle('install-scripts')
   t.ok(
     warnings.some(m => /semver ranges/.test(m) && /canvas@\^0\.33\.0/.test(m)),
     'resolver emits warning about forbidden range'
@@ -629,7 +723,7 @@ t.test('approve-scripts --pending lists packages that only have binding.gyp', as
 
   const out = mock.joinedOutput()
   t.match(out, /native-pkg@1\.0\.0/, 'binding.gyp-only package appears in --pending')
-  t.match(out, /install: node-gyp rebuild/, 'synthetic node-gyp install is named')
+  t.match(out, /node-gyp rebuild/, 'synthetic node-gyp install is named')
 })
 
 t.test('approve-scripts --all never approves bundled deps', async t => {
@@ -753,6 +847,50 @@ t.test('approve-scripts <bundled-pkg> positional is ignored', async t => {
   )
 })
 
+t.test('approve-scripts <root-bundled-pkg> positional CAN be approved', async t => {
+  // A package listed in the root project's own bundleDependencies is still
+  // fetched from the registry and installed normally — its install scripts
+  // run and the user should be able to approve it. inBundle=true but
+  // inDepBundle=false for such nodes; findNodesForArgs must NOT skip them.
+  const { npm, prefix } = await _mockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'host',
+        version: '1.0.0',
+        dependencies: { canvas: '*' },
+        bundleDependencies: ['canvas'],
+      }),
+      'package-lock.json': JSON.stringify({
+        name: 'host',
+        version: '1.0.0',
+        lockfileVersion: 3,
+        requires: true,
+        packages: {
+          '': { name: 'host', version: '1.0.0', dependencies: { canvas: '*' }, bundleDependencies: ['canvas'] },
+          'node_modules/canvas': {
+            version: '2.11.2',
+            resolved: 'https://registry.npmjs.org/canvas/-/canvas-2.11.2.tgz',
+            inBundle: true,
+            hasInstallScript: true,
+          },
+        },
+      }),
+      node_modules: {
+        canvas: {
+          'package.json': JSON.stringify({
+            name: 'canvas',
+            version: '2.11.2',
+            scripts: { install: 'node-gyp rebuild' },
+          }),
+        },
+      },
+    },
+  })
+  await npm.exec('approve-scripts', ['canvas@2.11.2'])
+  const pkg = JSON.parse(fs.readFileSync(resolve(prefix, 'package.json'), 'utf8'))
+  t.ok(pkg.allowScripts?.['canvas@2.11.2'], 'root-bundled dep approved with pinned version')
+})
+
 t.test('approve-scripts --all with only bundled deps has nothing to review', async t => {
   const { npm, logs, joinedOutput, prefix } = await _mockNpm(t, {
     prefixDir: {
@@ -808,4 +946,120 @@ t.test('approve-scripts --all with only bundled deps has nothing to review', asy
   // Ensure no policy entry was written.
   const pkg = JSON.parse(fs.readFileSync(resolve(prefix, 'package.json'), 'utf8'))
   t.notOk(pkg.allowScripts, 'no allowScripts written')
+})
+
+t.test('review report: buildInfo is null for packages with no gyp reference', async t => {
+  // A package whose install script has no node-gyp / binding.gyp reference
+  // should NOT have scanBuildIndicators run against it — buildInfo stays null.
+  const { npm, joinedOutput } = await _mockNpm(t, {
+    prefixDir: setupProject({ withScripts: ['canvas'] }),
+    config: { 'allow-scripts-pending': true, json: true },
+  })
+  await npm.exec('approve-scripts', [])
+  const parsed = JSON.parse(joinedOutput())
+  t.equal(parsed.packages[0].buildInfo, null,
+    'buildInfo is null when install script has no gyp reference')
+})
+
+t.test('review report: buildInfo is populated when install script references node-gyp', async t => {
+  // A package whose install script directly calls node-gyp rebuild AND has a
+  // binding.gyp on disk must have buildInfo populated in the review report.
+  const { npm, joinedOutput } = await _mockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'host',
+        version: '1.0.0',
+        dependencies: { 'native-pkg': '*' },
+      }),
+      'package-lock.json': JSON.stringify({
+        name: 'host',
+        version: '1.0.0',
+        lockfileVersion: 3,
+        requires: true,
+        packages: {
+          '': { name: 'host', version: '1.0.0', dependencies: { 'native-pkg': '*' } },
+          'node_modules/native-pkg': {
+            version: '1.0.0',
+            resolved: 'https://registry.npmjs.org/native-pkg/-/native-pkg-1.0.0.tgz',
+          },
+        },
+      }),
+      node_modules: {
+        'native-pkg': {
+          'package.json': JSON.stringify({ name: 'native-pkg', version: '1.0.0' }),
+          'binding.gyp': JSON.stringify({ targets: [{ target_name: 'mymod', sources: ['src/mymod.cc'] }] }),
+        },
+      },
+    },
+    config: { 'allow-scripts-pending': true, json: true },
+  })
+  await npm.exec('approve-scripts', [])
+  const parsed = JSON.parse(joinedOutput())
+  const entry = parsed.packages.find((p) => p.name === 'native-pkg')
+  t.ok(entry, 'native-pkg appears in pending list')
+  // The synthetic `node-gyp rebuild` script triggers the native-build hint, so
+  // buildInfo must be present as a non-empty IndicatorResult[].
+  t.ok(Array.isArray(entry.buildInfo) && entry.buildInfo.length > 0,
+    'buildInfo is a non-empty array for a gyp package')
+  const ind = entry.buildInfo.find(i => i.indicatorFile === 'binding.gyp')
+  t.ok(ind, 'binding.gyp indicator is present')
+  t.ok(ind.groups.some(g => g.items.includes('src/mymod.cc')),
+    'source file from binding.gyp appears in groups')
+})
+
+t.test('review report: buildInfo is populated when a referenced file carries native-build signal', async t => {
+  // A package whose install.js references node-gyp (triggering the native-build
+  // signal during file scan) must also get buildInfo in the review report.
+  const installJs = `
+const gyp = require('node-gyp')()
+gyp.commands.build([], () => {})
+`
+  const { npm, joinedOutput } = await _mockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'host',
+        version: '1.0.0',
+        dependencies: { 'lazy-gyp': '*' },
+      }),
+      'package-lock.json': JSON.stringify({
+        name: 'host',
+        version: '1.0.0',
+        lockfileVersion: 3,
+        requires: true,
+        packages: {
+          '': { name: 'host', version: '1.0.0', dependencies: { 'lazy-gyp': '*' } },
+          'node_modules/lazy-gyp': {
+            version: '1.0.0',
+            resolved: 'https://registry.npmjs.org/lazy-gyp/-/lazy-gyp-1.0.0.tgz',
+            hasInstallScript: true,
+          },
+        },
+      }),
+      node_modules: {
+        'lazy-gyp': {
+          'package.json': JSON.stringify({
+            name: 'lazy-gyp',
+            version: '1.0.0',
+            // install script calls a local file; no direct node-gyp mention here
+            scripts: { install: 'node install.js' },
+          }),
+          // install.js contains the node-gyp reference (native-build signal)
+          'install.js': installJs,
+          'binding.gyp': JSON.stringify({ targets: [{ target_name: 'lazymod', sources: ['src/lazy.cc'] }] }),
+        },
+      },
+    },
+    config: { 'allow-scripts-pending': true, json: true },
+  })
+  await npm.exec('approve-scripts', [])
+  const parsed = JSON.parse(joinedOutput())
+  const entry = parsed.packages.find((p) => p.name === 'lazy-gyp')
+  t.ok(entry, 'lazy-gyp appears in pending list')
+  // install.js carries the native-build signal, which triggers scanBuildIndicators.
+  t.ok(Array.isArray(entry.buildInfo) && entry.buildInfo.length > 0,
+    'buildInfo is a non-empty array via native-build signal in referenced file')
+  const ind = entry.buildInfo.find(i => i.indicatorFile === 'binding.gyp')
+  t.ok(ind, 'binding.gyp indicator is present')
+  t.ok(ind.groups.some(g => g.items.includes('src/lazy.cc')),
+    'source file from binding.gyp appears in groups')
 })

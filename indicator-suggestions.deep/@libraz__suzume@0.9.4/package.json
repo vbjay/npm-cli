@@ -1,0 +1,77 @@
+{
+  "name": "@libraz/suzume",
+  "version": "0.9.4",
+  "type": "module",
+  "packageManager": "yarn@4.12.0",
+  "description": "Lightweight Japanese morphological analyzer for browser and Node.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./wasm": "./dist/suzume-wasm.wasm",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "simple-git-hooks || true",
+    "build": "yarn build:wasm && yarn build:js",
+    "build:wasm": "emcmake cmake -B build-wasm -DBUILD_WASM=ON -DENABLE_DEBUG_INFO=OFF -DCMAKE_BUILD_TYPE=Release && cmake --build build-wasm",
+    "build:js": "tsc",
+    "clean": "rm -rf dist build-wasm",
+    "lint": "biome check js/ tests/wasm/",
+    "lint:fix": "biome check --write js/ tests/wasm/",
+    "format": "biome format --write js/ tests/wasm/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepack": "cp README.md .readme-backup && cp README.npm.md README.md",
+    "postpack": "mv .readme-backup README.md",
+    "prepublishOnly": "yarn clean && yarn build && yarn lint && yarn test"
+  },
+  "keywords": [
+    "japanese",
+    "morphological-analysis",
+    "nlp",
+    "tokenizer",
+    "wasm",
+    "webassembly"
+  ],
+  "author": "libraz <libraz@libraz.net>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libraz/suzume.git"
+  },
+  "bugs": {
+    "url": "https://github.com/libraz/suzume/issues"
+  },
+  "homepage": "https://suzume.libraz.net",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.2",
+    "lint-staged": "^17.0.8",
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  },
+  "volta": {
+    "node": "22.21.1",
+    "yarn": "4.12.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "yarn lint-staged"
+  },
+  "lint-staged": {
+    "{js,tests/wasm}/**/*.{ts,js}": [
+      "biome check --write"
+    ]
+  }
+}

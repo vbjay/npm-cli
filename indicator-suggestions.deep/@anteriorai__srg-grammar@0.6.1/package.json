@@ -1,0 +1,52 @@
+{
+  "name": "@anteriorai/srg-grammar",
+  "version": "0.6.1",
+  "private": false,
+  "license": "SEE LICENSE IN LICENSE",
+  "description": "Tree-sitter grammar for SRG (Symbolic Reasoning Graph) language",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./language-configuration.json": "./language-configuration.json"
+  },
+  "files": [
+    "grammar.js",
+    "tree-sitter-srg.wasm",
+    "queries",
+    "language-configuration.json",
+    "README.md"
+  ],
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "srg",
+    "wasm",
+    "grammar"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "tree-sitter generate && tree-sitter build --wasm",
+    "prepack": "npm run build",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.srg",
+      "file-types": [
+        "srg"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anteriorai/symbolic-reasoning.git",
+    "directory": "packages/srg-grammar"
+  }
+}

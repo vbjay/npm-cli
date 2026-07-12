@@ -1,0 +1,177 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c8645644893baffa",
+    "fetchedFiles": [
+      "dist/cli.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "picomatch",
+        "versionSpec": null
+      },
+      {
+        "name": "itty-router",
+        "versionSpec": null
+      },
+      {
+        "name": "hono",
+        "versionSpec": "^4.12.18"
+      },
+      {
+        "name": "@valkey/valkey-glide",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@valkey/valkey-glide@2.4.2",
+      "hono@4.12.29",
+      "itty-router@5.0.24",
+      "picomatch@4.0.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `preinstall`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/cli.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "fad58a42fdbc5ec4da2dac2bd3174dee86cd5d047400f916555b04395c32748d",
+        "sizeBytes": 987995,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "uses-net-socket",
+          "writes-file",
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "external-url",
+          "network-access",
+          "uses-eval",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "http://127.0.0.1",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://jira.example.com",
+            "classification": "unknown"
+          },
+          {
+            "url": "http://git.example.com",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://jenkins.example.com",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://gitlab.com",
+            "classification": "reference"
+          },
+          {
+            "url": "http://www.w3.org/2000/svg",
+            "classification": "unknown"
+          },
+          {
+            "url": "http://www.w3.org/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./dist/cli.js",
+        "sha256": "bf3434e81bc582f05bfdefb8a417120080ddd9689797551e48c01ac185c4243f",
+        "sizeBytes": 2426,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:52.534Z"
+  },
+  "hash": "sha256:5f044a6751dbef14cb5eb379b0ebaf9c34192985f9d49279585bd65a0dc4ac90"
+}

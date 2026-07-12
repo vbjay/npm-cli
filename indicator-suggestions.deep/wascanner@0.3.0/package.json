@@ -1,0 +1,86 @@
+{
+  "name": "wascanner",
+  "version": "0.3.0",
+  "description": "WebAssembly-powered document scanner — a WASM (Go) reimagining of jscanify, as a TypeScript library and a Vue component.",
+  "type": "module",
+  "license": "MIT",
+  "author": "andor83",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andor83/wascanner.git"
+  },
+  "homepage": "https://github.com/andor83/wascanner#readme",
+  "bugs": {
+    "url": "https://github.com/andor83/wascanner/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "document-scanner",
+    "wasm",
+    "webassembly",
+    "jscanify",
+    "opencv",
+    "vue",
+    "camera",
+    "perspective-transform",
+    "edge-detection"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "compile.sh",
+    "wasm",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vue": {
+      "types": "./dist/vue/index.d.ts",
+      "import": "./dist/vue/index.js"
+    },
+    "./wasm": "./dist/wascanner.wasm",
+    "./wasm-exec": "./dist/wasm_exec.js",
+    "./worker": "./dist/worker.js",
+    "./style.css": "./dist/wascanner.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "./compile.sh --all",
+    "build:js": "vite build && vite build --config vite.worker.config.ts",
+    "build:wasm": "./compile.sh --wasm",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "cd wasm && go test ./...",
+    "example": "node example/server.js",
+    "clean": "rm -rf dist",
+    "prepack": "./compile.sh --all",
+    "prepublishOnly": "npm test"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vite-plugin-dts": "^4.4.0",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.0"
+  }
+}

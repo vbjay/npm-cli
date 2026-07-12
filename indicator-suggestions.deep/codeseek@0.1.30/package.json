@@ -1,0 +1,42 @@
+{
+  "name": "codeseek",
+  "version": "0.1.30",
+  "description": "Code intelligence CLI for Claude Code — AST call graph analysis and hybrid semantic search (Dense + Sparse + RRF + Cross-Encoder Reranker) across 7 languages. Ships as MCP tools for Claude Code & Codex CLI.",
+  "bin": "dist/bin/codeseek.js",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "node -e \"var f='dist/install/download.js';require('fs').existsSync(f)&&require('./'+f)\" || true",
+    "preuninstall": "echo 'Run codeseek uninstall-hooks to clean up git hooks'",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "code-intelligence",
+    "semantic-search",
+    "call-graph",
+    "code-analysis",
+    "claude-code",
+    "mcp",
+    "codex",
+    "hybrid-search",
+    "reranker",
+    "cross-encoder",
+    "embedding",
+    "tree-sitter",
+    "bm25",
+    "lancedb",
+    "rust",
+    "cli"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "@arbidocs/cli",
+  "version": "0.3.119",
+  "description": "CLI tool for interacting with ARBI — login, manage workspaces, upload documents, query the RAG assistant",
+  "main": "dist/index.js",
+  "bin": {
+    "arbi": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "SKILL.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:integration": "vitest run src/integration.test.ts",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/postinstall.js",
+    "preuninstall": "node scripts/preuninstall.js"
+  },
+  "dependencies": {
+    "@arbidocs/sdk": "0.3.119",
+    "@arbidocs/client": "0.3.119",
+    "@arbidocs/tui": "0.3.119",
+    "@inquirer/prompts": "^8.5.2",
+    "chalk": "^5.6.2",
+    "commander": "^15.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.0",
+    "tsup": "^8.4.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.0.18"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arbicity/ARBI-frontend.git",
+    "directory": "packages/arbi-cli"
+  },
+  "keywords": [
+    "arbi",
+    "cli",
+    "rag",
+    "document-management",
+    "e2e-encryption"
+  ]
+}

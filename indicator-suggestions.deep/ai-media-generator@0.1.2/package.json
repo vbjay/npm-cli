@@ -1,0 +1,33 @@
+{
+  "name": "ai-media-generator",
+  "version": "0.1.2",
+  "description": "Thin npm wrapper for the ai-media Rust CLI",
+  "license": "MIT",
+  "homepage": "https://ricebowl.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/214140846/ai-media-generator.git"
+  },
+  "bin": {
+    "ai-media": "bin/ai-media.js"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "vendor",
+    "README.md"
+  ],
+  "keywords": [
+    "ai",
+    "cli",
+    "image-generation",
+    "video-generation"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "test": "node --test scripts/lib/platform.test.js"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "name": "oh-my-space",
+  "version": "0.11.6",
+  "description": "Manage multi-repo workspaces with Git submodules.",
+  "license": "MIT",
+  "homepage": "https://github.com/divlook/oh-my-space",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/divlook/oh-my-space.git"
+  },
+  "bugs": {
+    "url": "https://github.com/divlook/oh-my-space/issues"
+  },
+  "keywords": [
+    "oms",
+    "oh-my-space",
+    "git",
+    "cli",
+    "git-submodule",
+    "submodule",
+    "workspace",
+    "multi-repo",
+    "monorepo",
+    "repository-management",
+    "developer-tools",
+    "ai",
+    "agent"
+  ],
+  "author": {
+    "name": "divlook",
+    "email": "uihyeon.cha@gmail.com",
+    "url": "https://github.com/divlook"
+  },
+  "type": "module",
+  "bin": {
+    "oms": "./dist/oms.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "test": "npm run build && node --test tests/*.test.js",
+    "prepack": "npm test",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish",
+    "release:beta": "node scripts/publish-beta.mjs"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.29.7",
+    "@clack/prompts": "^1.4.0",
+    "@types/node": "^20.19.0",
+    "@types/semver": "^7.7.1",
+    "commander": "^14.0.3",
+    "esbuild": "^0.28.1",
+    "semver": "^7.8.4",
+    "typescript": "^5.9.3",
+    "yaml": "^2.8.1"
+  }
+}

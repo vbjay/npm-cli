@@ -1,0 +1,78 @@
+{
+  "version": "1.1.2",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "description": "Stripe VAT id handling",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maielo/stripe-tax-utils.git"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "np:publish": "git push origin master && npx np@latest",
+    "test": "npx tsdx test --watch",
+    "lint": "tsdx lint && npm run fix:prettier",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "lint:prettier": "prettier . --ignore-path=.eslintignore --list-different",
+    "fix:prettier": "npm run lint:prettier -- --write"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "stripe-tax-utils",
+  "author": "Maielo",
+  "module": "dist/stripe-tax-utils.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/stripe-tax-utils.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/stripe-tax-utils.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "keywords": [
+    "ts",
+    "typescript",
+    "nodejs",
+    "js",
+    "javascript",
+    "stripe",
+    "VAT",
+    "TAX"
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^6.0.3",
+    "@types/jest": "^27.0.2",
+    "husky": "^7.0.2",
+    "prettier": "^2.5.0",
+    "size-limit": "^6.0.3",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4"
+  }
+}

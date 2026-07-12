@@ -1,0 +1,39 @@
+{
+  "name": "maqcli",
+  "version": "0.15.0",
+  "description": "MAQ master orchestrator — a token-efficient, agent-agnostic supervisor CLI that sits on top of any worker CLI (AI or not) via a Scout -> Plan -> Execute -> Verify pipeline.",
+  "type": "module",
+  "bin": {
+    "maqcli": "dist/index.js",
+    "maq": "dist/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare": "npm run build",
+    "test": "npm run build && node --test",
+    "start": "node dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "cli",
+    "orchestrator",
+    "ai-agents",
+    "token-efficiency",
+    "scout-plan-execute-verify",
+    "supervisor"
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}

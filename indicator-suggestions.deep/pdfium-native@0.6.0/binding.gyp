@@ -1,0 +1,115 @@
+# DEFANGED: static-analysis cache — do not execute
+{
+  "targets": [
+    {
+      "target_name": "pdfium",
+      "variables": {
+        "cpp_std%": "c++20"
+      },
+      "sources": [
+        "src/pdfium_addon.cc",
+        "src/stb_image_write.cc"
+      ],
+      "include_dirs": [
+        "<!@(node -p \"require('node-addon-api').include\")",
+        "deps/pdfium/include",
+        "src"
+      ],
+      "defines": [
+        "NAPI_VERSION=9"
+      ],
+      "cflags!": [
+        "-fno-exceptions"
+      ],
+      "cflags": [
+        "-O2",
+        "-flto",
+        "-ffunction-sections",
+        "-fdata-sections"
+      ],
+      "cflags_cc!": [
+        "-fno-exceptions"
+      ],
+      "cflags_cc": [
+        "-std=<(cpp_std)",
+        "-fvisibility=hidden"
+      ],
+      "conditions": [
+        [
+          "OS=='mac'",
+          {
+            "xcode_settings": {
+              "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+              "CLANG_CXX_LANGUAGE_STANDARD": "<(cpp_std)",
+              "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+              "DEAD_CODE_STRIPPING": "YES",
+              "LLVM_LTO": "YES",
+              "OTHER_CPLUSPLUSFLAGS": [
+                "-O2",
+                "-ffunction-sections",
+                "-fdata-sections"
+              ],
+              "OTHER_LDFLAGS": [
+                "-L<(module_root_dir)/deps/pdfium/lib",
+                "-lpdfium",
+                "-Wl,-rpath,@loader_path",
+                "-Wl,-dead_strip",
+                "-Wl,-S",
+                "-flto",
+                "-framework CoreFoundation",
+                "-framework CoreGraphics"
+              ]
+            }
+          }
+        ],
+        [
+          "OS=='linux'",
+          {
+            "libraries": [
+              "-L<(module_root_dir)/deps/pdfium/lib",
+              "-lpdfium",
+              "-Wl,-rpath,'$$ORIGIN'",
+              "-Wl,--gc-sections",
+              "-Wl,-S",
+              "-flto",
+              "-lpthread",
+              "-ldl"
+            ]
+          }
+        ],
+        [
+          "OS=='win'",
+          {
+            "defines": [
+              "_HAS_EXCEPTIONS=1"
+            ],
+            "msvs_settings": {
+              "VCCLCompilerTool": {
+                "ExceptionHandling": 1,
+                "Optimization": 2,
+                "WholeProgramOptimization": "true",
+                "AdditionalOptions": [
+                  "/std:<(cpp_std)"
+                ]
+              },
+              "VCLinkerTool": {
+                "LinkTimeCodeGeneration": 1
+              }
+            },
+            "libraries": [
+              "<(module_root_dir)/deps/pdfium/lib/pdfium.dll.lib"
+            ],
+            "copies": [
+              {
+                "destination": "<(module_root_dir)/build/Release",
+                "files": [
+                  "<(module_root_dir)/deps/pdfium/bin/pdfium.dll"
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}

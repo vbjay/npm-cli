@@ -1,0 +1,58 @@
+{
+  "name": "nekostream",
+  "version": "2026.3.1",
+  "description": "Bettter version of NekoStream ",
+  "keywords": [
+    "anime",
+    "scraper",
+    "animevietsub",
+    "animetvn",
+    "anime47",
+    "nekostream",
+    "cli",
+    "video-player",
+    "streaming",
+    "vietsub",
+    "anime-cli"
+  ],
+  "main": "dist/index.js",
+  "bin": {
+    "nekostream": "bin/nekostream.js"
+  },
+  "scripts": {
+    "start": "tsx index.ts",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "postinstall": "playwright install chromium"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "player-main.js",
+    "player.html",
+    "isolate.js",
+    "isolate.css"
+  ],
+  "dependencies": {
+    "@ghostery/adblocker-playwright": "^2.18.1",
+    "@inquirer/prompts": "^8.5.2",
+    "artplayer": "^5.3.0",
+    "chalk": "^4.1.2",
+    "cheerio": "^1.2.0",
+    "cross-fetch": "^4.1.0",
+    "discord-rpc": "^4.0.1",
+    "electron": "^43.0.0",
+    "fastify": "^5.9.0",
+    "hls.js": "^1.6.0",
+    "ora": "^5.4.1",
+    "playwright": "^1.61.1",
+    "tsx": "^4.23.0"
+  },
+  "devDependencies": {
+    "@types/discord-rpc": "^4.0.11",
+    "@types/node": "^26.1.0",
+    "@types/prompts": "^2.4.9",
+    "eruda": "^3.4.3",
+    "typescript": "^5.0.0"
+  }
+}

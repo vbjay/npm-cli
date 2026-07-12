@@ -1,0 +1,74 @@
+{
+  "name": "cc-linker",
+  "version": "0.8.3",
+  "description": "Bridge mobile chat apps and Claude Code CLI sessions — seamless conversation switching between terminal and IM",
+  "license": "MIT",
+  "author": "wuyujun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yujuntea/cc-linker.git"
+  },
+  "homepage": "https://github.com/yujuntea/cc-linker#readme",
+  "bugs": {
+    "url": "https://github.com/yujuntea/cc-linker/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "feishu",
+    "lark",
+    "session",
+    "bridge",
+    "cli",
+    "chat-app",
+    "cross-platform"
+  ],
+  "bin": {
+    "cc-linker": "dist/cli.js"
+  },
+  "files": [
+    "dist/cli.js",
+    "dist/cli.js.map",
+    "scripts/postinstall.js"
+  ],
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --compile --outfile dist/cc-linker",
+    "build:npm": "bun build src/index.ts --outdir dist --target bun --sourcemap && mv dist/index.js dist/cli.js && mv dist/index.js.map dist/cli.js.map 2>/dev/null; chmod +x dist/cli.js",
+    "prepublishOnly": "bun run build:npm",
+    "postinstall": "node scripts/postinstall.js",
+    "link:local": "bun run build:npm && bun link",
+    "unlink:local": "bun unlink cc-linker",
+    "pack:test": "bun run build:npm && npm pack && mkdir -p /tmp/test-cc-linker && npm install --prefix /tmp/test-cc-linker ./cc-linker-$(node -p \"require('./package.json').version\").tgz",
+    "reload": "bun run build:npm && node scripts/reload-daemon.js",
+    "reload:force": "bun run build:npm && node scripts/reload-daemon.js --force",
+    "deploy": "node scripts/deploy-local.js",
+    "deploy:force": "node scripts/deploy-local.js --force",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.0.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^25.6.0",
+    "@types/proper-lockfile": "^4.1.4",
+    "@wecom/aibot-node-sdk": "^1.0.7",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.150",
+    "@iarna/toml": "^2.2.5",
+    "@larksuiteoapi/node-sdk": "^1.62.1",
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.3",
+    "inquirer": "^13.4.2",
+    "proper-lockfile": "^4.1.2",
+    "zod": "^4.4.2"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "name": "highwayhash-wasm",
+  "version": "1.2.7",
+  "packageManager": "pnpm@10.6.2",
+  "description": "HighwayHash WASM bindings for browser and node environments",
+  "author": "Andreas Sonnleitner <asonnleitner@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:asonnleitner/highwayhash-wasm.git"
+  },
+  "keywords": [
+    "highwayhash",
+    "highwayhash-wasm",
+    "highway",
+    "highway-wasm",
+    "hash",
+    "wasm",
+    "crypto"
+  ],
+  "main": "dist/highwayhash-wasm.cjs.js",
+  "module": "dist/highwayhash-wasm.esm.js",
+  "unpkg": "dist/highwayhash-wasm.global.js",
+  "jsdelivr": "dist/highwayhash-wasm.global.js",
+  "types": "dist/highwayhash-wasm.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "dev": "ts-node scripts/dev.ts",
+    "dev:vite": "vite",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "build": "pnpm clean && pnpm optimized-build:wasm && pnpm build:js && pnpm make-types",
+    "make-types": "api-extractor run --local --verbose",
+    "build:js": "pnpm build:esm && pnpm build:cjs && pnpm build:global",
+    "build:esm": "ts-node scripts/build.ts highwayhash-wasm -f esm",
+    "build:cjs": "ts-node scripts/build.ts highwayhash-wasm -f cjs",
+    "build:global": "ts-node scripts/build.ts highwayhash-wasm -f global",
+    "optimized-build:wasm": "scripts/build && scripts/optimize",
+    "clean": "rm -rf dist/* || true && rm -rf js/highwayhash-wasm/lib/* || true",
+    "prepare": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:",
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
+    "@microsoft/api-extractor": "catalog:",
+    "@semantic-release/changelog": "catalog:",
+    "@semantic-release/git": "catalog:",
+    "@semantic-release/npm": "catalog:",
+    "@types/minimist": "catalog:",
+    "@types/node": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "esbuild": "catalog:",
+    "esbuild-plugin-wasm-pack": "catalog:",
+    "eslint": "catalog:",
+    "lint-staged": "catalog:",
+    "magic-string": "catalog:",
+    "minimist": "catalog:",
+    "semantic-release": "catalog:",
+    "simple-git-hooks": "catalog:",
+    "ts-node": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "wasm-opt": "catalog:"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1d72b15507324d16",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/prepare.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/prepare.mjs",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "5af5fdb19a612e1f7bc90b2dd33048a08535fb6cb8f97b8428eacf5d56f2562c",
+        "sizeBytes": 9612,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:29.433Z"
+  },
+  "hash": "sha256:c97e94d0747c967797b60002c85afb95210401309cd51d99907f2d506c8331dd"
+}

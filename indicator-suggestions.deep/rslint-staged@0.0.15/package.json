@@ -1,0 +1,59 @@
+{
+  "name": "rslint-staged",
+  "version": "0.0.15",
+  "description": "Run linters on git staged files in Rust",
+  "main": "index.js",
+  "bin": {
+    "rslint-staged": "cli.js"
+  },
+  "napi": {
+    "name": "rslint-staged",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.15.2",
+    "@oxc-node/core": "^0.0.23",
+    "ava": "^6.2.0"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "timeout": "2m",
+    "workerThreads": false,
+    "environmentVariables": {
+      "OXC_TSCONFIG_PATH": "./__test__/tsconfig.json"
+    },
+    "nodeArguments": [
+      "--import",
+      "@oxc-node/core/register"
+    ]
+  },
+  "keywords": [
+    "lint",
+    "staged",
+    "git",
+    "rust"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "napi build --release",
+    "build:debug": "napi build",
+    "build-cargo": "cargo build --release",
+    "test": "node ./__test__/test.js",
+    "install": "node ./scripts/install.js",
+    "rename-binary": "node ./scripts/prepare-publish.js",
+    "manual-publish": "node ./scripts/manual-publish.js",
+    "manual-publish-all": "node ./scripts/manual-publish-all.js",
+    "build:all": "napi build --platform --release"
+  }
+}

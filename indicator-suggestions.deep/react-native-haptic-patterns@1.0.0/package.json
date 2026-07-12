@@ -1,0 +1,119 @@
+{
+  "name": "react-native-haptic-patterns",
+  "version": "1.0.0",
+  "description": "A React Native library for creating and playing customizable haptic feedback patterns on iOS and Android. Supports advanced pattern recording and playback.",
+  "main": "lib/index",
+  "types": "lib/index.d.ts",
+  "contributors": [],
+  "author": "Simform Solutions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SimformSolutionsPvtLtd/react-native-haptic-patterns"
+  },
+  "homepage": "https://github.com/SimformSolutionsPvtLtd/react-native-haptic-patterns#readme",
+  "keywords": [
+    "react",
+    "react-native",
+    "typescript",
+    "rn",
+    "haptics",
+    "vibration",
+    "feedback",
+    "pattern",
+    "custom",
+    "core-haptics",
+    "haptic-feedback",
+    "haptic-patterns",
+    "haptic-engine"
+  ],
+  "license": "MIT",
+  "files": [
+    "/lib",
+    "/ios",
+    "*.podspec"
+  ],
+  "scripts": {
+    "prepare": "husky install && yarn build",
+    "clean": "rm -rf node_modules",
+    "build": "rm -rf lib && tsc -p . ",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' -c .eslintrc --fix ",
+    "build:local": "yarn build && yarn pack",
+    "test": "jest",
+    "example": "yarn --cwd example"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.7",
+    "@babel/runtime": "^7.26.7",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.19.0",
+    "@react-native/eslint-config": "^0.77.0",
+    "@testing-library/react-native": "^13.0.1",
+    "@tsconfig/react-native": "^2.0.2",
+    "@types/jest": "^29.5.14",
+    "@types/react-native": "^0.73.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-native": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.4.3",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "prettier": "^3.4.2",
+    "react": "^19.0.0",
+    "react-native": "^0.77.0",
+    "react-test-renderer": "^19.0.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn build && yarn test"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx}": [
+      "eslint"
+    ]
+  },
+  "resolutions": {
+    "@types/react": "*"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "setupFilesAfterEnv": [],
+    "modulePathIgnorePatterns": []
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

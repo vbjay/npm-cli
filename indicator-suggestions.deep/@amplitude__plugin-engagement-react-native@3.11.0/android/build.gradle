@@ -1,0 +1,103 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['PluginEngagementReactNative_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.9.1"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["PluginEngagementReactNative_" + name]).toInteger()
+}
+
+android {
+  namespace "com.amplitude.pluginengagementreactnative"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+
+  def localAndroidDir = new File(rootDir, "../../android")
+  if (localAndroidDir.exists()) {
+    maven {
+      url = new File(localAndroidDir, "engagement/build/outputs/fat-aar/release").toURI()
+      metadataSources {
+        artifact()
+      }
+    }
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+def versions = new groovy.json.JsonSlurper().parse(file("../src/build-version-android.json"))
+def androidVersion = versions["version"]
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Amplitude Engagement SDK
+  implementation "com.amplitude:amplitude-engagement-android:${androidVersion}"
+
+  // Amplitude Analytics SDK (required dependency)
+  implementation "com.amplitude:analytics-android:1.+"
+}
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "PluginEngagementReactNative"
+  codegenJavaPackageName = "com.amplitude.pluginengagementreactnative"
+}

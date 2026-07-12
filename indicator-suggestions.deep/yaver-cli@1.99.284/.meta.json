@@ -1,0 +1,169 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0183fc3ef8863d32",
+    "fetchedFiles": [
+      "package.json",
+      "src/agent-runtime.js",
+      "src/hermesc-runtime.js",
+      "src/postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "postinstall",
+        "versionSpec": null
+      },
+      {
+        "name": "semver",
+        "versionSpec": "^7.6.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "postinstall@0.11.2",
+      "semver@7.8.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e2f8af2d83b7c0052c010cc8e57794f4000fe639adab0afbff4fd9b77492af66",
+        "sizeBytes": 23298,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "modifies-shell-config",
+          "native-build",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/agent-runtime.js",
+          "src/hermesc-runtime.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/agent-runtime.js",
+        "reason": "required by ./src/postinstall.js",
+        "sha256": "a5cde108995103f09cb028eecd25d5aa5506591cf7d085ca4b6cde04e8d32638",
+        "sizeBytes": 25365,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./src/agent-runtime.js",
+        "sha256": "19cc2145ef964cb4e6859cc3f19e2150a29568de7e86b985de4d12e0d87ebb2c",
+        "sizeBytes": 1161,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/hermesc-runtime.js",
+        "reason": "required by ./src/postinstall.js",
+        "sha256": "b5b8611a9df21b59285664c9e09fd8dbdfdec0db27adbf99d55e253734675546",
+        "sizeBytes": 10398,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://registry.npmjs.org/react-native/-/react-native-",
+            "classification": "download"
+          },
+          {
+            "url": "https://unpkg.com/react-native@",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:32.532Z"
+  },
+  "hash": "sha256:8fec8abfcb560c5d6416f7852eda8730b8f3570016cbce3dbe498c3ae1ba4d2a"
+}

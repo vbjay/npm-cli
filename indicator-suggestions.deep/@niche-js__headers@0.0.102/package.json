@@ -1,0 +1,75 @@
+{
+    "name": "@niche-js/headers",
+    "version": "0.0.102",
+    "private": false,
+    "description": "",
+    "keywords": [
+        "javascript"
+    ],
+    "homepage": "https://github.com/urbania-media/niche-js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/urbania-media/niche-js.git"
+    },
+    "author": {
+        "name": "Folklore",
+        "email": "info@folklore.email"
+    },
+    "contributors": [
+        {
+            "name": "David Mongeau-Petitpas",
+            "email": "dmp@folklore.email"
+        },
+        {
+            "name": "Nicolas Roy-Bourdages",
+            "email": "nrb@folklore.email"
+        }
+    ],
+    "license": "ISC",
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "style": "assets/css/styles.css",
+    "exports": {
+        ".": {
+            "require": "./lib/index.js",
+            "import": "./es/index.js"
+        },
+        "./editor": {
+            "require": "./lib/editor.js",
+            "import": "./es/editor.js"
+        },
+        "./css/styles": "./css/styles.css",
+        "./css/styles.css": "./css/styles.css",
+        "./assets/css/styles.css": "./assets/css/styles.css"
+    },
+    "files": [
+        "lib",
+        "es",
+        "assets",
+        "css"
+    ],
+    "scripts": {
+        "styles": "../../scripts/build-packages-styles.js --pattern='@niche-js/block-*' ./src/styles.css.ejs ./css/styles.css",
+        "css": "../../scripts/build-css.js ./css/styles.css ./assets/css/styles.css",
+        "prepare": "../../scripts/prepare-package.sh && npm run styles && npm run css"
+    },
+    "devDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    },
+    "dependencies": {
+        "@babel/runtime": "^7.12.5",
+        "@niche-js/core": "^0.0.102",
+        "@niche-js/header-article": "^0.0.102",
+        "prop-types": "^15.7.2"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "gitHead": "bfa75a62bfaf9b26f1065b8056ed6d0a395afdbe"
+}

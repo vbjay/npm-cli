@@ -1,0 +1,78 @@
+{
+  "name": "@hasna/secrets",
+  "version": "0.2.7",
+  "description": "A local secrets vault for AI agents — store API keys, passwords, tokens, and any credentials",
+  "type": "module",
+  "bin": {
+    "secrets": "dist/index.js",
+    "secrets-mcp": "dist/mcp-server.js",
+    "secrets-serve": "dist/server/index.js"
+  },
+  "exports": {
+    "./security": {
+      "types": "./dist/security.d.ts",
+      "import": "./dist/security.js"
+    },
+    "./status": {
+      "types": "./dist/status.d.ts",
+      "import": "./dist/status.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "import": "./dist/storage.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk.d.ts",
+      "import": "./dist/sdk.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && bun build src/index.ts src/status.ts src/storage.ts src/security.ts src/loop-tasks.ts src/mcp-server.ts src/sdk.ts --outdir dist --target bun --format esm --external pg --external @aws-sdk/* --external @hasna/events --external @hasna/events/* --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun --format esm --external pg --external @aws-sdk/* --external @hasna/events --external @hasna/events/* --external @modelcontextprotocol/sdk && chmod +x dist/index.js dist/mcp-server.js dist/server/index.js && tsc --emitDeclarationOnly --outDir dist",
+    "build:bin": "bun build src/index.ts --compile --outfile dist/secrets",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "prepublishOnly": "bun run build",
+    "postinstall": "mkdir -p $HOME/.hasna/secrets 2>/dev/null || true"
+  },
+  "files": [
+    "dist",
+    "migrations",
+    "Dockerfile.package",
+    "bun.lock",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "secrets",
+    "vault",
+    "credentials",
+    "agents",
+    "ai",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/secrets.git"
+  },
+  "author": "hasna",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.6",
+    "@types/bun": "latest",
+    "typescript": "^5.7.3",
+    "@hasna/contracts": "^0.4.2",
+    "@hasna/mcp-harness": "file:../open-mcp"
+  },
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.1008.0",
+    "@aws-sdk/credential-providers": "^3.1008.0",
+    "@hasna/events": "^0.1.13",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "commander": "^13.1.0",
+    "pg": "^8.20.0"
+  }
+}

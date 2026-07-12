@@ -1,0 +1,67 @@
+{
+  "name": "@sqlx-mcp/sqlx-mcp",
+  "version": "1.2.0",
+  "description": "Rust MCP server for SQLx database management",
+  "main": "index.js",
+  "bin": {
+    "sqlx-mcp": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node scripts/postinstall.js",
+    "release": "node scripts/release.js",
+    "release:patch": "echo 'patch' | node scripts/release.js",
+    "release:minor": "echo 'minor' | node scripts/release.js",
+    "release:major": "echo 'major' | node scripts/release.js"
+  },
+  "keywords": [
+    "sqlx",
+    "database",
+    "mcp",
+    "postgresql",
+    "mysql",
+    "sqlite",
+    "rust",
+    "sql"
+  ],
+  "author": {
+    "name": "lihongjie0209",
+    "url": "https://github.com/lihongjie0209"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lihongjie0209/sqlx-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lihongjie0209/sqlx-mcp/issues"
+  },
+  "homepage": "https://github.com/lihongjie0209/sqlx-mcp#readme",
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "optionalDependencies": {
+    "@sqlx-mcp/linux-x64": "1.2.0",
+    "@sqlx-mcp/macos-arm64": "1.2.0",
+    "@sqlx-mcp/macos-x64": "1.2.0",
+    "@sqlx-mcp/windows-x64": "1.2.0"
+  },
+  "files": [
+    "index.js",
+    "scripts/",
+    "README.md"
+  ],
+  "devDependencies": {
+    "inquirer": "^9.2.15",
+    "node-fetch": "^3.3.2"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "zunoy-appshare-cli",
+  "version": "0.5.1",
+  "description": "cli app for appshare",
+  "main": "index.js",
+  "bin": {
+    "appshare": "bin/appshare"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "prepare": "husky install",
+    "update-version": "node scripts/update-version-from-tag.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zunoy/zunoy-appshare-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "ipa",
+    "apk"
+  ],
+  "author": "Team Zunoy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zunoy/zunoy-appshare-cli/issues"
+  },
+  "homepage": "https://github.com/Zunoy/zunoy-appshare-cli#readme",
+  "dependencies": {
+    "go-npm-next": "^1.1.0"
+  },
+  "goBinary": {
+    "name": "appshare",
+    "path": "./bin/dist",
+    "url": "https://github.com/Zunoy/zunoy-appshare-cli/releases/download/v{{version}}/zunoy-appshare-cli_{{platform}}_{{arch}}.tar.gz"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "node-native-win-utils",
+  "version": "2.2.3",
+  "author": "Andrew K.",
+  "license": "MIT",
+  "repository": "https://github.com/T-Rumibul/node-native-win-utils.git",
+  "description": "Native addon for Node.js providing utility operations on Windows systems",
+  "keywords": [
+    "node.js",
+    "native",
+    "addon",
+    "Windows",
+    "utility",
+    "key event",
+    "window",
+    "screenshot",
+    "capture",
+    "listener",
+    "mouse",
+    "movemouse",
+    "click",
+    "keyboard",
+    "mousedrag",
+    "opencv",
+    "template matching",
+    "image",
+    "blur",
+    "grayscale",
+    "text recognition",
+    "OCR"
+  ],
+  "exports": {
+    "require": "./dist/index.cjs",
+    "import": "./dist/index.mjs"
+  },
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "gypfile": true,
+  "scripts": {
+    "install": "node-gyp-build",
+    "build": "node-gyp clean && npx prebuildify --napi && node ./buildHelpers/dllCopy.js && npm run buildts",
+    "buildts": "node ./buildHelpers/cjsCompatBuild.js",
+    "test": "tap run"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.6.0",
+    "node-gyp": "^12.2.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "node-api-headers": "^1.8.0",
+    "tap": "^21.6.2"
+  }
+}

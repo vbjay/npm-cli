@@ -1,0 +1,77 @@
+{
+  "name": "subnet-overlap",
+  "version": "1.1.0",
+  "description": "Check if subnet overlapped.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:browser": "rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:browser": "RUN_BROWSER_TESTS=true jest test/browser.test.ts",
+    "coverage": "jest --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typedoc": "typedoc",
+    "prepare": "husky",
+    "prepublishOnly": "npm run build && npm run build:browser && npm test"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SangHakLee/subnet-overlap.git"
+  },
+  "keywords": [
+    "javascript",
+    "cidr",
+    "ip",
+    "network"
+  ],
+  "engines": {
+    "node": ">=18.18.0",
+    "npm": ">=9.0.0"
+  },
+  "author": "sanghaklee, <code.ryan.lee@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SangHakLee/subnet-overlap/issues"
+  },
+  "homepage": "https://sanghaklee.github.io/subnet-overlap",
+  "dependencies": {
+    "netaddr": "^1.1.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/js": "^9.39.1",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.1",
+    "@semantic-release/npm": "^13.1.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "puppeteer": "^24.29.1",
+    "rollup": "^4.52.5",
+    "rollup-plugin-polyfill-node": "^0.13.0",
+    "semantic-release": "^25.0.1",
+    "ts-jest": "^29.4.5",
+    "tslib": "^2.8.1",
+    "typedoc": "^0.28.14",
+    "typescript": "^5.9.3",
+    "yallist": "^5.0.0"
+  }
+}

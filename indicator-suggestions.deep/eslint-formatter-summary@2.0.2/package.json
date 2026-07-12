@@ -1,0 +1,82 @@
+{
+  "name": "eslint-formatter-summary",
+  "version": "2.0.2",
+  "description": "ESLint summary formatter aggregating results by rule",
+  "keywords": [
+    "eslint",
+    "eslint-formatter",
+    "summary",
+    "formatter",
+    "javascript",
+    "linting",
+    "report"
+  ],
+  "bugs": {
+    "url": "https://github.com/mhipszki/eslint-formatter-summary/issues"
+  },
+  "repository": "mhipszki/eslint-formatter-summary",
+  "license": "MIT",
+  "author": "Marton Hipszki <mhipszki@gmail.com>",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "dist/*.js",
+    "dist/*.js.map",
+    "README.md",
+    "index.js",
+    "LICENSE",
+    "package.json",
+    "!dist/*.spec.js",
+    "!dist/*.spec.js.map"
+  ],
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "lint": "eslint lib/",
+    "prepare": "husky",
+    "prettier": "prettier --check .",
+    "test": "vitest",
+    "test:coverage": "vitest --run --coverage",
+    "try": "eslint -f ./index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "eslint"
+    ]
+  },
+  "dependencies": {
+    "chalk-template": "^1.1.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@eslint/js": "^9.25.1",
+    "@tsconfig/node-lts": "^22.0.1",
+    "@types/eslint": "^9.6.1",
+    "@vitest/coverage-v8": "^3.1.2",
+    "esbuild": "^0.25.3",
+    "eslint": "^9.25.1",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-packagejson": "^2.5.10",
+    "semantic-release": "^24.2.3",
+    "strip-ansi": "^7.1.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0",
+    "vitest": "^3.1.2"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

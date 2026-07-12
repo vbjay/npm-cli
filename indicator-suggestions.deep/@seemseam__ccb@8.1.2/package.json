@@ -1,0 +1,71 @@
+{
+  "name": "@seemseam/ccb",
+  "version": "8.1.2",
+  "description": "Lightweight multi-agent TUI and stable cross-provider collaboration layer for Codex, Claude, Gemini, Grok, Kimi, DeepSeek, and other CLI agents.",
+  "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/SeemSeam/claude_codex_bridge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeemSeam/claude_codex_bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SeemSeam/claude_codex_bridge/issues"
+  },
+  "keywords": [
+    "ccb",
+    "multi-agent",
+    "codex",
+    "claude",
+    "gemini",
+    "grok",
+    "kimi",
+    "deepseek",
+    "mimo",
+    "qwen",
+    "cursor",
+    "copilot",
+    "crush",
+    "kiro",
+    "pi",
+    "zai",
+    "opencode",
+    "tmux",
+    "cli"
+  ],
+  "bin": {
+    "ccb": "bin/ccb.js",
+    "ask": "bin/ask.js",
+    "autonew": "bin/autonew.js",
+    "ctx-transfer": "bin/ctx-transfer.js"
+  },
+  "files": [
+    "bin/ccb.js",
+    "bin/ask.js",
+    "bin/autonew.js",
+    "bin/ctx-transfer.js",
+    "bin/ccb-npm-install.js",
+    "bin/ccb-npm-runner.js",
+    "README.md",
+    "README/*.md",
+    "LICENSE",
+    "VERSION"
+  ],
+  "scripts": {
+    "postinstall": "node bin/ccb-npm-install.js",
+    "pack:check": "npm pack --dry-run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "linux",
+    "darwin"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

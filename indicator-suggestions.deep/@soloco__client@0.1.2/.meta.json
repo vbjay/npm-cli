@@ -1,0 +1,92 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ace410029ea031e6",
+    "fetchedFiles": [
+      "node-floor.mjs",
+      "package.json",
+      "postinstall.mjs",
+      "welcome-banner.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a0098d3fb68dbda6f674785886cd3be67e3155052e84e3b149a651755d140111",
+        "sizeBytes": 3862,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "node-floor.mjs",
+          "welcome-banner.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "node-floor.mjs",
+        "reason": "required by ./postinstall.mjs",
+        "sha256": "099b562325fc767677c9eb0f649ccff1fb46b244d3a19acce6c54906dfa67569",
+        "sizeBytes": 2144,
+        "signals": [
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "welcome-banner.mjs",
+        "reason": "required by ./postinstall.mjs",
+        "sha256": "95924cf0c9099fc2849984109f09c59af18e42b9220719abf53a4e100a362c1a",
+        "sizeBytes": 3988,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:58.252Z"
+  },
+  "hash": "sha256:ef677a6b9c02df047b6dc9c4d43313ca5d5873c98ce063b36cc64bc4e902de8a"
+}

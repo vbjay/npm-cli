@@ -1,0 +1,52 @@
+{
+  "name": "keyjey",
+  "version": "0.1.6",
+  "description": "KeyJey - Claude Code statusline renderer with Codex CLI setup support",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/KJ21-ENG/keyjey",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KJ21-ENG/keyjey.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KJ21-ENG/keyjey/issues"
+  },
+  "bin": {
+    "keyjey": "./bin/keyjey.js",
+    "keyjey-remaining": "./bin/keyjey-remaining.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "keyjey.toml",
+    "README.md",
+    "LICENSE"
+  ],
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "postinstall": "node ./scripts/postinstall.cjs",
+    "test:codex-setup": "node ./scripts/test-codex-setup.cjs",
+    "test:npm": "cargo build --quiet && KEYJEY_BINARY_PATH=\"$PWD/target/debug/keyjey\" node ./bin/keyjey.js --help",
+    "test:npm:install": "tmp=$(mktemp -d) && HOME=\"$tmp\" npm_config_global=true KEYJEY_BINARY_PATH=$(command -v keyjey) node ./scripts/postinstall.cjs && test -f \"$tmp/.config/keyjey.toml\" && test -f \"$tmp/.claude/settings.json\" && rm -rf \"$tmp\""
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "claude",
+    "statusline",
+    "terminal",
+    "starship",
+    "rust"
+  ]
+}

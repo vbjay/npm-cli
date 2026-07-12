@@ -1,0 +1,114 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3e5bdfd857589cb0",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "package.json",
+      "scripts/install.js",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "ts-node",
+        "versionSpec": "^10.9.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "ts-node@10.9.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "a1abcb9af1f7aa68b246f8ba2d4c513ce5befcd6d53c56ccc59fdde53bfa0da2",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "terminal-emulator"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "1.2.3"
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "51380ee28fc1d1f1c9136a82bfa81c2e79b93b82f0f1623efa291173cc4b1f38",
+        "sizeBytes": 1142,
+        "signals": [
+          "uses-child-process",
+          "dynamic-require"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7212a010e3b8e065d568491863f092c0dab129e84f7ac610f7cfdc3fbc3f9c27",
+        "sizeBytes": 1169,
+        "signals": [
+          "uses-child-process",
+          "dynamic-require"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:43:40.304Z"
+  },
+  "hash": "sha256:4295ab05750e0a1544489654bfb8b204c8c9041ae097a2b6bfa42af56798f159"
+}

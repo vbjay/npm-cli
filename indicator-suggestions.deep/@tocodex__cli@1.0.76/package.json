@@ -1,0 +1,55 @@
+{
+  "name": "@tocodex/cli",
+  "version": "1.0.76",
+  "description": "ToCodex CLI - AI coding assistant for the terminal",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "tocodex": "dist/index.js"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "extension/**/*",
+    "cli-settings.json",
+    "postinstall.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ai",
+    "coding",
+    "cli",
+    "tocodex",
+    "agent",
+    "llm",
+    "mcp"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tocodex/tocodex-cli.git"
+  },
+  "homepage": "https://tocodex.com",
+  "dependencies": {
+    "@inkjs/ui": "^2.0.0",
+    "@trpc/client": "^11.8.1",
+    "commander": "^12.1.0",
+    "cross-spawn": "^7.0.6",
+    "execa": "^9.5.2",
+    "fuzzysort": "^3.1.0",
+    "ink": "^6.6.0",
+    "p-wait-for": "^5.0.2",
+    "react": "^19.1.0",
+    "superjson": "^2.2.6",
+    "zustand": "^5.0.0"
+  },
+  "optionalDependencies": {
+    "@vscode/ripgrep": "^1.15.9"
+  }
+}

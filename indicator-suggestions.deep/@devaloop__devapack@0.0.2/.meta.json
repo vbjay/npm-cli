@@ -1,0 +1,118 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4cd15d6b1a4e1f12",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "out-tsc/scripts/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "follow-redirects",
+        "versionSpec": "^1.15.11"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "follow-redirects@1.16.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "9ee8edcb961d0e63ee3c090465f37da5bce4cd7b7aa10a83f999a038e0bb72a1",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "devapack"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.0.2"
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "out-tsc/scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9770e3a4927a8f1330bfc921f2ccf1783fe32508cff41be1590ae8d052158116",
+        "sizeBytes": 2380,
+        "signals": [
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/devaloop-labs/devapack/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:57.386Z"
+  },
+  "hash": "sha256:e046137e0d0eedb492c74250cf0871a2dc0956e04736e4647f6efd1bbea36d06"
+}

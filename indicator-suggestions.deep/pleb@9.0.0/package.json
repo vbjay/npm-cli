@@ -1,0 +1,76 @@
+{
+  "name": "pleb",
+  "description": "a casual publisher",
+  "version": "9.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "dist/index.d.ts",
+  "bin": {
+    "pleb": "bin/pleb.js"
+  },
+  "scripts": {
+    "clean": "node -e \"fs.rmSync('./dist', { recursive: true, force: true })\"",
+    "prebuild": "npm run clean",
+    "build": "tsc --build",
+    "pretest": "npm run lint && npm run build",
+    "test": "npm run test:only",
+    "test:only": "node --test --enable-source-maps \"dist/test/*.test.js\"",
+    "lint": "eslint",
+    "prepack": "npm run build",
+    "prettify": "prettier . --write"
+  },
+  "dependencies": {
+    "@dazl/resolve-directory-context": "^5.1.0",
+    "colorette": "^2.0.20",
+    "commander": "^15.0.0",
+    "p-queue": "^9.3.0",
+    "promise-assist": "^2.0.1",
+    "semver": "^7.8.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "22",
+    "@types/semver": "^7.7.1",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-no-only-tests": "^3.4.0",
+    "prettier": "^3.8.3",
+    "type-fest": "^5.6.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.60.0"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "!dist/test",
+    "src",
+    "!*/tsconfig.{json,tsbuildinfo}"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "publish",
+    "packages",
+    "workspace",
+    "npm",
+    "yarn",
+    "ci",
+    "automation",
+    "upgrade"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dazl-dev/pleb.git"
+  }
+}

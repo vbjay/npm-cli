@@ -1,0 +1,95 @@
+{
+  "name": "niddle",
+  "version": "0.2.12",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "napi": {
+    "name": "niddle",
+    "package": {
+      "name": "@niddle-rs/niddle"
+    },
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin",
+        "aarch64-linux-android",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "aarch64-pc-windows-msvc",
+        "armv7-unknown-linux-gnueabihf",
+        "armv7-unknown-linux-musleabihf",
+        "x86_64-unknown-linux-musl",
+        "x86_64-unknown-freebsd",
+        "i686-pc-windows-msvc",
+        "armv7-linux-androideabi",
+        "universal-apple-darwin",
+        "riscv64gc-unknown-linux-gnu"
+      ]
+    }
+  },
+  "keywords": [
+    "htmlparser",
+    "jquery",
+    "selector",
+    "scraper",
+    "parser",
+    "dom",
+    "html",
+    "rust",
+    "napi"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.4",
+    "@taplo/cli": "^0.7.0",
+    "ava": "^6.0.1",
+    "cheerio": "^1.1.2",
+    "htmlparser-benchmark": "^1.1.3",
+    "husky": "^8.0.0",
+    "js-beautify": "^1.15.1",
+    "typescript": "^5.5.3"
+  },
+  "ava": {
+    "timeout": "3m"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release --cargo-name niddle_napi",
+    "build:debug": "napi build --platform --cargo-name niddle_napi",
+    "prepublishOnly": "yarn patchdts && napi prepublish -t npm",
+    "universal": "napi universal",
+    "version": "napi version",
+    "test": "ava",
+    "patchdts": "cat ./patch.d.ts >> ./index.d.ts",
+    "benchmark": "node ./benchmark/benchmark.mjs",
+    "prepare": "husky install"
+  },
+  "repository": "https://github.com/xusd320/niddle",
+  "packageManager": "yarn@4.3.1",
+  "description": "A super fast html parser and manipulator written in rust.",
+  "optionalDependencies": {
+    "@niddle-rs/niddle-win32-x64-msvc": "0.2.12",
+    "@niddle-rs/niddle-darwin-x64": "0.2.12",
+    "@niddle-rs/niddle-linux-x64-gnu": "0.2.12",
+    "@niddle-rs/niddle-darwin-arm64": "0.2.12",
+    "@niddle-rs/niddle-android-arm64": "0.2.12",
+    "@niddle-rs/niddle-linux-arm64-gnu": "0.2.12",
+    "@niddle-rs/niddle-linux-arm64-musl": "0.2.12",
+    "@niddle-rs/niddle-win32-arm64-msvc": "0.2.12",
+    "@niddle-rs/niddle-linux-arm-gnueabihf": "0.2.12",
+    "@niddle-rs/niddle-linux-arm-musleabihf": "0.2.12",
+    "@niddle-rs/niddle-linux-x64-musl": "0.2.12",
+    "@niddle-rs/niddle-freebsd-x64": "0.2.12",
+    "@niddle-rs/niddle-win32-ia32-msvc": "0.2.12",
+    "@niddle-rs/niddle-android-arm-eabi": "0.2.12",
+    "@niddle-rs/niddle-darwin-universal": "0.2.12",
+    "@niddle-rs/niddle-linux-riscv64-gnu": "0.2.12"
+  }
+}

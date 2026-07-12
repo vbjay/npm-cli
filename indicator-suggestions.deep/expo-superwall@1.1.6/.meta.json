@@ -1,0 +1,98 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b920f68e300fd665",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/check-expo-version.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "9686c078878c1b54db74a2c94d16c2cd7a85ef617b9a896e2e566571ed8e7a83",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.superwall.sdk:superwall-android:2.7.16",
+              "com.android.billingclient:billing:8.0.0",
+              "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.2"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\expo-superwall@1.1.6\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check-expo-version.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a7381b3e52ea2e8282ffca6131cd330d2fc9485c2c433515c7aa1d88039a89ef",
+        "sizeBytes": 2771,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/superwall/expo-superwall\\n",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:49.415Z"
+  },
+  "hash": "sha256:ef6aa76261ba346f0d2dd585b6793eaf35a4a6b21d08eb0af2c00ff6d5dded0a"
+}

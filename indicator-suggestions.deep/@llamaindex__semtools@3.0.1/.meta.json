@@ -1,0 +1,142 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3fa8dc0116df5123",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": ">=6.2.1"
+      },
+      {
+        "name": "unzipper",
+        "versionSpec": ">=0.10.14"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "tar@7.5.19",
+      "unzipper@0.12.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "7f871f2eada76808f944e2202286730c60bfd35f6814b161da00717ab82a60d2",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "semtools"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "3.0.1"
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "9e0f23887eaedebbb0708162373aaa318e6902fe49111f6a394dbbcaaabe95b4",
+        "sizeBytes": 5095,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-outside-package",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://www.rust-lang.org/tools/install",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/run-llama/semtools/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "1a73d672a5cf80d81eb32eb8e0d369c81c18e475c72868634f0ef2989d07b431",
+        "sizeBytes": 1154,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:25.465Z"
+  },
+  "hash": "sha256:8af1cb78e0bb2bb81f76455a8e0b65ae88d340ca99210a7495595988e812c4a0"
+}

@@ -1,0 +1,100 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.BackupCardSdk = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return BackupCardSdk[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "BackupCardSdkSpec"
+  codegenJavaPackageName = "com.ziancube.reactnativebackupcardsdk"
+}
+
+// Kotlin/Java TurboModule uses BackupCardSdkSpec-generated.cpp (JavaTurboModule).
+// BackupCardSdkSpecJSI-generated.cpp targets a C++ module class that is not implemented
+// and conflicts with BackupCardSdkSpecJSI.h from the same codegen run.
+def patchBackupCardCodegen = tasks.register("patchBackupCardCodegen") {
+  doLast {
+    def jsiCpp =
+        file(
+            "${layout.buildDirectory.get()}/generated/source/codegen/jni/react/renderer/components/BackupCardSdkSpec/BackupCardSdkSpecJSI-generated.cpp"
+        )
+    if (jsiCpp.exists()) {
+      jsiCpp.delete()
+    }
+  }
+}
+
+tasks.configureEach { task ->
+  if (task.name == "generateCodegenArtifactsFromSchema") {
+    task.finalizedBy(patchBackupCardCodegen)
+  }
+}
+
+android {
+  namespace "com.ziancube.reactnativebackupcardsdk"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  implementation(files("libs/backupcardsdk.aar"))
+  // Transitive deps of backupcardsdk (not bundled inside the AAR)
+  implementation("androidx.appcompat:appcompat:1.7.1")
+  implementation("com.google.android.material:material:1.13.0")
+  implementation("com.facebook.react:react-android")
+}

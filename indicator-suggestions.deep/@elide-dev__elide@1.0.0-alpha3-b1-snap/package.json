@@ -1,0 +1,36 @@
+{
+  "name": "@elide-dev/elide",
+  "version": "1.0.0-alpha3-b1-snap",
+  "description": "Elide polyglot application runtime",
+  "homepage": "https://elide.dev",
+  "license": "(MIT OR Apache-2.0)",
+  "keywords": ["runtime", "js", "ts", "polyglot", "server", "framework", "kotlin", "javascript", "typescript"],
+  "repository": "github:elide-dev/v3",
+  "config": {
+    "elideVersion": "1.0-v3-alpha3-b1"
+  },
+  "author": {
+    "name": "Sam Gammon",
+    "url": "https://github.com/sgammon"
+  },
+  "bugs": {
+    "url": "https://github.com/elide-dev/v3/issues"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "elide.js"
+  ],
+  "bin": {
+    "elide": "./elide"
+  },
+  "scripts": {
+    "preinstall": "which elide || curl -sSL --tlsv1.2 dl.elide.dev/cli/install.sh | bash -s - --install-dir=${npm_config_binroot:-./node_modules/.bin/} --no-banner --install-rev=$npm_package_config_elideVersion"
+  }
+}

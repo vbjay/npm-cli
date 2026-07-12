@@ -1,0 +1,43 @@
+{
+  "name": "posthog-cli",
+  "version": "0.2.4",
+  "description": "Unofficial PostHog CLI — manage PostHog projects from the terminal",
+  "author": "sapihav",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapihav/posthog-cli.git"
+  },
+  "keywords": [
+    "posthog",
+    "cli",
+    "analytics",
+    "feature-flags",
+    "experiments"
+  ],
+  "bin": {
+    "posthog": "dist/index.js"
+  },
+  "files": [
+    "dist/**/*.js",
+    "scripts/postinstall.cjs"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "test": "tsx --test test/*.test.ts",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/postinstall.cjs"
+  },
+  "dependencies": {
+    "commander": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

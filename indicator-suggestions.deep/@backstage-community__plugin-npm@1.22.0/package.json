@@ -1,0 +1,113 @@
+{
+  "name": "@backstage-community/plugin-npm",
+  "description": "A Backstage plugin that shows meta info and latest versions from a npm registry",
+  "version": "1.22.0",
+  "main": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "backstage": {
+    "role": "frontend-plugin",
+    "supported-versions": "1.28.0",
+    "pluginId": "npm",
+    "pluginPackage": "@backstage-community/plugin-npm",
+    "pluginPackages": [
+      "@backstage-community/plugin-npm",
+      "@backstage-community/plugin-npm-backend",
+      "@backstage-community/plugin-npm-common"
+    ],
+    "features": {
+      "./alpha": "@backstage/FrontendPlugin"
+    }
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.esm.js"
+    },
+    "./alpha": {
+      "backstage": "@backstage/FrontendPlugin",
+      "import": "./dist/alpha.esm.js",
+      "types": "./dist/alpha.d.ts",
+      "default": "./dist/alpha.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "alpha": [
+        "dist/alpha.d.ts"
+      ],
+      "package.json": [
+        "package.json"
+      ]
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "start": "backstage-cli package start",
+    "start:alpha": "backstage-cli package start --entrypoint dev/alpha.tsx",
+    "build": "backstage-cli package build",
+    "lint": "backstage-cli package lint",
+    "test": "backstage-cli package test",
+    "clean": "backstage-cli package clean",
+    "prepack": "backstage-cli package prepack",
+    "postpack": "backstage-cli package postpack"
+  },
+  "dependencies": {
+    "@backstage-community/plugin-npm-common": "^1.22.0",
+    "@backstage/catalog-model": "^1.9.0",
+    "@backstage/core-components": "^0.18.10",
+    "@backstage/core-plugin-api": "^1.12.6",
+    "@backstage/errors": "^1.3.1",
+    "@backstage/frontend-plugin-api": "^0.17.0",
+    "@backstage/plugin-app-react": "^0.2.3",
+    "@backstage/plugin-catalog-react": "^3.0.0",
+    "@backstage/theme": "^0.7.3",
+    "@material-ui/core": "^4.9.13",
+    "luxon": "^3.5.0",
+    "react-use": "^17.2.4"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.36.2",
+    "@backstage/dev-utils": "^1.1.23",
+    "@backstage/frontend-dev-utils": "^0.1.2",
+    "@backstage/frontend-test-utils": "^0.6.0",
+    "@backstage/plugin-catalog": "^2.0.5",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react-dom": "^18",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-router-dom": "^7.14.1"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
+  },
+  "files": [
+    "config.d.ts",
+    "dist"
+  ],
+  "configSchema": "config.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/backstage/community-plugins",
+    "directory": "workspaces/npm/plugins/npm"
+  },
+  "keywords": [
+    "backstage",
+    "plugin",
+    "npm"
+  ],
+  "homepage": "https://github.com/backstage/community-plugins/tree/main/workspaces/npm/plugins/npm",
+  "bugs": "https://github.com/backstage/community-plugins/issues",
+  "maintainers": [
+    "jerolimov",
+    "karthikjeeyar"
+  ],
+  "author": "Christoph Jerolimov",
+  "module": "./dist/index.esm.js"
+}

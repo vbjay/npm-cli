@@ -1,0 +1,139 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d5df76820f6370eb",
+    "fetchedFiles": [
+      "bin/todui.js",
+      "package.json",
+      "scripts/npm/check-version-sync.mjs",
+      "scripts/npm/install.mjs",
+      "scripts/npm/shared.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/npm/install.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`; referenced by lifecycle script: `check:js`",
+        "sha256": "86a95ad7a4ffb7e19c5fb0019c15a06af8a9f9c1a677b0d667bcf009f2b2a3e4",
+        "sizeBytes": 3317,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/npm/shared.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/npm/shared.mjs",
+        "reason": "required by ./scripts/npm/install.mjs; required by ./scripts/npm/check-version-sync.mjs; required by ./bin/todui.js; referenced by lifecycle script: `check:js`",
+        "sha256": "6cab31f3518d6f03ab73c346d157df13c4da5877abbb50d416ad7ca8bfdc8610",
+        "sizeBytes": 2089,
+        "signals": [
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/npm/check-version-sync.mjs",
+        "reason": "referenced by lifecycle script: `check:version`; referenced by lifecycle script: `check:js`",
+        "sha256": "e8e4086868230c91216d25f3e42b0518894be71231b8ee6800c1dc408c56bda0",
+        "sizeBytes": 1506,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/npm/shared.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/todui.js",
+        "reason": "referenced by lifecycle script: `check:js`",
+        "sha256": "8337e2e14b5b7936812f42a94c0198fef4233b0780c953488d4bdaea24af04e6",
+        "sizeBytes": 2976,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/npm/shared.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/release-notes.mjs",
+        "reason": "referenced by lifecycle script: `check:js`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:52.087Z"
+  },
+  "hash": "sha256:c13f3c6602447fecea59e9304f6c34956f63e98e0c16be4819482660afd18916"
+}

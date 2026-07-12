@@ -1,0 +1,173 @@
+{
+  "name": "imba",
+  "description": "Intuitive and powerful language for building webapps that fly",
+  "author": "Sindre Aarsaether",
+  "version": "2.0.0-alpha.252",
+  "scripts": {
+    "test": "node bin/imba scripts/test-runner.imba",
+    "test-cli": "node test/cli/index.mjs",
+    "test:std": "imba test run -- --dir ./test/std",
+    "clean": "find test/apps -name '*.js' -type f -delete && rm -r dist/",
+    "watch": "node scripts/build.js -w",
+    "dev": "npm run watch",
+    "create-example": "node bin/imba scripts/create-example.imba",
+    "generate-typings": "node bin/imba scripts/docs/generate-typings.imba",
+    "build-parser": "node scripts/build-parser.js",
+    "build": "npm run build-parser && node scripts/build.js",
+    "prepack": "npm run build",
+    "sync": "npm i && npm run build && npm link"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "bin": {
+    "imba": "./bin/imba",
+    "imbac": "./bin/imbac"
+  },
+  "main": "./index",
+  "type": "commonjs",
+  "browser": {
+    ".": "./dist/imba.mjs",
+    "./program": "./program.imba.js",
+    "./compiler": "./dist/compiler.mjs",
+    "./runtime": "./src/imba/runtime.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "dist",
+    "build",
+    "typings",
+    "vendor",
+    "scripts/bootstrap.compiler.js",
+    "polyfills",
+    "*.imba",
+    "*.d.ts",
+    "*.js",
+    "*.css",
+    "*.md",
+    "templates"
+  ],
+  "exports": {
+    "./preflight.css": "./preflight.css",
+    "./hmr": "./hmr.js",
+    "./runtime": {
+      "default": "./src/imba/runtime.mjs"
+    },
+    ".": {
+      "tsimba": "./src/imba/imba.imba.ts",
+      "imba": "./src/imba/imba.imba",
+      "browser": "./dist/imba.mjs",
+      "default": "./index.js"
+    },
+    "./spec": {
+      "imba": "./src/utils/spec.imba"
+    },
+    "./colors": {
+      "tsimba": "./src/utils/colors.imba.ts",
+      "imba": "./src/utils/colors.imba",
+      "browser": "./dist/colors.mjs",
+      "require": "./dist/colors.cjs",
+      "default": "./dist/colors.mjs"
+    },
+    "./std": {
+      "tsimba": "./src/utils/std/std.imba.ts",
+      "imba": "./src/utils/std/std.imba",
+      "browser": "./dist/std.mjs",
+      "require": "./dist/std.cjs",
+      "default": "./dist/std.mjs"
+    },
+    "./std/*": {
+      "tsimba": "./src/utils/std/*.imba.ts",
+      "imba": "./src/utils/std/*.imba"
+    },
+    "./program": {
+      "browser": "./program.browser.imba.js",
+      "require": "./program.imba.js"
+    },
+    "./workers": "./workers.imba.js",
+    "./compiler": {
+      "browser": "./dist/compiler.mjs",
+      "require": "./dist/compiler.cjs",
+      "default": "./dist/compiler.mjs"
+    }
+  },
+  "devDependencies": {
+    "commander": "^6.2.1",
+    "ignore": "^5.2.4",
+    "image-size": "^0.9.3",
+    "imba-monarch": "file:../imba-monarch",
+    "playwright": "^1.60.0",
+    "sourcemap-codec": "^1.4.8",
+    "tmp": "^0.2.7",
+    "workerpool": "^6.0.3"
+  },
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "colord": "^2.9.3",
+    "dotenv": "^16.0.3",
+    "envinfo": "^7.8.1",
+    "esbuild": "^0.24.2",
+    "get-port": "^5.1.1"
+  },
+  "directories": {},
+  "preferGlobal": true,
+  "homepage": "https://imba.io",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/imba/imba.git"
+  },
+  "bugs": "https://github.com/imba/imba/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/imba/imba/raw/master/LICENSE"
+    }
+  ],
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Sindre Aarsaether",
+      "email": "sindre@identu.no",
+      "url": "https://github.com/somebee/"
+    },
+    {
+      "name": "Mikey Oz",
+      "url": "https://github.com/familyfriendlymikey/"
+    },
+    {
+      "name": "Abdellah Alaoui",
+      "email": "als.abdellah@gmail.com",
+      "url": "https://github.com/haikyuu/"
+    },
+    {
+      "name": "Magnus Holm",
+      "email": "judofyr@gmail.com",
+      "url": "https://github.com/judofyr/"
+    },
+    {
+      "name": "Slee Woo",
+      "url": "https://github.com/sleewoo/"
+    },
+    {
+      "name": "Luke Edwards",
+      "email": "luke@lukeed.com",
+      "url": "https://github.com/lukeed/"
+    },
+    {
+      "name": "Gavin Ray",
+      "url": "https://github.com/GavinRay97/"
+    },
+    {
+      "name": "Alexander Alemayhu",
+      "url": "https://github.com/aalemayhu/"
+    }
+  ],
+  "keywords": [
+    "javascript",
+    "language",
+    "imba",
+    "compiler"
+  ],
+  "gitHead": "e66a3085f6653982140dfce9f21a9a63cb4a1df7"
+}

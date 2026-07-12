@@ -1,0 +1,50 @@
+{
+  "name": "pi-feishu-cli",
+  "version": "2.0.0",
+  "description": "Pi AI agent with Feishu bot integration",
+  "keywords": [
+    "pi",
+    "feishu",
+    "lark",
+    "ai",
+    "agent",
+    "cli"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yandy/pi-feishu-cli.git"
+  },
+  "homepage": "https://github.com/yandy/pi-feishu-cli#readme",
+  "bugs": {
+    "url": "https://github.com/yandy/pi-feishu-cli/issues"
+  },
+  "bin": {
+    "pi-feishu": "./dist/cli.js"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "^0.80.1",
+    "@larksuiteoapi/node-sdk": "^1.66.0",
+    "typebox": "*"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^3.2.6",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "check": "biome check --write",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist/"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "clickhouse-migrations",
+  "version": "1.3.2",
+  "description": "ClickHouse Migrations",
+  "bin": {
+    "clickhouse-migrations": "lib/cli.js"
+  },
+  "main": "lib/migrate.js",
+  "types": "lib/migrate.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "private": false,
+  "license": "MIT",
+  "author": "VVVi",
+  "repository": "VVVi/clickhouse-migrations",
+  "scripts": {
+    "build": "rm -rf lib/*; tsc",
+    "test": "jest --config jestconfig.json",
+    "test:unit": "jest --config jestconfig.json --testPathPatterns=\"\\.(unit|integration)\\.test\\.ts$\"",
+    "test:e2e": "jest --config jestconfig.json --testPathPatterns=\"\\.e2e\\.test\\.ts$\"",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "eslint ./src",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "dependencies": {
+    "@clickhouse/client": "^1.20.0",
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.19.43",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
+    "@typescript-eslint/parser": "^8.61.1",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "jest": "^30.4.2",
+    "prettier": "^3.8.4",
+    "ts-jest": "^29.4.11",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1"
+  },
+  "overrides": {
+    "js-yaml": "^4.2.0",
+    "@babel/core": "^7.29.7",
+    "test-exclude": "^8.0.0",
+    "glob": "^13.0.6"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "clickhouse-migrations",
+    "clickhouse-migration",
+    "clickhouse-migrate",
+    "clickhouse",
+    "migrations",
+    "migration",
+    "migrate",
+    "cli"
+  ]
+}

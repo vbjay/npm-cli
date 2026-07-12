@@ -1,0 +1,52 @@
+{
+  "name": "semo-plugin-read",
+  "version": "1.0.22",
+  "description": "A tool which convert web pages to markdown and many other formats, based on Semo",
+  "keywords": [
+    "cli",
+    "command",
+    "markdown",
+    "reader",
+    "semo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/semojs/semo-plugin-read-mono"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.14.9",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "eslint": "^7.14.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.2"
+  },
+  "scripts": {
+    "semo": "SEMO_PLUGIN_DIR=.. semo",
+    "watch": "tsc -w",
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "prepare": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@semo/core": "^1.5.13",
+    "@vipzhichengfork/node-readability": "^1.0.5",
+    "clipboardy": "^2.3.0",
+    "got": "^11.8.0",
+    "marked": "^1.2.5",
+    "marked-terminal": "^4.1.0",
+    "mkdirp": "^1.0.4",
+    "shelljs": "^0.8.4",
+    "turndown": "^7.0.0",
+    "turndown-plugin-gfm": "^1.0.2",
+    "url-parse": "^1.4.7"
+  },
+  "gitHead": "d2152af4d3db5fcbdb2c4549cb4ff0bc0194ddf8"
+}

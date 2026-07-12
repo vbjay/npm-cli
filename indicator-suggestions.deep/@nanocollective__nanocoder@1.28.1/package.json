@@ -1,0 +1,164 @@
+{
+	"name": "@nanocollective/nanocoder",
+	"main": "dist/cli.js",
+	"version": "1.28.1",
+	"description": "An open coding agent for your terminal, built by a community collective rather than a company. Bring your own model, keep your code on your machine, and owe nothing to anyone.",
+	"keywords": [
+		"cli",
+		"ai",
+		"coding",
+		"agent",
+		"ollama",
+		"openrouter",
+		"local",
+		"typescript",
+		"llama-cpp"
+	],
+	"author": "Nano Collective",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Nano-Collective/nanocoder.git"
+	},
+	"homepage": "https://github.com/Nano-Collective/nanocoder#readme",
+	"bugs": {
+		"url": "https://github.com/Nano-Collective/nanocoder/issues"
+	},
+	"bin": {
+		"nanocoder": "dist/cli.js"
+	},
+	"type": "module",
+	"packageManager": "pnpm@11.0.9",
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"build": "tsc && tsc-alias && cp source/commands/contributors.json dist/commands/contributors.json && chmod +x dist/cli.js",
+		"build:credits": "./scripts/generate-credits.sh",
+		"dev": "tsc --watch",
+		"start": "node dist/cli.js",
+		"test:all": "./scripts/test.sh",
+		"test:ava": "ava",
+		"test:ava:coverage": "c8 ava",
+		"test:format": "biome check --no-errors-on-unmatched .",
+		"test:types": "tsc --noEmit",
+		"test:lint": "biome lint .",
+		"test:lint:fix": "biome check --write --unsafe .",
+		"test:knip": "knip",
+		"test:audit": "pnpm audit --audit-level=high --ignore-unfixable",
+		"audit": "pnpm audit",
+		"test:security": "semgrep scan --config auto --error",
+		"test:benchmark": "tsx benchmarks/report.ts",
+		"test:benchmark:update": "tsx benchmarks/report.ts --update",
+		"test:benchmark:explain": "tsx benchmarks/report.ts --explain",
+		"format": "biome check --write .",
+		"format:check": "biome check .",
+		"build:vscode": "cd plugins/vscode && pnpm run build && pnpm exec vsce package --allow-missing-repository --skip-license --no-dependencies -o ../../assets/nanocoder-vscode.vsix",
+		"prepublishOnly": "pnpm run build && pnpm run build:vscode",
+		"generate:system-prompts": "tsx scripts/generate-system-prompts.ts",
+		"prepare": "husky"
+	},
+	"files": [
+		"dist",
+		"source/app/prompts/sections",
+		"source/config/themes.json",
+		"assets/nanocoder-vscode.vsix"
+	],
+	"dependencies": {
+		"@agentclientprotocol/sdk": "^0.25.0",
+		"@ai-sdk/anthropic": "^3.0.85",
+		"@ai-sdk/google": "^3.0.43",
+		"@ai-sdk/openai": "^3.0.71",
+		"@ai-sdk/openai-compatible": "2.0.51",
+		"@anthropic-ai/tokenizer": "^0.0.4",
+		"@modelcontextprotocol/sdk": "^1.26.0",
+		"@nanocollective/get-md": "^1.4.0",
+		"ai": "6.0.193",
+		"chalk": "^5.2.0",
+		"chokidar": "^5.0.0",
+		"cli-highlight": "^2.1.11",
+		"clipboardy": "^5.3.1",
+		"cli-table3": "^0.6.5",
+		"croner": "^10.0.1",
+		"diff": "^8.0.2",
+		"dotenv": "^17.2.3",
+		"ignore": "^7.0.5",
+		"ink": "^6.3.1",
+		"ink-big-text": "^2.0.0",
+		"ink-gradient": "^4.0.0",
+		"ink-select-input": "^6.2.0",
+		"ink-spinner": "^5.0.0",
+		"ink-tab": "^5.2.0",
+		"llama-tokenizer-js": "^1.2.2",
+		"pino": "^10.1.0",
+		"pino-pretty": "^13.1.3",
+		"pino-roll": "^4.0.0",
+		"react": "^19.0.0",
+		"sonic-boom": "^5.0.0",
+		"tiktoken": "^1.0.22",
+		"undici": "^8.5.0",
+		"wrap-ansi": "^10.0.0",
+		"ws": "^8.18.0",
+		"xdg-basedir": "^5.1.0",
+		"yaml": "^2.8.3"
+	},
+	"devDependencies": {
+		"@ava/typescript": "^7.0.0",
+		"@biomejs/biome": "^2.5.0",
+		"@types/node": "^25.9.3",
+		"@types/react": "^19.0.0",
+		"@types/ws": "^8.18.1",
+		"ava": "^7.0.0",
+		"c8": "^11.0.0",
+		"husky": "^9.1.7",
+		"ink-testing-library": "^4.0.0",
+		"knip": "^6.0.0",
+		"lint-staged": "^17.0.7",
+		"strip-ansi": "^7.1.2",
+		"tsc-alias": "^1.8.16",
+		"tsx": "^4.20.6",
+		"typescript": "^5.0.3"
+	},
+	"lint-staged": {
+		"*.{js,ts,jsx,tsx,json,md}": [
+			"biome check --write --no-errors-on-unmatched"
+		]
+	},
+	"ava": {
+		"extensions": {
+			"ts": "module",
+			"tsx": "module"
+		},
+		"nodeArguments": [
+			"--import=tsx",
+			"--no-warnings"
+		],
+		"files": [
+			"source/**/*.spec.ts",
+			"source/**/*.spec.tsx",
+			"!source/**/*-helpers.ts",
+			"!source/**/test-helpers.ts"
+		],
+		"workerThreads": false,
+		"serial": true,
+		"environmentVariables": {
+			"NODE_ENV": "test",
+			"LC_ALL": "en-US.UTF-8",
+			"LANG": "en-US.UTF-8"
+		}
+	},
+	"c8": {
+		"exclude": [
+			"source/app/App.tsx"
+		],
+		"reporter": [
+			"text",
+			"json-summary",
+			"lcov"
+		],
+		"lines": 80,
+		"functions": 0,
+		"branches": 0,
+		"statements": 0
+	}
+}

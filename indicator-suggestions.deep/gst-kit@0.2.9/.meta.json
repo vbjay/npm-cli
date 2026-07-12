@@ -1,0 +1,122 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "54fc9b705849ae2c",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/ensure-native-addon.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "efdaec1b970e6c7a244f153d63cfce033047221cb88375b1db29befb9cb80b96",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `gst_kit`  -  C/C++ sources",
+            "items": [
+              "src/cpp/addon.cpp",
+              "src/cpp/async-workers.cpp",
+              "src/cpp/element.cpp",
+              "src/cpp/type-conversion.cpp",
+              "src/cpp/pipeline.cpp"
+            ]
+          },
+          {
+            "label": "Target `gst_kit`  -  libraries",
+            "items": [
+              "<!@(node -p \"require('child_process').execSync('pkg-config --libs-only-l gstreamer-1.0 gstreamer-app-1.0 gstreamer-rtp-1.0 glib-2.0 gobject-2.0').toString().trim().split(/\\s+/).map(f => f.replace(/^-l/, '') + '.lib').filter(f => f !== '.lib').join(' ')\")",
+              "<!@(node -p \"require('child_process').execSync('pkg-config --libs-only-l gstreamer-1.0 gstreamer-app-1.0 gstreamer-rtp-1.0 glib-2.0 gobject-2.0').toString().trim()\")"
+            ]
+          },
+          {
+            "label": "Target `gst_kit`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              ".",
+              "<!@(node -p \"require('child_process').execSync('pkg-config --cflags-only-I gstreamer-1.0').toString().trim().split(/\\s+/).map(f => f.replace(/^-I/, '')).join(' ')\")",
+              "<!@(node -p \"require('child_process').execSync('pkg-config --cflags-only-I gstreamer-app-1.0').toString().trim().split(/\\s+/).map(f => f.replace(/^-I/, '')).join(' ')\")",
+              "<!@(node -p \"require('child_process').execSync('pkg-config --cflags-only-I gstreamer-rtp-1.0').toString().trim().split(/\\s+/).map(f => f.replace(/^-I/, '')).join(' ')\")",
+              "<!@(node -p \"require('child_process').execSync('pkg-config --cflags-only-I glib-2.0').toString().trim().split(/\\s+/).map(f => f.replace(/^-I/, '')).join(' ')\")",
+              "<!@(node -p \"require('child_process').execSync('pkg-config --cflags-only-I gobject-2.0').toString().trim().split(/\\s+/).map(f => f.replace(/^-I/, '')).join(' ')\")"
+            ]
+          },
+          {
+            "label": "Target `gst_kit`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/ensure-native-addon.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "768adab5a4124736f50a187740d66f6b3e7b967414d4293a3629655786c74a4d",
+        "sizeBytes": 1572,
+        "signals": [
+          "uses-child-process",
+          "native-build",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:56.569Z"
+  },
+  "hash": "sha256:2672eeddbf48a657afa605b5b9fdef76d923083e4024463a833f9457fd61f896"
+}

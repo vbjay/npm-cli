@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "85a81da401846de2",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/build-js.mjs",
+      "scripts/clean-dist.mjs",
+      "scripts/verify-appbundle.mjs",
+      "scripts/verify-package-tarball.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "esbuild",
+        "versionSpec": "^0.28.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "esbuild@0.28.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/verify-appbundle.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "b185bfe11ee5eee5d3f9f16ba9240bba125b121a25beee0c4f3ffef0e47b8343",
+        "sizeBytes": 3072,
+        "signals": [
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/clean-dist.mjs",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": "56677dacb56199c14691b279fc2fa15a94c6befdab9d9bc997cc8a022c6df3ad",
+        "sizeBytes": 222,
+        "signals": [
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/build-js.mjs",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": "9c555799761f2e153b552ddfc1efef25b83ee9ac8657a98319edca8c6a084483",
+        "sizeBytes": 2313,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/verify-package-tarball.mjs",
+        "reason": "referenced by lifecycle script: `verify:package`",
+        "sha256": "8be28e1c84d82c02529899e9d62f053741e2393fb9def72e16dd704ae9b3cc91",
+        "sizeBytes": 9824,
+        "signals": [
+          "uses-child-process",
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:08.767Z"
+  },
+  "hash": "sha256:f5d4c1a23a76742f5cea337217e800ca30792aaade751a1df348922c0b3c0f11"
+}

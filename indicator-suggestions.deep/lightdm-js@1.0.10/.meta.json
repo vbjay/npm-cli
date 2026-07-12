@@ -1,0 +1,87 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a73e7023ce0ffeb1",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "aafb62f2c1d0280a53b62f3e9dfbf0a6dbdb64ca34dafe599fdaff1f3ca3e46a",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `lightdmjs`  -  C/C++ sources",
+            "items": [
+              "lightdmjs.cc",
+              "greeter.cc",
+              "event_loop.cc",
+              "callbacks.cc",
+              "users.cc",
+              "sessions.cc",
+              "languages.cc",
+              "power.cc"
+            ]
+          },
+          {
+            "label": "Target `lightdmjs`  -  include directories",
+            "items": [
+              "./src",
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "/usr/include/lightdm-gobject-1",
+              "/usr/include/glib-2.0",
+              "/usr/lib/glib-2.0/include",
+              "/usr/include/sysprof-4",
+              "/usr/include/libmount",
+              "/usr/include/blkid",
+              "/usr/include/gio-unix-2.0",
+              "/usr/include/libxml2"
+            ]
+          },
+          {
+            "label": "Target `lightdmjs`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:06.541Z"
+  },
+  "hash": "sha256:6fadbe0a754a29b97a32b6783d8285e7d18dcfba93d63582e27fb4099d4893cd"
+}

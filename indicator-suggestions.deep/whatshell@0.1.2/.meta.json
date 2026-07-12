@@ -1,0 +1,116 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "bdcddb9e09a88d13",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "npm/install-skills.js",
+      "npm/install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "6fe7bfccfd4bf717826a60c81b7bdee795af22d36b7e63740a017e7c4e5d28c7",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "whatshell"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.2"
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c5221d8fbff71bb5eef413c7831bf6edca38b64fdfbc9310f95aca37496971b4",
+        "sizeBytes": 1247,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/install-skills.js"
+        ],
+        "urls": [
+          {
+            "url": "https://rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "npm/install-skills.js",
+        "reason": "required by ./npm/install.js",
+        "sha256": "626618253c206cfec5fe2deb57c861f4b6aa55be766cbfb674db4e84f15d9407",
+        "sizeBytes": 2713,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:29.972Z"
+  },
+  "hash": "sha256:b523a6d21cf7945d1579728c76e64ca803ff36da6a2c34609c96ca3cbbec2699"
+}

@@ -1,0 +1,70 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0f19ac0e27cdac51",
+    "fetchedFiles": [
+      "dist/chunk-YHLMQVBV.js",
+      "dist/setup/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/setup/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f06a03a9ec73a4662d1298f0cb9b1ec7d33a019b50e100b209c63901f92504cb",
+        "sizeBytes": 1979,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/chunk-YHLMQVBV.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/chunk-YHLMQVBV.js",
+        "reason": "required by ./dist/setup/postinstall.js",
+        "sha256": "1fc9c755b5c7dbb8400225b0fe488f07c8dd7d11b9aff1ca1c6149c926cfa056",
+        "sizeBytes": 21181,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:35.592Z"
+  },
+  "hash": "sha256:7453e8f80a82f5f783d7769689ae92e6c270e3d157b8581637bcb9a2bc1a594e"
+}

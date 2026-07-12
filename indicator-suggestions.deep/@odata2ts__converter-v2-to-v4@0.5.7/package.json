@@ -1,0 +1,46 @@
+{
+  "name": "@odata2ts/converter-v2-to-v4",
+  "version": "0.5.7",
+  "description": "A set of odata2ts compatible converters to convert certain OData V2 types to their V4 analog",
+  "keywords": [
+    "odata2ts",
+    "odata",
+    "odata v2",
+    "odata v4",
+    "converter",
+    "datetime",
+    "datetimeoffset",
+    "time",
+    "typescript",
+    "ts",
+    "javascript",
+    "js",
+    "types",
+    "data types"
+  ],
+  "repository": "git@github.com:odata2ts/converter.git",
+  "license": "MIT",
+  "author": "texttechne",
+  "type": "commonjs",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "*.md",
+    "lib",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn compile",
+    "check-circular-deps": "madge ./src --extensions ts --circular",
+    "clean": "rimraf lib coverage",
+    "compile": "tsc",
+    "prepack": "yarn compile",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@odata2ts/converter-api": "^0.2.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "oopsx",
+  "version": "1.5.1",
+  "description": "Play a meme sound when your terminal command fails",
+  "type": "module",
+  "bin": {
+    "oopsx": "./bin/merr.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "assets/",
+    "scripts/"
+  ],
+  "keywords": [
+    "cli",
+    "meme",
+    "sound",
+    "error",
+    "terminal",
+    "fun"
+  ],
+  "author": "devesh@760 <drajawat760@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devesh760/oopsx.git"
+  },
+  "homepage": "https://github.com/devesh760/oopsx#readme",
+  "bugs": {
+    "url": "https://github.com/devesh760/oopsx/issues"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "postinstall": "node bin/merr.js setup",
+    "preuninstall": "node scripts/uninstall.js"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "play-sound": "^1.1.6"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.18"
+  }
+}

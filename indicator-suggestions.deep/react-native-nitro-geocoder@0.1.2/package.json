@@ -1,0 +1,100 @@
+{
+  "name": "react-native-nitro-geocoder",
+  "version": "0.1.2",
+  "description": "High-performance native geocoding for React Native using Nitro Modules JSI",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "nitrogen",
+    "nitro.json",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "build": "tsc",
+    "specs": "tsc --noEmit false && nitrogen --logLevel=\"debug\"",
+    "sync": "yarn specs && npx nitrogen",
+    "release": "yarn build && yarn publish",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "keywords": [
+    "react-native",
+    "nitro",
+    "geocoder",
+    "geocoding",
+    "reverse-geocoding",
+    "location",
+    "address",
+    "coordinates",
+    "jsi",
+    "native-module"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saadelsabahy/react-native-nitro-geocoder.git"
+  },
+  "author": "Saad Elsabahy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/saadelsabahy/react-native-nitro-geocoder/issues"
+  },
+  "homepage": "https://github.com/saadelsabahy/react-native-nitro-geocoder#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/react": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "lint-staged": "^16.2.7",
+    "nitrogen": "0.35.4",
+    "prettier": "^3.7.4",
+    "react": "^19.2.1",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  }
+}

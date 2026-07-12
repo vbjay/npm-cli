@@ -1,0 +1,23 @@
+{
+  "name": "@codonsplice/cli",
+  "version": "0.5.1",
+  "description": "CodonSplice genomic query engine — splice CLI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pogo-Bash/codonsplice.git"
+  },
+  "homepage": "https://swapdoesbioandis-a.dev/splice",
+  "keywords": ["genomics", "bioinformatics", "cli", "spliceql"],
+  "os": ["linux", "darwin", "win32"],
+  "cpu": ["x64", "arm64"],
+  "scripts": { "postinstall": "node install.js" },
+  "bin": { "splice": "bin/splice" },
+  "files": ["install.js", "binary.js", "bin/"],
+  "optionalDependencies": {
+    "@codonsplice/cli-linux-x64": "0.5.1",
+    "@codonsplice/cli-linux-arm64": "0.5.1",
+    "@codonsplice/cli-darwin-x64": "0.5.1",
+    "@codonsplice/cli-win32-x64": "0.5.1"
+  }
+}

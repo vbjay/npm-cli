@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "644116adb945c510",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "26bef8102b1ab145ec19c8ff3c0d4f0c2d912c1426a73bccec3ae47c413e6c7b",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `screencapturekit_addon`  -  C/C++ sources",
+            "items": [
+              "src/native/addon.mm",
+              "src/native/wrapper.mm"
+            ]
+          },
+          {
+            "label": "Target `screencapturekit_addon`  -  include directories",
+            "items": [
+              "<!(node -p \"require('node-addon-api').include_dir\")",
+              "src/native"
+            ]
+          },
+          {
+            "label": "Target `screencapturekit_addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:08.566Z"
+  },
+  "hash": "sha256:9176f85fe4b19c4f70a5d9123d755d48899428e8fa266f4c8efd9208b41c7992"
+}

@@ -1,0 +1,142 @@
+{
+  "name": "@rn-org/react-native-shortcuts",
+  "version": "0.2.0",
+  "description": "React native library for android shortcuts and iOS quick actions which allow users to quickly access specific app functionalities directly from the home screen or app icon.",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @rn-org/react-native-shortcuts-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "clean": "cd android && ./gradlew clean && cd .. && cd example && cd android && ./gradlew clean && cd .. && cd .."
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "library",
+    "shortcuts",
+    "quick actions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rn-org/react-native-shortcuts"
+  },
+  "author": "sriharshamadamanchi <sriharshamadamanchiz@gmail.com> (https://github.com/rn-bridge)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rn-org/react-native-shortcuts/issues"
+  },
+  "homepage": "https://github.com/rn-bridge",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "^0.84.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.14",
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.2.0",
+    "prettier": "^3.8.1",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "react-native-builder-bob": "^0.40.18",
+    "turbo": "^2.8.9",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "codegenConfig": {
+    "name": "shortcuts",
+    "type": "modules",
+    "jsSrcsDir": "./src",
+    "android": {
+      "javaPackageName": "com.rnorg.shortcuts"
+    }
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "none",
+          "bracketSpacing": true
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "packageManager": "yarn@3.6.1"
+}

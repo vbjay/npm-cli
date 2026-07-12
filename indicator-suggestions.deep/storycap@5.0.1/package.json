@@ -1,0 +1,130 @@
+{
+  "name": "storycap",
+  "version": "5.0.1",
+  "description": "A Storybook addon, Save the screenshot image of your stories! via puppeteer.",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "lib/index.js",
+  "module": "lib-esm/index.js",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "browser": "./lib-esm/index.js",
+      "import": "./lib-esm/index.js",
+      "default": "./lib/index.js"
+    },
+    "./register": "./register.js"
+  },
+  "sideEffects": [
+    "./register.js",
+    "./lib/client/register.js",
+    "./lib-esm/client/register.js"
+  ],
+  "typings": "lib/index.d.ts",
+  "bin": {
+    "storycap": "lib/node/cli.js"
+  },
+  "scripts": {
+    "clean": "rimraf -g lib lib-esm \"*.tsbuildinfo\"",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc --p tsconfig.build.cjs.json",
+    "build:esm": "tsc --p tsconfig.build.esm.json",
+    "prepare": "yarn clean && yarn build",
+    "test": "jest",
+    "typedoc": "typedoc --out \"../../dist-pages/typedoc/storycap\" --ignoreCompilerErrors --tsconfig tsconfig.build.json src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reg-viz/storycap.git"
+  },
+  "author": "tsuyoshiwada",
+  "contributors": [
+    "Yosuke Kurami"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reg-viz/storycap/issues"
+  },
+  "homepage": "https://github.com/reg-viz/storycap#readme",
+  "files": [
+    "lib",
+    "lib-esm",
+    "assets",
+    "CONTRIBUTING.md",
+    "MIGRATION.md",
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "register.js"
+  ],
+  "keywords": [
+    "storybook",
+    "addon",
+    "puppeteer",
+    "chrome",
+    "screenshot",
+    "capture",
+    "visual-testing",
+    "storybook-addon",
+    "testing",
+    "test"
+  ],
+  "devDependencies": {
+    "@types/jest": "29.5.12",
+    "@types/mkdirp": "^2.0.0",
+    "@types/node": "^20.0.0",
+    "@types/rimraf": "^3.0.0",
+    "@types/wait-on": "^5.0.0",
+    "@types/yargs": "^17.0.0",
+    "jest": "29.7.0",
+    "minimist": "1.2.8",
+    "puppeteer": "23.2.1",
+    "ts-jest": "29.1.2",
+    "typedoc": "0.25.13",
+    "typescript": "5.4.5"
+  },
+  "dependencies": {
+    "mkdirp": "^2.0.0",
+    "nanomatch": "^1.2.13",
+    "puppeteer-core": "^9.0.0",
+    "rimraf": "^5.0.0",
+    "sanitize-filename": "^1.6.3",
+    "storycrawler": "^5.0.1",
+    "yargs": "^17.0.0"
+  },
+  "peerDependencies": {
+    "@storybook/manager-api": "^7.0.0 || ^8.0.0",
+    "@storybook/preview-api": "^7.0.0 || ^8.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "diagnostics": false
+        }
+      ]
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx)",
+      "**/*.test.(ts|tsx)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "_old/.*",
+      "examples/.*",
+      "\\.d\\.ts$",
+      "lib/.*"
+    ],
+    "testEnvironmentOptions": {
+      "url": "http://localhost"
+    }
+  },
+  "gitHead": "e5bac01efe6d8ca1e29a1820de2b16225f3ebec9"
+}

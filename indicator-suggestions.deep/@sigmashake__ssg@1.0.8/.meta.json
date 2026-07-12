@@ -1,0 +1,78 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6070983b2201bc3c",
+    "fetchedFiles": [
+      "bin/cleanup-globals.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/cleanup-globals.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a3a38ec1f112d0c9b0f55a7d6cac15304faba27885867a5d3681b998292977c6",
+        "sizeBytes": 4945,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./bin/cleanup-globals.cjs",
+        "sha256": "6f6fcd728f39eef2ab5eaa1bde84473fef45ef371df115a9641526a86dbe9ed1",
+        "sizeBytes": 9581,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:56.533Z"
+  },
+  "hash": "sha256:9870730d3d8ef816f7434fe93f67ff71e8f5a17c48173dc67d72c5d71bdc6e73"
+}

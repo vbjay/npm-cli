@@ -1,0 +1,131 @@
+{
+  "name": "qminer",
+  "version": "9.4.0",
+  "description": "A C++ based data analytics platform for processing large-scale real-time streams containing structured and unstructured data",
+  "engines": {
+    "node": ">=12"
+  },
+  "license": "BSD-2-Clause-FreeBSD",
+  "author": "Blaz Fortuna <blaz@blazfortuna.com>",
+  "contributors": [
+    {
+      "name": "Janez Brank",
+      "email": "janez.brank@ijs.si"
+    },
+    {
+      "name": "Blaz Fortuna",
+      "email": "blaz@blazfortuna.com"
+    },
+    {
+      "name": "Carolina Fortuna",
+      "email": "carolina.fortuna@ijs.si"
+    },
+    {
+      "name": "Marko Grobelnik",
+      "email": "marko.grobelnik@ijs.si"
+    },
+    {
+      "name": "Viktor Jovanoski",
+      "email": "viktor@carvic.si"
+    },
+    {
+      "name": "Mario Karlovcec",
+      "email": "mario.karlovcec@ijs.si"
+    },
+    {
+      "name": "Blaz Kazic",
+      "email": "blaz.kazic@ijs.si"
+    },
+    {
+      "name": "Klemen Kenda",
+      "email": "klemen.kenda@ijs.si"
+    },
+    {
+      "name": "Gregor Leban",
+      "email": "gregor.leban@ijs.si"
+    },
+    {
+      "name": "Blaz Novak",
+      "email": "blaz.novak@ijs.si"
+    },
+    {
+      "name": "Andrej Muhic",
+      "email": "andrej.muhic@ijs.si"
+    },
+    {
+      "name": "Dunja Mladenic",
+      "email": "dunja.mladenic@ijs.si"
+    },
+    {
+      "name": "Erik Novak",
+      "email": "novak.erik@gmail.com"
+    },
+    {
+      "name": "Jost Novljan",
+      "email": "jost.novljan@ijs.si"
+    },
+    {
+      "name": "Miha Papler",
+      "email": "miha.papler@ijs.si"
+    },
+    {
+      "name": "Luis Rei",
+      "email": "luis.rei@ijs.si"
+    },
+    {
+      "name": "Jan Rupnik",
+      "email": "jan.rupnik@ijs.si"
+    },
+    {
+      "name": "Blaz Sovdat",
+      "email": "blaz.sovdat@ijs.si"
+    },
+    {
+      "name": "Luka Stopar",
+      "email": "luka.stopar@ijs.si"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qminer/qminer"
+  },
+  "main": "./index.js",
+  "dependencies": {
+    "nan": "^2.15.0",
+    "node-gyp": "^8.4.1",
+    "@mapbox/node-pre-gyp": "^1.0.8"
+  },
+  "bundledDependencies": [
+    "@mapbox/node-pre-gyp"
+  ],
+  "devDependencies": {
+    "async": "^3.2.2",
+    "aws-sdk": "^2.1048.0",
+    "jsdoc": "^3.6.6",
+    "jsdoc-baseline": "^0.1.5",
+    "mocha": "^9.1.3",
+    "mustache": "^4.2.0"
+  },
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "test:nodejs": "cd test && cd nodejs && mocha *.js --timeout 30000",
+    "test:cpp": "node ./test/cpp/run_tests.js",
+    "test": "npm run test:nodejs && npm run test:cpp"
+  },
+  "binary": {
+    "module_name": "qm",
+    "module_path": "./out",
+    "host": "https://node-qminer-binary.s3.amazonaws.com"
+  },
+  "keywords": [
+    "addon",
+    "machine-learning",
+    "linear-algebra",
+    "snap",
+    "social-network-analysis",
+    "analytics",
+    "data",
+    "mining",
+    "text-mining"
+  ]
+}

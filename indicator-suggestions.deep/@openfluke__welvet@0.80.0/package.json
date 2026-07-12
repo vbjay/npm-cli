@@ -1,0 +1,94 @@
+{
+  "name": "@openfluke/welvet",
+  "version": "0.80.0",
+  "description": "M-POLY-VTD AI Engine (Loom v0.80.0) — WASM/TS bindings: 21 dtypes, volumetric grid, train, .entity checkpoints, WebGPU, DNA/NEAT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "loom",
+    "welvet",
+    "neural-network",
+    "machine-learning",
+    "deep-learning",
+    "webassembly",
+    "wasm",
+    "webgpu",
+    "gpu",
+    "typescript",
+    "javascript",
+    "transformer",
+    "safetensors",
+    "polymorphic",
+    "quantization",
+    "fp4",
+    "int4",
+    "binary",
+    "ternary",
+    "multi-precision",
+    "step-mesh",
+    "target-propagation",
+    "gradient-free",
+    "swiglu",
+    "moe",
+    "embedding",
+    "rnn",
+    "lstm",
+    "cnn",
+    "llm",
+    "tokenizer",
+    "bpe",
+    "inference",
+    "training",
+    "browser",
+    "nodejs",
+    "isomorphic"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfluke/loom.git",
+    "directory": "welvet/typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/openfluke/loom/issues"
+  },
+  "homepage": "https://github.com/openfluke/loom/tree/main/welvet/typescript#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc -p tsconfig.json",
+    "build:wasm": "bash ../wasm/build.sh",
+    "build:all": "npm run build:wasm && npm run build",
+    "postbuild": "shx cp -r assets/* dist/ && shx mkdir -p dist/tests && shx cp -r tests/* dist/tests/",
+    "prepare": "npm run build",
+    "serve:seven-layer": "npx --yes serve dist -p 3000",
+    "dev": "npm run build && npm run serve:seven-layer",
+    "test": "tsx tests/cabi_verify.ts && tsx tests/benchmark.ts && tsx tests/coverage.ts && tsx tests/consumer_demo.ts",
+    "test:consumer": "tsx tests/consumer_demo.ts",
+    "test:cabi": "tsx tests/cabi_verify.ts",
+    "test:bench": "tsx tests/benchmark.ts",
+    "test:seven-layer": "tsx tests/seven_layer.ts",
+    "test:entity-roundtrip": "tsx tests/entity_roundtrip.ts",
+    "test:seven-layer:dense": "tsx tests/seven_layer.ts --layer Dense",
+    "test:coverage": "tsx tests/coverage.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3",
+    "tsx": "^4.19.1",
+    "rimraf": "^6.0.1",
+    "shx": "^0.3.4"
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "name": "@unif/react-native-camera",
+  "version": "2.23.1",
+  "description": "基于 react-native-vision-camera 5.x 的相机库（单拍/连拍/视频录制）",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./mock": {
+      "source": "./src/mock.ts",
+      "types": "./lib/typescript/src/mock.d.ts",
+      "default": "./lib/module/mock.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @unif/react-native-camera-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "release": "release-it --only-version",
+    "test": "jest",
+    "lint": "eslint \"**/*.{js,jsx,mjs,ts,tsx}\""
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "camera",
+    "vision-camera",
+    "photo",
+    "video"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unif-design/react-native-camera.git"
+  },
+  "author": "unif-design <382724935@qq.com> (https://github.com/unif-design)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unif-design/react-native-camera/issues"
+  },
+  "homepage": "https://unif-design.github.io/react-native-camera/",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@dr.pogodin/react-native-fs": "^2.38.2",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@jest/globals": "^29.7.0",
+    "@react-native/babel-preset": "0.85.0",
+    "@react-native/eslint-config": "0.85.0",
+    "@react-native/jest-preset": "0.85.0",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@sbaiahmed1/react-native-blur": "^4.6.2",
+    "@shopify/react-native-skia": "^2.6.4",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.0",
+    "@types/react": "^19.2.0",
+    "@types/react-test-renderer": "^19",
+    "@unif/react-native-design": "0.8.1",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^29.7.0",
+    "lefthook": "^2.1.4",
+    "prettier": "^3.8.1",
+    "react": "19.2.3",
+    "react-native": "0.85.0",
+    "react-native-builder-bob": "^0.41.0",
+    "react-native-gesture-handler": "^3.0.1",
+    "react-native-nitro-image": "^0.15.0",
+    "react-native-nitro-modules": "^0.35.0",
+    "react-native-reanimated": "^4.0.0",
+    "react-native-reanimated-carousel": "^5.0.0-beta.5",
+    "react-native-safe-area-context": "^5.0.0",
+    "react-native-svg": "^15.15.5",
+    "react-native-video": "7.0.0-beta.9",
+    "react-native-vision-camera": "^5.0.0",
+    "react-native-vision-camera-worklets": "^5.0.0",
+    "react-native-webview": "*",
+    "react-native-worklets": "*",
+    "react-test-renderer": "19.2.3",
+    "release-it": "^19.2.4",
+    "turbo": "^2.8.21",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "@dr.pogodin/react-native-fs": ">=2",
+    "@sbaiahmed1/react-native-blur": ">=4",
+    "@shopify/react-native-skia": ">=2",
+    "@unif/react-native-design": ">=0.8.1",
+    "react": ">=19.0.0",
+    "react-native": ">=0.85.0",
+    "react-native-gesture-handler": ">=2.21.0",
+    "react-native-nitro-image": "*",
+    "react-native-nitro-modules": "*",
+    "react-native-reanimated": ">=4.0.0",
+    "react-native-reanimated-carousel": ">=5.0.0-beta.0",
+    "react-native-safe-area-context": ">=5.0.0",
+    "react-native-svg": ">=15",
+    "react-native-video": ">=7.0.0-beta.0",
+    "react-native-vision-camera": "^5.0.0",
+    "react-native-vision-camera-worklets": "^5.0.0",
+    "react-native-webview": "*",
+    "react-native-worklets": "*"
+  },
+  "workspaces": [
+    "example",
+    "website"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version} [skip ci]",
+      "tagName": "v${version}",
+      "requireCommits": true
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        },
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "setupFiles": [
+      "./jest.setup.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/website/",
+      "<rootDir>/lib/",
+      "<rootDir>/src/__tests__/__helpers__/"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "create-react-native-library": {
+    "type": "library",
+    "languages": "js",
+    "tools": [
+      "lefthook",
+      "release-it",
+      "jest",
+      "eslint"
+    ],
+    "version": "0.62.0"
+  }
+}

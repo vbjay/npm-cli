@@ -1,0 +1,73 @@
+{
+  "name": "@react-native-ohos/react-native-smartrefreshlayout",
+  "version": "0.6.9",
+  "description": "基于android SmartRefreshLayout的封装",
+  "harmony": {
+    "alias": "react-native-smartrefreshlayout",
+    "autolinking": {
+      "etsPackageClassName": "SmartRefreshLayoutPackage",
+      "cppPackageClassName": "SmartRefreshLayoutPackage",
+      "cmakeLibraryTargetName": "rnoh_smart_refresh_layout",
+      "ohPackageName": "@react-native-ohos/react-native-smartrefreshlayout"
+    }
+  },
+  "main": "lib/commonjs/index.js",
+  "react-native": "src/index.tsx",
+  "source": "src/index.tsx",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "scripts": {
+    "test": "npm test",
+    "prepare": "bob build",
+    "prettier": "prettier --write src"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitcode.com/openharmony-sig/rntpc_react-native-SmartRefreshLayout.git"
+  },
+  "keywords": [
+    "react",
+    "react",
+    "native",
+    "pull",
+    "refresh",
+    "refreshcontrol",
+    "refreshlayout"
+  ],
+  "author": "react-native-studio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitcode.com/openharmony-sig/rntpc_react-native-SmartRefreshLayout/issues"
+  },
+  "homepage": "https://gitcode.com/openharmony-sig/rntpc_react-native-SmartRefreshLayout#readme",
+  "dependencies": {
+    "prop-types": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.20",
+    "react-native-builder-bob": "^0.18.3",
+    "typescript": "4.8.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

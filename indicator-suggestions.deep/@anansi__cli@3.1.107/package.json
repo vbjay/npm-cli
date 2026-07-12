@@ -1,0 +1,87 @@
+{
+  "name": "@anansi/cli",
+  "version": "3.1.107",
+  "description": "Fast React Web Apps",
+  "homepage": "https://github.com/ntucker/anansi/tree/master/packages/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:ntucker/anansi.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/ntucker/anansi/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Nathaniel Tucker",
+    "email": "me@ntucker.me",
+    "url": "https://ntucker.true.io"
+  },
+  "contributors": [
+    {
+      "name": "Melissa Zhang",
+      "email": "melissa.zhang@coinbase.com",
+      "url": "https://twitter.com/melissazhang13"
+    }
+  ],
+  "files": [
+    "run.mjs",
+    "check-version.mjs",
+    "postinstall.mjs"
+  ],
+  "bin": {
+    "anansi": "./run.mjs"
+  },
+  "keywords": [
+    "cli",
+    "react",
+    "framework",
+    "spa",
+    "fast-refresh",
+    "react-refresh",
+    "yeoman-generator",
+    "yeoman",
+    "typescript",
+    "data-client",
+    "webpack",
+    "sdk",
+    "scss",
+    "css modules",
+    "storybook",
+    "jest"
+  ],
+  "engines": {
+    "node": "^18.17.0 || >=20.5.0",
+    "npm": ">= 6.0.0"
+  },
+  "devDependencies": {
+    "@anansi/core": "^0.22.12",
+    "@types/node": "^24.0.0"
+  },
+  "dependencies": {
+    "@anansi/generator-js": "^12.6.38",
+    "binary-version-check": "^6.1.0",
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "execa": "^9.6.1",
+    "import-meta-resolve": "^4.2.0",
+    "latest-version": "^9.0.0"
+  },
+  "peerDependencies": {
+    "@anansi/core": "*"
+  },
+  "peerDependenciesMeta": {
+    "@anansi/core": {
+      "optional": true
+    }
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:ci": "echo \"Error: no test specified\"",
+    "pretest": "yarn g:lint ."
+  }
+}

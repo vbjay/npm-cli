@@ -1,0 +1,159 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "989a6f037fbeba97",
+    "fetchedFiles": [
+      "js/helper.js",
+      "js/logger.js",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "undici",
+        "versionSpec": "^6.22.0"
+      },
+      {
+        "name": "progress",
+        "versionSpec": "^2.0.3"
+      },
+      {
+        "name": "proxy-from-env",
+        "versionSpec": "^1.1.0"
+      },
+      {
+        "name": "which",
+        "versionSpec": "^2.0.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "progress@2.0.3",
+      "proxy-from-env@1.1.0",
+      "undici@6.27.0",
+      "which@2.0.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "8125be2e376568684056311a9c129d1fd8b1122a4269d5728ea2566cb284e7c4",
+        "sizeBytes": 10472,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "js/helper.js",
+          "package.json",
+          "js/logger.js"
+        ],
+        "urls": [
+          {
+            "url": "https://downloads.sentry-cdn.com/sentry-cli",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "js/helper.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "d3c7f2eb0154da7989490b15dba27d6dec0a4d4698023a2b592b71c83c1defc7",
+        "sizeBytes": 13662,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://yarnpkg.com/configuration/yarnrc/#supportedArchitecture",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "d2941de02ade99af1f3124a832791ff4054edccfd367cf96e97c094557e1bf8d",
+        "sizeBytes": 2032,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "js/logger.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "b0d4d2dca8eb1ee1b17183e6cb540dc28de7b2b137e700ab31ca85978fae58a7",
+        "sizeBytes": 445,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:55.382Z"
+  },
+  "hash": "sha256:c57418f67e4694306d3fefab9b2d09f614e82e7215bb087bd48726114aacbc5a"
+}

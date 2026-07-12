@@ -1,0 +1,108 @@
+{
+  "name": "@mfellner/react-native-fast-create-hash",
+  "version": "1.0.0-alpha.2",
+  "description": "Fast, native createHash implementation for React Native.",
+  "repository": "https://github.com/mfellner/react-native-fast-create-hash",
+  "author": "Maximilian Fellner <mail@mfellner.eu> (https://github.com/mfellner)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mfellner/react-native-fast-create-hash/issues"
+  },
+  "homepage": "https://github.com/mfellner/react-native-fast-create-hash#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "react-native",
+    "hash",
+    "sha256",
+    "ios",
+    "android"
+  ],
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-fast-create-hash.podspec",
+    "!*.test.*",
+    "!lib/typescript/example",
+    "!android/build",
+    "!android/.idea",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "husky install && bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods"
+  },
+  "lint-staged": {
+    ".{ts,tsx}": "eslint --fix"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "rfc4648": "^1.5.1"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "16.2.1",
+    "@release-it/conventional-changelog": "4.2.2",
+    "@types/jest": "27.4.1",
+    "@types/react": "17.0.43",
+    "@types/react-native": "0.67.4",
+    "@typescript-eslint/eslint-plugin": "5.19.0",
+    "@typescript-eslint/parser": "5.19.0",
+    "commitlint": "16.2.3",
+    "eslint": "8.13.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-jest": "26.1.4",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-react": "7.29.4",
+    "eslint-plugin-react-hooks": "4.4.0",
+    "eslint-plugin-react-native": "4.0.0",
+    "husky": "7.0.4",
+    "jest": "27.5.1",
+    "jest-runner-eslint": "1.0.0",
+    "lint-staged": "12.3.8",
+    "pod-install": "0.1.33",
+    "prettier": "2.6.2",
+    "react": "17.0.2",
+    "react-native": "0.68.0",
+    "react-native-builder-bob": "0.18.2",
+    "react-native-clean-project": "4.0.1",
+    "release-it": "14.14.2",
+    "typescript": "4.6.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "node_or_tools",
+  "version": "1.3.0",
+  "description": "Native module for the or-tools TSP / VRP solvers",
+  "url": "https://github.com/mapbox/node-or-tools-internal",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mapbox/node-or-tools-internal.git"
+  },
+  "keywords": [
+    "addon",
+    "native",
+    "module"
+  ],
+  "author": "Daniel J. Hofmann",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "clean": "node-pre-gyp clean",
+    "test": "tap -Rspec test/*.js"
+  },
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "^2.0.0",
+    "nan": "^2.22.2"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.1209.0",
+    "bufferutil": "^4.0.8",
+    "coveralls": "^3.1.1",
+    "flow-remove-types": "^2.186.0",
+    "node-gyp-build": "^4.8.4",
+    "tap": "^16.3.0",
+    "typescript": "^5.8.3",
+    "utf-8-validate": "github:websockets/utf-8-validate#dc7d1ddd79c35d543be4f5f21d94f6928f9f0954"
+  },
+  "binary": {
+    "module_name": "node_or_tools",
+    "module_path": "./lib/binding/",
+    "host": "https://mapbox-node-binary.s3.amazonaws.com",
+    "remote_path": "./{name}/v{version}/{configuration}/",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
+  }
+}

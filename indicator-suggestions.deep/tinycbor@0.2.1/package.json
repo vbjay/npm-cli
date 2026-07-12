@@ -1,0 +1,41 @@
+{
+  "name": "tinycbor",
+  "version": "0.2.1",
+  "description": "node.js addon for tinyCBOR",
+  "main": "build/Release/CBOR",
+  "scripts": {
+    "test": "mocha",
+    "pre-commit": "yarn run format:js",
+    "format:js": "prettier --single-quote --no-semi --write ./*/*.js",
+    "install": "node-gyp rebuild",
+    "build": "git submodule update && yarn run format:js && node-gyp configure build",
+    "benchmark": "node ./benchmark/addon.js & node ./benchmark/json_benchmark.js & node ./benchmark/msgpack_benchmark.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/controlenvy/lib/node-tinycbor.git"
+  },
+  "author": "Samuel Patterson",
+  "license": "ISC",
+  "gypfile": true,
+  "dependencies": {
+    "nan": "^2.6.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "chai": "^4.0.2",
+    "eslint": "^4.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "memwatch-ng": "^1.2.0",
+    "mocha": "^3.4.2",
+    "msgpack-lite": "^0.1.26",
+    "perfy": "^1.1.2",
+    "prettier": "^1.5.2",
+    "sinon": "^2.3.4"
+  },
+  "keywords": [
+    "tinycbor",
+    "cbor",
+    "addon"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@zendesk/zcli-core",
+  "version": "1.1.0",
+  "description": "ZCLI core libraries and services",
+  "main": "dist/index.js",
+  "npmRegistry": "https://registry.npmjs.org",
+  "keywords": [
+    "zcli",
+    "zendesk",
+    "command",
+    "cli"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "directories": {
+    "dist": "dist"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "9.0.13"
+  },
+  "optionalDependencies": {
+    "keytar": "^7.9.0"
+  },
+  "dependencies": {
+    "@oclif/plugin-plugins": "=2.1.12",
+    "axios": "^1.12.0",
+    "chalk": "^4.1.2",
+    "fs-extra": "^10.1.0"
+  },
+  "scripts": {
+    "prepack": "tsc && ../../scripts/prepack.sh",
+    "postpack": "rm -rf ./dist && git checkout ./package.json",
+    "type:check": "tsc"
+  },
+  "author": "@wattle",
+  "license": "ISC",
+  "gitHead": "d2072db715a40cf2486d5da62d30bb8f08690d92",
+  "oclif": {
+    "commands": "./dist/commands"
+  }
+}

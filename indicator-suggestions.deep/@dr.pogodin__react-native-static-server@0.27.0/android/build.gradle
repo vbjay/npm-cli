@@ -1,0 +1,75 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.ReactNativeStaticServer = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return ReactNativeStaticServer[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.drpogodin.reactnativestaticserver"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    externalNativeBuild {
+      cmake {
+        arguments "-DWITH_ANDROID_NDK_SYSLOG_INTERCEPT=ON", "-DWITH_JAVA_NATIVE_INTERFACE=ON", "-DBUILD_STATIC=ON",
+          // TODO: I guess, there should be a more elegant way to append
+          // arguments here based on flags set in project Gradle properties,
+          // but for now this will do.
+          (project.properties["ReactNativeStaticServer_webdav"] ? "-DWITH_MOD_WEBDAV=ON" : "-DWITH_MOD_WEBDAV=OFF")
+        targets "lighttpd"
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "../CMakeLists.txt"
+    }
+  }
+
+  buildTypes {
+    release {
+      consumerProguardFiles "proguard-rules.pro"
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+}

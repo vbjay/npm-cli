@@ -1,0 +1,80 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "41b6d507a567cd02",
+    "fetchedFiles": [
+      "lib/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f1949daf8ae5a2896d679da502ffb7d55c81955c2f44312cee906d3e17e2a584",
+        "sizeBytes": 1860,
+        "signals": [
+          "writes-outside-package",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/VictorTomaili/mendeley-cli",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./lib/postinstall.js",
+        "sha256": "d1d3e74834e20b76f959a57997c3668b6143e2122dfe1515d0c216fbd022dd88",
+        "sizeBytes": 1231,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:10.042Z"
+  },
+  "hash": "sha256:069631ead61fe3f2b43c0b471d2ff654e9837dc271bd2e7c4a8f5f56f4a0a7a7"
+}

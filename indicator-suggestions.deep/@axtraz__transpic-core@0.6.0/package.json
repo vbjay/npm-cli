@@ -1,0 +1,92 @@
+{
+  "name": "@axtraz/transpic-core",
+  "version": "0.6.0",
+  "description": "Native Node.js bindings for fast image manipulation, powered by Rust",
+  "keywords": [
+    "blur",
+    "grayscale",
+    "image",
+    "image-processing",
+    "napi",
+    "napi-rs",
+    "native",
+    "resize",
+    "rust"
+  ],
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "format": "run-p format:oxfmt format:rs format:toml",
+    "format:oxfmt": "oxfmt .",
+    "format:toml": "taplo format",
+    "format:rs": "cargo fmt",
+    "lint": "oxlint .",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "ava",
+    "preversion": "napi build --platform && git add .",
+    "version": "napi version",
+    "prepare": "cd .. && husky"
+  },
+  "devDependencies": {
+    "@emnapi/core": "^1.11.1",
+    "@emnapi/runtime": "^1.11.1",
+    "@napi-rs/cli": "^3.7.2",
+    "@taplo/cli": "^0.7.0",
+    "@tybys/wasm-util": "^0.10.2",
+    "ava": "^8.0.1",
+    "chalk": "^5.6.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
+    "npm-run-all2": "^9.0.2",
+    "oxfmt": "^0.54.0",
+    "oxlint": "^1.69.0",
+    "oxlint-tsgolint": "^0.23.0",
+    "tinybench": "^6.0.2",
+    "typescript": "^6.0.3"
+  },
+  "lint-staged": {
+    "*.@(js|ts|tsx)": [
+      "oxlint --fix"
+    ],
+    "*.@(js|ts|tsx|yml|yaml|md|json)": [
+      "oxfmt"
+    ],
+    "*.toml": [
+      "taplo format"
+    ]
+  },
+  "napi": {
+    "binaryName": "transpic-core",
+    "targets": [
+      "x86_64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-apple-darwin",
+      "aarch64-pc-windows-msvc"
+    ]
+  },
+  "ava": {
+    "timeout": "2m",
+    "workerThreads": false
+  },
+  "engines": {
+    "node": ">= 18.17.0 < 19 || >= 20.3.0 < 21 || >= 21.1.0"
+  },
+  "packageManager": "pnpm@11.8.0",
+  "optionalDependencies": {
+    "@axtraz/transpic-core-win32-x64-msvc": "0.6.0",
+    "@axtraz/transpic-core-linux-x64-gnu": "0.6.0",
+    "@axtraz/transpic-core-linux-x64-musl": "0.6.0",
+    "@axtraz/transpic-core-darwin-arm64": "0.6.0",
+    "@axtraz/transpic-core-win32-arm64-msvc": "0.6.0"
+  }
+}

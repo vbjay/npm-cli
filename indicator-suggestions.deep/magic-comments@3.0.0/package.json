@@ -1,0 +1,78 @@
+{
+  "name": "magic-comments",
+  "version": "3.0.0",
+  "description": "Node.js tool for adding Webpack magic comments at build time.",
+  "type": "module",
+  "main": "dist",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/types.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/types.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      },
+      "default": "./dist/esm/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/esm/types.d.ts",
+  "engines": {
+    "node": ">=22.21.1"
+  },
+  "engineStrict": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "build": "duel --dirs",
+    "lint": "eslint . src __tests__ --ext .js,.ts",
+    "prettier": "prettier ./src ./__tests__ -w",
+    "test": "BABEL_ENV=test jest",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "micromatch": "^4.0.8",
+    "schema-utils": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-typescript": "^7.28.5",
+    "@eslint/js": "^9.39.2",
+    "@jest/globals": "^30.2.0",
+    "@knighted/duel": "^4.0.0",
+    "@types/micromatch": "^4.0.9",
+    "eslint": "^9.39.2",
+    "eslint-plugin-jest": "^29.12.2",
+    "globals": "^17.3.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0"
+  },
+  "prettier": {
+    "printWidth": 90,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/morganney/magic-comments.git"
+  },
+  "bugs": {
+    "url": "https://github.com/morganney/magic-comments/issues"
+  },
+  "keywords": [
+    "node",
+    "build",
+    "tool",
+    "webpack",
+    "magic comments"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "Morgan Ney <morganney@gmail.com>",
+  "license": "MIT"
+}

@@ -1,0 +1,120 @@
+{
+  "type": "module",
+  "name": "@sns-myagent/cli",
+  "version": "0.3.8",
+  "description": "SNS-MyAgent \u2014 BYOK coding agent CLI. Multi-agent + Telegram + self-learning memory. ~120MB binary, zero forced cost.",
+  "homepage": "https://github.com/Reihantt6/sns-myagent",
+  "author": "Reihantt6",
+  "contributors": [],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reihantt6/sns-myagent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Reihantt6/sns-myagent/issues"
+  },
+  "keywords": [
+    "coding-agent",
+    "ai",
+    "llm",
+    "cli",
+    "byok",
+    "telegram",
+    "multi-agent",
+    "tui",
+    "agent",
+    "snsagent",
+    "sns-myagent"
+  ],
+  "main": "./src/index.ts",
+  "types": "./dist/types/index.d.ts",
+  "bin": {
+    "snsagent": "bin/snsagent.js"
+  },
+  "scripts": {
+    "fetch-binary": "node scripts/fetch-binary.mjs",
+    "postinstall": "node scripts/fetch-binary.mjs && node scripts/apply-pi-natives-patch.js",
+    "build": "bun build --compile --define process.env.PI_COMPILED='\"true\"' --define process.env.PKG_VERSION='\"0.3.8\"' --no-compile-autoload-bunfig --no-compile-autoload-dotenv --no-compile-autoload-tsconfig --no-compile-autoload-package-json --keep-names --outfile bin/snsagent-linux-x64 ./src/cli/entry.ts && cp bin/snsagent-linux-x64 bin/snsagent",
+    "check": "biome check . && bun run check:types",
+    "check:types": "tsgo -p tsconfig.json --noEmit",
+    "lint": "biome lint .",
+    "test": "bun test --parallel=4 test src",
+    "fix": "biome check --write --unsafe . && bun run format-prompts",
+    "fmt": "biome format --write . && bun run format-prompts",
+    "format-prompts": "bun scripts/format-prompts.ts",
+    "generate-docs-index": "bun scripts/generate-docs-index.ts --generate",
+    "prepack": "(bun scripts/generate-docs-index.ts --generate 2>/dev/null || echo 'docs index skipped') && (bun --cwd=../collab-web run build:tool-views 2>/dev/null || echo 'collab-web not found, skipping') && (bun scripts/bundle-dist.ts 2>/dev/null || echo 'bundle-dist skipped')",
+    "postpack": "bun scripts/generate-docs-index.ts --reset",
+    "bench:guard": "bun scripts/bench-guard.ts"
+  },
+  "dependencies": {
+    "@agentclientprotocol/sdk": "0.25.0",
+    "@babel/parser": "^7.29.7",
+    "@mozilla/readability": "^0.6.0",
+    "@oh-my-pi/hashline": "^16.1.18",
+    "@oh-my-pi/omp-stats": "^16.1.18",
+    "@oh-my-pi/pi-agent-core": "^16.1.18",
+    "@oh-my-pi/pi-ai": "^16.1.18",
+    "@oh-my-pi/pi-catalog": "^16.1.18",
+    "@oh-my-pi/pi-mnemopi": "^16.1.18",
+    "@oh-my-pi/pi-natives": "^16.1.18",
+    "@oh-my-pi/pi-tui": "^16.1.18",
+    "@oh-my-pi/pi-utils": "^16.1.18",
+    "@oh-my-pi/pi-wire": "^16.1.18",
+    "@oh-my-pi/snapcompact": "^16.1.18",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/context-async-hooks": "^2.7.1",
+    "@opentelemetry/exporter-trace-otlp-proto": "^0.218.0",
+    "@opentelemetry/resources": "^2.7.1",
+    "@opentelemetry/sdk-trace-base": "^2.7.1",
+    "@opentelemetry/sdk-trace-node": "^2.7.1",
+    "@puppeteer/browsers": "^3.0.4",
+    "@types/turndown": "5.0.6",
+    "@xterm/headless": "^6.0.0",
+    "arktype": "^2.2.0",
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "diff": "^9.0.0",
+    "fast-xml-parser": "^5.9.0",
+    "gradient-string": "^3.0.0",
+    "grammy": "^1.44.0",
+    "handlebars": "^4.7.9",
+    "js-yaml": "^5.1.0",
+    "linkedom": "^0.18.12",
+    "lru-cache": "11.5.1",
+    "mammoth": "^1.12.0",
+    "mupdf": "^1.27.0",
+    "ora": "^9.4.1",
+    "picocolors": "^1.1.1",
+    "puppeteer-core": "^25.1.0",
+    "string-width": "^8.2.1",
+    "turndown": "7.2.4",
+    "turndown-plugin-gfm": "1.0.2",
+    "zod": "^4"
+  },
+  "optionalDependencies": {
+    "@huggingface/transformers": "^4.2.0",
+    "sherpa-onnx-node": "1.13.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.14",
+    "@types/js-yaml": "^4.0.9",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "bun": ">=1.3.14"
+  },
+  "files": [
+    "src",
+    "bin",
+    "dist/cli.js",
+    "dist/*.node",
+    "scripts",
+    "examples",
+    "README.md",
+    "CHANGELOG.md",
+    "dist/types"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "@callstack/inspector-cli",
+  "version": "0.1.1",
+  "description": "CLI for Inspector",
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "bin": {
+    "inspector": "./lib/cli.js"
+  },
+  "scripts": {
+    "clean": "del-cli lib",
+    "build": "yarn clean && tsc -p tsconfig.build.json && node -e \"import { chmodSync } from 'node:fs'; chmodSync('lib/cli.js', 0o755);\"",
+    "prepare": "yarn build",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint \"**/*.{js,mjs,ts}\"",
+    "prepack": "cp ../../README.md ./README.md",
+    "postpack": "rm ./README.md"
+  },
+  "keywords": [
+    "react-native",
+    "inspector",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callstackincubator/inspector.git"
+  },
+  "author": "Callstack",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/callstackincubator/inspector/issues"
+  },
+  "homepage": "https://github.com/callstackincubator/inspector#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "*",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.59.3"
+  },
+  "dependencies": {
+    "commander": "^14.0.3"
+  }
+}

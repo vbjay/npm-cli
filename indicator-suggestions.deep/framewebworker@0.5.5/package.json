@@ -1,0 +1,82 @@
+{
+  "name": "framewebworker",
+  "version": "0.5.5",
+  "description": "Browser-native video rendering and clip export library. Trim, caption, and export MP4 Blobs in the browser — no server needed.",
+  "keywords": [
+    "video",
+    "browser",
+    "mp4",
+    "ffmpeg",
+    "wasm",
+    "captions",
+    "subtitles",
+    "video-editing",
+    "clip",
+    "export",
+    "canvas",
+    "typescript"
+  ],
+  "homepage": "https://github.com/nareshipme/framewebworker#readme",
+  "bugs": {
+    "url": "https://github.com/nareshipme/framewebworker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nareshipme/framewebworker.git"
+  },
+  "license": "MIT",
+  "author": "nareshipme",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "eslint": "^10.2.0",
+    "happy-dom": "^20.8.9",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "typescript-eslint": "^8.58.0",
+    "vitest": "^4.1.4"
+  }
+}

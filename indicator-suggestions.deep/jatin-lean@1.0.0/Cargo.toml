@@ -1,0 +1,105 @@
+[package]
+name = "jatin-lean"
+version = "1.0.0"
+edition = "2021"
+description = "Enterprise-grade high-performance CLI utility to prune node_modules — featuring io_uring I/O, CPU cache prefetching, hardware-coherent unified memory routing, and zero-copy IPC."
+authors = ["Jatin Jalandhra"]
+license = "MIT"
+repository = "https://github.com/decodejatin/jatin-lean"
+homepage = "https://github.com/decodejatin/jatin-lean"
+documentation = "https://github.com/decodejatin/jatin-lean#readme"
+readme = "README.md"
+keywords = ["node_modules", "cleanup", "prune", "optimization", "cli"]
+categories = ["command-line-utilities", "development-tools"]
+exclude = [
+    "npm/",
+    "scripts/",
+    "test-install/",
+    "dist/",
+    ".github/",
+    "*.md",
+    "!README.md",
+    "!LICENSE"
+]
+
+[[bin]]
+name = "jatin-lean"
+path = "src/main.rs"
+
+[lib]
+name = "jatin_lean"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+napi = ["dep:napi", "dep:napi-derive"]
+
+[dependencies]
+# CLI argument parsing
+clap = { version = "4", features = ["derive"] }
+
+# Parallel file walking (respects .gitignore, OS-level cache optimized)
+ignore = "0.4"
+
+# Progress bars & spinners
+indicatif = "0.17"
+
+# Colored terminal output
+console = "0.15"
+
+# JSON parsing (for package.json)
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }
+
+# Regex for require() / import scanning
+regex = "1"
+
+# Parallelism
+rayon = "1.10"
+
+# Error handling
+anyhow = "1"
+
+# Table formatting for --global mode
+comfy-table = "7"
+
+# TOML for rules configuration
+toml = "0.8"
+
+# Interactive prompts
+dialoguer = "0.11"
+
+# Home directory detection
+dirs = "5.0"
+
+# Low-level OS interface (mmap, syscalls, process stats)
+libc = "0.2"
+
+# Zero-copy serialization for high-performance caching
+rkyv = { version = "0.7", features = ["validation"] }
+
+# Memory mapping for zero-copy file access
+memmap2 = "0.9"
+
+# Lock-free data structures
+crossbeam = "0.8"
+
+# Machine hostname detection (for distributed cache)
+hostname = "0.4"
+
+# CPU core count detection
+num_cpus = "1.16"
+napi = { version = "3.9.0", optional = true }
+napi-derive = { version = "3.5.6", optional = true }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[dev-dependencies]
+tempfile = "3"
+

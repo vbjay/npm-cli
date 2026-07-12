@@ -1,0 +1,86 @@
+{
+  "name": "@pequity/vue-i18n-extract",
+  "description": "Manage vue-i18n localization with static analysis",
+  "version": "1.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.28.1",
+  "engines": {
+    "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+  },
+  "scripts": {
+    "build": "rm -fr dist && microbundle --target node -f umd,modern",
+    "dev": "microbundle watch --target node",
+    "vue-i18n-extract": "node ./bin/vue-i18n-extract.js",
+    "demo": "node ./bin/vue-i18n-extract.js report --vueFiles './tests/fixtures/vue-files/**/*.?(vue)' --languageFiles './tests/fixtures/lang/**/*.?(json|yaml|yml|js)'",
+    "demo:debug": "node ./bin/vue-i18n-extract.js report --vueFiles './tests/fixtures/vue-files/**/*.?(vue|js)' --languageFiles './tests/fixtures/lang/**/*.?(json|yaml|yml|js)'",
+    "test": "jest",
+    "test:dev": "jest --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint '**/*.ts'",
+    "lint-fix": "eslint '**/*.ts' --fix",
+    "prepare": "husky"
+  },
+  "license": "MIT",
+  "source": "src/index.ts",
+  "bin": {
+    "vue-i18n-extract": "bin/vue-i18n-extract.js"
+  },
+  "main": "dist/vue-i18n-extract.umd.js",
+  "module": "dist/vue-i18n-extract.modern.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getpequity/vue-i18n-extract.git"
+  },
+  "homepage": "https://github.com/getpequity/vue-i18n-extract",
+  "bugs": "https://github.com/getpequity/vue-i18n-extract/issues",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "vue i18n",
+    "vue",
+    "plugin",
+    "internationalization",
+    "internationalization-plugin"
+  ],
+  "author": "Pequity",
+  "dependencies": {
+    "cac": "^6.7.14",
+    "dot-object": "^2.1.5",
+    "glob": "^8.1.0",
+    "is-valid-glob": "^1.0.0",
+    "js-yaml": "^4.1.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/dot-object": "^2.1.6",
+    "@types/esm": "^3.2.2",
+    "@types/glob": "^7.2.0",
+    "@types/is-valid-glob": "^1.0.3",
+    "@types/jest": "^27.5.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.19.30",
+    "@types/yargs": "^17.0.35",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "camelcase": "^9.0.0",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.7",
+    "jest": "^27.5.1",
+    "jest-config": "^28.1.3",
+    "microbundle": "^0.15.1",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^25.0.2",
+    "ts-jest": "^27.1.5",
+    "typescript": "^4.9.5"
+  }
+}

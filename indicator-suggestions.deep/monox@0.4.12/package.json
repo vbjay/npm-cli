@@ -1,0 +1,61 @@
+{
+  "name": "monox",
+  "version": "0.4.12",
+  "description": "Lightweight monorepo build tool written in Rust",
+  "keywords": [
+    "monorepo",
+    "build-tool",
+    "dependency-analysis",
+    "rust",
+    "cli",
+    "package-manager",
+    "workspace",
+    "lerna",
+    "nx",
+    "turborepo",
+    "concurrent",
+    "parallel",
+    "build-system",
+    "javascript",
+    "typescript",
+    "frontend",
+    "automation",
+    "ci-cd"
+  ],
+  "homepage": "https://github.com/monoxon/monox",
+  "bugs": {
+    "url": "https://github.com/monoxon/monox/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monoxon/monox.git"
+  },
+  "license": "MIT",
+  "author": "xiaoYown",
+  "bin": {
+    "monox": "bin/monox"
+  },
+  "files": [
+    "install.js",
+    "bin/monox",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "optionalDependencies": {
+    "@monoxon/darwin-x64": "0.4.12",
+    "@monoxon/darwin-arm64": "0.4.12",
+    "@monoxon/linux-x64": "0.4.12",
+    "@monoxon/linux-arm64": "0.4.12"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

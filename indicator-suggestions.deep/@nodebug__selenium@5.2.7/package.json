@@ -1,0 +1,99 @@
+{
+  "name": "@nodebug/selenium",
+  "version": "5.2.7",
+  "lockfileVersion": 1,
+  "requires": true,
+  "author": {
+    "name": "Node Bug",
+    "email": "nodebug@outlook.com"
+  },
+  "bugs": {
+    "url": "https://github.com/node-bug/selenium/issues"
+  },
+  "dependencies": {
+    "@nodebug/browser-element-finder": "^1.2.0",
+    "@nodebug/config": "^2.1.4",
+    "@nodebug/logger": "^1.1.5",
+    "selenium-webdriver": "4.43.0"
+  },
+  "description": "implementation of seleniumjs to use with test automation",
+  "homepage": "https://github.com/node-bug/selenium#readme",
+  "keywords": [
+    "selenium",
+    "npm",
+    "chrome",
+    "firefox",
+    "ie",
+    "edge",
+    "test",
+    "automation",
+    "page",
+    "object",
+    "webdriver",
+    "plugins",
+    "extensible",
+    "plugin-system"
+  ],
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-bug/selenium.git"
+  },
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./browser-element-finder": "@nodebug/browser-element-finder",
+    "./browser-element-finder/browser": "@nodebug/browser-element-finder/browser",
+    "./browser-element-finder/min": "@nodebug/browser-element-finder/min",
+    "./browser-element-finder/element-definitions.json": "@nodebug/browser-element-finder/element-definitions.json",
+    "./browser-element-finder/searchable-attributes.json": "@nodebug/browser-element-finder/searchable-attributes.json"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "prepare": "husky && echo 'npx lint-staged' > .husky/pre-commit && chmod +x .husky/pre-commit"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "@types/selenium-webdriver": "^4.35.5",
+    "@vitest/coverage-v8": "^4.1.7",
+    "eslint": "^10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,yaml,yml,md,sh,groovy}": [
+      "prettier --write"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "contributors": [
+    {
+      "name": "Node Bug",
+      "email": "nodebug@outlook.com"
+    }
+  ],
+  "files": [
+    ".config",
+    "app",
+    "docs",
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md"
+  ]
+}

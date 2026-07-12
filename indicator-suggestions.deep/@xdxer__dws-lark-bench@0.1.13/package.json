@@ -1,0 +1,60 @@
+{
+  "name": "@xdxer/dws-lark-bench",
+  "version": "0.1.13",
+  "description": "Benchmark harness for comparing DWS and Lark CLI in E2B sandboxes.",
+  "type": "module",
+  "license": "MIT",
+  "author": "xdxer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xdxer/dws-lark-bench.git"
+  },
+  "keywords": [
+    "dingtalk",
+    "dws",
+    "lark",
+    "feishu",
+    "benchmark",
+    "e2b",
+    "cli",
+    "agent-skill"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "bin": {
+    "dws-lark-bench": "./bin/dws-lark-bench.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "sandbox",
+    "scripts",
+    "skill",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build && node scripts/check-pack.mjs",
+    "start": "npm run start:controller",
+    "start:controller": "node bin/dws-lark-bench.js controller start --host 0.0.0.0",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "sandbox:build": "bash scripts/build-e2b-template.sh"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "e2b": "^2.6.1",
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

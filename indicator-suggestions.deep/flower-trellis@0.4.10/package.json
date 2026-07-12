@@ -1,0 +1,66 @@
+{
+  "name": "flower-trellis",
+  "version": "0.4.10",
+  "description": "一键安装/升级 Trellis 并自动融合 skill-garden 强化包(默认 Claude + agents)",
+  "type": "module",
+  "bin": {
+    "flower-trellis": "./bin/flower-trellis.js",
+    "ftl": "./bin/flower-trellis.js",
+    "ft": "./bin/flower-trellis.js"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.5.2",
+    "@mindfoldhq/trellis": "0.6.5",
+    "chalk": "^5.6.2",
+    "figlet": "^1.11.0",
+    "node-pty": "^1.1.0"
+  },
+  "files": [
+    "bin",
+    "src",
+    "enhancements",
+    "scripts/sync-global-trellis.mjs",
+    "README.md"
+  ],
+  "scripts": {
+    "sync": "node scripts/sync-enhancements.mjs",
+    "postinstall": "node scripts/sync-global-trellis.mjs",
+    "prepublishOnly": "node scripts/sync-enhancements.mjs",
+    "release": "node scripts/check-snapshot.mjs && commit-and-tag-version",
+    "release:dry": "commit-and-tag-version --dry-run"
+  },
+  "commit-and-tag-version": {
+    "scripts": {
+      "postchangelog": "node scripts/write-release-notes-metadata.mjs"
+    }
+  },
+  "keywords": [
+    "trellis",
+    "skill-garden",
+    "ai",
+    "workflow",
+    "claude",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SilentFlower/flower-trellis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SilentFlower/flower-trellis/issues"
+  },
+  "homepage": "https://github.com/SilentFlower/flower-trellis#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "commit-and-tag-version": "^12.7.3"
+  },
+  "flowerReleaseNotes": {
+    "version": "0.4.10",
+    "source": "CHANGELOG.md",
+    "body": "### 🐛 修复 Bug Fixes\n\n* **flower:** 项目侧待更新提示会显示对应版本更新摘要 ([cc98c02](https://github.com/SilentFlower/flower-trellis/commit/cc98c021eb0536f693f50651854093a4795d9e93))",
+    "truncated": false
+  }
+}

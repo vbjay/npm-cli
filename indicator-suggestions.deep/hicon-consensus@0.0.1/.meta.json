@@ -1,0 +1,110 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "670ed2cf79dd0177",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "Makefile",
+      "build.rs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "9dd9c8a972ca88e1788537e20eef66944c5c3dd3a494c1572e717ef35a6d0056",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "hybridconsensus"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.0"
+            ]
+          },
+          {
+            "label": "Build script (runs at compile time)",
+            "items": [
+              "build.rs"
+            ]
+          },
+          {
+            "label": "Crate output type",
+            "items": [
+              "\"cdylib\", \"rlib\""
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.rs",
+        "label": "Rust build script",
+        "sha256": "ea23216154af615b924a5727b8c1c8ddc20ea752a22b33553ea8edeee2b9f1de",
+        "parseError": null,
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "d324d1de86743478672e93fc310ade0a2cea0d5ad09054f2305db61ce6f9295f",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "Libraries linked",
+            "items": [
+              "ib"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:58.127Z"
+  },
+  "hash": "sha256:7de1dba798e62f17fba1255d57d7e272f01a93655947715582fe8f391f39bf65"
+}

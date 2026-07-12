@@ -1,0 +1,88 @@
+{
+  "name": "rustalk",
+  "version": "0.0.1",
+  "description": "Modular P2P communication platform - reach (core) + rus (CLI) + rustalk (unified experience)",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "rustalk": "dist/bin/rustalk.js",
+    "rus": "bin/rus"
+  },
+  "files": [
+    "bin/",
+    "dist/bin/rustalk.js",
+    "dist/scripts/postinstall.js",
+    "target/release/rustalk_cli*",
+    "target/release/rus*",
+    "target/release/*.dll",
+    "target/release/*.exe",
+    "target/release/*.pdb",
+    "src/",
+    "README.md",
+    "CONTRIBUTING.md"
+  ],
+  "scripts": {
+    "build": "npm run build:ts && npm run build:rust",
+    "build:ts": "tsc",
+    "build:rust": "cargo build --release --workspace",
+    "dev": "bun run --watch src/index.ts",
+    "start": "npx tsx bin/rustalk.ts",
+    "cli": "bun run src/index.ts",
+    "test": "bun test tests/**/*.test.ts",
+    "test:rust": "cargo test --workspace",
+    "clean": "powershell -Command \"Remove-Item -Recurse -Force target, dist -ErrorAction SilentlyContinue\"",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node dist/scripts/postinstall.js",
+    "test:cli": "npx tsx bin/rustalk.ts --help"
+  },
+  "keywords": [
+    "p2p",
+    "chat",
+    "encrypted",
+    "terminal",
+    "rust",
+    "secure",
+    "messaging",
+    "modular",
+    "reach",
+    "rus",
+    "rustalk",
+    "cli",
+    "networking"
+  ],
+  "author": "Rustalk Team",
+  "license": "MIT",
+  "dependencies": {
+    "@napi-rs/cli": "^2.18.0",
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12",
+    "tsx": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/inquirer": "^9.0.0",
+    "@types/node": "^20.19.17",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhammad-fiaz/Rustalk.git"
+  },
+  "homepage": "https://github.com/muhammad-fiaz/Rustalk",
+  "bugs": {
+    "url": "https://github.com/muhammad-fiaz/Rustalk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

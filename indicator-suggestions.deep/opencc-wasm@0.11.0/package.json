@@ -1,0 +1,63 @@
+{
+  "name": "opencc-wasm",
+  "version": "0.11.0",
+  "description": "WebAssembly backend for OpenCC with opencc-js compatible API and official configs/ocd2 dictionaries.",
+  "keywords": [
+    "opencc",
+    "wasm",
+    "chinese",
+    "simplified",
+    "traditional",
+    "converter"
+  ],
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    },
+    "./wasm": {
+      "import": "./dist/esm/opencc-wasm.js",
+      "require": "./dist/cjs/opencc-wasm.cjs"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "files": [
+    "dist/",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "refresh-assets": "./scripts/refresh_assets.sh",
+    "build": "npm run refresh-assets && ./build.sh && node scripts/build-api.js",
+    "prepack": "npm run build",
+    "benchmark": "node scripts/benchmark.mjs",
+    "test": "npm run test:core && npm run test:cdn",
+    "test:core": "node --test test/opencc.test.js",
+    "test:cdn": "node test/cdn-simple.mjs && node test/cdn-usage.mjs"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "author": "Frank Lin (based on OpenCC)",
+  "contributors": [
+    "OpenCC Authors"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankslin/OpenCC.git",
+    "directory": "wasm-lib"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://opencc.js.org/"
+}

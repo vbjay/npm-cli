@@ -1,0 +1,76 @@
+{
+	"name": "@nyrra/prismantix-cli",
+	"description": "PrismantiX API client CLI.",
+	"version": "0.0.1",
+	"author": "NYRRA Inc.",
+	"bin": {
+		"prismantix-cli": "bin/run.js"
+	},
+	"bugs": {
+		"url": "https://github.com/nyrra-labs/prismantix/issues"
+	},
+	"dependencies": {
+		"@inkjs/ui": "^2.0.0",
+		"@oclif/core": "^4",
+		"@oclif/plugin-help": "^6",
+		"ink": "^7.0.2",
+		"react": "^19.2.0",
+		"react-devtools-core": "^6.1.2",
+		"zod": "^4.2.1"
+	},
+	"devDependencies": {
+		"@oclif/test": "^4",
+		"@types/node": "^25",
+		"ink-testing-library": "^4.0.0",
+		"oclif": "^4",
+		"shx": "^0.3.3",
+		"typescript": "^5"
+	},
+	"engines": {
+		"node": ">=22.0.0"
+	},
+	"files": [
+		"./bin",
+		"./dist",
+		"./README.md",
+		"./oclif.manifest.json"
+	],
+	"homepage": "https://github.com/nyrra-labs/prismantix",
+	"keywords": [
+		"prismantix",
+		"export",
+		"api",
+		"cli"
+	],
+	"license": "SEE LICENSE IN LICENSE",
+	"main": "dist/index.js",
+	"type": "module",
+	"oclif": {
+		"bin": "prismantix-cli",
+		"dirname": "prismantix-cli",
+		"commands": "./dist/commands",
+		"plugins": [
+			"@oclif/plugin-help"
+		],
+		"topicSeparator": " "
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nyrra-labs/prismantix.git",
+		"directory": "apps/cli"
+	},
+	"scripts": {
+		"build": "shx rm -rf dist tsconfig.tsbuildinfo && tsc -b tsconfig.json --force && oclif manifest",
+		"postpack": "shx rm -f oclif.manifest.json",
+		"prepack": "pnpm run build",
+		"test": "pnpm run build && vitest run --config vitest.config.mts",
+		"typecheck": "tsc -p tsconfig.json --noEmit"
+	},
+	"types": "dist/index.d.ts",
+	"publishConfig": {
+		"access": "public"
+	},
+	"nx": {
+		"name": "prismantix-cli"
+	}
+}

@@ -1,0 +1,89 @@
+{
+  "name": "expo-gaode-map-navigation",
+  "version": "2.0.19",
+  "description": "Expo Modules AMap (Gaode Map) navigation for Expo/React Native: Config Plugin, route planning, turn-by-turn navigation, map features, and react-native-amap3d migration guidance.",
+  "author": "TomWq <582752848@qq.com> (https://github.com/TomWq)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TomWq/expo-gaode-map",
+    "directory": "packages/navigation"
+  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build && yarn build:plugin",
+    "build:plugin": "tsc --project plugin/tsconfig.json",
+    "clean": "expo-module clean",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "test": "npx jest --no-watchman --config jest.config.js --runInBand",
+    "prepare": "expo-module prepare && yarn build:plugin",
+    "postinstall": "node scripts/check-expo-modules.js",
+    "prepublishOnly": "echo 'Skipping proofread check' && exit 0",
+    "expo-module": "expo-module",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "devDependencies": {
+    "@expo/vector-icons": "^15.0.3",
+    "@types/node": "^22.18.0",
+    "@types/react": "~19.2.10",
+    "eslint": "^9.25.1",
+    "expo": "^57.0.1",
+    "expo-font": "~57.0.0",
+    "expo-module-scripts": "^56.0.3",
+    "react-native": "0.86.0",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "@expo/vector-icons": "*",
+    "expo": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-safe-area-context": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/TomWq/expo-gaode-map/issues"
+  },
+  "files": [
+    "build",
+    "android",
+    "ios",
+    "widget-template",
+    "shared",
+    "scripts",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "plugin/build"
+  ],
+  "homepage": "https://tomwq.github.io/expo-gaode-map/",
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-gaode-map",
+    "expo-gaode-map-navigation",
+    "expo-amap",
+    "react-native-amap",
+    "react-native-amap3d",
+    "react-native-amap3d-alternative",
+    "react-native-gaode-map",
+    "rn-amap-navigation",
+    "expo-gaode",
+    "eas-build",
+    "fabric",
+    "amap",
+    "gaode-map",
+    "navigation",
+    "route-planning",
+    "turn-by-turn",
+    "route",
+    "高德地图",
+    "导航",
+    "路径规划"
+  ],
+  "license": "MIT"
+}

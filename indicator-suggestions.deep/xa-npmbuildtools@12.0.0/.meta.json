@@ -1,0 +1,257 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "424a617ab807e1c5",
+    "fetchedFiles": [
+      "index.js",
+      "lib/check-global-deps",
+      "lib/generate-adoc.js",
+      "lib/os-utils.js",
+      "lib/vc-git-utils.js",
+      "lib/vc-utils.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "fs-extra",
+        "versionSpec": "^8.1.0"
+      },
+      {
+        "name": "git",
+        "versionSpec": null
+      },
+      {
+        "name": "glob",
+        "versionSpec": null
+      },
+      {
+        "name": "@asciidoctor/core",
+        "versionSpec": "^2.1.1"
+      },
+      {
+        "name": "@asciidoctor/docbook-converter",
+        "versionSpec": "^2.0.0"
+      },
+      {
+        "name": "pandocjs",
+        "versionSpec": null
+      },
+      {
+        "name": "file",
+        "versionSpec": null
+      },
+      {
+        "name": "colors",
+        "versionSpec": "^1.4.0"
+      },
+      {
+        "name": "diff",
+        "versionSpec": "^4.0.2"
+      },
+      {
+        "name": "semver",
+        "versionSpec": "^7.1.3"
+      },
+      {
+        "name": "intercept-stdout",
+        "versionSpec": "^0.1.2"
+      },
+      {
+        "name": "tar4",
+        "versionSpec": "npm:tar@^6.2.1"
+      },
+      {
+        "name": "tar",
+        "versionSpec": "^6.2.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@asciidoctor/core@2.2.9",
+      "@asciidoctor/docbook-converter@2.0.0",
+      "colors@1.4.0",
+      "diff@4.0.4",
+      "file@0.2.2",
+      "fs-extra@8.1.0",
+      "git@0.1.5",
+      "glob@13.0.6",
+      "intercept-stdout@0.1.2",
+      "pandocjs@2.9.2-1.1",
+      "semver@7.8.5",
+      "tar@6.2.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\xa-npmbuildtools@12.0.0\\binding.gyp'",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "lib/check-global-deps",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "24a54e17450949702d03614ef4bce4afe519836112f5d0b05df3200cf24b1376",
+        "sizeBytes": 2147,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./lib/check-global-deps; required by ./lib/vc-git-utils.js",
+        "sha256": "0938a18723e92f4fa9d43a295dc5a564c847a5cc04bbefd0225d2e80d208fdb2",
+        "sizeBytes": 40227,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "obfuscation-pattern",
+          "dynamic-require",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/os-utils.js",
+          "lib/generate-adoc.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/os-utils.js",
+        "reason": "required by ./index.js",
+        "sha256": "347e7c2a007eb1f3102ba9bce13e8c92ed09748879f81c31028ced5a9a81c009",
+        "sizeBytes": 6287,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/generate-adoc.js",
+        "reason": "required by ./index.js",
+        "sha256": "265aa0b8d1538d617db038ceed531a3f16b7cdd8c526a4f1cf0f9fa03d9b7b49",
+        "sizeBytes": 16434,
+        "signals": [
+          "writes-file",
+          "obfuscation-pattern",
+          "dynamic-require",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/vc-utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/vc-utils.js",
+        "reason": "required by ./lib/generate-adoc.js; required by ./lib/vc-git-utils.js",
+        "sha256": "ead891fe36901fbff0f1eb300818ea2ff79a3db5c7549285b2d464e2124c64db",
+        "sizeBytes": 5157,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/vc-git-utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/vc-git-utils.js",
+        "reason": "required by ./lib/vc-utils.js",
+        "sha256": "19b71ae58604e54c7a95ad485fbded374f0a05a257a6ca9ae99882c37cfcea0b",
+        "sizeBytes": 5818,
+        "signals": [
+          "uses-child-process",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/vc-utils.js",
+          "index.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:45:58.066Z"
+  },
+  "hash": "sha256:4ade14a1cfdb5a851851bef68662878d9629a845ca304a6b2fcc5537b7daf201"
+}

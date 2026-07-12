@@ -1,0 +1,100 @@
+{
+  "name": "@kroffske/excalidraw-diagrams",
+  "version": "0.3.8",
+  "description": "TypeScript builder for Excalidraw JSON diagrams with bundled SVG assets.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Excalidraw Diagrams contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kroffske/excalidraw-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kroffske/excalidraw-js/issues"
+  },
+  "homepage": "https://github.com/kroffske/excalidraw-js#readme",
+  "keywords": [
+    "excalidraw",
+    "diagrams",
+    "agent",
+    "cli",
+    "typescript",
+    "npx"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "npm@10.9.2",
+  "engines": {
+    "node": ">=20"
+  },
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./layout": {
+      "types": "./dist/layout.d.ts",
+      "import": "./dist/layout.js",
+      "default": "./dist/layout.js"
+    },
+    "./assets": {
+      "types": "./dist/assets.d.ts",
+      "import": "./dist/assets.js",
+      "default": "./dist/assets.js"
+    },
+    "./render": {
+      "types": "./dist/render.d.ts",
+      "import": "./dist/render.js",
+      "default": "./dist/render.js"
+    },
+    "./diagram": {
+      "types": "./dist/diagram.d.ts",
+      "import": "./dist/diagram.js",
+      "default": "./dist/diagram.js"
+    },
+    "./examples": {
+      "types": "./dist/examples.d.ts",
+      "import": "./dist/examples.js",
+      "default": "./dist/examples.js"
+    }
+  },
+  "bin": {
+    "excalidraw-diagrams": "dist/bin/excalidraw-diagrams.js",
+    "excalidraw-assets": "dist/bin/excalidraw-assets.js",
+    "excalidraw-render": "dist/bin/excalidraw-render.js",
+    "excalidraw-render-setup": "dist/bin/excalidraw-render-setup.js"
+  },
+  "files": [
+    "dist",
+    "assets",
+    "renderer",
+    "skills",
+    "docs",
+    "examples/*.ts",
+    "examples/*.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "render:setup": "npm run build && node dist/bin/excalidraw-render-setup.js",
+    "security:secrets": "gitleaks git --redact --no-banner .",
+    "public:check": "node scripts/public-readiness.mjs",
+    "prepare:pack-dir": "mkdir -p build/npm",
+    "pack:check": "npm run prepare:pack-dir && npm pack --dry-run --pack-destination build/npm",
+    "pack:local": "npm run prepare:pack-dir && npm pack --pack-destination build/npm",
+    "release:check": "npm run build && npm test && npm run pack:check",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "name": "@shnitzel/plugscout",
+  "version": "0.3.40",
+  "description": "Claude plugins + Claude connectors + Copilot extensions + Skills + MCP security intelligence framework",
+  "private": false,
+  "type": "module",
+  "license": "MIT",
+  "author": "Amit Rintzler",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amitrintzler/plugscout.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amitrintzler/plugscout/issues"
+  },
+  "homepage": "https://github.com/amitrintzler/plugscout#readme",
+  "keywords": [
+    "cli",
+    "skills",
+    "mcp",
+    "claude-plugin",
+    "copilot-extension",
+    "security",
+    "recommendation"
+  ],
+  "overrides": {
+    "terser-webpack-plugin": "5.3.17"
+  },
+  "bin": {
+    "plugscout": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "config",
+    "data",
+    "assets/cli",
+    "README.md",
+    "LICENSE*"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./api": {
+      "import": "./dist/api/index.js",
+      "types": "./dist/api/index.d.ts"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "prepare": "git config core.hooksPath .githooks || true",
+    "dev": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts",
+    "setup": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts setup",
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint . --ext .ts",
+    "test": "vitest run",
+    "verify:claims": "vitest run --maxWorkers=1 tests/integration/functionality-claims.spec.ts tests/unit/workflow-contracts.spec.ts tests/integration/cli-flow.spec.ts tests/unit/recommendation.spec.ts tests/unit/project-analysis.spec.ts",
+    "smoke:pack": "node ./scripts/smoke-pack.mjs",
+    "prepush:local": "npm run lint && npm run build && npm run verify:claims && npm run smoke:pack",
+    "test:watch": "vitest",
+    "validate:data": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/commands/validate-data.ts",
+    "ingest:skills": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/commands/ingest.ts --kind skill",
+    "ingest:mcps": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/commands/ingest.ts --kind mcp",
+    "ingest:claude-plugins": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/commands/ingest.ts --kind claude-plugin",
+    "ingest:copilot-extensions": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/commands/ingest.ts --kind copilot-extension",
+    "ingest:all": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/commands/ingest.ts",
+    "sync": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts sync",
+    "about": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts about",
+    "init": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts init",
+    "doctor": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts doctor",
+    "status": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts status",
+    "list": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts list",
+    "search": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts search",
+    "explain": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts explain",
+    "scan": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts scan",
+    "show": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts show",
+    "top": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts top",
+    "web": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts web",
+    "video:preview": "remotion studio src/video/index.ts",
+    "video:render": "remotion render src/video/index.ts FrameworkWalkthrough out/framework-walkthrough.mp4",
+    "recommend": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts recommend",
+    "assess": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts assess",
+    "install:item": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts install",
+    "whitelist:verify": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts whitelist verify",
+    "quarantine:apply": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm src/cli.ts quarantine apply"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.0",
+    "fs-extra": "^11.3.4",
+    "semver": "^7.7.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@remotion/cli": "4.0.484",
+    "@types/semver": "^7.7.1",
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "4.0.484",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.5",
+    "vitest": "4.1.9"
+  }
+}

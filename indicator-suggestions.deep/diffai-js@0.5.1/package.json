@@ -1,0 +1,98 @@
+{
+  "name": "diffai-js",
+  "version": "0.5.1",
+  "description": "Node.js bindings for diffai - AI/ML model diff tool for PyTorch, Safetensors, NumPy, MATLAB tensor comparison. Powered by Rust for blazing fast performance.",
+  "keywords": [
+    "diff",
+    "ai",
+    "ml",
+    "pytorch",
+    "safetensors",
+    "numpy",
+    "matlab",
+    "tensor",
+    "machine-learning",
+    "deep-learning",
+    "model-comparison",
+    "napi-rs",
+    "rust"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "napi prepublish -t npm",
+    "artifacts": "napi artifacts",
+    "version": "napi version",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node"
+  ],
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "author": "kako-jun",
+  "license": "MIT",
+  "homepage": "https://github.com/kako-jun/diffai-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kako-jun/diffai-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kako-jun/diffai-js/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/kako-jun"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.5.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/tests"
+    ],
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "forceExit": true
+  },
+  "napi": {
+    "binaryName": "diffai-js",
+    "targets": [
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-pc-windows-msvc"
+    ]
+  },
+  "optionalDependencies": {
+    "diffai-js-linux-x64-gnu": "0.5.1",
+    "diffai-js-linux-x64-musl": "0.5.1",
+    "diffai-js-linux-arm64-gnu": "0.5.1",
+    "diffai-js-darwin-x64": "0.5.1",
+    "diffai-js-darwin-arm64": "0.5.1",
+    "diffai-js-win32-x64-msvc": "0.5.1"
+  }
+}

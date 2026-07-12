@@ -1,0 +1,66 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b09cfa838ceb4d9f",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "63a97e2f4519287a7eae2a7c26f3fa864d470097a0b2dab162061e0c060ba893",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `binding`  -  C/C++ sources",
+            "items": [
+              "src/binding.cc"
+            ]
+          },
+          {
+            "label": "Target `binding`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<!@(node -p \"require('get-symbol-from-current-process-h').include\")",
+              "<!@(node -p \"require('./lib/get-paths').include\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:45.693Z"
+  },
+  "hash": "sha256:e2011bed2e77a1c14813be8a28f874f55c7271d0b252626f2fe364cc0ae3404f"
+}

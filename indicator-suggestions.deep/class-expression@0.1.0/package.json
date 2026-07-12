@@ -1,0 +1,57 @@
+{
+  "name": "class-expression",
+  "version": "0.1.0",
+  "description": "A handling library for OWL-style class expressions in JavaScript.",
+  "keywords": [
+    "Berkeley BOP",
+    "GO",
+    "Gene Ontology",
+    "OWL",
+    "bbop",
+    "class",
+    "client",
+    "expression",
+    "graph",
+    "math",
+    "mathematics",
+    "node",
+    "npm",
+    "server"
+  ],
+  "homepage": "https://berkeleybop.org/",
+  "bugs": {
+    "url": "https://github.com/berkeleybop/bbop-js-monorepo/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "SJC <sjcarbon@lbl.gov>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/berkeleybop/bbop-js-monorepo.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/class_expression.mjs",
+      "require": "./dist/class_expression.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsdown --format esm --format cjs src/class_expression.js",
+    "prepack": "npm run build",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bbop-core": "^0.1.0",
+    "underscore": "^1.13.8"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2"
+  },
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "gitHead": "e16f9cba2ad153ec303cbea697fb3003a909040a"
+}

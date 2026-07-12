@@ -1,0 +1,163 @@
+{
+  "name": "serialism",
+  "version": "2.0.2",
+  "description": "Serialize complex JavaScript objects and ESM classes with circular dependencies, natively.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "files": [
+    "README.md",
+    "CHANGELOG.md",
+    "binding.gyp",
+    "dist",
+    "docs",
+    "src/native.cxx"
+  ],
+  "readme": "README.md",
+  "author": {
+    "email": "voodooattack@hotmail.com",
+    "name": "Abdullah Ali",
+    "url": "https://github.com/voodooattack"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 20.19.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/voodooattack/serialism.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist/ build/",
+    "docs:generate": "typedoc --out docs --theme default src/*.ts --excludeExternals --excludeNotDocumented --excludePrivate --excludeProtected --name serialism --readme README.md --tsconfig tsconfig.json",
+    "docs:deploy": "npm run docs:generate && gh-pages -d docs",
+    "prepublishOnly": "npm run rebuild && npm run docs:generate && npm run test",
+    "postpublish": "npm run docs:deploy",
+    "lint": "eslint --ext .ts src/ test/",
+    "pretest": "npm run build",
+    "test": "npm run rebuild:debug && nyc mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "prepare": "npm run lint && npm run bundle; npm run compile_commands",
+    "install": "node-gyp --release configure build",
+    "bundle": "rollup -c rollup.config.mjs",
+    "build": "npm run bundle && node-gyp --release configure build",
+    "build:debug": "npm run bundle && node-gyp --debug configure build",
+    "rebuild": "npm run bundle && node-gyp --release configure rebuild; npm run compile_commands",
+    "rebuild:debug": "npm run bundle && node-gyp --debug configure rebuild; npm run compile_commands",
+    "commit": "npm run lint && npm run test && npx git-cz",
+    "compile_commands": "node-gyp --debug configure -- -f compile_commands_json",
+    "semantic-release": "semantic-release"
+  },
+  "keywords": [
+    "serialization",
+    "serialize",
+    "deserialization",
+    "deserialize",
+    "encode",
+    "decode",
+    "memory",
+    "binary",
+    "native",
+    "stream",
+    "binary",
+    "typescript",
+    "javascript",
+    "object",
+    "flatten",
+    "buffer",
+    "packet",
+    "bson",
+    "json",
+    "protocol",
+    "wire",
+    "circular",
+    "cyclic",
+    "addon"
+  ],
+  "gypfile": true,
+  "dependencies": {
+    "async": "^3.2.6",
+    "bindings": "^1.5.0",
+    "nan": "^2.23.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^14.0.3",
+    "@types/bindings": "^1.5.5",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.0.13",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
+    "chai": "^5.2.1",
+    "coveralls": "^3.1.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
+    "gh-pages": "^6.3.0",
+    "mocha": "11.7.1",
+    "nyc": "^17.1.0",
+    "prettier": "3.6.2",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.45.0",
+    "semantic-release": "^24.2.7",
+    "source-map-support": "^0.5.21",
+    "tsx": "^4.20.3",
+    "typedoc": "^0.28.7",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "nyc": {
+    "check-coverage": true,
+    "include": [
+      "src/**/*.ts"
+    ],
+    "require": [
+      "source-map-support/register"
+    ],
+    "exclude": [
+      "**/*.spec.ts",
+      "**/*.spec.ts",
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "watermarks": {
+      "lines": [
+        80,
+        95
+      ],
+      "functions": [
+        80,
+        95
+      ],
+      "branches": [
+        80,
+        95
+      ],
+      "statements": [
+        80,
+        95
+      ]
+    },
+    "cache": true,
+    "all": true
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "relaydesgins",
+  "version": "0.1.1",
+  "description": "RelayDesgins CLI for copying website-inspired design instructions into a project as Relay.md.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "relay": "bin/relay.js"
+  },
+  "files": [
+    "bin/",
+    "design-md/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "check": "node --check bin/relay.js && node --check bin/postinstall.js",
+    "postinstall": "node bin/postinstall.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "relay",
+    "relaydesgins",
+    "website-styles",
+    "cli",
+    "ai"
+  ]
+}

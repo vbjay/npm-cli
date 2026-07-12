@@ -1,0 +1,81 @@
+{
+  "name": "adhdev",
+  "version": "0.9.81",
+  "description": "ADHDev — Agent Dashboard Hub for Dev. Remote-control AI coding agents from anywhere.",
+  "main": "dist/index.js",
+  "bin": {
+    "adhdev": "./dist/cli/index.js",
+    "adhmux": "./vendor/terminal-mux-cli/index.js"
+  },
+  "scripts": {
+    "preinstall": "node -e \"const major=Number.parseInt(process.versions.node.split('.')[0],10); if (process.platform === 'win32' && major >= 24) { console.error('\\n✗ ADHDev does not currently support Node.js 24+ on Windows.\\n  Install Node.js 22.x on Windows, then retry.\\n'); process.exit(1); }\"",
+    "build": "tsup",
+    "test": "node --import tsx --test test/*.test.ts",
+    "bundle:vendor": "node ./scripts/vendor-runtime-deps.mjs",
+    "dev": "tsx src/cli/index.ts",
+    "start": "node dist/cli/index.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "npm run build && npm run bundle:vendor"
+  },
+  "files": [
+    "dist",
+    "vendor",
+    "README.md"
+  ],
+  "keywords": [
+    "adhdev",
+    "ai-agent",
+    "ide",
+    "cli",
+    "setup-wizard",
+    "cursor",
+    "vscode",
+    "windsurf",
+    "p2p",
+    "webrtc"
+  ],
+  "author": "vilmire",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vilmire/adhdev-cloud.git",
+    "directory": "packages/daemon-cloud"
+  },
+  "homepage": "https://adhf.dev",
+  "bugs": "https://github.com/vilmire/adhdev-cloud/issues",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@adhdev/daemon-core": "*",
+    "@adhdev/ghostty-vt-node": "*",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@xterm/addon-serialize": "^0.14.0",
+    "@xterm/xterm": "^6.0.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "conf": "^13.0.0",
+    "inquirer": "^9.3.0",
+    "node-datachannel": "^0.32.1",
+    "node-pty": "1.2.0-beta.12",
+    "open": "^10.1.0",
+    "ora": "^8.0.0",
+    "ws": "^8.19.0"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.34.5",
+    "@img/sharp-win32-x64": "^0.34.5",
+    "@img/sharp-darwin-arm64": "^0.34.5",
+    "@img/sharp-darwin-x64": "^0.34.5",
+    "@img/sharp-linux-x64": "^0.34.5",
+    "@img/sharp-linux-arm64": "^0.34.5"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.18.1",
+    "tsup": "^8.2.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}

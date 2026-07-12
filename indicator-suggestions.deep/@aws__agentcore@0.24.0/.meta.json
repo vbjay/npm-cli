@@ -1,0 +1,98 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "85084fffd3523942",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/check-old-cli.lib.mjs",
+      "scripts/check-old-cli.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/check-old-cli.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c2a46579dca538603f237037e8eb4a1b382dd7e4b50ca38658f3ef98ddee0c0f",
+        "sizeBytes": 456,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/check-old-cli.lib.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/check-old-cli.lib.mjs",
+        "reason": "required by ./scripts/check-old-cli.mjs",
+        "sha256": "b624927c075ac0f6307a3aec8cd70189bd99024a035d28861f211c26fe8fe822",
+        "sizeBytes": 3863,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:42.704Z"
+  },
+  "hash": "sha256:2a24d77c7b6d9bea5f5e078235dd397199f0750c4bdce35640f31b249884a66c"
+}

@@ -1,0 +1,153 @@
+{
+  "name": "@treasuredata/tdx",
+  "version": "2026.6.5",
+  "description": "AI-native CLI for Treasure AI - optimized for both human engineers and AI coding assistants",
+  "type": "module",
+  "bin": {
+    "tdx": "./dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.7.1",
+  "scripts": {
+    "build:info": "node scripts/generate-build-info.mjs",
+    "build:ts": "pnpm run build:info && tsc && chmod +x dist/bin.js && cp src/build-info.json dist/build-info.json && cp -r src/sdk/workspace/builtin-schedules dist/sdk/workspace/builtin-schedules && node -e \"require('fs').copyFileSync('dist/bin.js','dist/tdx')\"",
+    "build:install": "pnpm run build:ts && pnpm link --global",
+    "build:obfuscate": "javascript-obfuscator ./dist --output ./dist",
+    "build": "pnpm run build:ts && pnpm run build:obfuscate",
+    "prepare": "lefthook install || echo 'lefthook not installed, skipping hooks'",
+    "prepublishOnly": "pnpm run build",
+    "dev": "tsx src/bin.ts",
+    "studio:install": "pnpm install",
+    "studio": "pnpm install && pnpm --filter @treasuredata/tdx-studio dev",
+    "studio:dev": "pnpm --filter @treasuredata/tdx-studio dev",
+    "ios:generate": "cd ios && xcodegen generate",
+    "test": "vitest src/",
+    "test:build": "vitest run tests/cli-validation/",
+    "test:integration": "vitest --run tests/",
+    "test:coverage": "vitest --coverage src/",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "release": "scripts/prepare-release.sh",
+    "promote": "scripts/promote-release.sh",
+    "typedoc": "typedoc",
+    "design-notes": "node scripts/generate-design-notes-sidebar.mjs",
+    "docs:dev": "pnpm run typedoc && pnpm run design-notes && pnpm --filter tdx-docs docs:dev",
+    "docs:build": "pnpm run typedoc && pnpm run design-notes && pnpm --filter tdx-docs docs:build",
+    "docs:preview": "pnpm --filter tdx-docs docs:preview"
+  },
+  "keywords": [
+    "treasure-data",
+    "cli",
+    "ai-native",
+    "database",
+    "analytics",
+    "cdp",
+    "workflow"
+  ],
+  "author": "Treasure AI DevAI Unit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/treasure-data/tdx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/treasure-data/tdx/issues"
+  },
+  "homepage": "https://tdx.treasuredata.com/",
+  "dependencies": {
+    "@fastify/cors": "^11.1.0",
+    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@napi-rs/keyring": "^1.2.0",
+    "@types/json-bigint": "^1.0.4",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.2",
+    "dotenv": "^17.2.3",
+    "fastify": "^5.2.0",
+    "ignore": "^7.0.5",
+    "json-bigint": "^1.0.0",
+    "ora": "^9.0.0",
+    "prompts": "^2.4.2",
+    "semver": "^7.8.1",
+    "string-width": "^8.1.0",
+    "tar": "^7.5.2",
+    "undici": "^8.0.0",
+    "yaml": "^2.8.2",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "@evilmartians/lefthook": "^2.1.8",
+    "@types/node": "^25.9.1",
+    "@types/prompts": "^2.4.9",
+    "@types/semver": "^7.7.1",
+    "@typescript-eslint/eslint-plugin": "^8.59.4",
+    "@typescript-eslint/parser": "^8.60.0",
+    "@vitest/coverage-v8": "^4.0.6",
+    "eslint": "^10.4.0",
+    "execa": "^9.6.0",
+    "javascript-obfuscator": "^5.4.3",
+    "prettier": "^3.3.3",
+    "tsx": "^4.22.3",
+    "typedoc": "^0.28.14",
+    "typedoc-plugin-markdown": "^4.9.0",
+    "typedoc-vitepress-theme": "^1.1.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.0.6"
+  },
+  "pnpm": {
+    "overrides": {
+      "dompurify": "^3.3.2",
+      "vite-plugin-singlefile>vite": "^8.0.8",
+      "vitepress-plugin-mermaid>vitepress": "2.0.0-alpha.17",
+      "qs@>=6.11.1 <6.15.2": "^6.15.2",
+      "fast-uri@<3.1.2": "^3.1.2",
+      "hono@<4.12.18": "^4.12.18",
+      "ip-address@<=10.1.0": "^10.1.1",
+      "@xmldom/xmldom@<0.8.13": "^0.8.13"
+    },
+    "onlyBuiltDependencies": [
+      "@evilmartians/lefthook",
+      "@napi-rs/canvas",
+      "@napi-rs/keyring",
+      "@recallai/desktop-sdk",
+      "electron",
+      "electron-winstaller",
+      "esbuild",
+      "javascript-obfuscator"
+    ],
+    "supportedArchitectures": {
+      "os": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "cpu": [
+        "x64",
+        "arm64"
+      ],
+      "libc": [
+        "glibc",
+        "musl"
+      ]
+    }
+  }
+}

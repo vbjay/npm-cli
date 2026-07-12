@@ -1,0 +1,159 @@
+{
+  "name": "mlld",
+  "version": "2.0.5",
+  "description": "An LLM scripting language for orchestrating workflows and building agents with infrastructure-level defense against prompt injection",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./sdk": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "bin": {
+    "mlld": "bin/mlld-wrapper.cjs",
+    "mlldx": "bin/mlldx-wrapper.cjs"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    ".claude-plugin/",
+    "llm/run/howto.mld",
+    "docs/src/atoms/",
+    "plugins/",
+    "scripts/postinstall.cjs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build:grammar:core": "tsc -p grammar/tsconfig.grammar.json && node grammar/build-grammar.mjs",
+    "build:grammar:fixtures": "node ./scripts/build-fixtures.mjs",
+    "build:grammar:syntax": "node grammar/syntax-generator/build-syntax-conditional.js",
+    "build:grammar": "npm run build:grammar:core && npm run build:grammar:fixtures && npm run build:grammar:syntax",
+    "build:fixtures": "npm run build:errors && npm run build:grammar:fixtures",
+    "build:errors": "node ./scripts/build-parse-errors.js && node ./scripts/build-js-errors.js",
+    "build:version": "node ./scripts/generate-version.js",
+    "build:wasm": "node ./scripts/copy-wasm-files.js",
+    "build:docs": "./dist/cli.cjs llm/run/llmstxt.mld",
+    "build:verbose": "node ./scripts/build-wrapper.js && npm run sync:mlldx",
+    "build": "node ./scripts/build-quiet.js",
+    "ast": "node ./scripts/ast-wrapper.js",
+    "reinstall": "node scripts/install-local.cjs",
+    "pretest": "node scripts/build-incremental.js",
+    "test": "node scripts/test-runner.js",
+    "test:full": "NODE_ENV=test MLLD_NO_STREAMING=true MLLD_STRICT=${MLLD_STRICT:-0} vitest run --reporter=dot --silent",
+    "test:coverage": "NODE_ENV=test MLLD_NO_STREAMING=true TESTFAST=1 SKIP_SLOW=1 MLLD_STRICT=${MLLD_STRICT:-0} vitest run --coverage --reporter=dot --silent --exclude=\"**/integration/imports/edge-cases.test.ts\" --exclude=\"**/integration/cli/absolute-paths.test.ts\" --exclude=\"**/integration/imports/local-resolver-bugs.test.ts\" --exclude=\"**/integration/shadow-env-basic-import.test.ts\" --exclude=\"**/integration/imports/shadow-environments.test.ts\" --exclude=\"**/integration/imports/complex-scenarios.test.ts\" --exclude=\"**/integration/node-shadow-cleanup.test.ts\" --exclude=\"**/integration/heredoc-large-variable.test.ts\" --exclude=\"**/core/registry/python/VirtualEnvironmentManager.test.ts\" --exclude=\"**/parallel/shell-commands-parallel.test.ts\" --exclude=\"**/*.e2e.test.ts\"",
+    "test:watch": "vitest",
+    "test:case": "node scripts/fixture-test-runner.js",
+    "doc:expect": "node scripts/doc-expect.mjs",
+    "test:tokens": "vitest run --config vitest.config.tokens.mts",
+    "test:heredoc": "vitest run --config vitest.config.heredoc.mts",
+    "test:nvim-lsp": "node scripts/test-nvim-lsp.mjs",
+    "perf": "node scripts/measure-performance.js",
+    "tokens": "npm test tokens",
+    "validate:tokens": "tsx scripts/validate-tokens.mjs",
+    "validate:tokens:strict": "tsx scripts/validate-tokens.mjs --mode=strict",
+    "check:syntax-coverage": "./dist/cli.cjs run check-syntax-coverage",
+    "dump:tokens": "tsx scripts/dump-tokens-for-file.mjs",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{ recursive: true, force: true })\"",
+    "postinstall": "node ./scripts/postinstall.cjs",
+    "prepublishOnly": "npm run clean && npm run build",
+    "sync:mlldx": "node scripts/sync-mlldx.cjs",
+    "pub": "node scripts/publish-with-mlldx.cjs",
+    "postpublish": "node scripts/sync-mlldx.cjs --publish",
+    "bump": "node scripts/bump-version.js",
+    "bump:patch": "node scripts/bump-version.js patch",
+    "bump:minor": "node scripts/bump-version.js minor",
+    "bump:major": "node scripts/bump-version.js major",
+    "sync:vscode-version": "node -e \"const fs=require('fs'); const main=JSON.parse(fs.readFileSync('package.json')); const vscode=JSON.parse(fs.readFileSync('editors/vscode/package.json')); vscode.version=main.version; fs.writeFileSync('editors/vscode/package.json', JSON.stringify(vscode,null,2)+'\\n')\"",
+    "publish:vscode": "npm run sync:vscode-version && cd editors/vscode && npm install && npx vsce publish",
+    "knip": "knip"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlld-lang/mlld.git"
+  },
+  "keywords": [
+    "mlld",
+    "interpreter",
+    "language",
+    "llm",
+    "prompt",
+    "cli"
+  ],
+  "author": "Adam Avenir",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mlld-lang/mlld/issues"
+  },
+  "homepage": "https://github.com/mlld-lang/mlld#readme",
+  "dependencies": {
+    "@disreguard/sig": "^0.4.0",
+    "@mozilla/readability": "^0.6.0",
+    "@octokit/rest": "^22.0.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/jsdom": "^21.1.7",
+    "@types/uuid": "^10.0.0",
+    "acorn": "^8.15.0",
+    "acorn-walk": "^8.3.5",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.3.0",
+    "glob": "^13.0.5",
+    "gray-matter": "^4.0.3",
+    "inquirer": "^12.8.2",
+    "js-yaml": "^4.1.0",
+    "jsdom": "^26.1.0",
+    "json5": "^2.2.3",
+    "just-bash": "^2.11.6",
+    "llmxml": "^1.4.4",
+    "minimatch": "^10.2.1",
+    "peggy": "^4.2.0",
+    "shell-quote": "^1.8.2",
+    "tinyglobby": "^0.2.14",
+    "turndown": "^7.2.0",
+    "uuid": "^11.1.0",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.12",
+    "web-tree-sitter": "^0.20.8",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.15.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.17.1",
+    "@types/shell-quote": "^1.7.5",
+    "@vitest/coverage-v8": "^3.2.4",
+    "knip": "^5.62.0",
+    "tree-sitter-bash": "^0.23.3",
+    "tree-sitter-javascript": "^0.23.1",
+    "tree-sitter-python": "^0.23.6",
+    "tsup": "^8.0.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.1"
+  },
+  "optionalDependencies": {
+    "keytar": "^7.9.0"
+  }
+}

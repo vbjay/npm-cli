@@ -1,0 +1,68 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        def kotlinVersion = safeExtGet('kotlinVersion', '2.1.20')
+        classpath "org.jetbrains.kotlin:kotlin-serialization:${kotlinVersion}"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
+
+def isNewArchEnabled = project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+
+if (isNewArchEnabled) {
+    apply plugin: "com.facebook.react"
+}
+
+android {
+    compileSdk safeExtGet('compileSdkVersion', 34)
+    namespace "io.ratex.rn"
+
+    defaultConfig {
+        minSdk safeExtGet('minSdkVersion', 24)
+        targetSdk safeExtGet('targetSdkVersion', 34)
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchEnabled.toString()
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/kotlin']
+            if (isNewArchEnabled) {
+                java.srcDirs += [
+                    'src/newarch/kotlin',
+                    "${project.buildDir}/generated/source/codegen/java"
+                ]
+            } else {
+                java.srcDirs += ['src/oldarch/kotlin']
+            }
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            assets.srcDirs = ['src/main/assets']
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation "com.facebook.react:react-android"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+}

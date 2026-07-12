@@ -1,0 +1,115 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["MyfatoorahReactnative_kotlinVersion"]
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:7.4.2"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+allprojects {
+  repositories {
+    mavenLocal()      // 👈 this makes Gradle check ~/.m2/repository
+    maven {
+      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+      url("$rootDir/../node_modules/react-native/android")
+    }
+    maven {
+      // Android JSC is installed from npm
+      url("$rootDir/../node_modules/jsc-android/dist")
+    }
+    mavenCentral {
+      // We don't want to fetch react-native from Maven Central as there are
+      // older versions over there.
+      content {
+        excludeGroup "com.facebook.react"
+      }
+    }
+    google()
+    maven { url 'https://www.jitpack.io' }
+  }
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: 'kotlin-android'
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["MyfatoorahReactnative_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["MyfatoorahReactnative_" + name]).toInteger()
+}
+
+android {
+  namespace "com.myfatoorahreactnative"
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    consumerProguardFiles 'proguard-rules.pro'
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+  buildFeatures {
+    viewBinding = true
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  // For < 0.71, this will be from the local maven repo
+  // implementation "com.facebook.react:react-native:+"
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-android"
+
+  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+  def okhttp_version = "4.9.0"
+  implementation("com.squareup.okhttp3:okhttp:$okhttp_version")
+  implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_version")
+  implementation "com.google.code.gson:gson:2.10.1"
+  implementation("com.myfatoorah:myfatoorah:4.3.1")
+//  implementation("com.myfatoorah-test:myfatoorah-test:2.0.1")
+  // Google Wallet
+  implementation "com.google.android.gms:play-services-wallet:19.5.0"
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "MyfatoorahReactnative"
+    codegenJavaPackageName = "com.myfatoorahreactnative"
+  }
+}

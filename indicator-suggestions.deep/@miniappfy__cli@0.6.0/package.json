@@ -1,0 +1,71 @@
+{
+  "name": "@miniappfy/cli",
+  "version": "0.6.0",
+  "license": "MIT",
+  "description": "CLI do MiniAppfy — login, init, pull, dev e publish de mini-apps.",
+  "type": "module",
+  "bin": {
+    "miniapp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "miniappfy",
+    "cli",
+    "mini-app"
+  ],
+  "homepage": "https://docs.miniappfy.dev/pt-br/cli/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.build.json && node scripts/post-build.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky && pnpm build",
+    "prepublishOnly": "pnpm build"
+  },
+  "lint-staged": {
+    "*.{json,md,yml,yaml}": [
+      "prettier --check"
+    ],
+    "*.{ts,tsx,js,mjs,cjs}": [
+      "prettier --check",
+      "eslint --max-warnings=0"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/prompts": "^2.4.9",
+    "@types/tar-stream": "^3.1.4",
+    "@types/ws": "^8.18.1",
+    "eslint": "^9.39.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "nock": "^14.0.15",
+    "prettier": "^3.6.2",
+    "tsx": "^4.22.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vitest": "^2.1.9"
+  },
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "citty": "^0.2.2",
+    "open": "^11.0.0",
+    "picocolors": "^1.1.1",
+    "prompts": "^2.4.2",
+    "tar-stream": "^3.2.0",
+    "ws": "^8.21.0",
+    "esbuild": "^0.25.0"
+  }
+}

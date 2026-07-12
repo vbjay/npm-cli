@@ -1,0 +1,87 @@
+{
+  "name": "@dev-amirzubair/react-native-voice",
+  "description": "React Native Voice library for iOS and Android - Fork with New Architecture, Bridgeless mode, and React Native 0.76+ support",
+  "version": "1.0.4",
+  "author": "Amir Zubair <amirzubairbutt@email.com>",
+  "private": false,
+  "homepage": "https://github.com/dev-amirzubair/voice",
+  "devDependencies": {
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@semantic-release/git": "^10.0.1",
+    "@types/invariant": "^2.2.37",
+    "eslint": "9.20.1",
+    "expo-module-scripts": "^4.0.5",
+    "lint-staged": "^15.2.10",
+    "react": "18.3.1",
+    "react-native": "^0.76.2",
+    "semantic-release": "^24.2.0",
+    "typescript": "5.6.3"
+  },
+  "keywords": [
+    "android",
+    "ios",
+    "react-native",
+    "speech",
+    "voice",
+    "speech-to-text",
+    "speech-recognition",
+    "new-architecture",
+    "turbomodules",
+    "fabric",
+    "bridgeless"
+  ],
+  "license": "MIT",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "peerDependencies": {
+    "expo": ">=48.0.0",
+    "react-native": ">=0.71.0"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dev-amirzubair/voice.git"
+  },
+  "files": [
+    "src",
+    "dist",
+    "android",
+    "ios",
+    "react-native-voice.podspec",
+    "app.plugin.js",
+    "plugin"
+  ],
+  "scripts": {
+    "lint": "eslint src/*",
+    "semantic-release": "semantic-release",
+    "start": "yarn --cwd example start",
+    "ios": "yarn --cwd example ios",
+    "android": "yarn --cwd example android",
+    "prepare": "yarn build && yarn build:plugin",
+    "build": "tsc",
+    "dev-sync": "mkdir -p example/node_modules/@react-native-voice/voice/dist && cp -r ./dist/* example/node_modules/@react-native-voice/voice/dist/ && cp -r ./android example/node_modules/@react-native-voice/voice/ && cp -r ./ios example/node_modules/@react-native-voice/voice/ && cp -r ./src example/node_modules/@react-native-voice/voice/ && cp package.json react-native-voice.podspec example/node_modules/@react-native-voice/voice/",
+    "type-check": "tsc -noEmit",
+    "build:plugin": "tsc --build plugin",
+    "lint:plugin": "eslint plugin/src/*"
+  },
+  "dependencies": {
+    "invariant": "^2.2.4"
+  },
+  "codegenConfig": {
+    "name": "RNVoiceSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.wenkesj.voice"
+    }
+  }
+}

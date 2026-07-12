@@ -1,0 +1,70 @@
+{
+  "name": "sapni-ai",
+  "version": "1.1.21",
+  "description": "Sapni — Self-Evolving AI Terminal Assistant",
+  "main": "Src/cli.js",
+  "bin": {
+    "sapni": "bin/sapni.mjs"
+  },
+  "files": [
+    "Src/",
+    "Tools/",
+    "Mem/",
+    "Logos/",
+    "bin/",
+    "config.json",
+    "README.md",
+    "install.cjs",
+    "install.sh",
+    "install.bat",
+    "Skills/"
+  ],
+  "scripts": {
+    "postinstall": "node install.cjs",
+    "start": "npx tsx Src/index.jsx",
+    "server": "npx tsx Src/cli.js -s",
+    "lint": "node --check Src/agent.cjs && node --check Src/llm.cjs && node --check Tools/index.js && node --check Tools/extended_tools.js && node --check Tools/search_tools.js && node --check Tools/browser.js && node --check Tools/file_tools.js && node --check Tools/edit_tools.js && node --check Tools/tokenizer.js && node --check Mem/index.js && node --check Mem/history.js"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "cli",
+    "deepseek",
+    "terminal",
+    "coding-assistant",
+    "llm",
+    "chatbot",
+    "ink",
+    "react",
+    "tui",
+    "api",
+    "server"
+  ],
+  "author": "PillowBots",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yxpil/sapni.git"
+  },
+  "homepage": "https://sapni.yxpil.com",
+  "bugs": {
+    "url": "https://github.com/yxpil/sapni/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@colbymchenry/codegraph": "^0.9.9",
+    "cors": "^2.8.6",
+    "express": "^4.22.2",
+    "ink": "^7.0.5",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^6.0.0",
+    "ink-text-input-improved": "^1.0.1",
+    "puppeteer-core": "^25.1.0",
+    "react": "^19.2.7",
+    "tsx": "^4.0.0",
+    "uuid": "^14.0.0"
+  }
+}

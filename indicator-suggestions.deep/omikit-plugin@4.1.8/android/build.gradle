@@ -1,0 +1,110 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["OmikitPlugin_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["OmikitPlugin_" + name]).toInteger()
+}
+
+android {
+  namespace "com.omikitplugin"
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+
+  buildFeatures {
+    buildConfig = true
+    dataBinding = true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  // OMISDK
+  implementation("androidx.work:work-runtime:2.8.1")
+  implementation "androidx.security:security-crypto:1.1.0-alpha06"
+  api "io.omicrm.vihat:omi-sdk:2.7.0"
+
+  // React Native — resolved from consumer's node_modules
+  implementation "com.facebook.react:react-native:+"
+
+  // Kotlin
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // UI & Android
+  implementation "com.google.android.flexbox:flexbox:3.0.0"
+  implementation "androidx.appcompat:appcompat:1.6.1"
+  implementation "androidx.lifecycle:lifecycle-process:2.6.1"
+  implementation "com.google.android.material:material:1.9.0"
+  implementation "com.google.firebase:firebase-messaging-ktx:23.1.2"
+
+  // Network
+  implementation("com.squareup.retrofit2:retrofit:2.9.0") {
+    exclude module: 'okhttp'
+  }
+  implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+  implementation "com.squareup.okhttp3:okhttp:4.9.1"
+  implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
+  implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+  implementation "com.google.code.gson:gson:2.8.9"
+
+  // Image
+  implementation "com.squareup.picasso:picasso:2.8"
+
+  // Coroutines
+  def coroutines_version = '1.7.2'
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "OmikitPlugin"
+    codegenJavaPackageName = "com.omikitplugin"
+  }
+}

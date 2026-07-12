@@ -1,0 +1,87 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "da18654ddc318a8a",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.cjs",
+      "scripts/resolve-binary.cjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ad8e5dae352815aa2efe284a88fb7889f4f2f78b30d919721e7f48d47e725a90",
+        "sizeBytes": 5749,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/resolve-binary.cjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/robertelee78/claude-telegram-mirror",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/resolve-binary.cjs",
+        "reason": "required by ./postinstall.cjs",
+        "sha256": "df767c41984f2f10f13677eb9d6e7439113c76199637481de96f4980887d06c7",
+        "sizeBytes": 6567,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:30.716Z"
+  },
+  "hash": "sha256:1a43052acc611d2c885469bf83c9719fa88d41e072f305f0bfceecdc08c03f1c"
+}

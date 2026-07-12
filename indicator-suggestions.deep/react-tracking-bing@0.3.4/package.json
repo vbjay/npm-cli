@@ -1,0 +1,59 @@
+{
+  "name": "react-tracking-bing",
+  "version": "0.3.4",
+  "description": "React Bing Tracking Module",
+  "main": "./lib/index.js",
+  "scripts": {
+    "clean": "rimraf lib",
+    "test": "npm run lint",
+    "test:prod": "cross-env BABEL_ENV=production npm run test",
+    "test:watch": "npm test --watch",
+    "lint": "eslint src",
+    "build": "cross-env BABEL_ENV=production babel src --out-dir lib",
+    "prepare": "npm run clean && npm run test && npm run build"
+  },
+  "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=6.0.0"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realalexbarge/react-tracking-bing.git"
+  },
+  "keywords": [
+    "react",
+    "bing",
+    "tracking",
+    "npm",
+    "javascript",
+    "wrapper",
+    "pixel"
+  ],
+  "author": "Alexander Barge <alexander.barge@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/realalexbarge/react-tracking-bing/issues"
+  },
+  "homepage": "https://github.com/realalexbarge/react-tracking-bing#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-minify": "^0.5.1",
+    "chai": "^4.2.0",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "nyc": "^14.1.1",
+    "rimraf": "^3.0.0"
+  }
+}

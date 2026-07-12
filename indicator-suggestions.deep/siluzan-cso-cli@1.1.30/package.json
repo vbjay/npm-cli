@@ -1,0 +1,64 @@
+{
+  "name": "siluzan-cso-cli",
+  "version": "1.1.30",
+  "description": "Siluzan platform AI Skill CLI — multi-platform content publishing (video/image-text) for Cursor, Claude Code, and OpenClaw.",
+  "keywords": [
+    "ai-skill",
+    "claude-code",
+    "cli",
+    "content-publishing",
+    "cursor",
+    "mcp",
+    "openclaw",
+    "publish",
+    "siluzan",
+    "skill",
+    "video"
+  ],
+  "homepage": "https://www.siluzan.com",
+  "bugs": {
+    "url": "https://dev.azure.com/jack4it/Sammamish/_git/siluzan-skill/issues"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://dev.azure.com/jack4it/Sammamish/_git/siluzan-skill",
+    "directory": "cso-cli"
+  },
+  "bin": {
+    "siluzan-cso": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "scripts/postinstall.mjs"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.31.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "image-size": "^2.0.2",
+    "proper-lockfile": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.2",
+    "siluzan-cli-common": "1.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs",
+    "build": "node scripts/write-defaults.mjs --env production && tsup && node scripts/copy-skill-assets.mjs --env production",
+    "build:prod": "node scripts/write-defaults.mjs --env production && tsup && node scripts/copy-skill-assets.mjs --env production",
+    "build:test": "node scripts/write-defaults.mjs --env test && tsup && node scripts/copy-skill-assets.mjs --env test",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

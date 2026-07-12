@@ -1,0 +1,50 @@
+{
+  "name": "@pulseengine/studio-mcp-server",
+  "version": "0.4.0",
+  "description": "WindRiver Studio MCP Server - A Model Context Protocol server for WindRiver Studio CLI integration",
+  "main": "index.js",
+  "bin": {
+    "studio-mcp-server": "./run.js",
+    "studio-mcp": "./run.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js",
+    "preuninstall": "node uninstall.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "windriver",
+    "studio",
+    "rust",
+    "cli"
+  ],
+  "author": "PulseEngine",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pulseengine/studio-mcp.git"
+  },
+  "homepage": "https://github.com/pulseengine/studio-mcp",
+  "bugs": {
+    "url": "https://github.com/pulseengine/studio-mcp/issues"
+  },
+  "optionalDependencies": {
+    "@pulseengine/studio-mcp-server-darwin-arm64": "0.4.0",
+    "@pulseengine/studio-mcp-server-darwin-x64": "0.4.0",
+    "@pulseengine/studio-mcp-server-linux-x64": "0.4.0",
+    "@pulseengine/studio-mcp-server-win32-x64": "0.4.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

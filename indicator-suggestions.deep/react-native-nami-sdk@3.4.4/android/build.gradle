@@ -1,0 +1,124 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def DEFAULT_BUILD_TOOLS_VERSION = '35.0.0'
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+ def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+apply plugin: 'com.android.library'
+// apply plugin: 'maven'
+apply plugin: "kotlin-android"
+buildscript {
+    ext.kotlin_version = '2.1.0'
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    // ref: https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:build_script_external_dependencies
+    if (project == rootProject) {
+        repositories {
+            mavenCentral()
+            google()
+        }
+        dependencies {
+            classpath 'com.android.tools.build:gradle:8.6.1'
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        }
+    }
+}
+android {
+    compileSdkVersion 35
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1.0"
+        buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+    }
+    lintOptions {
+        abortOnError false
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+    flavorDimensions "store"
+    productFlavors {
+        amazon {
+            dimension "store"
+        }
+
+        play {
+            dimension "store"
+        }
+    }
+}
+repositories {
+    mavenCentral()
+    // ref: https://www.baeldung.com/maven-local-repository
+    mavenLocal()
+    maven { url("https://packages.namiml.com/NamiSDK/Amazon/") }
+    maven { url("https://packages.namiml.com/NamiSDK/Android/") }
+    maven { url 'https://jitpack.io' }
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+    }
+    maven {
+        // Android JSC is installed from npm
+        url("$rootDir/../node_modules/jsc-android/dist")
+    }
+    google()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    playImplementation "com.namiml:sdk-android:3.4.4"
+    amazonImplementation "com.namiml:sdk-amazon:3.4.4"
+
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
+
+}
+
+if (isNewArchitectureEnabled()) {
+    react {
+        jsRootDir = file("../src/")
+        libraryName = "Nami"
+        codegenJavaPackageName = "com.namiml.reactnative"
+    }
+}
+
+configurations {
+  customConfig.extendsFrom implementation
+}
+
+afterEvaluate { project ->
+    // some Gradle build hooks ref:
+    // https://www.oreilly.com/library/view/gradle-beyond-the/9781449373801/ch03.html
+    android.libraryVariants.all { variant ->
+        def name = variant.name.capitalize()
+        def javaCompileTask = variant.javaCompileProvider.get()
+        task "jar${name}"(type: Jar, dependsOn: javaCompileTask) {
+            from javaCompileTask.destinationDir
+        }
+    }
+
+    task installArchives(type: Upload) {
+        configuration = configurations.archives
+    }
+}

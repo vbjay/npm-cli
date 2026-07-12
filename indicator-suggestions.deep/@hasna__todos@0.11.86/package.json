@@ -1,0 +1,111 @@
+{
+  "name": "@hasna/todos",
+  "version": "0.11.86",
+  "description": "Universal task management for AI coding agents - CLI + MCP server + interactive TUI",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "todos": "dist/cli/index.js",
+    "todos-mcp": "dist/mcp/index.js",
+    "todos-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp.d.ts",
+      "import": "./dist/mcp.js"
+    },
+    "./registry": {
+      "types": "./dist/registry.d.ts",
+      "import": "./dist/registry.js"
+    },
+    "./contracts": {
+      "types": "./dist/contracts.d.ts",
+      "import": "./dist/contracts.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "import": "./dist/storage.js"
+    }
+  },
+  "workspaces": [
+    "dashboard"
+  ],
+  "files": [
+    "dist",
+    "dashboard/dist",
+    "vendor",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist dashboard/dist && cd dashboard && bun install --frozen-lockfile && bun run build && cd .. && bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun && bun build src/sdk/index.ts --outdir dist/sdk --target bun && bun build src/index.ts src/mcp.ts src/registry.ts src/contracts.ts src/storage.ts --outdir dist --target bun && tsc --emitDeclarationOnly --outDir dist",
+    "build:server": "rm -rf dist && bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun && bun build src/sdk/index.ts --outdir dist/sdk --target bun && bun build src/index.ts src/mcp.ts src/registry.ts src/contracts.ts src/storage.ts --outdir dist --target bun",
+    "migrate": "bun run src/server/index.ts migrate",
+    "generate:sdk": "bun run scripts/generate-sdk.ts",
+    "build:dashboard": "cd dashboard && bun install --frozen-lockfile && bun run build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "test:no-cloud": "bun test src/no-cloud-boundary.test.ts src/local-first.test.ts src/lib/public-release-gate.test.ts",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "verify:release": "bun run scripts/verify-public-release.ts",
+    "prepublishOnly": "bun run verify:release",
+    "postinstall": "mkdir -p $HOME/.hasna/todos $HOME/.hasna/todos/training 2>/dev/null || true"
+  },
+  "keywords": [
+    "todos",
+    "tasks",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "claude",
+    "codex",
+    "gemini",
+    "tui",
+    "cli",
+    "dashboard"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hasna/todos.git"
+  },
+  "homepage": "https://github.com/hasna/todos",
+  "bugs": {
+    "url": "https://github.com/hasna/todos/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/contracts": "0.5.2",
+    "@hasna/events": "^0.1.11",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "react": "^18.3.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/react": "^18.3.18",
+    "bun-types": "1.3.9",
+    "typescript": "^5.7.3"
+  }
+}

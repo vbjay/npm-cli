@@ -1,0 +1,46 @@
+{
+  "name": "@gilbertwong1996/ado",
+  "version": "0.4.12",
+  "description": "AI-native Azure DevOps CLI — structured JSON output, embedded skills for LLM agents, single-file cross-platform binary.",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/gilbertwong96/ado_cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gilbertwong96/ado_cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gilbertwong96/ado_cli/issues"
+  },
+  "keywords": [
+    "azure-devops",
+    "cli",
+    "elixir",
+    "ai-agents",
+    "llm",
+    "burrito",
+    "structured-json"
+  ],
+  "bin": {
+    "ado": "bin/ado"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "uninstall": "node scripts/postinstall.js --uninstall"
+  },
+  "files": [
+    "bin/ado",
+    "scripts/postinstall.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "@gilbertwong1996/ado-darwin-arm64": "0.4.12",
+    "@gilbertwong1996/ado-darwin-x64": "0.4.12",
+    "@gilbertwong1996/ado-linux-arm64": "0.4.12",
+    "@gilbertwong1996/ado-linux-x64": "0.4.12",
+    "@gilbertwong1996/ado-win32-x64": "0.4.12"
+  }
+}

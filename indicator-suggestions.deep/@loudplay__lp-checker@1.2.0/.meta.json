@@ -1,0 +1,68 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "aa63ef672b9f7235",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "202f62ba8afc3e8919f2f9bb0f927309cba0d4adc889ecb84415e8a9677c9a11",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `<(module_name)`  -  C/C++ sources",
+            "items": [
+              "src/common_export.cpp",
+              "src/export_win.cpp",
+              "src/export_mac.cpp"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  libraries",
+            "items": [
+              "Wlanapi",
+              "PowrProf",
+              "Iphlpapi",
+              "Wininet",
+              "dxgi",
+              "D3D11",
+              "D3d9",
+              "../checker_static.lib",
+              "../libchecker_static_mac.a",
+              "../libchecker_swift.dylib"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  include directories",
+            "items": [
+              "<!(node -p \"require('node-addon-api').include_dir\")",
+              "include",
+              "src"
+            ]
+          },
+          {
+            "label": "Target `<(module_name)`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      }
+    ],
+    "referencedFiles": [],
+    "scannedAt": "2026-07-12T00:02:26.438Z"
+  },
+  "hash": "sha256:be2e5ca93ac9596d2af022433168cf8dde4fb257cf3a13ace16307761b969298"
+}

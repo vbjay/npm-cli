@@ -1,0 +1,72 @@
+{
+  "name": "regex-repo",
+  "version": "5.2.0",
+  "description": "A collection of useful regular expressions.",
+  "main": "dist/regex-repo.cjs",
+  "module": "dist/regex-repo.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/regex-repo.cjs",
+      "import": "./dist/regex-repo.mjs"
+    }
+  },
+  "files": [
+    "dist/",
+    "LICENSE.txt",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "make build",
+    "lint": "make lint",
+    "lint:fix": "make lint-fix",
+    "test": "make test",
+    "prepack": "make build",
+    "preversion": "make qa",
+    "qa": "make qa"
+  },
+  "engines": {
+    "node": "14.x || 16.x || >=18.0.0"
+  },
+  "repository": {
+    "url": "git+ssh://git@github.com/liquid-labs/regex-repo.git",
+    "type": "git"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "css",
+    "data-validation",
+    "javascript",
+    "regex",
+    "regexp",
+    "regular expression",
+    "validate",
+    "validate-data",
+    "validation"
+  ],
+  "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
+  "bugs": {
+    "url": "https://github.com/liquid-labs/regex-repo/issues"
+  },
+  "homepage": "https://github.com/liquid-labs/regex-repo#readme",
+  "catalyst": {
+    "jestConfig": {
+      "collectCoverageFrom": [
+        "**/*.{js,cjs,mjs,jsx}",
+        "!**/doc-extractor/**/*",
+        "!**/index.{js,mjs,cjs}",
+        "!**/.*.{js,mjs,cjs}"
+      ]
+    }
+  },
+  "_comply": {
+    "orgKey": "@liquid-labs"
+  },
+  "devDependencies": {
+    "@liquid-labs/dmd": "^6.3.1",
+    "@liquid-labs/jsdoc-to-markdown": "^9.1.3",
+    "@liquid-labs/sdlc-resource-babel-and-rollup": "^1.0.0-alpha.9",
+    "@liquid-labs/sdlc-resource-eslint": "^1.0.0-alpha.16",
+    "@liquid-labs/sdlc-resource-jest": "^1.0.0-alpha.7",
+    "dmd-readme-api": "^1.0.0-beta.7"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "react-native-nami-sdk",
+  "version": "3.4.4",
+  "description": "React Native SDK for Nami - No-code paywall and onboarding flows with A/B testing.",
+  "main": "index.ts",
+  "types": "dist/index.d.ts",
+  "codegenConfig": {
+    "name": "NativeNamiSpec",
+    "type": "modules",
+    "jsSrcsDir": "./specs",
+    "android": {
+      "javaPackageName": "com.namiml.reactnative"
+    }
+  },
+  "react-native": {
+    "android": {
+      "sourceDir": "android",
+      "packageImportPath": "com.namiml.reactnative.NamiBridgePackage",
+      "libraryName": "react-native-nami-sdk"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "generate:version": "ts-node scripts/generate-version.ts",
+    "prepare": "npm run generate:version && npm run build",
+    "test": "jest",
+    "android": "react-native run-android",
+    "android-clean": "cd android && rm -rf .gradle && rm -rf .idea && rm -rf android.iml && rm -rf local.properties",
+    "ios": "react-native run-ios",
+    "ios-setup": "cd ios && pod install",
+    "ios-clean": "cd ios && rm -rf Pods && rm -rf build",
+    "ios-setup-clean": "cd ios && rm -rf Pods && rm -rf build  && pod update && pod install",
+    "start": "react-native start"
+  },
+  "keywords": [
+    "in-app-purchase",
+    "ios",
+    "tvos",
+    "paywall",
+    "react-native",
+    "storekit",
+    "subscriptions",
+    "iap",
+    "play-billing",
+    "payments",
+    "onboarding"
+  ],
+  "author": {
+    "username": "hellonami",
+    "name": "Nami ML Inc.",
+    "email": "hello@namiml.com"
+  },
+  "contributors": [
+    {
+      "name": "Dan Burcaw",
+      "email": "dan.burcaw@namiml.com"
+    }
+  ],
+  "license": "SEE LICENSE FILE",
+  "standard": {
+    "ignore": [
+      "examples/*"
+    ]
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.73"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "^0.80.0",
+    "@types/jest": "^29.5.2",
+    "@types/react-native": "^0.73.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-prettier": "^5.5.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.6.0",
+    "react": "^18.2.0",
+    "react-native": "^0.73.0",
+    "react-native-codegen": "^0.0.12",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.2"
+  },
+  "homepage": "https://www.nami.ml"
+}

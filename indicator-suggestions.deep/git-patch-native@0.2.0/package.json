@@ -1,0 +1,78 @@
+{
+  "name": "git-patch-native",
+  "version": "0.2.0",
+  "private": false,
+  "description": "Generate git-style unified patch strings from in-memory source changes, powered by Rust.",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run build:native && tsc",
+    "build:native": "cargo build --release -p git-patch-napi -p git-patch-ffi && node scripts/copy-native.mjs release",
+    "build:native:debug": "cargo build -p git-patch-napi -p git-patch-ffi && node scripts/copy-native.mjs debug",
+    "stage:platform-package": "node scripts/stage-platform-package.mjs",
+    "sync:package-versions": "node scripts/sync-package-versions.mjs",
+    "prepack": "npm run build",
+    "prepublishOnly": "cargo clippy --all-targets --all-features -- -D warnings && cargo test && npm run typecheck && npm test && npm run test:bun && npm run smoke:pack",
+    "smoke:pack": "npm run smoke:pack:node-api && npm run smoke:pack:bun-ffi",
+    "smoke:pack:bun-ffi": "bun scripts/smoke-pack-bun-ffi.mjs",
+    "smoke:pack:node-api": "node scripts/smoke-pack-node-api.mjs",
+    "test": "npm run build && node test/e2e.mjs",
+    "test:bun": "npm run build && bun test/e2e.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "keywords": [
+    "git",
+    "patch",
+    "diff",
+    "unified-diff",
+    "node",
+    "bun",
+    "rust",
+    "native"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colelawrence/git-patch-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/colelawrence/git-patch-native/issues"
+  },
+  "homepage": "https://github.com/colelawrence/git-patch-native#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "optionalDependencies": {
+    "git-patch-native-darwin-arm64": "0.2.0",
+    "git-patch-native-linux-arm64-gnu": "0.2.0",
+    "git-patch-native-linux-x64-gnu": "0.2.0",
+    "git-patch-native-win32-arm64": "0.2.0",
+    "git-patch-native-win32-x64": "0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.0.0"
+  }
+}

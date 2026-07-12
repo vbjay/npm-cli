@@ -1,0 +1,89 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b7f6d530877feb51",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/download-binary.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "download",
+        "versionSpec": "^8.0.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "download@8.0.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\node-enigo@1.3.0\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/download-binary.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "bd7b1e174cc5dd37e16b4cc6e9494b6263c6bc72238c0ccbb03f466ae76c6359",
+        "sizeBytes": 1766,
+        "signals": [
+          "writes-outside-package",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/download-binary.js",
+        "sha256": "88d6ce3d4f809021abd2045cae378c2cc21cd18f605ec22c22a5bd6f406947d8",
+        "sizeBytes": 989,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:16.401Z"
+  },
+  "hash": "sha256:8641455feb626cf500b5a62364b8f98d44e2e80ff78acb702bebcf466d6c48f0"
+}

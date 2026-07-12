@@ -1,0 +1,72 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4d5e4f82044fe779",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "c20f635351f147bcd9038af36e6d175be21f51910bba81f1a35199402db5a80e",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "\"arm64-v8a\", \"armeabi-v7a\", \"x86_64\""
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-android",
+              "com.google.android.gms:play-services-location:21.3.0",
+              "androidx.core:core-ktx:1.13.1",
+              "androidx.work:work-runtime-ktx:2.9.1"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "internal/module_scripts/prepare.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:46.600Z"
+  },
+  "hash": "sha256:3b17754e9bdd0cbbe50d58576da27379b03fc2cf6772391270b05dd4670c8f4c"
+}

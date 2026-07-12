@@ -1,0 +1,49 @@
+{
+  "author": {
+    "name": "Neil Craig",
+    "email": "neil.craig@thedotproduct.org",
+    "website": "https://thedotproduct.org"
+  },
+  "name": "ah-tdp-auth-plugin",
+  "description": "A fast, comprehensive, secure authentication plugin for actionHero with a MongoDB storage layer",
+  "version": "2.0.4",
+  "license": "CC-BY-SA-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/neilstuartcraig/AHTDPAuthPlugin.git"
+  },
+  "bugs": "https://github.com/neilstuartcraig/AHTDPAuthPlugin/issues",
+  "keywords": [
+    "nodejs",
+    "npm",
+    "auth",
+    "authentication",
+    "mongodb",
+    "javascript"
+  ],
+  "main": "./ah-tdp-auth-plugin.js",
+  "dependencies": {
+    "mongoskin":"1.x",
+    "tdp-js-object-merge":"latest",
+    "check-types":"2.x"
+  },
+  "devDependencies": {
+    "actionhero":"10.x",
+    "mocha": "2.x",
+    "should": "5.x",
+    "coveralls": "2.x",
+    "mocha-lcov-reporter": "0.x",
+    "istanbul": "0.x"
+  },
+  "optionalDependencies": {},
+  "peerDependencies":{
+    "actionhero":"10.x"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "postinstall": "./scripts/NPMPostInstallScript.sh",
+    "test": "./node_modules/.bin/mocha ./test --timeout 30000"
+  }
+}

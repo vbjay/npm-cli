@@ -1,0 +1,182 @@
+{
+  "name": "react-native-filament-buildcores",
+  "version": "1.7.11",
+  "description": "A real-time physically based 3D rendering engine for React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "test": "src/test/RunTests",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "assets",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "typescript": "tsc --noEmit",
+    "check-all": "scripts/check-all.sh",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "rm -rf android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "git submodule update --init --recursive && yarn patch-filament && bob build",
+    "update-submodule": "git submodule update --remote --merge",
+    "patch-filament": "cd ../filament ; git apply ../package/filament_animator_feat.patch ; git apply ../package/filament_material_instance_getter.patch ; git apply ../package/filament_ios_simulator.patch ; cd ../package",
+    "build-filament": "yarn patch-filament && scripts/build-filament.sh",
+    "build-filament:release": "yarn build-filament release",
+    "build-filament:debug": "yarn build-filament debug",
+    "build-bullet3": "scripts/build-bullet3.sh",
+    "release": "yarn build-filament:release && yarn build-bullet3 && release-it && npm publish",
+    "codegen": "react-native codegen",
+    "prepack": "cp ../README.md ./README.md",
+    "postpack": "rm ./README.md"
+  },
+  "keywords": [
+    "react-native",
+    "filament",
+    "3d",
+    "rendering",
+    "engine",
+    "gltf",
+    "model",
+    "threejs",
+    "ios",
+    "android",
+    "physics",
+    "opengl",
+    "metal",
+    "vulkan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/margelo/react-native-filament.git"
+  },
+  "author": "Marc Rousavy <me@mrousavy.com> (https://github.com/mrousavy)",
+  "contributors": [
+    {
+      "name": "Hanno Gödecke",
+      "url": "https://github.com/hannojg",
+      "email": "hanno@margelo.io"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/margelo/react-native-filament/issues"
+  },
+  "homepage": "https://margelo.github.io/react-native-filament",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@jamesacarr/eslint-formatter-github-actions": "^0.2.0",
+    "@react-native/eslint-config": "^0.73.1",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/react": "18.3.11",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.0.3",
+    "react": "18.3.1",
+    "react-native": "0.76.5",
+    "react-native-builder-bob": "^0.20.0",
+    "react-native-worklets-core": "^1.5.0",
+    "release-it": "^15.0.0",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.44"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-worklets-core": ">=1.3.2"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}",
+      "requireCleanWorkingDir": false
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "perf",
+              "section": "💨 Performance Improvements"
+            },
+            {
+              "type": "fix",
+              "section": "🐛 Bug Fixes"
+            },
+            {
+              "type": "chore(deps)",
+              "section": "🛠️ Dependency Upgrades"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "rnfilament",
+    "type": "all",
+    "jsSrcsDir": "src/native/specs",
+    "android": {
+      "javaPackageName": "com.margelo.filament"
+    },
+    "ios": {
+      "componentProvider": {
+        "FilamentView": "FilamentComponent"
+      }
+    }
+  },
+  "packageManager": "yarn@3.6.4",
+  "workspaces": {
+    "packages": [
+      "example/*"
+    ]
+  }
+}

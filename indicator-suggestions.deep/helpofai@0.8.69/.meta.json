@@ -1,0 +1,169 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9fcf91f07428dfc4",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/artifacts.js",
+      "scripts/install.js",
+      "scripts/preflight-glibc.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`; referenced by lifecycle script: `prepack`",
+        "sha256": "582a134de17ff435903a2c388e911e3d06a94468e29b2f521a67981a244efff2",
+        "sizeBytes": 39425,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/artifacts.js",
+          "scripts/preflight-glibc.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/artifacts.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "c8948432efb936a0f26895af18dbfd06f4f9de27a645023123caba3dd802319d",
+        "sizeBytes": 4495,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/helpofai/HelpOfAi-Cli.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/helpofai/HelpOfAi-Cli/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          },
+          {
+            "url": "https://cnb.cool/helpofai/HelpOfAi-Cli/-/releases/v",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/preflight-glibc.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "4a9f382f7e47666d75f3030a9b272bbeb84e6629647baacc619ad3bcad090654",
+        "sizeBytes": 4300,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/helpofai/HelpOfAi-Cli.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/helpofai/HelpOfAi-Cli/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "03c1cdcb145aa0575760fec9fa6e3ec22f65af358f0303a979d32fb7df4fc73c",
+        "sizeBytes": 1540,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:23.194Z"
+  },
+  "hash": "sha256:84a276563cfe6b7c2e72ae01844cb0df26f2429622f157576c0b38f572ad9805"
+}

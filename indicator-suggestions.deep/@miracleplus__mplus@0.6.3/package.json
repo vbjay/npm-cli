@@ -1,0 +1,47 @@
+{
+  "name": "@miracleplus/mplus",
+  "version": "0.6.3",
+  "description": "奇绩创坛命令行工具（mplus CLI）",
+  "keywords": [
+    "miracleplus",
+    "cli",
+    "mplus"
+  ],
+  "license": "MIT",
+  "bin": {
+    "mplus": "bin/mplus.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "bin",
+    "skills",
+    "commands",
+    "scripts/postinstall-skills.js"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/postbuild.js",
+    "build:dev": "tsc && node scripts/postbuild.js",
+    "obfuscate": "node scripts/obfuscate.js",
+    "prepublishOnly": "npm run clean && npm run build && npm run obfuscate",
+    "postinstall": "node scripts/postinstall-skills.js",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "commander": "^12.0.0",
+    "conf": "^10.2.0",
+    "update-notifier": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/update-notifier": "^6.0.0",
+    "javascript-obfuscator": "^4.1.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

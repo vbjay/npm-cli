@@ -1,0 +1,38 @@
+{
+  "name": "@anvi-cli/anvi",
+  "version": "1.0.1",
+  "description": "Terminal-native AI coding agent built in Rust, powered by Gemini",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eagleisbatman/anvi"
+  },
+  "homepage": "https://github.com/eagleisbatman/anvi",
+  "keywords": [
+    "ai",
+    "coding",
+    "agent",
+    "terminal",
+    "cli",
+    "gemini",
+    "rust"
+  ],
+  "bin": {
+    "anvi": "bin/anvi"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "optionalDependencies": {
+    "@anvi-cli/anvi-darwin-arm64": "1.0.1",
+    "@anvi-cli/anvi-darwin-x64": "1.0.1",
+    "@anvi-cli/anvi-linux-x64": "1.0.1",
+    "@anvi-cli/anvi-linux-arm64": "1.0.1"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  }
+}

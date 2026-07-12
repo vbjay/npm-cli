@@ -1,0 +1,46 @@
+{
+  "name": "@qoder-ai/qodercli",
+  "version": "1.0.41",
+  "description": "Qoder AI CLI - AI-powered coding assistant",
+  "author": "Qoder AI",
+  "type": "module",
+  "bin": {
+    "qodercli": "bundle/qodercli.js"
+  },
+  "files": [
+    "bundle/",
+    "postinstall.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "sharp": "^0.34.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "keywords": [
+    "qoder",
+    "ai",
+    "cli",
+    "coding",
+    "assistant",
+    "gemini"
+  ],
+  "homepage": "https://github.com/nicepkg/qodercli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicepkg/qodercli.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.cjs"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "name": "@probelabs/maid",
+  "version": "0.0.29",
+  "description": "Fast, accurate Mermaid diagram validator (CLI) with clear diagnostics.",
+  "type": "module",
+  "bin": {
+    "maid": "./out/cli.js"
+  },
+  "main": "./out/index.js",
+  "types": "./out/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./out/index.d.ts",
+      "import": "./out/index.js"
+    },
+    "./cli": {
+      "import": "./out/cli.js"
+    },
+    "./core/router": {
+      "types": "./out/core/router.d.ts",
+      "import": "./out/core/router.js"
+    },
+    "./core/markdown": {
+      "types": "./out/core/markdown.d.ts",
+      "import": "./out/core/markdown.js"
+    },
+    "./core/fixes": {
+      "types": "./out/core/fixes.d.ts",
+      "import": "./out/core/fixes.js"
+    },
+    "./core/edits": {
+      "types": "./out/core/edits.d.ts",
+      "import": "./out/core/edits.js"
+    },
+    "./core/types": {
+      "types": "./out/core/types.d.ts",
+      "import": "./out/core/types.js"
+    }
+  },
+  "files": [
+    "out",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/probelabs/maid.git"
+  },
+  "homepage": "https://github.com/probelabs/maid#readme",
+  "bugs": {
+    "url": "https://github.com/probelabs/maid/issues"
+  },
+  "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -rf out",
+    "build": "tsc",
+    "build:browser": "npm run build && esbuild out/browser.js --bundle --minify --format=esm --outfile=site/maid/maid.bundle.js --platform=browser --tree-shaking=true --target=es2020 --external:fs --external:path --external:url --external:util --external:@modelcontextprotocol/sdk --external:@modelcontextprotocol/sdk/*",
+    "build:browser:analyze": "npm run build && esbuild out/browser.js --bundle --minify --format=esm --metafile=meta.json --platform=browser --tree-shaking=true --target=es2020 --external:fs --external:path --external:url --external:util --analyze",
+    "prepack": "npm run build",
+    "test": "node scripts/test-chevrotain.js",
+    "test:errors:sequence": "npm run build && node scripts/test-errors.js sequence",
+    "test:errors:flowchart": "npm run build && node scripts/test-errors.js flowchart",
+    "test:errors:pie": "npm run build && node scripts/test-errors.js pie",
+    "test:errors:all": "npm run build && node scripts/test-errors.js all",
+    "test:markdown": "npm run build && node scripts/test-markdown.js",
+    "test:dir": "npm run build && node scripts/test-dir.js",
+    "test:frontmatter": "npm run build && node scripts/test-frontmatter.js",
+    "ci:test": "npm run build && node scripts/test-errors.js all && node scripts/test-fixes.js && node scripts/test-cli-fixes.js && node scripts/test-frontmatter.js && node scripts/test-unsupported.js && node scripts/compare-linters.js flowchart && node scripts/compare-linters.js pie && node scripts/compare-linters.js sequence && node scripts/test-renderer-pie.js && node scripts/test-renderer-flowchart.js && node scripts/test-renderer-sequence.js && node scripts/test-renderer-class.js && node scripts/test-renderer-state.js",
+    "test:compare": "node scripts/compare-linters.js flowchart",
+    "test:compare:pie": "node scripts/compare-linters.js pie",
+    "test:compare:sequence": "node scripts/compare-linters.js sequence",
+    "compare:one": "node scripts/compare-render-svg.js",
+    "compare:renderers": "npm run build && node scripts/compare-renderers-batch.js",
+    "compare:renderers:sequence": "npm run build && node scripts/compare-renderers-batch.js sequence",
+    "compare:renderers:pie": "npm run build && node scripts/compare-renderers-batch.js pie",
+    "compare:renderers:flowchart": "npm run build && node scripts/compare-renderers-all.js flowchart",
+    "compare:renderers:class": "npm run build && node scripts/compare-renderers-batch.js class",
+    "compare:renderers:state": "npm run build && node scripts/compare-renderers-batch.js state",
+    "palette:extract": "node scripts/extract-mermaid-palette.js",
+    "lint:valid": "for file in test-fixtures/flowchart/valid/*.mmd; do node out/cli.js \"$file\" || exit 1; done",
+    "lint:invalid": "for file in test-fixtures/flowchart/invalid/*.mmd; do node out/cli.js \"$file\" 2>/dev/null && exit 1 || true; done",
+    "generate:previews": "node scripts/generate-previews.js all",
+    "generate:valid": "node scripts/generate-previews.js all --valid-only",
+    "generate:invalid": "node scripts/generate-previews.js all --invalid-only",
+    "ci:previews": "npm run build && node scripts/generate-previews.js all && git update-index -q --refresh && git diff --exit-code || (echo '\nPreview files are outdated. Run: npm run generate:previews' && exit 1)",
+    "test:sdk": "node scripts/test-sdk.js"
+  },
+  "keywords": [
+    "mermaid",
+    "linter",
+    "cli",
+    "docs",
+    "markdown",
+    "diagram"
+  ],
+  "author": "Probelabs",
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.12.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/node": "^24.5.2",
+    "esbuild": "^0.25.10",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@types/dagre": "^0.7.53",
+    "chevrotain": "^11.0.3",
+    "dagre": "^0.8.5",
+    "globby": "^14.0.2"
+  }
+}

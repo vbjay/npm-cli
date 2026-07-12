@@ -1,0 +1,49 @@
+{
+  "name": "@currentjs/gen",
+  "version": "0.6.3",
+  "description": "CLI code generator",
+  "license": "LGPL-3.0",
+  "author": "Konstantin Zavalny",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/currentjs/gen.git"
+  },
+  "homepage": "https://github.com/currentjs/gen",
+  "bugs": "https://github.com/currentjs/gen/issues",
+  "keywords": [
+    "currentjs",
+    "generator",
+    "cli",
+    "code",
+    "generator"
+  ],
+  "bin": {
+    "current": "dist/cli.js",
+    "currentjs": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "howto.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && npm run copy-templates",
+    "copy-templates": "mkdir -p dist/generators/templates/data && cp src/generators/templates/data/* dist/generators/templates/data/",
+    "clean": "rm -rf dist dist-test",
+    "prepack": "npm run build",
+    "test:build": "tsc -p tsconfig.test.json && mkdir -p dist-test/src/generators/templates/data && cp src/generators/templates/data/* dist-test/src/generators/templates/data/",
+    "test": "npm run test:build && node --test dist-test/tests/unit/*.test.js",
+    "test:integration": "npm run test:build && node --test dist-test/tests/integration/*.test.js",
+    "test:all": "npm run test:build && node --test dist-test/tests/unit/*.test.js dist-test/tests/integration/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "^5.6.3"
+  }
+}

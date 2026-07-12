@@ -1,0 +1,54 @@
+{
+  "name": "ancoder-skill-cli",
+  "version": "0.13.38",
+  "description": "CLI for managing everything-claude-code (ECC) components — agents, skills, commands, rules, hooks, MCP configs. Single binary, all assets embedded.",
+  "bin": {
+    "skill-cli": "bin/skill-cli.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "prepublishOnly": "node scripts/check-bin.js",
+    "build": "bash scripts/build-all.sh",
+    "install-bundle": "node scripts/make-install-bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AncoderAI/Ancoder_SkillsCreator.git"
+  },
+  "homepage": "https://github.com/AncoderAI/Ancoder_SkillsCreator#readme",
+  "bugs": {
+    "url": "https://github.com/AncoderAI/Ancoder_SkillsCreator/issues"
+  },
+  "keywords": [
+    "skill",
+    "claude",
+    "claude-code",
+    "anthropic",
+    "agentskills",
+    "everything-claude-code",
+    "ecc",
+    "cli",
+    "agents",
+    "mcp"
+  ],
+  "author": "AncoderAI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "bin/skill-cli.js",
+    "bin/targets",
+    "scripts/install.sh",
+    "scripts/install.ps1",
+    "scripts/make-install-bundle.js",
+    "scripts/check-install-host.js",
+    "scripts/postinstall.js",
+    "scripts/check-bin.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

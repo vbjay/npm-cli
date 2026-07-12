@@ -1,0 +1,111 @@
+{
+  "name": "@microblink/blinkid-react-native",
+  "version": "8000.0.0",
+  "description": "A small and powerful ID card scanning library. Powered by Microblink (www.microblink.com).",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+"files": [
+  "src",
+  "lib",
+  "android",
+  "ios",
+  "cpp",
+  "*.podspec",
+  "react-native.config.js",
+  "!**/__tests__",
+  "!**/__fixtures__",
+  "!**/__mocks__",
+  "!ios/build",
+  "!android/build",
+  "!android/local.properties"
+],
+"scripts": {
+  "typecheck": "tsc",
+  "prepare": "bob build"
+},
+  "keywords": [
+    "scan",
+    "id",
+    "scanner",
+    "identity",
+    "passport",
+    "licence",
+    "sdk",
+    "ocr",
+    "USDL",
+    "PDF417",
+    "MRZ",
+    "MRTD",
+    "barcode",
+    "DL",
+    "card",
+    "document",
+    "microblink",
+    "react-native",
+    "blinkid",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microblink/blinkid-react-native.git",
+    "directory": "BlinkID"
+  },
+  "author": {
+    "name": "Microblink (https://microblink.com)",
+    "email": "support@microblink.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/microblink/blinkid-react-native/issues"
+  },
+  "homepage": "https://github.com/microblink/blinkid-react-native#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+  "@react-native-community/cli": "17.0.1",
+  "react-native": "^0.82.1",
+  "del-cli": "^5.1.0",
+  "react-native-builder-bob": "^0.40.10",
+  "typescript": "^5.2.2"
+},
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "BlinkidReactNativeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.microblink.blinkid.reactnative"
+    }
+  }
+}

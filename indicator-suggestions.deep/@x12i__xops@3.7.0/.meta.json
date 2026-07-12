@@ -1,0 +1,92 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "db1247f77ae1eac1",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.mjs",
+      "scripts/windowsGlobalInstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "657e3a103baea5ef66eab0fb623ec27561a0c0e64c00763757f10b743c83c33c",
+        "sizeBytes": 5800,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/windowsGlobalInstall.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/windowsGlobalInstall.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "9d137513ac203b907e01038f0fc378ed84ca8d7a7e0bab7b83c083d615f4b780",
+        "sizeBytes": 16528,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "obfuscation-pattern",
+          "jsfuck-obfuscation",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:13.118Z"
+  },
+  "hash": "sha256:f389b12f85b3a5fe8d9763c124fb60fe6c9146c8ef260dc185a83b9d8796e3f0"
+}

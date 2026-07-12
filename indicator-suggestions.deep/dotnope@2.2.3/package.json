@@ -1,0 +1,64 @@
+{
+  "name": "dotnope",
+  "version": "2.2.3",
+  "author": "Alex Spinu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spinualexandru/dotnope.git"
+  },
+  "description": "Strict environment variable access control for Node.js with optional native hardening",
+  "main": "index.js",
+  "module": "index.mjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    },
+    "./register": "./register.js"
+  },
+  "types": "index.d.ts",
+  "bin": {
+    "dotnope-run": "bin/dotnope-run.js"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "register.js",
+    "lib/",
+    "bin/",
+    "scripts/",
+    "native/src/",
+    "native/preload/",
+    "binding.gyp"
+  ],
+  "scripts": {
+    "test": "node --test 'test/**/*.js'",
+    "build:native": "node-gyp rebuild",
+    "postbuild:native": "node scripts/generate-addon-manifest.js",
+    "install": "node-gyp-build || true",
+    "prebuild": "prebuildify --napi --strip",
+    "generate-manifest": "node scripts/generate-addon-manifest.js"
+  },
+  "engines": {
+    "node": "^20.17.0 || >=22.9.0"
+  },
+  "keywords": [
+    "environment",
+    "env",
+    "security",
+    "whitelist",
+    "process.env",
+    "native",
+    "addon"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^7.0.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^12.3.0",
+    "prebuildify": "^6.0.0"
+  }
+}

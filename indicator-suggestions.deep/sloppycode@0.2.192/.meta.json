@@ -1,0 +1,77 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fe1855225f411e49",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "990a91a3be4cb8ebca09725d81a684552a1144c463fb618362a21b730f939f8c",
+        "sizeBytes": 7219,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./postinstall.mjs",
+        "sha256": "0bc83fd631fba45bd75c2a9a8b8c6a3537c3cb1b8a24f9253b521f138d294e4d",
+        "sizeBytes": 1328,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:12.016Z"
+  },
+  "hash": "sha256:844a5571523f069ed2b1045ab702b16354d7fa205acf29eaa0a6a8fd8cd0d77c"
+}

@@ -1,0 +1,118 @@
+{
+  "name": "@flyerhq/react-native-chat-ui",
+  "version": "1.4.3",
+  "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
+  "homepage": "https://flyer.chat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyerhq/react-native-chat-ui.git"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
+  "contributors": [
+    "Vitalii Danylov <vitaliidanylov1992@gmail.com>",
+    "Volodymyr Smolianinov <voidozzer@gmail.com>"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "chat",
+    "ui",
+    "react-native",
+    "react-native-component",
+    "ios",
+    "android",
+    "typescript"
+  ],
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p . && copyup src/assets/*.png lib",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepare": "yarn compile",
+    "test": "jest",
+    "type-coverage": "type-coverage"
+  },
+  "dependencies": {
+    "@flyerhq/react-native-keyboard-accessory-view": "^2.3.3",
+    "@flyerhq/react-native-link-preview": "^1.5.2",
+    "dayjs": "^1.10.7",
+    "react-native-image-viewing": "^0.2.1",
+    "react-native-parsed-text": "^0.0.22"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/runtime": "^7.15.4",
+    "@react-native-community/eslint-config": "^3.0.1",
+    "@testing-library/react-native": "^8.0.0",
+    "@types/jest": "^27.0.2",
+    "@types/react-native": "^0.66.0",
+    "@types/react-test-renderer": "^17.0.1",
+    "babel-jest": "^27.3.1",
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "jest": "^27.3.1",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "react": "^17.0.2",
+    "react-native": "^0.66.1",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-test-renderer": "^17.0.2",
+    "type-coverage": "^2.18.2",
+    "typescript": "^4.4.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!**/index.{ts,tsx}",
+      "!**/styles.{ts,tsx}",
+      "!**/types.{ts,tsx}",
+      "!**/*.d.ts",
+      "!**/ImageView.android.ts",
+      "!**/ImageView.ios.ts",
+      "!**/ImageView.tsx"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "preset": "react-native",
+    "setupFiles": [
+      "./jest/setup.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@flyerhq|@react-native|react-native))"
+    ]
+  },
+  "typeCoverage": {
+    "cache": true,
+    "ignoreCatch": true,
+    "ignoreNonNullAssertion": true,
+    "ignoreUnread": true,
+    "is": 100,
+    "showRelativePath": true,
+    "strict": true
+  }
+}

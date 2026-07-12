@@ -1,0 +1,37 @@
+{
+  "name": "@empower-nokta/react-native-mobile-ads",
+  "version": "0.11.1",
+  "description": "React Native bridge for Empower Mobile Ads SDK",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "postinstall": "echo '\n  @empower-nokta/react-native-mobile-ads installed.\n\n  Android setup:\n    1. Maven repositories are injected automatically (Empower, AppLovin, Pangle, IronSource, Ogury).\n       If your settings.gradle uses repositoriesMode = FAIL_ON_PROJECT_REPOS, either:\n       a) Use the settings plugin: id \"net.empower.mobile.ads.settings\" version \"5.7.16\", or\n       b) Switch to PREFER_PROJECT to allow injected repos.\n    2. Add kotlin.suppressKotlinVersionCompatibilityCheck=2.2.0 to gradle.properties\n    3. Enable core library desugaring in app/build.gradle (required by SDK 5.7.10+):\n         android.compileOptions { coreLibraryDesugaringEnabled true; sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }\n         dependencies { coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.1.5\" }\n    4. (New Arch only) Use SoLoader.init(this, OpenSourceMergedSoMapping) in MainApplication.kt\n\n  iOS setup:\n    1. Add source https://github.com/empowernet/specs.git to your Podfile\n    2. Run: cd ios && pod install --repo-update\n\n  See README.md for details.\n'",
+    "prepublishOnly": "echo 'Ready to publish @empower-nokta/react-native-mobile-ads'"
+  },
+  "keywords": [
+    "react-native",
+    "ads",
+    "empower",
+    "banner",
+    "interstitial",
+    "rewarded",
+    "app-open",
+    "preroll"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://git.nokta.com/react-native/empower-mobile-ads.git"
+  },
+  "homepage": "https://git.nokta.com/react-native/empower-mobile-ads",
+  "bugs": {
+    "url": "https://git.nokta.com/react-native/empower-mobile-ads/issues"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.70.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

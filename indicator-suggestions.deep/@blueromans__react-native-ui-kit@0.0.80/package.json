@@ -1,0 +1,131 @@
+{
+  "name": "@blueromans/react-native-ui-kit",
+  "version": "0.0.80",
+  "description": "Ui kit for React Native",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "react-native": "src/index.tsx",
+  "source": "src/index.tsx",
+  "types": "lib/typescript/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "babel.js"
+  ],
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blueromans/ReactNativeUiKit.git"
+  },
+  "author": "Yaşar ÖZYURT",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blueromans/ReactNativeUiKit/issues"
+  },
+  "homepage": "https://github.com/blueromans/ReactNativeUiKit#readme",
+  "keywords": [
+    "react-native",
+    "react component",
+    "react native component",
+    "react",
+    "react native",
+    "mobile",
+    "ios",
+    "android",
+    "ui"
+  ],
+  "scripts": {
+    "typescript": "tsc --noEmit",
+    "lint": "eslint --ext '.js,.ts,.tsx' .  --fix",
+    "prepare": "bob build && node ./scripts/generate-mappings.js",
+    "release": "release-it",
+    "bootstrap": "yarn --cwd example && yarn --cwd docs && yarn",
+    "docs": "yarn --cwd docs",
+    "commit": "commit"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@blueromans/react-theme-provider": "^0.0.2",
+    "color": "^3.1.2",
+    "react-hook-form": "^7.35.0",
+    "react-native-animated-pagination-dots": "^0.1.73",
+    "react-native-iphone-x-helper": "^1.3.1",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-masked-text": "^1.13.0",
+    "react-native-modal": "^13.0.1",
+    "react-native-svg": "^13.4.0",
+    "recyclerlistview": "^4.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/runtime": "^7.10.3",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@commitlint/prompt-cli": "^17.1.2",
+    "@react-native-community/eslint-config": "^3.1.0",
+    "@release-it/conventional-changelog": "^1.1.0",
+    "@types/color": "^3.0.0",
+    "@types/node": "^13.1.0",
+    "@types/react-dom": "^18.0.2",
+    "@types/react-native": "^0.69.8",
+    "@types/react-native-vector-icons": "^6.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "all-contributors-cli": "^6.1.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^26.1.0",
+    "babel-loader": "^8.2.3",
+    "babel-test": "^0.1.1",
+    "chalk": "^4.0.0",
+    "dedent": "^0.7.0",
+    "eslint": "^8.26.0",
+    "eslint-plugin-jest": "^27.1.4",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react-native": "^3.5.0",
+    "expo-constants": "^9.3.5",
+    "flow-bin": "0.92.0",
+    "glob": "^7.1.3",
+    "husky": "^1.3.1",
+    "metro-react-native-babel-preset": "^0.67.0",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "0.68.2",
+    "react-native-builder-bob": "^0.17.1",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
+    "react-native-vector-icons": "^9.2.0",
+    "react-test-renderer": "16.13.1",
+    "release-it": "^13.4.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn typescript"
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ],
+    "files": [
+      "src/"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "xtract-cli",
+  "version": "1.0.0",
+  "description": "Solidity to MultiversX transpiler with wallet, build, deploy, and TypeScript SDK — the full EVM-to-MultiversX developer toolkit",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "xtract": "bin/xtract.js"
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./sdk": "./sdk/dist/index.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "sdk/dist/",
+    "sdk/src/",
+    "scripts/",
+    "xtract/",
+    "pyproject.toml",
+    "demo/",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "@multiversx/sdk-core": ">=13.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@multiversx/sdk-core": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "test": "node test/test.js",
+    "build:sdk": "cd sdk && npm install && npm run build",
+    "postinstall": "node scripts/check-python.js"
+  },
+  "keywords": [
+    "solidity",
+    "multiversx",
+    "transpiler",
+    "elrond",
+    "smart-contract",
+    "evm",
+    "rust",
+    "sdk",
+    "deploy",
+    "blockchain",
+    "web3"
+  ],
+  "author": "XTract Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XTract-build/Xtract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/XTract-build/Xtract/issues"
+  },
+  "homepage": "https://github.com/XTract-build/Xtract#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

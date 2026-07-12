@@ -1,0 +1,100 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "912d559c335143b3",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "c7d1e9caf3a91f38bd763bfda59967fa566e61f08fcbda6bb2a71e7fd13701de",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `node_nanomsg`  -  C/C++ sources",
+            "items": [
+              "src/node_nanomsg.cc",
+              "src/poll_ctx.cc"
+            ]
+          },
+          {
+            "label": "Target `node_nanomsg`  -  libraries",
+            "items": [
+              "<!@(pkg-config nanomsg --libs || echo \"\")",
+              "<!@(pkg-config libnanomsg --libs || echo \"\")",
+              "<!@(pkg-config libnanomsg --libs || echo \"\")",
+              "<!@(pkg-config nanomsg --libs || echo \"\")"
+            ]
+          },
+          {
+            "label": "Target `node_nanomsg`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")"
+            ]
+          },
+          {
+            "label": "Target `node_nanomsg`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "8ad4725ff6aacf59ab6e8737a3753cbea7bb8e4919807d4e93a19b6a94241e85",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked",
+            "items": [
+              "npm",
+              "node"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:13.785Z"
+  },
+  "hash": "sha256:4e1ebdead59b13bdcdf13071041ecb74dde305435ca2a30ce0d1d128a8ff622e"
+}

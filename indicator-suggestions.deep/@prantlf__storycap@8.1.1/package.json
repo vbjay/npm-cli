@@ -1,0 +1,141 @@
+{
+  "name": "@prantlf/storycap",
+  "version": "8.1.1",
+  "description": "A Storybook addon, Save the screenshot image of your stories! via puppeteer.",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "lib-esm/index.js",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "browser": "./lib-esm/index.js",
+      "import": "./lib-esm/index.js",
+      "default": "./lib/index.js"
+    },
+    "./manager": {
+      "require": "./lib/client/manager.js",
+      "import": "./lib-esm/client/manager.js"
+    }
+  },
+  "sideEffects": [
+    "./lib/client/manager.js",
+    "./lib-esm/client/manager.js"
+  ],
+  "typings": "lib/index.d.ts",
+  "bin": {
+    "storycap": "lib/node/cli.js"
+  },
+  "scripts": {
+    "clean": "rimraf -g lib lib-esm \"*.tsbuildinfo\"",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc --p tsconfig.build.cjs.json",
+    "build:esm": "tsc --p tsconfig.build.esm.json",
+    "prepare": "yarn clean && yarn build",
+    "test": "jest",
+    "typedoc": "typedoc --out \"../../dist-pages/typedoc/storycap\" --ignoreCompilerErrors --tsconfig tsconfig.build.json src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prantlf/storycap.git"
+  },
+  "author": "tsuyoshiwada",
+  "contributors": [
+    "Yosuke Kurami"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prantlf/storycap/issues"
+  },
+  "homepage": "https://github.com/prantlf/storycap#readme",
+  "files": [
+    "lib",
+    "lib-esm",
+    "assets",
+    "CONTRIBUTING.md",
+    "MIGRATION.md",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "keywords": [
+    "storybook",
+    "addon",
+    "puppeteer",
+    "chrome",
+    "screenshot",
+    "capture",
+    "visual-testing",
+    "storybook-addon",
+    "testing",
+    "test"
+  ],
+  "devDependencies": {
+    "@types/jest": "30.0.0",
+    "@types/node": "^24.10.1",
+    "@types/picomatch": "^4.0.2",
+    "@types/wait-on": "^5.3.4",
+    "@types/yargs": "^17.0.35",
+    "cpy-cli": "^6.0.0",
+    "jest": "30.2.0",
+    "minimist": "1.2.8",
+    "puppeteer": "24.30.0",
+    "ts-jest": "29.4.5",
+    "typedoc": "0.28.14",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@prantlf/storycrawler": "^8.1.1",
+    "picomatch": "^4.0.3",
+    "puppeteer-core": "^24.30.0",
+    "rimraf": "^6.1.0",
+    "sanitize-filename": "^1.6.3",
+    "yargs": "^18.0.0"
+  },
+  "peerDependencies": {
+    "storybook": "^9.0.0 || ^10.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.[tj]sx?$": [
+        "ts-jest",
+        {
+          "diagnostics": false
+        }
+      ]
+    },
+    "preset": "ts-jest/presets/default-esm",
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    },
+    "moduleNameMapper": {
+      "(.+)\\.js$": "$1"
+    },
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx)",
+      "**/*.test.(ts|tsx)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "_old/.*",
+      "examples/.*",
+      "\\.d\\.ts$",
+      "lib/.*"
+    ],
+    "testEnvironmentOptions": {
+      "url": "http://localhost"
+    }
+  }
+}

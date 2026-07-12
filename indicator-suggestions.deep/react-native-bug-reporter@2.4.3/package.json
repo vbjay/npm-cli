@@ -1,0 +1,96 @@
+{
+  "name": "react-native-bug-reporter",
+  "version": "2.4.3",
+  "description": "Universal React Native bug reporter: auto-detect screenshots, annotate, capture crashes + diagnostics, and POST to your Bug Reporter HTTP API.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "lib/module/index.js",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "react-native-bug-reporter.podspec",
+    "react-native.config.js",
+    "!android/build",
+    "!android/.gradle",
+    "!**/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "clean": "del-cli lib",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "bug-report",
+    "bug-reporter",
+    "screenshot",
+    "screenshot-detection",
+    "annotation",
+    "feedback",
+    "crash-report",
+    "supabase",
+    "qa",
+    "testing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanjay20242020/react-native-bug-reporter.git"
+  },
+  "homepage": "https://github.com/sanjay20242020/react-native-bug-reporter#readme",
+  "bugs": {
+    "url": "https://github.com/sanjay20242020/react-native-bug-reporter/issues"
+  },
+  "author": {
+    "name": "Sanjay",
+    "email": "sanjay20242020@gmail.com",
+    "url": "https://github.com/sanjay20242020"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "dependencies": {
+    "@react-native-community/netinfo": ">=9.0.0",
+    "react-native-device-info": ">=10.0.0",
+    "react-native-svg": ">=13.0.0",
+    "react-native-view-shot": ">=3.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "del-cli": "^5.1.0",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-builder-bob": "^0.40.13",
+    "react-native-svg": "^15.8.0",
+    "react-native-view-shot": "^4.0.3",
+    "typescript": "^5.8.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

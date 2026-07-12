@@ -1,0 +1,63 @@
+{
+  "name": "react-navigation-helpers",
+  "version": "2.3.1",
+  "description": "Easy to use React Navigation with these helpers for React Navigation on React Native",
+  "keywords": [
+    "v5",
+    "helpers",
+    "react-navigation-helpers",
+    "@react-navigation-helpers",
+    "@react-navigation",
+    "react-navigation",
+    "navigation",
+    "FreakyCoder",
+    "freakycoder",
+    "kuray",
+    "Kuray",
+    "react",
+    "react-native",
+    "javascript",
+    "ui-lib",
+    "rn"
+  ],
+  "homepage": "https://www.freakycoder.com",
+  "bugs": "https://github.com/WrathChaos/react-navigation-helpers/issues",
+  "main": "./build/dist/NavigationService.js",
+  "repository": "git@github.com:WrathChaos/react-navigation-helpers.git",
+  "author": "Kuray (FreakyCoder) <kurayogun@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "@react-navigation/native": ">= 4.x.x"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-native": "^0.63.25",
+    "cpx": "^1.5.0",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^10.4.2",
+    "npm-post-install": "0.0.2",
+    "prettier": "^2.1.2",
+    "prettier-format": "^3.0.3",
+    "react-native-typescript-transformer": "^1.2.13",
+    "semantic-release": "^19.0.5",
+    "typescript": "^4.0.3"
+  },
+  "scripts": {
+    "build": "cd lib && tsc && npm run copy:assets && npm run copy:package",
+    "prepare": "husky install",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prettier": "cd lib && npx prettier --write . && git add .",
+    "husky:setup": "npx husky-init && npm run husky:commitlint && npm run husky:prettier && npm run husky:lint",
+    "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
+    "semantic-release": "semantic-release",
+    "copy:assets": "cpx 'lib/local-assets/**' './build/dist/local-assets'",
+    "copy:package": "cpx '../package.json' '../build/dist/'",
+    "husky:lint": "npx husky add .husky/pre-commit 'npm run lint'",
+    "husky:prettier": "npx husky set .husky/pre-commit 'npm run prettier'"
+  }
+}

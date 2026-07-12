@@ -1,0 +1,51 @@
+{
+  "name": "@shrimpcoder/ts-result",
+  "version": "0.1.3",
+  "description": "A TypeScript-based Result library",
+  "keywords": [
+    "result",
+    "typescript",
+    "rust"
+  ],
+  "author": "shrimpcoder <shrimpcoder97@gmail.com> (https://github.com/shrimpcoder)",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shrimpcoder/ts-result"
+  },
+  "homepage": "https://shrimpcoder.github.io/ts-result/index.html",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --project tsconfig.build.json",
+    "prepare": "npm run build",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest --coverage",
+    "docs": "typedoc"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@vitest/coverage-v8": "^2.1.1",
+    "eslint": "9.x",
+    "globals": "^15.8.0",
+    "typedoc": "^0.26.7",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.16.1",
+    "vite": "^5.2.10",
+    "vitest": "^2.1.1"
+  }
+}

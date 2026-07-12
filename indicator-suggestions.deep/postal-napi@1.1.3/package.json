@@ -1,0 +1,65 @@
+{
+  "name": "postal-napi",
+  "version": "1.1.3",
+  "description": "Node-API (N-API) bindings for libpostal - address parsing and normalization",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "install": "node scripts/install.js",
+    "build": "node-gyp rebuild",
+    "prebuild": "node scripts/create-prebuilds.js",
+    "clean": "node-gyp clean",
+    "test": "bun test",
+    "docker:build": "docker build -t postal-napi .",
+    "docker:run": "docker run --rm postal-napi",
+    "docker:test": "docker build -t postal-napi . && docker run --rm postal-napi bun test"
+  },
+  "dependencies": {
+    "node-api-headers": "^1.1.0",
+    "node-gyp": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^20.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WoH/node-api-postal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WoH/node-api-postal/issues"
+  },
+  "homepage": "https://github.com/WoH/node-api-postal#readme",
+  "files": [
+    "src/",
+    "scripts/",
+    "prebuilds/",
+    "binding.gyp",
+    "README.md",
+    "LICENSE"
+  ],
+  "gypfile": true,
+  "keywords": [
+    "libpostal",
+    "address",
+    "parsing",
+    "normalization",
+    "geocoding",
+    "napi",
+    "node-api",
+    "native",
+    "addon",
+    "bun",
+    "typescript"
+  ],
+  "author": "Wolfgang Hobmaier <wolfgang@hey.com>",
+  "license": "MIT"
+}

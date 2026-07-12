@@ -1,0 +1,355 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b55a7acd1ddc0e7b",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "dist/agents/definitions.js",
+      "dist/agents/native-config.js",
+      "dist/agents/policy.js",
+      "dist/catalog/installable.js",
+      "dist/catalog/reader.js",
+      "dist/catalog/schema.js",
+      "dist/catalog/skill-mirror.js",
+      "dist/config/generator.js",
+      "dist/config/models.js",
+      "dist/config/rcs-first-party-mcp.js",
+      "dist/config/roblox-reference-mcp.js",
+      "dist/scripts/cleanup-explore-harness.js",
+      "dist/scripts/surface-taxonomy.js",
+      "dist/scripts/sync-plugin-mirror.js",
+      "dist/scripts/sync-release-notes.js",
+      "dist/scripts/verify-native-agents.js",
+      "dist/utils/package.js",
+      "dist/utils/paths.js",
+      "package.json",
+      "src/scripts/postinstall-bootstrap.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "@iarna/toml",
+        "versionSpec": "^2.2.5"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@iarna/toml@2.2.5"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "29809295a1517c80dbea58866937a90968c5c40bb35e54e656d606a126938f8c",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate version",
+            "items": [
+              "0.1.9"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/scripts/postinstall-bootstrap.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e77374f1f55fe15fc3975a97130cc3731d18b8244d0ce940d480dbac4c8a699e",
+        "sizeBytes": 808,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "makes-executable"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/scripts/sync-release-notes.js",
+        "reason": "referenced by lifecycle script: `sync:release-notes:check`",
+        "sha256": "32ff009606c05d70063daf304721b31a4869cedaefb1a23379ae59b829b0f8c0",
+        "sizeBytes": 4254,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/scripts/verify-native-agents.js",
+        "reason": "referenced by lifecycle script: `verify:native-agents`",
+        "sha256": "5346a8558fec118db004da038a9185721fa4a28e05769f3c939b4e36bdb95c20",
+        "sizeBytes": 7379,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/agents/definitions.js",
+          "dist/agents/native-config.js",
+          "dist/agents/policy.js",
+          "dist/catalog/reader.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/agents/definitions.js",
+        "reason": "required by ./dist/scripts/verify-native-agents.js; required by ./dist/agents/native-config.js; required by ./dist/config/generator.js",
+        "sha256": "5d80ca2de9b08f6c7f43d09326f67305048ada17ae39d94a9e75a245e6bc921a",
+        "sizeBytes": 7835,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/agents/native-config.js",
+        "reason": "required by ./dist/scripts/verify-native-agents.js",
+        "sha256": "899f97a4fd44f4fdcfbfd0266c4388d6d993d070f76ee752df32e5a899bb52ab",
+        "sizeBytes": 11486,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/agents/definitions.js",
+          "dist/catalog/reader.js",
+          "dist/agents/policy.js",
+          "dist/config/models.js",
+          "dist/config/generator.js",
+          "dist/utils/paths.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/catalog/reader.js",
+        "reason": "required by ./dist/agents/native-config.js; required by ./dist/scripts/verify-native-agents.js; required by ./dist/scripts/sync-plugin-mirror.js",
+        "sha256": "4e7e3c89714083ad2c3aa33e3c7d5adf6e8d5f6dcfde68002dfc31782f5ea75b",
+        "sizeBytes": 2660,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/package.js",
+          "dist/catalog/schema.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/package.js",
+        "reason": "required by ./dist/catalog/reader.js",
+        "sha256": "85e10e3bfc8e99ab458494346e96a304d7d2a3ab966e2fd0fd0a992c659a7ecb",
+        "sizeBytes": 1004,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/catalog/schema.js",
+        "reason": "required by ./dist/catalog/reader.js",
+        "sha256": "ba8c864142207fa26f39c0e6dc98d14d2c77ad65885e07bd97f198189336fdaf",
+        "sizeBytes": 4890,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/agents/policy.js",
+        "reason": "required by ./dist/agents/native-config.js; required by ./dist/scripts/verify-native-agents.js",
+        "sha256": "5c775d1ccf9be9f2e1ed6fb621e6273cd32879fe93d0ad7a550bc1a21f931b0a",
+        "sizeBytes": 2524,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/models.js",
+        "reason": "required by ./dist/agents/native-config.js; required by ./dist/config/generator.js",
+        "sha256": "db69be4958885c07372fff4d6ce628e81f0c4be2918bdbade911ee901b2caef0",
+        "sizeBytes": 13989,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/paths.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/paths.js",
+        "reason": "required by ./dist/config/models.js; required by ./dist/agents/native-config.js",
+        "sha256": "09a61d4b39d717704140d221d1629888a6fd2db082f26f17ac98aeb5951b694f",
+        "sizeBytes": 10326,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/generator.js",
+        "reason": "required by ./dist/agents/native-config.js",
+        "sha256": "69552d6c1d82d7cada03cfbd12f3f39d787b179376fbf95f2e5dc7bbcd42516b",
+        "sizeBytes": 46774,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/agents/definitions.js",
+          "dist/config/models.js",
+          "dist/config/rcs-first-party-mcp.js",
+          "dist/config/roblox-reference-mcp.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/rcs-first-party-mcp.js",
+        "reason": "required by ./dist/config/generator.js; required by ./dist/scripts/sync-plugin-mirror.js",
+        "sha256": "dd72b0c5c3c9866f2aa7f4d7554166ff42f62f5b3af5f5b05126812915d3e973",
+        "sizeBytes": 2769,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/roblox-reference-mcp.js",
+        "reason": "required by ./dist/config/generator.js",
+        "sha256": "3bf25251f77d19f1838ce20d8db84921da80b0770f225ea6d9829911eb6d13d0",
+        "sizeBytes": 1278,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://gitmcp.io/Roblox/creator-docs",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://gitmcp.io/sentinelcore/roblox-skills",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://gitmcp.io/Corecii/Devprod",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://gitmcp.io/retpirato/Roblox-Scripts",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/scripts/sync-plugin-mirror.js",
+        "reason": "referenced by lifecycle script: `sync:plugin`; referenced by lifecycle script: `verify:plugin-bundle`",
+        "sha256": "6e6e7a80b1149251fb9fa034bc6848f6bb413601ea8e8d7222792ad6c8789a5a",
+        "sizeBytes": 12050,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/catalog/installable.js",
+          "dist/catalog/reader.js",
+          "dist/catalog/skill-mirror.js",
+          "dist/config/rcs-first-party-mcp.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/catalog/installable.js",
+        "reason": "required by ./dist/scripts/sync-plugin-mirror.js",
+        "sha256": "e795db24331427e4d7b68fb602dd2c86c7ba0d0b65ea86f2e82991d2e4b7e9c7",
+        "sizeBytes": 556,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/catalog/skill-mirror.js",
+        "reason": "required by ./dist/scripts/sync-plugin-mirror.js",
+        "sha256": "94449b74ebb024551df72bedf5522892b978c30f5617ddbbec6f4cb368f55b57",
+        "sizeBytes": 4441,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/scripts/surface-taxonomy.js",
+        "reason": "referenced by lifecycle script: `surface:map:check`",
+        "sha256": "2df155c6894e062925af9247e07819fcfe5b536c4e093ea7b998c39f482b5a2d",
+        "sizeBytes": 10781,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/scripts/cleanup-explore-harness.js",
+        "reason": "referenced by lifecycle script: `clean:native-package-assets`",
+        "sha256": "e5481d51a54d5b603d29f69c7f5b9e8ee75923d105a10e3c831e501d957a88d8",
+        "sizeBytes": 692,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:20.080Z"
+  },
+  "hash": "sha256:67bc1ab35d3b1c573b6ac47d0808563b05d903f4e7f16d743fec148d3a2b210d"
+}

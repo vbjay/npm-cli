@@ -1,0 +1,25 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+group = 'host.exp.exponent'
+version = '12.0.5'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useDefaultAndroidSdkVersions()
+useExpoPublishing()
+
+android {
+  namespace "expo.modules.fontWeights"
+  defaultConfig {
+    versionCode 29
+    versionName "12.0.5"
+  }
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-android'
+}

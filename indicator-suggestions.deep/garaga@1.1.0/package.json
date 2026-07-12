@@ -1,0 +1,89 @@
+{
+  "type": "module",
+  "name": "garaga",
+  "version": "1.1.0",
+  "description": "State-of-the-art Elliptic Curve operations and SNARKS verification for Cairo & Starknet 🐺",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "./dist/",
+    "README.md",
+    "API.md"
+  ],
+  "keywords": [
+    "elliptic-curves",
+    "cryptography",
+    "zk-snarks",
+    "zero-knowledge",
+    "pairing",
+    "starknet",
+    "cairo",
+    "groth16",
+    "noir",
+    "honk",
+    "blockchain",
+    "wasm",
+    "typescript",
+    "rust"
+  ],
+  "author": {
+    "name": "feltroidprime"
+  },
+  "contributors": [
+    "Keep Starknet Strange Contributors"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/keep-starknet-strange/garaga",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keep-starknet-strange/garaga.git",
+    "directory": "tools/npm/garaga_ts"
+  },
+  "bugs": {
+    "url": "https://github.com/keep-starknet-strange/garaga/issues"
+  },
+  "documentation": "https://garaga.gitbook.io/",
+  "scripts": {
+    "build:wasm": "cd ../../garaga_rs && RUSTFLAGS='--cfg getrandom_backend=\"wasm_js\"' wasm-pack build --target web --out-dir ../npm/garaga_ts/src/wasm/pkg --release --no-default-features --features wasm",
+    "patch:wasm": "node patch.wasm.cjs",
+    "build:node": "tsc && rollup -c",
+    "build": "npm run build:wasm && npm run patch:wasm && npm run build:node",
+    "prepare": "npm run build:node",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.7.4",
+    "jest": "^29.7.0",
+    "rollup": "^4.24.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.7.0",
+    "typescript": "^5.5.4"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "crypto-browserify": "^3.12.1",
+    "stream-browserify": "^3.0.0",
+    "vm-browserify": "^1.1.2"
+  },
+  "browser": {
+    "crypto": "crypto-browserify",
+    "stream": "stream-browserify",
+    "vm": "vm-browserify",
+    "fs": false
+  }
+}

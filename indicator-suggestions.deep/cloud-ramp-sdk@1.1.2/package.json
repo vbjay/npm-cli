@@ -1,0 +1,30 @@
+{
+  "name": "cloud-ramp-sdk",
+  "version": "1.1.2",
+  "description": "SDK for creating WebAssembly code for Cloud Ramp",
+  "main": "index.js",
+  "files": [
+    "assembly/",
+    "scripts/"
+  ],
+  "keywords": [
+    "wasm",
+    "sdk",
+    "cloud-ramp"
+  ],
+  "author": "Peter Olsen",
+  "license": "MIT",
+  "dependencies": {
+    "assemblyscript": "^0.28.9"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  }
+}

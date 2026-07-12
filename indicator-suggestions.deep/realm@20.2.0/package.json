@@ -1,0 +1,283 @@
+{
+  "name": "realm",
+  "version": "20.2.0",
+  "description": "Realm by MongoDB is an offline-first mobile database: an alternative to SQLite and key-value stores",
+  "license": "apache-2.0",
+  "homepage": "https://www.mongodb.com/docs/realm/",
+  "keywords": [
+    "database",
+    "db",
+    "storage",
+    "react",
+    "react-native",
+    "persistence",
+    "local storage",
+    "localstorage",
+    "sqlite",
+    "async storage",
+    "asyncstorage",
+    "rocksdb",
+    "leveldb",
+    "realm",
+    "mongodb",
+    "offline first",
+    "offlinefirst",
+    "localfirst",
+    "local first"
+  ],
+  "author": {
+    "name": "MongoDB",
+    "email": "help@realm.io",
+    "url": "https://www.mongodb.com/docs/realm/"
+  },
+  "config": {
+    "anonymizedBundleId": "tkgif/+3l1e9wStGJp2TOngAK3UcQ2u7OM8ZYJU5JYo="
+  },
+  "types": "./dist/public-types/index.d.ts",
+  "main": "./dist/platform/node/index.js",
+  "react-native": "./index.react-native.js",
+  "exports": {
+    ".": {
+      "types": "./dist/public-types/index.d.ts",
+      "node": "./dist/platform/node/index.js",
+      "react-native": "./index.react-native.js"
+    },
+    "./scripts/submit-analytics": "./dist/scripts/submit-analytics.js",
+    "./react-native.config.js": "./react-native.config.js",
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#realm.node": "./prebuilds/node/realm.node"
+  },
+  "files": [
+    "scripts",
+    "dist",
+    "!dist/scripts/build/",
+    "binding/android",
+    "binding/apple",
+    "binding/jsi",
+    "binding/*.hpp",
+    "bindgen/src/*.h",
+    "bindgen/vendor/realm-core/bindgen/src/realm_helpers.h",
+    "prebuilds/apple",
+    "prebuilds/android",
+    "index.react-native.js",
+    "react-native.config.js",
+    "RealmJS.podspec",
+    "PrivacyInfo.xcprivacy",
+    "binding.gyp"
+  ],
+  "scripts": {
+    "test": "wireit",
+    "test:types": "tsc --project type-tests/tsconfig.json",
+    "lint": "eslint --ext .js,.mjs,.ts .",
+    "prebuild": "tsx ./src/scripts/build/cli.ts",
+    "prebuild-apple": "wireit",
+    "prebuild-apple:simulator": "wireit",
+    "prebuild-android": "wireit",
+    "prebuild-node": "wireit",
+    "build:ts": "wireit",
+    "build:node": "wireit",
+    "bindgen:jsi": "wireit",
+    "bindgen:wrapper": "wireit",
+    "check-types": "wireit",
+    "check-circular-imports": "wireit",
+    "install": "prebuild-install --runtime napi || echo 'Failed to download prebuild for Realm'",
+    "docs": "wireit",
+    "postinstall": "node ./scripts/submit-analytics.js"
+  },
+  "wireit": {
+    "test": {
+      "command": "mocha --exit",
+      "dependencies": [
+        "../fetch:build",
+        "build:node",
+        "bindgen:wrapper"
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tsconfig.tests.json"
+      }
+    },
+    "prebuild-apple": {
+      "command": "tsx ./src/scripts/build/cli.ts build-apple",
+      "files": [
+        "bindgen/vendor/realm-core/src",
+        "src/scripts"
+      ],
+      "output": [
+        "prebuilds/apple/realm-core.xcframework"
+      ]
+    },
+    "prebuild-apple:simulator": {
+      "command": "tsx ./src/scripts/build/cli.ts build-apple --platform iphonesimulator --configuration Debug",
+      "files": [
+        "bindgen/vendor/realm-core/src",
+        "src/scripts"
+      ],
+      "output": [
+        "prebuilds/apple/realm-core.xcframework"
+      ]
+    },
+    "prebuild-android": {
+      "command": "tsx ./src/scripts/build/cli.ts build-android",
+      "files": [
+        "bindgen/vendor/realm-core/src",
+        "src/scripts"
+      ],
+      "output": [
+        "prebuilds/android"
+      ]
+    },
+    "build:ts": {
+      "command": "tsc --build",
+      "dependencies": [
+        "../fetch:build",
+        "bindgen:wrapper"
+      ]
+    },
+    "bindgen:configure": {
+      "command": "cmake-js configure --debug --directory binding/node"
+    },
+    "bindgen:build:node": {
+      "command": "cmake --build binding/node/build --target realm-js-node",
+      "dependencies": [
+        "bindgen:configure"
+      ]
+    },
+    "bindgen:jsi": {
+      "command": "realm-bindgen --template bindgen/src/templates/jsi.ts --spec bindgen/vendor/realm-core/bindgen/spec.yml --spec bindgen/js_spec.yml --opt-in bindgen/js_opt_in_spec.yml --output ./binding/jsi",
+      "dependencies": [
+        "bindgen:generate:spec-schema"
+      ],
+      "files": [
+        "bindgen/vendor/realm-core/bindgen/spec.yml",
+        "bindgen/vendor/realm-core/bindgen/src",
+        "bindgen/js_spec.yml",
+        "bindgen/js_opt_in_spec.yml",
+        "bindgen/src",
+        "!bindgen/src/templates",
+        "bindgen/src/templates/jsi.ts"
+      ],
+      "output": [
+        "binding/jsi/jsi_init.cpp"
+      ]
+    },
+    "bindgen:wrapper": {
+      "command": "realm-bindgen --template bindgen/src/templates/wrapper.ts --spec bindgen/vendor/realm-core/bindgen/spec.yml --spec bindgen/js_spec.yml --opt-in bindgen/js_opt_in_spec.yml --output ./src/binding",
+      "dependencies": [
+        "bindgen:generate:spec-schema"
+      ],
+      "files": [
+        "bindgen/vendor/realm-core/bindgen/spec.yml",
+        "bindgen/vendor/realm-core/bindgen/src",
+        "bindgen/js_spec.yml",
+        "bindgen/js_opt_in_spec.yml",
+        "bindgen/src",
+        "!bindgen/src/templates",
+        "bindgen/src/templates/wrapper.ts"
+      ],
+      "output": [
+        "src/binding/wrapper.generated.ts"
+      ]
+    },
+    "bindgen:generate:spec-schema": {
+      "command": "typescript-json-schema bindgen/vendor/realm-core/bindgen/tsconfig.json RelaxedSpec --include bindgen/vendor/realm-core/bindgen/src/spec/relaxed-model.ts --out bindgen/vendor/realm-core/bindgen/generated/spec.schema.json --required --noExtraProps",
+      "files": [
+        "bindgen/vendor/realm-core/bindgen/src/spec/relaxed-model.ts",
+        "bindgen/vendor/realm-core/bindgen/tsconfig.json"
+      ],
+      "output": [
+        "bindgen/vendor/realm-core/bindgen/generated/spec.schema.json"
+      ]
+    },
+    "build:node": {
+      "dependencies": [
+        {
+          "script": "bindgen:build:node",
+          "cascade": false
+        }
+      ]
+    },
+    "prebuild-node": {
+      "command": "cross-env-shell prebuild --runtime napi --arch $PREBUILD_ARCH -- --directory binding/node",
+      "env": {
+        "PREBUILD_ARCH": {
+          "external": true,
+          "default": "undefined"
+        }
+      }
+    },
+    "check-types": {
+      "command": "tsc --project tsconfig.public-types-check.json",
+      "dependencies": [
+        "build:ts"
+      ]
+    },
+    "check-circular-imports": {
+      "command": "madge --circular --extensions ts src",
+      "dependencies": [
+        "../fetch:build",
+        "bindgen:generate:typescript",
+        "bindgen:generate:node-wrapper",
+        "bindgen:generate:react-native-wrapper",
+        "bindgen:transpile"
+      ]
+    },
+    "docs": {
+      "command": "typedoc",
+      "dependencies": [
+        "build:ts"
+      ]
+    }
+  },
+  "dependencies": {
+    "@realm/fetch": "^0.1.1",
+    "bson": "^4.7.2",
+    "debug": "^4.3.4",
+    "node-machine-id": "^1.1.12",
+    "path-browserify": "^1.0.1",
+    "prebuild-install": "^7.1.2"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.71.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "@commander-js/extra-typings": "^12",
+    "@realm/bindgen": "^0.1.0",
+    "@types/node": "^22",
+    "@types/path-browserify": "^1.0.0",
+    "cmake-js": "6.3.2",
+    "command-line-args": "^5.2.1",
+    "commander": "^12",
+    "cross-env": "^7.0.3",
+    "glob": "^10.3.12",
+    "prebuild": "^13.0.1",
+    "react-native": "0.80.2",
+    "typedoc-plugin-rename-defaults": "^0.7.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/realm/realm-js.git",
+    "directory": "packages/realm"
+  },
+  "binary": {
+    "module_name": "realm",
+    "module_path": "prebuilds/node",
+    "host": "https://static.realm.io",
+    "remote_path": "realm-js-prebuilds/{version}",
+    "napi_versions": [
+      6
+    ]
+  }
+}

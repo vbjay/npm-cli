@@ -1,0 +1,49 @@
+{
+  "name": "@hmos-library-adapter/fast",
+  "version": "0.0.13",
+  "description": "鸿蒙三方库适配统一入口（高效流程版）— 自动判定 Flutter 插件 / React Native 模块 / 原生 Android 库，路由到对应 agent 完成 HarmonyOS 适配。安装到 OpenCode / ClaudeCode 宿主。",
+  "type": "module",
+  "main": "src/plugin.js",
+  "exports": {
+    ".": "./src/plugin.js",
+    "./plugin": "./src/plugin.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "hmos-library-adapter-fast": "src/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "agent",
+    "shared",
+    "README.md"
+  ],
+  "scripts": {
+    "stage": "node scripts/stage-agent.mjs",
+    "stage:clean": "node scripts/stage-agent.mjs --clean",
+    "prepack": "node scripts/stage-agent.mjs",
+    "postpack": "node scripts/stage-agent.mjs --clean",
+    "install:dry": "node src/cli.js install --dry-run",
+    "doctor": "node src/cli.js doctor"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "harmonyos",
+    "openharmony",
+    "ohos",
+    "flutter",
+    "react-native",
+    "android",
+    "sdk",
+    "arkts",
+    "opencode",
+    "claudecode",
+    "agent"
+  ],
+  "license": "MIT"
+}

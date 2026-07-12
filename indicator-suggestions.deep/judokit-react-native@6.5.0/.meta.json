@@ -1,0 +1,79 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e35acdb675af54e9",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/rewrite-package-json-module-path.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "5ea8a9c43e60c39405977a7c936052fa0acc99a854722ce0e51569e442944797",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "org.jetbrains.kotlin:kotlin-stdlib:${getExtOrDefault(",
+              "com.judopay:judokit-android:${getExtOrDefault("
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/rewrite-package-json-module-path.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "eb692b6c18658de582f15c7064d67cd0f9cae9510828908294c9c737a7cf4803",
+        "sizeBytes": 2590,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:03.784Z"
+  },
+  "hash": "sha256:a09f36fed1b37ffc86f4a5ba18a7fe5f5962c368e2e1570188eb4a4d28ed6e1e"
+}

@@ -1,0 +1,44 @@
+{
+  "name": "@mywallpaper/addon-dev",
+  "version": "0.1.3",
+  "description": "Official MyWallpaper addon development runner.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "mywallpaper-addon": "./bin/mywallpaper-addon.mjs"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "vite": "^7.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "~5.8.3"
+  },
+  "keywords": [
+    "mywallpaper",
+    "addon",
+    "vite",
+    "dev-server"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0"
+  }
+}

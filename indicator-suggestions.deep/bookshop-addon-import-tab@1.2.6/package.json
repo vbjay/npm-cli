@@ -1,0 +1,61 @@
+{
+  "name": "bookshop-addon-import-tab",
+  "version": "1.2.6",
+  "description": "A Storybook addon that gives an example for importing a component",
+  "main": "out/preset.js",
+  "files": [
+    "out/**/*",
+    "README.md",
+    "*.js"
+  ],
+  "keywords": [
+    "addon",
+    "storybook",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Robbie-Cook/storybook-addon-html"
+  },
+  "scripts": {
+    "build": "yarn clean && babel -d ./out ./src",
+    "build:watch": "babel --watch -d ./out ./src",
+    "start": "npm run build:watch",
+    "clean": "rm -rf ./out",
+    "prepare": "yarn build",
+    "prepublishOnly": "cp ../README.md ."
+  },
+  "author": "Robbie Cook",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.9",
+    "@storybook/addons": "^6.1.11",
+    "@storybook/react": "^6.1.11",
+    "babel-eslint": "^10.1.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "semantic-release": "^17.3.1"
+  },
+  "peerDependencies": {
+    "@storybook/addons": "^6.1.11",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.12.11",
+    "@babel/parser": "^7.12.11",
+    "@storybook/api": "^6.1.11",
+    "@storybook/components": "^6.1.11",
+    "prettier": "^2.2.1",
+    "react-syntax-highlighter": "^15.4.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

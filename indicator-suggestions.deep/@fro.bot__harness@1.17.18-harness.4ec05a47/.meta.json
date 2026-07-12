@@ -1,0 +1,87 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2c5160477c0d466b",
+    "fetchedFiles": [
+      "dist/platform-CKoiiV92.mjs",
+      "dist/postinstall.mjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "90746589cb73e1eabf539d1c5185715eb6c3387d7e7f8f9bd3bbac8979ee47a8",
+        "sizeBytes": 2562,
+        "signals": [
+          "uses-child-process",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/platform-CKoiiV92.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/platform-CKoiiV92.mjs",
+        "reason": "required by ./dist/postinstall.mjs",
+        "sha256": "b65f666802fd56754b817e6f00d40e7eceba5b1b427c4059c2bc824c9b808be7",
+        "sizeBytes": 2295,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:05.259Z"
+  },
+  "hash": "sha256:083337673ea8848929149bf443cad944e77d4cb46c6dab96e6c1ab707630f789"
+}

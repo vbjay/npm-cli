@@ -1,0 +1,51 @@
+{
+  "name": "convert-to-arrow",
+  "version": "1.1.4",
+  "description": "Codemod to safely convert javascript function declarations into equivalent arrow-function expressions.",
+  "type": "module",
+  "bin": {
+    "convert-to-arrow": "./dist/cli.js"
+  },
+  "keywords": ["codemod", "javascript", "typescript", "arrow-functions", "refactor", "cli"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsup",
+    "benchmark": "bash test/benchmark.sh",
+    "lefthook": "lefthook install",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "biome lint --write .",
+    "lint:check": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "knip": "knip",
+    "prepare": "lefthook install",
+    "test": "npm run build && node --test test/*.test.js",
+    "verify": "npm run knip && npm run format:check && npm run lint:check && npm run typecheck && npm run test",
+    "deploy:npm": "npm run verify && node ./scripts/deploy.mjs"
+  },
+  "dependencies": {
+    "ts-morph": "^28.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^24.1.0",
+    "knip": "^6.18.0",
+    "lefthook": "^2.1.9",
+    "tsup": "^8.5.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/richard-unterberg/convert-to-arrow"
+  }
+}

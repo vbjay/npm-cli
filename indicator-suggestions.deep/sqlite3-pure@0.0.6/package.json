@@ -1,0 +1,40 @@
+{
+  "name": "sqlite3-pure",
+  "version": "0.0.6",
+  "description": "A simple SQLite3 Node.js addon with embedded SQLite3 (version 3.50.4)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/li1125435097/sqlite3-pure.git"
+  },
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "test": "node test/index.js",
+    "install": "node-gyp rebuild",
+    "pub": "npm version patch && npm publish --access public"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0"
+  },
+  "peerDependencies": {
+    "node-gyp": "11.2"
+  },
+  "peerDependenciesMeta": {
+    "node-gyp": {
+      "optional": true
+    }
+  },
+  "optionalDependencies": {
+    "node-gyp": "11.2"
+  },
+  "keywords": [
+    "sqlite3",
+    "node",
+    "addon",
+    "database",
+    "embedded"
+  ],
+  "author": "Mount Tai",
+  "license": "MIT",
+  "gypfile": true
+}

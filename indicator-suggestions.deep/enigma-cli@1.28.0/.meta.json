@@ -1,0 +1,122 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a0a079ca39772aaa",
+    "fetchedFiles": [
+      "bin/download.mjs",
+      "bin/platform.mjs",
+      "bin/postinstall.mjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c37b7aedaf3fcfae091ede9e9bdbe19db6f2f0029ebcbf621cbfa99dc32e5887",
+        "sizeBytes": 1850,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/platform.mjs",
+          "bin/download.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "bin/platform.mjs",
+        "reason": "required by ./bin/postinstall.mjs; required by ./bin/download.mjs",
+        "sha256": "e74957e51259c539e36958359c3da3deb265958a6295fde74a14ff5ab54a68fd",
+        "sizeBytes": 3348,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "bin/download.mjs",
+        "reason": "required by ./bin/postinstall.mjs",
+        "sha256": "dad36be469298a23b5dbfafa9d2234b1945f1d68fdb51349f4bef7cebde3b8c6",
+        "sizeBytes": 5253,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "bin/platform.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/FJRG2007/enigma/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:41.874Z"
+  },
+  "hash": "sha256:51c10c7953a22d0d4615029c6b9b6e9f65c98eb312d1d48bd08ed8b047257ce7"
+}

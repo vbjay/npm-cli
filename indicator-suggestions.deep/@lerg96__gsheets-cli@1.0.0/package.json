@@ -1,0 +1,77 @@
+{
+  "name": "@lerg96/gsheets-cli",
+  "version": "1.0.0",
+  "description": "CLI tool for Google Sheets using Google Sheets API",
+  "main": "dist/cli.js",
+  "types": "dist/cli.d.ts",
+  "bin": {
+    "gsheets": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "dev": "ts-node src/cli.ts",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "test": "bash scripts/run-tests.sh",
+    "test:watch": "bash scripts/run-tests.sh --watch",
+    "test:coverage": "bash scripts/run-tests.sh --coverage",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "google-sheets",
+    "cli",
+    "google-api",
+    "sheets",
+    "csv",
+    "json",
+    "typescript",
+    "nodejs",
+    "npm"
+  ],
+  "author": "Luis Romero <lerg96@gmail.com>",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/cli.d.ts",
+      "default": "./dist/cli.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lerg96/gsheets-cli.git"
+  },
+  "homepage": "https://github.com/lerg96/gsheets-cli#readme",
+  "bugs": {
+    "url": "https://github.com/lerg96/gsheets-cli/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "commonjs",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "csv-stringify": "^6.5.1",
+    "googleapis": "^144.0.0"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.5",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.10.5",
+    "eslint": "^9.17.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.2",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

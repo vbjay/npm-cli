@@ -1,0 +1,135 @@
+{
+  "name": "i18n-tag-schema",
+  "description": "Generates a json schema for all i18n tagged template literals in your project",
+  "author": {
+    "email": "steffen@kolmer.net",
+    "name": "Steffen Kolmer",
+    "url": "http://kolmer.net"
+  },
+  "homepage": "http://i18n-tag.kolmer.net",
+  "icon": "images/vscode-18n-tag-schema-icon.png",
+  "license": "MIT",
+  "keywords": [
+    "javascript",
+    "JS",
+    "ES6",
+    "ES2015",
+    "Intl",
+    "l10n",
+    "i18n",
+    "translation",
+    "localization",
+    "internationalization",
+    "template literal",
+    "tagged template",
+    "template tag",
+    "es2015-i18n-tag",
+    "i18n-tag-schema",
+    "vscode-i18n-tag-schema",
+    "babel-plugin-i18n-tag-translate"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skolmer/i18n-tag-schema.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skolmer/i18n-tag-schema/issues",
+    "email": "steffen@kolmer.net"
+  },
+  "engines": {
+    "node": ">= 8.10"
+  },
+  "dependencies": {
+    "ajv": "^6.5.2",
+    "babel-runtime": "^6.26.0",
+    "babel-traverse": "^6.26.0",
+    "babylon": "^6.18.0",
+    "chalk": "^2.4.1",
+    "commander": "^2.16.0",
+    "escape-string-regexp": "^1.0.5",
+    "lodash": "^4.17.10",
+    "mz": "^2.7.0",
+    "progress": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.5",
+    "babel-jest": "^23.2.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "coveralls": "^3.0.2",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.0.1",
+    "eslint-plugin-import": "^2.13.0",
+    "husky": "^0.14.3",
+    "jest": "^23.2.0",
+    "rimraf": "^2.6.2",
+    "semantic-release": "^15.6.3",
+    "shx": "^0.3.1",
+    "typedoc": "^0.11.1",
+    "typescript": "^2.9.2",
+    "validate-commit-msg": "^2.14.0",
+    "travis-deploy-once": "^5.0.1"
+  },
+  "scripts": {
+    "prepare": "npm run lint && npm run clean && npm run build",
+    "test": "npm run test:local && npm run report-coverage",
+    "test:local": "npm run lint && jest",
+    "report-coverage": "shx cat ./coverage/lcov.info | coveralls",
+    "clean": "rimraf dist/lib/**/*",
+    "build": "babel lib -d dist/lib --source-maps --copy-files",
+    "lint": "eslint lib",
+    "pushdocs": "git add docs && git commit -m \"docs(pages): Updated pages\" && git subtree push --prefix docs origin gh-pages",
+    "docs": "typedoc --out ./docs/ ./lib/index.d.ts --module commonjs --readme ./README.md --target ES6 --includeDeclarations --hideGenerator --name i18n-tag-schema --mode file --media ./images",
+    "commit": "git cz",
+    "commit-all": "git add . && npm run commit",
+    "semantic-release": "semantic-release",
+    "precommit": "npm run test:local",
+    "commitmsg": "validate-commit-msg",
+    "travis-deploy-once": "travis-deploy-once"
+  },
+  "typings": "./dist/lib/index.d.ts",
+  "main": "./dist/lib",
+  "bin": {
+    "i18n-tag-schema": "./cli/index.js"
+  },
+  "files": [
+    "dist",
+    "cli"
+  ],
+  "jest": {
+    "verbose": false,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "lib/*"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text-summary",
+      "text"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 92,
+        "functions": 100,
+        "lines": 94,
+        "statements": 94
+      }
+    },
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/__tests__/data/"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "version": "2.5.0"
+}

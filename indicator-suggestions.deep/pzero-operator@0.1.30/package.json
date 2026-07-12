@@ -1,0 +1,92 @@
+{
+  "name": "pzero-operator",
+  "version": "0.1.30",
+  "private": false,
+  "type": "module",
+  "description": "Operator is a coding-first terminal AI agent from ProjectZero for software development, shell execution, repository workflows, advanced file reading, and structured deep research.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "operator",
+    "cli",
+    "ai-agent",
+    "coding-agent",
+    "terminal",
+    "ollama"
+  ],
+  "dependencies": {
+    "@operator/agent-core": "0.69.0",
+    "@operator/ai": "0.69.0",
+    "@operator/jiti": "2.6.5",
+    "@operator/tui": "0.69.0",
+    "@silvia-odwyer/photon-node": "0.3.4",
+    "chalk": "5.6.2",
+    "cli-highlight": "2.1.11",
+    "diff": "8.0.4",
+    "express": "^4.22.2",
+    "extract-zip": "2.0.1",
+    "file-type": "21.3.4",
+    "glob": "13.0.6",
+    "hosted-git-info": "9.0.2",
+    "ignore": "7.0.5",
+    "minimatch": "10.2.5",
+    "proper-lockfile": "4.1.2",
+    "strip-ansi": "7.2.0",
+    "typebox": "1.1.31",
+    "undici": "7.25.0",
+    "uuid": "11.1.0",
+    "ws": "^8.21.0",
+    "yaml": "2.8.3"
+  },
+  "bundleDependencies": [
+    "@operator/agent-core",
+    "@operator/ai",
+    "@operator/jiti",
+    "@operator/tui",
+    "@silvia-odwyer/photon-node",
+    "chalk",
+    "cli-highlight",
+    "diff",
+    "express",
+    "extract-zip",
+    "file-type",
+    "glob",
+    "hosted-git-info",
+    "ignore",
+    "minimatch",
+    "proper-lockfile",
+    "strip-ansi",
+    "typebox",
+    "undici",
+    "uuid",
+    "ws",
+    "yaml"
+  ],
+  "bin": {
+    "operator": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "assets",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "node dist/cli.js",
+    "start": "node dist/cli.js",
+    "build": "echo 'Operator uses the bundled runtime engine. No build step is required yet.'",
+    "test": "echo 'No automated tests are wired yet.'",
+    "postinstall": "node scripts/postinstall.js",
+    "pack:release": "bash scripts/create-release.sh"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "operatorConfig": {
+    "name": "operator",
+    "configDir": ".operator"
+  }
+}

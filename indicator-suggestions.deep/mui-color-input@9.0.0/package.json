@@ -1,0 +1,110 @@
+{
+  "name": "mui-color-input",
+  "description": "A color input designed for the React library MUI built with TinyColor",
+  "author": "Victor de la Fouchardiere <victor.delafouchardiere@gmail.com> (https://github.com/viclafouch)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/viclafouch/mui-color-input/issues"
+  },
+  "homepage": "https://viclafouch.github.io/mui-color-input/",
+  "type": "module",
+  "version": "9.0.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/mui-color-input.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/mui-color-input.es.js",
+      "default": "./dist/mui-color-input.es.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viclafouch/mui-color-input.git"
+  },
+  "keywords": [
+    "react",
+    "color",
+    "typescript",
+    "picker",
+    "input",
+    "mui",
+    "javascript",
+    "hex",
+    "rgb",
+    "material"
+  ],
+  "scripts": {
+    "build": "pnpm lint && pnpm test -- run && vite build && pnpm check-types",
+    "lint": "tsc && eslint",
+    "lint:fix": "pnpm lint -- --fix",
+    "check-types": "attw --pack . --ignore-rules cjs-resolves-to-esm unexpected-module-syntax",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test": "vitest",
+    "release": "standard-version",
+    "coverage": "vitest run --coverage",
+    "prepare": "husky"
+  },
+  "standard-version": {
+    "scripts": {
+      "prerelease": "pnpm build"
+    },
+    "skip": {
+      "changelog": true
+    }
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^7.0.0 || ^9.0.0",
+    "@types/react": "^18.0.0 || ^19.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@ctrl/tinycolor": "^4.2.0"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^9.0.0",
+    "@storybook/addon-docs": "^10.3.3",
+    "@storybook/addon-links": "^10.3.3",
+    "@storybook/react-vite": "^10.3.3",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2",
+    "@types/react-dom": "^19.2",
+    "@types/stylis": "^4.2.7",
+    "@viclafouch/eslint-config-viclafouch": "^5.3.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-storybook": "10.3.3",
+    "husky": "^9.1.7",
+    "jsdom": "^29.0.1",
+    "prettier": "^3.8",
+    "react": "^19.2",
+    "react-dom": "^19.2",
+    "standard-version": "^9.5.0",
+    "storybook": "^10.3.3",
+    "stylis": "^4.3.6",
+    "stylis-plugin-rtl": "^2.1.1",
+    "typescript": "^5.9",
+    "vite": "^8.0.3",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^4.1.2"
+  }
+}

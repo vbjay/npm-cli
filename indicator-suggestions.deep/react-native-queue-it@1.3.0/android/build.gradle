@@ -1,0 +1,120 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['QueueIt_kotlinVersion']
+
+  repositories {
+    mavenCentral()
+    google()
+    maven{
+      url "https://repo1.maven.org/maven2/"
+    }
+    maven {
+      url "https://maven.google.com"
+    }
+    mavenLocal()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.3.2'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+plugins {
+  id 'com.android.library'
+  id 'com.facebook.react'
+  id 'kotlin-android'
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['QueueIt_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['QueueIt_' + name]).toInteger()
+}
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.newArchEnabled == "true"
+}
+
+android {
+  namespace "com.reactnativequeueit"
+  compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+  buildFeatures {
+    prefab true
+  }
+  defaultConfig {
+    minSdkVersion 24
+    targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+    versionCode 1
+    versionName "1.0"
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+
+    externalNativeBuild {
+      cmake {
+        cppFlags "-std=c++17"
+        arguments "-DANDROID_STL=c++_shared",
+                  "-DCMAKE_OBJECT_PATH_MAX=1024",
+                  "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON",
+                  "-DREACT_NATIVE_DIR=${rootProject.projectDir}/../node_modules/react-native",
+                  "-DCODEGEN_DIR=${buildDir}/generated/source/codegen/jni"
+      }
+    }
+
+    ndk {
+      abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"
+    }
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  externalNativeBuild {
+    cmake {
+      path "src/main/jni/CMakeLists.txt"
+    }
+  }
+  sourceSets {
+    main {
+      java.srcDirs += "$buildDir/generated/source/codegen/java"
+      jniLibs.srcDirs += "$buildDir/generated/source/codegen/jni"
+    }
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ['src/newarch']
+      } else {
+        java.srcDirs += ['src/oldarch']
+      }
+    }
+  }
+
+  packaging {
+    jniLibs {
+      excludes += ["**/libreactnative.so", "**/libjsi.so"]
+    }
+  }
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  // The 'com.facebook.react' Gradle plugin (applied above) substitutes react-native ->
+  // react-android and supplies the version from the host app's installed React Native,
+  // so no version is pinned here. fbjni is provided transitively by react-android (its
+  // prefab is configured by React Native's CMake helper), so it needs no explicit entry.
+  implementation 'com.facebook.react:react-native:+'
+
+  //App dependencies
+  // Queue-it Android SDK 2.3.0+ is AndroidX-native, so it needs no com.android.support
+  // exclude and works with Jetifier disabled.
+  implementation('com.queue-it.androidsdk:library:2.3.0')
+  implementation('androidx.appcompat:appcompat:1.7.1')
+  implementation('com.google.android.material:material:1.14.0')
+  implementation('androidx.localbroadcastmanager:localbroadcastmanager:1.1.0')
+}

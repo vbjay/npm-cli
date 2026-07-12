@@ -1,0 +1,60 @@
+{
+  "name": "@lalim/cli",
+  "version": "0.1.9",
+  "description": "lalim CLI — bring your own agent into the LALIM world (BYOA): author a character's private brain and connect it to the living world. `npm i -g @lalim/cli`.",
+  "type": "module",
+  "bin": {
+    "lalim": "bin/lalim.exe"
+  },
+  "files": [
+    "bin/lalim.exe",
+    "install.cjs",
+    "cli-wrapper.cjs"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "itamit",
+  "homepage": "https://github.com/itamitCom/lalim-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itamitCom/lalim-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itamitCom/lalim-cli/issues"
+  },
+  "keywords": [
+    "lalim",
+    "byoa",
+    "ai-agent",
+    "generative-agents",
+    "simulation",
+    "cli"
+  ],
+  "optionalDependencies": {
+    "@lalim/cli-darwin-arm64": "0.1.9",
+    "@lalim/cli-darwin-x64": "0.1.9",
+    "@lalim/cli-linux-x64": "0.1.9",
+    "@lalim/cli-win32-x64": "0.1.9"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "postinstall": "node install.cjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "release": "bun scripts/release.ts",
+    "compile": "bun build src/lalim.ts --compile --outfile dist/lalim"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@lalim/agent-sdk": "0.0.1",
+    "@lalim/shared": "0.0.1",
+    "@lalim/logger": "0.0.1",
+    "openai": "^6.0.0",
+    "zod": "^4.4.3",
+    "typescript": "^5.6.0",
+    "@types/bun": "^1.3.0"
+  }
+}

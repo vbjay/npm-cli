@@ -1,0 +1,126 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9a82e6d9c4c56cb8",
+    "fetchedFiles": [
+      "download.js",
+      "package.json",
+      "post-install.js",
+      "utils.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "fs-extra",
+        "versionSpec": "^9.1.0"
+      },
+      {
+        "name": "chalk",
+        "versionSpec": "^4.1.0"
+      },
+      {
+        "name": "debug",
+        "versionSpec": "^4.3.1"
+      },
+      {
+        "name": "download",
+        "versionSpec": "^8.0.0"
+      },
+      {
+        "name": "cli-progress",
+        "versionSpec": "^3.9.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chalk@4.1.2",
+      "cli-progress@3.12.0",
+      "debug@4.4.3",
+      "download@8.0.0",
+      "fs-extra@9.1.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "post-install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "bc26324a1b8412fdc7721f671481938b63ed66d314e739942e1bd95610ea75a3",
+        "sizeBytes": 281,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "download.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "download.js",
+        "reason": "required by ./post-install.js",
+        "sha256": "20c3b7456c8990ad8b785317f856a4b038dcebe9822bff963509bc543c0114f8",
+        "sizeBytes": 3469,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "utils.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/stuartZhang/scaffold-wizard/releases/download/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "utils.js",
+        "reason": "required by ./download.js",
+        "sha256": "37337c76f487f3fb60ddfa1fe7a2cf86274320223efddce08b16d292730b3c23",
+        "sizeBytes": 544,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:08.243Z"
+  },
+  "hash": "sha256:1f7162fb7436fdea1681ea851f28848b9c98ef9210b20f83a6ab4e0f8541616c"
+}

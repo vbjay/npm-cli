@@ -1,0 +1,71 @@
+{
+  "name": "@bymbly/api-tools",
+  "type": "module",
+  "version": "1.4.62",
+  "description": "Unified, opinionated CLI wrapper for API specification tooling.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "openapi",
+    "asyncapi",
+    "arazzo",
+    "redocly",
+    "spectral",
+    "cli",
+    "tools",
+    "api"
+  ],
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bymbly/api-tools.git"
+  },
+  "bin": {
+    "api-tools": "dist/bin/api-tools.js"
+  },
+  "scripts": {
+    "dev": "npm run watch",
+    "build": "tsc -p tsconfig.build.json && npm run copy:defaults",
+    "test": "vitest run",
+    "build:clean": "npm run clean && npm run build",
+    "pretest": "npm run build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build:clean",
+    "watch": "npm run copy:defaults && tsc --watch",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "typecheck": "tsc",
+    "lint": "npm run lint:md && npm run lint:eslint",
+    "lint:check": "npm run lint:md:check && npm run lint:eslint:check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint:md": "markdownlint-cli2 --fix",
+    "lint:md:check": "markdownlint-cli2",
+    "lint:eslint": "eslint . --fix",
+    "lint:eslint:check": "eslint .",
+    "clean": "npm run clean:dist",
+    "clean:dist": "rm -rf ./dist",
+    "copy:defaults": "mkdir -p dist/defaults && cp -a defaults/. dist/defaults/"
+  },
+  "//": "react/react/dom in dependencies: not used directly - ensures consistent hoisting for @redocly/cli and @asyncapi/cli. see: https://github.com/bymbly/api-tools/issues/37",
+  "dependencies": {
+    "@asyncapi/cli": "6.0.2",
+    "@commander-js/extra-typings": "14.0.0",
+    "@redocly/cli": "2.37.0",
+    "@stoplight/spectral-cli": "6.16.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.4",
+    "@types/node": "24.13.2",
+    "@vitest/ui": "4.1.9",
+    "eslint": "9.39.4",
+    "markdownlint-cli2": "0.22.1",
+    "prettier": "3.9.4",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.58.2",
+    "vitest": "4.1.9"
+  }
+}

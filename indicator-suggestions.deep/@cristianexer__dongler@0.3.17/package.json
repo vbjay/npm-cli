@@ -1,0 +1,63 @@
+{
+  "name": "@cristianexer/dongler",
+  "version": "0.3.17",
+  "description": "Fast Rust-native PDF and document extraction for Node.js, with Markdown, LaTeX, and JSON output.",
+  "author": "Daniel Fat",
+  "license": "MIT",
+  "keywords": [
+    "pdf",
+    "pdf-parser",
+    "document-extraction",
+    "markdown",
+    "latex",
+    "rust",
+    "napi"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristianexer/dongler.git"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "scripts/build-native.mjs",
+    "vendor",
+    "package.json"
+  ],
+  "scripts": {
+    "build:native": "node scripts/build-native.mjs",
+    "build:ts": "tsc -p tsconfig.json",
+    "build": "npm run build:native && npm run build:ts",
+    "test": "npm run build && vitest run",
+    "prepack": "node scripts/vendor-rust.mjs && npm run build",
+    "postinstall": "node scripts/build-native.mjs"
+  },
+  "napi": {
+    "binaryName": "dongler"
+  },
+  "dependencies": {
+    "@napi-rs/cli": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

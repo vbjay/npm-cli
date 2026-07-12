@@ -1,0 +1,58 @@
+{
+  "name": "node-xlsxwriter",
+  "version": "v0.1.20",
+  "description": "node-xlsxwriter is a Node.js wrapper for the Rust library rust_xlsxwriter",
+  "main": "./javascript/src/index.js",
+  "author": "Victor Ribeiro de Lima",
+  "license": "ISC",
+  "types": "./javascript/types/src/index.d.ts",
+  "scripts": {
+    "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
+    "build:debug": "npm run build && rm -rf native && mkdir native && mv ./index.node ./native/node-xlsxwriter.node",
+    "build:release": "npm run build -- --release && npx tsc",
+    "release:types": "npx tsc",
+    "release:native": "npm run build:release && rm -rf native && mkdir native && mv ./index.node ./native/node-xlsxwriter.node",
+    "test:rust": "cargo test",
+    "test:node": "node --test 'javascript/test/**/*.spec.*'",
+    "install": "node-pre-gyp install"
+  },
+  "keywords": [
+    "xlsx",
+    "xlsxwriter",
+    "excel",
+    "node",
+    "nodejs",
+    "node.js",
+    "rust",
+    "wrapper"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorRibeiroLima/node-xlsxwriter.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "1.0.11"
+  },
+  "devDependencies": {
+    "cargo-cp-artifact": "0.1.9",
+    "typescript": "5.6.3"
+  },
+  "binary": {
+    "module_name": "node-xlsxwriter",
+    "module_path": "./native",
+    "host": "https://github.com/VictorRibeiroLima/node-xlsxwriter/releases/download/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
+    "remote_path": "v{version}"
+  }
+}

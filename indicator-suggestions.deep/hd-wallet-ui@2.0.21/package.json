@@ -1,0 +1,74 @@
+{
+  "name": "hd-wallet-ui",
+  "version": "2.0.21",
+  "description": "HD Wallet modal UI — login, keys, identity, trust map, and security bond. Attach to any button in your app.",
+  "type": "module",
+  "main": "src/app.js",
+  "module": "src/app.js",
+  "exports": {
+    ".": "./src/app.js",
+    "./lib": "./src/lib.js",
+    "./styles": "./styles/widget.css",
+    "./styles/demo": "./styles/main.css"
+  },
+  "files": [
+    "src/",
+    "styles/"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build:wasm": "emcmake cmake -B ../build-wasm -S .. -DCMAKE_BUILD_TYPE=Release -DHD_WALLET_BUILD_WASM=ON && cmake --build ../build-wasm --target hd_wallet_wasm_npm -j8",
+    "build:widget-css": "node scripts/build-widget-css.mjs",
+    "dev": "vite",
+    "dev:full": "npm run build:wasm && vite",
+    "build": "npm run build:wasm && vite build",
+    "build:docs": "npm run build:wasm && vite build --outDir ../docs --emptyOutDir",
+    "preview": "vite preview",
+    "prepack": "npm run build:widget-css",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.9.7",
+    "@noble/hashes": "^1.7.2",
+    "@peculiar/x509": "^1.14.3",
+    "@scure/base": "^1.2.4",
+    "@scure/bip32": "^2.0.1",
+    "bip39": "^3.1.0",
+    "buffer": "^6.0.3",
+    "flatbuffers": "^25.9.23",
+    "flatc-wasm": "^26.1.32",
+    "hd-wallet-wasm": "^2.0.21",
+    "qrcode": "^1.5.3",
+    "spacedatastandards.org": "^1.93.3",
+    "vcard-cryptoperson": "^1.1.11"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vitest": "^4.0.18"
+  },
+  "keywords": [
+    "hd-wallet",
+    "wallet-ui",
+    "webassembly",
+    "wasm",
+    "bip32",
+    "bip39",
+    "bip44",
+    "cryptocurrency",
+    "bitcoin",
+    "ethereum",
+    "solana"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigitalArsenal/hd-wallet-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DigitalArsenal/hd-wallet-wasm/issues"
+  },
+  "homepage": "https://digitalarsenal.github.io/hd-wallet-wasm/"
+}

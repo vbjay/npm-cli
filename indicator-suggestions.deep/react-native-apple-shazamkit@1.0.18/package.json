@@ -1,0 +1,82 @@
+{
+  "name": "react-native-apple-shazamkit",
+  "version": "1.0.18",
+  "description": "🎵 Powerful music recognition for React Native using Apple's ShazamKit. Identify songs, get metadata, and integrate with Apple Music seamlessly.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "bin": {
+    "setup-android": "./scripts/setup-android.js"
+  },
+  "scripts": {
+    "build": "expo-module build",
+    "build:plugin": "expo-module build plugin",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "open -a \"Xcode\" example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-module",
+    "ShazamKit",
+    "shazam",
+    "music",
+    "audio",
+    "recognition",
+    "identification",
+    "ios",
+    "android",
+    "apple-music",
+    "song-recognition",
+    "audio-fingerprinting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rizwan92/expo-shazamkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rizwan92/expo-shazamkit/issues"
+  },
+  "author": "Rizwan92 <chouhan.rizwan@gmail.com> (https://github.com/rizwan92)",
+  "license": "MIT",
+  "homepage": "https://github.com/rizwan92/expo-shazamkit#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "build",
+    "src",
+    "ios",
+    "android",
+    "plugin/build",
+    "scripts",
+    "app.plugin.js",
+    "expo-module.config.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "~18.2.14",
+    "expo-module-scripts": "^3.1.0",
+    "expo-modules-core": "^2.5.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "trailingComma": "all"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

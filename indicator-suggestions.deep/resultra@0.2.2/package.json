@@ -1,0 +1,63 @@
+{
+  "name": "resultra",
+  "version": "0.2.2",
+  "description": "Rust inspired Result type",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run",
+    "coverage": "vitest run --coverage",
+    "build": "tsup && tsc",
+    "prepublish": "npm run build",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whiteand/resultra.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "rust",
+    "result",
+    "monad"
+  ],
+  "tsup": {
+    "entry": [
+      "src/index.ts",
+      "src/utils.ts"
+    ],
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "default": "./dist/utils.js"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "utils": [
+        "dist/utils.d.ts"
+      ]
+    }
+  },
+  "author": "andrewbeletskiy",
+  "license": "ISC",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
+    "tsup": "^8.0.2",
+    "typescript": "^5.8.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
+  }
+}

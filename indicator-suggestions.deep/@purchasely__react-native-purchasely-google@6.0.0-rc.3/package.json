@@ -1,0 +1,91 @@
+{
+  "name": "@purchasely/react-native-purchasely-google",
+  "version": "6.0.0-rc.3",
+  "description": "Purchasely Google Play Billing dependency",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/packages/google/src/index.d.ts",
+  "files": [
+    "lib",
+    "android",
+    "cpp",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Purchasely/Purchasely-ReactNative.git",
+    "directory": "packages/google"
+  },
+  "author": "Purchasely <kevin@purchasely.com> (https://github.com/Purchasely/Purchasely-ReactNative)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Purchasely/Purchasely-ReactNative/issues"
+  },
+  "homepage": "https://github.com/Purchasely/Purchasely-ReactNative/packages/google#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@react-native/babel-preset": "0.86.0",
+    "@react-native/jest-preset": "0.86.0",
+    "@types/react": "^19.2.0",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-builder-bob": "^0.36.0",
+    "typescript": "^5.8.3"
+  },
+  "resolutions": {
+    "@types/react": "^19.2.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

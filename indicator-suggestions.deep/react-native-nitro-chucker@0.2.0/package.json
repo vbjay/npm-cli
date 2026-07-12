@@ -1,0 +1,152 @@
+{
+  "name": "react-native-nitro-chucker",
+  "version": "0.2.0",
+  "description": "On-device HTTP(S) network inspector for React Native — Chucker on Android, Wormholy on iOS, via Nitro.",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "git clean -dfX",
+    "release": "semantic-release",
+    "build": "npm run typecheck && bob build",
+    "codegen": "nitrogen --logLevel=\"debug\" && npm run build && node post-script.js",
+    "test": "jest",
+    "prepare": "bob build"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/src/__tests__/**/*.test.ts"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "tsconfig": {
+            "module": "commonjs",
+            "verbatimModuleSyntax": false
+          }
+        }
+      ]
+    }
+  },
+  "keywords": [
+    "react-native",
+    "nitro",
+    "nitro-modules",
+    "network-inspector",
+    "chucker",
+    "wormholy",
+    "http",
+    "debugging",
+    "android",
+    "ios"
+  ],
+  "files": [
+    "src",
+    "lib",
+    "nitrogen",
+    "cpp",
+    "nitro.json",
+    "android/build.gradle",
+    "android/fix-prefab.gradle",
+    "android/gradle.properties",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "*.podspec",
+    "app.plugin.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fluxlabs-tech/react-native-nitro-chucker.git"
+  },
+  "author": "fluxlabs",
+  "license": "MIT",
+  "bugs": "https://github.com/Fluxlabs-tech/react-native-nitro-chucker/issues",
+  "homepage": "https://github.com/Fluxlabs-tech/react-native-nitro-chucker#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^56.0.9",
+    "@jamesacarr/eslint-formatter-github-actions": "^0.2.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/jest": "^29.5.12",
+    "@types/react": "19.2.0",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
+    "jest": "^29.7.0",
+    "nitrogen": "0.35.9",
+    "react": "19.2.3",
+    "react-native": "0.84.1",
+    "react-native-builder-bob": "^0.40.18",
+    "react-native-nitro-modules": "0.35.9",
+    "semantic-release": "^25.0.3",
+    "ts-jest": "^29.4.11",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "warn",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false,
+    "semi": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json"
+        }
+      ]
+    ]
+  }
+}

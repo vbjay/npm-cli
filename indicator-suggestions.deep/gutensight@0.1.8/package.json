@@ -1,0 +1,90 @@
+{
+  "name": "gutensight",
+  "version": "0.1.8",
+  "description": "An advanced command-line SEO manager toolkit and library SDK for Single Page Applications (SPA).",
+  "type": "commonjs",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js",
+      "require": "./dist/src/index.js"
+    }
+  },
+  "bin": {
+    "seo": "./dist/bin/seo.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/bin/seo.js",
+    "dev": "ts-node ./bin/seo.ts",
+    "test": "jest",
+    "lint": "eslint . --ext .ts,.tsx",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "seo",
+    "sdk",
+    "spa",
+    "cli",
+    "typescript",
+    "javascript",
+    "react",
+    "vue",
+    "angular",
+    "svelte",
+    "nextjs",
+    "single-page-application",
+    "search-engine-optimization",
+    "web-development",
+    "web",
+    "npm",
+    "library",
+    "framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gutensight-SEO/sdk"
+  },
+  "author": "Abdulhakeem Muhammed Ibiyemi",
+  "license": "BUSL-1.1",
+  "dependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/parser": "^7.29.7",
+    "@babel/traverse": "^8.0.0",
+    "@babel/types": "^7.29.7",
+    "axios": "^1.18.0",
+    "commander": "^15.0.0",
+    "configstore": "^8.0.0",
+    "dotenv": "^17.4.2",
+    "fs-extra": "^11.3.5",
+    "inquirer": "^14.0.2",
+    "luxon": "^3.7.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@types/configstore": "^6.0.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.10",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.9.3",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "prettier": "^3.8.4",
+    "react": "^19.2.7",
+    "ts-jest": "^29.4.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

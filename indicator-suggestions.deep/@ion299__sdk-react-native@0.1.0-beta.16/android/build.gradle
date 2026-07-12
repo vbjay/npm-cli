@@ -1,0 +1,58 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.getExtOrDefault = { name, defaultValue ->
+        rootProject.ext.has(name) ? rootProject.ext.get(name) : defaultValue
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.1.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+android {
+    namespace "com.chatplatform.sdk"
+    compileSdkVersion getExtOrDefault("compileSdkVersion", 34)
+
+    defaultConfig {
+        minSdkVersion getExtOrDefault("minSdkVersion", 24)
+        targetSdkVersion getExtOrDefault("targetSdkVersion", 34)
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile "src/main/AndroidManifest.xml"
+            java.srcDirs = ["src/main/java"]
+            res.srcDirs = ["src/main/res"]
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.facebook.react:react-android"
+    implementation "androidx.core:core-ktx:1.13.1"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+    implementation platform("com.google.firebase:firebase-bom:33.7.0")
+    implementation "com.google.firebase:firebase-messaging"
+}

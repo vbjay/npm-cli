@@ -1,0 +1,117 @@
+{
+  "name": "@bishaldahal/react-native-khalti-checkout",
+  "version": "0.2.2",
+  "description": "React Native/Expo SDK for Khalti Payment Gateway. Accept payments from Khalti, eBanking, mobile banking, and cards in Nepal.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module tsc",
+    "build:watch": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module jest --passWithNoTests --ci",
+    "test:watch": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "setup": "chmod +x scripts/setup.sh && scripts/setup.sh",
+    "release": "npx standard-version",
+    "release:patch": "npm run build && npx standard-version --release-as patch",
+    "release:minor": "npm run build && npx standard-version --release-as minor",
+    "release:major": "npm run build && npx standard-version --release-as major",
+    "release:prerelease": "npm run build && npx standard-version --prerelease",
+    "release:alpha": "npm run build && npx standard-version --release-as minor --prerelease alpha",
+    "release:beta": "npm run build && npx standard-version --release-as minor --prerelease beta",
+    "release:dry": "npx standard-version --dry-run",
+    "release:first": "npx standard-version --first-release",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "commit": "git-cz"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "khalti",
+    "payment-gateway",
+    "nepal",
+    "mobile-payment",
+    "react-native",
+    "khalti",
+    "android",
+    "ios",
+    "checkout",
+    "native-module",
+    "example"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bishaldahal/react-native-khalti-checkout.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bishaldahal/react-native-khalti-checkout/issues"
+  },
+  "author": {
+    "name": "Bishal Dahal",
+    "email": "bishaldahal@duck.com",
+    "url": "https://github.com/bishaldahal"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/bishaldahal/react-native-khalti-checkout#readme",
+  "files": [
+    "build",
+    "android/src",
+    "android/build.gradle",
+    "ios",
+    "src",
+    "expo-module.config.json"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.34.0",
+    "@types/react": "~19.0.0",
+    "commitizen": "^4.3.1",
+    "conventional-changelog-cli": "^5.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "expo": "~53.0.0",
+    "expo-module-scripts": "^4.1.6",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "react-native": "0.79.1",
+    "standard-version": "^9.5.0"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "npm run lint"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "nativeDependencies": {
+    "khalti-android-sdk": "com.khalti:checkout-sdk-android:<latest-version>"
+  }
+}

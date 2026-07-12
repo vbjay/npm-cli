@@ -1,0 +1,70 @@
+{
+  "name": "pi-rust-skills",
+  "version": "0.1.1",
+  "description": "Rust programming skills and a lightweight Rust project context tool for Pi Coding Agent.",
+  "type": "module",
+  "license": "MIT",
+  "author": "gripebomb",
+  "homepage": "https://github.com/gripebomb/pi-rust-skills#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gripebomb/pi-rust-skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gripebomb/pi-rust-skills/issues"
+  },
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-coding-agent",
+    "pi-extension",
+    "agent-skills",
+    "skills",
+    "rust",
+    "cargo",
+    "clippy",
+    "rustfmt",
+    "tokio"
+  ],
+  "files": [
+    "extensions/",
+    "skills/",
+    "references/",
+    "scripts/",
+    "examples/",
+    "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./extensions/rust-skills.ts"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "scripts": {
+    "list": "node ./scripts/list-skills.mjs",
+    "test": "node ./scripts/validate-skills.mjs",
+    "validate": "node ./scripts/validate-skills.mjs",
+    "pack:dry": "npm pack --dry-run",
+    "prepack": "node ./scripts/validate-skills.mjs"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

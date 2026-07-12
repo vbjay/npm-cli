@@ -1,0 +1,166 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "301795832a1b40b9",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.cjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "undici",
+        "versionSpec": "^7.25.0"
+      },
+      {
+        "name": "fflate",
+        "versionSpec": "^0.8.2"
+      },
+      {
+        "name": "@saluzi/codegraph",
+        "versionSpec": "^0.1.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@saluzi/codegraph@0.1.0",
+      "fflate@0.8.3",
+      "undici@7.28.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "39be31f2739a6d858f6fe264789158364ed6170966e7e5bd2bb21ca9d968b878",
+        "sizeBytes": 17333,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "uses-dns",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/microsoft/ripgrep-prebuilt/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://ghproxy.net/https://github.com/microsoft/ripgrep-prebuilt/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://registry.npmjs.org/",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/BurntSushi/ripgrep#installation",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:53.654Z"
+  },
+  "hash": "sha256:ad802851d6ffe67ce225ac4dc6d9c33692a327f3f585ac644edbf193eb3bfc89"
+}

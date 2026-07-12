@@ -1,0 +1,131 @@
+{
+  "name": "@inverter-network/react",
+  "description": "INVERTER react",
+  "version": "0.9.1",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    },
+    "./client": {
+      "types": "./dist/types/client.d.ts",
+      "import": "./dist/esm/client.js",
+      "default": "./dist/cjs/client.js"
+    },
+    "./styles": {
+      "import": "./dist/esm/styles/global.css",
+      "default": "./dist/cjs/styles/global.css"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "typings": "./dist/types/index.d.ts",
+  "sideEffects": false,
+  "directories": {
+    "tool": "tools",
+    "test": "tests"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "watch": "tsc -w",
+    "type-check": "tsc-files --pretty --project ./tsconfig.build.json --noEmit --module ESNext --declaration",
+    "build": "bun clean && bun build:cjs && bun build:esm && bun build:types",
+    "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --moduleResolution node --outDir ./dist/cjs --removeComments --verbatimModuleSyntax false && printf '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json && tsc-alias --outDir ./dist/cjs && ts-add-js-extension --dir=dist/cjs --showchanges=false",
+    "build:esm": "tsc --project ./tsconfig.build.json --module ESNext --outDir ./dist/esm && printf '{\"type\": \"module\",\"sideEffects\":false}' > ./dist/esm/package.json && tsc-alias --outDir ./dist/esm && ts-add-js-extension --dir=dist/esm --showchanges=false",
+    "build:types": "tsc --project ./tsconfig.build.json --module ESNext --declarationDir ./dist/types --emitDeclarationOnly --declaration --declarationMap && tsc-alias --outDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo tsconfig.build.tsbuildinfo",
+    "postinstall": "husky || true",
+    "prepack": "pinst --disable",
+    "package": "bun run build && npm pack",
+    "postpack": "pinst --enable",
+    "release": "standard-version -a",
+    "release:alpha": "standard-version -a --prerelease alpha --skip.changelog",
+    "release:beta": "standard-version -a --prerelease beta --skip.changelog",
+    "release:pub": "git push --follow-tags origin $(git rev-parse --abbrev-ref HEAD)",
+    "copy:dist": "bun run build && bun tools/copy-dist.js"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "bun type-check",
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "resolutions": {
+    "type-fest-4": "^4.26.0",
+    "lodash": "^4.17.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.6.2",
+    "viem": "^2.24.2",
+    "wagmi": "^2.14.11",
+    "@wagmi/core": "^2.6.4",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "@tanstack/react-query": "^5.59.0"
+  },
+  "dependencies": {
+    "@api3/logos": "^1.0.0",
+    "@inverter-network/graphql": "^0.9.31",
+    "@inverter-network/sdk": "0.9.1",
+    "debug": "^4.4.0",
+    "immer": "^10.1.1",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint-react/eslint-plugin": "^1.14.3",
+    "@happy-dom/global-registrator": "^15.7.4",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/bun": "^1.1.8",
+    "@types/lodash": "^4.17.13",
+    "@types/react": "^18.0.0 || ^19.0.0",
+    "@types/react-dom": "^18.0.0 || ^19.0.0",
+    "eslint-plugin-import-x": "^4.3.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "nodemon": "^3.1.7",
+    "pinst": "^3.0.0",
+    "prettier": "^3.3.3",
+    "standard-version": "^9.5.0",
+    "ts-add-js-extension": "^1.6.4",
+    "tsc-alias": "^1.8.10",
+    "tsc-files": "^1.1.4",
+    "typescript-eslint": "^8.8.1"
+  },
+  "license": "LGPL-3.0",
+  "homepage": "https://inverter.network",
+  "repository": "InverterNetwork/react",
+  "authors": [
+    "mguleryuz"
+  ],
+  "bugs": {
+    "url": "https://github.com/InverterNetwork/react"
+  },
+  "keywords": [
+    "InverterNetwork",
+    "npm",
+    "bun",
+    "contracts",
+    "web3",
+    "ethereum",
+    "solidity",
+    "evm",
+    "sdk",
+    "react"
+  ]
+}

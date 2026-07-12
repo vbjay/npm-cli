@@ -1,0 +1,275 @@
+{
+  "name": "modestbench",
+  "version": "0.9.3",
+  "type": "module",
+  "description": "A full-ass benchmarking framework for Node.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boneskull/modestbench.git"
+  },
+  "homepage": "https://modestbench.dev",
+  "bugs": {
+    "url": "https://github.com/boneskull/modestbench/issues"
+  },
+  "author": "Christopher Hiller <boneskull@boneskull.com>",
+  "license": "BlueOak-1.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": "./dist/cli/index.cjs",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.cts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./ava": {
+      "types": "./dist/adapters/ava-register.d.cts",
+      "import": "./dist/adapters/ava-register.js",
+      "require": "./dist/adapters/ava-register.cjs"
+    },
+    "./ava-hooks": {
+      "types": "./dist/adapters/ava-hooks.d.cts",
+      "import": "./dist/adapters/ava-hooks.js",
+      "require": "./dist/adapters/ava-hooks.cjs"
+    },
+    "./cli": {
+      "types": "./dist/cli/index.d.cts",
+      "import": "./dist/cli/index.js",
+      "require": "./dist/cli/index.cjs"
+    },
+    "./jest": {
+      "types": "./dist/adapters/jest-register.d.cts",
+      "import": "./dist/adapters/jest-register.js",
+      "require": "./dist/adapters/jest-register.cjs"
+    },
+    "./jest-hooks": {
+      "types": "./dist/adapters/jest-hooks.d.cts",
+      "import": "./dist/adapters/jest-hooks.js",
+      "require": "./dist/adapters/jest-hooks.cjs"
+    },
+    "./node-test": {
+      "types": "./dist/adapters/node-test-register.d.cts",
+      "import": "./dist/adapters/node-test-register.js",
+      "require": "./dist/adapters/node-test-register.cjs"
+    },
+    "./node-test-hooks": {
+      "types": "./dist/adapters/node-test-hooks.d.cts",
+      "import": "./dist/adapters/node-test-hooks.js",
+      "require": "./dist/adapters/node-test-hooks.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "benchmark",
+    "benchmarking",
+    "cli",
+    "csv",
+    "framework",
+    "json",
+    "measurement",
+    "metrics",
+    "optimization",
+    "perf",
+    "performance",
+    "profiling",
+    "speed",
+    "testing",
+    "tinybench"
+  ],
+  "scripts": {
+    "astro:build": "astro build --config astro.config.js",
+    "astro:dev": "astro dev --config astro.config.js",
+    "build": "run-s -sl build:compile build:schema",
+    "build:compile": "zshy",
+    "build:schema": "tsx scripts/generate-schema.ts",
+    "clean": "rm -rf dist",
+    "commitlint": "commitlint",
+    "docs:build": "run-s build:schema docs:copy astro:build",
+    "docs:copy": "tsx scripts/copy-docs.ts",
+    "docs:dev": "run-s docs:copy astro:dev",
+    "docs:preview": "astro preview --config astro.config.js",
+    "fix": "run-s -sl fix:*",
+    "fix:eslint": "eslint --fix .",
+    "fix:prettier": "prettier --write . && markdownlint-cli2 --fix \"**/*.md\"",
+    "lint": "run-p -sl --aggregate-output lint:*",
+    "lint-staged": "lint-staged",
+    "lint:eslint": "eslint .",
+    "lint:knip": "knip",
+    "lint:markdown": "markdownlint-cli2 \"**/*.md\"",
+    "lint:prettier": "prettier --check .",
+    "lint:spelling": "cspell .",
+    "lint:types": "tsc --noEmit",
+    "prepare": "husky; run-s -s clean build",
+    "pretest:base": "run-s -s build:compile",
+    "start": "node dist/cli/index.js",
+    "test": "run-s -s test:runtime test:types",
+    "test:base": "node --import tsx --test --test-reporter=spec",
+    "test:contract": "npm run test:base -- \"test/contract/**/*.test.ts\"",
+    "test:integration": "npm run test:base -- \"test/integration/**/*.test.ts\"",
+    "test:runtime": "npm run test:base -- \"test/**/*.test.ts\"",
+    "test:types": "tsd",
+    "test:unit": "npm run test:base -- \"test/unit/**/*.test.ts\"",
+    "test:watch": "npm run test:base -- --watch"
+  },
+  "dependencies": {
+    "@boneskull/bargs": "3.6.2",
+    "cosmiconfig": "9.0.0",
+    "cosmiconfig-typescript-loader": "6.2.0",
+    "glob": "13.0.0",
+    "minimatch": "10.2.1",
+    "tinybench": "6.0.0",
+    "zod": "4.2.1"
+  },
+  "devDependencies": {
+    "@astrojs/mdx": "4.3.13",
+    "@astrojs/starlight": "0.37.1",
+    "@commitlint/cli": "20.2.0",
+    "@commitlint/config-conventional": "20.2.0",
+    "@eslint/js": "9.39.2",
+    "@jest/globals": "30.2.0",
+    "@pasqal-io/starlight-client-mermaid": "0.1.0",
+    "@stylistic/eslint-plugin": "5.6.1",
+    "@types/mocha": "10.0.10",
+    "@types/node": "24.10.4",
+    "@types/wallabyjs": "0.0.15",
+    "asciinema-player": "3.13.5",
+    "astro": "5.16.6",
+    "astro-broken-link-checker": "file:./vendor/astro-broken-link-checker",
+    "ava": "6.4.1",
+    "bupkis": "0.14.0",
+    "cspell": "9.4.0",
+    "eslint": "9.39.2",
+    "eslint-plugin-jsonc": "2.21.0",
+    "eslint-plugin-perfectionist": "5.2.0",
+    "globals": "16.5.0",
+    "husky": "9.1.7",
+    "jest": "30.2.0",
+    "knip": "5.78.0",
+    "lint-staged": "16.2.7",
+    "markdownlint-cli2": "0.20.0",
+    "markdownlint-cli2-formatter-pretty": "0.0.9",
+    "mocha": "11.7.5",
+    "npm-run-all2": "8.0.4",
+    "prettier": "3.7.4",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-jsdoc": "1.8.0",
+    "prettier-plugin-pkg": "0.21.2",
+    "prettier-plugin-sort-json": "4.1.1",
+    "tsd": "0.33.0",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.50.1",
+    "zshy": "0.6.0"
+  },
+  "overrides": {
+    "minimatch": "$minimatch"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "knip": {
+    "ignoreDependencies": [
+      "@types/wallabyjs",
+      "@types/mocha",
+      "markdownlint-cli2-formatter-pretty",
+      "@astrojs/mdx",
+      "astro-broken-link-checker",
+      "jest",
+      "mocha"
+    ],
+    "ignore": [
+      ".wallaby.js",
+      "**/*.cts",
+      "**/*.d.ts",
+      "site/media/**/*",
+      "..worktrees/**/*",
+      "site/src/content/**/*",
+      "test-d/**/*",
+      "site/src/components/**/*.astro",
+      "vendor/**/*"
+    ],
+    "tags": [
+      "-knipignore"
+    ],
+    "node": {
+      "entry": [
+        "scripts/**/*.ts",
+        "test/**/*.test.ts",
+        "src/index.ts",
+        "src/cli/index.ts",
+        "examples/**/*.ts",
+        "examples/**/*.js",
+        "src/adapters/*-hooks.ts",
+        "src/adapters/*-register.ts"
+      ]
+    }
+  },
+  "lint-staged": {
+    "*.{astro,css}": [
+      "prettier --write"
+    ],
+    "*.{ts,cts,js,cjs,yml,json5}": [
+      "eslint --fix",
+      "prettier --write",
+      "cspell lint --no-must-find-files"
+    ],
+    "**/!(package-lock).json": [
+      "eslint --fix",
+      "prettier --write",
+      "cspell lint --no-must-find-files"
+    ],
+    "*.md": [
+      "markdownlint-cli2 --fix",
+      "prettier --write",
+      "cspell lint --no-must-find-files"
+    ],
+    "*.mdx": [
+      "prettier --write",
+      "cspell lint --no-must-find-files"
+    ]
+  },
+  "prettier": {
+    "jsdocCommentLineStrategy": "keep",
+    "jsdocPreferCodeFences": true,
+    "overrides": [
+      {
+        "files": "*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      }
+    ],
+    "plugins": [
+      "prettier-plugin-astro",
+      "prettier-plugin-jsdoc",
+      "prettier-plugin-pkg",
+      "prettier-plugin-sort-json"
+    ],
+    "singleQuote": true,
+    "tsdoc": true
+  },
+  "zshy": {
+    "bin": "./src/cli/index.ts",
+    "exports": {
+      ".": "./src/index.ts",
+      "./ava": "./src/adapters/ava-register.ts",
+      "./ava-hooks": "./src/adapters/ava-hooks.ts",
+      "./cli": "./src/cli/index.ts",
+      "./jest": "./src/adapters/jest-register.ts",
+      "./jest-hooks": "./src/adapters/jest-hooks.ts",
+      "./node-test": "./src/adapters/node-test-register.ts",
+      "./node-test-hooks": "./src/adapters/node-test-hooks.ts",
+      "./package.json": "./package.json"
+    }
+  }
+}

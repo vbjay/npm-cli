@@ -1,0 +1,132 @@
+{
+  "name": "@deijose/nix-ionic",
+  "version": "1.4.11",
+  "description": "Ionic lifecycle & router bridge for Nix.js",
+  "license": "MIT",
+  "author": "Deiver Vasquez",
+  "type": "module",
+  "homepage": "https://github.com/DeijoseDevelop/nix-ionic",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeijoseDevelop/nix-ionic.git"
+  },
+  "main": "./dist/lib/nix-ionic.cjs",
+  "module": "./dist/lib/nix-ionic.js",
+  "types": "./dist/lib/index.d.ts",
+  "keywords": [
+    "ionic",
+    "nix-js",
+    "bridge",
+    "routing",
+    "navigation",
+    "lifecycle",
+    "capacitor",
+    "mobile",
+    "native",
+    "ios",
+    "android",
+    "web-components",
+    "reactive",
+    "signals",
+    "typescript",
+    "micro-framework",
+    "ui",
+    "frontend",
+    "tree-shaking",
+    "modular"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/lib/nix-ionic.js",
+      "require": "./dist/lib/nix-ionic.cjs",
+      "types": "./dist/lib/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/lib/components.js",
+      "require": "./dist/lib/components.cjs",
+      "types": "./dist/lib/components.d.ts"
+    },
+    "./bundles/layout": {
+      "import": "./dist/lib/bundles/layout.js",
+      "require": "./dist/lib/bundles/layout.cjs",
+      "types": "./dist/lib/bundles/layout.d.ts"
+    },
+    "./bundles/forms": {
+      "import": "./dist/lib/bundles/forms.js",
+      "require": "./dist/lib/bundles/forms.cjs",
+      "types": "./dist/lib/bundles/forms.d.ts"
+    },
+    "./bundles/lists": {
+      "import": "./dist/lib/bundles/lists.js",
+      "require": "./dist/lib/bundles/lists.cjs",
+      "types": "./dist/lib/bundles/lists.d.ts"
+    },
+    "./bundles/feedback": {
+      "import": "./dist/lib/bundles/feedback.js",
+      "require": "./dist/lib/bundles/feedback.cjs",
+      "types": "./dist/lib/bundles/feedback.d.ts"
+    },
+    "./bundles/buttons": {
+      "import": "./dist/lib/bundles/buttons.js",
+      "require": "./dist/lib/bundles/buttons.cjs",
+      "types": "./dist/lib/bundles/buttons.d.ts"
+    },
+    "./bundles/overlays": {
+      "import": "./dist/lib/bundles/overlays.js",
+      "require": "./dist/lib/bundles/overlays.cjs",
+      "types": "./dist/lib/bundles/overlays.d.ts"
+    },
+    "./bundles/navigation": {
+      "import": "./dist/lib/bundles/navigation.js",
+      "require": "./dist/lib/bundles/navigation.cjs",
+      "types": "./dist/lib/bundles/navigation.d.ts"
+    },
+    "./bundles/all": {
+      "import": "./dist/lib/bundles/all.js",
+      "require": "./dist/lib/bundles/all.cjs",
+      "types": "./dist/lib/bundles/all.d.ts"
+    },
+    "./tabs": {
+      "import": "./dist/lib/tabs.js",
+      "require": "./dist/lib/tabs.cjs",
+      "types": "./dist/lib/tabs.d.ts"
+    }
+  },
+  "files": [
+    "dist/lib",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "clean:lib": "rm -rf dist/lib",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc --project tsconfig.lib.json && terser dist/lib/nix-ionic.js -c -m -o dist/lib/nix-ionic.js && terser dist/lib/nix-ionic.cjs -c -m -o dist/lib/nix-ionic.cjs",
+    "prepack": "npm run clean:lib && npm run build:lib",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "peerDependencies": {
+    "@deijose/nix-js": "^2.5.3"
+  },
+  "devDependencies": {
+    "@deijose/nix-js": "^2.5.3",
+    "@deijose/nix-js-testing": "^0.1.3",
+    "@vitest/coverage-v8": "^4.1.9",
+    "happy-dom": "^20.8.3",
+    "terser": "^5.46.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.0",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^4.1.9"
+  },
+  "dependencies": {
+    "@ionic/core": "^8.8.1",
+    "ionicons": "^8.0.13"
+  }
+}

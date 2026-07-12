@@ -1,0 +1,78 @@
+{
+  "name": "web-txt2img",
+  "version": "0.3.1",
+  "private": false,
+  "type": "module",
+  "author": "Luigi Acerbi",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/lacerbi"
+  },
+  "description": "Generate images from text prompts directly in the browser using open-weights AI models",
+  "keywords": [
+    "text-to-image",
+    "stable-diffusion",
+    "sd-turbo",
+    "janus-pro",
+    "onnxruntime-web",
+    "webgpu",
+    "wasm",
+    "transformers.js",
+    "in-browser",
+    "web-worker",
+    "generative-ai",
+    "typescript",
+    "esm"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lacerbi/web-txt2img.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lacerbi/web-txt2img/issues"
+  },
+  "homepage": "https://github.com/lacerbi/web-txt2img#readme",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p .",
+    "typecheck": "tsc -p . --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "onnxruntime-web": "^1.18.0",
+    "@xenova/transformers": "*",
+    "@huggingface/transformers": "^3"
+  },
+  "peerDependenciesMeta": {
+    "onnxruntime-web": {
+      "optional": true
+    },
+    "@xenova/transformers": {
+      "optional": true
+    },
+    "@huggingface/transformers": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

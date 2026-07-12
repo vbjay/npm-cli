@@ -1,0 +1,78 @@
+{
+  "name": "@calimero-network/abi-codegen",
+  "version": "1.2.0",
+  "description": "WASM-ABI v1 parser and code generator for Calimero",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/calimero-network/mero-devtools-js",
+    "directory": "abi-codegen"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./parse": {
+      "import": "./dist/parse.js",
+      "types": "./dist/parse.d.ts"
+    },
+    "./generate/types": {
+      "import": "./dist/generate/types.js",
+      "types": "./dist/generate/types.d.ts"
+    },
+    "./generate/client": {
+      "import": "./dist/generate/client.js",
+      "types": "./dist/generate/client.d.ts"
+    },
+    "./generate/emit": {
+      "import": "./dist/generate/emit.js",
+      "types": "./dist/generate/emit.d.ts"
+    }
+  },
+  "bin": {
+    "calimero-abi-codegen": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && mkdir -p dist/schema && cp src/schema/wasm-abi-v1.schema.json dist/schema/",
+    "test": "vitest run --reporter=dot",
+    "codegen:test": "vitest run --reporter=dot __tests__/codegen.spec.ts",
+    "sync:corpus": "node scripts/sync-corpus.mjs",
+    "validate:abi": "node dist/cli.js --validate -i __fixtures__/abi_conformance.json",
+    "prepack": "tsc -p tsconfig.json && mkdir -p dist/schema && cp src/schema/wasm-abi-v1.schema.json dist/schema/",
+    "generate:example": "node dist/cli.js -i __fixtures__/abi_conformance.json -o ../codegen-example/src/generated/abi-conformance",
+    "release": "semantic-release"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1"
+  },
+  "devDependencies": {
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/github": "^8.0.0",
+    "@types/node": "^18.19.34",
+    "conventional-changelog-conventionalcommits": "^6.1.0",
+    "semantic-release": "^21.0.0",
+    "typescript": "^4.9.5",
+    "vitest": "^1.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "calimero",
+    "wasm",
+    "abi",
+    "codegen"
+  ],
+  "license": "MIT",
+  "author": "Calimero Ltd"
+}

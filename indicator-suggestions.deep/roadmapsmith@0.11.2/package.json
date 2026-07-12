@@ -1,0 +1,71 @@
+{
+  "name": "roadmapsmith",
+  "version": "0.11.2",
+  "description": "Evidence-backed ROADMAP.md workflows for AI coding agents — two commands: init and update.",
+  "main": "src/index.js",
+  "bin": {
+    "roadmapsmith": "bin/cli.js"
+  },
+  "type": "commonjs",
+  "scripts": {
+    "test": "node scripts/run-tests.js",
+    "validate:qa-regression": "node scripts/pre-push-gate.js qa-regression",
+    "validate:functional-smoke": "node scripts/pre-push-gate.js functional-smoke",
+    "validate:pre-push": "node scripts/pre-push-gate.js all",
+    "release:auto": "node scripts/auto-release.js",
+    "release:version": "node scripts/release-version.js --write",
+    "release:changelog": "node scripts/generate-changelog.js",
+    "sync-bundle-metadata": "node scripts/sync-bundle-metadata.js --write",
+    "check-bundle-metadata": "node scripts/sync-bundle-metadata.js",
+    "verify-pack-surface": "node scripts/verify-pack-surface.js",
+    "prepack": "node scripts/sync-bundle-metadata.js && node scripts/stage-claude-bundle.js",
+    "postpack": "node scripts/clean-staged-claude-bundle.js"
+  },
+  "keywords": [
+    "roadmap",
+    "planning",
+    "agent",
+    "cli",
+    "validation",
+    "sync",
+    "task-tracking",
+    "evidence-based",
+    "deterministic",
+    "monorepo",
+    "claude-code",
+    "ai-agent",
+    "project-management",
+    "coding-agents",
+    "agent-skills",
+    "roadmap-generator",
+    "task-validation",
+    "developer-tools",
+    "markdown",
+    "agent-workflow"
+  ],
+  "author": "PapiScholz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PapiScholz/roadmapsmith.git",
+    "directory": "roadmap-skill"
+  },
+  "bugs": {
+    "url": "https://github.com/PapiScholz/roadmapsmith/issues"
+  },
+  "homepage": "https://github.com/PapiScholz/roadmapsmith#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates",
+    "README.md",
+    "skills",
+    "skills.json",
+    ".claude-plugin",
+    ".codex-plugin",
+    "assets"
+  ]
+}

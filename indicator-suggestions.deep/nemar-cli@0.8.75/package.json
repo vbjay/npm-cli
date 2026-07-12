@@ -1,0 +1,81 @@
+{
+  "name": "nemar-cli",
+  "version": "0.8.75",
+  "description": "CLI for NEMAR (Neuroelectromagnetic Data Archive and Tools Resource) dataset management",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "nemar": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun --minify && sed '1s|#!/usr/bin/env node|#!/usr/bin/env bun|' dist/index.js > dist/index.js.tmp && mv dist/index.js.tmp dist/index.js",
+    "test": "bun test",
+    "lint": "biome check src/",
+    "lint:fix": "biome check --fix src/",
+    "format": "biome format --write src/",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build",
+    "prepare": "husky",
+    "postinstall": "bun scripts/postinstall-check.mjs",
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
+  },
+  "keywords": [
+    "nemar",
+    "bids",
+    "neuroimaging",
+    "eeg",
+    "emg",
+    "datalad",
+    "cli"
+  ],
+  "author": "NEMAR Team",
+  "license": "CC-BY-NC-ND-4.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nemarOrg/nemar-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nemarOrg/nemar-cli/issues"
+  },
+  "homepage": "https://docs.nemar.org",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "files": [
+    "dist",
+    "scripts/postinstall-check.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "conf": "^13.0.1",
+    "fuse.js": "^7.1.0",
+    "inquirer": "^9.2.15",
+    "ora": "^8.0.1",
+    "zod": "^3.23.8"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "biome check --fix"
+    ],
+    "backend/src/**/*.{ts,tsx}": [
+      "biome check --fix"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/bun": "latest",
+    "@types/inquirer": "^9.0.7",
+    "bcryptjs": "^3.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "typescript": "^5.5.4",
+    "wrangler": "^4.70.0",
+    "yaml": "^2.8.4"
+  }
+}

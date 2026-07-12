@@ -1,0 +1,57 @@
+{
+  "name": "expo-scroll-forwarder",
+  "version": "2.0.5",
+  "description": "Expo native module that forwards scroll gestures from a plain view (e.g. a sticky profile header) to a scroll view, with native scroll physics. Works on iOS and Android, no-op on web.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc",
+    "clean": "node -e \"require('fs').rmSync('build', {recursive: true, force: true})\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-module",
+    "scroll",
+    "scroll-forwarder",
+    "gesture",
+    "sticky-header",
+    "collapsible-header",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sharifrayhan/expo-scroll-forwarder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sharifrayhan/expo-scroll-forwarder/issues"
+  },
+  "homepage": "https://github.com/sharifrayhan/expo-scroll-forwarder#readme",
+  "author": "Rayhan Nafi <rayhannafi.connect@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "build",
+    "android",
+    "ios",
+    "src",
+    "expo-module.config.json",
+    "!android/build",
+    "!android/.gradle",
+    "!ios/build"
+  ],
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.0",
+    "expo-module-scripts": "^5.0.8",
+    "expo-modules-core": "~3.0.30",
+    "typescript": "^5.9.0"
+  }
+}

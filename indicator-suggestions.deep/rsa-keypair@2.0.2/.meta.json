@@ -1,0 +1,78 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "89679ea5d7b920ed",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "11c1cd15a8c91ecd2490d33fd6002f8062dc8bb54b821a60d8e787b183334989",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `rsa_keypair`  -  C/C++ sources",
+            "items": [
+              "src/rsa_keypair.cc"
+            ]
+          },
+          {
+            "label": "Target `rsa_keypair`  -  libraries",
+            "items": [
+              "-l<(openssl_root)/lib/libeay32.lib"
+            ]
+          },
+          {
+            "label": "Target `rsa_keypair`  -  include directories",
+            "items": [
+              "<(openssl_root)/include",
+              "<(node_root_dir)/deps/openssl/openssl/include"
+            ]
+          },
+          {
+            "label": "Target `rsa_keypair`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:06.876Z"
+  },
+  "hash": "sha256:03277fea90384b5a90ff5f60d3b46ba21444380836f5692f99ef2e17de7f7937"
+}

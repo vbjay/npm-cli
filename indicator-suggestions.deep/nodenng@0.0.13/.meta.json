@@ -1,0 +1,123 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "536c2ae09fb5c04d",
+    "fetchedFiles": [
+      "Makefile",
+      "binding.gyp",
+      "compile",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "dc65573703f2fc406da7d19bf9f7f095b03862ddfd35bffa9d06a7e23af474f4",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `nodenng`  -  C/C++ sources",
+            "items": [
+              "binding.cc"
+            ]
+          },
+          {
+            "label": "Target `nodenng`  -  libraries",
+            "items": [
+              "../deps/lib/libnng.a"
+            ]
+          },
+          {
+            "label": "Target `nodenng`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "deps/include"
+            ]
+          },
+          {
+            "label": "Target `nodenng`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "ae69e0400c119c683cfd232a0316ec213efd4ddaa6cd20ffe2e964bbd117c6a9",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked",
+            "items": [
+              "npm"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "compile",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "e62a23c9b54850ad1398251c4c215c46b3c3b5bae82ca7c4e9e54fbed338b714",
+        "sizeBytes": 537,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/nanomsg/nng",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.790Z"
+  },
+  "hash": "sha256:915967f06c28e89bef167830770c59f4c08299e12f4cbf0817f516fb91f61fb9"
+}

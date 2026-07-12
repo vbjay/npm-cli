@@ -229,6 +229,57 @@ t.test('omitLockfileRegistryResolved: name-only match via edges; version-pinned 
   t.end()
 })
 
+t.test('omitLockfileRegistryResolved: version-pinned deny fails closed', t => {
+  // No resolved URL means no trusted version. A version-pinned deny must
+  // still block (fail closed); a matching allow stays refused.
+  const omitted = () => ({
+    name: 'evilpkg',
+    packageName: 'evilpkg',
+    version: '1.0.0',
+    resolved: undefined,
+    location: 'node_modules/evilpkg',
+    edgesIn: new Set([{ name: 'evilpkg', spec: '^1.0.0' }]),
+  })
+
+  // Exact-version deny: blocked.
+  t.equal(isScriptAllowed(omitted(), { 'evilpkg@1.0.0': false }), false,
+    'version-pinned deny blocks even without a trusted version')
+  // Exact-disjunction deny: blocked.
+  t.equal(isScriptAllowed(omitted(), { 'evilpkg@1.0.0 || 2.0.0': false }), false,
+    'exact-disjunction deny blocks even without a trusted version')
+  // The exploit: name-only allow + version-pinned deny. Deny still wins.
+  t.equal(isScriptAllowed(omitted(), { evilpkg: true, 'evilpkg@1.0.0': false }), false,
+    'deny wins over a name-only allow when the version is unverifiable')
+
+  // Allow stays strict: an unverifiable version is never authorized.
+  t.equal(isScriptAllowed(omitted(), { 'evilpkg@1.0.0 || 2.0.0': true }), null,
+    'exact-disjunction allow is refused without a trusted version')
+
+  // Name mismatch: fail-closed must not over-match a different package.
+  t.equal(isScriptAllowed(omitted(), { 'otherpkg@1.0.0': false }), null,
+    'a version-pinned deny for a different name does not match')
+
+  t.end()
+})
+
+t.test('omitLockfileRegistryResolved + alias: version-pinned deny fails closed', t => {
+  // `"trusted": "npm:naughty@1.0.0"`, resolved omitted. A deny on the
+  // underlying name must block; the alias name authorizes nothing.
+  const aliasOmitted = {
+    name: 'trusted',
+    packageName: 'naughty',
+    version: '1.0.0',
+    resolved: undefined,
+    location: 'node_modules/trusted',
+    edgesIn: new Set([{ name: 'trusted', spec: 'npm:naughty@1.0.0' }]),
+  }
+  t.equal(isScriptAllowed(aliasOmitted, { 'naughty@1.0.0': false }), false,
+    'underlying-name version deny blocks the aliased package')
+  t.equal(isScriptAllowed(aliasOmitted, { 'trusted@1.0.0': false }), null,
+    'alias-name version deny does not match the underlying package')
+  t.end()
+})
+
 t.test('omitLockfileRegistryResolved + alias: location is ignored; underlying name wins', t => {
   // Consumer's package.json has `"trusted": "npm:naughty@1.0.0"`. With
   // omitLockfileRegistryResolved, the resolved URL is absent. The install
@@ -365,17 +416,17 @@ t.test('isRegistryNode — arborist isRegistryDependency true accepts even unusu
 })
 
 t.test('bundled deps cannot be allowlisted (never run)', async t => {
-  // Bundled dependencies have inBundle=true and no independent resolved
-  // URL. They can never be allowlisted because matching by name@version
-  // from the bundled tarball would reintroduce manifest confusion. They
-  // always return null, and their install scripts never run.
+  // Dependencies bundled inside a *published* package's tarball (inDepBundle)
+  // can never be allowlisted because matching by name@version from the bundled
+  // tarball would reintroduce manifest confusion. They always return null, and
+  // their install scripts never run.
 
   const bundled = {
     name: 'bundled-pkg',
     packageName: 'bundled-pkg',
     version: '1.0.0',
     resolved: undefined,
-    inBundle: true,
+    inDepBundle: true,
   }
 
   // Name-only allow: must NOT match a bundled dep.
@@ -389,8 +440,32 @@ t.test('bundled deps cannot be allowlisted (never run)', async t => {
   t.equal(isScriptAllowed(bundled, null), null)
 })
 
+t.test('root-bundled deps CAN be allowlisted', async t => {
+  // A root project may list a dependency in `bundleDependencies` for
+  // publishing purposes, but that dep is fetched from the registry and
+  // installed normally — its scripts run and the user can review/approve them.
+  // Such nodes have inBundle=true but inDepBundle=false.
+
+  const rootBundled = {
+    name: 'root-bundled-pkg',
+    packageName: 'root-bundled-pkg',
+    version: '1.0.0',
+    resolved: 'https://registry.npmjs.org/root-bundled-pkg/-/root-bundled-pkg-1.0.0.tgz',
+    isRegistryDependency: true,
+    inBundle: true,
+    inDepBundle: false,
+  }
+
+  // An approved root-bundled dep must match (its scripts will run).
+  t.equal(isScriptAllowed(rootBundled, { 'root-bundled-pkg@1.0.0': true }), true)
+  // A denied root-bundled dep must match the deny entry.
+  t.equal(isScriptAllowed(rootBundled, { 'root-bundled-pkg@1.0.0': false }), false)
+  // No policy: unreviewed.
+  t.equal(isScriptAllowed(rootBundled, null), null)
+})
+
 t.test('bundled deps: deny entry does not match either (returns null, not false)', async t => {
-  // A deny entry doesn't apply to bundled deps because they're outside
+  // A deny entry doesn't apply to dep-bundled deps because they're outside
   // the policy scope entirely. They're blocked because they never run,
   // not via a policy entry.
   const bundled = {
@@ -398,20 +473,20 @@ t.test('bundled deps: deny entry does not match either (returns null, not false)
     packageName: 'bundled-pkg',
     version: '1.0.0',
     resolved: undefined,
-    inBundle: true,
+    inDepBundle: true,
   }
   t.equal(isScriptAllowed(bundled, { 'bundled-pkg': false }), null)
 })
 
 t.test('bundled dep with resolved field is still rejected', async t => {
-  // Defensive: even if a bundled dep somehow has a resolved URL, the
-  // inBundle flag wins over identity matching.
+  // Defensive: even if a dep-bundled dep somehow has a resolved URL, the
+  // inDepBundle flag wins over identity matching.
   const bundledWithResolved = {
     name: 'pkg',
     packageName: 'pkg',
     version: '1.0.0',
     resolved: 'https://registry.npmjs.org/pkg/-/pkg-1.0.0.tgz',
-    inBundle: true,
+    inDepBundle: true,
   }
   t.equal(isScriptAllowed(bundledWithResolved, { 'pkg@1.0.0': true }), null)
 })
@@ -431,10 +506,12 @@ t.test('inBundle: false does not affect normal matching', async t => {
 t.test('isolated mode (linked): bundled IsolatedNode is blocked', async t => {
   // Regression guard: in isolated/linked mode the gate runs against
   // IsolatedNode instances, not real Nodes. A bundled IsolatedNode must
-  // report inBundle so the gate blocks it even when its resolved URL
+  // report inDepBundle so the gate blocks it even when its resolved URL
   // looks like a registry identity that a name entry would otherwise
-  // match. Without inBundle on IsolatedNode the guard is silently
+  // match. Without inDepBundle on IsolatedNode the guard is silently
   // skipped and the bundled install script runs.
+  // IsolatedNode.inDepBundle mirrors inBundle because all bundled nodes
+  // in isolated mode are dep-bundles (root-bundles are regular nodes).
   const { IsolatedNode } = require('../lib/isolated-classes.js')
 
   const bundled = new IsolatedNode({
@@ -447,6 +524,7 @@ t.test('isolated mode (linked): bundled IsolatedNode is blocked', async t => {
   })
 
   t.equal(bundled.inBundle, true, 'bundled IsolatedNode reports inBundle')
+  t.equal(bundled.inDepBundle, true, 'bundled IsolatedNode reports inDepBundle')
   t.equal(isScriptAllowed(bundled, { 'bundled-pkg': true }), null)
   t.equal(isScriptAllowed(bundled, { 'bundled-pkg@1.0.0': true }), null)
 

@@ -1,0 +1,81 @@
+{
+  "name": "@hasna/markdown",
+  "version": "0.1.17",
+  "description": "Open Markdown Protocol (OMP) — structured markdown as intermediate representation between AI models. Smart LLM writes it, cheap LLM/regex executes it.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "omp": "dist/cli/index.js",
+    "omp-mcp": "dist/mcp/index.js",
+    "omp-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "import": "./dist/storage.js"
+    }
+  },
+  "files": [
+    "dist",
+    "spec",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && bun build src/cli/index.ts --outdir dist/cli --target bun --external @modelcontextprotocol/sdk --external pg && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk --external pg && bun build src/server/index.ts --outdir dist/server --target bun --external pg && bun build src/index.ts src/storage.ts --outdir dist --target bun --external pg && bunx tsc --emitDeclarationOnly --outDir dist",
+    "typecheck": "bunx tsc --noEmit",
+    "test": "bun test",
+    "dev:cli": "bun run src/cli/index.ts",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "prepublishOnly": "bun run build",
+    "postinstall": "install -d -m 700 \"$HOME/.hasna/markdown\" 2>/dev/null || (mkdir -p \"$HOME/.hasna/markdown\" && chmod 700 \"$HOME/.hasna/markdown\")"
+  },
+  "keywords": [
+    "omp",
+    "markdown",
+    "ai",
+    "llm",
+    "intermediate-representation",
+    "code-generation",
+    "planner-executor",
+    "mcp",
+    "cli",
+    "specification"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hasna/open-markdown.git"
+  },
+  "homepage": "https://github.com/hasna/open-markdown",
+  "bugs": {
+    "url": "https://github.com/hasna/open-markdown/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "pg": "^8.20.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.15.6",
+    "typescript": "^5.7.3"
+  }
+}

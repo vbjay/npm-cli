@@ -1,0 +1,106 @@
+{
+  "name": "m4i-core",
+  "version": "0.12.15-beta",
+  "description": "Core library for the M4i main Discord bot: extensible, modular, and scalable foundation for commands, components, and event management.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src/lang",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "format": "biome format --write .",
+    "fix": "biome check --write .",
+    "prepare": "husky",
+    "build": "tsc && cpx \"src/lang/**/*\" dist/lang",
+    "build:prod": "tsc && cpx \\src/lang/**/*\\ dist/lang && npm run obfuscate",
+    "obfuscate": "javascript-obfuscator dist --output dist --config obfuscator.config.json",
+    "watch": "tsc -w && cp -r src/lang dist/lang",
+    "dev": "bun format && rimraf dist && bun run build && yalc push",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest",
+    "prepublishOnly": "rimraf dist && npm run build:prod"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "bin": {
+    "m4i": "dist/cli/index.js"
+  },
+  "keywords": [
+    "m4i",
+    "discord",
+    "bot",
+    "core",
+    "framework",
+    "addon",
+    "commands",
+    "components",
+    "extensible",
+    "modular"
+  ],
+  "author": {
+    "name": "lbahjawi06",
+    "email": "lbahjawi06@gmail.com"
+  },
+  "license": "CC BY NC 4.0",
+  "type": "commonjs",
+  "dependencies": {
+    "@babel/parser": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
+    "@dotenvx/dotenvx": "^1.51.1",
+    "@google/genai": "^1.30.0",
+    "@sentry/node": "^10.10.0",
+    "async-exit-hook": "^2.0.1",
+    "async-mutex": "^0.5.0",
+    "axios": "^1.13.2",
+    "cli-color": "^2.0.4",
+    "commander": "^14.0.2",
+    "figlet": "^1.9.3",
+    "glob": "^13.0.0",
+    "ioredis": "^5.7.0",
+    "json-stable-stringify": "^1.3.0",
+    "lru-cache": "^11.2.2",
+    "node-cron": "^3.0.3",
+    "picocolors": "^1.1.1",
+    "prom-client": "^15.1.3",
+    "sequelize": "^6.37.7",
+    "umzug": "^3.8.2",
+    "winston": "^3.18.3",
+    "winston-daily-rotate-file": "^5.0.0"
+  },
+  "peerDependencies": {
+    "discord.js": "^14.25.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbahjawi06/m4i-core.git"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.7",
+    "@types/async-exit-hook": "^2.0.2",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/cli-color": "^2.0.6",
+    "@types/figlet": "^1.7.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/glob": "^9.0.0",
+    "@types/node": "^24.10.1",
+    "@types/node-cron": "^3.0.11",
+    "@types/sequelize": "^4.28.20",
+    "@vitest/coverage-v8": "^4.0.16",
+    "cpx": "^1.5.0",
+    "husky": "^9.1.7",
+    "javascript-obfuscator": "^5.1.0",
+    "lint-staged": "^16.2.7",
+    "rimraf": "^6.1.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3",
+    "vite-tsconfig-paths": "^6.0.3",
+    "vitest": "^4.0.16"
+  }
+}

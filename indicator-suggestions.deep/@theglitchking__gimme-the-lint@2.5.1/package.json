@@ -1,0 +1,95 @@
+{
+  "name": "@theglitchking/gimme-the-lint",
+  "version": "2.5.1",
+  "description": "Polyglot progressive linting for monorepos — adapter-driven baselines, per-app drift detection, and idempotent skips across JavaScript/TypeScript, Python, Go, Rust, Terraform, and Ansible.",
+  "keywords": [
+    "linting",
+    "progressive-linting",
+    "baseline",
+    "drift-detection",
+    "monorepo",
+    "polyglot",
+    "git-hooks",
+    "claude-plugin",
+    "eslint",
+    "biome",
+    "ruff",
+    "python",
+    "javascript",
+    "typescript",
+    "golangci-lint",
+    "go",
+    "clippy",
+    "rust",
+    "tflint",
+    "terraform",
+    "opentofu",
+    "ansible-lint",
+    "ansible"
+  ],
+  "author": {
+    "name": "TheGlitchKing",
+    "email": "theglitchking@users.noreply.github.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheGlitchKing/gimme-the-lint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TheGlitchKing/gimme-the-lint/issues"
+  },
+  "homepage": "https://github.com/TheGlitchKing/gimme-the-lint",
+  "main": "lib/index.js",
+  "bin": {
+    "gimme-the-lint": "./bin/gimme-the-lint.js"
+  },
+  "scripts": {
+    "postinstall": "node ./scripts/link-skills.mjs",
+    "setup:venv": "bash ./scripts/setup-venv.sh",
+    "install:hooks": "bash ./githooks/install.sh",
+    "lint:init": "node ./bin/gimme-the-lint.js init",
+    "check": "node ./bin/gimme-the-lint.js check",
+    "check:fix": "node ./bin/gimme-the-lint.js check --fix",
+    "baseline": "node ./bin/gimme-the-lint.js baseline",
+    "dashboard": "node ./bin/gimme-the-lint.js dashboard",
+    "test": "node --test tests/*.test.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "templates/",
+    "githooks/",
+    "hooks/",
+    "lib/",
+    ".claude-plugin/",
+    "commands/",
+    "agents/",
+    "docs/",
+    "install.sh",
+    "uninstall.sh",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@theglitchking/claude-plugin-runtime": "^0.1.0",
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "liquidz",
+  "version": "0.6.0",
+  "description": "High-performance Liquid template engine powered by Zig",
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./browser.mjs",
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "install": "node-gyp-build || node-gyp rebuild",
+    "test": "node test.js",
+    "prebuild": "prebuildify --napi --strip"
+  },
+  "keywords": [
+    "liquid",
+    "template",
+    "templating",
+    "zig",
+    "wasm",
+    "fast",
+    "shopify",
+    "browser"
+  ],
+  "author": "Pedro Piñera Buendía",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pepicrft/liquidz.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0",
+    "prebuildify": "^6.0.0"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "browser.mjs",
+    "liquidz.wasm",
+    "binding.gyp",
+    "src/",
+    "prebuilds/"
+  ],
+  "browser": {
+    "./index.js": "./browser.mjs",
+    "./index.mjs": "./browser.mjs"
+  }
+}

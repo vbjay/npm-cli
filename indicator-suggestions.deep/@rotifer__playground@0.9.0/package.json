@@ -1,0 +1,104 @@
+{
+  "name": "@rotifer/playground",
+  "version": "0.9.0",
+  "description": "Rotifer Protocol Playground — local development environment for gene development, Arena competition, and protocol simulation",
+  "license": "Apache-2.0",
+  "author": "Rotifer Protocol Contributors",
+  "homepage": "https://github.com/rotifer-protocol/rotifer-playground#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rotifer-protocol/rotifer-playground.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rotifer-protocol/rotifer-playground/issues"
+  },
+  "keywords": [
+    "rotifer",
+    "protocol",
+    "gene",
+    "arena",
+    "agent",
+    "wasm",
+    "sandbox",
+    "evolution",
+    "ai",
+    "web3",
+    "decentralized",
+    "autonomous",
+    "digital-life",
+    "cli"
+  ],
+  "bin": {
+    "rotifer": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:napi": "cd crates/rotifer-napi && napi build --release",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "sync:plugins": "node scripts/sync-plugin-outputs.mjs",
+    "check:plugins": "node scripts/check-plugin-outputs.mjs",
+    "verify:plugins": "node scripts/verify-plugin-packaging.mjs",
+    "verify:versions": "node scripts/verify-version-alignment.mjs",
+    "sync:native-versions": "node scripts/sync-native-versions.mjs",
+    "bump:plugin-family": "node scripts/bump-plugin-family.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:workspace": "vitest run --config vitest.workspace.config.ts",
+    "lint": "tsc --noEmit && eslint src/",
+    "lint:names": "eslint src/ --rule '@typescript-eslint/naming-convention: error'",
+    "clean": "rm -rf dist",
+    "smoke-test": "npx tsx scripts/post-deploy-smoke-test.ts",
+    "postinstall": "node scripts/postinstall.js",
+    "prepublishOnly": "npm run verify:versions && npm run lint && npm run test && npm run build",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0",
+    "chalk": "^4.1.2",
+    "commander": "^15.0.0"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.7.0",
+    "@supabase/supabase-js": "^2.105.4",
+    "@types/node": "^25.9.2",
+    "@vitest/coverage-v8": "^4.1.2",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.1.0",
+    "javy-cli": "^3.0.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.58.0",
+    "vitest": "^4.0.0"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-linux-x64-gnu": "1.1.1",
+    "@rotifer/playground-darwin-arm64": "0.9.0",
+    "@rotifer/playground-darwin-x64": "0.9.0",
+    "@rotifer/playground-linux-x64-gnu": "0.9.0",
+    "@rotifer/playground-win32-x64-msvc": "0.9.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "dist/",
+    "templates/",
+    "genes/",
+    "scripts/postinstall.js",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ]
+}

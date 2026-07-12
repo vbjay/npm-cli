@@ -1,0 +1,49 @@
+{
+  "name": "@wcauchois/program-builder",
+  "version": "0.1.3",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc && rm -rf dist/{examples,scripts} && mv dist/src/* dist/ && rmdir dist/src",
+    "format": "prettier --write \"{src,scripts}/**/*.ts\"",
+    "run-example": "./scripts/run_example.sh",
+    "docsonly": "node scripts/make-docs.js",
+    "docs": "yarn build && yarn docsonly",
+    "watch": "tsc-watch --onSuccess \"yarn docsonly\"",
+    "test": "jest",
+    "prepare": "yarn docs",
+    "gen-examples": "ts-node scripts/generateExampleInvocations.ts"
+  },
+  "types": "dist/index.d.ts",
+  "homepage": "https://program-builder.js.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wcauchois/program-builder.git"
+  },
+  "keywords": [
+    "cli",
+    "command",
+    "option",
+    "parser",
+    "argument",
+    "args"
+  ],
+  "author": "Bill Cauchois <wcauchois@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "word-wrap": "^1.2.3"
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.7.8",
+    "@microsoft/api-extractor": "^7.7.5",
+    "@types/jest": "^24.9.0",
+    "@types/node": "^13.1.4",
+    "escape-string-regexp": "^2.0.0",
+    "fs-extra": "^8.1.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.3.0",
+    "ts-node": "^8.5.4",
+    "tsc-watch": "^4.0.0",
+    "typescript": "^3.7.2"
+  }
+}

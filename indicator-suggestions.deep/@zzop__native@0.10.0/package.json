@@ -1,0 +1,47 @@
+{
+  "name": "@zzop/native",
+  "version": "0.10.0",
+  "license": "MIT",
+  "description": "zzop N-API binding (single Node<->Rust boundary) — see src/lib.rs for the addon-feature build.",
+  "repository": "github:eezz4/zzop",
+  "homepage": "https://eezz4.github.io/zzop/",
+  "bugs": "https://github.com/eezz4/zzop/issues",
+  "keywords": [
+    "sast",
+    "static-analysis",
+    "architecture",
+    "code-analysis",
+    "security",
+    "napi",
+    "native",
+    "typescript",
+    "javascript",
+    "java"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node",
+    "rules/"
+  ],
+  "scripts": {
+    "smoke": "node smoke.mjs",
+    "sync-versions": "node scripts/sync-versions.mjs",
+    "prepack": "node scripts/copy-rules.mjs"
+  },
+  "optionalDependencies": {
+    "@zzop/native-win32-x64-msvc": "0.10.0",
+    "@zzop/native-darwin-x64": "0.10.0",
+    "@zzop/native-darwin-arm64": "0.10.0",
+    "@zzop/native-linux-x64-gnu": "0.10.0",
+    "@zzop/native-linux-arm64-gnu": "0.10.0"
+  }
+}

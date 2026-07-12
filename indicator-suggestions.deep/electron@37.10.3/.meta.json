@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3fd4487ace5049ce",
+    "fetchedFiles": [
+      "checksums.json",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "@electron/get",
+        "versionSpec": "^2.0.0"
+      },
+      {
+        "name": "extract-zip",
+        "versionSpec": "^2.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@electron/get@2.0.3",
+      "extract-zip@2.0.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "742ad5d6d4118b7324100facb361867518668ff7a75bfd7b4a0dfada893d7881",
+        "sizeBytes": 3285,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "checksums.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "checksums.json",
+        "reason": "required by ./install.js",
+        "sha256": "71157c6026c876f7a01a417495c73967421dc01302e76a77d927aaca454157a4",
+        "sizeBytes": 8196,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:40.765Z"
+  },
+  "hash": "sha256:d128d0854010ff30a733ce7e3f5a152d97838bf263f908251c55cb1038d484b2"
+}

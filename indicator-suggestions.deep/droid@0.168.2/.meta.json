@@ -1,0 +1,99 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "506b5de17d0e7882",
+    "fetchedFiles": [
+      "install.js",
+      "package.json",
+      "platform.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "3d1844846f84c8ac987bb32728cec966866847b01670c912c7c2c70336a7e49f",
+        "sizeBytes": 13494,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "references-credential-env-var",
+          "network-access",
+          "writes-file",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "platform.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://registry.npmjs.org/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "platform.js",
+        "reason": "required by ./install.js",
+        "sha256": "7101137f3caa879a54fba87d75a9a49b9598da7070e5c4a750774a243d0f1dd9",
+        "sizeBytes": 5113,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "2b2d4bb9228609e69799ac3c373268ac0e30dfa890511129a1960ca16450dde8",
+        "sizeBytes": 1097,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:39.686Z"
+  },
+  "hash": "sha256:9451e3e925440c7101a62b44e65252589b93b8eea461780979083ea35a72f90d"
+}

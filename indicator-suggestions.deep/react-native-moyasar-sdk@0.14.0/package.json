@@ -1,0 +1,168 @@
+{
+  "name": "react-native-moyasar-sdk",
+  "version": "0.14.0",
+  "description": "Official React Native Moyasar SDK - Integrate Credit Cards, Apple Pay, Samsung Pay, and STC Pay with simple interfaces for a seamless payment experience in your React Native app",
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "react-native": "./src/index.tsx",
+  "source": "./src/index.tsx",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-moyasar-sdk-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it --no-increment"
+  },
+  "keywords": [
+    "moyasar",
+    "react-native",
+    "ios",
+    "android",
+    "apple-pay",
+    "samsung-pay",
+    "credit-card",
+    "stc-pay"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moyasar/moyasar-react-native.git"
+  },
+  "author": "Abdulaziz Alrabiah <developers@moyasar.com> (https://github.com/moyasar/moyasar-react-native)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moyasar/moyasar-react-native/issues"
+  },
+  "homepage": "https://github.com/moyasar/moyasar-react-native#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-community/cli": "18.0.1",
+    "@react-native/babel-preset": "0.79.2",
+    "@react-native/eslint-config": "^0.78.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.0.0",
+    "commitlint": "^19.6.1",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^30.2.0",
+    "prettier": "^3.0.3",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-builder-bob": "^0.40.12",
+    "react-native-svg": "^15.11.2",
+    "react-native-webview": "^13.13.4",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": "^15.11.2",
+    "react-native-webview": "^13.13.4"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/",
+      "<rootDir>/src/__tests__/__fixtures__"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RTNMoyasarSpec",
+    "type": "all",
+    "jsSrcsDir": "./src/specs",
+    "android": {
+      "javaPackageName": "com.moyasarsdk"
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "fabric-view",
+    "version": "0.51.1"
+  },
+  "dependencies": {
+    "decimal.js": "^10.4.3",
+    "es6-error": "^4.0.2",
+    "i18next": "^23.11.5",
+    "react-i18next": "^14.1.2",
+    "react-native-url-polyfill": "^2.0.0",
+    "validator": "^13.15.23"
+  }
+}

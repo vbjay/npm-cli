@@ -1,0 +1,109 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "95ffe0ca68703764",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/post-install.js",
+      "scripts/prebuild.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "81b87c9afc6883b79f98ea27cd1981093908ebd9c43edfed9f2782d9842fe2f4",
+        "parseError": "Bad escaped character in JSON at position 1289 (line 55 column 36)",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/prebuild.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "a00d42adf21e50a8a991e96d42b91d4cadc62666d474f3d81f3685cf1b196c50",
+        "sizeBytes": 1230,
+        "signals": [
+          "reads-process-env",
+          "native-build",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/post-install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "d0c479dd3785e1b0192804509d923f61b874b41650cfc73898a926fc13388a84",
+        "sizeBytes": 2631,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.063Z"
+  },
+  "hash": "sha256:9f2e9a2dda3fb44b87356688b9feee431e83453a9291051a40bcf4d26fb80fcd"
+}

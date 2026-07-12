@@ -1,0 +1,66 @@
+{
+  "name": "kasy-cli",
+  "version": "1.46.0",
+  "description": "CLI for scaffolding production-ready Flutter SaaS apps with Firebase, Supabase, or API REST backends.",
+  "bin": {
+    "kasy": "./bin/kasy.js"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "templates/",
+    "docs/",
+    "README.md"
+  ],
+  "keywords": [
+    "flutter",
+    "saas",
+    "cli",
+    "scaffold",
+    "firebase",
+    "supabase",
+    "dart",
+    "boilerplate",
+    "starter"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepack": "node scripts/check-feature-patches.js && node scripts/check-backend-patches.js && node test/firebase-only-imports-need-patch.test.js && node scripts/bundle-template.js && node test/generated-matches-kit.test.js && node test/supabase-verify-jwt.test.js && node test/supabase-cors.test.js && node test/supabase-google-web.test.js && node test/backend-pubspec-local-reminders.test.js && node test/backend-pubspec-media-deps.test.js && node test/stripe-webhook-orphan-guard.test.js && node test/facebook-strip.test.js && node test/path-provider-pin.test.js && node test/features-flags-parity.test.js && node test/apple-web.test.js && node test/facebook.test.js && node test/env-tools.test.js && node test/docs-links.test.js",
+    "start": "node ./bin/kasy.js",
+    "setup": "node ./bin/kasy.js setup",
+    "doctor": "node ./bin/kasy.js doctor",
+    "features": "node ./bin/kasy.js features",
+    "validate": "node ./bin/kasy.js validate --analyze-only",
+    "validate:backends": "node ./scripts/bundle-template.js && node ./scripts/validate-backends.js",
+    "extract:patch": "node ./scripts/extract_patch.js",
+    "check:firebase": "node ./scripts/check-firebase-template.js",
+    "edge:check": "node ./scripts/check-edge-functions.js",
+    "patch:check": "node ./scripts/check-backend-patches.js",
+    "patch:bless": "node ./scripts/check-backend-patches.js --bless",
+    "test": "node ./scripts/run-tests.js",
+    "test:generate": "node ./test-generate.js",
+    "test:google-ios": "node ./test/google-ios-url-scheme.test.js",
+    "test:apple-release": "node ./test/apple-release.test.js",
+    "test:localize-docs": "node ./test/localize-release-docs.test.js",
+    "test:i18n-accents": "node ./test/i18n-accents.test.js",
+    "lint": "eslint bin lib scripts"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.4.0",
+    "boxen": "^8.0.1",
+    "commander": "^12.0.0",
+    "fs-extra": "^11.2.0",
+    "kleur": "^4.1.5",
+    "pngjs": "^7.0.0",
+    "yaml": "^2.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "@faisalbz/tester-sdk",
+  "version": "1.1.0",
+  "description": "Tester platform SDK for Expo / React Native — pure JS, works in Expo Go.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "testing",
+    "google-play",
+    "closed-testing"
+  ],
+  "author": "faisalbz",
+  "license": "MIT",
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  },
+  "peerDependencies": {
+    "expo-application": "*",
+    "expo-device": "*",
+    "expo-secure-store": "*",
+    "react-native": "*",
+    "expo-linking": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

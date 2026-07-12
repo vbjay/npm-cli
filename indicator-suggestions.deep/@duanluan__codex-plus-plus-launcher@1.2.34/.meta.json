@@ -1,0 +1,155 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "81dda0efd73b64b0",
+    "fetchedFiles": [
+      "install-npm.cjs",
+      "npm/i18n.js",
+      "npm/install.js",
+      "npm/launcher.js",
+      "npm/verify-package.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install-npm.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "98502ce422716e86c42d5f25682aa65085f0ae9b90c5f36d0b980f61d013c891",
+        "sizeBytes": 279,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/install.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/install.js",
+        "reason": "required by ./install-npm.cjs",
+        "sha256": "a77d7238c33fcdd72d4bfc119756e40ad17eab91ef51d1b84c7e5f544b67486c",
+        "sizeBytes": 807,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/i18n.js",
+          "npm/launcher.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/i18n.js",
+        "reason": "required by ./npm/install.js; required by ./npm/launcher.js",
+        "sha256": "9d39bd91b9e6c864cfaee8d3b3b4cebb54abd6ac98f00ba7222226e6967506d2",
+        "sizeBytes": 4496,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "npm/launcher.js",
+        "reason": "required by ./npm/install.js",
+        "sha256": "fa946701a5c034448eb81b184b846e7695e87548586c16f0bc792ce0b4e35561",
+        "sizeBytes": 74023,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "makes-executable",
+          "dynamic-require",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/i18n.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/verify-package.cjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "607b62729a91b6974995a488999dff9d2573aea2f98d52120401ab84f1f7fe56",
+        "sizeBytes": 3083,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:59.476Z"
+  },
+  "hash": "sha256:170db45cabcc00c3eeb039270849f38ed54e3bf6ee8a0351122c5bc8f5807a72"
+}

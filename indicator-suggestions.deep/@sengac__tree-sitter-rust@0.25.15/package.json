@@ -1,0 +1,69 @@
+{
+  "name": "@sengac/tree-sitter-rust",
+  "version": "0.25.15",
+  "description": "Rust grammar for tree-sitter",
+  "repository": "https://github.com/sengac/tree-sitter-rust",
+  "license": "MIT",
+  "author": {
+    "name": "Maxim Sokolov",
+    "email": "maxim0xff@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Max Brunsfeld",
+      "email": "maxbrunsfeld@gmail.com"
+    },
+    {
+      "name": "Amaan Qureshi",
+      "email": "amaanq12@gmail.com"
+    }
+  ],
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "rust"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.2.2",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "eslint": "^9.15.0",
+    "eslint-config-treesitter": "^1.0.2",
+    "prebuildify": "^6.0.1",
+    "tree-sitter-cli": "^0.24.4"
+  },
+  "peerDependencies": {
+    "@sengac/tree-sitter": "^0.25.10"
+  },
+  "peerDependenciesMeta": {
+    "@sengac/tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "lint": "eslint grammar.js",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --name node.napi"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gypfile": false
+}

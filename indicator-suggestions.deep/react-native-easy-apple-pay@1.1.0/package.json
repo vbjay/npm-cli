@@ -1,0 +1,135 @@
+{
+  "name": "react-native-easy-apple-pay",
+  "version": "1.1.0",
+  "description": "The simplest way to add Apple Pay to your React Native app",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/commonjs/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "lib/",
+    "ios/",
+    "src/",
+    "react-native-easy-apple-pay.podspec",
+    "README.md",
+    "LICENSE",
+    "!**/__tests__",
+    "!**/__mocks__",
+    "!**/*.test.*",
+    "!**/.DS_Store"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"__tests__/**/*.{ts,tsx}\"",
+    "test": "jest --coverage",
+    "clean": "del-cli lib",
+    "build": "bob build",
+    "prepare": "bob build",
+    "prepack": "npm run typecheck && npm run lint && npm test && npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "apple-pay",
+    "payments",
+    "ios",
+    "passkit",
+    "stripe",
+    "ecommerce"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamHeyo/react-native-easy-apple-pay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TeamHeyo/react-native-easy-apple-pay/issues"
+  },
+  "homepage": "https://github.com/TeamHeyo/react-native-easy-apple-pay#readme",
+  "author": "Kenny Krosky <kenny.krosky@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.72.0"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "0.85.3",
+    "@react-native/jest-preset": "0.85.3",
+    "@react-native/babel-preset": "0.85.3",
+    "babel-jest": "^29.7.0",
+    "@testing-library/react-native": "^12.9.0",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.0.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "del-cli": "^6.0.0",
+    "eslint": "^8.57.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.2",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-builder-bob": "^0.40.13",
+    "react-test-renderer": "19.2.3",
+    "typescript": "^5.6.3"
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "setupFiles": [
+      "<rootDir>/__tests__/test-setup.ts"
+    ],
+    "setupFilesAfterEach": [
+      "<rootDir>/__tests__/setupAfterEach.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/__tests__/test-setup.ts",
+      "<rootDir>/__tests__/setupAfterEach.ts"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example",
+      "<rootDir>/lib"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/NativeApplePay.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      ["commonjs", { "esm": true }],
+      ["module", { "esm": true }],
+      ["typescript", { "project": "tsconfig.build.json" }]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNEasyApplePaySpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "includesGeneratedCode": false
+  }
+}

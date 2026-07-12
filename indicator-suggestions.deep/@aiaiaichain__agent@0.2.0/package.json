@@ -1,0 +1,73 @@
+{
+  "name": "@aiaiaichain/agent",
+  "version": "0.2.0",
+  "description": "AIAIAI Chain Agent — Solana-native AI agent for decentralized AI governance. Ticker: $AIAIAI",
+  "author": "AIAIAI Foundation",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "bin": {
+    "aiaiaichain": "bin/aiaiaicli",
+    "aiai": "bin/aiaiaicli",
+    "aiaiai-mcp": "bin/aiai-mcp"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json && node scripts/build-esbuild.mjs && node scripts/bundle-dts.mjs",
+    "build:prod": "tsc --project tsconfig.json && node scripts/build-esbuild.mjs && node scripts/bundle-dts.mjs && npm run minify",
+    "build:tsc": "tsc --project tsconfig.json",
+    "build:esbuild": "node scripts/build-esbuild.mjs",
+    "build:esbuild:watch": "node scripts/build-esbuild.mjs --watch",
+    "build:watch": "tsc --watch",
+    "minify": "node scripts/minify.mjs",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "type-check": "tsc --noEmit --project tsconfig.json",
+    "test": "echo \"no tests yet\" && exit 0",
+    "prepublishOnly": "npm run build:prod",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.0",
+    "dotenv": "^17.0.0",
+    "ink": "^7.1.0",
+    "ink-text-input": "^6.0.0",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "esbuild": "^0.28.0",
+    "typescript": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "solana",
+    "terminal",
+    "cli",
+    "aiaiai",
+    "crypto"
+  ],
+  "files": [
+    "dist",
+    "bin",
+    "scripts",
+    "README.md",
+    "docs",
+    "!dist/**/*.map"
+  ]
+}

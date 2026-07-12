@@ -1,0 +1,98 @@
+{
+  "name": "@robertlinde/react-tour-kit",
+  "version": "0.8.7",
+  "type": "module",
+  "description": "Cross-platform guided tour library for React and React Native. Build interactive onboarding experiences with customizable tooltips, smart positioning, cross-page navigation, and async step actions. Fully themeable with TypeScript support.",
+  "author": "Robert Linde",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robertlinde/react-tour-kit.git"
+  },
+  "homepage": "https://github.com/robertlinde/react-tour-kit#readme",
+  "bugs": {
+    "url": "https://github.com/robertlinde/react-tour-kit/issues"
+  },
+  "scripts": {
+    "start:dev": "tsc --watch",
+    "build": "tsc",
+    "lint": "xo",
+    "lint:fix": "xo --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:e2e:react": "playwright test --config=playwright/playwright.config.ts",
+    "test:e2e:react:ui": "playwright test --config=playwright/playwright.config.ts --ui",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky || true"
+  },
+  "main": "./dist/react.js",
+  "module": "./dist/react.js",
+  "types": "./dist/react.d.ts",
+  "exports": {
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "require": "./dist/react.js",
+      "import": "./dist/react.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "require": "./dist/react-native.js",
+      "import": "./dist/react-native.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-native": ">=0.70.0",
+    "react-native-svg": ">=13.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.0",
+    "@commitlint/config-conventional": "21.2.0",
+    "@estruyf/github-actions-reporter": "1.12.0",
+    "@playwright/test": "1.61.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@types/react-native": "0.73.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.8",
+    "prettier": "3.9.4",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-native-svg": "15.15.5",
+    "typescript": "6.0.3",
+    "xo": "2.0.2"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "tour",
+    "guided-tour",
+    "walkthrough",
+    "onboarding",
+    "tooltip",
+    "tutorial",
+    "intro",
+    "product-tour"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

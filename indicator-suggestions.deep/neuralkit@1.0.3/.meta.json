@@ -1,0 +1,77 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "25b10315642630ba",
+    "fetchedFiles": [
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "binary-install",
+        "versionSpec": "^1.1.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "binary-install@1.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ad6d15e3cae6a96c73098262370ba933ed20e1727d319c8303e626c5eb44d3ef",
+        "sizeBytes": 756,
+        "signals": [
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/neuralkit-ai/neuralkit/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "1da6a740bfa887a46661cc0a20fd9f4a2b9b945eb4d85440c0a78ff308eae334",
+        "sizeBytes": 637,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:14.907Z"
+  },
+  "hash": "sha256:6249171c6e126d8f41ac168e932d5df0a3b6021bd063b7aab0cb32e0f46fc6c0"
+}

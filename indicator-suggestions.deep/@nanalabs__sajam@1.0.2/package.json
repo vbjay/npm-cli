@@ -1,0 +1,46 @@
+{
+  "name": "@nanalabs/sajam",
+  "version": "1.0.2",
+  "description": "High-performance Node.js bindings for the sajam Shazam API wrapper",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/miruchigawa/sajam.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "src/",
+    "deps/",
+    "CMakeLists.txt"
+  ],
+  "scripts": {
+    "prepack": "cp -r ../src/* deps/sajam/src/ && cp -r ../include/* deps/sajam/include/ && cp ../CMakeLists.txt deps/sajam/CMakeLists.txt",
+    "install": "npx cmake-js compile",
+    "build": "npx cmake-js compile",
+    "test": "jest"
+  },
+  "keywords": [
+    "shazam",
+    "music-recognition",
+    "audio",
+    "recognition",
+    "n-api",
+    "addon"
+  ],
+  "author": "nanakura <nanakura@hanaworks.site>",
+  "license": "GPL-3.0-or-later",
+  "type": "commonjs",
+  "dependencies": {
+    "node-addon-api": "^8.5.0"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}

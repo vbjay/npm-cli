@@ -1,0 +1,48 @@
+{
+  "name": "taskbar-progress",
+  "version": "1.1.1",
+  "description": "任务栏进度",
+  "main": "index.js",
+  "keywords": [
+    "windows",
+    "taskbar",
+    "progress",
+    "addon",
+    "native",
+    "ITaskbarList3",
+    "node-gyp",
+    "pkg"
+  ],
+  "scripts": {
+    "test": "node demo.js",
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild && node scripts/generate-embedded.js",
+    "postbuild": "node scripts/generate-embedded.js",
+    "clean": "node-gyp clean",
+    "configure": "node-gyp configure",
+    "pub": "npm run build && npm publish"
+  },
+  "devDependencies": {
+    "node-gyp": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pigman18/taskbar-progress.git"
+  },
+  "author": "pigman18",
+  "license": "MIT",
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/pigman18/taskbar-progress/issues"
+  },
+  "homepage": "https://github.com/pigman18/taskbar-progress#readme"
+}

@@ -1,0 +1,114 @@
+{
+  "name": "aidevops",
+  "version": "3.32.29",
+  "description": "AI DevOps Framework - AI-assisted development workflows, code quality, and deployment automation",
+  "type": "module",
+  "workspaces": [
+    "packages/gui-shared",
+    "packages/gui-api",
+    "packages/gui-web",
+    "packages/gui-desktop"
+  ],
+  "bin": {
+    "aidevops": "./bin/aidevops"
+  },
+  "scripts": {
+    "dev": "bun run .opencode/server/api-gateway.ts",
+    "dashboard": "bun run .opencode/server/mcp-dashboard.ts",
+    "quality": "bun run .opencode/tool/parallel-quality.ts",
+    "dspy:init": "dspyground init",
+    "dspy:dev": "dspyground dev",
+    "dspy:build": "dspyground build",
+    "install:python": "python3 -m venv python-env/dspy-env && source python-env/dspy-env/bin/activate && pip install -r requirements.txt",
+    "setup": "bun install && npm run install:python",
+    "setup:bun": "bun install",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "gui:api:dev": "bun run packages/gui-api/src/server.ts",
+    "gui:web:dev": "bun ./node_modules/vite/bin/vite.js --config packages/gui-web/vite.config.ts --host 127.0.0.1 --port 5173",
+    "gui:test:schema": "bun test packages/gui-shared/tests",
+    "gui:test:adapters": "bun test packages/gui-api/tests/*adapter.test.ts",
+    "gui:test:api": "bun test packages/gui-api/tests/status-route.test.ts",
+    "gui:test:components": "bun test packages/gui-web/tests",
+    "gui:test:security": "bun test packages/gui-shared/tests/security.test.ts packages/gui-api/tests/security.test.ts packages/gui-web/tests/security.test.ts",
+    "gui:test:smoke": "bun test packages/gui-api/tests/smoke.test.ts",
+    "gui:lint": "bun test packages/gui-web/tests/security.test.ts packages/gui-shared/tests/security.test.ts packages/gui-api/tests/security.test.ts",
+    "gui:typecheck": "tsc --noEmit",
+    "gui:build": "bun ./node_modules/vite/bin/vite.js build --config packages/gui-web/vite.config.ts",
+    "gui:ci": "npm run gui:lint && npm run gui:typecheck && npm run gui:test:schema && npm run gui:test:adapters && npm run gui:test:api && npm run gui:test:components && npm run gui:test:security && npm run gui:test:smoke && npm run gui:build",
+    "gui:desktop:check": "bash packages/gui-desktop/scripts/install-macos-app.sh --check",
+    "gui:desktop:install:macos": "bash packages/gui-desktop/scripts/install-macos-app.sh",
+    "postinstall": "node scripts/npm-postinstall.cjs || true"
+  },
+  "keywords": [
+    "ai",
+    "devops",
+    "cli",
+    "automation",
+    "code-quality",
+    "git-workflow",
+    "mcp",
+    "llm",
+    "dspy",
+    "prompt-optimization",
+    "ai-agents"
+  ],
+  "author": "Marcus Quinn <marcus@aidevops.sh>",
+  "license": "MIT",
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "elysia": "^1.1.0",
+    "hono": "^4.6.0",
+    "vite": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
+    "@types/bun": "latest",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "secretlint": "^11.2.5",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "files": [
+    "bin/",
+    "aidevops.sh",
+    "aidevops-*-lib.sh",
+    "setup.sh",
+    "setup-modules/",
+    "docs/metrics/",
+    "bun.lock",
+    "packages/gui-shared/package.json",
+    "packages/gui-shared/src/",
+    "packages/gui-api/package.json",
+    "packages/gui-api/src/",
+    "packages/gui-web/package.json",
+    "packages/gui-web/index.html",
+    "packages/gui-web/src/",
+    "packages/gui-web/vite.config.ts",
+    "packages/gui-desktop/package.json",
+    "packages/gui-desktop/scripts/",
+    "VERSION",
+    "scripts/npm-postinstall.cjs",
+    "templates/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcusquinn/aidevops.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marcusquinn/aidevops/issues"
+  },
+  "homepage": "https://aidevops.sh"
+}

@@ -1,0 +1,60 @@
+{
+  "name": "react-native-maps-routes",
+  "version": "1.5.3",
+  "description": "Route component for react-native-maps",
+  "author": {
+    "name": "Hugo EXTRAT",
+    "email": "extrat.h@gmail.com",
+    "url": "https://www.github.com/huextrat"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huextrat/react-native-maps-routes"
+  },
+  "bugs": {
+    "url": "https://github.com/huextrat/react-native-maps-routes/issues"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-maps",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "npx biome check ./src && npx biome format ./src",
+    "lint:fix": "npx biome lint --write ./src && npx biome format --write ./src && npx biome check --write ./src",
+    "prepare": "husky",
+    "build": "tsc",
+    "release": "semantic-release"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": ">=0.64.3",
+    "react-native-maps": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@commitlint/cli": "20.5.0",
+    "@commitlint/config-conventional": "20.5.0",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@types/node": "24.12.0",
+    "@types/react": "19.0.0",
+    "husky": "9.1.7",
+    "react": "19.0.0",
+    "react-native-maps": "1.27.2",
+    "semantic-release": "25.0.3",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "yarn@4.12.0"
+}

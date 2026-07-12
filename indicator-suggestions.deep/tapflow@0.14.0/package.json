@@ -1,0 +1,71 @@
+{
+  "name": "tapflow",
+  "version": "0.14.0",
+  "description": "Self-hosted iOS/Android simulator streaming for the whole team",
+  "keywords": [
+    "ios",
+    "android",
+    "simulator",
+    "emulator",
+    "qa",
+    "testing",
+    "streaming",
+    "self-hosted"
+  ],
+  "homepage": "https://github.com/jo-duchan/tapflow",
+  "bugs": "https://github.com/jo-duchan/tapflow/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jo-duchan/tapflow.git"
+  },
+  "license": "MIT",
+  "bin": {
+    "tapflow": "./bin/tapflow.js"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "bin",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "tsx": "./src/index.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.6.0",
+    "cac": "^6.7.14",
+    "ws": "^8.21.0",
+    "zod": "^4.4.3",
+    "@tapflowio/agent-core": "0.14.0",
+    "@tapflowio/android-agent": "0.14.0",
+    "@tapflowio/flow-runner": "0.14.0",
+    "@tapflowio/ios-agent": "0.14.0",
+    "@tapflowio/relay": "0.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/ws": "^8.0.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.9"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "lint": "eslint src",
+    "postinstall": "node bin/postinstall.js"
+  }
+}

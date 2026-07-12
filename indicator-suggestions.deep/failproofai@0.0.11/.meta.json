@@ -1,0 +1,158 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a958a3e09acff052",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/install-diagnosis.mjs",
+      "scripts/install-telemetry.mjs",
+      "scripts/postinstall.mjs",
+      "scripts/prune-standalone.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "start",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "start@5.1.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "c71f046a78fe77ab3004ab2b7e3c35d2fd8c35b78ebecf9a14574c0b8be3244a",
+        "sizeBytes": 9241,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/install-telemetry.mjs",
+          "scripts/install-diagnosis.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/install-telemetry.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "c733fecfd16d36a0a3c30e01e3aa5210942c9b98cd9118663269cd19e47d7d1d",
+        "sizeBytes": 3654,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://us.i.posthog.com/capture/",
+            "classification": "telemetry"
+          }
+        ]
+      },
+      {
+        "path": "scripts/install-diagnosis.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "3c8f53373409f4b86f5e7a42658d22abff3b94868eb3a4881c4274ce100ede87",
+        "sizeBytes": 7060,
+        "signals": [
+          "uses-child-process",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build",
+        "reason": "referenced by lifecycle script: `prepare`; referenced by lifecycle script: `build`; referenced by lifecycle script: `build:cli`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "next",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/prune-standalone.mjs",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": "aa5367797a2a64599b89e23834be1f87011c8616ac42e064731663e52810ecdb",
+        "sizeBytes": 4631,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `build:cli`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:50.660Z"
+  },
+  "hash": "sha256:78d29261dd5e7fbeab8da723047d61c37e39963d593990907c1da2d58bde89d4"
+}

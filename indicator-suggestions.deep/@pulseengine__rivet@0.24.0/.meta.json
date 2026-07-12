@@ -1,0 +1,126 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b0506d8cebdfc81e",
+    "fetchedFiles": [
+      "index.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "b02f6825215284d9caa7965e4924067688f1c5fcd5c0dfa67e83c5def71014a4",
+        "sizeBytes": 5746,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "index.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/pulseengine/rivet/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/pulseengine/rivet.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/pulseengine/rivet/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "index.js",
+        "reason": "required by ./install.js",
+        "sha256": "5bdc411a423b656896c037b9bfc370c9aa94d9d6d06cfbd1ae08e8527bb943d1",
+        "sizeBytes": 3077,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./install.js",
+        "sha256": "4f5c11ff223d54cd14f825aa2d3a231479ed7612a09b4440b430a4b3a50a037f",
+        "sizeBytes": 1458,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:43.922Z"
+  },
+  "hash": "sha256:c787dc2156714a271874834b51bfb8c374fbaf2913252f89f34ada511f2ab7b3"
+}

@@ -1,0 +1,70 @@
+{
+  "name": "codevibe-claude-plugin",
+  "version": "1.0.0",
+  "description": "Mobile companion for Claude Code - monitor and control your Claude Code sessions from your iPhone with CodeVibe",
+  "main": "dist/server.js",
+  "bin": {
+    "codevibe-claude": "./bin/codevibe-claude"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "hooks",
+    ".claude-plugin",
+    "README.md",
+    ".env.example"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepack": "node scripts/prepare-publish.js && npm run build",
+    "postpack": "node scripts/restore-dev.js",
+    "dev": "ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hendryyeh/quantiya-codevibe-claude-plugin.git"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "anthropic",
+    "plugin",
+    "mobile",
+    "ios",
+    "codevibe",
+    "remote-control",
+    "ai",
+    "developer-tools"
+  ],
+  "author": "Quantiya <support@quantiya.ai>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hendryyeh/quantiya-codevibe-claude-plugin/issues"
+  },
+  "homepage": "https://github.com/hendryyeh/quantiya-codevibe-claude-plugin#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin"
+  ],
+  "dependencies": {
+    "@quantiya/codevibe-core": "^1.0.0",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "graphql": "^16.12.0",
+    "uuid": "^13.0.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.18.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

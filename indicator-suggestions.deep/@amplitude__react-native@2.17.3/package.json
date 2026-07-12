@@ -1,0 +1,116 @@
+{
+  "name": "@amplitude/react-native",
+  "version": "2.17.3",
+  "description": "Official React Native SDK",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "amplitude-react-native.podspec"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "eslint --fix \"**/*.{js,jsx,ts,tsx}\"",
+    "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx,json}\"",
+    "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
+    "prepare": "bob build",
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "update-example-pod-lockfile": "yarn example install --frozen-lockfile && yarn pods",
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "docs:create-docs": "typedoc --tsconfig ./tsconfig.build.json",
+    "docs:gen-docs": "rm -rf docs && yarn run docs:create-docs && git add docs",
+    "docs:deploy": "gh-pages -d docs",
+    "release": "semantic-release"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "https://github.com/amplitude/Amplitude-ReactNative",
+  "author": "Amplitude Inc. <sdk.dev@amplitude.com> (https://github.com/amplitude)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amplitude/Amplitude-ReactNative/issues"
+  },
+  "homepage": "https://github.com/amplitude/Amplitude-ReactNative#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@google/semantic-release-replace-plugin": "^1.2.0",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.1",
+    "@semantic-release/github": "^7.2.3",
+    "@semantic-release/npm": "^9.0.2",
+    "@semantic-release/release-notes-generator": "^9.0.3",
+    "@types/jest": "^26.0.24",
+    "@types/react": "^16.14.35",
+    "@types/react-native": "0.62.18",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "gh-pages": "3.2.3",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
+    "pod-install": "^0.1.38",
+    "prettier": "^2.8.5",
+    "react": "17.0.2",
+    "react-native": "0.68.6",
+    "react-native-builder-bob": "^0.20.4",
+    "semantic-release": "^19.0.5",
+    "typedoc": "^0.23.28",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "**/*.{json}": [
+      "prettier --write"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

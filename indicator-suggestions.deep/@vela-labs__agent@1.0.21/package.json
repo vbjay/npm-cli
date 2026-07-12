@@ -1,0 +1,54 @@
+{
+  "name": "@vela-labs/agent",
+  "version": "1.0.21",
+  "description": "Vela — an agentic AI coding assistant for your terminal",
+  "type": "module",
+  "bin": {
+    "vela": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "bun run --cwd ../sdk build && bun src/index.tsx",
+    "clean": "rm -rf dist",
+    "build": "bun run clean && tsc",
+    "prepack": "bun run build",
+    "pretypecheck": "bun run --cwd ../sdk build",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "cli",
+    "terminal",
+    "coding-agent",
+    "llm",
+    "openrouter",
+    "vela"
+  ],
+  "author": "Vela Labs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vela-Agentic-Labs/Vela-Monorepo.git",
+    "directory": "packages/tui"
+  },
+  "homepage": "https://github.com/Vela-Agentic-Labs/Vela-Monorepo",
+  "license": "MIT",
+  "dependencies": {
+    "@vela-labs/sdk": "^1.0.0",
+    "dotenv": "^16.0.0",
+    "ink": "^5.0.0",
+    "ink-text-input": "^6.0.0",
+    "marked": "18.0.5",
+    "react": "^18.0.0",
+    "string-width": "7.2.0",
+    "wrap-ansi": "9.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "ink-testing-library": "4.0.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -24,14 +24,18 @@ const versionFromTgz = require('./version-from-tgz.js')
 //     resolved committish
 
 const isScriptAllowed = (node, policy) => {
-  // Bundled dependencies never run their install scripts and cannot be
-  // allowlisted. Matching by name@version from the bundled tarball would
-  // reintroduce manifest confusion (a bundled tarball can claim any name
-  // and version). Returning null marks them as not-allowed regardless of
-  // any policy entry, so their install scripts are blocked by the
-  // install-time gate. A package that needs a bundled dep's script must
-  // forward it as one of its own lifecycle scripts.
-  if (node.inBundle) {
+  // Dependencies bundled inside a *published* package's tarball (inDepBundle)
+  // never run their install scripts and cannot be allowlisted. Matching by
+  // name@version from the bundled tarball would reintroduce manifest confusion
+  // (a bundled tarball can claim any name and version). Returning null marks
+  // them as not-allowed regardless of any policy entry.
+  //
+  // NOTE: we intentionally check `inDepBundle` (bundler !== root) rather than
+  // the broader `inBundle`. A root project may list a dependency in
+  // `bundleDependencies` for publishing purposes, but that dep is still
+  // fetched from the registry and installed normally — its install scripts
+  // WILL run and the user should be able to review/approve them.
+  if (node.inDepBundle) {
     return null
   }
 
@@ -43,7 +47,9 @@ const isScriptAllowed = (node, policy) => {
   let anyDeny = false
 
   for (const [key, value] of Object.entries(policy)) {
-    if (!matches(node, key)) {
+    // Pass deny intent so matchRegistry can fail closed on an unverifiable
+    // version: a deny still blocks, an allow stays refused.
+    if (!matches(node, key, value === false)) {
       continue
     }
     if (value === false) {
@@ -66,7 +72,7 @@ const isScriptAllowed = (node, policy) => {
   return null
 }
 
-const matches = (node, key) => {
+const matches = (node, key, failClosed) => {
   let parsed
   try {
     parsed = npa(key)
@@ -78,7 +84,7 @@ const matches = (node, key) => {
     case 'tag':
     case 'range':
     case 'version':
-      return matchRegistry(node, parsed)
+      return matchRegistry(node, parsed, failClosed)
     case 'git':
       return matchGit(node, parsed)
     case 'file':
@@ -132,7 +138,7 @@ const resolvedSourceSpecs = (node) => {
   return specs
 }
 
-const matchRegistry = (node, parsed) => {
+const matchRegistry = (node, parsed, failClosed) => {
   // If this node is not a registry dep, refuse the match. A registry-style
   // key (`pkg`, `pkg@1`, `pkg@1 || 2`) must not match a tarball or git node
   // even if their names happen to coincide.
@@ -168,8 +174,13 @@ const matchRegistry = (node, parsed) => {
     if (parsed.fetchSpec === '*' || parsed.rawSpec === '' || parsed.rawSpec === '*') {
       return true
     }
-    if (!trusted.version || !isExactVersionDisjunction(parsed.fetchSpec)) {
+    if (!isExactVersionDisjunction(parsed.fetchSpec)) {
       return false
+    }
+    // Unverifiable version (omit-lockfile-registry-resolved): a deny blocks,
+    // an allow is refused.
+    if (!trusted.version) {
+      return failClosed
     }
     return semver.satisfies(trusted.version, parsed.fetchSpec, { loose: true })
   }
@@ -178,6 +189,10 @@ const matchRegistry = (node, parsed) => {
   /* istanbul ignore else: parsed.type at this point is always 'version';
      the istanbul-ignored fallback below handles the impossible case. */
   if (parsed.type === 'version') {
+    // Unverifiable version: a deny blocks, an allow is refused.
+    if (!trusted.version) {
+      return failClosed
+    }
     return trusted.version === parsed.fetchSpec
   }
 
@@ -351,7 +366,7 @@ const isRegistryNode = (node) => {
 }
 
 // Trusted display identity for human-facing output (the `npm install`
-// blocked-scripts summary and `npm approve-scripts --allow-scripts-pending`).
+// blocked-scripts summary and `npm install-scripts ls`).
 // Same as getTrustedRegistryIdentity, but for display only: version
 // falls back to node.version when the URL doesn't carry one. Do not
 // use for policy matching.
@@ -366,6 +381,7 @@ const trustedDisplay = (node) => {
 
 module.exports = isScriptAllowed
 module.exports.isScriptAllowed = isScriptAllowed
+module.exports.matches = matches
 module.exports.isExactVersionDisjunction = isExactVersionDisjunction
 module.exports.getTrustedRegistryIdentity = getTrustedRegistryIdentity
 module.exports.resolvedSourceSpecs = resolvedSourceSpecs

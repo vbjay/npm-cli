@@ -1,0 +1,137 @@
+{
+  "name": "@tabnine/jupyterlab",
+  "version": "0.0.24",
+  "description": "JupyterLab client for Tabnine",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension",
+    "javascript",
+    "python",
+    "typescript",
+    "php",
+    "autocomplete",
+    "ruby",
+    "java",
+    "go",
+    "golang",
+    "bash",
+    "kotlin",
+    "html",
+    "css",
+    "ocaml",
+    "perl",
+    "rust",
+    "julia",
+    "lua",
+    "haskell",
+    "c",
+    "cpp",
+    "c++",
+    "csharp",
+    "c#",
+    "react",
+    "swift",
+    "objective-c",
+    "objectivec",
+    "ai",
+    "method completion",
+    "intellicode",
+    "intellisense",
+    "snippets",
+    "tabnine"
+  ],
+  "homepage": "https://github.com/codota/tabnine-jupyterlab",
+  "bugs": {
+    "url": "https://github.com/codota/tabnine-jupyterlab/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Tabnine",
+    "email": "info@tabnine.com"
+  },
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:codota/tabnine-jupyterlab.git"
+  },
+  "scripts": {
+    "build": "jlpm run build:lib && jlpm run build:labextension:dev",
+    "build:all": "jlpm run build:lib && jlpm run build:labextension",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "build:lib": "tsc",
+    "build:prod": "jlpm run clean && jlpm run build:lib && jlpm run build:labextension",
+    "clean": "jlpm run clean:lib",
+    "clean:all": "jlpm run clean:lib && jlpm run clean:labextension",
+    "clean:labextension": "rimraf jupyterlab_tabnine/labextension",
+    "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
+    "eslint": "eslint . --ext .ts,.tsx --fix",
+    "eslint:check": "eslint . --ext .ts,.tsx",
+    "install:extension": "jlpm run build",
+    "prepare": "jlpm run clean && jlpm run build:prod",
+    "watch": "run-p watch:src watch:labextension",
+    "watch:labextension": "jupyter labextension watch .",
+    "prettier": "prettier -w .",
+    "watch:src": "tsc -w"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^3.1.6",
+    "@jupyterlab/apputils": "3.1.6",
+    "@jupyterlab/codeeditor": "^3.1.6",
+    "@jupyterlab/codemirror": "^3.1.6",
+    "@jupyterlab/completer": "^3.1.6",
+    "@jupyterlab/launcher": "^3.1.6",
+    "@jupyterlab/mainmenu": "^3.1.6",
+    "@jupyterlab/notebook": "^3.1.6",
+    "@jupyterlab/outputarea": "^3.1.6",
+    "@jupyterlab/statedb": "^3.1.6",
+    "@jupyterlab/statusbar": "^3.1.6",
+    "@jupyterlab/translation": "^3.1.6",
+    "@jupyterlab/ui-components": "3.1.6",
+    "@lumino/algorithm": "^1.6.0",
+    "@lumino/coreutils": "^1.8.0",
+    "@lumino/datagrid": "^0.27.0",
+    "@lumino/disposable": "^1.7.0",
+    "semver": "^7.3.5"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^3.1.6",
+    "@jupyterlab/fileeditor": "^3.1.6",
+    "@types/semver": "^7.3.8",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-jsdoc": "^36.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.18.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.2",
+    "rimraf": "^3.0.2",
+    "typescript": "~4.1.3"
+  },
+  "jupyterlab": {
+    "discovery": {
+      "server": {
+        "managers": [
+          "pip"
+        ],
+        "base": {
+          "name": "jupyterlab_tabnine"
+        }
+      }
+    },
+    "extension": true,
+    "schemaDir": "schema",
+    "outputDir": "jupyterlab_tabnine/labextension",
+    "disabledExtensions": [
+      "@jupyterlab/completer-extension:notebooks",
+      "@jupyterlab/completer-extension:files"
+    ]
+  },
+  "peerDependencies": {
+    "codemirror": "~5.61.0"
+  }
+}

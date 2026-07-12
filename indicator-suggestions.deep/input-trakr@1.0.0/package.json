@@ -1,0 +1,74 @@
+{
+  "name": "input-trakr",
+  "version": "1.0.0",
+  "description": "Native macOS input monitoring for trackpad gestures, mouse, and keyboard events with separate event emitters",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "test": "node test/test.js",
+    "prepare": "npm run build",
+    "example": "node examples/electron-example.js",
+    "setup": "chmod +x setup.sh && ./setup.sh"
+  },
+  "keywords": [
+    "macos",
+    "trackpad",
+    "gestures",
+    "mouse",
+    "keyboard",
+    "input",
+    "monitoring",
+    "electron",
+    "native",
+    "addon",
+    "swipe",
+    "pinch",
+    "rotate",
+    "accessibility",
+    "global",
+    "events"
+  ],
+  "author": "team-devntech <team.khan@devntech.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/team-devntech/input-trakr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/team-devntech/input-trakr/issues"
+  },
+  "homepage": "https://github.com/team-devntech/input-trakr#readme",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "os": ["darwin"],
+  "dependencies": {
+    "node-addon-api": "^7.0.0",
+    "bindings": "^1.5.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0",
+    "electron": "^28.0.0"
+  },
+  "peerDependencies": {
+    "electron": ">=20.0.0"
+  },
+  "peerDependenciesMeta": {
+    "electron": {
+      "optional": true
+    }
+  },
+  "files": [
+    "lib/",
+    "src/",
+    "examples/",
+    "binding.gyp",
+    "README.md",
+    "LICENSE",
+    "setup.sh"
+  ],
+  "gypfile": true
+}

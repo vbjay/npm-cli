@@ -1,0 +1,60 @@
+{
+  "name": "create-mds-app",
+  "version": "0.1.6",
+  "description": "Scaffold production-ready Expo apps for MobileDevelopmentSimplified",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/israromar/mds-app-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/israromar/mds-app-cli/issues"
+  },
+  "homepage": "https://github.com/israromar/mds-app-cli#readme",
+  "bin": {
+    "create-mds-app": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "lint": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">= 20"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "cli",
+    "scaffold",
+    "mobiledevelopmentsimplified"
+  ],
+  "author": "MobileDevelopmentSimplified",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "commander": "^13.1.0",
+    "ejs": "^3.1.10",
+    "execa": "^9.5.2",
+    "picocolors": "^1.1.1",
+    "validate-npm-package-name": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^22.13.10",
+    "prettier": "^3.6.2",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  }
+}

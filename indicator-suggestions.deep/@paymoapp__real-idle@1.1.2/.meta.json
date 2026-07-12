@@ -1,0 +1,112 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "61ae59fcce693ed4",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "1bd566a78bc60cf2ef63ecc64e2711c5f8b5d2518cf3bba3161e5892a2e1726c",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `PaymoRealIdle`  -  C/C++ sources",
+            "items": [
+              "module/main.cpp",
+              "module/NapiBindings.cpp",
+              "module/linux/RealIdle.cpp",
+              "module/main.cpp",
+              "module/NapiBindings.cpp",
+              "module/mac/RealIdle.mm",
+              "module/main.cpp",
+              "module/NapiBindings.cpp",
+              "module/win/RealIdle.cpp"
+            ]
+          },
+          {
+            "label": "Target `PaymoRealIdle`  -  libraries",
+            "items": [
+              "-lX11",
+              "-lXext",
+              "-lXss",
+              "-ldbus-1",
+              "-framework Foundation",
+              "-framework ApplicationServices",
+              "-framework IOKit",
+              "User32.lib"
+            ]
+          },
+          {
+            "label": "Target `PaymoRealIdle`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `PaymoRealIdle`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:40.840Z"
+  },
+  "hash": "sha256:b6288bd9eaf4914c6f85428f1486991d886c643c4ea38a0b31812764d8ec901b"
+}

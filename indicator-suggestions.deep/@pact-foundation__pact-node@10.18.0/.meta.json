@@ -1,0 +1,192 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fb440480b33c5a8d",
+    "fetchedFiles": [
+      "package.json",
+      "postinstall.js",
+      "src/pact-environment.js",
+      "standalone/install.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "needle",
+        "versionSpec": "^2.9.1"
+      },
+      {
+        "name": "unzipper",
+        "versionSpec": "^0.10.11"
+      },
+      {
+        "name": "tar",
+        "versionSpec": "^6.1.13"
+      },
+      {
+        "name": "chalk",
+        "versionSpec": "2.4.2"
+      },
+      {
+        "name": "url-join",
+        "versionSpec": "^4.0.1"
+      },
+      {
+        "name": "libnpmconfig",
+        "versionSpec": "^1.2.1"
+      },
+      {
+        "name": "sumchecker",
+        "versionSpec": "^2.0.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chalk@2.4.2",
+      "libnpmconfig@1.2.1",
+      "needle@2.9.1",
+      "sumchecker@2.0.2",
+      "tar@6.2.1",
+      "unzipper@0.10.14",
+      "url-join@4.0.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a90619bcd74a251479b20ef6990d1ef805b97b53ffda878cdf0e49c7d76c4d34",
+        "sizeBytes": 243,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "standalone/install.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "standalone/install.js",
+        "reason": "required by ./postinstall.js",
+        "sha256": "347337887368e4857cdf8186fb44406cfa64735784b6b0dfbd197da81e9c74a6",
+        "sizeBytes": 15251,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "dynamic-require",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/pact-environment.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/pact-foundation/pact-node",
+            "classification": "reference"
+          },
+          {
+            "url": "https://www.google-analytics.com/collect",
+            "classification": "telemetry"
+          },
+          {
+            "url": "http://donate.pact.io/node",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "src/pact-environment.js",
+        "reason": "required by ./standalone/install.js",
+        "sha256": "a97e0970da097ce62a71a97947c0de4676dcbfe5bb4c2e9a93076e58e33c0ec0",
+        "sizeBytes": 821,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./standalone/install.js",
+        "sha256": "3dd2b95998b7676cf8595a89f9478d2065dceeb98c3229ec0f1bc862e052869a",
+        "sizeBytes": 5574,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:39.933Z"
+  },
+  "hash": "sha256:2be77bb7b3b351afb9a4ddb0a478c98e6c775fe08fab2567d565edeb2ea357bd"
+}

@@ -1,0 +1,217 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+    def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["MyTatvaRnSdk_kotlinVersion"]
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.1.0"
+        // noinspection DifferentKotlinGradleVersion
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.10'
+    }
+}
+
+def isNewArchitectureEnabled() {
+    return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-kapt'
+
+
+def appProject = rootProject.allprojects.find { it.plugins.hasPlugin('com.android.application') }
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["MyTatvaRnSdk_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["MyTatvaRnSdk_" + name]).toInteger()
+}
+
+def supportsNamespace() {
+    def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+    def major = parsed[0].toInteger()
+    def minor = parsed[1].toInteger()
+
+    // Namespace support was added in 7.3.0
+    if (major == 7 && minor >= 3) {
+        return true
+    }
+
+    return major >= 8
+}
+
+android {
+    if (supportsNamespace()) {
+        namespace "com.mytatvarnsdk"
+
+        sourceSets {
+            main {
+                manifest.srcFile "src/main/AndroidManifestNew.xml"
+                jniLibs.srcDirs = ['src/main/jniLibs']
+            }
+        }
+    }
+
+    compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+    defaultConfig {
+        minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+        targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        multiDexEnabled true
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lintOptions {
+        disable "GradleCompatible"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+    viewBinding {
+        enabled = true
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+}
+
+repositories {
+    mavenCentral()
+    google()
+    flatDir {
+        dirs project.file('libs')
+    }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // For < 0.71, this will be from the local maven repo
+    // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+    //noinspection GradleDynamicVersion
+    implementation 'com.facebook.react:react-android:0.75.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.activity:activity:1.9.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.15.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
+
+    implementation 'com.orhanobut:logger:2.2.0'
+
+    def room_version = "2.6.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Optional - RxJava2 support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+
+    // Optional - Guava support for Room
+    implementation "androidx.room:room-guava:$room_version"
+
+    // Optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    // ViewModel and LiveData
+    api 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    // alternatively - just ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.1.0' // use -ktx for Kotlin
+    // alternatively - just LiveData
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.1.0'
+    // alternatively - Lifecycles only (no ViewModel or LiveData).
+    //     Support library depends on this lightweight import
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.1.0'
+
+    // Sentry: compile-only — host app (@sentry/react-native) provides runtime SDK + init.
+    // Version aligned with @sentry/react-native 7.11.0 (sentry-android 8.31.0).
+    compileOnly platform('io.sentry:sentry-bom:8.31.0')
+    compileOnly 'io.sentry:sentry-android'
+
+    // network
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    def kotlin_coroutinesVersion = "1.5.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutinesVersion"
+    def ktor_version = "1.6.5"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+
+    // implementation(name: 'library_zxing-release', ext: 'aar')
+    // implementation(name: 'algorithm-release', ext: 'aar')
+    implementation files('libs/library_zxing-release.aar')
+    implementation files('libs/algorithm-release.aar')
+
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.2'
+
+}
+
+if (isNewArchitectureEnabled()) {
+    react {
+        jsRootDir = file("../src/")
+        libraryName = "MyTatvaRnSdkView"
+        codegenJavaPackageName = "com.mytatvarnsdk"
+    }
+}
+
+// Disable AAR lint tasks that fail with local AAR dependencies in newer AGP versions
+// These tasks are not critical for the build
+afterEvaluate {
+    // Disable bundleReleaseLocalLintAar and bundleDebugLocalLintAar tasks
+    tasks.matching { 
+        it.name.contains("bundleReleaseLocalLintAar") || 
+        it.name.contains("bundleDebugLocalLintAar")
+    }.configureEach { task ->
+        task.enabled = false
+    }
+}
+ 

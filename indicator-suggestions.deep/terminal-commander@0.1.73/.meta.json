@@ -1,0 +1,594 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3d18320b081734d9",
+    "fetchedFiles": [
+      "lib/bootstrap/constants.js",
+      "lib/bootstrap/ensure_daemon_autostart.js",
+      "lib/bootstrap/ensure_wsl_runtime.js",
+      "lib/bootstrap/lock.js",
+      "lib/bootstrap/orchestrator.js",
+      "lib/bootstrap/skip.js",
+      "lib/cli/restart.js",
+      "lib/cli/setup_cursor_wsl.js",
+      "lib/cli/setup_state.js",
+      "lib/cursor/config.js",
+      "lib/cursor/write.js",
+      "lib/daemon/autostart.js",
+      "lib/daemon/managed_block.js",
+      "lib/harness/detect.js",
+      "lib/harness/io/atomic.js",
+      "lib/harness/io/json_mcp.js",
+      "lib/harness/io/toml_mcp.js",
+      "lib/harness/needs.js",
+      "lib/harness/paths.js",
+      "lib/harness/registry.js",
+      "lib/harness/stable_bin.js",
+      "lib/harness/write_all.js",
+      "lib/resolve-binary.js",
+      "lib/session/mint.js",
+      "lib/wsl/detect.js",
+      "lib/wsl/distro-name.js",
+      "lib/wsl/doctor.js",
+      "lib/wsl/filtered_env.js",
+      "lib/wsl/spawn.js",
+      "package.json",
+      "scripts/postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f54d876289b3ac4daee16c1e66507f1b07b0a140c9163e458244b653420abbaa",
+        "sizeBytes": 2852,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/bootstrap/skip.js",
+          "lib/bootstrap/orchestrator.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/bootstrap/skip.js",
+        "reason": "required by ./scripts/postinstall.js; required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "c4a2155065a114c0f449c2a7fd10214b815041392d1d7ab7c7ad7c99321df10f",
+        "sizeBytes": 2280,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/bootstrap/orchestrator.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "62d38cf0e3246ec4779e5da11e4ab2b4c9d97ca308372068d7a228288f5dde95",
+        "sizeBytes": 18067,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/detect.js",
+          "lib/wsl/doctor.js",
+          "lib/cli/setup_cursor_wsl.js",
+          "lib/cli/setup_state.js",
+          "lib/harness/detect.js",
+          "lib/harness/write_all.js",
+          "lib/harness/stable_bin.js",
+          "lib/bootstrap/ensure_wsl_runtime.js",
+          "lib/bootstrap/ensure_daemon_autostart.js",
+          "lib/daemon/autostart.js",
+          "lib/bootstrap/lock.js",
+          "lib/bootstrap/skip.js",
+          "lib/harness/needs.js",
+          "lib/bootstrap/constants.js",
+          "lib/cli/restart.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/wsl/detect.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js; required by ./lib/wsl/doctor.js; required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/cli/restart.js; required by ./lib/wsl/spawn.js",
+        "sha256": "d3fe8109f2ae74443d6e22a2cd8a8839ee7b48e680278bfe5342408973e43047",
+        "sizeBytes": 11844,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/filtered_env.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/wsl/filtered_env.js",
+        "reason": "required by ./lib/wsl/detect.js; required by ./lib/wsl/doctor.js; required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/bootstrap/ensure_wsl_runtime.js; required by ./lib/bootstrap/ensure_daemon_autostart.js; required by ./lib/cli/restart.js; required by ./lib/wsl/spawn.js",
+        "sha256": "d56801261c2d9e56421445add2b82b7bd1b219938db2a1c75adb8c676fe66dfe",
+        "sizeBytes": 3020,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/wsl/doctor.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js; required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/wsl/spawn.js",
+        "sha256": "ce32d68ca97d1d5669fc947437de22889678b402b0e8b9c8a90f65260a28483f",
+        "sizeBytes": 13222,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/detect.js",
+          "lib/wsl/distro-name.js",
+          "lib/wsl/filtered_env.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/wsl/distro-name.js",
+        "reason": "required by ./lib/wsl/doctor.js; required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/cursor/config.js; required by ./lib/cursor/write.js; required by ./lib/wsl/spawn.js",
+        "sha256": "541e8e4a5c94903410239dc6759a90f819a2f512cf96b44e08103aa58085943c",
+        "sizeBytes": 1706,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/cli/setup_cursor_wsl.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js; required by ./lib/cli/restart.js",
+        "sha256": "0c112a69096d57504c9712413b0bcac3fd830b8d94db88e7af3680dbda3c0d05",
+        "sizeBytes": 18013,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/detect.js",
+          "lib/wsl/doctor.js",
+          "lib/wsl/distro-name.js",
+          "lib/wsl/filtered_env.js",
+          "lib/cursor/config.js",
+          "lib/cursor/write.js",
+          "lib/cli/setup_state.js",
+          "lib/bootstrap/constants.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/cursor/config.js",
+        "reason": "required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/harness/io/atomic.js; required by ./lib/cursor/write.js; required by ./lib/harness/detect.js; required by ./lib/harness/write_all.js; required by ./lib/harness/io/toml_mcp.js",
+        "sha256": "6b2e5b4a19c3f20c0d1bb48f31d42bfd995f99855edd02a7c19119179f15201b",
+        "sizeBytes": 18257,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/distro-name.js",
+          "lib/session/mint.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/session/mint.js",
+        "reason": "required by ./lib/cursor/config.js; required by ./lib/harness/write_all.js",
+        "sha256": "f1c2b46e09e819b7fd82e51e229cfadcf13955d119f546498693fdb47ef85ed4",
+        "sizeBytes": 3466,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/cursor/write.js",
+        "reason": "required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/harness/write_all.js",
+        "sha256": "66d4275e258133830579668f17a9ef3dddbfa86873ee5fb056fdc33f67308613",
+        "sizeBytes": 11237,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/harness/io/atomic.js",
+          "lib/cursor/config.js",
+          "lib/wsl/distro-name.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/io/atomic.js",
+        "reason": "required by ./lib/cursor/write.js; required by ./lib/harness/io/json_mcp.js; required by ./lib/harness/io/toml_mcp.js",
+        "sha256": "a18543174a37beac02ba1d35558d15e540ac35aa352657641f0147450e7ed09a",
+        "sizeBytes": 7094,
+        "signals": [
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/cursor/config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/cli/setup_state.js",
+        "reason": "required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/bootstrap/orchestrator.js; required by ./lib/bootstrap/lock.js",
+        "sha256": "ec00e5959a077d9736eff254bfa3153c76ef92af0be5990f94f37adb66280b36",
+        "sizeBytes": 8730,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/bootstrap/constants.js",
+        "reason": "required by ./lib/cli/setup_cursor_wsl.js; required by ./lib/daemon/autostart.js; required by ./lib/bootstrap/ensure_wsl_runtime.js; required by ./lib/bootstrap/ensure_daemon_autostart.js; required by ./lib/bootstrap/orchestrator.js; required by ./lib/cli/restart.js; required by ./lib/wsl/spawn.js",
+        "sha256": "c5f1082649f4d27f7245f87016f81238ec141919af8fc5cf3ca7f8ea39b2d0bf",
+        "sizeBytes": 1812,
+        "signals": [
+          "writes-outside-package",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/daemon/autostart.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/daemon/autostart.js",
+        "reason": "required by ./lib/bootstrap/constants.js; required by ./lib/bootstrap/ensure_daemon_autostart.js; required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "44b7911afd76a073a603895b8f8eb6b2e43655a729a0a58de770666eec8907c8",
+        "sizeBytes": 12578,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "modifies-shell-config",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/daemon/managed_block.js",
+          "lib/bootstrap/constants.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/special-place-ai-heaven/terminal-commander",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/daemon/managed_block.js",
+        "reason": "required by ./lib/daemon/autostart.js",
+        "sha256": "de9f44cd1eca7aeab055d69a51b9534e3c15eb1ae5677b32985a4c552a58e10b",
+        "sizeBytes": 1683,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/detect.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js; required by ./lib/harness/write_all.js; required by ./lib/harness/needs.js",
+        "sha256": "7c0d7508e272c1eb8de7d72a568444213aedc8d40b34ea15b2f545e35b943f7d",
+        "sizeBytes": 3960,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/cursor/config.js",
+          "lib/harness/paths.js",
+          "lib/harness/registry.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/paths.js",
+        "reason": "required by ./lib/harness/detect.js; required by ./lib/harness/write_all.js",
+        "sha256": "6565cb95baaa34d05527aa020c2270761d990ef8b5f053abf8537ae9000b5e1d",
+        "sizeBytes": 2050,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/registry.js",
+        "reason": "required by ./lib/harness/detect.js; required by ./lib/harness/write_all.js; required by ./lib/harness/needs.js",
+        "sha256": "5a16ae98c4a9e9d9c44c84c647335c72e419b81035536f7bbcefb7ca7eb97da8",
+        "sizeBytes": 1373,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/write_all.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "46a1ca9bc0bbff3e4073bd111839454657caf926d243faa55fbf583e2888ecc4",
+        "sizeBytes": 7589,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/cursor/write.js",
+          "lib/cursor/config.js",
+          "lib/harness/io/json_mcp.js",
+          "lib/harness/io/toml_mcp.js",
+          "lib/harness/stable_bin.js",
+          "lib/harness/paths.js",
+          "lib/harness/detect.js",
+          "lib/harness/registry.js",
+          "lib/session/mint.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/io/json_mcp.js",
+        "reason": "required by ./lib/harness/write_all.js",
+        "sha256": "b14ca94939e5b880b179ab27b61fff1c6b3e85e034a8897df5bec0fbb47a0f76",
+        "sizeBytes": 4883,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/harness/io/atomic.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/io/toml_mcp.js",
+        "reason": "required by ./lib/harness/write_all.js",
+        "sha256": "cf9cda1b7db0eb9074781cb0f51cecf77a5a6b99312f465d9b70caaff887f846",
+        "sizeBytes": 8831,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/harness/io/atomic.js",
+          "lib/cursor/config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/stable_bin.js",
+        "reason": "required by ./lib/harness/write_all.js; required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "a82c071a507f2232e3a2ed918eda7568145bd93c43659882a7149b5d081e8add",
+        "sizeBytes": 11408,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/resolve-binary.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/resolve-binary.js",
+        "reason": "required by ./lib/harness/stable_bin.js",
+        "sha256": "c17fcdfaf014e7a4091040a90036da424f7de8c89379909fc4dedb34806bdc76",
+        "sizeBytes": 4683,
+        "signals": [
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./lib/harness/stable_bin.js; required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "69bbc56002beff03310ea8431bbed4861dfee800c0e067966ebb8c33b9e5c5b6",
+        "sizeBytes": 1515,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/bootstrap/ensure_wsl_runtime.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "52b3d2254f299d9e5eabddddec31893980a938a3e2d4124b48126dcdd17b5db3",
+        "sizeBytes": 5710,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/filtered_env.js",
+          "lib/bootstrap/constants.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/bootstrap/ensure_daemon_autostart.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "2f0b1ab1fe06ccdccffa419e29665888f7ec23970b6cd2faa5dcf107feb32444",
+        "sizeBytes": 4004,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/filtered_env.js",
+          "lib/bootstrap/constants.js",
+          "lib/daemon/autostart.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/bootstrap/lock.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "a96091b88b74156d13f0417d2f2cdc5ff1f90bc3481ba555e08ba77da4b6c611",
+        "sizeBytes": 1660,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/cli/setup_state.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/harness/needs.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "05ce08a727f119d877e51d2ec3529abd8dc2372394c165ce2156bf3e0d9786c6",
+        "sizeBytes": 1399,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/harness/registry.js",
+          "lib/harness/detect.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/cli/restart.js",
+        "reason": "required by ./lib/bootstrap/orchestrator.js",
+        "sha256": "8b4f79325ad326359550aad2e34ea09d989dd544d8415a96addbe713c91546d2",
+        "sizeBytes": 5223,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/cli/setup_cursor_wsl.js",
+          "lib/wsl/detect.js",
+          "lib/bootstrap/constants.js",
+          "lib/wsl/filtered_env.js",
+          "lib/wsl/spawn.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/wsl/spawn.js",
+        "reason": "required by ./lib/cli/restart.js",
+        "sha256": "f030b4b9f15128027b5afa246faeaaf99691671d05722ba2b5754ee94da633fb",
+        "sizeBytes": 14925,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/wsl/detect.js",
+          "lib/wsl/doctor.js",
+          "lib/wsl/filtered_env.js",
+          "lib/wsl/distro-name.js",
+          "lib/bootstrap/constants.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:19.258Z"
+  },
+  "hash": "sha256:c901aaae3f8d4bc003cc4843f7fd856495f244bc7e13058752b863c71687c2d7"
+}

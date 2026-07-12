@@ -1,0 +1,55 @@
+{
+  "name": "yiyan-browser-agent",
+  "version": "1.11.2",
+  "description": "AI coding agent powered by Yiyan (文心一言) via browser automation (chat.baidu.com) — no API key needed. Performance-optimized. Enhanced with comprehensive security.",
+  "main": "src/index.js",
+  "bin": {
+    "yiyan-agent": "src/index.js",
+    "ya": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "postinstall": "node src/postinstall.js",
+    "debug": "node src/index.js --debug",
+    "calibrate": "node src/calibrate.js",
+    "test:security": "node test-security.js",
+    "test:integration": "node test-integration.js",
+    "test:path": "node test-path-security.js"
+  },
+  "files": [
+    "src/",
+    "docs/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "playwright": "^1.45.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "yiyan",
+    "wenxin",
+    "baidu",
+    "browser-automation",
+    "coding-agent",
+    "cli",
+    "llm",
+    "security",
+    "command-validation",
+    "safe-execution",
+    "path-protection",
+    "file-backup"
+  ],
+  "author": "readfor",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/readfor/yiyan-browser-agent.git"
+  },
+  "homepage": "https://github.com/readfor/yiyan-browser-agent#readme"
+}

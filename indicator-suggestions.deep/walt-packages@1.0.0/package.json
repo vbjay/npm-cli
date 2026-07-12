@@ -1,0 +1,39 @@
+{
+  "name": "walt-packages",
+  "version": "1.0.0",
+  "description": "Walt packages",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "lerna bootstrap --hoist walt-compiler",
+    "validate": "lerna run validate --stream",
+    "test": "lerna run test --stream",
+    "publish": "lerna publish",
+    "clean": "lerna clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ballercat/walt.git"
+  },
+  "keywords": [
+    "walt",
+    "javascript",
+    "webassembly",
+    "wasm",
+    "compiler",
+    "js",
+    "ast"
+  ],
+  "author": "Arthur Buldauskas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ballercat/walt/issues"
+  },
+  "homepage": "https://github.com/ballercat/walt#readme",
+  "devDependencies": {
+    "lerna": "^2.11.0",
+    "walt-compiler": "^0.5.3"
+  },
+  "nyc": {
+    "cache": true
+  }
+}

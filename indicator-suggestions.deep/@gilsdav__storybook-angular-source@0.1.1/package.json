@@ -1,0 +1,57 @@
+{
+  "name": "@gilsdav/storybook-angular-source",
+  "version": "0.1.1",
+  "description": "Displays template code to use to have same result into your app.",
+  "main": "dist/preset.js",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "*.js"
+  ],
+  "keywords": [
+    "addon",
+    "storybook",
+    "angular",
+    "source"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gilsdav/storybook-angular-source.git"
+  },
+  "scripts": {
+    "build": "npm run clean && babel -d ./dist ./src",
+    "build:watch": "babel --watch -d ./dist ./src",
+    "clean": "rm -rf ./dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "cp ../README.md ."
+  },
+  "author": "David Gilson <davgilson@live.fr>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.12.13",
+    "@storybook/addons": "^6.1.21",
+    "@storybook/react": "^6.1.21",
+    "babel-eslint": "^10.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "peerDependencies": {
+    "@storybook/addons": "^6.1.21",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.13.9",
+    "@babel/parser": "^7.13.12",
+    "@storybook/api": "^6.1.21",
+    "@storybook/components": "^6.1.21",
+    "prettier": "^2.2.1",
+    "react-syntax-highlighter": "^15.4.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

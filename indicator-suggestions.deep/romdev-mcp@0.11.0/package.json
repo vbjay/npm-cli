@@ -1,0 +1,93 @@
+{
+  "name": "romdev-mcp",
+  "version": "0.11.0",
+  "description": "MCP server giving coding agents full control of homebrew ROM development AND reverse-engineering/romhacking across 14 retro platforms (NES, SNES, GB, Genesis, Atari, C64, PC Engine, MSX, ...) via WASM libretro cores.",
+  "type": "module",
+  "main": "src/mcp/server.js",
+  "bin": {
+    "romdev-mcp": "src/mcp/server.js",
+    "romdev-mcp-cli": "src/cli/smoke.js"
+  },
+  "scripts": {
+    "postinstall": "node src/install/postinstall.mjs",
+    "smoke": "node --enable-source-maps src/cli/smoke.js",
+    "mcp": "node --enable-source-maps src/mcp/server.js",
+    "test": "node --test 'src/**/*.test.js' 'test/**/*.test.js'"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "libretro",
+    "wasm",
+    "emulator",
+    "homebrew",
+    "retro",
+    "nes",
+    "snes",
+    "game-boy",
+    "genesis",
+    "atari",
+    "commodore-64",
+    "pc-engine",
+    "msx",
+    "romhacking",
+    "reverse-engineering",
+    "cheats",
+    "agent",
+    "claude"
+  ],
+  "author": "monteslu",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@kmamal/sdl": "^0.11.13",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@monteslu/chafa-wasm": "^0.4.0",
+    "ase-parser": "^0.0.18",
+    "fuse.js": "^7.4.1",
+    "omggif": "^1.0.10",
+    "pngjs": "^7.0.0",
+    "romdev_game_codes": "0.1.0",
+    "romdev-core-bluemsx": "0.4.0",
+    "romdev-core-fceumm": "0.7.0",
+    "romdev-core-gambatte": "0.7.0",
+    "romdev-core-geargrafx": "0.5.0",
+    "romdev-core-gpgx": "0.10.0",
+    "romdev-core-handy": "0.5.0",
+    "romdev-core-prosystem": "0.6.0",
+    "romdev-core-vice": "0.6.0",
+    "romdev-platform-atari2600": "0.6.0",
+    "romdev-platform-gba": "0.6.0",
+    "romdev-platform-snes": "0.6.0",
+    "romdev-toolchain-cc65": "0.1.1",
+    "romdev-toolchain-m68k-gcc": "0.2.0",
+    "romdev-toolchain-rgbds": "0.1.0",
+    "romdev-toolchain-sdcc": "0.2.0",
+    "romdev-toolchain-vasm": "0.1.0",
+    "romdev-xgm2": "0.1.0",
+    "socket.io": "^4.8.3",
+    "yauzl": "^3.3.1",
+    "zod": "^4.4.3"
+  },
+  "files": [
+    "src",
+    "!src/**/*.test.js",
+    "examples",
+    "AGENTS.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monteslu/romdev.git",
+    "directory": "packages/romdev"
+  },
+  "homepage": "https://github.com/monteslu/romdev#readme",
+  "bugs": {
+    "url": "https://github.com/monteslu/romdev/issues"
+  }
+}

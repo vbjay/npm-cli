@@ -1,0 +1,75 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "897cb3f50349b9e1",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "44e788cef58dd496cb1af5279c43d332033d4378163756bb7232f4c89637b358",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `gles`  -  C/C++ sources",
+            "items": [
+              "src/module.cpp",
+              "src/egl_context.cpp",
+              "src/gl_bindings.cpp"
+            ]
+          },
+          {
+            "label": "Target `gles`  -  libraries",
+            "items": [
+              "-lEGL",
+              "-lGLESv2",
+              "-L$(ANGLE_LIB)",
+              "-lEGL",
+              "-lGLESv2",
+              "-l<!(echo %ANGLE_LIB%)\\libEGL.lib",
+              "-l<!(echo %ANGLE_LIB%)\\libGLESv2.lib"
+            ]
+          },
+          {
+            "label": "Target `gles`  -  include directories",
+            "items": [
+              "$(ANGLE_INC)",
+              "<!(echo %ANGLE_INC%)"
+            ]
+          },
+          {
+            "label": "Target `gles`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.mjs",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:13.712Z"
+  },
+  "hash": "sha256:c3470c2d93b59f4b4b627c4cc00e2b829d98c90b5e42bbd3a19301e2e531f135"
+}

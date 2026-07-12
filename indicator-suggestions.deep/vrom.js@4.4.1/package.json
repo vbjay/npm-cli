@@ -1,0 +1,85 @@
+{
+  "name": "vrom.js",
+  "version": "4.4.1",
+  "description": "Zero-boilerplate RAG for browser AI agents. WASM HNSW vector search + background ONNX embedding + OPFS-cached vROM cartridges.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./web": {
+      "import": {
+        "types": "./dist/web.d.ts",
+        "default": "./dist/web.js"
+      }
+    },
+    "./embed-worker": {
+      "import": {
+        "types": "./dist/embed-worker.d.ts",
+        "default": "./dist/embed-worker.js"
+      },
+      "require": {
+        "types": "./dist/embed-worker.d.ts",
+        "default": "./dist/embed-worker.js"
+      }
+    },
+    "./wasm-bundler/*": "./wasm-bundler/*",
+    "./wasm-web/*": "./wasm-web/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "wasm-bundler/*",
+    "wasm-web/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build:wasm-bundler": "wasm-pack build ../src --target bundler --out-dir ../lib/wasm-bundler --release && rm -f ../lib/wasm-bundler/.gitignore",
+    "build:wasm-web": "wasm-pack build ../src --target web --out-dir ../lib/wasm-web --release && rm -f ../lib/wasm-web/.gitignore",
+    "build:js": "tsdown",
+    "build": "npm run build:wasm-bundler && npm run build:wasm-web && npm run build:js",
+    "build:check": "tsc --noEmit",
+    "lint": "publint",
+    "lint:types": "attw --pack . --ignore-rules no-resolution cjs-resolves-to-esm",
+    "prepack": "cp ../README.md . && npm run build",
+    "clean": "rm -rf dist wasm-pkg"
+  },
+  "devDependencies": {
+    "tsdown": "^0.12.0",
+    "typescript": "^5.8.0",
+    "publint": "^0.3.0",
+    "@arethetypeswrong/cli": "^0.18.0"
+  },
+  "keywords": [
+    "vector-database",
+    "hnsw",
+    "wasm",
+    "webassembly",
+    "rag",
+    "embeddings",
+    "transformers.js",
+    "browser",
+    "offline",
+    "ai-agent",
+    "opfs",
+    "web-worker"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philsupertramp/vecdb-wasm.git"
+  },
+  "homepage": "https://huggingface.co/spaces/philipp-zettl/vecdb-wasm",
+  "sideEffects": false
+}

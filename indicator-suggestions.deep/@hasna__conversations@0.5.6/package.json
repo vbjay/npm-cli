@@ -1,0 +1,94 @@
+{
+  "name": "@hasna/conversations",
+  "version": "0.5.6",
+  "description": "Real-time CLI messaging for AI agents",
+  "type": "module",
+  "bin": {
+    "conversations": "bin/index.js",
+    "conversations-mcp": "bin/mcp.js",
+    "conversations-serve": "bin/serve.js",
+    "conversations-hook": "bin/hook.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./sdk": {
+      "import": "./dist/sdk/index.js",
+      "types": "./dist/sdk/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "dashboard/dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist bin",
+    "build": "bun run clean && bun build ./src/cli/index.tsx --outdir ./bin --target bun --external ink --external react --external chalk && bun build ./src/mcp/index.ts --outfile ./bin/mcp.js --target bun && bun build ./src/server/serve-entry.ts --outfile ./bin/serve.js --target bun && bun build ./src/hooks/blocker-hook.ts --outfile ./bin/hook.js --target bun && bun build ./src/index.ts ./src/sdk/index.ts --outdir ./dist --target bun && (tsc --emitDeclarationOnly --declaration --outDir dist || true)",
+    "build:dashboard": "cd dashboard && bun install && bun run build",
+    "test": "bun test",
+    "dev": "bun run ./src/cli/index.tsx",
+    "serve": "bun run ./src/server/serve-entry.ts",
+    "migrate": "bun run ./src/server/migrate.ts",
+    "kit:vendor": "bunx @hasna/contracts vendor-kit",
+    "kit:check": "bunx @hasna/contracts vendor-kit --check",
+    "sdk:generate": "bun run ./scripts/generate-sdk.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build:dashboard && bun run build",
+    "postinstall": "mkdir -p $HOME/.hasna/conversations $HOME/.hasna/conversations/training 2>/dev/null || true"
+  },
+  "keywords": [
+    "conversations",
+    "messaging",
+    "ai",
+    "agent",
+    "cli",
+    "typescript",
+    "bun",
+    "claude",
+    "mcp"
+  ],
+  "author": "Hasna",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/pg": "^8.11.11",
+    "@types/react": "^18.2.0",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@hasna/contracts": "^0.4.2",
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "ink": "^5.0.1",
+    "ink-select-input": "^6.0.0",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^6.0.0",
+    "pg": "^8.20.0",
+    "react": "^18.2.0",
+    "zod": "^4.3.6"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/conversations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hasna/conversations/issues"
+  },
+  "homepage": "https://github.com/hasna/conversations#readme"
+}

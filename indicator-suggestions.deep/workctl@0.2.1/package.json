@@ -1,0 +1,77 @@
+{
+  "name": "workctl",
+  "version": "0.2.1",
+  "description": "Unified CLI for task management across providers (ClickUp, Jira, etc.)",
+  "type": "module",
+  "bin": {
+    "workctl": "./bin/run.js"
+  },
+  "main": "",
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itboxful/workctl.git"
+  },
+  "homepage": "https://github.com/itboxful/workctl#readme",
+  "bugs": {
+    "url": "https://github.com/itboxful/workctl/issues"
+  },
+  "author": "loviver",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "./bin/dev.js",
+    "lint": "eslint src/",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "npm run build && oclif manifest",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "oclif": {
+    "bin": "workctl",
+    "dirname": "workctl",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-not-found"
+    ],
+    "topicSeparator": " "
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "cli",
+    "task-management",
+    "clickup",
+    "jira",
+    "productivity",
+    "project-management",
+    "agent-friendly",
+    "oclif"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@inquirer/prompts": "^8.3.2",
+    "@oclif/core": "^4.10.3",
+    "@oclif/plugin-help": "^6.2.40",
+    "@oclif/plugin-not-found": "^3.2.77",
+    "pino": "^10.3.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.5.0",
+    "eslint": "^10.1.0",
+    "oclif": "^4.22.96",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2",
+    "vitest": "^4.1.2"
+  }
+}

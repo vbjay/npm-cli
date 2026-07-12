@@ -1,0 +1,74 @@
+{
+  "name": "contaazul-pinst",
+  "version": "1.1.10",
+  "description": "Enable or disable npm postinstall hook",
+  "main": "lib/bin.js",
+  "bin": {
+    "ca-pinst": "./lib/bin.js"
+  },
+  "files": [
+    "lib/bin.js",
+    "lib/index.js"
+  ],
+  "scripts": {
+    "ignore_prei": "yarn dlx only-allow yarn",
+    "ignore_posti": "husky install",
+    "prepack": "node ./lib/bin.js --silent --disable",
+    "postpack": "node ./lib/bin.js --silent --enable",
+    "precommit": "yarn lint-staged",
+    "test": "jest --coverage",
+    "lint": "eslint .",
+    "lint:fix": "yarn lint --fix",
+    "release": "release-it --config release-it.config.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn lint:fix"
+    ],
+    "*.{json,md,yml}": [
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContaAzul/pinst.git"
+  },
+  "keywords": [
+    "npm",
+    "preinstall",
+    "postinstall",
+    "lifecycle",
+    "dev",
+    "devpreinstall",
+    "devpostinstall"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ContaAzul/pinst/issues"
+  },
+  "homepage": "https://github.com/ContaAzul/pinst#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/format": "^17.4.4",
+    "@release-it/conventional-changelog": "^4.3.0",
+    "conventional-changelog": "^3.1.25",
+    "conventional-changelog-conventionalcommits": "^4.6.3",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "husky": "^5.0.6",
+    "jest": "^29.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^3.5.3",
+    "release-it": "^14.14.3",
+    "tempy": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "packageManager": "yarn@4.9.1"
+}

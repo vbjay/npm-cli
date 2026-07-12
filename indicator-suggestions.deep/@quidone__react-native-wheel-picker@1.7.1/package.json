@@ -1,0 +1,146 @@
+{
+  "name": "@quidone/react-native-wheel-picker",
+  "version": "1.7.1",
+  "description": "Picker is a UI component for selecting an item from a list of options.",
+  "main": "dest/commonjs/index",
+  "module": "dest/module/index",
+  "types": "dest/typescript/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "dest",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!dest/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test:run": "jest",
+    "tsc:check": "tsc --noEmit",
+    "lint:check": "eslint \"**/*.{js,ts,tsx}\"",
+    "deps:check-shared": "node scripts/check-shared-deps.js",
+    "lint:fix": "eslint --fix \"**/*.{js,ts,tsx}\"",
+    "build:check-all": "yarn lint:fix && yarn deps:check-shared && yarn tsc:check && yarn test:run",
+    "build:resolve": "babel --config-file ./babel.local-namespace-config.js ./src --out-dir ./src --extensions .ts,.js,.tsx,.json --keep-file-extension",
+    "build:bob": "cp -r ./src ./copied-src && yarn run build:resolve && yarn run lint:fix && bob build",
+    "prepack": "yarn build:check-all && yarn build:bob",
+    "postpublish": "rm -r ./src && cp -r ./copied-src ./src && rm -r ./copied-src",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install"
+  },
+  "keywords": [
+    "react-native",
+    "wheel",
+    "picker",
+    "date",
+    "datetime",
+    "expo",
+    "ios",
+    "android",
+    "select",
+    "field"
+  ],
+  "repository": "https://github.com/quidone/react-native-wheel-picker",
+  "author": "Sergey Rozhkov <rozhkovse1@gmail.com> (https://github.com/quidone/react-native-wheel-picker)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quidone/react-native-wheel-picker/issues"
+  },
+  "homepage": "https://github.com/quidone/react-native-wheel-picker#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "react": ">=16.8",
+    "react-native": ">=0.71.6"
+  },
+  "dependencies": {
+    "@rozhkov/react-useful-hooks": "^1.0.10",
+    "date-fns": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-syntax-typescript": "^7.21.4",
+    "@babel/preset-react": "^7.27.1",
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.2.2",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@react-native/babel-preset": "0.86.0",
+    "@react-native/jest-preset": "0.86.0",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.2",
+    "@types/react": "^19.2.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^4.0.0",
+    "hermes-eslint": "^0.36.1",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-builder-bob": "^0.38.4",
+    "react-test-renderer": "19.2.3",
+    "release-it": "^15.0.0",
+    "typescript": "5.6.3"
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "packageManager": "yarn@4.5.1",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dest",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

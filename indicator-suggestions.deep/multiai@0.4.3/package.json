@@ -1,0 +1,51 @@
+{
+  "name": "multiai",
+  "version": "0.4.3",
+  "description": "Route multiple AI CLIs (Claude Code, Codex, OpenCode) with isolated env profiles — native Go binary, SHA256-verified download",
+  "keywords": [
+    "ai",
+    "cli",
+    "claude",
+    "codex",
+    "opencode",
+    "router",
+    "anthropic",
+    "deepseek",
+    "openrouter"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Laurent Rochetta",
+    "url": "https://follow.ovh/bio/laurent"
+  },
+  "homepage": "https://rochetta.fr",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lrochetta/multiai.git"
+  },
+  "bin": {
+    "multiai": "bin/multiai.js"
+  },
+  "files": [
+    "bin/multiai.js",
+    "install.js",
+    "scan-secrets.js",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node install.js",
+    "prepublishOnly": "node scan-secrets.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

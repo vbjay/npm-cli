@@ -1,0 +1,33 @@
+{
+  "name": "@jdmichaud/wasm-toolkit",
+  "version": "19.0.0",
+  "description": "Statically compiled clang binary and friends for WASM accessible via npx",
+  "main": "index.js",
+  "engines": {
+    "npm": ">=6.14.7",
+    "node": ">=14.8.0"
+  },
+  "scripts": {
+    "build": "./make-clang-linux.sh && ./make-wabt-linux.sh",
+    "postinstall": "node install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdmichaud/clang-npm-pkg.git"
+  },
+  "keywords": [
+    "clang",
+    "static",
+    "wasm"
+  ],
+  "author": "jdmichaud",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jdmichaud/clang-npm-pkg/issues"
+  },
+  "files": [
+    "dist",
+    "install.js"
+  ],
+  "homepage": "https://github.com/jdmichaud/clang-npm-pkg#readme"
+}

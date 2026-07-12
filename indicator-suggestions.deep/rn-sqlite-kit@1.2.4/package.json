@@ -1,0 +1,79 @@
+{
+  "name": "rn-sqlite-kit",
+  "version": "1.2.4",
+  "description": "A dependency-free SQLite TurboModule for React Native iOS and Android.",
+  "keywords": [
+    "react-native",
+    "sqlite",
+    "database",
+    "offline",
+    "turbo-module"
+  ],
+  "homepage": "https://github.com/monavidev/rn-sqlite-kit#readme",
+  "bugs": {
+    "url": "https://github.com/monavidev/rn-sqlite-kit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monavidev/rn-sqlite-kit.git"
+  },
+  "license": "MIT",
+  "author": "Nattawat Virunsuntornkul",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "react-native": "./src/index.js",
+  "source": "./src/index.js",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "react-native": "./src/index.js",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "android/src",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "ios",
+    "src",
+    "react-native-sqlite-kit.podspec",
+    "react-native.config.js",
+    "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check:syntax": "node --check src/index.js && node --check src/createSQLiteKit.js && node --check src/internal/codec.js && node --check src/internal/validation.js",
+    "check": "npm run check:syntax && npm test && npm pack --dry-run",
+    "prepack": "npm test",
+    "prepublishOnly": "npm run check"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "react-native": ">=0.79.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "codegenConfig": {
+    "name": "ReactNativeSqliteKitSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.reactnativesqlitekit"
+    },
+    "ios": {
+      "modulesProvider": {
+        "ReactNativeSqliteKit": "RNSqliteKit"
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "name": "@glamario/core-react-native",
+  "description": "GlamAR SDK for React Native",
+  "version": "1.0.5",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "react-native": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "homepage": "https://www.glamar.io/docs/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixelbin-io/glamar-react-native.git"
+  },
+  "exports": {
+    ".": {
+      "react-native": "./dist/esm/index.js",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/esm/index.d.ts"
+    }
+  },
+  "keywords": [
+    "react-native",
+    "glamar",
+    "ar",
+    "sdk",
+    "skin analysis"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf dist || rm -rf dist",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "minify:esm": "node src/minify.cjs dist/esm && node src/obfuscate.cjs dist/esm",
+    "minify:cjs": "node src/minify.cjs dist/cjs && node src/obfuscate.cjs dist/cjs",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run minify:esm && npm run minify:cjs",
+    "verify:peers": "node src/verify-peers.cjs",
+    "pack:check": "npm pack --dry-run",
+    "pack": "npm pack",
+    "prepack": "npm run verify:peers && npm run build",
+    "prepublishOnly": "npm run verify:peers && npm run build && npm run pack:check",
+    "release:patch": "npm version patch && npm publish --access public",
+    "release:minor": "npm version minor && npm publish --access public",
+    "release:major": "npm version major && npm publish --access public"
+  },
+  "peerDependencies": {
+    "react": ">=18 <20",
+    "react-native": ">=0.68.0",
+    "react-native-webview": ">=11.0.0",
+    "react-native-device-info": ">=10.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-webview": {
+      "optional": true
+    },
+    "react-native-device-info": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "buffer": "^6.0.3",
+    "crypto-js": "^4.2.0",
+    "react-native-url-polyfill": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^22.5.0",
+    "@types/react": "19.1.11",
+    "@types/react-native": "0.72.8",
+    "glob": "^11.0.3",
+    "javascript-obfuscator": "^4.1.1",
+    "react-native-device-info": "^14.0.4",
+    "react-native-webview": "13.15.0",
+    "rimraf": "6.0.1",
+    "terser": "^5.43.1",
+    "typescript": "5.9.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.17",
+    "npm": ">=9"
+  }
+}

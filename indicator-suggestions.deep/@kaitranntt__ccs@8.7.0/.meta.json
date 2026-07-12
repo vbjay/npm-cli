@@ -1,0 +1,1243 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3e823fa0ddc3782c",
+    "fetchedFiles": [
+      "dist/auth/account-context.js",
+      "dist/channels/official-channels-ids.js",
+      "dist/cliproxy/ai-providers/model-id-normalizer.js",
+      "dist/cliproxy/config/composite-validator.js",
+      "dist/cliproxy/model-catalog.js",
+      "dist/cliproxy/provider-capabilities.js",
+      "dist/config/config-loader-facade.js",
+      "dist/config/feature-flags.js",
+      "dist/config/loader/config-getters.js",
+      "dist/config/loader/defaults-merger.js",
+      "dist/config/loader/io-locks.js",
+      "dist/config/loader/normalizers.js",
+      "dist/config/loader/yaml-serializer.js",
+      "dist/config/schemas/auth.js",
+      "dist/config/schemas/browser.js",
+      "dist/config/schemas/channels.js",
+      "dist/config/schemas/cliproxy.js",
+      "dist/config/schemas/copilot-cursor.js",
+      "dist/config/schemas/index.js",
+      "dist/config/schemas/logging.js",
+      "dist/config/schemas/providers.js",
+      "dist/config/schemas/proxy-server.js",
+      "dist/config/schemas/quota.js",
+      "dist/config/schemas/runtime.js",
+      "dist/config/schemas/thinking.js",
+      "dist/config/schemas/unified-config.js",
+      "dist/config/schemas/version.js",
+      "dist/config/unified-config-loader.js",
+      "dist/config/unified-config-types.js",
+      "dist/errors/error-types.js",
+      "dist/errors/exit-codes.js",
+      "dist/management/instance-directory.js",
+      "dist/management/plugin-path-normalizer.js",
+      "dist/management/profile-context-sync-lock.js",
+      "dist/management/shared-manager.js",
+      "dist/management/shared-manager/fs-helpers.js",
+      "dist/management/shared-manager/migrations.js",
+      "dist/management/shared-manager/orchestrator.js",
+      "dist/management/shared-manager/plugin-layout-internals.js",
+      "dist/management/shared-manager/plugin-metadata-normalizer.js",
+      "dist/management/shared-manager/project-context-sync.js",
+      "dist/management/shared-manager/project-memory-sync.js",
+      "dist/management/shared-manager/shared-dir-linker.js",
+      "dist/management/shared-manager/symlink-helpers.js",
+      "dist/management/shared-manager/types.js",
+      "dist/shared/agy-gemini-pro-compatibility.js",
+      "dist/shared/extended-context-utils.js",
+      "dist/shared/gemini-minor-version-compatibility.js",
+      "dist/utils/browser/browser-settings.js",
+      "dist/utils/browser/chrome-reuse.js",
+      "dist/utils/browser/platform.js",
+      "dist/utils/config-manager.js",
+      "dist/utils/error-codes.js",
+      "dist/utils/error-manager.js",
+      "dist/utils/helpers.js",
+      "dist/utils/hooks/image-analysis-backend-resolver.js",
+      "dist/utils/platform-commands.js",
+      "dist/utils/ui.js",
+      "dist/utils/ui/boxes.js",
+      "dist/utils/ui/colors.js",
+      "dist/utils/ui/index.js",
+      "dist/utils/ui/indicators.js",
+      "dist/utils/ui/init.js",
+      "dist/utils/ui/spinner.js",
+      "dist/utils/ui/tables.js",
+      "dist/utils/ui/tasks.js",
+      "dist/utils/ui/text.js",
+      "dist/utils/ui/types.js",
+      "dist/utils/websearch/types.js",
+      "package.json",
+      "scripts/add-shebang.js",
+      "scripts/postinstall.js",
+      "scripts/preinstall.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "js-yaml",
+        "versionSpec": "^4.1.1"
+      },
+      {
+        "name": "official-channels-runtime",
+        "versionSpec": null
+      },
+      {
+        "name": "this",
+        "versionSpec": null
+      },
+      {
+        "name": "x",
+        "versionSpec": null
+      },
+      {
+        "name": "cli-table3",
+        "versionSpec": "^0.6.5"
+      },
+      {
+        "name": "listr2",
+        "versionSpec": "^3.14.0"
+      },
+      {
+        "name": "ora",
+        "versionSpec": "^5.4.1"
+      },
+      {
+        "name": "shared-manager",
+        "versionSpec": null
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "cli-table3@0.6.5",
+      "js-yaml@4.3.0",
+      "listr2@3.14.0",
+      "ora@5.4.1",
+      "this@1.1.0",
+      "x@0.1.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/preinstall.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "10ff45f5bf763e338f3a7b37ba2720b3528f8488b954172ac55e170efcb55cc3",
+        "sizeBytes": 1677,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "669cc9472c5c4af77587b4b12dcc8b6af8da70d93c2d46c36d16bc03329fc435",
+        "sizeBytes": 13513,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/management/shared-manager.js",
+          "dist/config/unified-config-loader.js",
+          "dist/config/unified-config-types.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/kaitranntt/ccs/issues",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "dist/management/shared-manager.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "4a11fe24ac017c18d64d008a7b43759c3139da728e28ffb01d9f9bd42bd1fa8c",
+        "sizeBytes": 1690,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/management/shared-manager/orchestrator.js",
+          "dist/management/plugin-path-normalizer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/orchestrator.js",
+        "reason": "required by ./dist/management/shared-manager.js",
+        "sha256": "b3fa7cf4f65b6dc4becb5957bddcff1e09e0db1af116cc38f7b5ad88849d2d3a",
+        "sizeBytes": 6427,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui.js",
+          "dist/config/config-loader-facade.js",
+          "dist/management/profile-context-sync-lock.js",
+          "dist/management/shared-manager/plugin-metadata-normalizer.js",
+          "dist/management/shared-manager/shared-dir-linker.js",
+          "dist/management/shared-manager/project-context-sync.js",
+          "dist/management/shared-manager/project-memory-sync.js",
+          "dist/management/shared-manager/migrations.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js; required by ./dist/utils/config-manager.js; required by ./dist/utils/error-manager.js; required by ./dist/management/shared-manager/plugin-metadata-normalizer.js; required by ./dist/management/shared-manager/shared-dir-linker.js; required by ./dist/management/shared-manager/plugin-layout-internals.js; required by ./dist/management/shared-manager/project-context-sync.js; required by ./dist/management/shared-manager/project-memory-sync.js; required by ./dist/management/shared-manager/migrations.js",
+        "sha256": "cfebd0309064a4d26057b81b414a348965ab13d4964c93cbaa80fe0ec6e8c4f1",
+        "sizeBytes": 3995,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/index.js",
+        "reason": "required by ./dist/utils/ui.js",
+        "sha256": "efb43ff3ebeb184942eb8b55df72144bcccd733c9d2074bd93ccfd99693bba64",
+        "sizeBytes": 5519,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/types.js",
+          "dist/utils/ui/init.js",
+          "dist/utils/ui/colors.js",
+          "dist/utils/ui/indicators.js",
+          "dist/utils/ui/boxes.js",
+          "dist/utils/ui/tables.js",
+          "dist/utils/ui/text.js",
+          "dist/utils/ui/spinner.js",
+          "dist/utils/ui/tasks.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/types.js",
+        "reason": "required by ./dist/utils/ui/index.js; required by ./dist/utils/ui/init.js; required by ./dist/utils/ui/colors.js; required by ./dist/utils/ui/boxes.js; required by ./dist/utils/ui/text.js; required by ./dist/utils/ui/spinner.js; required by ./dist/utils/ui/tasks.js",
+        "sha256": "e8482c4c9caff2799cb1376f5b51a241f817a69315d5a1532c90e8cef7338898",
+        "sizeBytes": 850,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/init.js",
+        "reason": "required by ./dist/utils/ui/index.js; required by ./dist/utils/ui/colors.js; required by ./dist/utils/ui/boxes.js; required by ./dist/utils/ui/text.js; required by ./dist/utils/ui/spinner.js; required by ./dist/utils/ui/tasks.js",
+        "sha256": "60e5427d853edcc4a77c4dc7c4ac156d20d7a99cc8ee8985973e129771bc99d6",
+        "sizeBytes": 3287,
+        "signals": [
+          "uses-eval",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/colors.js",
+        "reason": "required by ./dist/utils/ui/index.js; required by ./dist/utils/ui/indicators.js; required by ./dist/utils/ui/tables.js; required by ./dist/utils/ui/text.js; required by ./dist/utils/ui/spinner.js",
+        "sha256": "63b3f8f8f4fa19e78377d25f66565027c147814419cff48c86f3f7f4db22fd00",
+        "sizeBytes": 2223,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/types.js",
+          "dist/utils/ui/init.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/indicators.js",
+        "reason": "required by ./dist/utils/ui/index.js; required by ./dist/utils/ui/spinner.js; required by ./dist/utils/ui/tasks.js",
+        "sha256": "992238811a157d43a6b09e6812cdc1c4d0a34811c9e4c5e1806e0638f744063a",
+        "sizeBytes": 959,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/colors.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/boxes.js",
+        "reason": "required by ./dist/utils/ui/index.js",
+        "sha256": "57ffe93cab3ed24134720f77569c9acf3bf0b1012c06fe4153ab101a39037c23",
+        "sizeBytes": 3102,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/types.js",
+          "dist/utils/ui/init.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/tables.js",
+        "reason": "required by ./dist/utils/ui/index.js",
+        "sha256": "6cfe6bd3c0f25bf2ec65bf8df5dafb3a97d437a3a72f8ce9c254a5149730bfe4",
+        "sizeBytes": 2155,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/colors.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/text.js",
+        "reason": "required by ./dist/utils/ui/index.js",
+        "sha256": "40e580a7dc41cc05d8471dd5b63ee52781279aa3f9be65d0caf1cc8d04d994bf",
+        "sizeBytes": 1951,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/types.js",
+          "dist/utils/ui/init.js",
+          "dist/utils/ui/colors.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/spinner.js",
+        "reason": "required by ./dist/utils/ui/index.js; required by ./dist/utils/ui/tasks.js",
+        "sha256": "46c37d25d0d754cc343d1f30d16acf48372a5eb8f569612df738996339089562",
+        "sizeBytes": 3414,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/types.js",
+          "dist/utils/ui/init.js",
+          "dist/utils/ui/colors.js",
+          "dist/utils/ui/indicators.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/ui/tasks.js",
+        "reason": "required by ./dist/utils/ui/index.js",
+        "sha256": "55c0426b6850f6e417c4b3057dc25c87abff6109f0c9a3488bc2512b4826f4cd",
+        "sizeBytes": 3663,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui/types.js",
+          "dist/utils/ui/init.js",
+          "dist/utils/ui/indicators.js",
+          "dist/utils/ui/spinner.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/config-loader-facade.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js; required by ./dist/config/config-loader-facade.js",
+        "sha256": "41a45888dffdaecacd1fc0289a654fb0817a46a16d8447ee2d57abbca448208e",
+        "sizeBytes": 9128,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/unified-config-loader.js",
+          "dist/utils/config-manager.js",
+          "dist/config/config-loader-facade.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/unified-config-loader.js",
+        "reason": "required by ./dist/config/config-loader-facade.js; required by ./dist/utils/config-manager.js; required by ./dist/config/loader/config-getters.js; required by ./scripts/postinstall.js",
+        "sha256": "00b515b010f73df6b4dbbf7bc0422fdd3329899fdcfc7d9e598fd06031bebf09",
+        "sizeBytes": 17776,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/unified-config-types.js",
+          "dist/config/feature-flags.js",
+          "dist/config/loader/io-locks.js",
+          "dist/config/loader/normalizers.js",
+          "dist/config/loader/yaml-serializer.js",
+          "dist/config/loader/defaults-merger.js",
+          "dist/config/loader/config-getters.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/unified-config-types.js",
+        "reason": "required by ./dist/config/unified-config-loader.js; required by ./dist/config/loader/io-locks.js; required by ./dist/config/loader/normalizers.js; required by ./dist/cliproxy/config/composite-validator.js; required by ./dist/config/loader/defaults-merger.js; required by ./dist/utils/hooks/image-analysis-backend-resolver.js; required by ./dist/config/loader/config-getters.js; required by ./scripts/postinstall.js",
+        "sha256": "10f78aa7ad3938ea6fd79a7afbab2767cca5429a181358438bff3c6b5eb56653",
+        "sizeBytes": 1330,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/schemas/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/index.js",
+        "reason": "required by ./dist/config/unified-config-types.js",
+        "sha256": "b5a20aecc164b4634ce26a758c449df9c851ca9d643ea54e0f9b8a498b740e20",
+        "sizeBytes": 5644,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/schemas/version.js",
+          "dist/config/schemas/auth.js",
+          "dist/config/schemas/cliproxy.js",
+          "dist/config/schemas/quota.js",
+          "dist/config/schemas/thinking.js",
+          "dist/config/schemas/runtime.js",
+          "dist/config/schemas/channels.js",
+          "dist/config/schemas/browser.js",
+          "dist/config/schemas/logging.js",
+          "dist/config/schemas/providers.js",
+          "dist/config/schemas/unified-config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/version.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "058594bed772867851fbe412ffdd38b1eb4a6bdb42def35881f57413e779855f",
+        "sizeBytes": 1260,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/auth.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "d806557b2a842fa08cfeb00d26be2150a8e7dcd7ab7fee4a72b20161a798b864",
+        "sizeBytes": 900,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/cliproxy.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "3edcf111c84bce5bfc71df39055309c137937bf9f5137b1b8d8e47627873a28b",
+        "sizeBytes": 793,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/cliproxy/provider-capabilities.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/cliproxy/provider-capabilities.js",
+        "reason": "required by ./dist/config/schemas/cliproxy.js; required by ./dist/utils/hooks/image-analysis-backend-resolver.js",
+        "sha256": "ca28212229f29dfd2e7649692acdc0cf876d9f1b1e4305bd247fe48800b2085e",
+        "sizeBytes": 13456,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/errors/error-types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/errors/error-types.js",
+        "reason": "required by ./dist/cliproxy/provider-capabilities.js",
+        "sha256": "03ad068c31b90a96c92a98a1049bc2c2952c39e92d7637e376d455f3eba2707c",
+        "sizeBytes": 6289,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/errors/exit-codes.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/errors/exit-codes.js",
+        "reason": "required by ./dist/errors/error-types.js",
+        "sha256": "26e23c4ad8c6445ced600e284ace6bffee09377a0b8f13edbab9049c928a445a",
+        "sizeBytes": 2978,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/quota.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "bdca3ab745e6caa3b07d4bbe315aede89834ef63238c54b25d9598571f91cf0b",
+        "sizeBytes": 2227,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/thinking.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "76d4ea51680df290dbecffc5b2d0ff48e3ada8602dfb9e84b3a15df4ada52e8a",
+        "sizeBytes": 751,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/runtime.js",
+        "reason": "required by ./dist/config/schemas/index.js",
+        "sha256": "938ed609e0c4a7f833cb5d6ab12155c15553433c478939c13d579db959152119",
+        "sizeBytes": 2224,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/channels.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "befa80b591ea7321595105ac77357a5f7930ea851ab0a996bd90837d8b02e2b7",
+        "sizeBytes": 635,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/browser.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "41298a164cb0fd2f4975cd6842ea11838fc999ad546859c09bf9ed9e59bf8ccb",
+        "sizeBytes": 702,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/logging.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "b9a6341f5ff33e3c5e8fed88fd44adec84a2f79a1cdede73384664fdd666390a",
+        "sizeBytes": 665,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/providers.js",
+        "reason": "required by ./dist/config/schemas/index.js; required by ./dist/config/schemas/unified-config.js",
+        "sha256": "14c5a7841f05a26be04a018005e8440165b12a7f42f726bbf615fea9ff7e7027",
+        "sizeBytes": 1806,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/schemas/copilot-cursor.js",
+          "dist/config/schemas/proxy-server.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/copilot-cursor.js",
+        "reason": "required by ./dist/config/schemas/providers.js",
+        "sha256": "04cb95173b3d81cabd565324288c76ad1d5701b9e3c7638a7f5c6b97e1492133",
+        "sizeBytes": 1054,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/proxy-server.js",
+        "reason": "required by ./dist/config/schemas/providers.js",
+        "sha256": "e8d30d9528d9aff300ed564eb0b84b64bde8fc41f9629a09daf9587ac0a6ee8e",
+        "sizeBytes": 2214,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/schemas/unified-config.js",
+        "reason": "required by ./dist/config/schemas/index.js",
+        "sha256": "0f86be4645d706e80c7a00a830c1602edfcafd46f96fa7c2d94d1648ef98a5fd",
+        "sizeBytes": 4906,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/schemas/auth.js",
+          "dist/config/schemas/cliproxy.js",
+          "dist/config/schemas/logging.js",
+          "dist/config/schemas/providers.js",
+          "dist/config/schemas/version.js",
+          "dist/config/schemas/quota.js",
+          "dist/config/schemas/thinking.js",
+          "dist/config/schemas/channels.js",
+          "dist/config/schemas/browser.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config/feature-flags.js",
+        "reason": "required by ./dist/config/unified-config-loader.js",
+        "sha256": "7cc4a4677d25edbda69fe2dde7f69755a3fe62ac5fef98404f950237c7d53eef",
+        "sizeBytes": 999,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/loader/io-locks.js",
+        "reason": "required by ./dist/config/unified-config-loader.js; required by ./dist/config/loader/normalizers.js",
+        "sha256": "c07919222a6b2be558b1efa4df4bd13804305c4f6bf4c0505c9255f1a9e3b7f7",
+        "sizeBytes": 11525,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/config-manager.js",
+          "dist/config/unified-config-types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/config-manager.js",
+        "reason": "required by ./dist/config/loader/io-locks.js; required by ./dist/utils/browser/browser-settings.js; required by ./dist/config/config-loader-facade.js",
+        "sha256": "c72287a40d92f39e11a59c4b2e94cc46302cfc91881f817d867e008e04360cf7",
+        "sizeBytes": 15978,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/helpers.js",
+          "dist/utils/ui.js",
+          "dist/config/unified-config-loader.js",
+          "dist/utils/error-manager.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/helpers.js",
+        "reason": "required by ./dist/utils/config-manager.js; required by ./dist/utils/browser/browser-settings.js; required by ./dist/utils/browser/chrome-reuse.js",
+        "sha256": "dc923e70c96e75978d0803c152762c9c60bd5350f694de239b1f1d5b8e9e057c",
+        "sizeBytes": 4059,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/error-manager.js",
+        "reason": "required by ./dist/utils/config-manager.js",
+        "sha256": "b10f76fa9f7da02fc4bdeb8087d4d1b98e308e2d193bc36641609228546ef47f",
+        "sizeBytes": 11887,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui.js",
+          "dist/utils/error-codes.js",
+          "dist/utils/platform-commands.js"
+        ],
+        "urls": [
+          {
+            "url": "https://docs.claude.com/install",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/utils/error-codes.js",
+        "reason": "required by ./dist/utils/error-manager.js",
+        "sha256": "1802b868ce8edb9a6b71c1fd05fb23306b49b7606da2234e73350f6ab37598a4",
+        "sizeBytes": 2416,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://docs.ccs.kaitran.ca/reference/error-codes",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/utils/platform-commands.js",
+        "reason": "required by ./dist/utils/error-manager.js",
+        "sha256": "7d85758817b8c75fce7c86e101262ca503cfa8f1fd745e37d52e9d017c8e2bd0",
+        "sizeBytes": 6081,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/loader/normalizers.js",
+        "reason": "required by ./dist/config/unified-config-loader.js; required by ./dist/config/loader/defaults-merger.js; required by ./dist/config/loader/config-getters.js",
+        "sha256": "ba31642019add6621bc5adbaefc57f88b1bd2f2018a6139e6ad352acb050aee1",
+        "sizeBytes": 8171,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/unified-config-types.js",
+          "dist/cliproxy/config/composite-validator.js",
+          "dist/channels/official-channels-ids.js",
+          "dist/utils/browser/browser-settings.js",
+          "dist/config/loader/io-locks.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/cliproxy/config/composite-validator.js",
+        "reason": "required by ./dist/config/loader/normalizers.js",
+        "sha256": "a47caf1d563f48e97473945abd88064c693dff9a0127ed560a02d4120a44ed3e",
+        "sizeBytes": 4695,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/unified-config-types.js",
+          "dist/cliproxy/ai-providers/model-id-normalizer.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/cliproxy/ai-providers/model-id-normalizer.js",
+        "reason": "required by ./dist/cliproxy/config/composite-validator.js; required by ./dist/cliproxy/model-catalog.js; required by ./dist/utils/hooks/image-analysis-backend-resolver.js",
+        "sha256": "ab45db746caa235bd41a28edb3e2a82b8c30d52091abe7166db4814121a5786d",
+        "sizeBytes": 13657,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/shared/extended-context-utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/shared/extended-context-utils.js",
+        "reason": "required by ./dist/cliproxy/ai-providers/model-id-normalizer.js; required by ./dist/cliproxy/model-catalog.js; required by ./dist/utils/hooks/image-analysis-backend-resolver.js",
+        "sha256": "1b393327e76f54cadc10e54a5a2c0429bc80d35572e7cb32d70c46cae85c6739",
+        "sizeBytes": 4581,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/channels/official-channels-ids.js",
+        "reason": "required by ./dist/config/loader/normalizers.js; required by ./dist/config/loader/config-getters.js",
+        "sha256": "454e00f158f55bde5dce7a45b158be3ed65fda01e3b7d45d950b8d3b20f699a9",
+        "sizeBytes": 1832,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/browser/browser-settings.js",
+        "reason": "required by ./dist/config/loader/normalizers.js",
+        "sha256": "7cb0e5a29ce50b310c23250ef66c83d1c9620c45266b06b079577761e4ba0ea2",
+        "sizeBytes": 11254,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/config-manager.js",
+          "dist/utils/helpers.js",
+          "dist/utils/browser/chrome-reuse.js",
+          "dist/utils/browser/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/browser/chrome-reuse.js",
+        "reason": "required by ./dist/utils/browser/browser-settings.js",
+        "sha256": "2a5f0eb57a66fc14015b2cdf9649f8684abbe3b8214cc7a6a2d7b6e0285d7681",
+        "sizeBytes": 7857,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/helpers.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/browser/platform.js",
+        "reason": "required by ./dist/utils/browser/browser-settings.js",
+        "sha256": "d6f587e97b286df63b5b440909accfa0a6994e5d7eec057edb8487a27d7b5a42",
+        "sizeBytes": 448,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/loader/yaml-serializer.js",
+        "reason": "required by ./dist/config/unified-config-loader.js",
+        "sha256": "353529314b2805cebd4f06ac693ec92388b584e3b40936d822db87f3ff985951",
+        "sizeBytes": 20035,
+        "signals": [
+          "runtime-installer",
+          "shell-network-fetch",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://antigravity.google/cli/install.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://opencode.ai/install",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "dist/config/loader/defaults-merger.js",
+        "reason": "required by ./dist/config/unified-config-loader.js",
+        "sha256": "c1b4b59b9948904e8ed0e3a0987dc60fd808eb32c4f17dc0a8d42f6726e6c428",
+        "sizeBytes": 18625,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/unified-config-types.js",
+          "dist/config/loader/normalizers.js",
+          "dist/utils/hooks/image-analysis-backend-resolver.js",
+          "dist/utils/websearch/types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/hooks/image-analysis-backend-resolver.js",
+        "reason": "required by ./dist/config/loader/defaults-merger.js; required by ./dist/config/loader/config-getters.js",
+        "sha256": "7916b372a14212fea56737cc87e40e0bd6c7fa3e1b477ee40170dcaa071cae15",
+        "sizeBytes": 17221,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/unified-config-types.js",
+          "dist/cliproxy/provider-capabilities.js",
+          "dist/cliproxy/model-catalog.js",
+          "dist/cliproxy/ai-providers/model-id-normalizer.js",
+          "dist/shared/extended-context-utils.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/cliproxy/model-catalog.js",
+        "reason": "required by ./dist/utils/hooks/image-analysis-backend-resolver.js",
+        "sha256": "c9554a28be8e00fdd89c6207e1a8683f3c77b54e6211dfcc4794b7342254e6ea",
+        "sizeBytes": 21775,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/cliproxy/ai-providers/model-id-normalizer.js",
+          "dist/shared/agy-gemini-pro-compatibility.js",
+          "dist/shared/extended-context-utils.js",
+          "dist/shared/gemini-minor-version-compatibility.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/shared/agy-gemini-pro-compatibility.js",
+        "reason": "required by ./dist/cliproxy/model-catalog.js",
+        "sha256": "02206b25fee94207da38dc1633657ea9bf07fc4d3a971ace9d76edaf32bd1e54",
+        "sizeBytes": 1112,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/shared/gemini-minor-version-compatibility.js",
+        "reason": "required by ./dist/cliproxy/model-catalog.js",
+        "sha256": "ce90ae9e3f7b4cb04deab570f01c2b05696d1095189c8c03fa08571e072703da",
+        "sizeBytes": 705,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/utils/websearch/types.js",
+        "reason": "required by ./dist/config/loader/defaults-merger.js; required by ./dist/config/loader/config-getters.js",
+        "sha256": "eb8c95762e111ba8fa0113e1bd395593a969ea19f5982e5c0e5f631a0573bc42",
+        "sizeBytes": 1564,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/config/loader/config-getters.js",
+        "reason": "required by ./dist/config/unified-config-loader.js",
+        "sha256": "6fc5c74c35e43243ce84e32db0c4272f020a76ef02444ae6c897d9bb1902476c",
+        "sizeBytes": 13696,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config/unified-config-types.js",
+          "dist/config/loader/normalizers.js",
+          "dist/utils/hooks/image-analysis-backend-resolver.js",
+          "dist/channels/official-channels-ids.js",
+          "dist/utils/websearch/types.js",
+          "dist/config/unified-config-loader.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/management/profile-context-sync-lock.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js",
+        "sha256": "040ba92c250d6143b2cb70126cb77bbe179112c17ec35ff313e9447943ece349",
+        "sizeBytes": 9346,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/plugin-metadata-normalizer.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js; required by ./dist/management/shared-manager/shared-dir-linker.js; required by ./dist/management/shared-manager/plugin-layout-internals.js",
+        "sha256": "7f66f19f8d9ec3b5c59b2253a210e6d85337b116cacd72c3196c7b0f2693809f",
+        "sizeBytes": 10997,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui.js",
+          "dist/management/plugin-path-normalizer.js",
+          "dist/management/instance-directory.js",
+          "dist/management/shared-manager/fs-helpers.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/management/plugin-path-normalizer.js",
+        "reason": "required by ./dist/management/shared-manager/plugin-metadata-normalizer.js; required by ./dist/management/shared-manager.js",
+        "sha256": "c2d631f6a178b2e360c7d7827288bb5eb22beb0b8d6cb53e96b6bc442713c3e4",
+        "sizeBytes": 4047,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/management/instance-directory.js",
+        "reason": "required by ./dist/management/shared-manager/plugin-metadata-normalizer.js; required by ./dist/management/shared-manager/migrations.js",
+        "sha256": "3ea090c515a566bb6c636e42c795f159b3b64a4056f5a4b2af874c1104a5d211",
+        "sizeBytes": 2219,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/fs-helpers.js",
+        "reason": "required by ./dist/management/shared-manager/plugin-metadata-normalizer.js; required by ./dist/management/shared-manager/shared-dir-linker.js; required by ./dist/management/shared-manager/plugin-layout-internals.js; required by ./dist/management/shared-manager/project-context-sync.js; required by ./dist/management/shared-manager/symlink-helpers.js; required by ./dist/management/shared-manager/project-memory-sync.js",
+        "sha256": "62ad4f3a0e69e3c7187124b257e19b6741cd7af297c34d909a581bf2136c17c3",
+        "sizeBytes": 8345,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/shared-dir-linker.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js; required by ./dist/management/shared-manager/migrations.js",
+        "sha256": "185c4ee36a7432172d57dbb954c8ceea0402db29e79afe9ee8e3b9652a76e961",
+        "sizeBytes": 9922,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui.js",
+          "dist/management/shared-manager/fs-helpers.js",
+          "dist/management/shared-manager/plugin-metadata-normalizer.js",
+          "dist/management/shared-manager/plugin-layout-internals.js",
+          "dist/management/shared-manager/types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/plugin-layout-internals.js",
+        "reason": "required by ./dist/management/shared-manager/shared-dir-linker.js",
+        "sha256": "49ae318c254c72a677e0022613ba13f71448abf8aa8afbad4a1eda6a0fdea664",
+        "sizeBytes": 8159,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui.js",
+          "dist/management/shared-manager/fs-helpers.js",
+          "dist/management/shared-manager/plugin-metadata-normalizer.js",
+          "dist/management/shared-manager/types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/types.js",
+        "reason": "required by ./dist/management/shared-manager/plugin-layout-internals.js; required by ./dist/management/shared-manager/shared-dir-linker.js; required by ./dist/management/shared-manager/project-context-sync.js; required by ./dist/management/shared-manager/migrations.js",
+        "sha256": "d2374b403a1969e47a61631d787dae13e0dcabb19cb9f8f84bf8ed71b408f87c",
+        "sizeBytes": 2118,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/project-context-sync.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js",
+        "sha256": "9814d0282062bfe3e3369d0ee8a865985ed5da6f8f05652b2c26696ef1eae9dc",
+        "sizeBytes": 11643,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/auth/account-context.js",
+          "dist/utils/ui.js",
+          "dist/management/shared-manager/fs-helpers.js",
+          "dist/management/shared-manager/symlink-helpers.js",
+          "dist/management/shared-manager/types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/auth/account-context.js",
+        "reason": "required by ./dist/management/shared-manager/project-context-sync.js",
+        "sha256": "05a9ac7689462baad7701d8729adb6b7095b80e46f4acc761781ca1059c47310",
+        "sizeBytes": 6415,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/symlink-helpers.js",
+        "reason": "required by ./dist/management/shared-manager/project-context-sync.js; required by ./dist/management/shared-manager/project-memory-sync.js",
+        "sha256": "a1da94aa89e26140e7f82b7aeb0732ef51759aec85d4c75696871587fd9148ea",
+        "sizeBytes": 10673,
+        "signals": [
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/management/shared-manager/fs-helpers.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/project-memory-sync.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js",
+        "sha256": "9ba2cdfd1caad427dd586038d45323e5dab2cfa63e74b125fe6c456beeea13d8",
+        "sizeBytes": 4826,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui.js",
+          "dist/management/shared-manager/fs-helpers.js",
+          "dist/management/shared-manager/symlink-helpers.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/management/shared-manager/migrations.js",
+        "reason": "required by ./dist/management/shared-manager/orchestrator.js",
+        "sha256": "5a276fc05f098f61425da841af0d18d6e0d964825af27aba2c5b454beb42f055",
+        "sizeBytes": 7871,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/utils/ui.js",
+          "dist/management/instance-directory.js",
+          "dist/management/shared-manager/shared-dir-linker.js",
+          "dist/management/shared-manager/types.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build",
+        "reason": "referenced by lifecycle script: `ui:build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/add-shebang.js",
+        "reason": "referenced by lifecycle script: `build:server`; referenced by lifecycle script: `build`",
+        "sha256": "3a536df68988da5b0bb0eeff811a39ee6e946f13b64193c4f97dd62bbd245523",
+        "sizeBytes": 1822,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "makes-executable",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:21.113Z"
+  },
+  "hash": "sha256:378c7abfa2f47595fe19bee3ff07bdf66ff63667737094f8b996c759f8ec8047"
+}

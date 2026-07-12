@@ -1,0 +1,27 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+group = 'com.smsotp'
+version = '0.1.1'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+android {
+  namespace "com.smsotp"
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 24)
+    compileSdk safeExtGet("compileSdkVersion", 34)
+    targetSdkVersion safeExtGet("targetSdkVersion", 34)
+  }
+}
+
+dependencies {
+  implementation "com.google.android.gms:play-services-auth:21.0.0"
+  implementation "com.google.android.gms:play-services-auth-api-phone:18.0.2"
+}

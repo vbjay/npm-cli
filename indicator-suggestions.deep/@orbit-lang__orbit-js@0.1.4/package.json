@@ -1,0 +1,53 @@
+{
+  "name": "@orbit-lang/orbit-js",
+  "version": "0.1.4",
+  "description": "JavaScript bindings for the Orbit configuration language.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "pnpm run download-wasm && tsc -p tsconfig.build.json",
+    "download-wasm": "node ./scripts/download-wasm.mjs",
+    "format": "prettier --write .",
+    "clean": "rimraf dist wasm",
+    "test": "pnpm run download-wasm && vitest run",
+    "prepack": "pnpm run build"
+  },
+  "keywords": [
+    "orbit",
+    "configuration",
+    "wasm",
+    "parser"
+  ],
+  "author": "The Orbit Authors",
+  "license": "BSD-3-Clause",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orbit-format/orbit-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/orbit-format/orbit-js/issues"
+  },
+  "homepage": "https://github.com/orbit-format/orbit-js#readme",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prettier": "^3.7.4",
+    "rimraf": "^6.1.2",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.15"
+  }
+}

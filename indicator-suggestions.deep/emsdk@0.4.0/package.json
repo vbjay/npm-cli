@@ -1,0 +1,52 @@
+{
+  "name": "emsdk",
+  "version": "0.4.0",
+  "description": "Emscripten SDK for npm — install with npm, use emcc immediately",
+  "bin": {
+    "emcc": "dist/bin/emcc.js",
+    "empp": "dist/bin/empp.js",
+    "emrun": "dist/bin/emrun.js",
+    "emcmake": "dist/bin/emcmake.js",
+    "emmake": "dist/bin/emmake.js",
+    "emconfigure": "dist/bin/emconfigure.js",
+    "emar": "dist/bin/emar.js",
+    "emranlib": "dist/bin/emranlib.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "postinstall": "node dist/postinstall.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "emscripten",
+    "emsdk",
+    "wasm",
+    "webassembly",
+    "compiler",
+    "llvm",
+    "clang"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.0.0"
+  }
+}

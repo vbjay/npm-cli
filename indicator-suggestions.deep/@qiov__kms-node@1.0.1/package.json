@@ -1,0 +1,31 @@
+{
+  "name": "@qiov/kms-node",
+  "version": "1.0.1",
+  "description": "node sdk for tencent kms",
+  "main": "index.js",
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "install": "node-gyp rebuild",
+    "rebuild": "node-gyp rebuild",
+    "rebuild:dev": "node-gyp rebuild --debug",
+    "clean": "node-gyp clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "c++",
+    "addon"
+  ],
+  "files": [
+    "src/whitebox/",
+    "src/init.cc",
+    "index.js",
+    "binding.gyp",
+    "readme.md"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^7.0.0"
+  }
+}

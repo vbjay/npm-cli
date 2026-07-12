@@ -1,0 +1,153 @@
+{
+  "name": "react-native-pencil-kit",
+  "version": "1.2.3",
+  "description": "iOS PencilKit for React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-pencil-kit-example",
+    "dev": "yarn example start",
+    "ios": "yarn example ios",
+    "typecheck": "tsc --noEmit",
+    "lint": "./script/lint.sh",
+    "t": "./script/lint.sh",
+    "format": "./script/clang-format.sh",
+    "lint:js": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:ios": "./script/clang-lint.sh",
+    "clean": "del-cli example/ios/build lib",
+    "prepare": "husky",
+    "release": "release-it",
+    "release:pre": "release-it pre",
+    "xcode": "open $(pwd)/example/ios/PencilKitExample.xcworkspace",
+    "pod": "cd example/ios && bundle install && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install",
+    "codegen": "yarn react-native codegen --path example/ --outputPath example/ios",
+    "prepack": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "pencilkit",
+    "ios-pencil-kit",
+    "react",
+    "typescript",
+    "javascript",
+    "react-native-pencil-kit",
+    "RNPencilKit",
+    "Drawing",
+    "Color",
+    "Pallete",
+    "Base64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mym0404/react-native-pencil-kit.git"
+  },
+  "author": "mym0404 <mym0404@gmail.com> (https://github.com/mym0404)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mym0404/react-native-pencil-kit/issues"
+  },
+  "homepage": "https://github.com/mym0404/react-native-pencil-kit#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@mj-studio/eslint-config-react": "^1.0.7",
+    "@react-native/eslint-config": "0.74.81",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.2.44",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.51.0",
+    "eslint-plugin-jest": "^28.2.0",
+    "husky": "^9.0.11",
+    "prettier": "3.2.5",
+    "react": "18.2.0",
+    "react-native": "0.74.1",
+    "react-native-builder-bob": "^0.23.2",
+    "release-it": "^15.0.0",
+    "turbo": "^1.10.7",
+    "typescript": "~5.3.3"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.44"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version} [skip ci]",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNPencilKitSpec",
+    "type": "all",
+    "jsSrcsDir": "src/spec",
+    "ios": {
+      "componentProvider": {
+        "RNPencilKit": "RNPencilKit"
+      }
+    }
+  }
+}

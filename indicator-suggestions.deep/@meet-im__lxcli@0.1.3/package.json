@@ -1,0 +1,46 @@
+{
+  "name": "@meet-im/lxcli",
+  "version": "0.1.3",
+  "description": "连续科技命令行工具",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "lxcli": "./bin/lxcli.js"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --watch",
+    "clean": "tsc --build --clean",
+    "typecheck": "tsc --noEmit",
+    "verify": "pnpm typecheck && pnpm test",
+    "prepare": "husky",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "keywords": [
+    "cli",
+    "lxcli"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.32.0",
+  "dependencies": {
+    "commander": "^14.0.3",
+    "json5": "^2.2.3",
+    "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "husky": "^9.1.7",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
+  }
+}

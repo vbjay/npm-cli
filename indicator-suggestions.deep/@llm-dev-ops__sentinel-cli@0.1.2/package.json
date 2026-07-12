@@ -1,0 +1,52 @@
+{
+  "name": "@llm-dev-ops/sentinel-cli",
+  "version": "0.1.2",
+  "description": "Enterprise-grade anomaly detection and observability platform for LLM applications - NPM CLI wrapper",
+  "keywords": [
+    "llm",
+    "anomaly-detection",
+    "observability",
+    "monitoring",
+    "sentinel",
+    "rust",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/globalbusinessadvisors/llm-sentinel.git"
+  },
+  "homepage": "https://github.com/globalbusinessadvisors/llm-sentinel",
+  "license": "Apache-2.0",
+  "author": "LLM DevOps Team <noreply@llm-sentinel.dev>",
+  "bin": {
+    "sentinel": "./bin/cli.js",
+    "llm-sentinel": "./bin/cli.js"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node ./lib/install.js",
+    "test": "node ./lib/test.js",
+    "prepare": "node ./lib/prepare.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "optionalDependencies": {
+    "@llm-dev-ops/sentinel-cli-darwin-x64": "0.1.2",
+    "@llm-dev-ops/sentinel-cli-darwin-arm64": "0.1.2",
+    "@llm-dev-ops/sentinel-cli-linux-x64": "0.1.2",
+    "@llm-dev-ops/sentinel-cli-linux-arm64": "0.1.2",
+    "@llm-dev-ops/sentinel-cli-win32-x64": "0.1.2"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

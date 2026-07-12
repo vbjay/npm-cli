@@ -1,0 +1,63 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+group = 'expo.modules.screenrecorder'
+version = '1.8.2'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+def useManagedAndroidSdkVersions = false
+if (useManagedAndroidSdkVersions) {
+  useDefaultAndroidSdkVersions()
+} else {
+  buildscript {
+    ext.safeExtGet = { prop, fallback ->
+      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+  }
+  project.android {
+    compileSdkVersion safeExtGet("compileSdkVersion", 35)
+    defaultConfig {
+      minSdkVersion safeExtGet("minSdkVersion", 24)
+      targetSdkVersion safeExtGet("targetSdkVersion", 35)
+    }
+  }
+}
+
+android {
+  namespace "expo.modules.screenrecorder"
+
+  defaultConfig {
+    versionCode 1
+    versionName "1.8.2"
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+ 
+  // Kotlin stdlib — version managed by applyKotlinExpoModulesCorePlugin()
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8" 
+
+  implementation "androidx.appcompat:appcompat:1.6.1" 
+
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
+
+ 
+  // AndroidX Core — needed for NotificationCompat used in ScreenCaptureService
+  implementation "androidx.core:core-ktx:1.13.0"
+
+  // AndroidX Activity — needed for ActivityResultContract / registerForActivityResult
+  implementation "androidx.activity:activity-ktx:1.8.2"
+}

@@ -1,0 +1,169 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1c242d6c6d2c13d6",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/artifacts.js",
+      "scripts/install.js",
+      "scripts/preflight-glibc.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`; referenced by lifecycle script: `prepack`",
+        "sha256": "ee6ae7aba781f8fca2dbb18e2fb0ccd60d64b4c843af6236b299f708efb46975",
+        "sizeBytes": 38142,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/artifacts.js",
+          "scripts/preflight-glibc.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/artifacts.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "b5bd3232331b011ea79cbc4779c13ebd5f6ec678b93a647d5a6f856c2f1f734f",
+        "sizeBytes": 4303,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/blissito/ghostycode.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/blissito/ghostycode/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          },
+          {
+            "url": "https://cnb.cool/blissito/ghostycode/-/releases/v",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/preflight-glibc.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "fc77a16312794312c133a793aa6a1deff5764012dd48429358d4c37ff8796d84",
+        "sizeBytes": 3954,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/blissito/ghostycode.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/blissito/ghostycode/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "819ec3a49273bbd07394c558e0685939ecc37f6f11e2b6865e632363c177a950",
+        "sizeBytes": 1453,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:54.358Z"
+  },
+  "hash": "sha256:0be3d26e7c6065c098bf3afc37f1224601a1a1e4389f9366ca2bddd7dc5ef72e"
+}

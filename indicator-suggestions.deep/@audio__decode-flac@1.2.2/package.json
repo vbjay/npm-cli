@@ -1,0 +1,58 @@
+{
+  "name": "@audio/decode-flac",
+  "version": "1.2.2",
+  "description": "Decode FLAC audio via libflac WASM — self-contained bundle",
+  "type": "module",
+  "main": "decode-flac.js",
+  "types": "decode-flac.d.ts",
+  "exports": {
+    ".": "./decode-flac.js",
+    "./meta": "./meta.js",
+    "./audio": {
+      "types": "./audio.d.ts",
+      "default": "./audio.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "decode-flac.js",
+    "decode-flac.d.ts",
+    "meta.js",
+    "LICENSE",
+    "audio.js",
+    "audio.d.ts"
+  ],
+  "scripts": {
+    "build": "bash build.sh",
+    "prepack": "npm run build",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "flac",
+    "audio",
+    "decode",
+    "decoder",
+    "wasm",
+    "lossless"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "author": "audiojs",
+  "homepage": "https://github.com/audiojs/decode/tree/main/packages/decode-flac#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/audiojs/decode.git",
+    "directory": "packages/decode-flac"
+  },
+  "dependencies": {
+    "@wasm-audio-decoders/flac": "^0.2.10"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "audio": "./audio.js",
+  "sideEffects": false,
+  "funding": "https://github.com/sponsors/audiojs"
+}

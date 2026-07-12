@@ -1,0 +1,81 @@
+{
+  "name": "quantum-resistant-rustykey",
+  "version": "0.12.12",
+  "description": "WebAssembly post-quantum-resistant tools for web",
+  "author": "Antony R Mott <antony@rustykey.io> (https://rustykey.io)",
+  "license": "ISC",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/antonymott"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonymott/quantum-resistant-rustykey.git"
+  },
+  "homepage": "https://github.com/antonymott/quantum-resistant-rustykey.git#readme",
+  "bugs": {
+    "url": "https://github.com"
+  },
+  "keywords": [
+    "NIST",
+    "post-quantum",
+    "pqc",
+    "WebAssembly",
+    "wasm",
+    "cryptography",
+    "crypto",
+    "sqisign",
+    "ml-dsa",
+    "ml-kem",
+    "webauthn"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "lint": "biome check --config-path ./biome.json ./src ./scripts ./tsconfig.json ./tsconfig.lint.json ./tsdown.config.ts && tsc --project ./tsconfig.lint.json",
+    "lint:fix": "biome check --config-path ./biome.json --write ./src ./scripts ./tsconfig.json ./tsconfig.lint.json ./tsdown.config.ts",
+    "build:wasm": "node scripts/build-wasm.mjs",
+    "bundle:mlkem": "node scripts/bundle-mlkem.mjs",
+    "bundle:signatures": "node scripts/bundle-signatures.mjs",
+    "bundle:accel-worker": "node scripts/bundle-accel-worker.mjs",
+    "build:vendor": "pnpm build:wasm && pnpm bundle:mlkem && pnpm bundle:signatures",
+    "build": "pnpm build:vendor && tsdown && pnpm bundle:accel-worker",
+    "test": "pnpm build:vendor && vitest run",
+    "verify:dist": "node scripts/verify-dist.mjs",
+    "prepack": "pnpm verify:dist",
+    "prepublishOnly": "pnpm verify:dist",
+    "release": "changeset publish",
+    "example:browser": "pnpm --filter browser-demo dev"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.11",
+    "@changesets/cli": "2.30.0",
+    "@types/node": "^26.1.0",
+    "@webgpu/types": "0.1.71",
+    "esbuild": "0.28.0",
+    "tsdown": "0.22.3",
+    "typescript": "6.0.2",
+    "vitest": "4.1.4"
+  },
+  "dependencies": {
+    "@noble/post-quantum": "0.6.1"
+  },
+  "engines": {
+    "node": ">=26.4.0"
+  }
+}

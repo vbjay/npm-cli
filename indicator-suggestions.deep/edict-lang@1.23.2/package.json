@@ -1,0 +1,127 @@
+{
+  "name": "edict-lang",
+  "version": "1.23.2",
+  "mcpName": "io.github.Sowiedu/edict",
+  "description": "Edict — A programming language for AI agents. JSON AST in, WASM out. MCP server included. Statically typed, effect-tracked, contract-verified.",
+  "type": "module",
+  "bin": {
+    "edict-lang": "./dist/mcp/server.js"
+  },
+  "files": [
+    "dist",
+    "schema",
+    "examples",
+    "cjs-error.cjs"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "require": "./cjs-error.cjs"
+    },
+    "./browser": {
+      "import": "./dist/browser.js",
+      "types": "./dist/browser.d.ts",
+      "require": "./cjs-error.cjs"
+    },
+    "./browser-full": {
+      "import": "./dist/browser-full.js",
+      "types": "./dist/browser-full.d.ts",
+      "require": "./cjs-error.cjs"
+    },
+    "./quickjs": {
+      "import": "./dist/quickjs/index.js",
+      "types": "./dist/quickjs/index.d.ts",
+      "require": "./cjs-error.cjs"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "programming-language",
+    "ai-agents",
+    "compiler",
+    "webassembly",
+    "wasm",
+    "mcp",
+    "model-context-protocol",
+    "formal-verification",
+    "type-system",
+    "effect-system",
+    "json-ast",
+    "llm",
+    "z3",
+    "smt",
+    "contract-verification",
+    "ast"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sowiedu/Edict.git"
+  },
+  "homepage": "https://github.com/Sowiedu/Edict#readme",
+  "bugs": {
+    "url": "https://github.com/Sowiedu/Edict/issues"
+  },
+  "author": "Sowiedu",
+  "license": "MIT",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Sowiedu"
+  },
+  "scripts": {
+    "prepare": "git config core.hooksPath .githooks",
+    "build": "npm run generate-schema && npm run sync-server-json && tsc && npm run build:browser && npm run build:quickjs",
+    "build:browser": "tsx scripts/build-browser.ts",
+    "sync-server-json": "tsx scripts/sync-server-json.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:fast": "vitest run --exclude tests/mcp/integration.test.ts --exclude tests/mcp/agent-simulation.test.ts --exclude tests/e2e-agent-loop.test.ts --exclude tests/compact/expand.test.ts",
+    "test:slow": "vitest run tests/mcp/integration.test.ts tests/mcp/agent-simulation.test.ts tests/e2e-agent-loop.test.ts tests/compact/expand.test.ts",
+    "typecheck": "tsc --noEmit",
+    "validate-examples": "tsx scripts/validate-examples.ts",
+    "ci:local": "npm run typecheck && npm run check:jsdoc && npm run build && npm test && npm run validate-examples",
+    "check:jsdoc": "bash scripts/check-jsdoc.sh",
+    "generate:jsdoc": "tsx scripts/generate-jsdoc.ts",
+    "generate-schema": "tsx scripts/generate-schema.ts",
+    "snapshot-schema": "tsx scripts/snapshot-schema.ts",
+    "diff-schemas": "tsx scripts/diff-schemas.ts",
+    "mcp": "tsx src/mcp/server.ts",
+    "benchmark": "tsx scripts/benchmark.ts",
+    "build:quickjs": "tsx scripts/build-quickjs-bundle.ts",
+    "quickjs:test": "tsx scripts/quickjs-feasibility.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@vitest/coverage-v8": "^4.0.18",
+    "esbuild": "^0.28.0",
+    "fast-check": "^4.5.3",
+    "miniflare": "^4.20260312.0",
+    "quickjs-emscripten": "^0.32.0",
+    "tsx": "^4.19.0",
+    "typescript": "^6.0.2",
+    "typescript-json-schema": "^0.67.1",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "peerDependencies": {
+    "quickjs-emscripten": ">=0.32.0",
+    "tsx": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tsx": {
+      "optional": true
+    },
+    "quickjs-emscripten": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "z3-solver": "^4.15.8",
+    "zod": "^4.3.6"
+  }
+}

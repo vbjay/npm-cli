@@ -1,0 +1,38 @@
+{
+  "name": "@cowasm/py-pandas",
+  "version": "1.1.0",
+  "description": "WebAssembly build of the Pandas Python library",
+  "main": "index.js",
+  "files": [
+    "dist/wasm/**",
+    "README.md",
+    "package.json",
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sagemathinc/cowasm.git"
+  },
+  "keywords": [
+    "WebAssembly",
+    "wasm"
+  ],
+  "author": "William Stein <wstein@sagemath.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/sagemathinc/cowasm/issues"
+  },
+  "homepage": "https://github.com/sagemathinc/cowasm/tree/main/python/py-pandas",
+  "devDependencies": {
+    "@cowasm/kernel": "0.27.9",
+    "@cowasm/py-cython": "1.1.0",
+    "@cowasm/py-numpy": "1.1.0",
+    "@cowasm/py-pip": "1.1.4",
+    "@cowasm/cpython": "1.6.0"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "make wasm",
+    "test": "make test"
+  }
+}

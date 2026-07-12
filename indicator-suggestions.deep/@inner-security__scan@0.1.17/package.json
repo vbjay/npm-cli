@@ -1,0 +1,70 @@
+{
+  "name": "@inner-security/scan",
+  "version": "0.1.17",
+  "description": "Inner CLI: `@inner-security/scan` zero-auth instant dependency scan + `inner init` to route the 6 package managers through the Inner proxy. A thin client of Inner's Verdict API, gated by an org API key.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/Inner-security/Inner/tree/main/packages/cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Inner-security/Inner.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/Inner-security/Inner/issues"
+  },
+  "keywords": [
+    "inner",
+    "security",
+    "supply-chain",
+    "dependencies",
+    "scan",
+    "malware",
+    "cli",
+    "npm",
+    "pypi"
+  ],
+  "main": "bundle/index.js",
+  "types": "bundle/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./bundle/index.d.ts",
+      "import": "./bundle/index.js"
+    }
+  },
+  "bin": {
+    "scan": "bundle/inner-cli.js",
+    "inner-scan": "bundle/inner-cli.js",
+    "inner": "bundle/inner-cli.js"
+  },
+  "files": [
+    "bundle",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc && tsup",
+    "bundle": "tsup",
+    "prepack": "tsup && node ../../scripts/strip-workspace-deps.mjs strip",
+    "postpack": "node ../../scripts/strip-workspace-deps.mjs restore",
+    "check": "tsc --noEmit",
+    "test": "node --test --import tsx ./src/test/*.test.ts",
+    "scan": "node dist/scan-cli.js",
+    "inner": "node dist/inner-cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsup": "^8.3.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {
+    "posthog-node": "^5.39.4"
+  }
+}

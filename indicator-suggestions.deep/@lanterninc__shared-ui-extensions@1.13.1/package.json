@@ -1,0 +1,71 @@
+{
+  "name": "@lanterninc/shared-ui-extensions",
+  "version": "1.13.1",
+  "description": "Lantern Shared UI Extensions",
+  "author": "Dominic McPhee <dom@lantern.is> (https://lantern.is)",
+  "homepage": "https://github.com/lanterninc/shared-ui-extensions",
+  "repository": "github:lanterninc/shared-ui-extensions",
+  "license": "ISC",
+  "keywords": [
+    "vite",
+    "typescript",
+    "npm",
+    "package"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./preview": {
+      "import": "./dist/preview/index.es.js",
+      "types": "./dist/preview/index.d.ts"
+    },
+    "./preview/style.css": "./dist/preview/style.css",
+    "./src": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "dev": "npm run ladle",
+    "start": "vite --host --open",
+    "build": "pnpm run clean && vite build",
+    "build:preview": "vite build --mode preview && tsup --dts-only",
+    "build:all": "pnpm run build && pnpm run build:preview",
+    "prepare": "pnpm run build:all",
+    "ladle": "npx ladle serve",
+    "ladle:build": "npx ladle build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@ladle/react": "^4.1.1",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "3.1.0",
+    "react-reconciler": "0.29.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.2",
+    "tsup": "^8.3.5",
+    "@lanterninc/configurator-types": "0.8.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

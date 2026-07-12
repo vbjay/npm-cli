@@ -1,0 +1,163 @@
+{
+  "name": "@salesforce/cli-plugins-testkit",
+  "description": "Provides test utilities to assist Salesforce CLI plug-in authors with writing non-unit tests (NUT).",
+  "version": "5.3.62",
+  "author": "Salesforce",
+  "license": "Apache-2.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "salesforcecli/cli-plugins-testkit",
+  "scripts": {
+    "build": "wireit",
+    "clean": "sf-clean",
+    "clean-all": "sf-clean all",
+    "compile": "wireit",
+    "docs": "sf-docs",
+    "fix-license": "eslint src test --fix --rule \"header/header: [2]\"",
+    "format": "wireit",
+    "link-check": "wireit",
+    "lint": "wireit",
+    "lint-fix": "yarn sf-lint --fix",
+    "prepack": "sf-prepack",
+    "prepare": "sf-install",
+    "test": "wireit",
+    "test:only": "wireit"
+  },
+  "keywords": [
+    "force",
+    "salesforce",
+    "sfdx",
+    "salesforcedx",
+    "cli",
+    "plugins",
+    "testkit",
+    "test",
+    "integration",
+    "nut"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "docs",
+    "lib",
+    "messages",
+    "!lib/**/*.map"
+  ],
+  "dependencies": {
+    "@salesforce/core": "^8.31.2",
+    "@salesforce/kit": "^3.2.6",
+    "@salesforce/ts-types": "^2.0.11",
+    "@types/shelljs": "^0.10.0",
+    "debug": "^4.4.3",
+    "jszip": "^3.10.1",
+    "shelljs": "^0.10.0",
+    "sinon": "^17.0.2",
+    "strip-ansi": "6.0.1",
+    "ts-retry-promise": "^0.8.1"
+  },
+  "devDependencies": {
+    "@salesforce/dev-scripts": "^11.0.2",
+    "@salesforce/ts-sinon": "^1.4.36",
+    "@types/debug": "^4.1.13",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "config": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "wireit": {
+    "samples": {
+      "command": "tsc -p samples && ts-node samples/generateSamplesDoc.ts",
+      "files": [
+        "samples/**/*.ts",
+        "samples/**/*.json"
+      ],
+      "output": [
+        "SAMPLE.md"
+      ]
+    },
+    "build": {
+      "dependencies": [
+        "compile",
+        "lint",
+        "samples"
+      ]
+    },
+    "compile": {
+      "command": "tsc -p . --pretty --incremental",
+      "files": [
+        "src/**/*.ts",
+        "**/tsconfig.json",
+        "messages/**"
+      ],
+      "output": [
+        "lib/**",
+        "*.tsbuildinfo"
+      ],
+      "clean": "if-file-deleted"
+    },
+    "format": {
+      "command": "prettier --write \"+(src|test|schemas)/**/*.+(ts|js|json)|command-snapshot.json\"",
+      "files": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "schemas/**/*.json",
+        "command-snapshot.json",
+        ".prettier*"
+      ],
+      "output": []
+    },
+    "lint": {
+      "command": "eslint src test --color --cache --cache-location .eslintcache",
+      "files": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "messages/**",
+        "**/.eslint*",
+        "**/tsconfig.json"
+      ],
+      "output": []
+    },
+    "test:compile": {
+      "command": "tsc -p \"./test\" --pretty",
+      "files": [
+        "test/**/*.ts",
+        "**/tsconfig.json"
+      ],
+      "output": []
+    },
+    "test": {
+      "dependencies": [
+        "test:only",
+        "test:compile",
+        "link-check"
+      ]
+    },
+    "test:only": {
+      "command": "nyc mocha \"test/**/*.test.ts\"",
+      "env": {
+        "FORCE_COLOR": "2"
+      },
+      "files": [
+        "test/**/*.ts",
+        "src/**/*.ts",
+        "**/tsconfig.json",
+        ".mocha*",
+        "!*.nut.ts",
+        ".nycrc"
+      ],
+      "output": []
+    },
+    "link-check": {
+      "command": "node -e \"process.exit(process.env.CI ? 0 : 1)\" || linkinator \"**/*.md\" --skip \"CHANGELOG.md|node_modules|test/|confluence.internal.salesforce.com|my.salesforce.com|localhost|%s\" --markdown --retry --directory-listing --verbosity error",
+      "files": [
+        "./*.md",
+        "./!(CHANGELOG).md",
+        "messages/**/*.md"
+      ],
+      "output": []
+    }
+  }
+}

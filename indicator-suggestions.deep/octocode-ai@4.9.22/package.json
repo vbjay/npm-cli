@@ -1,0 +1,36 @@
+{
+  "name": "octocode-ai",
+  "version": "4.9.22",
+  "description": "OctoCode - AI-powered development tool by Farhan Dhrubo",
+  "license": "GPL-3.0-or-later",
+  "author": "Farhan Dhrubo",
+  "homepage": "https://github.com/farhanic017/octocode",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farhanic017/octocode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/farhanic017/octocode/issues"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "code",
+    "octocode",
+    "agent",
+    "coding"
+  ],
+  "bin": {
+    "octo": "./bin/octo"
+  },
+  "scripts": {
+    "postinstall": "bun ./postinstall.mjs || node ./postinstall.mjs"
+  },
+  "optionalDependencies": {
+    "octocode-ai-windows-x64": "4.9.22",
+    "octocode-ai-windows-arm64": "4.9.22",
+    "octocode-ai-linux-x64": "4.9.22",
+    "octocode-ai-linux-arm64": "4.9.22",
+    "octocode-ai-darwin-arm64": "4.9.22"
+  }
+}

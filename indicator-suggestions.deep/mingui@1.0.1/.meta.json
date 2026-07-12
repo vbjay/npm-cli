@@ -1,0 +1,85 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f9779d84b17fbb93",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "37473e3e82077d9dcebba1a70ad52ebf8d359bb8b1abde64c8fb77ec1961528f",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `mingui`  -  C/C++ sources",
+            "items": [
+              "src/mingui.cc",
+              "src/astox-deps/StringAlg.cpp",
+              "src/mingui.cc",
+              "src/astox-deps/StringAlg.cpp",
+              "src/astox-deps/MinGUI.cpp",
+              "src/astox-deps/MinGUI.mm"
+            ]
+          },
+          {
+            "label": "Target `mingui`  -  libraries",
+            "items": [
+              "<!@(pkg-config gtk+-2.0 --libs)",
+              "<!@(pkg-config libnotify --libs)"
+            ]
+          },
+          {
+            "label": "Target `mingui`  -  include directories",
+            "items": [
+              "src/astox-deps",
+              "<!@(pkg-config gtk+-2.0 --cflags-only-I | sed s/-I//g)",
+              "<!@(pkg-config libnotify --cflags-only-I | sed s/-I//g)"
+            ]
+          },
+          {
+            "label": "Target `mingui`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:10.992Z"
+  },
+  "hash": "sha256:859d8bf3b920324cdd195d3999365b9472ec098ed3ba3d041186f94dfaaff8c3"
+}

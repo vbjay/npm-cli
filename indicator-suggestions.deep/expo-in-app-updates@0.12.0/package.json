@@ -1,0 +1,100 @@
+{
+  "name": "expo-in-app-updates",
+  "version": "0.12.0",
+  "description": "Native in-app updates for Android and iOS",
+  "keywords": [
+    "ExpoInAppUpdates",
+    "expo",
+    "expo-in-app-updates",
+    "react-native"
+  ],
+  "homepage": "https://github.com/SohelIslamImran/expo-in-app-updates#readme",
+  "bugs": {
+    "url": "https://github.com/SohelIslamImran/expo-in-app-updates/issues"
+  },
+  "license": "MIT",
+  "author": "SohelIslamImran <sohelislamimran@gmail.com> (https://github.com/SohelIslamImran)",
+  "repository": "https://github.com/SohelIslamImran/expo-in-app-updates",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "bunx expo-module-scripts build",
+    "clean": "bunx expo-module-scripts clean",
+    "lint": "oxlint src example && oxfmt --check",
+    "lint:fix": "oxlint --fix src example",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "release": "release-it",
+    "prepare": "bunx expo-module-scripts prepare",
+    "prepublishOnly": "bunx expo-module-scripts prepublishOnly",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^11.0.1",
+    "@types/react": "~19.2.17",
+    "expo": "~56.0.9",
+    "expo-module-scripts": "^56.0.3",
+    "oxfmt": "^0.53.0",
+    "oxlint": "^1.68.0",
+    "release-it": "^20.2.0"
+  },
+  "peerDependencies": {
+    "expo": "*"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}",
+      "tagName": "v${version}",
+      "push": true
+    },
+    "npm": {
+      "publish": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "infile": "CHANGELOG.md",
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "fix",
+              "section": "🐛 Bug Fixes"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            },
+            {
+              "type": "style",
+              "section": "🎨 Styles"
+            },
+            {
+              "type": "refactor",
+              "section": "🔨 Code Refactoring"
+            },
+            {
+              "type": "perf",
+              "section": "💨 Performance Improvements"
+            },
+            {
+              "type": "chore",
+              "section": "🛠️ Changes in Build Process & Tools"
+            }
+          ]
+        }
+      }
+    },
+    "hooks": {
+      "before:init": [
+        "bun lint",
+        "bun run build"
+      ]
+    }
+  }
+}

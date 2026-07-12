@@ -1,0 +1,122 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['DocumentScanner_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["DocumentScanner_" + name]).toInteger()
+}
+
+def parseFeatureList = { rawValue ->
+  def raw = (rawValue ?: "").toString().toLowerCase()
+  def values = raw.split(",")
+    .collect { it.trim() }
+    .findAll { !it.isEmpty() }
+    .toSet()
+
+  if (values.contains("none")) {
+    values = values - "none"
+  }
+
+  if (values.contains("all")) {
+    values += ["barcode", "text", "tables"]
+  }
+
+  return values
+}
+
+def analysisFeaturesRaw =
+  (project.findProperty("DocumentScanner_analysisFeatures")
+    ?: "")
+
+def analysisFeatures = parseFeatureList(analysisFeaturesRaw)
+def barcodeFeatureEnabled = analysisFeatures.contains("barcode")
+def textFeatureEnabled = analysisFeatures.contains("text")
+def tablesFeatureEnabled = analysisFeatures.contains("tables")
+def textPipelineEnabled = textFeatureEnabled || tablesFeatureEnabled
+
+android {
+  namespace "com.preeternal.scanner"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+      if (barcodeFeatureEnabled) {
+        java.srcDirs += ["src/barcode/java"]
+      } else {
+        java.srcDirs += ["src/no-barcode/java"]
+      }
+      if (textPipelineEnabled) {
+        java.srcDirs += ["src/text/java"]
+      } else {
+        java.srcDirs += ["src/no-text/java"]
+      }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "com.google.android.gms:play-services-mlkit-document-scanner:16.0.0"
+
+  if (barcodeFeatureEnabled) {
+    implementation "com.google.mlkit:barcode-scanning:17.3.0"
+    implementation "androidx.exifinterface:exifinterface:1.4.2"
+  }
+  if (textPipelineEnabled) {
+    implementation "com.google.mlkit:text-recognition:16.0.1"
+  }
+}

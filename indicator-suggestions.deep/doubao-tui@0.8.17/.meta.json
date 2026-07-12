@@ -1,0 +1,165 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a1d4ff2d6626551b",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/artifacts.js",
+      "scripts/install.js",
+      "scripts/preflight-glibc.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`; referenced by lifecycle script: `prepack`",
+        "sha256": "c51b8c2f1e0cc9daddfea84c777a80d7fb9daaa8b17c41fc5b600a6b71ee6ca7",
+        "sizeBytes": 32921,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-outside-package",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/artifacts.js",
+          "scripts/preflight-glibc.js",
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/artifacts.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "f67e30bba7cdf730d0fee2f69d567b6298372ecf8605e5fa6deb929958c27458",
+        "sizeBytes": 3523,
+        "signals": [
+          "reads-process-env",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/freestylefly/Doubao-TUI.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/freestylefly/Doubao-TUI/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/preflight-glibc.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "b189f1cb4a2b5bd4efd49e4ff48d79b06385d063c134cbc080983acac732feec",
+        "sizeBytes": 3968,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/freestylefly/Doubao-TUI.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/freestylefly/Doubao-TUI/blob/main/docs/INSTALL.md",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "b87dfd22bc9f4c69a019aa6fd310d1e70ab9ff4288b40855fa727ab5bd0c698d",
+        "sizeBytes": 1171,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:39.347Z"
+  },
+  "hash": "sha256:0655a63422fbf411301daf22974ceefa787f5317821087b7a4898e5af4ae0062"
+}

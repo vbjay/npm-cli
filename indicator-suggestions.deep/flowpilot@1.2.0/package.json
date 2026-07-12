@@ -1,0 +1,89 @@
+{
+	"name": "flowpilot",
+	"version": "1.2.0",
+	"type": "module",
+	"engines": {
+		"node": ">=22.13"
+	},
+	"packageManager": "pnpm@11.0.9",
+	"exports": {
+		".": {
+			"types": "./dist/server.d.ts",
+			"import": "./dist/server.js"
+		}
+	},
+	"module": "./dist/server.js",
+	"types": "./dist/server.d.ts",
+	"description": "Jira & GitLab workflow automation — config, release, end and more",
+	"bin": {
+		"flowpilot": "./dist/cli.js"
+	},
+	"scripts": {
+		"build": "biome check && rolldown -c rolldown.config.ts && pnpm build:css",
+		"build:css": "tailwindcss -i src/styles/tailwind.css -o dist/public/tailwind.css",
+		"check": "biome check --write",
+		"dev": "rolldown -c rolldown.config.ts --watch",
+		"format": "biome format --write",
+		"test": "vitest",
+		"release": "vitest run && pnpm build && bash scripts/bump-version.sh | xargs npm version && git push && git push --tags",
+		"release:patch": "vitest run && pnpm build && npm version patch && git push && git push --tags",
+		"release:minor": "vitest run && pnpm build && npm version minor && git push && git push --tags",
+		"release:major": "vitest run && pnpm build && npm version major && git push && git push --tags",
+		"preinstall": "node -e \"const{execSync}=require('child_process');try{execSync('node ./dist/cli.js stop',{stdio:'ignore'})}catch(e){}\"",
+		"postinstall": "node dist/cli.js serve",
+		"prepublishOnly": "pnpm build",
+		"prepare": "husky"
+	},
+	"files": [
+		"dist",
+		"favicon",
+		"README.md"
+	],
+	"keywords": [
+		"jira",
+		"gitlab",
+		"cli",
+		"release",
+		"merge-request",
+		"workflow",
+		"devops"
+	],
+	"author": "Corazon",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/FriendsA/flowpilot"
+	},
+	"publishConfig": {
+		"provenance": true
+	},
+	"license": "ISC",
+	"dependencies": {
+		"@clack/prompts": "^1.4.0",
+		"@gitbeaker/rest": "^43.8.0",
+		"@hono/node-server": "^2.0.2",
+		"@inquirer/search": "^4.1.9",
+		"cac": "^7.0.0",
+		"hono": "^4.12.18",
+		"i18next": "^26.1.0",
+		"picocolors": "^1.1.1",
+		"tinyclip": "^0.1.12"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.15",
+		"@rslib/core": "^0.21.4",
+		"@tailwindcss/cli": "^4.3.1",
+		"@types/node": "^25.6.2",
+		"@types/prompts": "^2.4.9",
+		"@typescript/native-preview": "7.0.0-dev.20260421.2",
+		"husky": "^9.1.7",
+		"rolldown": "^1.0.1",
+		"tailwindcss": "^4.3.1",
+		"typescript": "^6.0.3",
+		"vitest": "^4.1.6"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@parcel/watcher"
+		]
+	}
+}

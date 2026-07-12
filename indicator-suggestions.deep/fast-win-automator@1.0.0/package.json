@@ -1,0 +1,34 @@
+{
+  "name": "fast-win-automator",
+  "version": "1.0.0",
+  "description": "A lightweight, high-performance native Windows UI Automation library.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build:ts": "tsc",
+    "build:native": "prebuildify --napi --strip",
+    "build": "npm run build:native && npm run build:ts",
+    "install": "node-gyp-build"
+  },
+  "keywords": [
+    "windows",
+    "automation",
+    "uiautomation",
+    "test",
+    "native",
+    "addon",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "node-addon-api": "^8.8.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "prebuildify": "^6.0.1",
+    "typescript": "^6.0.3"
+  }
+}

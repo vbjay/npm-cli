@@ -1,0 +1,103 @@
+{
+  "name": "@imran_afzal/react-native-photo-editor",
+  "version": "1.1.2",
+  "description": "A powerful, customizable photo editor for React Native and Expo with filters, adjustments, text overlays, drawing, cropping, and templates — powered by Skia",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src/",
+    "lib/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "photo-editor",
+    "image-editor",
+    "skia",
+    "filters",
+    "photo-filters",
+    "image-adjustments",
+    "crop",
+    "rotate",
+    "text-overlay",
+    "drawing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imranAfzal43A/photoEditor"
+  },
+  "author": "Imran Afzal",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.72.0",
+    "@shopify/react-native-skia": ">=1.0.0",
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=3.0.0",
+    "react-native-safe-area-context": ">=4.0.0",
+    "@react-native-community/slider": ">=4.0.0",
+    "@react-native-vector-icons/material-icons": ">=0.0.1",
+    "react-native-worklets": ">=0.5.0",
+    "@dr.pogodin/react-native-fs": ">=2.29.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-worklets": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/slider": "^5.2.0",
+    "@react-native-vector-icons/material-icons": "^13.0.0",
+    "@react-native/babel-preset": "0.83.0",
+    "@react-native/typescript-config": "^0.86.0",
+    "@shopify/react-native-skia": "^2.6.2",
+    "@types/react": "^19.2.0",
+    "add": "^2.0.6",
+    "eslint": "^8.19.0",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react": "19.2.0",
+    "react-native": "0.83.0",
+    "react-native-builder-bob": "^0.35.0",
+    "react-native-gesture-handler": "^2.31.0",
+    "react-native-reanimated": "^4.3.0",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-worklets": "^0.8.1",
+    "typescript": "^5.8.3",
+    "@dr.pogodin/react-native-fs": "^2.29.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "copyFlow": false
+        }
+      ],
+      "module",
+      "typescript"
+    ]
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

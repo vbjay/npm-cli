@@ -1,0 +1,59 @@
+{
+  "name": "loading-attribute-polyfill",
+  "version": "2.1.1",
+  "description": "Fast and lightweight dependency-free vanilla JavaScript polyfill for native lazy loading / the awesome loading='lazy'-attribute.",
+  "source": "./src/loading-attribute-polyfill.js",
+  "browser": "./dist/loading-attribute-polyfill.js",
+  "esmodule": "./dist/loading-attribute-polyfill.modern.js",
+  "module": "./dist/loading-attribute-polyfill.module.js",
+  "umd:main": "./dist/loading-attribute-polyfill.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mfranzke/loading-attribute-polyfill.git"
+  },
+  "author": "Maximilian Franzke",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "keywords": [
+    "lazy loading",
+    "native lazy loading",
+    "img",
+    "image",
+    "iframe",
+    "polyfill",
+    "web development",
+    "javascript",
+    "html",
+    "front-end"
+  ],
+  "bugs": {
+    "url": "https://github.com/mfranzke/loading-attribute-polyfill/issues"
+  },
+  "homepage": "https://mfranzke.github.io/loading-attribute-polyfill/demo/",
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "@wdio/cli": "^8.0.0",
+    "@wdio/dot-reporter": "^8.0.0",
+    "@wdio/local-runner": "^8.0.0",
+    "@wdio/mocha-framework": "^8.0.0",
+    "html-validate": "^7.0.0",
+    "husky": "^8.0.0",
+    "microbundle": "^0.15.0",
+    "np": "^7.5.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "2.8.3",
+    "pretty-quick": "^3.1.1",
+    "xo": "^0.53.0"
+  },
+  "scripts": {
+    "test": "run-p validate:* lint:*",
+    "lint:xo": "xo src/loading-attribute-polyfill.js",
+    "validate:html": "html-validate demo/index.html",
+    "test:wdio": "wdio run webdriverio-tests/wdio.conf-crossbrowsertesting.js",
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "release": "np",
+    "prepare": "husky install"
+  }
+}

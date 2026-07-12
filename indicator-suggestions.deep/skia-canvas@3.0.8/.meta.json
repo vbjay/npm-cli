@@ -1,0 +1,110 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ab112cdd6f25e2b5",
+    "fetchedFiles": [
+      "lib/prebuild.mjs",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "detect-libc",
+        "versionSpec": "^2.1.1"
+      },
+      {
+        "name": "follow-redirects",
+        "versionSpec": "^1.15.11"
+      },
+      {
+        "name": "https-proxy-agent",
+        "versionSpec": "^7.0.6"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "detect-libc@2.1.2",
+      "follow-redirects@1.16.0",
+      "https-proxy-agent@7.0.6"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\skia-canvas@3.0.8\\binding.gyp'",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/prebuild.mjs",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "e1e3704297eb4dcc3fee65fd927e9adfb34fe1dcf7e8a6ec644e036802a3b034",
+        "sizeBytes": 5927,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "native-build",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/samizdatco/skia-canvas",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:11.487Z"
+  },
+  "hash": "sha256:9ee92a895a8ad95100941c39515ca55e74abdc05f84642c748f425137069fb80"
+}

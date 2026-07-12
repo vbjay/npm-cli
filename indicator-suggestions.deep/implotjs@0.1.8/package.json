@@ -1,0 +1,59 @@
+{
+  "name": "implotjs",
+  "version": "0.1.8",
+  "author": {
+    "name": "Federico Cervelli",
+    "email": "federicocervelli01@gmail.com",
+    "url": "https://cervelli.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Federicocervelli/implotjs.git"
+  },
+  "description": "Managed-canvas ImPlot wrapper for JavaScript and TypeScript.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "scripts": {
+    "build": "bash scripts/build-wasm.sh",
+    "clean": "rm -rf build dist",
+    "dev": "concurrently -k -n native,ts,vite -c blue,magenta,green \"bun run dev:wasm\" \"bun run dev:ts\" \"vite --host 0.0.0.0\"",
+    "dev:ts": "tsc --project tsconfig.json --watch --preserveWatchOutput false --incremental --tsBuildInfoFile build/tsconfig.tsbuildinfo",
+    "dev:wasm": "tsx scripts/dev-wasm.ts",
+    "package:test": "bash scripts/package-smoke-test.sh",
+    "pages:build": "vite build --base=/implotjs/ --outDir build/pages",
+    "prepack": "bash scripts/build-wasm.sh",
+    "start": "bun run dev",
+    "start:test": "bash scripts/start-test-server.sh",
+    "generate:readme": "bun run scripts/generate-readme.ts",
+    "release:patch": "node scripts/release.js patch",
+    "release:minor": "node scripts/release.js minor",
+    "release:major": "node scripts/release.js major"
+  },
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.20.6",
+    "typescript": "^6.0.3",
+    "vite": "^7.2.2"
+  },
+  "keywords": [
+    "imgui",
+    "implot",
+    "wasm",
+    "emscripten",
+    "webassembly"
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "aa6e18c43f887512",
+    "fetchedFiles": [
+      "dist/postinstall-daemon.cjs",
+      "dist/preinstall.cjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/preinstall.cjs",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "a3dfad0b45db668645551bed4242f33d977234ffa8fd63299b3f2c26ee0cc6a0",
+        "sizeBytes": 4437,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "dist/postinstall-daemon.cjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "84568aa786475879e0345bdc74c7dafd5d6485c8d32a3f64ee563aed14324098",
+        "sizeBytes": 32732,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/robit-man/omnius",
+            "classification": "reference"
+          },
+          {
+            "url": "http://127.0.0.1",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:21.123Z"
+  },
+  "hash": "sha256:95b967dcba92fb92e9c16b567d9c2c3be9da7abb2bb20f24870edfc63f08b6b6"
+}

@@ -1,0 +1,85 @@
+{
+  "name": "justtrack-adapter-facebook",
+  "version": "1.0.0-rc5",
+  "description": "A React Native adapter that enables seamless integration of Facebook with the justtrack SDK.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "lib/module/index.js",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/index.d.ts",
+      "react-native": "./lib/module/index.js",
+      "import": "./lib/module/index.js",
+      "require": "./lib/commonjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/",
+    "!lib/**/*.map",
+    "src/",
+    "ios/",
+    "android/",
+    "!android/build",
+    "!android/.gradle",
+    "JusttrackAdapterFacebook.podspec"
+  ],
+  "scripts": {
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "build:bob": "bob build",
+    "build:types": "tsc --project tsconfig.build.json",
+    "build": "yarn build:types && yarn build:bob"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "author": "justtrack <sdk@justtrack.io> (https://justtrack.io)",
+  "license": "MIT",
+  "homepage": "https://justtrack.io/",
+  "devDependencies": {
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@justtrack/react-native-config": "workspace:*",
+    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native/babel-preset": "0.79.2",
+    "@react-native/eslint-config": "^0.78.0",
+    "@types/react": "^19.0.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.0.3",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-builder-bob": "^0.40.13",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "prettier": "@justtrack/react-native-config/prettier",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "codegenConfig": {
+    "name": "JusttrackAdapterFacebookSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "io.justtrack.adapter.facebook"
+    }
+  }
+}

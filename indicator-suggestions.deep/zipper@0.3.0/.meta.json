@@ -1,0 +1,118 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d9210f4de0abf258",
+    "fetchedFiles": [
+      "Gruntfile.coffee",
+      "Makefile",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "de1833626aa3e5265fcb1f1339d3e7e0dd465941bb508999379864dd051890cb",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `zipper`  -  C/C++ sources",
+            "items": [
+              "src/_zipper.cc",
+              "src/zipper.cpp"
+            ]
+          },
+          {
+            "label": "Target `zipper`  -  libraries",
+            "items": [
+              "-lz",
+              "-L../deps/libzip-<(libzip)/lib/.libs/",
+              "-lzip",
+              "-lz",
+              "-lzip"
+            ]
+          },
+          {
+            "label": "Target `zipper`  -  include directories",
+            "items": [
+              "deps/libzip-<(libzip)/lib/"
+            ]
+          },
+          {
+            "label": "Target `zipper`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Makefile",
+        "label": "Makefile build script",
+        "sha256": "25df40f73314feaef322aeab7c4ce5f573d197b21227f351e61cef2c27771b7f",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "Libraries linked",
+            "items": [
+              "ibzip"
+            ]
+          },
+          {
+            "label": "External tools invoked",
+            "items": [
+              "node"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Gruntfile.coffee",
+        "label": "Grunt build script (CoffeeScript)",
+        "sha256": "69a0342508c0b0454a8f9b0cf8ba71c03419d527b0511f2bc6716c1213874ed9",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "External tools invoked in Gruntfile",
+            "items": [
+              "make"
+            ]
+          },
+          {
+            "label": "Gruntfile variants",
+            "items": [
+              "Gruntfile.coffee"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Gruntfile.js",
+        "label": "Grunt build script",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\zipper@0.3.0\\Gruntfile.js'",
+        "signals": [
+          "make-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [],
+    "scannedAt": "2026-07-12T00:05:33.763Z"
+  },
+  "hash": "sha256:5ee2cbb886327ae8da178aad932e1a359c6ffa16b98d81c1a30f03c1dab94034"
+}

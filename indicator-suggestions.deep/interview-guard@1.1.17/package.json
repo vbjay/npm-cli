@@ -1,0 +1,76 @@
+{
+  "name": "interview-guard",
+  "version": "1.1.17",
+  "description": "Lightweight passive fraud-detection daemon. Detects AI interview cheating apps (Cheating Daddy, Parakeet, Final Round, Cluely, Sanctuary), hardware capture cards, screen-recording access, AI API connections, and virtual audio loops. Runs with <15MB RAM and <1% CPU.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "author": "Your Name <you@example.com>",
+  "homepage": "https://github.com/your-org/interview-guard#readme",
+  "keywords": [
+    "interview",
+    "proctoring",
+    "fraud-detection",
+    "ai-copilot",
+    "cheating-daddy",
+    "parakeet",
+    "finalround",
+    "cluely",
+    "napi",
+    "napi-rs",
+    "rust",
+    "native",
+    "screen-monitor",
+    "audio-audit",
+    "daemon",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/interview-guard.git"
+  },
+  "bin": {
+    "interview-guard": "bin/interview-guard-daemon.js"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "bin/",
+    "lib/",
+    "*.node",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "napi build --release",
+    "build:debug": "napi build",
+    "artifacts": "napi artifacts",
+    "universal": "napi universal",
+    "version": "napi version",
+    "test": "node --test",
+    "start": "node bin/interview-guard-daemon.js",
+    "postinstall": "node -e \"try{require('./interview-guard.node');console.log('[interview-guard] Native binary loaded OK.')}catch(e){console.log('\\n[interview-guard] NOTE: Native binary not bundled. The daemon will use the built-in JS fallback scanner.\\nFor full audio + display detection, compile the native module:\\n  npm run build  (requires Rust >= 1.95)\\n')}\""
+  },
+  "napi": {
+    "binaryName": "interview-guard",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-pc-windows-msvc",
+      "aarch64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-musl"
+    ]
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.7.2"
+  }
+}

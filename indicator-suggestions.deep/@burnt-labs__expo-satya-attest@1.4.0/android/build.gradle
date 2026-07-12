@@ -1,0 +1,40 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.satyaattest'
+version = '1.4.0'
+
+android {
+  namespace "expo.modules.satyaattest"
+  defaultConfig {
+    versionCode 1
+    versionName "1.4.0"
+    // StrongBox key attestation needs API 28+; basic Keystore attestation API 24+.
+    minSdkVersion 24
+  }
+  lintOptions {
+    abortOnError false
+  }
+  // Prebuilt per-ABI Rust libraries produced by scripts/build-rust-android.sh.
+  sourceSets {
+    main {
+      jniLibs.srcDirs += ['src/main/jniLibs']
+    }
+  }
+}
+
+dependencies {
+  // uniffi-generated Kotlin bindings load the native lib through JNA. The @aar
+  // classifier is mandatory on Android (the plain jar crashes at runtime).
+  implementation "net.java.dev.jna:jna:5.14.0@aar"
+  implementation "androidx.webkit:webkit:1.14.0"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+  // Google Play Integrity (Android analog of iOS App Attest).
+  implementation "com.google.android.play:integrity:1.4.0"
+  // Native provider replay with certificate pinning and handshake capture.
+  implementation "com.squareup.okhttp3:okhttp:4.12.0"
+}

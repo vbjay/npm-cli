@@ -1,0 +1,100 @@
+{
+  "name": "@epa-wg/custom-element-dist",
+  "version": "0.0.39",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "postinstall": "bash bin/postinstall.sh",
+    "prepublishOnly": "bash bin/build.sh",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test": "node bin/vitest/vitest-browser-importmaps.mjs && vitest --coverage.enabled --coverage.all --no-file-parallelism --watch=false ",
+    "test:ff": "yarn test --browser.name=firefox",
+    "test:watch": "vitest --inspect-brk --no-file-parallelism --browser.headless=false --test-timeout=0",
+    "test:storybook": "test-storybook",
+    "sb": "yarn storybook",
+    "t": "node ./node_modules/vitest/vitest.mjs --no-file-parallelism --watch --browser.headless=false src/stories/module-url.test.stories.ts",
+    "tt": "vitest --coverage.enabled --coverage.all --no-file-parallelism --watch --browser.headless=false src/stories/external-template.test.stories.ts "
+  },
+  "dependencies": {
+    "@epa-wg/cem-theme": "0.0.12",
+    "@epa-wg/custom-element": "0.0.39"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "8.5.3",
+    "@storybook/addon-interactions": "8.5.3",
+    "@storybook/addon-links": "8.5.3",
+    "@storybook/addon-mdx-gfm": "8.5.3",
+    "@storybook/blocks": "8.5.3",
+    "@storybook/test": "8.5.3",
+    "@storybook/test-runner": "0.21.0",
+    "@storybook/web-components": "8.5.3",
+    "@storybook/web-components-vite": "8.5.3",
+    "@vitest/browser": "3.0.5",
+    "@vitest/coverage-istanbul": "3.0.5",
+    "coverage-svg": "0.0.3",
+    "lit": "3.2.1",
+    "msw": "2.12.7",
+    "msw-storybook-addon": "2.0.6",
+    "playwright": "1.50.1",
+    "storybook": "8.5.3",
+    "typescript": "5.7.3",
+    "vite": "6.1.0",
+    "vitest": "3.0.5",
+    "webdriverio": "9.9.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
+  "keywords": [
+    "WebComponent",
+    "Declarative Custom Element",
+    "XSLT",
+    "JS",
+    "javascript"
+  ],
+  "author": {
+    "name": "Sasha Firsov",
+    "email": "suns@simulationworks.com",
+    "url": "https://blog.firsov.net/"
+  },
+  "files": [
+    "*",
+    "dist/**/*",
+    "storybook-static/**/*",
+    "coverage/**/*"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/assets/custom-element-bundle.js",
+      "require": "./dist/assets/custom-element-bundle.cjs"
+    },
+    "./custom-element": {
+      "import": "./dist/assets/custom-element-bundle.js",
+      "require": "./dist/assets/custom-element-bundle.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EPA-WG/custom-element-dist.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/EPA-WG/custom-element/issues"
+  },
+  "homepage": "https://github.com/EPA-WG/custom-element#readme",
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/sashafirsov"
+  },
+  "web-types": [
+    "./src/custom-element/ide/web-types-dce.json",
+    "./src/custom-element/ide/web-types-xsl.json"
+  ],
+  "packageManager": "yarn@4.12.0"
+}

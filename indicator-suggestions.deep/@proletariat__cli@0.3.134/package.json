@@ -1,0 +1,142 @@
+{
+  "name": "@proletariat/cli",
+  "description": "Agent orchestration platform for AI labor - Spin up workers on demand for multi-agent development",
+  "version": "0.3.134",
+  "author": "Chris McDermut",
+  "mcpName": "io.github.chrismcdermut/proletariat-cli",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "prlt": "./bin/run.js"
+  },
+  "bugs": "https://github.com/chrismcdermut/proletariat/issues",
+  "dependencies": {
+    "@inkjs/ui": "^2.0.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@oclif/core": "^4",
+    "@oclif/plugin-autocomplete": "^3",
+    "@oclif/plugin-commands": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5",
+    "@sentry/node": "^10.42.0",
+    "better-sqlite3": "^12.6.2",
+    "chalk": "^4.1.2",
+    "chokidar": "^5.0.0",
+    "drizzle-orm": "^0.37.0",
+    "gray-matter": "^4.0.3",
+    "ink": "^5.0.1",
+    "ink-select-input": "^6.0.0",
+    "inquirer": "^8.2.5",
+    "js-yaml": "^4.1.1",
+    "posthog-node": "^5.28.4",
+    "react": "^18.0.0",
+    "string-width": "^8.1.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.0.0",
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/chai": "^4",
+    "@types/ink-spinner": "^3.0.5",
+    "@types/inquirer": "^8.2.6",
+    "@types/jest": "^30.0.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/mocha": "^10",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "chai": "^4",
+    "drizzle-kit": "^0.30.0",
+    "eslint": "^9",
+    "eslint-config-oclif": "^6.0.129",
+    "eslint-config-prettier": "^10",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20 <25"
+  },
+  "files": [
+    "./bin",
+    "./dist",
+    "./images",
+    "./oclif.manifest.json",
+    "README.md"
+  ],
+  "homepage": "https://proletariat.ai/",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "cli",
+    "multi-agent",
+    "ai-agents",
+    "coding-assistant",
+    "claude",
+    "claude-code",
+    "git-worktree",
+    "automation",
+    "ticket-management",
+    "project-management",
+    "tmux",
+    "docker",
+    "oclif"
+  ],
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "prlt",
+    "dirname": "proletariat",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-commands",
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "hooks": {
+      "init": "./dist/hooks/init",
+      "postrun": "./dist/hooks/postrun"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrismcdermut/proletariat.git",
+    "directory": "apps/cli"
+  },
+  "scripts": {
+    "postinstall": "(npm rebuild better-sqlite3 || npm rebuild better-sqlite3 || true) && node ./bin/validate-better-sqlite3.cjs",
+    "build": "shx rm -rf dist && tsc -b",
+    "rebuild": "pnpm install && pnpm build",
+    "clean": "shx rm -rf dist",
+    "dev": "tsc --watch",
+    "lint": "eslint",
+    "lint:all": "eslint && tsc --noEmit",
+    "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "pnpm run lint",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "bash test/run-mocha.sh --forbid-only --parallel \"test/**/*.test.ts\"",
+    "test:unit": "bash test/run-mocha.sh --forbid-only --parallel \"test/unit/**/*.test.ts\"",
+    "test:e2e": "bash test/run-mocha.sh --forbid-only --parallel \"test/e2e/**/*.test.ts\"",
+    "test:smoke": "bash test/run-mocha.sh --forbid-only --parallel --grep @smoke \"test/**/*.test.ts\"",
+    "test:smoke:unit": "bash test/run-mocha.sh --forbid-only --parallel --grep @smoke \"test/unit/**/*.test.ts\"",
+    "test:smoke:e2e": "bash test/run-mocha.sh --forbid-only --parallel --grep @smoke \"test/e2e/**/*.test.ts\"",
+    "test:e2e:pmo": "bash test/run-mocha.sh --forbid-only --parallel \"test/e2e/pmo-*.test.ts\"",
+    "test:e2e:interactive": "mocha --forbid-only --timeout 120000 \"test/e2e/interactive-menu.test.ts\"",
+    "test:commands": "mocha --forbid-only --parallel \"test/commands/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md",
+    "publish:npm": "pnpm build && pnpm publish --access public --no-git-checks && git tag v$(node -p \"require('./package.json').version\") && git push origin v$(node -p \"require('./package.json').version\") && gh release create v$(node -p \"require('./package.json').version\") --generate-notes --title \"v$(node -p \"require('./package.json').version\")\"",
+    "roadmap:generate": "node ./bin/run.js roadmap generate --all",
+    "check:raw-sql": "bash ../../scripts/check-raw-sql.sh"
+  },
+  "types": "dist/index.d.ts"
+}

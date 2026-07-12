@@ -1,0 +1,56 @@
+{
+  "author": "Marshmallow Insurance",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marshmallow-insurance/smores-foundations.git"
+  },
+  "description": "Design token system for Marshmallow Insurance",
+  "module": "index.ts",
+  "name": "@mrshmllw/smores-foundations",
+  "private": false,
+  "type": "module",
+  "version": "1.1.1",
+  "keywords": [
+    "android",
+    "design-system",
+    "design-tokens",
+    "ios",
+    "style-dictionary",
+    "swift",
+    "web"
+  ],
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "tokens:build": "bun run index.ts",
+    "tokens:clean": "rm -rf build/",
+    "format": "prettier --write '**/*.+(js|json|ts)'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pre-commit-lint": "npm run check-types && lint-staged",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@tokens-studio/sd-transforms": "^2.0.1",
+    "@types/bun": "latest",
+    "chalk": "^5.6.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "10.1.8",
+    "glob": "^11.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "semantic-release": "^25.0.2",
+    "style-dictionary": "^5.0.4",
+    "tsx": "^4.20.5",
+    "typescript-eslint": "^8.41.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.9"
+  },
+  "files": [
+    "build/web",
+    "licence.md"
+  ]
+}

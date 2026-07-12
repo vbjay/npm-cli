@@ -1,0 +1,98 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "7c6f0fbdeacc339a",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "35efff2295f7eb50cdc868074878ac6338ef586acd9ad9f7283d7a2fb5375171",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `process-audio-capture`  -  C/C++ sources",
+            "items": [
+              "src/audio_capture_addon.cc",
+              "src/mac/mac_audio_capture.mm",
+              "src/mac/mac_permission_manager.mm",
+              "src/mac/mac_utils.cc",
+              "src/mac/process_manager.mm",
+              "src/mac/audio_tap.mm",
+              "src/win/win_audio_capture.cpp",
+              "src/win/win_permission_manager.cpp",
+              "src/win/win_utils.cpp",
+              "src/win/process_manager.cpp",
+              "src/win/audio_tap.cpp"
+            ]
+          },
+          {
+            "label": "Target `process-audio-capture`  -  libraries",
+            "items": [
+              "-lole32",
+              "-loleaut32",
+              "-luuid",
+              "-lpsapi",
+              "-lshell32",
+              "-lgdiplus",
+              "-lversion",
+              "-lmmdevapi",
+              "-lavrt"
+            ]
+          },
+          {
+            "label": "Target `process-audio-capture`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "include",
+              "include/mac",
+              "include/win"
+            ]
+          },
+          {
+            "label": "Target `process-audio-capture`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:27.377Z"
+  },
+  "hash": "sha256:0b7b65379648a89d760cf1e6fdaf1aa033b96d26bc76a7558307a5de8435c9df"
+}

@@ -1,0 +1,114 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "47690b75b0bd5b30",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/npm/cli-path.mjs",
+      "scripts/npm/install-release.mjs",
+      "scripts/npm/release-artifacts.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/npm/install-release.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9f5be812f284c21ad845a5b96ed14b0cc67f0f501a2760f2e9ecb9c97d3291e9",
+        "sizeBytes": 10193,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/npm/cli-path.mjs",
+          "scripts/npm/release-artifacts.mjs"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Tura-AI/test-tura/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/npm/cli-path.mjs",
+        "reason": "required by ./scripts/npm/install-release.mjs",
+        "sha256": "78dec3d494bc372ff3137cbe88f278256223d5e0284aed320da3741bb574340c",
+        "sizeBytes": 18988,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "modifies-shell-config",
+          "obfuscation-pattern",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/npm/release-artifacts.mjs",
+        "reason": "required by ./scripts/npm/install-release.mjs",
+        "sha256": "78d843f0abdb79e65b54d3798eb90721a4e5de159a2166692e478949e0ee7230",
+        "sizeBytes": 4620,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:21.893Z"
+  },
+  "hash": "sha256:813fddb9747e1333b12708a5158d910815e52c8a77dc7b3e7da054d054a992a6"
+}

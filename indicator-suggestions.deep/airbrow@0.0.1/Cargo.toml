@@ -1,0 +1,32 @@
+[package]
+name = "airbrow"
+version = "0.0.1"
+edition = "2024"
+description = "Ultra-fast browser CLI for LLM agents. Rust/CDP based."
+
+[dependencies]
+# Minimal core
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Async runtime (minimal)
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "io-std", "io-util", "net", "time", "sync", "process"] }
+
+# WebSocket for CDP
+tokio-tungstenite = "0.24"
+futures-util = "0.3"
+
+# HTTP client (minimal, for CDP discovery)
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"] }
+
+# Utilities
+dirs = "5"
+anyhow = "1"
+atty = "0.2"
+
+[profile.release]
+opt-level = "z"      # Size optimization
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

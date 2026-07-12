@@ -1,0 +1,72 @@
+{
+  "name": "nuxt-smart-app-banner",
+  "version": "0.2.0",
+  "description": "Smart banner for nuxt 3",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Xemka1309/nuxt-smart-app-banner.git"
+  },
+  "keywords": [
+    "nuxt",
+    "appinstallbanner",
+    "smart",
+    "banner",
+    "smartbanner",
+    "android",
+    "iphone",
+    "application"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Xemka1309/nuxt-smart-app-banner",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix --max-warnings 0",
+    "prepare": "husky install",
+    "test:specific:platforms": "vitest run test/behavior/platforms.test.ts",
+    "test:specific:userAgents": "vitest run test/behavior/userAgents.test.ts",
+    "test:specific:behavior": "vitest run test/behavior/behavior.test.ts"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,vue,html,css}": [
+      "npm run lint:fix"
+    ]
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.1.1",
+    "bowser": "^2.11.0",
+    "js-cookie": "^3.0.1"
+  },
+  "devDependencies": {
+    "@nuxt/eslint-config": "^0.1.1",
+    "@nuxt/module-builder": "^0.2.1",
+    "@nuxt/schema": "^3.1.1",
+    "@nuxt/test-utils": "^3.1.1",
+    "@types/node": "^18.11.18",
+    "changelogen": "^0.4.1",
+    "eslint": "^8.32.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.0",
+    "nuxt": "^3.1.1",
+    "playwright": "^1.30.0",
+    "vitest": "^0.28.3"
+  }
+}

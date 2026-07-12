@@ -1,0 +1,71 @@
+{
+  "name": "appsprint-react-native",
+  "version": "1.1.13",
+  "description": "AppSprint mobile attribution SDK for React Native",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "ios",
+    "android",
+    "plugin",
+    "app.plugin.js",
+    "appsprint-react-native.podspec",
+    "!**/__tests__",
+    "!lib/**/*.map",
+    "!ios/build",
+    "!android/build",
+    "!android/.gradle"
+  ],
+  "scripts": {
+    "test": "node --test test/appsprint-sdk.test.cjs test/release-artifacts.test.cjs",
+    "typecheck": "tsc --noEmit",
+    "build": "bob build",
+    "prepare": "bob build",
+    "validate:release": "node scripts/validate-release-artifacts.cjs",
+    "prepack": "npm run validate:release"
+  },
+  "keywords": [
+    "react-native",
+    "attribution",
+    "mobile",
+    "analytics",
+    "appsprint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getappsprint/appsprint-react-native.git"
+  },
+  "author": "AppSprint",
+  "license": "MIT",
+  "homepage": "https://appsprint.app",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.71.0"
+  },
+  "devDependencies": {
+    "react-native-builder-bob": "^0.35.0",
+    "typescript": "^5.7.0",
+    "react": "^18.2.0",
+    "react-native": "^0.76.0"
+  },
+  "dependencies": {},
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "expo": {
+    "plugins": [
+      "./app.plugin.js"
+    ]
+  }
+}

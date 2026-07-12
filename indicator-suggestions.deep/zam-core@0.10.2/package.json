@@ -1,0 +1,89 @@
+{
+  "name": "zam-core",
+  "version": "0.10.2",
+  "description": "The Symbiotic Learning Kernel: Elevating Human Intelligence through AI Collaboration.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/",
+    ".claude/skills/zam/",
+    ".agent/skills/zam/",
+    ".agents/skills/zam/",
+    "templates/personal/",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "zam": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsup && npm run build:panel && npm run build:copilot-extension",
+    "build:copilot-extension": "tsup --config tsup.config.copilot-extension.ts && vite build --config vite.config.copilot-extension.mts && node scripts/prepare-copilot-extension.mjs",
+    "build:panel": "vite build --config vite.config.panel.mts && vite build --config vite.config.panel.mts --mode recall && vite build --config vite.config.panel.mts --mode graph && vite build --config vite.config.panel.mts --mode settings",
+    "prepare": "npm run build",
+    "dev": "tsx src/cli/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src/",
+    "format": "biome format --write src/",
+    "desktop:prepare": "node scripts/prepare-desktop-bridge.mjs",
+    "observer:check": "cargo check --manifest-path observer/Cargo.toml",
+    "observer:test": "cargo test --manifest-path observer/Cargo.toml",
+    "observer:build": "cargo build --manifest-path observer/Cargo.toml --release",
+    "observer:prepare": "node scripts/prepare-observer-sidecar.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zam-os/zam.git"
+  },
+  "keywords": [
+    "learning",
+    "spaced-repetition",
+    "active-recall",
+    "ai-symbiosis",
+    "cli"
+  ],
+  "author": "ZAM Contributors",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/zam-os/zam/issues"
+  },
+  "homepage": "https://github.com/zam-os/zam#readme",
+  "dependencies": {
+    "@inquirer/prompts": "^8.3.2",
+    "@modelcontextprotocol/ext-apps": "^1.7.4",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "better-sqlite3": "^12.10.0",
+    "commander": "^14.0.3",
+    "ulid": "^3.0.2",
+    "zod": "^4.4.3"
+  },
+  "optionalDependencies": {
+    "libsql": "^0.5.29"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.5.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.3",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vitest": "^4.1.0"
+  }
+}

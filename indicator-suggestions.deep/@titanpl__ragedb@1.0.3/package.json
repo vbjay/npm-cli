@@ -1,0 +1,38 @@
+{
+    "name": "@titanpl/ragedb",
+    "version": "1.0.3",
+    "description": "High-Performance Database Extension for Titan Planet",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "type": "module",
+    "author": "ezetgalaxy",
+    "scripts": {
+        "configure": "node configure.js",
+        "postinstall": "node configure.js",
+        "build:native": "cd native && cargo build --release && cd .. && npm run configure",
+        "test:ext": "titan run ext"
+    },
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "titan.json",
+        "configure.js",
+        "native/target/release/ragedb_native.dll",
+        "native/target/release/ragedb_native.so",
+        "native/target/release/ragedb_native.dylib",
+        "migrations"
+    ],
+    "keywords": [
+        "titan",
+        "database",
+        "rust",
+        "orm"
+    ],
+    "engines": {
+        "@ezetgalaxy/titan": ">=26.15.0"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "@titanpl/core": "^2.4.2"
+    }
+}

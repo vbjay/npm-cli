@@ -1,0 +1,217 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1eb1ab3b2033affc",
+    "fetchedFiles": [
+      "lib/archive-preflight.js",
+      "lib/checksum.js",
+      "lib/child-env.js",
+      "lib/download-limits.js",
+      "lib/download-policy.js",
+      "lib/extract-selection.js",
+      "lib/install-target.js",
+      "lib/local-binary-dir.js",
+      "lib/platform.js",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "fa53d741a5644ef3eb2203bafd8200cd1fdf184e911e5b9ff13cf78973bfb0a4",
+        "sizeBytes": 13207,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/archive-preflight.js",
+          "lib/child-env.js",
+          "lib/checksum.js",
+          "lib/extract-selection.js",
+          "lib/local-binary-dir.js",
+          "lib/download-limits.js",
+          "lib/download-policy.js",
+          "lib/install-target.js",
+          "lib/platform.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/imthegoodboy/conU/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "lib/archive-preflight.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "3971d43dd78994e1493bcb4c87928cfd512195da5d299506b5a21ceb780596df",
+        "sizeBytes": 10840,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/child-env.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/child-env.js",
+        "reason": "required by ./lib/archive-preflight.js; required by ./scripts/install.js",
+        "sha256": "770cec7ff4fe6b03bb3e9d44c01605cf69b699ee6230c523fa6356096ad25ab6",
+        "sizeBytes": 1004,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/checksum.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "377a6c96ab5f04c7a6cebcee3fa84659ba083581b96c88d8533cdd433b3586c2",
+        "sizeBytes": 2429,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/extract-selection.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "9a020bce8bc007cc5af9786b2c75a06dd1b796ee927d8db413f8a72eb5f5df89",
+        "sizeBytes": 5546,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/local-binary-dir.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "d71bbd287760f3e5abdd60d521e574b08f1510be7bd4b7988ad11d8506bc4c05",
+        "sizeBytes": 1759,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/download-limits.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "ca13bf076919671b4e6559eb8f8d1d3a2bdea0cd79584346442f5dee819e4e84",
+        "sizeBytes": 2175,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/download-policy.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "daf70da60c46c7eae8d9645f5ee111eb20293a7f74f1367600950c0dd3304ac6",
+        "sizeBytes": 9712,
+        "signals": [
+          "uses-net-socket",
+          "uses-dns",
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/install-target.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "821c6797b24a19d5b2ac51f0d131ef7033040d2d1d5988f4534da71bf81358f3",
+        "sizeBytes": 6894,
+        "signals": [
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/platform.js",
+        "reason": "required by ./lib/install-target.js; required by ./scripts/install.js",
+        "sha256": "abe0d419460bd5875393559ff714297ec383360c5b643b594c49f72014695506",
+        "sizeBytes": 1742,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:16.580Z"
+  },
+  "hash": "sha256:d89c76a8ed9d9a27bc78dd543535108e5c9b2b8bfbbc6eb3c34463331ad1df22"
+}

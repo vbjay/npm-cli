@@ -1,0 +1,65 @@
+{
+  "name": "expo-gifski",
+  "version": "1.0.2",
+  "description": "Expo module for gifski - high-quality GIF encoder written in Rust",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "eslint .",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "prepack": "./scripts/verify-prebuilt.sh",
+    "postpack": "rm -f README.md LICENSE THIRD-PARTY-NOTICES",
+    "build:rust:ios": "cd ios && ./build.sh",
+    "build:rust:android": "cd android && ./build.sh",
+    "expo-module": "expo-module"
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "gif",
+    "gifski",
+    "rust"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adam-sajko/expo-gifski"
+  },
+  "bugs": {
+    "url": "https://github.com/adam-sajko/expo-gifski/issues"
+  },
+  "author": "Adam Sajko",
+  "license": "MIT",
+  "homepage": "https://github.com/adam-sajko/expo-gifski#readme",
+  "devDependencies": {
+    "eslint": "^9.25.0",
+    "eslint-config-expo": "~55.0.0",
+    "expo-module-scripts": "^55.0.2",
+    "typescript": "~5.9.2"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "files": [
+    "build",
+    "src",
+    "THIRD-PARTY-NOTICES",
+    "ios/*.swift",
+    "ios/*.h",
+    "ios/*.podspec",
+    "ios/Podfile",
+    "ios/libs/",
+    "ios/generated/",
+    "android/build.gradle",
+    "android/consumer-proguard-rules.pro",
+    "android/src/",
+    "scripts/",
+    "expo-module.config.json",
+    "app.plugin.js"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "name": "fastenhancer-web",
+  "version": "0.1.1",
+  "description": "Real-time voice noise removal for the web using FastEnhancer (ICASSP 2026) via C/WASM SIMD",
+  "type": "module",
+  "main": "./dist/api/index.js",
+  "module": "./dist/api/index.js",
+  "types": "./dist/api/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/api/index.d.ts",
+      "import": "./dist/api/index.js"
+    },
+    "./loader": {
+      "types": "./dist/api/loader.d.ts",
+      "import": "./dist/api/loader.js"
+    },
+    "./errors": {
+      "types": "./dist/api/errors.d.ts",
+      "import": "./dist/api/errors.js"
+    },
+    "./stream": {
+      "types": "./dist/api/stream-denoiser.d.ts",
+      "import": "./dist/api/stream-denoiser.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    },
+    "./worklet/processor.js": "./dist/worklet/processor.js"
+  },
+  "files": [
+    "dist/api",
+    "dist/embedded",
+    "dist/engine",
+    "dist/react",
+    "dist/wasm",
+    "dist/worklet",
+    "weights",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "embed": "bun run scripts/embed-assets.ts",
+    "prebuild:check": "node -e \"const fs=require('fs');const missing=[];['weights/fe_tiny_48k.bin','weights/fe_base_48k.bin','weights/fe_small_48k.bin'].forEach(f=>{if(!fs.existsSync(f))missing.push(f)});if(missing.length){console.error('Missing required files: '+missing.join(', ')+'\\nRun build:wasm:all first.');process.exit(1)}\"",
+    "build": "bun run prebuild:check && bun run embed && tsc && node -e \"require('fs').cpSync('src/worklet/processor.js','dist/worklet/processor.js')\"",
+    "build:ts": "bun run embed && tsc && node -e \"require('fs').cpSync('src/worklet/processor.js','dist/worklet/processor.js')\"",
+    "build:wasm": "powershell -ExecutionPolicy Bypass -File ./scripts/build-wasm.ps1",
+    "build:wasm:scalar": "powershell -ExecutionPolicy Bypass -File ./scripts/build-wasm.ps1 -Variant scalar",
+    "build:wasm:simd": "powershell -ExecutionPolicy Bypass -File ./scripts/build-wasm.ps1 -Variant simd",
+    "build:wasm:all": "powershell -ExecutionPolicy Bypass -Command \"foreach ($m in 'tiny','base','small') { foreach ($v in 'simd','scalar') { & ./scripts/build-wasm.ps1 -Model $m -Variant $v -WorkletBuild } }\"",
+    "build:wasm:worklet": "powershell -ExecutionPolicy Bypass -File ./scripts/build-wasm.ps1 -WorkletBuild",
+    "build:all": "powershell -ExecutionPolicy Bypass -Command \"foreach ($m in 'tiny','base','small') { foreach ($v in 'simd','scalar') { & ./scripts/build-wasm.ps1 -Model $m -Variant $v -WorkletBuild } }\" && bun run embed && tsc && node -e \"require('fs').cpSync('src/worklet/processor.js','dist/worklet/processor.js')\"",
+    "test": "bun run embed && vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "powershell -ExecutionPolicy Bypass -Command \"foreach ($m in 'tiny','base','small') { foreach ($v in 'simd','scalar') { & ./scripts/build-wasm.ps1 -Model $m -Variant $v -WorkletBuild } }\" && bun run embed && tsc && node -e \"require('fs').cpSync('src/worklet/processor.js','dist/worklet/processor.js')\" && bunx playwright test",
+    "test:e2e:only": "bunx playwright test",
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true})\"",
+    "prepack": "bun run build"
+  },
+  "keywords": [
+    "noise-removal",
+    "denoiser",
+    "audio",
+    "wasm",
+    "simd",
+    "audioworklet",
+    "real-time",
+    "48khz",
+    "fastenhancer"
+  ],
+  "author": "ryyr_ry <contact@ryyr.net>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryyr-ry/fastenhancer-web.git"
+  },
+  "homepage": "https://github.com/ryyr-ry/fastenhancer-web#readme",
+  "bugs": {
+    "url": "https://github.com/ryyr-ry/fastenhancer-web/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/coverage-v8": "^4.1.2",
+    "jsdom": "^29.0.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3",
+    "vitest": "^4.1.2"
+  }
+}

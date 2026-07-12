@@ -1,0 +1,117 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e06a0afde8596062",
+    "fetchedFiles": [
+      "package.json",
+      "wasm-version/scripts/install-gitleaks.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "wasm-version/scripts/install-gitleaks.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9f47fca783a5ccc4978e0e8e46ab14da6e01fcd998b90099a57971b2de79c0ce",
+        "sizeBytes": 5474,
+        "signals": [
+          "uses-child-process",
+          "makes-executable",
+          "binary-download",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://chocolatey.org/install",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/gitleaks/gitleaks/releases",
+            "classification": "reference"
+          },
+          {
+            "url": "https://scoop.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/gitleaks/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz",
+            "classification": "download"
+          },
+          {
+            "url": "https://github.com/gitleaks/gitleaks#installation",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:09.076Z"
+  },
+  "hash": "sha256:ec28f1cd99ceb104df890cd080617fee331a7bb0fae6bd6076107525e141080d"
+}

@@ -1,0 +1,55 @@
+{
+  "name": "stackdriver-errors-js",
+  "version": "0.12.0",
+  "description": "Experimental client-side JavaScript library to report errors to Stackdriver Error Reporting",
+  "main": "stackdriver-errors.js",
+  "types": "stackdriver-errors.d.ts",
+  "scripts": {
+    "clean": "rimraf dist/",
+    "dist": "gulp lib-concat",
+    "lint": "eslint --ignore-path .gitignore .",
+    "prepare": "npm run clean && npm run dist",
+    "pretest": "npm run lint",
+    "start": "gulp lib-concat demo-js demo-html && http-server ./dist -o",
+    "test": "mocha -r test/setup.js test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleCloudPlatform/stackdriver-errors-js"
+  },
+  "files": [
+    "dist/",
+    "stackdriver-errors.d.ts"
+  ],
+  "keywords": [
+    "stackdriver",
+    "error",
+    "crash",
+    "reporting",
+    "javascript",
+    "web"
+  ],
+  "author": "steren@google.com",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "browser-pack-flat": "^3.4.2",
+    "browserify": "^16.5.2",
+    "chai": "^4.3.4",
+    "eslint": "^5.16.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "gulp": "^4.0.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.1.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "http-server": "^0.12.3",
+    "mocha": "^9.0.2",
+    "nise": "^1.5.3",
+    "rimraf": "^2.7.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "stacktrace-js": "^2.0.2"
+  }
+}

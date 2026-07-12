@@ -1,0 +1,23 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.crispsdk'
+version = '0.2.0'
+
+android {
+  namespace "expo.modules.crispsdk"
+  defaultConfig {
+    versionCode 1
+    versionName "0.2.0"
+  }
+}
+
+dependencies {
+  implementation("im.crisp:crisp-sdk:2.0.22") {
+    exclude group: "com.atlassian.commonmark", module: "commonmark"
+  }
+  implementation "org.commonmark:commonmark:0.21.0"
+}

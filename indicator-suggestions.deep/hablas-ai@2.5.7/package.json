@@ -1,0 +1,80 @@
+{
+  "name": "hablas-ai",
+  "version": "2.5.7",
+  "description": "Single-agent terminal AI engineering runtime with full tools, direct execution, and clean UX.",
+  "main": "dist/index.js",
+  "bin": {
+    "hablas": "bin/hablas-shim.js"
+  },
+  "files": [
+    "bin",
+    "dist/index.js",
+    "dist/binaries/checksums.json",
+    "postinstall.js",
+    "README.md",
+    "LICENSE",
+    "CREDITS.md",
+    "CHANGELOG.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --minify --outfile=dist/index.js",
+    "build:binaries": "node scripts/build-binaries.js",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node postinstall.js",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "tsc --noEmit",
+    "test": "npm run test:engine && npm run test:analyzer && npm run test:session && npm run test:image-pipeline",
+    "test:engine": "ts-node --transpile-only src/agents/__tests__/agentic-engine.test.ts",
+    "test:analyzer": "ts-node --transpile-only src/core/__tests__/analyzer.test.ts",
+    "test:session": "ts-node --transpile-only src/context/__tests__/session.test.ts",
+    "test:image-pipeline": "ts-node --transpile-only src/tools/__tests__/image-pipeline.test.ts"
+  },
+  "keywords": [
+    "cli",
+    "agent",
+    "ollama",
+    "ai",
+    "local",
+    "streaming",
+    "typescript",
+    "hablas",
+    "coding-assistant",
+    "openai",
+    "terminal",
+    "developer-tools",
+    "code-generation",
+    "llm"
+  ],
+  "author": {
+    "name": "Abdulmoin Hablas",
+    "url": "https://portfolio-monopoly63s-projects.vercel.app/"
+  },
+  "homepage": "https://portfolio-monopoly63s-projects.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monopoly63/mobile-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Monopoly63/mobile-bot/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "diff": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^5.2.3",
+    "@types/node": "^20.19.41",
+    "@types/pino": "^7.0.4",
+    "esbuild": "^0.25.0",
+    "pino": "^10.3.1",
+    "postject": "^1.0.0-alpha.6",
+    "ts-node": "^10.9.2",
+    "typescript": "5.5"
+  }
+}

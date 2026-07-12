@@ -1,0 +1,105 @@
+{
+  "name": "grainjs",
+  "version": "1.1.0",
+  "description": "JS library from Grist Labs",
+  "main": "dist/cjs/index",
+  "module": "dist/esm/index",
+  "types": "dist/cjs/index.d.ts",
+  "scripts": {
+    "build": "bash build.sh",
+    "watch": "tsc -w",
+    "test": "nyc mocha -R list 'test/lib/*.{js,ts}' && npm run test-types && npm run test-browser-headless",
+    "test-memory": "mocha -R list --expose-gc --gc-global 'test/lib/*.{js,ts}'",
+    "test-timing": "TIMING_TESTS=1 mocha -R list 'test/lib/*.{js,ts}'",
+    "build-demo": "browserify demo/celsius_grain/index.js -d | uglifyjs --source-map 'content=inline,url=build-index.js.map' -o demo/celsius_grain/build-index.js",
+    "test-manual": "webpack-dev-server --config test/fixtures/webpack.config.js",
+    "test-browser-headless": "MOCHA_WEBDRIVER_ARGS='--no-sandbox --disable-gpu' MOCHA_WEBDRIVER_HEADLESS=1 mocha 'test/browser/*.{js,ts}'",
+    "test-browser": "mocha 'test/browser/*.{js,ts}'",
+    "test-browser-debug": "mocha --bail --no-exit 'test/browser/*.{js,ts}'",
+    "test-types": "tsd --files 'test/types/**/*.ts'",
+    "prepack": "npm run build && npm test",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:build-api": "tsc -p tsconfig/tsconfig.es2015.cjs.json && api-extractor run --local --verbose && node scripts/generate-api-md.js",
+    "docs:preview": "vitepress preview docs"
+  },
+  "keywords": [
+    "grist",
+    "gristlabs",
+    "javascript",
+    "typescript",
+    "dom",
+    "observable",
+    "disposable"
+  ],
+  "files": [
+    "dist",
+    "lib",
+    "index.ts"
+  ],
+  "author": "Grist Labs",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gristlabs/grainjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gristlabs/grainjs/issues"
+  },
+  "homepage": "https://github.com/gristlabs/grainjs#readme",
+  "nyc": {
+    "reporter": [
+      "html",
+      "text",
+      "lcov"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ]
+  },
+  "publishRelease": {
+    "owner": "gristlabs",
+    "repo": "grainjs"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.55.1",
+    "@types/chai": "^4.2.18",
+    "@types/chai-as-promised": "^7.1.4",
+    "@types/jsdom": "^16.2.11",
+    "@types/lodash": "^4.14.170",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^22",
+    "@types/selenium-webdriver": "^4.0.13",
+    "@types/sinon": "^21.0.0",
+    "chai": "^6.2.1",
+    "chai-as-promised": "^8.0.2",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "fastpriorityqueue": "^0.7.5",
+    "jsdom": "27.3.0",
+    "knockout": "^3.5.1",
+    "lodash": "^4.17.21",
+    "markdown-it-multimd-table": "^4.2.3",
+    "mocha": "^11.7.5",
+    "mocha-webdriver": "^0.3.4",
+    "nyc": "^17.1.0",
+    "selenium-webdriver": "^4.38.0",
+    "sinon": "^21.0.0",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.9.2",
+    "tsd": "^0.27.0",
+    "typescript": "^4",
+    "typescript-eslint": "^8.50.0",
+    "typescript-tslint-plugin": "^1.0.1",
+    "uglify-es": "^3.2.0",
+    "vitepress": "^1.6.4",
+    "webpack": "^5.104.0",
+    "webpack-dev-server": "^5.2.2"
+  },
+  "overrides": {
+    "esbuild": "^0.27.2"
+  }
+}

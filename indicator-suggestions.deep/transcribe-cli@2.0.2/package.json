@@ -1,0 +1,55 @@
+{
+  "name": "transcribe-cli",
+  "version": "2.0.2",
+  "description": "Local audio/video transcription with speaker diarization and live audio support. No API keys. Powered by faster-whisper.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "transcribe-cli": "dist/bin/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/postinstall.js",
+    "test": "node --test dist/test/*.test.js",
+    "clean": "rm -rf dist"
+  },
+  "files": [
+    "dist/",
+    "scripts/",
+    "src/",
+    "pyproject.toml",
+    "install.sh"
+  ],
+  "keywords": [
+    "transcription",
+    "whisper",
+    "speech-to-text",
+    "audio",
+    "video",
+    "diarization",
+    "live-audio",
+    "streaming",
+    "local",
+    "offline",
+    "faster-whisper",
+    "cli"
+  ],
+  "author": "robit-man",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robit-man/transcribe-cli.git"
+  },
+  "homepage": "https://github.com/robit-man/transcribe-cli#readme",
+  "bugs": {
+    "url": "https://github.com/robit-man/transcribe-cli/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

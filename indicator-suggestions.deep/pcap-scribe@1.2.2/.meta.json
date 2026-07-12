@@ -1,0 +1,91 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "48073ee55946767e",
+    "fetchedFiles": [
+      "Gruntfile.js",
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "177f142cfdfb1bdba000d382f66f977a8f791a8e46234ed0a7964831d6f76ee1",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Target `pcap_binding`  -  C/C++ sources",
+            "items": [
+              "pcap_dump_worker.cpp",
+              "pcap_binding.cc"
+            ]
+          },
+          {
+            "label": "Target `pcap_binding`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "Gruntfile.js",
+        "label": "Grunt build script",
+        "sha256": "35b45932b46959b1c46287bf13765e91b2da08ffb068db762f6e8ef7acea1cf0",
+        "parseError": null,
+        "signals": [
+          "make-build"
+        ],
+        "groups": [
+          {
+            "label": "Registered Grunt tasks",
+            "items": [
+              "travis",
+              "cover",
+              "default"
+            ]
+          },
+          {
+            "label": "Gruntfile variants",
+            "items": [
+              "Gruntfile.js"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:24.701Z"
+  },
+  "hash": "sha256:a0c34a4c6445b24b957542f336cab2aa2f54988ccc96d4ed34d2b2409b9c5d10"
+}

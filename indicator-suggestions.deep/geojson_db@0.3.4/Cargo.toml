@@ -1,0 +1,30 @@
+[package]
+name = "geojson_db"
+version = "0.3.3"
+authors = ["Michael Kreil <github@michael-kreil.de>"]
+homepage = "https://github.com/SWRdata/geojson_db"
+repository = "https://github.com/SWRdata/geojson_db.git"
+license = "MIT"
+edition = "2018"
+description = "High-performance spatial queries on GeoJSON files"
+readme = "README.md"
+exclude = ["index.node"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+bincode = { version = "1.3.3", default-features = false }
+brotli-decompressor = { version = "2.3.4", default-features = false, features = ["default"] }
+geojson = { version = "0.24.1", default-features = false }
+libflate = { version = "1.4.0", default-features = false }
+neon = { version = "0.10.1", default-features = false, features = ["napi-6"] }
+serde = { version = "1.0.164", default-features = false, features = ["std"] }
+
+[workspace]
+
+[dev-dependencies]
+assert_fs = "1.0.13"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]

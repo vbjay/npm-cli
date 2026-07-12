@@ -1,0 +1,118 @@
+{
+  "name": "node-ping-rs",
+  "version": "0.0.1",
+  "description": "A high-performance ping utility for Node.js built with Rust and napi-rs",
+  "main": "index.js",
+  "repository": "git@github.com:luckyyyyy/node-ping-rs.git",
+  "license": "MIT",
+  "keywords": [
+    "ping",
+    "icmp",
+    "network",
+    "utilities",
+    "rust",
+    "napi-rs",
+    "NAPI",
+    "N-API",
+    "node-addon",
+    "performance",
+    "cross-platform"
+  ],
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "scripts/"
+  ],
+  "napi": {
+    "binaryName": "node-ping-rs",
+    "targets": [
+      "x86_64-pc-windows-msvc",
+      "x86_64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-apple-darwin",
+      "aarch64-pc-windows-msvc"
+    ]
+  },
+  "engines": {
+    "node": ">= 12.22.0 < 13 || >= 14.17.0 < 15 || >= 15.12.0 < 16 || >= 16.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "bench": "node --import @oxc-node/core/register benchmark/bench.ts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "format": "run-p format:prettier format:rs format:toml",
+    "format:prettier": "prettier . -w",
+    "format:toml": "taplo format",
+    "format:rs": "cargo fmt",
+    "lint": "oxlint .",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "ava",
+    "version": "napi version",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@emnapi/core": "^1.4.5",
+    "@emnapi/runtime": "^1.4.5",
+    "@napi-rs/cli": "^3.0.3",
+    "@oxc-node/core": "^0.0.30",
+    "@taplo/cli": "^0.7.0",
+    "@tybys/wasm-util": "^0.10.0",
+    "@types/node": "^24.1.0",
+    "ava": "^6.4.1",
+    "chalk": "^5.4.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "npm-run-all2": "^8.0.4",
+    "oxlint": "^1.8.0",
+    "prettier": "^3.6.2",
+    "tinybench": "^4.0.1",
+    "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "*.@(js|ts|tsx)": [
+      "oxlint --fix"
+    ],
+    "*.@(js|ts|tsx|yml|yaml|md|json)": [
+      "prettier --write"
+    ],
+    "*.toml": [
+      "taplo format"
+    ]
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "timeout": "2m",
+    "workerThreads": false,
+    "environmentVariables": {
+      "OXC_TSCONFIG_PATH": "./__test__/tsconfig.json"
+    },
+    "nodeArguments": [
+      "--import",
+      "@oxc-node/core/register"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "arrowParens": "always"
+  },
+  "packageManager": "yarn@4.9.2",
+  "optionalDependencies": {
+    "node-ping-rs-win32-x64-msvc": "0.0.1",
+    "node-ping-rs-darwin-x64": "0.0.1",
+    "node-ping-rs-linux-x64-gnu": "0.0.1",
+    "node-ping-rs-linux-x64-musl": "0.0.1",
+    "node-ping-rs-darwin-arm64": "0.0.1",
+    "node-ping-rs-win32-arm64-msvc": "0.0.1"
+  }
+}

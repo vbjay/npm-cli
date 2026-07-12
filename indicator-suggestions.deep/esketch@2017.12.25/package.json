@@ -1,0 +1,41 @@
+{
+  "name": "esketch",
+  "version": "2017.12.25",
+  "author": "Claude SIMON (http://q37.info/contact/)",
+  "description": "Node.js addon template",
+  "main": "eSketch.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "binary": {
+    "module_name": "esketchnjs",
+    "module_path": "./",
+    "remote_path": "./epeios-q37/esketch-node/releases/download/v20171225/",
+    "package_name": "{module_name}-v20171225-{platform}-{arch}.tar.gz",
+    "host": "https://github.com"
+  },
+  "dependencies": {
+   "njsq": "2017.12.25"
+  },
+  "devDependencies": {
+
+  },
+  "scripts": {
+    "preinstall": "npm install node-pre-gyp",
+    "install": "node-pre-gyp install --fallback-to-build",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epeios-q37/esketch-node.git"
+  },
+  "keywords": [
+    "addon","native","C++","njsq","template","q37","epeios"
+  ],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/epeios-q37/esketch-node/issues"
+  },
+  "homepage": "https://github.com/epeios-q37/esketch-node#readme",
+  "runkitExampleFilename": "runkit.js"
+}

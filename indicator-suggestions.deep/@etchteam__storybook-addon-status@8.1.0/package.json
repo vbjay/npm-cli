@@ -1,0 +1,79 @@
+{
+  "name": "@etchteam/storybook-addon-status",
+  "version": "8.1.0",
+  "description": "Add component status to the storybook UI",
+  "type": "module",
+  "main": "dist/manager.js",
+  "exports": {
+    "./manager": "./dist/manager.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "manager.js"
+  ],
+  "scripts": {
+    "prebuild": "node -e \"fs.rmSync('./dist', { recursive: true, force: true })\"",
+    "prepare": "tsup",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etchteam/storybook-addon-status.git"
+  },
+  "keywords": [
+    "storybook",
+    "addon",
+    "status",
+    "react",
+    "storybook-addon",
+    "organize",
+    "popular"
+  ],
+  "author": "Etch <hey@etch.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/etchteam/storybook-addon-status/issues"
+  },
+  "homepage": "https://github.com/etchteam/storybook-addon-status#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@etchteam/eslint-config": "^1.10.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^13.1.3",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@storybook/addon-docs": "10.0.0-rc.0",
+    "@storybook/react-vite": "10.0.0-rc.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "semantic-release": "^25.0.2",
+    "storybook": "10.2.10",
+    "tsup": "^8.3.5",
+    "vite": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "storybook": {
+    "icon": "https://pbs.twimg.com/profile_images/998947662287130625/7Ff1hOdQ_400x400.jpg",
+    "displayName": "Status"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "storybook": "^10.0.0"
+  }
+}

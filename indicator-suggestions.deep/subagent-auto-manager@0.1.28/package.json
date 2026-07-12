@@ -1,0 +1,51 @@
+{
+  "name": "subagent-auto-manager",
+  "version": "0.1.28",
+  "description": "Codex subagent ledger CLI and hooks backed by SQLite.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NyaMisty/subagent-auto-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NyaMisty/subagent-auto-manager/issues"
+  },
+  "homepage": "https://github.com/NyaMisty/subagent-auto-manager#readme",
+  "bin": {
+    "subagent-auto-manager": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run clean:dist && tsc -p tsconfig.json",
+    "clean": "node --run clean:dist && node --run clean:coverage",
+    "clean:dist": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "clean:coverage": "node -e \"require('node:fs').rmSync('coverage',{recursive:true,force:true})\"",
+    "prepack": "npm run build",
+    "test": "tsc -p tsconfig.test.json && node --test dist/**/*.test.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "codex",
+    "subagent",
+    "hooks",
+    "sqlite",
+    "cli"
+  ],
+  "author": "NyaMisty",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

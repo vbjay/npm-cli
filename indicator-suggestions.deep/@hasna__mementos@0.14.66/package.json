@@ -1,0 +1,101 @@
+{
+  "name": "@hasna/mementos",
+  "version": "0.14.66",
+  "description": "Universal memory system for AI agents - CLI + MCP server + library API",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "mementos": "dist/cli/index.js",
+    "mementos-mcp": "dist/mcp/index.js",
+    "mementos-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "import": "./dist/storage.js"
+    }
+  },
+  "files": [
+    "dist",
+    "dashboard/dist",
+    "Dockerfile.package",
+    "docker-entrypoint.sh",
+    "bun.lock",
+    "hasna.contract.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bun run clean && bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external @modelcontextprotocol/sdk --external @hasna/contracts --external @hasna/contracts/schemas --external @hasna/contracts/auth --external pg && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external @modelcontextprotocol/sdk --external @hasna/contracts --external @hasna/contracts/schemas --external @hasna/contracts/auth --external pg && bun build src/server/index.ts --outdir dist/server --target bun --external @hasna/contracts --external @hasna/contracts/schemas --external @hasna/contracts/auth --external pg && bun build src/index.ts src/storage.ts src/pg-sync-worker.ts --outdir dist --target bun --external @hasna/contracts --external @hasna/contracts/schemas --external @hasna/contracts/auth --external pg && bun build src/sdk/index.ts --outdir dist/sdk --target bun && tsc --emitDeclarationOnly --outDir dist",
+    "prepare": "bun run build",
+    "prepublishOnly": "bun run typecheck && bun run test",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test --isolate --timeout=10000",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "postinstall": "mkdir -p $HOME/.hasna/mementos $HOME/.hasna/mementos/profiles $HOME/.hasna/mementos/agents $HOME/.hasna/mementos/training 2>/dev/null || true"
+  },
+  "keywords": [
+    "memory",
+    "mementos",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "claude",
+    "codex",
+    "gemini",
+    "cli",
+    "sqlite"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/mementos.git"
+  },
+  "homepage": "https://github.com/hasna/mementos",
+  "bugs": {
+    "url": "https://github.com/hasna/mementos/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.82",
+    "@ai-sdk/openai": "^3.0.69",
+    "@ai-sdk/openai-compatible": "^2.0.48",
+    "@hasna/contracts": "0.4.2",
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "ai": "^6.0.199",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "pdf-parse": "^1.1.1",
+    "pg": "^8.13.3",
+    "react": "^18.3.1",
+    "tesseract.js": "^5.1.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.11.11",
+    "@types/react": "^18.3.18",
+    "typescript": "^5.7.3"
+  }
+}

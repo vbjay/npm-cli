@@ -1,0 +1,71 @@
+{
+  "name": "@makeomatic/ref-napi",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Turn Buffer instances into \"pointers\"",
+  "engines": {
+    "node": ">= 10.0"
+  },
+  "keywords": [
+    "native",
+    "buffer",
+    "extensions",
+    "c++",
+    "pointer",
+    "reference",
+    "dereference",
+    "type",
+    "int",
+    "long",
+    "float",
+    "double",
+    "byte",
+    "64",
+    "napi"
+  ],
+  "version": "3.0.6",
+  "license": "MIT",
+  "author": "Anna Henningsen <anna@addaleax.net>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AVVS/ref-napi.git"
+  },
+  "main": "./lib/ref.js",
+  "scripts": {
+    "docs": "node docs/compile",
+    "test": "nyc mocha --v8-expose-gc",
+    "install": "node-gyp-build",
+    "prebuild": "prebuildify --napi --tag-armv",
+    "semantic-release": "semantic-release"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "get-symbol-from-current-process-h": "^1.0.2",
+    "node-addon-api": "^7.0.0",
+    "node-gyp-build": "^4.2.1"
+  },
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/npm": "^11.0.2",
+    "dox": "1.0.0",
+    "highlight.js": "^11.9.0",
+    "jade": "^1.11.0",
+    "marked": "^11.1.0",
+    "mocha": "^10.2.0",
+    "node-gyp": "^10.0.1",
+    "nyc": "^15.0.0",
+    "prebuildify": "^5.0.1",
+    "prebuildify-ci": "^1.0.5",
+    "semantic-release": "^22.0.12",
+    "weak-napi": "^2.0.0"
+  },
+  "files": [
+    "prebuilds/",
+    "src/",
+    "lib/",
+    "include/",
+    "binding.gyp"
+  ]
+}

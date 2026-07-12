@@ -1,0 +1,204 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c514d42ae802b8d4",
+    "fetchedFiles": [
+      "package.json",
+      "src/common.js",
+      "src/emsdk-checkout.js",
+      "src/emsdk-pull.js",
+      "src/emsdk-run.js",
+      "src/emsdk.js",
+      "src/index.js",
+      "src/path.js",
+      "src/postinstall.js",
+      "src/version.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "cross-spawn-promise",
+        "versionSpec": "^0.10.2"
+      },
+      {
+        "name": "@zkochan/npm-conf",
+        "versionSpec": "^2.0.1"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "@zkochan/npm-conf@2.0.2",
+      "cross-spawn-promise@0.10.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "a6a78eb7ac78038a27a3c7cc3d4f40a6c93284a9dc8146e4777311c2c6ff2a5e",
+        "sizeBytes": 1881,
+        "signals": [
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/version.js",
+          "src/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/version.js",
+        "reason": "required by ./src/postinstall.js; required by ./src/emsdk.js; required by ./src/index.js",
+        "sha256": "06fd068baeed7c4cf513144b587fd54486f97d881c9fe610d59e24e1ab4283a0",
+        "sizeBytes": 3970,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/common.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/common.js",
+        "reason": "required by ./src/version.js; required by ./src/emsdk.js; required by ./src/emsdk-checkout.js; required by ./src/emsdk-run.js; required by ./src/emsdk-pull.js; required by ./src/index.js",
+        "sha256": "7f52e580987400a769c7fec480b43ce0eb37ef488599134ebcab76ec6fafa9ad",
+        "sizeBytes": 3942,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/path.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/path.js",
+        "reason": "required by ./src/common.js; required by ./src/index.js",
+        "sha256": "7595e0aaa77c6f0d2cf181c44d535f876e1a68c54eda4997cd67a74ec942e322",
+        "sizeBytes": 3258,
+        "signals": [
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/index.js",
+        "reason": "required by ./src/postinstall.js",
+        "sha256": "a9f96cae8bb2bda2d7aa4d484ed20742bf149bbbf3eccf79616518bcdfc8d2b1",
+        "sizeBytes": 4976,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/emsdk.js",
+          "src/emsdk-checkout.js",
+          "src/emsdk-run.js",
+          "src/emsdk-pull.js",
+          "src/common.js",
+          "src/path.js",
+          "src/version.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/emsdk.js",
+        "reason": "required by ./src/index.js",
+        "sha256": "17bcd58b22fca8b2c5165b3d7c8178416d59968c97db786030e6171c1bc2ec9e",
+        "sizeBytes": 2108,
+        "signals": [
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/common.js",
+          "src/version.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/emsdk-checkout.js",
+        "reason": "required by ./src/index.js",
+        "sha256": "457d63b36360342f6b245af90653b6dd4447e08169391168871ac83a9e62aeae",
+        "sizeBytes": 1948,
+        "signals": [
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/common.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/emscripten-core/emsdk.git",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "src/emsdk-run.js",
+        "reason": "required by ./src/index.js",
+        "sha256": "3d71594ca677efcc69694821eee719f98bd611429a78217f1898e82d613a4f12",
+        "sizeBytes": 4265,
+        "signals": [
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/common.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/emsdk-pull.js",
+        "reason": "required by ./src/index.js",
+        "sha256": "48a13e833ceae2ccb41ac797d87e383f4ce6b950b8b0242d3387599135df79e5",
+        "sizeBytes": 1890,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/common.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:41.781Z"
+  },
+  "hash": "sha256:655e35a73234ca8a71e5f37bab97e9becbe565d72b05c7fadefaae56d5325c1d"
+}

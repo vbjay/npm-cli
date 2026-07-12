@@ -1,0 +1,86 @@
+{
+  "name": "first-tree-staging",
+  "version": "0.5.14-staging.819.1",
+  "type": "module",
+  "description": "First Tree — unified CLI for Context Tree onboarding, agent management, and team messaging. (Source-tree dev build; CI rewrites `name` and `bin` for prod / staging publishes — see docs/local-dev-isolation.md.)",
+  "keywords": [
+    "agents",
+    "cli",
+    "context-tree",
+    "first-tree",
+    "github",
+    "collaboration"
+  ],
+  "homepage": "https://github.com/agent-team-foundation/first-tree#readme",
+  "bugs": {
+    "url": "https://github.com/agent-team-foundation/first-tree/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "bin": {
+    "first-tree-staging": "./dist/cli/index.mjs",
+    "fts": "./dist/cli/index.mjs"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "scripts/prune-codex-runtime-binary.mjs",
+    "scripts/prune-claude-runtime-binary.mjs",
+    "scripts/prune-claude-sdk-deps.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "tsx src/cli/index.ts",
+    "build": "tsdown src/cli/index.ts src/index.ts --format esm --no-dts --external @anthropic-ai/claude-agent-sdk --external @openai/codex-sdk && node ../../scripts/copy-client-runtime-templates.mjs apps/cli && node ../../scripts/copy-cli-tree-templates.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/run-vitest-batches.mjs",
+    "coverage": "pnpm run build && vitest run --coverage --passWithNoTests",
+    "prepack": "rm -rf skills && cp -R ../../skills .",
+    "postpack": "rm -rf skills",
+    "postinstall": "node scripts/prune-codex-runtime-binary.mjs && node scripts/prune-claude-runtime-binary.mjs && node scripts/prune-claude-sdk-deps.mjs"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agent-team-foundation/first-tree.git",
+    "directory": "apps/cli"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.187",
+    "@inquirer/prompts": "^8.3.0",
+    "@openai/codex-sdk": "^0.144.1",
+    "commander": "^13.1.0",
+    "ejs": "^6.0.1",
+    "gray-matter": "^4.0.3",
+    "jose": "^6.0.0",
+    "semver": "^7.6.3",
+    "ws": "^8.20.0",
+    "yaml": "^2.8.3",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@first-tree/client": "workspace:*",
+    "@first-tree/server": "workspace:*",
+    "@first-tree/shared": "workspace:*",
+    "@first-tree/web": "workspace:*",
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^22.16.0",
+    "@types/semver": "^7.5.8",
+    "@vitest/coverage-v8": "3.2.4",
+    "postgres": "^3.4.0",
+    "tsdown": "^0.21.4",
+    "tsx": "^4.21.0",
+    "vitest": "^3.2.0"
+  }
+}

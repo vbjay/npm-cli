@@ -1,0 +1,77 @@
+{
+  "name": "@oxmc/node-smbios",
+  "version": "1.0.4",
+  "description": "A Node.js module designed to retrieve detailed system and hardware information from SMBIOS.",
+  "main": "index.js",
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "build": "node-pre-gyp rebuild",
+    "clean": "node-gyp clean",
+    "test": "node example.js",
+    "package": "node-pre-gyp package",
+    "publish-binary": "node-pre-gyp-github publish"
+  },
+  "binary": {
+    "module_name": "smbios",
+    "module_path": "./lib/{platform}-{arch}-napi-v{napi_build_version}",
+    "package_name": "{module_name}-v{version}-napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/oxmc/node-smbios/releases/download/",
+    "remote_path": "v{version}",
+    "napi_versions": [3, 4, 5, 6, 7, 8, 9]
+  },
+  "files": [
+    "index.js",
+    "lib/**/*",
+    "src/**/*",
+    "binding.gyp"
+  ],
+  "keywords": [
+    "smbios",
+    "dmi",
+    "system-information",
+    "hardware",
+    "bios",
+    "motherboard",
+    "baseboard",
+    "processor",
+    "cpu",
+    "memory",
+    "ram",
+    "chassis",
+    "native",
+    "addon",
+    "cross-platform",
+    "windows",
+    "linux",
+    "macos",
+    "system-info",
+    "hardware-info"
+  ],
+  "author": "Seth Olivarez <me@oxmc.me> (https://oxmc.me)",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oxmc/node-smbios.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oxmc/node-smbios/issues"
+  },
+  "homepage": "https://github.com/oxmc/node-smbios#readme",
+  "gypfile": true,
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "^2.0.3",
+    "node-addon-api": "^8.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0",
+    "node-pre-gyp-github": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
+}

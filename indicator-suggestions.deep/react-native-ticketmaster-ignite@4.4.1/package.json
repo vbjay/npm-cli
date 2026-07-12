@@ -1,0 +1,201 @@
+{
+  "name": "react-native-ticketmaster-ignite",
+  "version": "4.4.1",
+  "description": "React Native wrapper for the Ticketmaster Ignite SDK",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "source": "./src/index.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace react-native-ticketmaster-ignite-example",
+    "expo": "yarn workspace react-native-ticketmaster-ignite-expo",
+    "test": "jest __tests__/* && yarn workspace react-native-ticketmaster-ignite-example test && yarn workspace react-native-ticketmaster-ignite-expo test",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ticketmaster/react-native-ticketmaster-ignite.git"
+  },
+  "author": "Ticketmaster <app@ticketmaster.com> (https://github.com/ticketmaster)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ticketmaster/react-native-ticketmaster-ignite/issues"
+  },
+  "homepage": "https://github.com/ticketmaster/react-native-ticketmaster-ignite#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.6.0",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native/eslint-config": "^0.73.1",
+    "@release-it/conventional-changelog": "10.0.4",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^13.2.1",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^19.1.0",
+    "commitlint": "^19.6.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
+    "prettier": "^3.0.3",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.40.13",
+    "react-test-renderer": "19.1.0",
+    "release-it": "^19.0.4",
+    "turbo": "^1.10.7",
+    "typescript": "^5.2.2"
+  },
+  "resolutions": {
+    "@types/react": "^19.1.0",
+    "conventional-changelog-angular": "^8.0.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example",
+    "expo"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/expo/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?@?react-native|@react-native|@react-navigation)"
+    ],
+    "setupFilesAfterEnv": [
+      "./jest-setup.ts"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "TicketmasterIgniteSpecs",
+    "type": "all",
+    "jsSrcsDir": "src/specs",
+    "android": {
+      "javaPackageName": "com.ticketmasterignitespecs"
+    },
+    "ios": {
+      "componentProvider": {
+        "TicketsSdkEmbeddedView": "RCTTicketsSdkEmbeddedView",
+        "SecureEntryView": "RCTSecureEntryView"
+      }
+    }
+  }
+}

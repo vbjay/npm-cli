@@ -1,0 +1,54 @@
+{
+	"author": "Luis Blanco <luisblanco1337@gmail.com>",
+	"name": "segfault-raub",
+	"version": "3.2.0",
+	"description": "Catches SIGSEGV and prints diagnostic information",
+	"main": "index.js",
+	"license": "MIT, BSD-3-Clause, BSD-2-Clause",
+	"keywords": [
+		"headers",
+		"include",
+		"events",
+		"utils",
+		"c++",
+		"addon",
+		"bindings",
+		"native",
+		"napi",
+		"gyp"
+	],
+	"files": [
+		"index.js",
+		"index.d.ts",
+		"install.js",
+		"LICENSE",
+		"LICENSE_node-segfault-handler",
+		"package.json"
+	],
+	"scripts": {
+		"postinstall": "node install",
+		"eslint": "eslint .",
+		"build": "cd src && node-gyp rebuild -j max --silent && node -e \"require('addon-tools-raub').cpbin('segfault')\"",
+		"build-only": "cd src && node-gyp build -j max --silent && node -e \"require('addon-tools-raub').cpbin('segfault')\"",
+		"test": "node --test --watch",
+		"test-ci": "node --test"
+	},
+	"engines": {
+		"node": ">=22.14.0",
+		"npm": ">=10.9.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/node-3d/segfault-raub.git"
+	},
+	"dependencies": {
+		"addon-tools-raub": "^9.3.0"
+	},
+	"devDependencies": {
+		"@types/node": "^22.13.4",
+		"@eslint/js": "^9.20.0",
+		"eslint": "^9.20.1",
+		"node-addon-api": "^8.3.0",
+		"typescript": "^5.7.3"
+	}
+}

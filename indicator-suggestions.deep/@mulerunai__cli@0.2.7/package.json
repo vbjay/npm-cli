@@ -1,0 +1,50 @@
+{
+  "name": "@mulerunai/cli",
+  "version": "0.2.7",
+  "description": "MuleRun CLI — interact with MuleRun platform and launch Claude Code.",
+  "keywords": [
+    "mulerun",
+    "cli",
+    "claude",
+    "ai"
+  ],
+  "homepage": "https://mulerun.com",
+  "license": "Apache-2.0",
+  "mulerun": {
+    "releaseRegistry": "https://registry.npmjs.org"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "bin": {
+    "mulerun": "dist/mulerun.cjs"
+  },
+  "files": [
+    "dist",
+    "shared/agents.yaml",
+    "shared/platform-manifest.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node dist/postinstall.cjs",
+    "build": "node scripts/build-bundle.js",
+    "test": "node --test bin/__tests__/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "javascript-obfuscator": "^4.1.1"
+  },
+  "optionalDependencies": {
+    "@mulerunai/cli-darwin-arm64": "0.2.7",
+    "@mulerunai/cli-darwin-x64": "0.2.7",
+    "@mulerunai/cli-linux-arm64": "0.2.7",
+    "@mulerunai/cli-linux-x64": "0.2.7",
+    "@mulerunai/cli-windows-x64": "0.2.7",
+    "@mulerunai/cli-windows-arm64": "0.2.7"
+  }
+}

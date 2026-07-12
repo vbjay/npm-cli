@@ -1,0 +1,68 @@
+{
+  "name": "@lynx-js/weak-node-api",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "description": "Lynx-friendly weak Node-API headers and a scaffolding CLI to create NAPI addons for Android/iOS/Harmony/macOS using CMake.",
+  "homepage": "https://github.com/lynx-family/primjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lynx-family/primjs.git",
+    "directory": "packages/weak-node-api"
+  },
+  "packageManager": "pnpm@9.12.0",
+  "bugs": "https://github.com/lynx-family/primjs/issues",
+  "author": "Lynx Authors",
+  "bin": {
+    "create-weak-node-api": "scripts/create.mjs"
+  },
+  "scripts": {
+    "prepare:headers": "node scripts/prepare-headers.mjs",
+    "sync:skeleton-package": "node scripts/sync-skeleton-package.mjs",
+    "prepack": "npm run sync:skeleton-package",
+    "bootstrap": "npm run prepare:headers",
+    "create": "node scripts/create.mjs",
+    "clean": "npx rimraf headers generated build dist out vendor templates-scaffold --glob *.tgz"
+  },
+  "files": [
+    "headers/**",
+    "generated/**",
+    "shim/**",
+    "weak-node-api-config.cmake",
+    "scripts/prepare-headers.mjs",
+    "scripts/sync-skeleton-package.mjs",
+    "scripts/create.mjs",
+    "templates/**",
+    "Agent.md",
+    "LICENSE",
+    "NOTICE.md",
+    "THIRD-PARTY-NOTICES.md",
+    "UPSTREAM.md",
+    "README.md",
+    "licenses/**",
+    "Changelog.md"
+  ],
+  "dependencies": {
+    "node-addon-api": "7.1.0"
+  },
+  "devDependencies": {
+    "weak-node-api": "0.1.1",
+    "typescript": "^5.8.0"
+  },
+  "keywords": [
+    "napi",
+    "node-api",
+    "weak",
+    "lynx",
+    "scaffold",
+    "cmake",
+    "android",
+    "ios",
+    "harmony",
+    "macos"
+  ]
+}

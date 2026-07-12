@@ -1,0 +1,169 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  apply from: file("versions.gradle")
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:$gradle_tools_version"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+plugins {
+  id "com.adarshr.test-logger" version "$test_logger_version"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+try {
+  apply plugin: 'com.facebook.react'
+} catch (Exception ignored) {
+  // Plugin not available in standalone builds (unit tests)
+}
+
+dependencyLocking {
+    lockAllConfigurations()
+}
+
+android {
+  compileSdkVersion project.ext.compile_sdk_version
+  buildToolsVersion project.ext.build_tools_version
+
+  namespace "io.deckers.blob_courier"
+  defaultConfig {
+    minSdkVersion project.ext.min_sdk_version
+    targetSdkVersion project.ext.target_sdk_version
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    multiDexEnabled true
+    buildConfigField "Long", "ADB_COMMAND_TIMEOUT_MILLISECONDS", ADB_COMMAND_TIMEOUT_MILLISECONDS
+    buildConfigField "Long", "PROMISE_TIMEOUT_MILLISECONDS", PROMISE_TIMEOUT_MILLISECONDS
+  }
+
+  packagingOptions {
+    exclude 'androidsupportmultidexversion.txt'
+    exclude 'META-INF/*.kotlin_module'
+    pickFirst 'META-INF/AL2.0'
+    pickFirst 'META-INF/LGPL2.1'
+    pickFirst 'META-INF/LICENSE.md'
+    pickFirst 'META-INF/LICENSE-notice.md'
+
+    // ED Required for Android Instrumented tests; mismatch between RN version of example app and of actual package
+    pickFirst 'lib/x86/libc++_shared.so'
+    pickFirst 'lib/x86_64/libc++_shared.so'
+    pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+    pickFirst 'lib/arm64-v8a/libc++_shared.so'
+    pickFirst 'lib/x86/libfbjni.so'
+    pickFirst 'lib/x86_64/libfbjni.so'
+    pickFirst 'lib/armeabi-v7a/libfbjni.so'
+    pickFirst 'lib/arm64-v8a/libfbjni.so'
+   }
+
+  sourceSets {
+    androidTest {
+      java.srcDirs += "src/sharedTest/java"
+    }
+    test {
+      java.srcDirs += "src/sharedTest/java"
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+
+  def defaultDir = null
+
+  if (rootProject.ext.has('reactNativeAndroidRoot')) {
+    defaultDir = rootProject.ext.get('reactNativeAndroidRoot')
+  } else {
+    defaultDir = new File(
+      projectDir,
+      '/../../../node_modules/react-native/android'
+    )
+  }
+
+  if (defaultDir.exists()) {
+    maven {
+      url defaultDir.toString()
+      name 'React Native sources'
+    }
+
+    logger.info(":${project.name}:reactNativeAndroidRoot ${defaultDir.canonicalPath}")
+  } else {
+    def parentDir = rootProject.projectDir
+
+    1.upto(5, {
+      parentDir = parentDir.parentFile
+
+      def androidPrebuiltBinaryDir = new File(
+        parentDir,
+        'node_modules/react-native/android'
+      )
+
+      if (androidPrebuiltBinaryDir.exists()) {
+        maven {
+          url androidPrebuiltBinaryDir.toString()
+          name 'React Native sources'
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidPrebuiltBinaryDir.canonicalPath}")
+      }
+    })
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android:0.76.9"
+
+  implementation "androidx.multidex:multidex:$multidex_version"
+  implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+  testImplementation "androidx.test:core:$test_core_version"
+  testImplementation "io.mockk:mockk:$mockk_version"
+  testImplementation "io.mockk:mockk-agent-api:$mockk_version"
+  testImplementation "io.mockk:mockk-agent-jvm:$mockk_version"
+  testImplementation "junit:junit:$junit_version"
+  testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+  testImplementation "org.robolectric:robolectric:$robolectric_version"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+  androidTestImplementation "androidx.test.ext:junit:$test_ext_version"
+  androidTestImplementation "io.mockk:mockk-android:$mockk_version"
+  androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+}
+
+dependencyLocking {
+    lockAllConfigurations()
+}

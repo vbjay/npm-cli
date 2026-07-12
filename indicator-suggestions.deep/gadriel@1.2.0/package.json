@@ -1,0 +1,45 @@
+{
+  "name": "gadriel",
+  "version": "1.2.0",
+  "description": "Gadriel - Code-security CLI for AI-assisted development",
+  "keywords": [
+    "security",
+    "sast",
+    "cli",
+    "audit",
+    "ai-coding",
+    "scanner"
+  ],
+  "homepage": "https://gadriel.ai",
+  "bugs": "https://gadriel.ai/docs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gadriel-ai/preflight.git",
+    "directory": "npm/gadriel"
+  },
+  "license": "MIT",
+  "author": "Gadriel team",
+  "type": "module",
+  "bin": {
+    "gadriel": "bin/gadriel.cjs"
+  },
+  "files": [
+    "bin/gadriel.cjs",
+    "scripts/postinstall.js",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js || true",
+    "test": "node --test test/shim.test.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "@gadriel/cli-linux-x64": "1.2.0",
+    "@gadriel/cli-linux-arm64": "1.2.0",
+    "@gadriel/cli-darwin-x64": "1.2.0",
+    "@gadriel/cli-darwin-arm64": "1.2.0",
+    "@gadriel/cli-win32-x64": "1.2.0"
+  }
+}

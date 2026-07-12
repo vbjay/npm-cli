@@ -1,0 +1,98 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4ad62b0eb498687b",
+    "fetchedFiles": [
+      "activation.js",
+      "package.json",
+      "services/ActivationService.js",
+      "static.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "axios",
+        "versionSpec": "^1.7.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "axios@1.18.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "activation.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ce0e4fb25fa5cd73a87c44d44e11627484f7d02ab18481dcfb25bad14280efb9",
+        "sizeBytes": 1156,
+        "signals": [
+          "uses-child-process",
+          "requires-local-file"
+        ],
+        "references": [
+          "services/ActivationService.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "services/ActivationService.js",
+        "reason": "required by ./activation.js",
+        "sha256": "cb06104583dad67a5f4ccc3b5fd9f173a6585d6893715265c21e4768fe8be977",
+        "sizeBytes": 2387,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "uses-dns",
+          "writes-outside-package",
+          "dynamic-require",
+          "requires-local-file"
+        ],
+        "references": [
+          "static.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "static.js",
+        "reason": "required by ./services/ActivationService.js",
+        "sha256": "a35d41d38516ef8c9f9c3350337386786a7a049838273234c3e989000eadceaa",
+        "sizeBytes": 235,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://activation.corraldev.com",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:25.572Z"
+  },
+  "hash": "sha256:1eca8feb47837879b16895143955737b3e46db4a7d868a5cefcf0f481902f891"
+}

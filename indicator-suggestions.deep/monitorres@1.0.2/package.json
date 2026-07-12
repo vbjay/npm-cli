@@ -1,0 +1,54 @@
+{
+  "name": "monitorres",
+  "version": "1.0.2",
+  "description": "A Node.js native addon for managing monitor resolutions on Windows",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "node test.js",
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild",
+    "prebuild": "prebuildify --napi --strip",
+    "clean": "node-gyp clean"
+  },
+  "keywords": [
+    "monitor",
+    "resolution",
+    "screen",
+    "display",
+    "windows",
+    "native",
+    "addon"
+  ],
+  "author": "Sebastian Graebsch <graebschsebastian16@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "win32"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zepiocs/monitorres.git"
+  },
+  "gypfile": true,
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src",
+    "binding.gyp",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "prebuildify": "^6.0.1"
+  },
+  "homepage": "https://github.com/zepiocs/monitorres#readme",
+  "bugs": {
+    "url": "https://github.com/zepiocs/monitorres/issues"
+  }
+}

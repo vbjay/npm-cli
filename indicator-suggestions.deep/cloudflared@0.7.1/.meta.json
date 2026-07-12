@@ -1,0 +1,266 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0713167a0c49c934",
+    "fetchedFiles": [
+      "lib/cloudflared.js",
+      "lib/constants.js",
+      "lib/error.js",
+      "lib/handler.js",
+      "lib/index.js",
+      "lib/install.js",
+      "lib/lib.js",
+      "lib/regex.js",
+      "lib/service.js",
+      "lib/tunnel.js",
+      "package.json",
+      "scripts/postinstall.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "d29438caed5e922a866bb16598a48ffd6e66d1ae69865f2ba829181c60eb3352",
+        "sizeBytes": 362,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/cloudflared.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "63b6bd7c8418842be18cb6b3be6ea47c1afb996aea8bb45b680a57486ebac987",
+        "sizeBytes": 388,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/error.js",
+          "lib/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/error.js",
+        "reason": "required by ./lib/cloudflared.js; required by ./lib/install.js",
+        "sha256": "3ddc6a1b9de7ad2082956df522e08ba74af452c06bf63fbd2e1e0a93c5463e60",
+        "sizeBytes": 1200,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/index.js",
+        "reason": "required by ./lib/cloudflared.js",
+        "sha256": "e708c56e567450c3b8a1db42dee1fd874bbcb9e557b739fb0a64d0af08e52a56",
+        "sizeBytes": 4813,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/lib.js",
+          "lib/constants.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/cloudflare/cloudflared/releases",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/lib.js",
+        "reason": "required by ./lib/index.js",
+        "sha256": "bd54506a2a9234dc508838f6a5f6783cdc3d14748464281e85f836538d6858c1",
+        "sizeBytes": 1992,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/constants.js",
+          "lib/install.js",
+          "lib/tunnel.js",
+          "lib/service.js",
+          "lib/handler.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/constants.js",
+        "reason": "required by ./lib/lib.js; required by ./lib/install.js; required by ./lib/tunnel.js; required by ./lib/service.js; required by ./lib/index.js",
+        "sha256": "f771f6d3530f06de988f5efaae9ef2cde9abcff5f406ebb9ed3f25018b98c2ca",
+        "sizeBytes": 2396,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/cloudflare/cloudflared/releases/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "lib/install.js",
+        "reason": "required by ./lib/lib.js",
+        "sha256": "56a360ecd3e6cd6dd47435e6e93a3c8dfc0bf4aeb51b7adbdd4bbe10812cd59d",
+        "sizeBytes": 6153,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/constants.js",
+          "lib/error.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/tunnel.js",
+        "reason": "required by ./lib/lib.js",
+        "sha256": "497791b9e7d724f045382502f1ba40321e580d23f085620d229e3fb157a3f820",
+        "sizeBytes": 5214,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/constants.js",
+          "lib/handler.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/handler.js",
+        "reason": "required by ./lib/tunnel.js; required by ./lib/lib.js",
+        "sha256": "7ecb97349f6123fdafe3064e4261adb492b21dcc9fa14a1206f3835748a2515e",
+        "sizeBytes": 4185,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/regex.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "lib/regex.js",
+        "reason": "required by ./lib/handler.js; required by ./lib/service.js",
+        "sha256": "85ccb78a5103edf15a84e9190eb07ac853f39fd0405064ddf2759c8b9134ecf4",
+        "sizeBytes": 2146,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "lib/service.js",
+        "reason": "required by ./lib/lib.js",
+        "sha256": "80be4162d5b5ed400ad0a4a4e37e9bfbecf492f0e762eaa162b87d1e143e1cfc",
+        "sizeBytes": 9142,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "obfuscation-pattern",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/constants.js",
+          "lib/regex.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:31.599Z"
+  },
+  "hash": "sha256:3fc6bc50357cdb24dba72e614aeade36c1e0dffc57e028b37d3939e774c672de"
+}

@@ -1,0 +1,146 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['VideoEditorReactNative_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.1.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+project.ext.react = [
+  enableCodegen: false
+]
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-parcelize'
+
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["VideoEditorReactNative_" + name]).toInteger()
+}
+
+def supportsNamespace() {
+  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+  def major = parsed[0].toInteger()
+  def minor = parsed[1].toInteger()
+
+  // Namespace support was added in 7.3.0
+  return (major == 7 && minor >= 3) || major >= 8
+}
+
+def ENABLE_FACE_AR = project.hasProperty("ENABLE_FACE_AR") ? project.ENABLE_FACE_AR.toBoolean() : true
+def ENABLE_GALLERY = project.hasProperty("ENABLE_GALLERY") ? project.ENABLE_GALLERY.toBoolean() : true
+
+android {
+  if (supportsNamespace()) {
+    namespace "com.videoeditorreactnative"
+
+    sourceSets {
+      main {
+        manifest.srcFile "src/main/AndroidManifestNew.xml"
+      }
+    }
+  }
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  buildFeatures {
+    buildConfig = true
+  }
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+    buildConfigField "boolean", "ENABLE_FACE_AR", "${ENABLE_FACE_AR}"
+    buildConfigField "boolean", "ENABLE_GALLERY", "${ENABLE_GALLERY}"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  packagingOptions {
+    pickFirst '**/*.so'
+
+    jniLibs {
+      useLegacyPackaging = true
+    }
+  }
+}
+
+rootProject.allprojects {
+  repositories {
+    maven {
+      name = "nexus"
+      url = uri("https://nexus.banuba.net/repository/maven-releases")
+    }
+    google()
+    mavenCentral()
+  }
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+  def banubaSdkVersion = '1.53.0'
+  implementation "com.banuba.sdk:ffmpeg:5.3.0"
+  implementation "com.banuba.sdk:camera-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:camera-ui-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:core-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:core-ui-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ve-flow-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ve-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ve-ui-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ve-effects-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ar-cloud:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ve-audio-browser-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ve-export-sdk:${banubaSdkVersion}"
+  implementation "com.banuba.sdk:ve-playback-sdk:${banubaSdkVersion}"
+
+  if (ENABLE_GALLERY){
+    println("!!! BANUBA GALLERY IS ENABLED !!!")
+    implementation "com.banuba.sdk:ve-gallery-sdk:${banubaSdkVersion}"
+  } else {
+    println("!!! BANUBA GALLERY IS DISABLED !!!")
+  }
+
+  if (ENABLE_FACE_AR){
+    print("!!! BANUBA FACE AR IS ENABLED !!!")
+    implementation "com.banuba.sdk:effect-player-adapter:${banubaSdkVersion}"
+  } else {
+    print("!!! BANUBA FACE AR IS DISABLED !!!")
+  }
+}
+

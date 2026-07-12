@@ -1,0 +1,114 @@
+{
+  "name": "flatc-wasm",
+  "version": "26.1.32",
+  "description": "FlatBuffers compiler (flatc) as a WebAssembly module - schema management, JSON/binary conversion, and code generation",
+  "type": "module",
+  "main": "src/index.mjs",
+  "module": "src/index.mjs",
+  "types": "src/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.mjs",
+      "require": "./dist/flatc-wasm.cjs"
+    },
+    "./runner": {
+      "types": "./src/runner.d.ts",
+      "import": "./src/runner.mjs"
+    },
+    "./hd-keys": {
+      "types": "./src/hd-keys.d.ts",
+      "import": "./src/hd-keys.mjs"
+    },
+    "./module": {
+      "types": "./dist/flatc-wasm.d.ts",
+      "import": "./dist/flatc-wasm.js",
+      "require": "./dist/flatc-wasm.cjs"
+    },
+    "./pipeline": {
+      "types": "./src/pipeline.d.ts",
+      "import": "./src/pipeline.mjs"
+    },
+    "./he": {
+      "types": "./src/he-context.d.ts",
+      "import": "./src/he-context.mjs"
+    },
+    "./he-bridge": {
+      "types": "./src/he-key-bridge.d.ts",
+      "import": "./src/he-key-bridge.mjs"
+    },
+    "./he-encryptor": {
+      "types": "./src/he-field-encryptor.d.ts",
+      "import": "./src/he-field-encryptor.mjs"
+    },
+    "./format-detector": {
+      "types": "./src/format-detector.d.ts",
+      "import": "./src/format-detector.mjs"
+    }
+  },
+  "files": [
+    "src/index.mjs",
+    "src/index.d.ts",
+    "src/runner.mjs",
+    "src/runner.d.ts",
+    "src/aligned-codegen.mjs",
+    "src/aligned-codegen.d.ts",
+    "src/encryption.mjs",
+    "src/hd-keys.mjs",
+    "src/hd-keys.d.ts",
+    "src/streaming-dispatcher.mjs",
+    "src/format-detector.mjs",
+    "src/format-detector.d.ts",
+    "src/he-context.mjs",
+    "src/he-context.d.ts",
+    "src/he-key-bridge.mjs",
+    "src/he-key-bridge.d.ts",
+    "src/he-field-encryptor.mjs",
+    "src/he-field-encryptor.d.ts",
+    "src/pipeline.mjs",
+    "src/pipeline.d.ts",
+    "dist/flatc-wasm.js",
+    "dist/flatc-wasm.cjs",
+    "dist/flatc-wasm.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "cmake --build ../build/wasm --target flatc_wasm_npm -j",
+    "test": "node test/test_all.mjs && node test/test_runner.mjs && node test/test_he.mjs && node test/test_aligned.mjs && node test/test_aligned_interop.mjs",
+    "test:he": "node test/test_he.mjs",
+    "test:aligned": "node test/test_aligned.mjs && node test/test_aligned_interop.mjs",
+    "prepublishOnly": "npm test",
+    "prepare": "cd .. && husky || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigitalArsenal/flatbuffers.git",
+    "directory": "wasm"
+  },
+  "keywords": [
+    "flatbuffers",
+    "flatc",
+    "wasm",
+    "webassembly",
+    "serialization",
+    "schema",
+    "compiler",
+    "codegen"
+  ],
+  "author": "The FlatBuffers project",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/DigitalArsenal/flatbuffers/issues"
+  },
+  "homepage": "https://flatbuffers.dev/",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "hd-wallet-wasm": "^2.0.4"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

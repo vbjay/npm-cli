@@ -54,6 +54,83 @@ the command cannot infer. Existing `false` entries always win;
 `approve-scripts` will not silently re-allow a package you previously
 denied.
 
+If a registry dependency has no `resolved` URL in your `package-lock.json`
+(for example, an older lockfile or one written with
+`omit-lockfile-registry-resolved`), npm cannot verify a trusted version for
+it and cannot pin it: a `pkg@1.2.3` entry never matches, so the package
+keeps appearing under `--allow-scripts-pending`. `approve-scripts` approves
+these by name (`pkg: true`) and warns when it does. To restore pinning,
+refresh the lockfile with `npm install`.
+### Review report
+
+When combined with `--allow-scripts-pending`, a Markdown review report is generated
+by default for each pending package. This makes approval more deliberate and auditable.
+
+```bash
+# Markdown report — the default output for --allow-scripts-pending
+npm approve-scripts --allow-scripts-pending > npm-script-review.md
+
+# Explicitly request Markdown (same as default)
+npm approve-scripts --allow-scripts-pending \
+  --allow-scripts-report-format=markdown > npm-script-review.md
+
+# Machine-readable JSON report (suitable for CI pipelines or AI-assisted review)
+npm approve-scripts --allow-scripts-pending \
+  --allow-scripts-report-format=json > npm-script-review.json
+
+# Opt out of the review report and get the original plain text listing
+npm approve-scripts --allow-scripts-pending \
+  --allow-scripts-report-format=null
+
+# --json produces the full structured review report in JSON format (RFC #897 schema)
+npm approve-scripts --allow-scripts-pending --json
+```
+
+Each package entry in the report includes:
+
+- Package name, version, and location under `node_modules`
+- Whether the package is a direct or transitive dependency
+- The full dependency path from your project root ("introduced by" chain)
+- Whether the package is new or is a version update of a previously-approved entry
+- The exact lifecycle script commands that would run
+- Local files referenced by those scripts, including files they `require()`/`import`
+- SHA-256 hash of each scanned file
+- Risk signals detected in each file (see below)
+
+**Detected risk signals** include: use of `child_process`, `eval`, or dynamic
+`Function`; `process.env` access; references to credential-like environment
+variable names; network requests (`https`, `fetch`, etc.); file writes;
+potential writes outside the package directory; references to shell or npm
+config files; base64 decoding (possible obfuscation); dense hex-escape patterns;
+external URLs; and native-code builds (`node-gyp` / `binding.gyp`).
+
+**This report does not:**
+
+- Execute lifecycle scripts
+- Approve or deny anything automatically
+- Claim that a package is safe
+- Perform complete static analysis
+
+The report is evidence for human review. After reviewing it, a human
+can submit a separate commit updating `allowScripts` or `denyScripts`
+using `npm approve-scripts` or `npm deny-scripts`.
+
+For a detailed description of every field in the Markdown and JSON report
+formats — including the full signal reference, alarm callouts, and JSON
+schema — see [approve-scripts report](/using-npm/approve-scripts-report).
+
+**AI-assisted review workflow:**
+
+```bash
+# 1. Generate the report
+npm approve-scripts --allow-scripts-pending \
+  --allow-scripts-report-format=json > npm-script-review.json
+
+# 2. Pass it to an AI security reviewer (the AI must not modify allowScripts)
+# 3. A human reviews the AI's findings
+# 4. A human runs: npm approve-scripts canvas  (or deny-scripts)
+```
+
 ### Examples
 
 ```bash
@@ -68,6 +145,14 @@ npm approve-scripts --no-allow-scripts-pin canvas
 
 # Preview which packages still need review
 npm approve-scripts --allow-scripts-pending
+
+# Generate a Markdown review report for pending packages
+npm approve-scripts --allow-scripts-pending \
+  --allow-scripts-report-format=markdown > npm-script-review.md
+
+# Generate a JSON review report for CI / AI-assisted security review
+npm approve-scripts --allow-scripts-pending \
+  --allow-scripts-report-format=json > npm-script-review.json
 ```
 
 ### Configuration
@@ -76,6 +161,8 @@ npm approve-scripts --allow-scripts-pending
 
 ### See Also
 
+* [approve-scripts report](/using-npm/approve-scripts-report)
+* [approve-scripts indicator suggestions](/using-npm/approve-scripts-indicator-suggestions)
 * [npm deny-scripts](/commands/npm-deny-scripts)
 * [npm install](/commands/npm-install)
 * [npm rebuild](/commands/npm-rebuild)

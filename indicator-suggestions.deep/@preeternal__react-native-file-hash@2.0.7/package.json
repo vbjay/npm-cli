@@ -1,0 +1,259 @@
+{
+    "name": "@preeternal/react-native-file-hash",
+    "version": "2.0.7",
+    "description": "Native streaming hash for React Native: MD5, SHA-1/224/256/384/512, XXH3, BLAKE3 (hash/HMAC/keyed). TurboModules, no UI freezes.",
+    "main": "./lib/module/index.js",
+    "types": "./lib/typescript/src/index.d.ts",
+    "exports": {
+        ".": {
+            "source": "./src/index.tsx",
+            "types": "./lib/typescript/src/index.d.ts",
+            "default": "./lib/module/index.js"
+        },
+        "./app.plugin.js": "./app.plugin.js",
+        "./app.plugin": "./app.plugin.js",
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "src",
+        "lib",
+        "android",
+        "ios",
+        "windows",
+        "cpp",
+        "third_party/blake3/LICENSE_A2",
+        "third_party/blake3/LICENSE_A2LLVM",
+        "third_party/blake3/LICENSE_CC0",
+        "third_party/blake3/c/blake3.c",
+        "third_party/blake3/c/blake3.h",
+        "third_party/blake3/c/blake3_dispatch.c",
+        "third_party/blake3/c/blake3_impl.h",
+        "third_party/blake3/c/blake3_neon.c",
+        "third_party/blake3/c/blake3_portable.c",
+        "third_party/xxhash/LICENSE",
+        "third_party/xxhash/xxhash.c",
+        "third_party/xxhash/xxhash.h",
+        "third_party/zig-files-hash/LICENSE",
+        "third_party/zig-files-hash/build.zig.zon",
+        "third_party/zig-files-hash/src/zig_files_hash_c_api.h",
+        "third_party/zig-files-hash/src/zig_files_hash_c_api_generated.h",
+        "third_party/zig-files-hash-prebuilt/android/arm64-v8a/libzig_files_hash.a",
+        "third_party/zig-files-hash-prebuilt/android/armeabi-v7a/libzig_files_hash.a",
+        "third_party/zig-files-hash-prebuilt/android/x86/libzig_files_hash.a",
+        "third_party/zig-files-hash-prebuilt/android/x86_64/libzig_files_hash.a",
+        "third_party/zig-files-hash-prebuilt/ios/ZigFilesHash.xcframework/Info.plist",
+        "third_party/zig-files-hash-prebuilt/ios/ZigFilesHash.xcframework/ios-arm64/Headers/zig_files_hash_c_api.h",
+        "third_party/zig-files-hash-prebuilt/ios/ZigFilesHash.xcframework/ios-arm64/Headers/zig_files_hash_c_api_generated.h",
+        "third_party/zig-files-hash-prebuilt/ios/ZigFilesHash.xcframework/ios-arm64/libzig_files_hash.a",
+        "third_party/zig-files-hash-prebuilt/ios/ZigFilesHash.xcframework/ios-arm64_x86_64-simulator/Headers/zig_files_hash_c_api.h",
+        "third_party/zig-files-hash-prebuilt/ios/ZigFilesHash.xcframework/ios-arm64_x86_64-simulator/Headers/zig_files_hash_c_api_generated.h",
+        "third_party/zig-files-hash-prebuilt/ios/ZigFilesHash.xcframework/ios-arm64_x86_64-simulator/libzig_files_hash.a",
+        "third_party/zig-files-hash-prebuilt/macos/ZigFilesHash.xcframework/Info.plist",
+        "third_party/zig-files-hash-prebuilt/macos/ZigFilesHash.xcframework/macos-arm64_x86_64/Headers/zig_files_hash_c_api.h",
+        "third_party/zig-files-hash-prebuilt/macos/ZigFilesHash.xcframework/macos-arm64_x86_64/Headers/zig_files_hash_c_api_generated.h",
+        "third_party/zig-files-hash-prebuilt/macos/ZigFilesHash.xcframework/macos-arm64_x86_64/libzig_files_hash.a",
+        "third_party/zig-files-hash-prebuilt/windows/ARM64/zig_files_hash.lib",
+        "third_party/zig-files-hash-prebuilt/windows/Win32/zig_files_hash.lib",
+        "third_party/zig-files-hash-prebuilt/windows/x64/zig_files_hash.lib",
+        "app.plugin.js",
+        "*.podspec",
+        "react-native.config.js",
+        "!ios/build",
+        "!android/build",
+        "!windows/**/ARM64",
+        "!windows/**/Debug",
+        "!windows/**/Generated Files",
+        "!windows/**/Release",
+        "!windows/**/Win32",
+        "!windows/**/x64",
+        "!windows/**/*.user",
+        "!android/gradle",
+        "!android/gradlew",
+        "!android/gradlew.bat",
+        "!android/local.properties",
+        "!**/__tests__",
+        "!**/__fixtures__",
+        "!**/__mocks__",
+        "!**/.*"
+    ],
+    "scripts": {
+        "example": "yarn workspace @preeternal/react-native-file-hash-example",
+        "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+        "prepare": "bob build",
+        "prepack": "git submodule update --init --recursive",
+        "typecheck": "tsc",
+        "lint": "eslint \"**/*.{js,ts,tsx}\"",
+        "test": "jest",
+        "release": "release-it --only-version",
+        "check:16kb": "cd example/android && ./gradlew :app:assembleRelease && cd ../.. && bash scripts/check-16kb.sh",
+        "compare:size:android": "bash scripts/compare-size-android.sh",
+        "compare:size:ios": "bash scripts/compare-size-ios.sh",
+        "test:e2e:maestro:native": "bash scripts/maestro-runtime-smoke.sh native",
+        "test:e2e:maestro:zig": "bash scripts/maestro-runtime-smoke.sh zig",
+        "check:packaged-artifacts": "bash scripts/check-packed-prebuilts.sh"
+    },
+    "keywords": [
+        "react-native",
+        "ios",
+        "android",
+        "file",
+        "hash",
+        "md5",
+        "sha256",
+        "native",
+        "turbo-module",
+        "react-native-module",
+        "native-module",
+        "preeternal",
+        "xxh3",
+        "blake3",
+        "hmac",
+        "checksum",
+        "streaming"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Preeternal/react-native-file-hash.git"
+    },
+    "author": "Preeternal <preeternal@gmail.com> (https://github.com/Preeternal)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Preeternal/react-native-file-hash/issues"
+    },
+    "homepage": "https://github.com/Preeternal/react-native-file-hash#readme",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "expo": {
+        "plugins": [
+            "./app.plugin.js"
+        ]
+    },
+    "devDependencies": {
+        "@commitlint/config-conventional": "^20.5.0",
+        "@eslint/compat": "^2.0.3",
+        "@eslint/eslintrc": "^3.3.5",
+        "@eslint/js": "^10.0.1",
+        "@jest/globals": "^30.0.0",
+        "@react-native/babel-preset": "0.85.0",
+        "@react-native/eslint-config": "0.85.0",
+        "@react-native/jest-preset": "0.85.0",
+        "@release-it/conventional-changelog": "^10.0.6",
+        "@types/react": "^19.2.0",
+        "commitlint": "^20.5.0",
+        "del-cli": "^7.0.0",
+        "eslint": "^9.39.4",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-ft-flow": "^3.0.11",
+        "eslint-plugin-prettier": "^5.5.5",
+        "jest": "^30.3.0",
+        "lefthook": "^2.1.4",
+        "prettier": "^3.8.1",
+        "react": "19.2.3",
+        "react-native": "0.85.0",
+        "react-native-builder-bob": "^0.41.0",
+        "release-it": "^19.2.4",
+        "turbo": "^2.8.21",
+        "typescript": "^6.0.2"
+    },
+    "peerDependencies": {
+        "react": "*",
+        "react-native": "*"
+    },
+    "workspaces": [
+        "example",
+        "examples/macos",
+        "examples/windows"
+    ],
+    "packageManager": "yarn@4.12.0",
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            [
+                "module",
+                {
+                    "esm": true
+                }
+            ],
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.build.json"
+                }
+            ]
+        ]
+    },
+    "codegenConfig": {
+        "name": "FileHashSpec",
+        "type": "modules",
+        "jsSrcsDir": "src",
+        "android": {
+            "javaPackageName": "com.preeternal.filehash"
+        },
+        "windows": {
+            "namespace": "Preeternal::FileHash",
+            "outputDirectory": "windows/FileHash/codegen"
+        }
+    },
+    "prettier": {
+        "quoteProps": "consistent",
+        "singleQuote": true,
+        "tabWidth": 4,
+        "trailingComma": "es5",
+        "useTabs": false,
+        "overrides": [
+            {
+                "files": "*.md",
+                "options": {
+                    "tabWidth": 2
+                }
+            }
+        ]
+    },
+    "jest": {
+        "preset": "@react-native/jest-preset",
+        "setupFilesAfterEnv": [
+            "<rootDir>/src/jest.setup.ts"
+        ],
+        "modulePathIgnorePatterns": [
+            "<rootDir>/example/node_modules",
+            "<rootDir>/lib/"
+        ]
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "release-it": {
+        "git": {
+            "commitMessage": "chore: release ${version}",
+            "tagName": "v${version}"
+        },
+        "npm": {
+            "publish": true
+        },
+        "github": {
+            "release": true
+        },
+        "plugins": {
+            "@release-it/conventional-changelog": {
+                "preset": {
+                    "name": "angular"
+                }
+            }
+        }
+    },
+    "create-react-native-library": {
+        "type": "turbo-module",
+        "languages": "kotlin-objc",
+        "tools": [
+            "eslint",
+            "jest",
+            "lefthook",
+            "release-it"
+        ],
+        "version": "0.62.0"
+    }
+}

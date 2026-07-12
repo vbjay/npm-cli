@@ -1,0 +1,71 @@
+{
+  "name": "@inner-security/mcp",
+  "version": "0.1.17",
+  "private": false,
+  "description": "Inner MCP server (stdio). Exposes 5 tools (check_package, check_dependencies, explain_verdict, suggest_alternative, request_review) so a coding agent gets a verdict + a suggested safer alternative BEFORE it installs. A thin client of Inner's Verdict API, gated by an org API key.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/Inner-security/Inner/tree/main/packages/mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Inner-security/Inner.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/Inner-security/Inner/issues"
+  },
+  "keywords": [
+    "inner",
+    "security",
+    "supply-chain",
+    "mcp",
+    "model-context-protocol",
+    "ai-agent",
+    "dependencies",
+    "malware",
+    "npm",
+    "pypi"
+  ],
+  "main": "bundle/index.js",
+  "types": "bundle/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./bundle/index.d.ts",
+      "import": "./bundle/index.js"
+    }
+  },
+  "bin": {
+    "inner-mcp": "bundle/server.js"
+  },
+  "files": [
+    "bundle",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc && tsup",
+    "bundle": "tsup",
+    "prepack": "tsup && node ../../scripts/strip-workspace-deps.mjs strip",
+    "postpack": "node ../../scripts/strip-workspace-deps.mjs restore",
+    "check": "tsc --noEmit",
+    "start": "node dist/server.js",
+    "test": "node --test --import tsx ./src/*.test.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "posthog-node": "^5.39.4",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsup": "^8.3.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "9fd6ff89fee578c9",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/install.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "f49ce08a7f5a26b5a10b93d3b494635d4a6eb9d69d8e7cc511ce14b109c4ceff",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `micropdf`  -  C/C++ sources",
+            "items": [
+              "native/micropdf.cc",
+              "native/context.cc",
+              "native/document.cc",
+              "native/page.cc",
+              "native/stext.cc",
+              "native/annot.cc",
+              "native/form.cc",
+              "native/display_list.cc",
+              "native/link.cc",
+              "native/cookie.cc",
+              "native/device.cc",
+              "native/path.cc",
+              "native/pixmap.cc",
+              "native/image.cc",
+              "native/colorspace.cc",
+              "native/font.cc",
+              "native/stream.cc",
+              "native/output.cc",
+              "native/enhanced.cc"
+            ]
+          },
+          {
+            "label": "Target `micropdf`  -  libraries",
+            "items": [
+              "<(module_root_dir)/native/lib/linux-<(target_arch)/libmicropdf.a",
+              "-lpthread",
+              "-ldl",
+              "-lm",
+              "<(module_root_dir)/native/lib/darwin-<(target_arch)/libmicropdf.a",
+              "-framework CoreFoundation",
+              "-framework Security",
+              "<(module_root_dir)/native/lib/win32-<(target_arch)/micropdf.lib",
+              "ws2_32.lib",
+              "userenv.lib",
+              "bcrypt.lib",
+              "ntdll.lib"
+            ]
+          },
+          {
+            "label": "Target `micropdf`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "native/include"
+            ]
+          },
+          {
+            "label": "Target `micropdf`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "21567907f166d7a0ac8059c6f5533105bcd2b9da04740137403bff951b5e5f07",
+        "sizeBytes": 5081,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://bitbucket.org/lexmata/micropdf/downloads",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:24.271Z"
+  },
+  "hash": "sha256:ce71b562e229be5732ceaf1544ad45df7a574241db8bc40ccb83b609de9d1aca"
+}

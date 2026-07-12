@@ -1,0 +1,88 @@
+{
+  "name": "npmversion",
+  "version": "2.0.5",
+  "description": "A command line node module to deal with \"bumping\" and \"npm version\"",
+  "type": "module",
+  "bin": {
+    "npmversion": "./bin/npmversion.js"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "bump:release": "npm prune && node ./bin/npmversion.js --unpreid --nogit-commit --nogit-tag",
+    "bump:major": "npm prune && node ./bin/npmversion.js --increment major --nogit-commit --nogit-tag",
+    "bump:minor": "npm prune && node ./bin/npmversion.js --increment minor --nogit-commit --nogit-tag",
+    "bump:patch": "npm prune && node ./bin/npmversion.js --increment patch --nogit-commit --nogit-tag",
+    "bump:major:beta": "npm prune && node ./bin/npmversion.js --increment major --preid beta --nogit-commit --nogit-tag",
+    "bump:minor:beta": "npm prune && node ./bin/npmversion.js --increment minor --preid beta --nogit-commit --nogit-tag",
+    "bump:patch:beta": "npm prune && node ./bin/npmversion.js --increment patch --preid beta --nogit-commit --nogit-tag",
+    "bump:prerelease:beta": "npm prune && node ./bin/npmversion.js --increment prerelease --preid beta --nogit-commit --nogit-tag",
+    "dev:audit": "npm audit --workspaces --include-workspace-root",
+    "dev:check": "npm test && npm run dev:styling",
+    "dev:format": "prettier --check \"./**/*.{ts,tsx,js,mjs,cjs,md}\"",
+    "dev:format:check": "prettier --write \"./**/*.{ts,tsx,js,mjs,cjs,md}\"",
+    "dev:linting": "npm run dev:linting --workspaces --if-present",
+    "dev:styling": "npm run dev:format && npm run dev:linting",
+    "prepare": "husky && npx replace-in-file '#!/usr/bin/env sh' '#!/usr/bin/env bash' '.husky/_/husky.sh' --quiet && npx replace-in-file 'sh -e' 'bash -e' '.husky/_/husky.sh' --quiet",
+    "dev:publish": "npm publish --workspaces && npm publish",
+    "start": "node ./bin/npmversion.js --read-only",
+    "test": "npm run test --workspaces --if-present",
+    "test:coverage": "npm run test:coverage --workspaces --if-present"
+  },
+  "//": {
+    "dev:audit": "Checks we don't have vulnearbilities",
+    "dev:check": "Run tests and styling over packages",
+    "dev:format": "Format files over packages",
+    "dev:format:check": "Check files format over packages",
+    "dev:linting": "Lint files over packages",
+    "dev:publish": "Publish all the packages on npm registry",
+    "dev:styling": "Format and lint files over packages",
+    "test": "Run tests over packages",
+    "test:coverage": "Run tests over packages and see coverage reports"
+  },
+  "keywords": [
+    "bump",
+    "npm",
+    "version",
+    "cli"
+  ],
+  "author": {
+    "name": "Julien Roche",
+    "email": "roche.jul@gmail.com",
+    "url": "https://julienroche.blogspot.com/"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/rochejul/node-version#readme",
+  "bugs": {
+    "url": "https://github.com/rochejul/node-version/issues",
+    "email": "roche.jul@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rochejul/node-version.git"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "19.6.0",
+    "@commitlint/config-conventional": "19.6.0",
+    "eslint": "9.16.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-jest": "28.9.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "husky": "9.1.7",
+    "prettier": "3.4.2"
+  },
+  "overrides": {
+    "eslint": "$eslint"
+  },
+  "engines": {
+    "node": "^16.10.0 || ^18.12.0 || >=20.0.0"
+  },
+  "volta": {
+    "node": "20.15.0",
+    "npm": "10.7.0"
+  },
+  "dependencies": {
+    "@npmversion/cli": "2.0.5"
+  }
+}

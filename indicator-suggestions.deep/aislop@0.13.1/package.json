@@ -1,0 +1,118 @@
+{
+  "name": "aislop",
+  "version": "0.13.1",
+  "description": "Catch the slop AI coding agents leave in your code: narrative comments, swallowed exceptions, as-any casts, dead code, oversized functions. 50+ rules across 8 language targets (TypeScript, JavaScript, Expo / React Native, Python, Go, Rust, Ruby, PHP). Sub-second, deterministic, no LLM at runtime. MIT-licensed.",
+  "type": "module",
+  "bin": {
+    "aislop": "./dist/cli.js",
+    "aislop-mcp": "./dist/mcp.js"
+  },
+  "files": [
+    "dist",
+    "scripts"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./adapters/astro": {
+      "types": "./dist/adapters/astro.d.ts",
+      "default": "./dist/adapters/astro.js"
+    },
+    "./adapters/expo": {
+      "types": "./dist/adapters/expo.d.ts",
+      "default": "./dist/adapters/expo.js"
+    },
+    "./adapters/nuxt": {
+      "types": "./dist/adapters/nuxt.d.ts",
+      "default": "./dist/adapters/nuxt.js"
+    },
+    "./adapters/sveltekit": {
+      "types": "./dist/adapters/sveltekit.d.ts",
+      "default": "./dist/adapters/sveltekit.js"
+    },
+    "./adapters/vite": {
+      "types": "./dist/adapters/vite.d.ts",
+      "default": "./dist/adapters/vite.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "postinstall": "node scripts/postinstall-tools.mjs",
+    "typecheck": "tsc --noEmit",
+    "gen:schema": "node --experimental-strip-types scripts/gen-config-schema.mjs",
+    "test": "pnpm build && vitest run",
+    "scan": "pnpm build && node dist/cli.js scan .",
+    "scan:exclude": "pnpm build && node dist/cli.js scan . --exclude .idea --exclude .gitnore --exclude node_modules",
+    "scan:include": "pnpm build && node dist/cli.js scan . --include src --include tests",
+    "scan:json": "pnpm build && node dist/cli.js scan . --json",
+    "quality": "pnpm typecheck && pnpm test && node dist/cli.js scan . --json"
+  },
+  "keywords": [
+    "aislop",
+    "ai-slop",
+    "code-quality",
+    "linter",
+    "formatter",
+    "cli",
+    "ai",
+    "copilot",
+    "code-review",
+    "static-analysis",
+    "typescript",
+    "javascript",
+    "python",
+    "go",
+    "rust",
+    "ruby",
+    "php"
+  ],
+  "author": {
+    "name": "Kenny Olawuwo",
+    "url": "https://scanaislop.com"
+  },
+  "license": "MIT",
+  "homepage": "https://scanaislop.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scanaislop/aislop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scanaislop/aislop/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "dependencies": {
+    "@biomejs/biome": "^2.5.1",
+    "@clack/prompts": "^1.2.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "adm-zip": "^0.5.16",
+    "commander": "^14.0.3",
+    "expo-doctor": "^1.19.10",
+    "ink": "^6.8.0",
+    "ink-select-input": "^6.2.0",
+    "knip": "^5.85.0",
+    "micromatch": "^4.0.8",
+    "oxlint": "^1.71.0",
+    "picocolors": "^1.1.1",
+    "react": "^19.2.7",
+    "tar": "^7.5.19",
+    "typescript": "^5.9.3",
+    "wcwidth": "^1.0.1",
+    "yaml": "^2.8.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/micromatch": "^4.0.10",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.17",
+    "ink-testing-library": "^4.0.0",
+    "tsdown": "^0.20.3",
+    "vite": "^7.3.5",
+    "vitest": "^4.1.8"
+  }
+}

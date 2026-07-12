@@ -1,0 +1,54 @@
+{
+    "name": "@jeanmajid/windows-keylistener",
+    "version": "1.1.3",
+    "description": "Low‑level keyboard hook for Windows",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jeanmajid/NPM-windows-keylistener"
+    },
+    "bugs": {
+        "url": "https://github.com/jeanmajid/NPM-windows-keylistener/issues"
+    },
+    "main": "./index.cjs",
+    "module": "./index.mjs",
+    "license": "MIT",
+    "types": "./keylistener.d.ts",
+    "scripts": {
+        "build": "node-gyp rebuild"
+    },
+    "exports": {
+        ".": {
+            "import": "./index.mjs",
+            "require": "./index.cjs",
+            "types": "./keylistener.d.ts"
+        }
+    },
+    "files": [
+        "index.cjs",
+        "index.mjs",
+        "keylistener.d.ts",
+        "keylistener.cpp",
+        "binding.gyp",
+        "README.md"
+    ],
+    "gypfile": true,
+    "dependencies": {
+        "nan": "^2.22.0"
+    },
+    "keywords": [
+        "keylistener",
+        "keyboard",
+        "windows",
+        "native",
+        "clipboard",
+        "hook",
+        "low-level",
+        "win32",
+        "addon",
+        "node-gyp",
+        "event",
+        "input",
+        "listener",
+        "hotkey"
+    ]
+}

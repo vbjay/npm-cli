@@ -1,0 +1,86 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def DEFAULT_COMPILE_SDK_VERSION = 35
+def DEFAULT_BUILD_TOOLS_VERSION = '35.0.0'
+def DEFAULT_MIN_SDK_VERSION = 21
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+buildscript {
+    // The Android Gradle plugin is only required when opening the android folder stand-alone.
+    // This avoids unnecessary downloads and potential conflicts when the library is included as a
+    // module dependency in an application project.
+    // ref: https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:build_script_external_dependencies
+    if (project == rootProject) {
+        repositories {
+            google()
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'com.android.tools.build:gradle:8.1.4'
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    if (getGradle().getGradleVersion().substring(0, 3).toFloat() >= 7.3) {
+        namespace "pendo.io.reactnative"
+    }
+
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+    maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url "$rootDir/../node_modules/react-native/android"
+    }
+    maven {
+        // Android JSC is installed from npm
+        url "$rootDir/../node_modules/jsc-android/dist"
+    }
+    maven {
+        url "https://software.mobile.pendo.io/artifactory/androidx-release"
+    }
+}
+
+def myAttribute = Attribute.of("com.android.build.api.attributes.BuildTypeAttr", String)
+
+dependencies.attributesSchema {
+    // registers this attribute to the attributes schema
+    attribute(myAttribute)
+}
+
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    implementation 'com.facebook.react:react-native:+'  // From node_modules
+    //noinspection GradleDynamicVersion
+    implementation('sdk.pendo.io:pendoIO:3.13.+') {
+        attributes {
+            attribute(myAttribute, "release")
+        }
+        changing = true
+    }
+}

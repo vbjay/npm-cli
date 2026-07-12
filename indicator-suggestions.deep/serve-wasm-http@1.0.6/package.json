@@ -1,0 +1,43 @@
+{
+  "name": "serve-wasm-http",
+  "version": "1.0.6",
+  "description": "A simple http server that also delivers the expected mime type for WASM.",
+  "bin": {
+    "serve-wasm-http" : "./bin/wasm_server.js"
+  },
+  "scripts": {
+    "test": "node test/index.js",
+    "postinstall": "bash tools/fix_link.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/copious-world/serve-wasm-http.git"
+  },
+  "keywords": [
+    "http-server",
+    "wasm",
+    "mime-type",
+    "applicatin/wasm"
+  ],
+  "author": "R. Leddy",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/copious-world/serve-wasm-http/issues"
+  },
+  "homepage": "https://github.com/copious-world/serve-wasm-http#readme",
+  "funding": {
+    "type": "GitHub Sponsors",
+    "url": "https://github.com/sponsors/copious-world"
+  },
+  "dependencies": {
+    "@polka/send-type": "^0.5.2",
+    "@types/node": "^20.4.9",
+    "body-parser": "^1.20.2",
+    "compress": "^0.99.0",
+    "cors": "^2.8.5",
+    "mime-db": "^1.52.0",
+    "polka": "^0.5.2",
+    "serve": "^14.2.0",
+    "serve-static": "^1.15.0"
+  }
+}

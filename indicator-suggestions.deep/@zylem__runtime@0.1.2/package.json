@@ -1,0 +1,74 @@
+{
+	"name": "@zylem/runtime",
+	"version": "0.1.2",
+	"description": "Rust + wasm simulation runtime for Zylem (prebuilt zylem_runtime.wasm + thin TS loader and typed FFI exports).",
+	"license": "MIT",
+	"type": "module",
+	"sideEffects": [
+		"./dist/zylem_runtime.wasm"
+	],
+	"engines": {
+		"node": ">=20.10.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/zylem-game-lib/runtime.git"
+	},
+	"keywords": [
+		"zylem",
+		"wasm",
+		"rust",
+		"rapier3d",
+		"shipyard",
+		"ecs",
+		"simulation",
+		"physics"
+	],
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./wasm": "./dist/zylem_runtime.wasm",
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"scripts": {
+		"zylem": "node --experimental-strip-types ./scripts/zylem-runner.ts",
+		"clean": "rimraf dist target/wasm32-unknown-unknown",
+		"build": "pnpm run build:wasm && pnpm run build:ts && pnpm run copy:wasm",
+		"build:dev": "pnpm run build:wasm && pnpm run build:ts && pnpm run copy:wasm",
+		"build:wasm": "cargo build --manifest-path Cargo.toml --target-dir target --target wasm32-unknown-unknown --release",
+		"build:native": "cargo build --manifest-path Cargo.toml --target-dir target",
+		"build:release": "cargo build --manifest-path Cargo.toml --target-dir target --release",
+		"build:ts": "tsup",
+		"copy:wasm": "node scripts/copy-wasm.mjs",
+		"test": "cargo test --manifest-path Cargo.toml --target-dir target",
+		"test:wasm": "node --test demo/node-demo.mjs",
+		"typecheck": "tsc --noEmit && cargo check --manifest-path Cargo.toml --target-dir target",
+		"check:publish-access": "node scripts/check-publish-access.mjs",
+		"demo:node": "node demo/node-demo.mjs",
+		"demo:browser": "node demo/serve.mjs",
+		"prepack": "pnpm run build",
+		"prepublishOnly": "pnpm run check:publish-access && pnpm run build && pnpm run test"
+	},
+	"devDependencies": {
+		"@clack/prompts": "^1.6.0",
+		"@types/node": "^20.19.13",
+		"rimraf": "^6.0.1",
+		"tsup": "^8.5.1",
+		"typescript": "5.8.2"
+	},
+	"packageManager": "pnpm@10.33.0"
+}

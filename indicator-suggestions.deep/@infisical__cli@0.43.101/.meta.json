@@ -1,0 +1,97 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "bf25f29d9890ffcd",
+    "fetchedFiles": [
+      "package.json",
+      "src/index.cjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "tar",
+        "versionSpec": "^7.5.13"
+      },
+      {
+        "name": "yauzl",
+        "versionSpec": "^3.2.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "tar@7.5.19",
+      "yauzl@3.4.0"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "src/index.cjs",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "f5b16cac686acd634abfa3d49d0769d14e017fb4f9f691e379e3fd80950b1ef0",
+        "sizeBytes": 5446,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Infisical/cli/releases/download/",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./src/index.cjs",
+        "sha256": "c0a215d8597d6d6881aac351a6d10837fb8f7ee308e86b8bb9a47b833ee5e5a4",
+        "sizeBytes": 468,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:16.797Z"
+  },
+  "hash": "sha256:538d9870ca8acebaf427a836dbdf31b478f6dd74b561c1b4a5c3aabf8fc4661b"
+}

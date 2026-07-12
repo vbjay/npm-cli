@@ -1,0 +1,77 @@
+{
+  "name": "@friday-night/tui",
+  "version": "0.4.8",
+  "description": "First-party terminal UI primitives for Friday and reusable CLIs.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing/index.d.ts",
+      "import": "./dist/testing/index.js"
+    },
+    "./text": {
+      "types": "./dist/text/index.d.ts",
+      "import": "./dist/text/index.js"
+    },
+    "./input": {
+      "types": "./dist/input/index.d.ts",
+      "import": "./dist/input/index.js"
+    },
+    "./ai": {
+      "types": "./dist/ai/index.d.ts",
+      "import": "./dist/ai/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc -p tsconfig.json",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm test",
+    "pack:dry-run": "npm pack --dry-run",
+    "release:check": "npm test && npm pack --dry-run"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
+  },
+  "packageManager": "npm@10.9.3",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungdapoet/friday.git",
+    "directory": "packages/tui"
+  },
+  "bugs": {
+    "url": "https://github.com/tungdapoet/friday/issues"
+  },
+  "homepage": "https://github.com/tungdapoet/friday/tree/main/packages/tui#readme",
+  "keywords": [
+    "friday",
+    "terminal",
+    "tui",
+    "cli",
+    "widgets",
+    "renderer",
+    "ansi"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

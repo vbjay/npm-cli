@@ -1,0 +1,129 @@
+{
+  "name": "llm-checker",
+  "version": "3.7.4",
+  "description": "Intelligent CLI tool with AI-powered model selection that analyzes your hardware and recommends optimal LLM models for your system",
+  "bin": {
+    "llm-checker": "bin/cli.js",
+    "ollama-checker": "bin/cli.js",
+    "llm-checker-mcp": "bin/mcp-server.mjs"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node tests/run-all-tests.js",
+    "test:roadmap": "node tests/roadmap-tools.test.js",
+    "test:gpu": "node tests/amd-gpu-detection.test.js",
+    "test:platform": "node tests/hardware-simulation-tests.js",
+    "test:ui": "node tests/ui-cli-smoke.test.js",
+    "test:runtime": "node tests/runtime-specdec-tests.js",
+    "test:deterministic-pool": "node tests/deterministic-model-pool-check.js",
+    "test:registry": "node tests/model-registry-ingestors.test.js",
+    "test:registry-main": "node tests/model-registry-main-flow.test.js",
+    "test:registry-recommender": "node tests/model-registry-recommender.test.js",
+    "test:registry-seed": "node tests/model-registry-seed.test.js",
+    "test:policy": "node tests/policy-commands.test.js",
+    "test:policy-cli": "node tests/policy-cli-enforcement.js",
+    "test:policy-engine": "node tests/policy-engine.test.js",
+    "test:policy-audit": "node tests/policy-audit-reporter.test.js",
+    "test:policy-e2e": "node tests/policy-e2e-integration.test.js",
+    "test:hardware-detector": "node tests/hardware-detector-regression.js",
+    "test:all": "node tests/run-all-tests.js",
+    "build": "echo 'No build needed'",
+    "dev": "node bin/enhanced_cli.js",
+    "start": "node bin/enhanced_cli.js",
+    "check": "node bin/enhanced_cli.js check",
+    "gpu-plan": "node bin/enhanced_cli.js gpu-plan",
+    "verify-context": "node bin/enhanced_cli.js verify-context",
+    "amd-guard": "node bin/enhanced_cli.js amd-guard",
+    "toolcheck": "node bin/enhanced_cli.js toolcheck",
+    "recommend": "node bin/enhanced_cli.js recommend",
+    "ollama": "node bin/enhanced_cli.js ollama",
+    "list-models": "node bin/enhanced_cli.js list-models",
+    "ai-check": "node bin/enhanced_cli.js ai-check",
+    "ai-run": "node bin/enhanced_cli.js ai-run",
+    "sync:seed": "node bin/enhanced_cli.js sync --force --quiet && node scripts/update-seed-db.js && node scripts/update-registry-seed.js",
+    "sync:registry-seed": "node scripts/update-registry-seed.js",
+    "benchmark": "cd ml-model && python python/benchmark_collector.py",
+    "train-ai": "cd ml-model && python python/train_model.py",
+    "postinstall": "echo 'LLM Checker installed. Run: llm-checker hw-detect'"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "inquirer": "^8.2.6",
+    "node-fetch": "^2.7.0",
+    "ora": "^5.4.1",
+    "systeminformation": "^5.31.6",
+    "table": "^6.8.1",
+    "yaml": "^2.9.0",
+    "zod": "^3.23.0"
+  },
+  "optionalDependencies": {
+    "sql.js": "^1.14.1"
+  },
+  "overrides": {
+    "ajv": "^8.18.0",
+    "hono": "^4.11.10",
+    "glob": "^13.0.0",
+    "minimatch": "^10.2.2",
+    "test-exclude": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "jest": "^30.4.2"
+  },
+  "keywords": [
+    "llm",
+    "ai",
+    "intelligent-selector",
+    "model-recommendation",
+    "hardware-analysis",
+    "machine-learning",
+    "hardware",
+    "compatibility",
+    "cli",
+    "ollama",
+    "small-language-models",
+    "sllm",
+    "local-ai",
+    "quantization",
+    "inference",
+    "gpu",
+    "vram",
+    "performance",
+    "benchmark",
+    "apple-silicon",
+    "memory-optimization",
+    "mcp",
+    "claude",
+    "model-context-protocol"
+  ],
+  "author": "Pavelevich (https://github.com/Pavelevich)",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pavelevich/llm-checker.git"
+  },
+  "homepage": "https://github.com/Pavelevich/llm-checker#readme",
+  "bugs": {
+    "url": "https://github.com/Pavelevich/llm-checker/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "os": [
+    "android",
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "preferGlobal": true,
+  "files": [
+    "bin/",
+    "src/",
+    "analyzer/",
+    "README.md",
+    "LICENSE"
+  ]
+}

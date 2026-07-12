@@ -1,0 +1,128 @@
+{
+  "name": "@gitborlando/utils",
+  "version": "5.2.0",
+  "description": "",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/browser/index.js",
+      "types": "./dist/browser/index.d.ts"
+    },
+    "./node": {
+      "import": "./dist/node/index.js",
+      "types": "./dist/node/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react/index.js",
+      "types": "./dist/react/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "prepare": "simple-git-hooks",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "release": "pnpm build && pnpm publish",
+    "re-i": "rm -rf node_modules pnpm-lock.yaml && pnpm i",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gitborlando/utils"
+  },
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.14",
+    "@types/react": "^19.1.8",
+    "@vitest/ui": "^3.2.4",
+    "jsdom": "^26.1.0",
+    "pretty-quick": "^4.2.2",
+    "simple-git-hooks": "^2.13.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "prettier": {
+    "printWidth": 85,
+    "jsxBracketSameLine": true,
+    "useTabs": false,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true
+  },
+  "simple-git-hooks": {
+    "pre-commit": "node scripts/check-version-changed.mjs && pnpm exec pretty-quick --staged"
+  },
+  "keywords": [
+    "utils",
+    "utilities",
+    "typescript",
+    "esm",
+    "tools",
+    "helpers",
+    "library",
+    "array",
+    "event",
+    "react",
+    "common",
+    "functional",
+    "frontend",
+    "browser",
+    "javascript",
+    "ts",
+    "type-safe",
+    "modern",
+    "lightweight",
+    "modular",
+    "tree-shaking",
+    "performance",
+    "developer-tools",
+    "web-development",
+    "react-hooks",
+    "ui",
+    "interaction",
+    "manipulation",
+    "data-structures",
+    "algorithms",
+    "event-handling",
+    "mouse-events",
+    "dom",
+    "browser-api",
+    "cross-platform",
+    "node",
+    "bundler",
+    "vite",
+    "rollup",
+    "build-tools",
+    "npm",
+    "pnpm",
+    "yarn",
+    "package",
+    "module",
+    "import",
+    "export",
+    "gitborlando"
+  ],
+  "dependencies": {
+    "camelcase": "^8.0.0"
+  }
+}

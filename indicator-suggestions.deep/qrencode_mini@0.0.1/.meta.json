@@ -1,0 +1,81 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e66bdb746cb5171a",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "56155d38cc8ea086b03894a24bd5fbf3db8a421332aa229d74c7d524120bb4dd",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `qrencode_mini`  -  C/C++ sources",
+            "items": [
+              "qrencode_mini.c"
+            ]
+          },
+          {
+            "label": "Target `qrencode_mini`  -  libraries",
+            "items": [
+              "-lpng",
+              "-L./build/Release/libqrenca.a",
+              "libpng.lib",
+              "zlib.lib",
+              "/build/Release/libqrenca.lib"
+            ]
+          },
+          {
+            "label": "Target `qrencode_mini`  -  include directories",
+            "items": [
+              "./deps/libqrencode/libqrencode"
+            ]
+          },
+          {
+            "label": "Target `qrencode_mini`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:29.255Z"
+  },
+  "hash": "sha256:0342564af204533d813b52d4f89929aad050e9ecf284029ec8ce2cf5eaa71168"
+}

@@ -1,0 +1,47 @@
+{
+  "name": "keyseed",
+  "version": "0.1.5",
+  "description": "Deterministic local secret encryption CLI with npm/npx distribution",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efekurucay/keyseed.git"
+  },
+  "homepage": "https://github.com/efekurucay/keyseed#readme",
+  "bugs": {
+    "url": "https://github.com/efekurucay/keyseed/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "keyseed": "bin/keyseed.js"
+  },
+  "files": [
+    "bin/keyseed.js",
+    "scripts",
+    "src",
+    "Cargo.toml",
+    "Cargo.lock",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "build": "cargo build --release",
+    "test": "cargo test",
+    "cli": "node bin/keyseed.js",
+    "pack:dry": "npm pack --dry-run"
+  },
+  "preferGlobal": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cli",
+    "rust",
+    "encryption",
+    "deterministic",
+    "security"
+  ]
+}

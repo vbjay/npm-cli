@@ -1,0 +1,189 @@
+{
+  "name": "@vgs/collect-react-native",
+  "version": "1.1.5",
+  "description": "VGS Collect React Native SDK",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "default": "./lib/commonjs/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "npm workspace @vgs/collect-react-native run start",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings=0",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "release": "release-it",
+    "check-version": "node scripts/check-version.js"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/verygoodsecurity/vgs-collect-react-native-public.git"
+  },
+  "author": "Dmytro Khludkov <dmytro.khludkov@vgs.io> (https://github.com/dmytrokhl)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/verygoodsecurity/vgs-collect-react-native-public/issues"
+  },
+  "homepage": "https://github.com/verygoodsecurity/vgs-collect-react-native-public#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.0.0",
+    "@evilmartians/lefthook": "^2.0.0",
+    "@react-native/eslint-config": "^0.81.1",
+    "@release-it/conventional-changelog": "^10.0.2",
+    "@types/jest": "^30.0.0",
+    "@types/react": "19.2.6",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "commitlint": "^20.0.0",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^30.1.3",
+    "prettier": "^3.6.2",
+    "react": "19.1.0",
+    "react-native": "0.81.4",
+    "react-native-builder-bob": "^0.40.13",
+    "release-it": "^19.0.4",
+    "typedoc": "^0.28.13",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "browser": {
+    "@vgs/collect-react-native": false
+  },
+  "workspaces": [
+    "example"
+  ],
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNVgsCollectReactNativeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "outputDir": {
+      "ios": "ios/generated",
+      "android": "android/generated"
+    },
+    "android": {
+      "javaPackageName": "com.vgscollectreactnative"
+    }
+  },
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.45.5"
+  }
+}

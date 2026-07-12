@@ -1,0 +1,78 @@
+{
+  "name": "@fitlab-ai/agent-infra",
+  "version": "0.8.3",
+  "description": "Bootstrap tool for AI multi-tool collaboration infrastructure — works with Claude Code, Codex, Gemini CLI, and OpenCode",
+  "license": "MIT",
+  "type": "module",
+  "author": "CodeCaster <codecaster365@outlook.com>",
+  "homepage": "https://github.com/fitlab-ai/agent-infra#readme",
+  "bugs": {
+    "url": "https://github.com/fitlab-ai/agent-infra/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fitlab-ai/agent-infra.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "bin": {
+    "agent-infra": "./dist/bin/cli.js",
+    "ai": "./dist/bin/cli.js"
+  },
+  "files": [
+    "dist/",
+    "!dist/**/*.map",
+    "bin/cli.ts",
+    "lib/",
+    "templates/"
+  ],
+  "engines": {
+    "node": ">=22.9.0"
+  },
+  "keywords": [
+    "ai",
+    "collaboration",
+    "claude-code",
+    "codex",
+    "gemini",
+    "opencode",
+    "cli",
+    "bootstrap",
+    "installer"
+  ],
+  "dependencies": {
+    "@clack/prompts": "1.7.0",
+    "@larksuiteoapi/node-sdk": "^1.68.0",
+    "cross-spawn": "^7.0.6",
+    "picocolors": "1.1.1",
+    "semver": "^7.8.1",
+    "smol-toml": "^1.6.1",
+    "yaml": "^2.9.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/build.js && node scripts/build-inline.js",
+    "demo:regen": "sh scripts/demo-regen.sh",
+    "prepare": "git config core.hooksPath .git-hooks || true",
+    "typecheck": "tsc -p tsconfig.test.json --noEmit && tsc -p tsconfig.jschecks.json --noEmit",
+    "test:smoke": "npm run build && node --experimental-strip-types --no-warnings --test \"tests/unit/**/*.test.ts\"",
+    "test:core": "npm run build && node --experimental-strip-types --no-warnings --test \"tests/unit/**/*.test.ts\" \"tests/integration/**/*.test.ts\"",
+    "check": "npm run typecheck && npm test",
+    "test": "npm run build && node --experimental-strip-types --no-warnings --test \"tests/**/*.test.ts\"",
+    "test:coverage": "npm run build && node --experimental-strip-types --no-warnings --test --experimental-test-coverage \"--test-coverage-exclude=tests/**\" --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage.lcov \"tests/**/*.test.ts\"",
+    "prepublishOnly": "npm run build && node --experimental-strip-types --no-warnings --test \"tests/**/*.test.ts\""
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^22.20.0",
+    "@types/semver": "^7.7.1",
+    "typescript": "~7.0"
+  },
+  "optionalDependencies": {
+    "@lydell/node-pty": "^1.2.0-beta.12"
+  },
+  "overrides": {
+    "axios": "1.18.1"
+  }
+}

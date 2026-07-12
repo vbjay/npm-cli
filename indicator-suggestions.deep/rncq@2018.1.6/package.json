@@ -1,0 +1,41 @@
+{
+  "name": "rncq",
+  "version": "2018.1.6",
+  "author": "Claude SIMON (http://q37.info/contact/)",
+  "description": "Rational number calculator.",
+  "main": "RNCq.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "binary": {
+    "module_name": "rncqnjs",
+    "module_path": "./",
+    "remote_path": "./epeios-q37/rncq-node/releases/download/v20180106/",
+    "package_name": "{module_name}-v20180106-{platform}-{arch}.tar.gz",
+    "host": "https://github.com"
+  },
+  "dependencies": {
+   "njsq": "2018.1.5"
+  },
+  "devDependencies": {
+
+  },
+  "scripts": {
+    "preinstall": "npm install node-pre-gyp",
+    "install": "node-pre-gyp install --fallback-to-build",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epeios-q37/rncq-node.git"
+  },
+  "keywords": [
+    "addon","native","C++","njsq","rational","calculator","calculus","calculation","calc","math","absolute","full","high","accuracy","precision","q37","epeios"
+  ],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/epeios-q37/rncq-node/issues"
+  },
+  "homepage": "https://github.com/epeios-q37/rncq-node#readme",
+  "runkitExampleFilename": "runkit.js"
+}

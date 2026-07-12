@@ -1,0 +1,64 @@
+{
+  "name": "@sys1yagi/expo-channel-talk-plugin",
+  "version": "0.1.0",
+  "description": "Expo config plugin to integrate react-native-channel-plugin for Channel Talk SDK in Expo managed workflow",
+  "main": "plugin/build/index.js",
+  "types": "plugin/build/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch",
+    "clean": "rm -rf plugin/build",
+    "prepare": "npm run clean && npm run build",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch --passWithNoTests",
+    "lint": "biome lint src/",
+    "fix": "biome lint --write src/",
+    "format": "biome format --write .",
+    "check": "biome check --write ."
+  },
+  "keywords": [
+    "expo",
+    "react-native",
+    "channel-talk",
+    "channel-io",
+    "config-plugin",
+    "expo-plugin"
+  ],
+  "author": "sys1yagi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sys1yagi/unofficial-expo-channel-talk-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sys1yagi/unofficial-expo-channel-talk-plugin/issues"
+  },
+  "homepage": "https://github.com/sys1yagi/unofficial-expo-channel-talk-plugin#readme",
+  "files": [
+    "plugin/build"
+  ],
+  "peerDependencies": {
+    "expo": ">=49.0.0",
+    "react-native-channel-plugin": ">=0.6.0"
+  },
+  "dependencies": {
+    "@expo/config-plugins": "^7.0.0",
+    "@expo/config-types": "^49.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": false
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "name": "normalize-diacritics",
+  "version": "5.0.0",
+  "description": "Remove accents/ diacritics in string",
+  "keywords": [
+    "diacritic",
+    "diacritics",
+    "motss",
+    "normalize",
+    "normalize-diacritics",
+    "npm"
+  ],
+  "homepage": "https://github.com/motss/normalize-diacritics",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:motss/normalize-diacritics.git"
+  },
+  "funding": "https://github.com/motss/lit-ntml?sponsor=1",
+  "license": "MIT",
+  "author": {
+    "name": "Rong Sen Ng (motss)",
+    "email": "wes.ngrongsen@gmail.com",
+    "url": "https://github.com/motss"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./diacritics": {
+      "types": "./dist/diacritics.d.ts",
+      "import": "./dist/diacritics.js",
+      "default": "./dist/diacritics.js"
+    },
+    "./normalize": {
+      "types": "./dist/normalize.d.ts",
+      "import": "./dist/normalize.js",
+      "default": "./dist/normalize.js"
+    },
+    "./normalize-sync": {
+      "types": "./dist/normalize-sync.d.ts",
+      "import": "./dist/normalize-sync.js",
+      "default": "./dist/normalize-sync.js"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist/*.*js.map",
+    "dist/*.*js",
+    "dist/*.d.ts.map",
+    "dist/*.d.ts",
+    "!**/*bench*/**/*.*",
+    "!**/*test*/**/*.*"
+  ],
+  "nano-staged": {
+    "*.ts": [
+      "npm run lint:build -- -f 1",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@reallyland/tools": "^0.3.1",
+    "@vitest/coverage-c8": "^0.25.7",
+    "typescript": "^5.2.2",
+    "vitest": "^0.25.7"
+  },
+  "engines": {
+    "node": ">= 14.x",
+    "npm": ">= 6.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "bench": "vitest bench",
+    "build": "npm run clean && tsc",
+    "clean": "sh $(npm root)/@reallyland/tools/cleanup.sh",
+    "postinstall": "FILE=\"$(npm root)/@reallyland/tools/postinstall.sh\"; if [ -f \"$FILE\" ]; then sh \"$FILE\"; fi",
+    "lint": "sh $(npm root)/@reallyland/tools/lint-build.sh -c $(npm root)/@reallyland/tools/.eslintrc.json -s 'src/**/*.ts'",
+    "lint-commit": "sh $(npm root)/@reallyland/tools/lint-commit.sh",
+    "lint:build": "sh $(npm root)/@reallyland/tools/lint-build.sh -c $(npm root)/@reallyland/tools/browser/.build.eslintrc.json",
+    "pre-commit": "sh $(npm root)/@reallyland/tools/pre-commit.sh",
+    "test": "vitest --coverage",
+    "version": "sh $(npm root)/@reallyland/tools/generate-changelogs.sh && git add *CHANGELOG.md"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": "nuxt-modernizr",
+  "version": "5.0.0",
+  "description": "Adds a Modernizr build to your Nuxt.js app.",
+  "keywords": [
+    "browser-detection",
+    "caniuse",
+    "css",
+    "feature-detection",
+    "frontend",
+    "javascript",
+    "modernizr",
+    "npm",
+    "npm-package",
+    "nuxt",
+    "nuxt-module",
+    "nuxtjs",
+    "nuxtjs-module",
+    "webdevelopment"
+  ],
+  "repository": "dword-design/nuxt-modernizr",
+  "funding": "https://github.com/sponsors/dword-design",
+  "license": "MIT",
+  "author": "Sebastian Landwehr <info@sebastianlandwehr.com>",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/module.js",
+      "types": "./dist/module.d.ts"
+    }
+  },
+  "main": "dist/module.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "checkUnknownFiles": "base checkUnknownFiles",
+    "commit": "base commit",
+    "depcheck": "base depcheck",
+    "dev": "base dev",
+    "lint": "base lint",
+    "prepare": "base prepare",
+    "prepublishOnly": "base prepublishOnly",
+    "test": "base test",
+    "typecheck": "base typecheck",
+    "verify": "base verify"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^4.2.1",
+    "endent": "npm:@dword-design/endent@^1.4.7",
+    "modernizr": "^3.13.1",
+    "modernizr-build": "npm:modernizr@^3.13.1"
+  },
+  "devDependencies": {
+    "@dword-design/base": "^16.1.0",
+    "@dword-design/base-config-nuxt-module": "^5.0.0",
+    "@playwright/browser-chromium": "^1.57.0",
+    "@playwright/test": "^1.57.0",
+    "@types/modernizr": "^3.5.6",
+    "execa": "^9.6.1",
+    "get-port": "^7.1.0",
+    "nuxt": "^4.2.1",
+    "nuxt-dev-ready": "^5.0.1",
+    "output-files": "^3.0.0",
+    "tree-kill-promise": "^4.0.0"
+  },
+  "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

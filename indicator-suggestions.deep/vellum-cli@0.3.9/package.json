@@ -1,0 +1,37 @@
+{
+  "name": "vellum-cli",
+  "version": "0.3.9",
+  "description": "The vellum CLI — publish agent-authored HTML artifacts to a Vellum server.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "vellum": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "vellum",
+    "cli",
+    "html",
+    "artifacts",
+    "agents"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --target=node --format=esm --outfile=dist/index.js",
+    "prepack": "bun run build",
+    "release": "bun publish --access public",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@vellum/core": "workspace:*"
+  }
+}

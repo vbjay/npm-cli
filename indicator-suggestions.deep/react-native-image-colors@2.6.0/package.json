@@ -1,0 +1,85 @@
+{
+  "name": "react-native-image-colors",
+  "version": "2.6.0",
+  "description": "Fetch prominent colors from an image.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "open -a \"Xcode\" example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "react-native-image-colors",
+    "RNImageColors",
+    "ios",
+    "android",
+    "react",
+    "image",
+    "dominant",
+    "average",
+    "color",
+    "palette"
+  ],
+  "repository": "https://github.com/osamaqarem/react-native-image-colors",
+  "bugs": {
+    "url": "https://github.com/osamaqarem/react-native-image-colors/issues"
+  },
+  "author": "OsamaQarem <osamaqarem@gmail.com> (https://github.com/osamaqarem)",
+  "license": "MIT",
+  "homepage": "https://github.com/osamaqarem/react-native-image-colors#readme",
+  "dependencies": {
+    "node-vibrant": "^4.0.3"
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@types/react": "~18.0.27",
+    "@types/react-native": "^0.72.2",
+    "babel-preset-expo": "^9.3.1",
+    "eslint": "^8.39.0",
+    "expo-module-scripts": "^3.4.0",
+    "expo-modules-core": "^1.11.2",
+    "jest": "^29.5.0",
+    "jest-expo": "^49.0.0",
+    "prettier": "^2.8.8",
+    "react-native": "0.72.1",
+    "release-it": "^15.11.0"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!@react-native|react-native|expo-modules-core)"
+    ]
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true,
+      "autoGenerate": true,
+      "releaseName": "${version}"
+    }
+  }
+}

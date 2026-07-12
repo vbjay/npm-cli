@@ -1,0 +1,42 @@
+{
+  "name": "pdqhash-node",
+  "version": "1.1.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "Apache-2.0",
+  "packageManager": "yarn@1.22.22",
+  "author": "Dispherical (https://dispherical.com)",
+  "scripts": {
+    "build": "napi build --release",
+    "dev": "napi build",
+    "harness": "node harness.js",
+    "install": "napi build --release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dispherical/pdqhash-node.git"
+  },
+  "keywords": [
+    "pdq",
+    "perceptual",
+    "rust",
+    "hash",
+    "image",
+    "picture",
+    "algorithm"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src",
+    "Cargo.toml",
+    "build.rs",
+    "README.md"
+  ],
+  "dependencies": {
+    "@napi-rs/cli": "^3.5.1"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "name": "@nickname4th/pura-cli",
+  "version": "0.1.6",
+  "description": "LAN Android device mirroring hub and developer CLI for distributed teams.",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://github.com/LiuTianjie/pura#readme",
+  "bugs": {
+    "url": "https://github.com/LiuTianjie/pura/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiuTianjie/pura.git"
+  },
+  "keywords": [
+    "android",
+    "adb",
+    "screen-mirroring",
+    "lan",
+    "device-lab",
+    "cli",
+    "webrtc",
+    "h264"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist/client",
+    "server/dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "pura-cli": "server/dist/cli.js"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c blue,green \"tsx watch server/src/index.ts\" \"vite --host 0.0.0.0\"",
+    "dev:server": "tsx watch server/src/index.ts",
+    "dev:client": "vite --host 0.0.0.0",
+    "dev:hub": "ROLE=hub tsx watch server/src/index.ts",
+    "dev:agent": "ROLE=agent HUB_URL=http://127.0.0.1:8787 PORT=8788 DATA_DIR=data-agent tsx watch server/src/index.ts",
+    "build": "vite build && tsc -p server/tsconfig.json",
+    "start": "node server/dist/index.js",
+    "hub": "ROLE=hub node server/dist/index.js",
+    "check": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p server/tsconfig.json",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "jmuxer": "^2.1.0",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.1",
+    "concurrently": "^10.0.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.7"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a74e7ea319fa3efc",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/sync-global-trellis.mjs",
+      "src/lib/global-trellis-sync.js",
+      "src/lib/paths.js",
+      "src/lib/runtime-env.js",
+      "src/lib/versions.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/sync-global-trellis.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9a2badb23137d367867583eb526696b91f99e499774176bc0aa3a652ea11b1bb",
+        "sizeBytes": 800,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/global-trellis-sync.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/global-trellis-sync.js",
+        "reason": "required by ./scripts/sync-global-trellis.mjs",
+        "sha256": "8d7bb12621d2e9de1a574183bc51f0c799edfc15a05722418b60c17d284e3246",
+        "sizeBytes": 5774,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/runtime-env.js",
+          "src/lib/versions.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/runtime-env.js",
+        "reason": "required by ./src/lib/global-trellis-sync.js",
+        "sha256": "4153b2214348f6c60140be8cb4d93b909a0a01ec3ff036561f61de5b3d854328",
+        "sizeBytes": 810,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/lib/versions.js",
+        "reason": "required by ./src/lib/global-trellis-sync.js",
+        "sha256": "9b266a54af559f23b115beb46734c225215ff081a5af510a4991b2ae133ed126",
+        "sizeBytes": 951,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/paths.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/paths.js",
+        "reason": "required by ./src/lib/versions.js",
+        "sha256": "f46db5d073f0b0c37eb9a0e8c4770e356dd7eff68496060da13e322c1f016a21",
+        "sizeBytes": 627,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:52.233Z"
+  },
+  "hash": "sha256:05fb4f6b43e4ed62138e81048e5526b029f51ad6a5c71c57df15de04d87f5363"
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@vimlet/bundl",
+  "version": "1.4.4",
+  "description": "Build & pack anything your way!",
+  "engines": {
+    "node": ">=8.16.0"
+  },
+  "keywords": [
+    "bundle",
+    "pack",
+    "build",
+    "compile",
+    "tasks"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vimlet/bundl.git"
+  },
+  "main": "src/index.js",
+  "bin": {
+    "bundl": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "postinstall": "node src/version.js",
+    "doc": "cd docs && npm i && npm run doc",
+    "test": "npx intern config=@node",
+    "test:wip": "npx intern config=internWip.json@node",
+    "test:manual": "npx intern config=internManual.json@node"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@vimlet/commons-glob": "1.2.5",
+    "@vimlet/commons-watcher": "0.0.2",
+    "@vimlet/commons-run": "0.0.12",
+    "@vimlet/cli": "1.2.8",
+    "@vimlet/meta": "3.0.2",
+    "md5": "2.2.1",
+    "rimraf": "2.6.3",
+    "lodash": "4.17.15",
+    "semver": "6.3.0"
+  },
+  "devDependencies": {
+    "intern": "4.4.2"
+  }
+}

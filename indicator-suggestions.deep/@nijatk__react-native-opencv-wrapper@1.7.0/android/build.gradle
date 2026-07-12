@@ -1,0 +1,139 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.ReactNativeOpencvWrapper = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return ReactNativeOpencvWrapper[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+android {
+  namespace "com.nijatk.reactnativeopencvwrapper"
+
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  // When building the instrumented-test APK, both react-android and the
+  // bundled OpenCV ship libc++_shared.so. Keep the first to avoid a duplicate.
+  packaging {
+    jniLibs {
+      pickFirsts += ["**/libc++_shared.so"]
+    }
+  }
+
+  buildTypes {
+    debug {
+      enableAndroidTestCoverage true
+    }
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+// ---------------------------------------------------------------------------
+// OpenCV bundling strategy
+// ---------------------------------------------------------------------------
+// Two modes are supported:
+//
+//   1. "bundled" (default) - We declare a Maven dependency on OpenCV
+//      (org.opencv:opencv) so the host app does not have to do anything.
+//
+//   2. "host" - The host app already provides OpenCV (e.g. by including the
+//      OpenCV Android SDK as a Gradle module, or via another library that
+//      transitively depends on it). In this mode we DO NOT declare the
+//      dependency and just compile against it.
+//
+// Selection (in order of precedence):
+//   * Gradle property  rnOpenCVMode = bundled | host    (in gradle.properties
+//     of the host app, or via -PrnOpenCVMode=host)
+//   * Env variable     RN_OPENCV_MODE
+//   * Auto-detect: if the root project sets ext.rnOpenCVProvided = true OR if
+//     a project named ":opencv" exists in the build, we switch to "host".
+//   * Otherwise: "bundled".
+// ---------------------------------------------------------------------------
+
+ext.resolveOpenCVMode = {
+  if (project.hasProperty("rnOpenCVMode")) return project.rnOpenCVMode
+  if (System.getenv("RN_OPENCV_MODE")) return System.getenv("RN_OPENCV_MODE")
+  if (rootProject.ext.has("rnOpenCVProvided") && rootProject.ext.rnOpenCVProvided) return "host"
+  if (rootProject.findProject(":opencv") != null) return "host"
+  return "bundled"
+}
+
+ext.resolveOpenCVVersion = {
+  if (project.hasProperty("rnOpenCVVersion")) return project.rnOpenCVVersion
+  if (System.getenv("RN_OPENCV_VERSION")) return System.getenv("RN_OPENCV_VERSION")
+  return "4.11.0"
+}
+
+def opencvMode = resolveOpenCVMode()
+def opencvVersion = resolveOpenCVVersion()
+logger.lifecycle("[react-native-opencv-wrapper] OpenCV mode: ${opencvMode} (version: ${opencvVersion})")
+
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+
+  androidTestImplementation "androidx.test.ext:junit:1.2.1"
+  androidTestImplementation "androidx.test:runner:1.6.2"
+
+  if (opencvMode == "bundled") {
+    implementation "org.opencv:opencv:${opencvVersion}"
+  } else if (opencvMode == "host") {
+    if (rootProject.findProject(":opencv") != null) {
+      compileOnly project(":opencv")
+    }
+  } else {
+    throw new GradleException("[react-native-opencv-wrapper] Unknown rnOpenCVMode='${opencvMode}'. Use 'bundled' or 'host'.")
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "artifactDownloadUrls": [
+    "https://github.com/miiiiiiich/agent-walker/releases/download/v0.9.0"
+  ],
+  "bin": {
+    "agent-walker": "run-agent-walker.js",
+    "agw": "run-agw.js"
+  },
+  "dependencies": {
+    "detect-libc": "^2.1.2"
+  },
+  "description": "Local AI coding-agent usage dashboard — tokens, cost, projects, autonomy.",
+  "devDependencies": {
+    "prettier": "^3.8.3"
+  },
+  "engines": {
+    "node": ">=14.14",
+    "npm": ">=6"
+  },
+  "glibcMinimum": {
+    "major": 2,
+    "series": 35
+  },
+  "homepage": "https://github.com/miiiiiiich/agent-walker",
+  "keywords": [
+    "command-line-utilities",
+    "development-tools",
+    "cli",
+    "tui",
+    "claude",
+    "codex",
+    "usage"
+  ],
+  "license": "MIT OR Apache-2.0",
+  "name": "agent-walker",
+  "preferUnplugged": true,
+  "repository": "https://github.com/miiiiiiich/agent-walker",
+  "scripts": {
+    "fmt": "prettier --write **/*.js",
+    "fmt:check": "prettier --check **/*.js",
+    "postinstall": "node ./install.js"
+  },
+  "supportedPlatforms": {
+    "aarch64-apple-darwin": {
+      "artifactName": "agent-walker-aarch64-apple-darwin.tar.xz",
+      "bins": {
+        "agent-walker": "agent-walker",
+        "agw": "agw"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "aarch64-pc-windows-msvc": {
+      "artifactName": "agent-walker-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "agent-walker": "agent-walker.exe",
+        "agw": "agw.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "aarch64-unknown-linux-gnu": {
+      "artifactName": "agent-walker-aarch64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "agent-walker": "agent-walker",
+        "agw": "agw"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "x86_64-apple-darwin": {
+      "artifactName": "agent-walker-x86_64-apple-darwin.tar.xz",
+      "bins": {
+        "agent-walker": "agent-walker",
+        "agw": "agw"
+      },
+      "zipExt": ".tar.xz"
+    },
+    "x86_64-pc-windows-gnu": {
+      "artifactName": "agent-walker-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "agent-walker": "agent-walker.exe",
+        "agw": "agw.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "x86_64-pc-windows-msvc": {
+      "artifactName": "agent-walker-x86_64-pc-windows-msvc.zip",
+      "bins": {
+        "agent-walker": "agent-walker.exe",
+        "agw": "agw.exe"
+      },
+      "zipExt": ".zip"
+    },
+    "x86_64-unknown-linux-gnu": {
+      "artifactName": "agent-walker-x86_64-unknown-linux-gnu.tar.xz",
+      "bins": {
+        "agent-walker": "agent-walker",
+        "agw": "agw"
+      },
+      "zipExt": ".tar.xz"
+    }
+  },
+  "version": "0.9.0",
+  "volta": {
+    "node": "18.14.1",
+    "npm": "9.5.0"
+  }
+}

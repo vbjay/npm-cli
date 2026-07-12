@@ -1,0 +1,43 @@
+{
+  "name": "aura-mcp-connect",
+  "version": "0.4.0",
+  "description": "Zero-config WebRTC bridge for AURA's on-device MCP server. Lets any MCP client (Claude Code, VS Code, Cursor, Cline, Windsurf, Zed, custom SDK agents) talk to the AURA Android app from anywhere — no IP addresses, no firewall rules, no certificates. End-to-end encrypted over WebRTC DTLS.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "aura-mcp": "src/index.js",
+    "aura-mcp-connect": "src/index.js"
+  },
+  "files": [
+    "src",
+    "firebase-config.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@roamhq/wrtc": "^0.10.0",
+    "firebase": "^12.15.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "aura",
+    "android",
+    "webrtc",
+    "datachannel",
+    "remote-bridge"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dinesh210805/aura-live-mcp.git",
+    "directory": "aura-mcp-connect"
+  },
+  "scripts": {
+    "postinstall": "node src/postinstall.js",
+    "test": "node --check src/index.js && node --check src/webrtc-bridge.js"
+  }
+}

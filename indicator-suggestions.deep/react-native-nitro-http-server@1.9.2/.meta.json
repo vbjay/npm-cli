@@ -1,0 +1,72 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "281990e68d29d54f",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/fix-symlinks.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "de4cffc8c601ab9d5717883bd42eb81cac86f0549ecf3a74554e446887971834",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "(*reactNativeArchitectures())"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/fix-symlinks.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9f1815c6fda651944b0384b07a8c1dbc32c8c0b54e9f1f41ba4c1271b1df441d",
+        "sizeBytes": 2106,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:47.010Z"
+  },
+  "hash": "sha256:738dce7f8bb73e8078f8fd9a22783251c0bd81abc0513acb588e1bfe054b4460"
+}

@@ -1,0 +1,100 @@
+{
+  "name": "@kilohealth/rn-fitness-tracker",
+  "version": "3.1.0",
+  "description": "React native module for tracking fitness data with Google Fit and Apple Health Kit for Android & iOS",
+  "keywords": [
+    "react-native",
+    "health kit",
+    "google fit",
+    "fitness",
+    "step",
+    "track",
+    "tracker",
+    "health",
+    "android",
+    "ios",
+    "healthkit",
+    "apple health",
+    "fit",
+    "googlefit",
+    "fitnessapi"
+  ],
+  "homepage": "https://github.com/kilohealth/rn-fitness-tracker",
+  "repository": "https://github.com/kilohealth/rn-fitness-tracker",
+  "license": "MIT",
+  "author": "Kilo.Health",
+  "main": "src/index.ts",
+  "source": "src/index",
+  "scripts": {
+    "allow-bash": "chmod a+x .husky/commit-msg",
+    "_postinstall": "test -n \"$CI\" || (yarn allow-bash && husky install)",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable",
+    "sort-package-json": "npx sort-package-json",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tests:ios:build": "cd example && yarn detox build --configuration ios",
+    "tests:ios:pod:install": "cd example && rm -rf ios/example.xcworkspace && yarn pod-install",
+    "tests:ios:test": "cd example && yarn detox test --configuration ios --loglevel warn",
+    "tests:packager:jet-ci": "cd example && cross-env TMPDIR=$HOME/.metro REACT_DEBUGGER=\"echo nope\" node_modules/.bin/react-native start --no-interactive"
+  },
+  "lint-staged": {
+    "package.json": [
+      "sort-package-json"
+    ],
+    "*.{js,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,yml}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.6",
+    "@babel/core": "^7.19.3",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-export-default-from": "^7.18.6",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@kilohealth/eslint-config": "^2.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@types/react-native": "^0.69.2",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "conventional-changelog-conventionalcommits": "^5.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^27.1.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-native": "^4.0.0",
+    "eslint-plugin-react-native-a11y": "^3.2.1",
+    "eslint-restricted-globals": "^0.2.0",
+    "eslint-watch": "^8.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "pinst": "^3.0.0",
+    "prettier": "^2.7.1",
+    "react-native": "0.67.0",
+    "react-native-device-info": "^8.7.1",
+    "react-native-permissions": "^3.4.0",
+    "semantic-release": "^19.0.5",
+    "semantic-release-slack-bot": "^3.5.3",
+    "sort-package-json": "^1.57.0",
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "packageManager": "yarn@3.2.1",
+  "summary": ""
+}

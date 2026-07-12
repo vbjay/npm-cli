@@ -1,0 +1,119 @@
+{
+  "name": "figly",
+  "description": "CLI tool that fetches data from the Figma Web API and generates styling elements and components",
+  "version": "3.0.3",
+  "author": "deowk @deowk",
+  "auto-changelog": {
+    "output": "HISTORY.md",
+    "template": "./changelog-template.hbs",
+    "unreleased": false,
+    "commitLimit": false,
+    "includeBranch": [
+      "master",
+      "develop"
+    ]
+  },
+  "bin": {
+    "figly": "./bin/run"
+  },
+  "bugs": "https://github.com/SPANDigital/figly/issues",
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^2",
+    "chalk": "^3.0.0",
+    "conf": "^6.2.0",
+    "cosmiconfig": "^6.0.0",
+    "debug": "^4.1.1",
+    "ejs": "^3.0.1",
+    "enquirer": "^2.3.4",
+    "execa": "^4.0.0",
+    "figlet": "^1.3.0",
+    "fs-extra": "^8.1.0",
+    "gaze": "^1.1.3",
+    "imagemin": "^7.0.1",
+    "imagemin-svgo": "^8.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "jest": "^24.9.0",
+    "jest-diff": "^24.9.0",
+    "ora": "^4.0.3",
+    "svgstore": "^3.0.0-2",
+    "svgstore-cli": "^2.0.0",
+    "tslib": "^1",
+    "update-notifier": "^4.0.0"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1.2.5",
+    "@types/chai": "^4",
+    "@types/fs-extra": "^8.0.1",
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/jest": "^24.9.0",
+    "@types/mocha": "^5",
+    "@types/node": "^10",
+    "@types/proxyquire": "^1.3.28",
+    "auto-changelog": "^1.16.2",
+    "chai": "^4",
+    "commitizen": "^4.0.3",
+    "cpx": "^1.5.0",
+    "cz-conventional-changelog": "^3.0.2",
+    "eslint": "^5.13",
+    "eslint-config-oclif": "^3.1",
+    "eslint-config-oclif-typescript": "^0.1",
+    "mocha": "^5",
+    "mock-stdin": "^1.0.0",
+    "mustache": "^4.0.0",
+    "nock": "^11.7.2",
+    "nyc": "^14",
+    "proxyquire": "^2.1.3",
+    "rewiremock": "^3.13.9",
+    "sinon": "^8.1.1",
+    "ts-jest": "^24.3.0",
+    "ts-node": "^8",
+    "typescript": "^3.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/SPANDigital/figly",
+  "keywords": [
+    "oclif",
+    "figma",
+    "cli"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "topics": {
+      "init": {
+        "description": "main command that interacts with figma and generates assets"
+      },
+      "config:clear": {
+        "description": "command for clearing figlys internal cache"
+      }
+    },
+    "bin": "figly",
+    "commands": "./lib/commands"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "repository": "SPANDigital/figly",
+  "scripts": {
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "prepack": "rm -rf lib && tsc -b && cpx \"src/examples/*/**\" lib/examples && oclif-dev readme",
+    "version": "oclif-dev readme && git add README.md && auto-changelog -p && git add HISTORY.md && yarn pjson && git add src/examples/nextjs/package.json",
+    "ci": "npx git-cz",
+    "clg": "npx auto-changelog -p",
+    "postversion": "git push && git push --tags",
+    "pjson": "node ./src/scripts/render-package.json.js"
+  },
+  "types": "lib/index.d.ts"
+}

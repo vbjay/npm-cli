@@ -1,0 +1,97 @@
+{
+  "author": "Jens Oliver Meiert",
+  "bin": {
+    "html-minifier-next": "./cli.js",
+    "hmn": "./cli.js"
+  },
+  "bugs": "https://github.com/j9t/html-minifier-next/issues",
+  "dependencies": {
+    "commander": "^15.0.0",
+    "entities": "^8.0.0",
+    "lightningcss": "^1.32.0",
+    "svgo": "^4.0.1",
+    "terser": "^5.47.1"
+  },
+  "description": "Super-configurable and well-tested web page minifier (enhanced successor to HTML Minifier)",
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.0",
+    "@eslint/js": "^10.0.1",
+    "@swc/core": "^1.15.41",
+    "@types/node": "^26.1.0",
+    "eslint": "^10.6.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/htmlminifier.d.ts",
+      "import": "./src/htmlminifier.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "cli.js",
+    "html-minifier-next.schema.json",
+    "dist/types/",
+    "src/"
+  ],
+  "funding": "https://github.com/j9t/html-minifier-next?sponsor=1",
+  "homepage": "https://j9t.github.io/html-minifier-next/",
+  "keywords": [
+    "cli",
+    "compress",
+    "compressor",
+    "css",
+    "html",
+    "htmlmin",
+    "javascript",
+    "js",
+    "min",
+    "minification",
+    "minifier",
+    "minify",
+    "optimize",
+    "optimizer",
+    "pack",
+    "packer",
+    "svg",
+    "svgo",
+    "swc",
+    "terser",
+    "uglifier",
+    "uglify"
+  ],
+  "license": "MIT",
+  "name": "html-minifier-next",
+  "peerDependencies": {
+    "@swc/core": "^1.15.7"
+  },
+  "peerDependenciesMeta": {
+    "@swc/core": {
+      "optional": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j9t/html-minifier-next.git"
+  },
+  "scripts": {
+    "build": "tsc && npm run build:schema",
+    "build:docs": "vite build --base /html-minifier-next/",
+    "build:schema": "node scripts/build-schema.js",
+    "deploy": "npm run build && npm run build:docs",
+    "lint": "eslint .",
+    "prebuild": "node --input-type=module --eval \"import {rmSync} from 'fs';rmSync('dist',{recursive:true,force:true})\"",
+    "prepack": "npm run build",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "serve": "vite",
+    "test": "npm run test:types && node --test tests/*.spec.js",
+    "test:types": "tsc --noEmit && tsc --project tsconfig.test.json",
+    "test:watch": "node --test --watch tests/*.spec.js"
+  },
+  "type": "module",
+  "version": "7.2.0"
+}

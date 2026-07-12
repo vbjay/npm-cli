@@ -1,0 +1,448 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ff3949ced02fe685",
+    "fetchedFiles": [
+      "build/grammar.js",
+      "package.json",
+      "scripts/bootstrap.compiler.js",
+      "scripts/build-parser.js",
+      "scripts/build.js",
+      "src/compiler/ast/style.mjs",
+      "src/compiler/colord.mjs",
+      "src/compiler/compilation.mjs",
+      "src/compiler/compiler.mjs",
+      "src/compiler/constants.mjs",
+      "src/compiler/errors.mjs",
+      "src/compiler/helpers.mjs",
+      "src/compiler/imbaconfig.mjs",
+      "src/compiler/lexer.mjs",
+      "src/compiler/nodes.mjs",
+      "src/compiler/parser.mjs",
+      "src/compiler/rewriter.mjs",
+      "src/compiler/selparse.mjs",
+      "src/compiler/sourcemap.mjs",
+      "src/compiler/sourcemapper.mjs",
+      "src/compiler/styler.mjs",
+      "src/compiler/theme.mjs",
+      "src/compiler/token.mjs",
+      "src/compiler/utils.mjs",
+      "src/imba/runtime.mjs",
+      "vendor/colors.mjs",
+      "vendor/css-selector-parser.mjs",
+      "vendor/fnv1a.mjs"
+    ],
+    "bareFollows": [
+      {
+        "name": "colord",
+        "versionSpec": "^2.9.3"
+      },
+      {
+        "name": "imba",
+        "versionSpec": null
+      },
+      {
+        "name": "chokidar",
+        "versionSpec": "^5.0.0"
+      },
+      {
+        "name": "esbuild",
+        "versionSpec": "^0.24.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chokidar@5.0.0",
+      "colord@2.9.3",
+      "esbuild@0.24.2",
+      "imba@2.0.0-alpha.252"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build.js",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": "8a8f2d9a4997952d02d9454828183239678f36824fbc41f8f255f742e442b4b2",
+        "sizeBytes": 8165,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/bootstrap.compiler.js",
+          "src/compiler/compiler.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/bootstrap.compiler.js",
+        "reason": "required by ./scripts/build.js",
+        "sha256": "96aed51280a33ec151f281e17f4a96a0cb8be170fd4af888a2290d69886cb1a7",
+        "sizeBytes": 361327,
+        "signals": [
+          "uses-eval",
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/compiler.mjs",
+        "reason": "required by ./scripts/build.js",
+        "sha256": "d3fdebac6e517bd359ea7028aea367b905adf4623414c47e37a1504a94f9e3c1",
+        "sizeBytes": 2703,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/helpers.mjs",
+          "src/compiler/lexer.mjs",
+          "src/compiler/rewriter.mjs",
+          "src/compiler/parser.mjs",
+          "src/compiler/nodes.mjs",
+          "src/compiler/imbaconfig.mjs",
+          "src/compiler/errors.mjs",
+          "src/compiler/compilation.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/helpers.mjs",
+        "reason": "required by ./src/compiler/compiler.mjs; required by ./src/compiler/compilation.mjs; required by ./src/compiler/errors.mjs; required by ./src/compiler/lexer.mjs; required by ./src/compiler/nodes.mjs; required by ./src/compiler/sourcemap.mjs",
+        "sha256": "bbb34e6d0e1689584ee0433a6e675eb91d58f833b613c44f010cb793becfe3af",
+        "sizeBytes": 14936,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "vendor/fnv1a.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "vendor/fnv1a.mjs",
+        "reason": "required by ./src/compiler/helpers.mjs",
+        "sha256": "8123be11542553c3531d45dfc32754ff1b669e99890b2c3d0b134fc7f2c84620",
+        "sizeBytes": 3384,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/lexer.mjs",
+        "reason": "required by ./src/compiler/compiler.mjs",
+        "sha256": "d1b4282cb16dfa1c7df10756968bd42949d2ef65ee1c9bd9b49c021de8779dee",
+        "sizeBytes": 78619,
+        "signals": [
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/token.mjs",
+          "src/compiler/constants.mjs",
+          "src/compiler/compilation.mjs",
+          "src/compiler/errors.mjs",
+          "src/compiler/helpers.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/token.mjs",
+        "reason": "required by ./src/compiler/lexer.mjs; required by ./src/compiler/rewriter.mjs; required by ./src/compiler/nodes.mjs",
+        "sha256": "4b2955de472fe94730597ba4a05f2718a242e8bc76931702cb4b74e145b40ee4",
+        "sizeBytes": 3212,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/constants.mjs",
+        "reason": "required by ./src/compiler/lexer.mjs; required by ./src/compiler/rewriter.mjs; required by ./src/compiler/nodes.mjs; required by ./vendor/css-selector-parser.mjs",
+        "sha256": "cf9aa033e85dcf18d7c86d94c7074b28c6764b1918678f4ed7f4b70861cd435a",
+        "sizeBytes": 14252,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/compilation.mjs",
+        "reason": "required by ./src/compiler/lexer.mjs; required by ./src/compiler/nodes.mjs; required by ./src/compiler/compiler.mjs",
+        "sha256": "22fadd09e927241f57965f88403c63807d4f3422e8320bed8036c2a5f52d9878",
+        "sizeBytes": 5464,
+        "signals": [
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/helpers.mjs",
+          "src/compiler/sourcemapper.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/sourcemapper.mjs",
+        "reason": "required by ./src/compiler/compilation.mjs; required by ./src/compiler/nodes.mjs",
+        "sha256": "28b740b9708d31a060691ce6ef51287dec4b9893f700f354e17e83779b9ec94a",
+        "sizeBytes": 608,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/errors.mjs",
+        "reason": "required by ./src/compiler/lexer.mjs; required by ./src/compiler/nodes.mjs; required by ./src/compiler/compiler.mjs",
+        "sha256": "dd40daa859b44ae1eb2a4169eec5fd950194f80fe50b37ca8ef269d612d6208e",
+        "sizeBytes": 5021,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/helpers.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/rewriter.mjs",
+        "reason": "required by ./src/compiler/compiler.mjs",
+        "sha256": "c63b27df719aa68669491860f74408873d5e11b2e4242db02c97f39368ea8f9c",
+        "sizeBytes": 27422,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/token.mjs",
+          "src/compiler/constants.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/parser.mjs",
+        "reason": "required by ./src/compiler/compiler.mjs",
+        "sha256": "c964fddd240b71e8809e2c19a1f7c5a992523998f6418d4e8f5b25471f8f33d6",
+        "sizeBytes": 192950,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/nodes.mjs",
+        "reason": "required by ./src/compiler/compiler.mjs",
+        "sha256": "902733736d5328c8334b82614656a878e41262eb84bf6237ba4f89d3135450c8",
+        "sizeBytes": 491666,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/ast/style.mjs",
+          "src/compiler/helpers.mjs",
+          "src/compiler/constants.mjs",
+          "vendor/colors.mjs",
+          "src/compiler/colord.mjs",
+          "src/compiler/errors.mjs",
+          "src/compiler/token.mjs",
+          "src/compiler/sourcemap.mjs",
+          "src/compiler/styler.mjs",
+          "src/compiler/compilation.mjs",
+          "src/compiler/sourcemapper.mjs",
+          "src/imba/runtime.mjs",
+          "src/compiler/utils.mjs"
+        ],
+        "urls": [
+          {
+            "url": "http://www.w3.org/2000/svg",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "src/compiler/ast/style.mjs",
+        "reason": "required by ./src/compiler/nodes.mjs",
+        "sha256": "b91c256e7a50d1ec89efa1e2f0d1ac29713b8be1df52a7b4bb30cbc0eab67b78",
+        "sizeBytes": 32399,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "vendor/colors.mjs",
+        "reason": "required by ./src/compiler/nodes.mjs; required by ./src/compiler/styler.mjs",
+        "sha256": "5db99b1d90dad395d33c1c4109e890e1b00da99324c5f1ca906bed18a96d2f65",
+        "sizeBytes": 16400,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/colord.mjs",
+        "reason": "required by ./src/compiler/nodes.mjs; required by ./src/compiler/styler.mjs",
+        "sha256": "e4d8d8804e0725cafb00524c86b8f63699b48a611623d01391fd12ea025871da",
+        "sizeBytes": 303,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/sourcemap.mjs",
+        "reason": "required by ./src/compiler/nodes.mjs",
+        "sha256": "1abedcf22fe47689ce08284a7bc2b42ddfaf2b3b55837c3f18f962f6bbda7b4e",
+        "sizeBytes": 7746,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/helpers.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/styler.mjs",
+        "reason": "required by ./src/compiler/nodes.mjs",
+        "sha256": "271c4bf15a445d3fff55bbffa95a7cbe614530e4c280a0b4278ced116eb73358",
+        "sizeBytes": 50361,
+        "signals": [
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/selparse.mjs",
+          "vendor/colors.mjs",
+          "src/compiler/colord.mjs",
+          "src/compiler/theme.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/selparse.mjs",
+        "reason": "required by ./src/compiler/styler.mjs",
+        "sha256": "e63794d74e0ffc81d1dac335ea449d579e8bd7e06a8c65acd2dcf448f31dc479",
+        "sizeBytes": 12511,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "vendor/css-selector-parser.mjs",
+          "src/compiler/theme.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "vendor/css-selector-parser.mjs",
+        "reason": "required by ./src/compiler/selparse.mjs",
+        "sha256": "eacdeb18dbd578efb53bad241cfc59db2ba55f847619524985de667516abf56a",
+        "sizeBytes": 26894,
+        "signals": [
+          "writes-outside-package",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/compiler/theme.mjs",
+          "src/compiler/constants.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/theme.mjs",
+        "reason": "required by ./vendor/css-selector-parser.mjs; required by ./src/compiler/selparse.mjs; required by ./src/compiler/styler.mjs",
+        "sha256": "e34ffb83993dc012fe41ff0025c1dee8dc002b1cbd753bd6d2b4666afa5e9b52",
+        "sizeBytes": 17956,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/imba/runtime.mjs",
+        "reason": "required by ./src/compiler/nodes.mjs",
+        "sha256": "d151aa6bfffc1c930acb3dc68bd0c519400db9138e2db1f14ee52ffa527228cc",
+        "sizeBytes": 8674,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/utils.mjs",
+        "reason": "required by ./src/compiler/nodes.mjs",
+        "sha256": "85e5e834fc682f3f40dc6e75f2e9c65f8d9f1aedec67c0004c49e0cf5d45177a",
+        "sizeBytes": 1158,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "src/compiler/imbaconfig.mjs",
+        "reason": "required by ./src/compiler/compiler.mjs",
+        "sha256": "b15cc55834491e28b0b924cdf7152199f3cf525d6c22e8fc74a7cc576c26de1f",
+        "sizeBytes": 1186,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/build-parser.js",
+        "reason": "referenced by lifecycle script: `build-parser`",
+        "sha256": "7dd3080e0deb0b33ca3d748ea9124d34fd2f918db1cc2b1169daadb401a586b5",
+        "sizeBytes": 1211,
+        "signals": [
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "build/grammar.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "build/grammar.js",
+        "reason": "required by ./scripts/build-parser.js",
+        "sha256": "fc10dd66479c871d68daf328b8b6f670d37491cccb7819d6560bc606de695982",
+        "sizeBytes": 120043,
+        "signals": [
+          "uses-eval",
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:00.700Z"
+  },
+  "hash": "sha256:ff5294e4184a555ca92c6912f25ac6e41b381d8619070c3c18c8315d6aaed3ce"
+}

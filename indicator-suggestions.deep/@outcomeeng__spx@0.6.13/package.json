@@ -1,0 +1,109 @@
+{
+  "name": "@outcomeeng/spx",
+  "version": "0.6.13",
+  "description": "Developer CLI for code validation and session management",
+  "type": "module",
+  "bin": {
+    "spx": "./bin/spx.js"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/outcomeeng/spx.git"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "pnpm run build && vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "pnpm run build && vitest run tests/integration",
+    "test:e2e": "pnpm run build && vitest run tests/e2e",
+    "test:coverage": "pnpm run build && vitest run --coverage",
+    "typecheck": "tsx src/cli.ts validation typescript",
+    "typecheck:production": "tsx src/cli.ts validation typescript --scope production",
+    "lint": "tsx src/cli.ts validation lint",
+    "lint:fix": "tsx src/cli.ts validation lint --fix",
+    "lint:production": "tsx src/cli.ts validation lint --scope production",
+    "validate": "tsx src/cli.ts validation all --skip-circular",
+    "validate:production": "tsx src/cli.ts validation all --scope production --skip-circular",
+    "validate:published": "node bin/spx.js validation all --scope production --skip-circular",
+    "publish:check": "pnpm run validate && pnpm run circular && pnpm run build && vitest run && pnpm run validate:published && pnpm run circular:published",
+    "knip": "tsx src/cli.ts validation knip",
+    "circular": "tsx src/cli.ts validation circular",
+    "circular:published": "node bin/spx.js validation circular --scope production",
+    "clean": "pnpm run clean:ignored",
+    "clean:ignored": "find . \\( -path '*/node_modules' -o -path './dist' -o -path './build' -o -path './coverage' -o -path './coverage-*' -o -path '*/.git' \\) -prune -o \\( -type d -name __pycache__ -prune -exec rm -rf {} + \\) -o \\( -type f \\( -name .DS_Store -o -name Thumbs.db -o -name '*.pyc' \\) -exec rm -f {} + \\)",
+    "format": "dprint fmt .",
+    "format:check": "dprint check .",
+    "prepare": "tsx src/lib/precommit/install-hooks.ts",
+    "prepublishOnly": "pnpm run publish:check"
+  },
+  "keywords": [
+    "cli",
+    "validation",
+    "session",
+    "workflow"
+  ],
+  "author": "Outcome Engineering",
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "@types/estree": "^1.0.8",
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@vitest/coverage-v8": "^4.1.5",
+    "dprint": "0.55.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-sonarjs": "^4.1.0",
+    "eslint-plugin-unicorn": "65.0.1",
+    "fast-check": "^4.7.0",
+    "globals": "^17.5.0",
+    "ink-testing-library": "^4.0.0",
+    "jsonc-parser": "^3.3.1",
+    "knip": "^6.16.1",
+    "lefthook": "^2.1.9",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript-eslint": "^8.59.1",
+    "vitest": "^4.1.5"
+  },
+  "dependencies": {
+    "@typescript-eslint/parser": "^8.59.1",
+    "@typescript-eslint/visitor-keys": "^8.59.1",
+    "chalk": "^5.6.2",
+    "commander": "^11.1.0",
+    "dependency-cruiser": "16.10.4",
+    "eslint-visitor-keys": "^5.0.1",
+    "execa": "^9.6.1",
+    "ink": "^7.0.6",
+    "markdownlint-cli2": "^0.23.0",
+    "markdownlint-rule-relative-links": "^5.1.0",
+    "react": "^19.2.7",
+    "smol-toml": "^1.6.1",
+    "typescript": "^5.9.3",
+    "yaml": "^2.8.3"
+  },
+  "packageManager": "pnpm@11.5.0+sha512.dbfcc4f81cf48597afd4bc391ffdf12c11f1a9fb83a395bfa6b0a2d9cc2fd8ffebafdb1ccbd529632153f793904c2615b7f09fe1a345473fd1c35845172a8eb1"
+}

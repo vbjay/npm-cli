@@ -1,0 +1,115 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.FileHash = [
+    kotlinVersion: "2.0.21",
+    minSdkVersion: 24,
+    compileSdkVersion: 36,
+    targetSdkVersion: 36,
+    ndkVersion: "27.1.12297006"
+  ]
+
+  ext.getExtOrDefault = { prop ->
+    if (rootProject.ext.has(prop)) {
+      return rootProject.ext.get(prop)
+    }
+
+    return FileHash[prop]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+apply plugin: "com.facebook.react"
+
+def fileHashEngine =
+  (project.findProperty("react_native_file_hash_engine")
+    ?: rootProject.findProperty("react_native_file_hash_engine")
+    ?: "native")
+    .toString()
+    .toLowerCase()
+
+def zigCoreVersion = "unknown"
+def zigCoreZon = file("../third_party/zig-files-hash/build.zig.zon")
+if (zigCoreZon.exists()) {
+  def match = (zigCoreZon.getText("UTF-8") =~ /version\s*=\s*"([^"]+)"/)
+  if (match.find()) {
+    zigCoreVersion = "v${match.group(1)}"
+  }
+}
+
+if (!(fileHashEngine in ["native", "zig"])) {
+  throw new GradleException("react_native_file_hash_engine must be 'native' or 'zig' (got '${fileHashEngine}')")
+}
+
+android {
+  namespace "com.preeternal.filehash"
+
+  ndkVersion getExtOrDefault("ndkVersion")
+  compileSdkVersion getExtOrDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault("minSdkVersion")
+    targetSdkVersion getExtOrDefault("targetSdkVersion")
+    buildConfigField "String", "FILE_HASH_ENGINE", "\"${fileHashEngine}\""
+    buildConfigField "String", "FILE_HASH_ZIG_CORE_VERSION", "\"${zigCoreVersion}\""
+
+    externalNativeBuild {
+      cmake {
+        arguments "-DFILE_HASH_ENGINE=${fileHashEngine}"
+      }
+    }
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "src/main/cpp/CMakeLists.txt"
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  testImplementation "junit:junit:4.13.2"
+}

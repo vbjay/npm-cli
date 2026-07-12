@@ -1,0 +1,57 @@
+{
+  "name": "smoltcpjs",
+  "version": "0.2.1",
+  "description": "Userland IPv6 network stack in WebAssembly via smoltcp.",
+  "license": "0BSD",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukeburns/smoltcpjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lukeburns/smoltcpjs/issues"
+  },
+  "homepage": "https://github.com/lukeburns/smoltcpjs#readme",
+  "files": [
+    "README.md",
+    "pkg/smoltcpjs.js",
+    "pkg/smoltcpjs.d.ts",
+    "pkg/smoltcpjs_bg.wasm",
+    "pkg/smoltcpjs_bg.wasm.d.ts",
+    "COVERAGE.md",
+    "LICENSE"
+  ],
+  "main": "pkg/smoltcpjs.js",
+  "types": "pkg/smoltcpjs.d.ts",
+  "exports": {
+    ".": {
+      "types": "./pkg/smoltcpjs.d.ts",
+      "import": "./pkg/smoltcpjs.js",
+      "default": "./pkg/smoltcpjs.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "wasm-pack build --target web --out-dir pkg",
+    "build:node": "wasm-pack build --target nodejs --out-dir pkg-node",
+    "test": "npm run build && node --test test/smoltcpjs.test.mjs",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "wasm",
+    "webassembly",
+    "wasm-bindgen",
+    "smoltcp",
+    "network",
+    "ipv6",
+    "tcp",
+    "udp",
+    "icmpv6",
+    "tun",
+    "mesh",
+    "raw-socket"
+  ],
+  "devDependencies": {
+    "wasm-pack": "^0.0.0"
+  }
+}

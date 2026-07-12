@@ -1,0 +1,238 @@
+{
+  "name": "@droppii-org/chat-mobile",
+  "version": "0.2.32",
+  "description": "Droppii chat mobile",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "homepage": "https://github.com/droppii/chat-mobile#readme",
+  "bugs": {
+    "url": "https://github.com/droppii/chat-mobile/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/droppii/chat-mobile.gitt"
+  },
+  "license": "MIT",
+  "author": "droppii <hoang.phan@droppii.com> (https://github.com/hoangphandroppii)",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "directories": {
+    "doc": "docs",
+    "example": "example",
+    "lib": "lib"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "workspaces": [
+    "example",
+    "exampleLegacy"
+  ],
+  "scripts": {
+    "example": "yarn workspace @droppii-org/chat-mobile-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "typecheck": "tsc -p tsconfig.build.json 2>&1 | grep -E 'src/.*error' || echo 'Typecheck passed (external dependency warnings ignored)'",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest",
+    "release": "release-it --no-git --ci --no-increment",
+    "web": "vite",
+    "build:web": "vite build",
+    "example-legacy": "yarn workspace @droppii-org/chat-mobile-example-legacy"
+  },
+  "dependencies": {
+    "@droppii/openim-rn-client-sdk": "git+ssh://git@github.com/droppii/open-im-sdk-reactnative.git#v1.0.0-rc15",
+    "@legendapp/list": "^3.0.6",
+    "axios": "^1.16.1",
+    "lodash": "^4.18.1",
+    "react-native-fs": "^2.20.0",
+    "react-native-uuid": "^2.0.4"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^20.5.0",
+    "@droppii/libs": "git+ssh://git@github.com:droppii/mobile-components.git#v1.1.17",
+    "@eslint/compat": "^2.0.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@growthbook/growthbook-react": "*",
+    "@jest/globals": "^30.0.0",
+    "@react-native-clipboard/clipboard": "^1.16.3",
+    "@react-native-documents/picker": "^12.0.1",
+    "@react-native/babel-preset": "0.85.0",
+    "@react-native/eslint-config": "0.85.0",
+    "@react-native/jest-preset": "0.85.0",
+    "@react-navigation/native": "*",
+    "@release-it/conventional-changelog": "^10.0.6",
+    "@tanstack/react-query": "^5.101.0",
+    "@types/lodash": "^4",
+    "@types/react": "^19.2.0",
+    "@types/react-native": "^0.73.0",
+    "@types/react-native-photo-view": "^1.5.4",
+    "@types/react-native-snap-carousel": "^3.8.5",
+    "@types/react-query": "^1.2.9",
+    "commitlint": "^20.5.0",
+    "del-cli": "^7.0.0",
+    "deprecated-react-native-prop-types": "5.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "lefthook": "^2.1.4",
+    "prettier": "^3.8.1",
+    "react-native": "^0.86.0",
+    "react-native-blob-util": "^0.24.10",
+    "react-native-builder-bob": "^0.41.0",
+    "react-native-create-thumbnail": "^2.2.0",
+    "react-native-device-info": "*",
+    "react-native-file-viewer": "^2.1.5",
+    "react-native-gesture-handler": "^3.0.0",
+    "react-native-image-crop-picker": "^0.51.1",
+    "react-native-keyboard-controller": "1.19.0",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-mmkv": "4.0.0",
+    "react-native-permissions": "^5.6.0",
+    "react-native-photo-view": "git+ssh://git@github.com/droppii/react-native-photo-view.git",
+    "react-native-reanimated": "3.19.1",
+    "react-native-safe-area-context": "^5.8.0",
+    "react-native-snap-carousel": "3.9.0",
+    "react-native-svg": "^15.15.5",
+    "react-native-tab-view": "^4.3.1",
+    "react-native-toast-message": "^2.4.0",
+    "react-native-vector-icons": "*",
+    "react-native-video": "6.19.2",
+    "react-native-web": "~0.21.1",
+    "release-it": "^19.2.4",
+    "turbo": "^2.8.21",
+    "typescript": "^6.0.2",
+    "zustand": "^5.0.14"
+  },
+  "peerDependencies": {
+    "@droppii/libs": "*",
+    "@react-native-clipboard/clipboard": "*",
+    "@react-native-documents/picker": "*",
+    "@tanstack/react-query": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-blob-util": "*",
+    "react-native-create-thumbnail": "*",
+    "react-native-file-viewer": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-image-crop-picker": "*",
+    "react-native-keyboard-controller": "*",
+    "react-native-linear-gradient": "*",
+    "react-native-mmkv": "*",
+    "react-native-permissions": "*",
+    "react-native-photo-view": "*",
+    "react-native-reanimated": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-snap-carousel": "*",
+    "react-native-svg": "*",
+    "react-native-tab-view": "*",
+    "react-native-toast-message": "*",
+    "react-native-video": "*",
+    "zustand": "*"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "packageManager": "yarn@4.17.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true,
+      "skipChecks": true
+    },
+    "github": {
+      "release": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "create-react-native-library": {
+    "type": "library",
+    "languages": "js",
+    "tools": [
+      "eslint",
+      "jest",
+      "lefthook",
+      "release-it",
+      "vite"
+    ],
+    "version": "0.62.0"
+  }
+}

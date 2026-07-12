@@ -1,0 +1,63 @@
+{
+  "name": "@supernovae-st/qrcode-ai-scanner",
+  "version": "0.8.1",
+  "description": "QR decoding + scannability scoring for artistic and AI-generated QR codes — async native bindings (Rust)",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/supernovae-st/qrcode-ai-scanner"
+  },
+  "keywords": [
+    "qrcode",
+    "qr",
+    "scanner",
+    "validation",
+    "rust",
+    "napi",
+    "artistic-qr",
+    "ai-qr"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "native.js",
+    "native.d.ts",
+    "report-types.d.ts"
+  ],
+  "napi": {
+    "binaryName": "qrcode-ai-scanner",
+    "targets": [
+      "x86_64-apple-darwin",
+      "aarch64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "x86_64-pc-windows-msvc"
+    ]
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "scripts": {
+    "build": "napi build --platform --release --js native.js --dts native.d.ts",
+    "build:debug": "napi build --platform --js native.js --dts native.d.ts",
+    "test": "node test.mjs",
+    "prepack": "node ../../scripts/sync-report-types.mjs"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.7.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "optionalDependencies": {
+    "@supernovae-st/qrcode-ai-scanner-darwin-x64": "0.8.1",
+    "@supernovae-st/qrcode-ai-scanner-darwin-arm64": "0.8.1",
+    "@supernovae-st/qrcode-ai-scanner-linux-x64-gnu": "0.8.1",
+    "@supernovae-st/qrcode-ai-scanner-linux-arm64-gnu": "0.8.1",
+    "@supernovae-st/qrcode-ai-scanner-linux-x64-musl": "0.8.1",
+    "@supernovae-st/qrcode-ai-scanner-win32-x64-msvc": "0.8.1"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "packageManager": "npm@11.5.1",
+  "name": "@hanazuki/node-jsonnet",
+  "version": "3.3.1",
+  "description": "Jsonnet addon for Node.js",
+  "bugs": "https://github.com/hanazuki/node-jsonnet/issues",
+  "homepage": "https://node-jsonnet.hanazuki.dev/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanazuki/node-jsonnet"
+  },
+  "license": "MIT AND Apache-2.0",
+  "type": "module",
+  "main": "./lib/index.cjs",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "require": "./lib/index.cjs",
+      "default": "./lib/module.mjs"
+    }
+  },
+  "types": "./types/index.d.ts",
+  "files": [
+    "/**/CMakeLists.txt",
+    "/**/LICENSE",
+    "/**/LICENSE.txt",
+    "/*.md",
+    "/examples/",
+    "/lib/",
+    "/types/*.d.ts",
+    "/src/",
+    "/spec/",
+    "/third_party/jsonnet/CMakeLists.txt.in",
+    "/third_party/jsonnet/include/*.h",
+    "/third_party/jsonnet/core/*.c",
+    "/third_party/jsonnet/core/*.cpp",
+    "/third_party/jsonnet/core/*.h",
+    "/third_party/jsonnet/cmd/*.cpp",
+    "/third_party/jsonnet/cmd/*.h",
+    "/third_party/jsonnet/cpp/*.cpp",
+    "/third_party/jsonnet/cpp/*.h",
+    "/third_party/jsonnet/third_party/**/*.h",
+    "/third_party/jsonnet/third_party/**/*.hpp",
+    "/third_party/jsonnet/third_party/**/*.cpp",
+    "/third_party/jsonnet/stdlib/*.cpp",
+    "/third_party/jsonnet/stdlib/*.jsonnet",
+    "/third_party/jsonnet/test_suite/"
+  ],
+  "keywords": [
+    "jsonnet",
+    "node-addon",
+    "native",
+    "bindings"
+  ],
+  "scripts": {
+    "install": "cmake-js configure --CDCMAKE_EXPORT_COMPILE_COMMANDS=1 && cmake-js build",
+    "prepare": "if test -f ./scripts/apply-patches.sh; then ./scripts/apply-patches.sh; fi",
+    "version": "./scripts/bump-version.cjs",
+    "test": "jasmine",
+    "typetest": "tstyche --target '>=5.0'",
+    "format": "clang-format -i src/*",
+    "cpplint": "cpplint --filter=-,+build,+runtime,-runtime/indentation_namespace src/*",
+    "cmake-verbose": "cmake-js configure -l verbose --CDCMAKE_EXPORT_COMPILE_COMMANDS=1 --CDCMAKE_VERBOSE_MAKEFILE=1 && cmake-js build -l verbose"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "binary": {
+    "napi_versions": [
+      6
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "plugin:@definitelytyped/all"
+    ],
+    "rules": {
+      "@definitelytyped/dt-header": "off"
+    }
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "cmake-js": "^8.0.0",
+    "node-addon-api": "^8.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "20",
+    "glob": "^13.0.0",
+    "jasmine": "^6.0.0",
+    "tsx": "^4.22.3",
+    "tstyche": "^7.0.0",
+    "typedoc": "^0.28.1",
+    "typescript": "^6.0.2"
+  },
+  "workspaces": [
+    ".github/scripts"
+  ]
+}

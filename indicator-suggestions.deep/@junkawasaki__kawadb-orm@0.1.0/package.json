@@ -1,0 +1,85 @@
+{
+  "name": "@junkawasaki/kawadb-orm",
+  "version": "0.1.0",
+  "description": "TypeScript ORM for KawaDB with KSQL support - works in Web and Electron environments",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:types",
+    "build:cjs": "webpack --config webpack.config.js",
+    "build:esm": "webpack --config webpack.esm.config.js",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist",
+    "clean": "rimraf dist",
+    "dev": "webpack --watch --config webpack.config.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts",
+    "prepare": "npm run build",
+    "example:web": "cd examples/web && npm start",
+    "example:electron": "cd examples/electron && npm run dev"
+  },
+  "keywords": [
+    "kawadb",
+    "orm",
+    "ksql",
+    "typescript",
+    "webassembly",
+    "wasm",
+    "database",
+    "streaming",
+    "event-sourcing",
+    "web",
+    "electron"
+  ],
+  "author": "KawaDB Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kawasaki/kawadb.com.git",
+    "directory": "apps/kawadb-orm"
+  },
+  "bugs": {
+    "url": "https://github.com/kawasaki/kawadb.com/issues"
+  },
+  "homepage": "https://github.com/kawasaki/kawadb.com/tree/main/apps/kawadb-orm",
+  "dependencies": {
+    "eventemitter3": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.1.0",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.5.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 

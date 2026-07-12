@@ -1,0 +1,80 @@
+{
+  "name": "@shapeshift-labs/frontier-swarm-codex",
+  "version": "0.5.161",
+  "description": "Node Codex CLI runner adapter for Frontier swarm plans with resource allocation.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siliconjungle/-shapeshift-labs-frontier-swarm-codex.git"
+  },
+  "homepage": "https://github.com/siliconjungle/-shapeshift-labs-frontier-swarm-codex#readme",
+  "bugs": {
+    "url": "https://github.com/siliconjungle/-shapeshift-labs-frontier-swarm-codex/issues"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "frontier-swarm": "dist/cli.js",
+    "frontier-swarm-codex": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js",
+      "default": "./dist/cli.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "benchmarks/package-bench.mjs"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "npm run build && npm run typecheck && node test/smoke.mjs && node test/fuzz.mjs --cases 300",
+    "prepack": "npm run lint && npm run readme:packages:check && npm run test",
+    "typecheck": "node build.mjs --typecheck",
+    "fuzz": "npm run build && node test/fuzz.mjs",
+    "bench": "npm run build && node --expose-gc benchmarks/package-bench.mjs --out benchmarks/results/frontier-swarm-codex-package-bench-latest.json",
+    "pack:dry": "npm pack --dry-run",
+    "readme:packages": "node benchmarks/package-readme-sections.mjs",
+    "readme:packages:check": "node benchmarks/package-readme-sections.mjs --check",
+    "lint": "node scripts/strict-source-policy.mjs"
+  },
+  "keywords": [
+    "frontier",
+    "swarm",
+    "codex",
+    "agents",
+    "cli",
+    "worktree",
+    "evidence"
+  ],
+  "dependencies": {
+    "@shapeshift-labs/frontier-merge-metrics": "0.1.3",
+    "@shapeshift-labs/frontier-queue": "0.1.2",
+    "@shapeshift-labs/frontier-run": "0.1.2",
+    "@shapeshift-labs/frontier-swarm": "0.5.30",
+    "@shapeshift-labs/frontier-swarm-git": "0.1.4",
+    "@shapeshift-labs/frontier-test": "0.1.3"
+  },
+  "optionalDependencies": {
+    "@shapeshift-labs/frontier-lang": "^0.4.150"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3"
+  }
+}

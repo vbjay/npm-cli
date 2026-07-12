@@ -1,0 +1,75 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2ed1c3aefc39a0d8",
+    "fetchedFiles": [
+      "bin/postinstall.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "bin/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4e6f075e286842f580a4a723f8f364be7b68eebd26bcb834b8ddaae77fef5d76",
+        "sizeBytes": 7512,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:17.472Z"
+  },
+  "hash": "sha256:fbd707d93287432c79a033dc1f4f892e8dcb151a24c16c9df83a8fd4523dfe0b"
+}

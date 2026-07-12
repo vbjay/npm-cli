@@ -1,0 +1,159 @@
+{
+  "name": "node-liblzma",
+  "version": "5.1.1",
+  "description": "Native Node.js bindings for liblzma (XZ/LZMA2). Streaming, buffer and async APIs with browser support via WebAssembly. zlib-like API, TypeScript-first, prebuilt binaries for Linux/macOS/Windows.",
+  "type": "module",
+  "main": "./lib/lzma.js",
+  "exports": {
+    ".": {
+      "browser": {
+        "types": "./lib/lzma.browser.d.ts",
+        "import": "./lib/lzma.browser.js",
+        "default": "./lib/lzma.browser.js"
+      },
+      "types": "./index.d.ts",
+      "import": "./lib/lzma.js",
+      "default": "./lib/lzma.js"
+    },
+    "./wasm": {
+      "types": "./lib/wasm/index.d.ts",
+      "import": "./lib/wasm/index.js",
+      "default": "./lib/wasm/index.js"
+    },
+    "./inline": {
+      "types": "./lib/lzma.inline.d.ts",
+      "import": "./lib/lzma.inline.js",
+      "default": "./lib/lzma.inline.js"
+    },
+    "./wasm/liblzma.js": {
+      "types": "./src/wasm/liblzma.d.ts",
+      "default": "./lib/wasm/liblzma.js"
+    },
+    "./wasm/liblzma.wasm": "./lib/wasm/liblzma.wasm"
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "build": "tsc && node scripts/copy-wasm-artifacts.js",
+    "build:wasm": "bash src/wasm/build.sh",
+    "build:wasm:size": "bash src/wasm/build.sh --size-only",
+    "build:wasm:inline": "node scripts/generate-wasm-inline.js",
+    "build:wasm:all": "pnpm build:wasm && pnpm build:wasm:inline",
+    "build:watch": "tsc --watch",
+    "prepare": "simple-git-hooks && pnpm run build",
+    "prebuildify": "prebuildify --napi --strip -t $(node -v)",
+    "prebuildify:win": "for /f \"usebackq tokens=*\" %v in (`node -v`) do prebuildify -t %v --napi --strip",
+    "test": "vitest run && pnpm -r --filter './packages/*' test",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --config vitest.config.monocart.ts --coverage",
+    "test:coverage-v8": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf lib",
+    "lint": "biome lint",
+    "lint:fix": "biome lint --write",
+    "format": "biome format",
+    "format:write": "biome format --write",
+    "check": "biome check",
+    "check:write": "biome check --write",
+    "release": "release-it-preset default",
+    "release:manual": "release-it-preset --config .release-it.manual.json",
+    "release:hotfix": "release-it-preset hotfix",
+    "changelog:update": "release-it-preset changelog-only",
+    "typedoc": "typedoc",
+    "typedoc:watch": "typedoc --watch"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.6.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@oorabona/release-it-preset": "^1.2.0",
+    "@oorabona/vitest-monocart-coverage": "^3.0.1",
+    "@types/node": "catalog:",
+    "@vitest/coverage-istanbul": "^4.1.0",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "4.1.9",
+    "nano-staged": "^0.9.0",
+    "node-gyp": "^13.0.0",
+    "prebuildify": "^6.0.1",
+    "release-it": "^20.0.0",
+    "simple-git-hooks": "^2.13.1",
+    "tsd": "^0.33.0",
+    "typedoc": "^0.28.17",
+    "typedoc-material-theme": "^1.4.1",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "types": "index.d.ts",
+  "files": [
+    "lib/",
+    "prebuilds/",
+    "src/bindings/",
+    "src/wasm/liblzma.d.ts",
+    "scripts/binding_config.py",
+    "scripts/build_xz_with_cmake.py",
+    "scripts/download_xz_from_github.py",
+    "scripts/copy_dll.py",
+    "scripts/walk_sources.py",
+    "binding.gyp",
+    "index.d.ts",
+    "xz-version.json"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oorabona/node-liblzma"
+  },
+  "keywords": [
+    "module",
+    "node",
+    "nodejs",
+    "typescript",
+    "lzma",
+    "lzma2",
+    "xz",
+    "unxz",
+    "compress",
+    "uncompress",
+    "decompress",
+    "streaming",
+    "wasm",
+    "webassembly",
+    "browser",
+    "zlib",
+    "filters",
+    "binding",
+    "native"
+  ],
+  "author": "Olivier ORABONA",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/oorabona/node-liblzma/issues"
+  },
+  "homepage": "https://github.com/oorabona/node-liblzma",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/oorabona"
+  },
+  "binary": {
+    "module_name": "liblzma"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "nano-staged": {
+    "*.{ts,js,mts,cts}": [
+      "biome check --write --no-errors-on-unmatched"
+    ],
+    "*.json": [
+      "biome format --write"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec nano-staged"
+  },
+  "packageManager": "pnpm@10.15.0"
+}

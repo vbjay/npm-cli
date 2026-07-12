@@ -1,0 +1,92 @@
+{
+  "name": "@hyperse/exec-program",
+  "version": "1.2.1",
+  "description": "Executes a command using `file ...arguments`, supports `.ts` file for esm type module.",
+  "keywords": [
+    "hyperse",
+    "exec",
+    "child",
+    "process",
+    "subprocess",
+    "execute",
+    "fork",
+    "execfile",
+    "spawn",
+    "file",
+    "shell",
+    "bin",
+    "binary",
+    "binaries",
+    "npm",
+    "path",
+    "local",
+    "zx",
+    "run ts file",
+    "run typescript file"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hyperse-io/exec-program.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./bin/",
+    "./dist/",
+    "./index.js"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "next": "next build",
+    "lint": "eslint .",
+    "lint-fix": "yarn lint --fix",
+    "test": "run-s test-unit",
+    "test-unit": "vitest run",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit",
+    "lint-staged-files": "lint-staged --allow-empty",
+    "changeset": "changeset",
+    "release": "yarn build && changeset publish",
+    "cz": "cz",
+    "prepare": " husky"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@hyperse/ts-node": "^1.0.3",
+    "execa": "^9.6.0"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "0.5.1",
+    "@changesets/cli": "2.29.4",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@hyperse/eslint-config-hyperse": "^1.4.4",
+    "@types/node": "^24.0.0",
+    "commitizen": "4.3.1",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "^9.28.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.0",
+    "npm-run-all": "^4.1.5",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.3"
+  },
+  "packageManager": "yarn@4.9.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

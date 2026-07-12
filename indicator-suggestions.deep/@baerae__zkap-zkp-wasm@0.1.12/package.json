@@ -1,0 +1,54 @@
+{
+  "name": "@baerae/zkap-zkp-wasm",
+  "version": "0.1.12",
+  "description": "WebAssembly bindings for zkap-zkp — Poseidon hash and anchor generation. For proving/verification, use @baerae/zkap-zkp (Node.js).",
+  "types": "./pkg/zkap_zkp_wasm.d.ts",
+  "exports": {
+    ".": {
+      "import": "./pkg/zkap_zkp_wasm.js",
+      "types": "./pkg/zkap_zkp_wasm.d.ts"
+    }
+  },
+  "files": [
+    "pkg/LICENSE-APACHE",
+    "pkg/LICENSE-MIT",
+    "pkg/README.md",
+    "pkg/package.json",
+    "pkg/zkap_zkp_wasm.d.ts",
+    "pkg/zkap_zkp_wasm.js",
+    "pkg/zkap_zkp_wasm_bg.wasm",
+    "pkg/zkap_zkp_wasm_bg.wasm.d.ts"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "wasm",
+    "webassembly",
+    "zk",
+    "poseidon",
+    "zkap"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baerae-zkap/zkap-zkp-sdk.git",
+    "directory": "packages/sdk-wasm"
+  },
+  "homepage": "https://github.com/baerae-zkap/zkap-zkp-sdk",
+  "bugs": "https://github.com/baerae-zkap/zkap-zkp-sdk/issues",
+  "license": "MIT OR Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "wasm-pack build --target web --out-dir pkg --out-name zkap_zkp_wasm && node scripts/patch-pkg-name.mjs",
+    "build:bundler": "wasm-pack build --target bundler --out-dir pkg-bundler --out-name zkap_zkp_wasm && node scripts/patch-pkg-name.mjs pkg-bundler",
+    "build:nodejs": "wasm-pack build --target nodejs --out-dir pkg-node --out-name zkap_zkp_wasm && node scripts/patch-pkg-name.mjs pkg-node",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "wasm-pack": "^0.13"
+  }
+}

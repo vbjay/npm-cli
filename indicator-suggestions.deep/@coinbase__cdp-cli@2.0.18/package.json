@@ -1,0 +1,39 @@
+{
+  "name": "@coinbase/cdp-cli",
+  "version": "2.0.18",
+  "description": "CLI for the Coinbase Developer Platform API",
+  "type": "module",
+  "bin": {
+    "cdp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "BUILD=external node scripts/embed-spec.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --no-warnings --test 'src/**/*.test.ts'",
+    "test:keyring": "node --experimental-strip-types --no-warnings --test src/lib/keyring/keyring.integration-test.ts",
+    "postinstall": "node scripts/postinstall.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist/",
+    "skills/",
+    "scripts/postinstall.mjs"
+  ],
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.7.0",
+    "yaml": "^2.6.0"
+  },
+  "license": "MIT",
+  "homepage": "https://docs.cdp.coinbase.com",
+  "keywords": [
+    "coinbase",
+    "cdp",
+    "cli",
+    "mcp",
+    "api"
+  ]
+}

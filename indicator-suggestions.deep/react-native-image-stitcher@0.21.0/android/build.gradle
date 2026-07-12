@@ -1,0 +1,341 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// SPDX-FileCopyrightText: 2026 Tiger Analytics
+// SPDX-License-Identifier: Apache-2.0
+//
+// Gradle module for the Android side of react-native-image-stitcher.
+//
+// What lives here:
+//   - QualityChecker.kt — Laplacian-variance blur scoring
+//     and mean-luminance brightness scoring via OpenCV.  Mirror of
+//     the iOS Phase 1 implementation (which used vImage + vDSP).
+//   - Stitcher.kt — extractFrames + stitchFrames +
+//     stitchVideo + normaliseImage, mirroring the iOS Phase 2 / 2.5
+//     ObjC++ surface.
+//   - RNImageStitcherPackage.kt — ReactPackage that surfaces the
+//     two RN modules to the host app via Android autolinking.
+//
+// OpenCV vendor:
+//   We use the `quickbirdstudios/opencv-android` Maven artifact
+//   because it ships a clean AAR with the standard
+//   `org.opencv.*` Java packages, including the stitching module
+//   (which `opencv-mobile` strips on iOS — same trade-off applies
+//   here).  Version pinned to 4.x to match the iOS framework.
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def reactNativeRoot = rootProject.findProperty("reactNativeRoot") ?: project.file("../../../node_modules/react-native")
+
+// ── OpenCV Android SDK download ──────────────────────────────────────
+//
+// The OpenCV custom Android SDK is delivered by the package's
+// postinstall script (`scripts/postinstall-fetch-binaries.js`).  It
+// downloads the version-matched release asset from GitHub Releases
+// and extracts it into `android/vendor/OpenCV-android-sdk/` — exactly
+// where this build.gradle (and `cpp/CMakeLists.txt`) read it from.
+//
+// We deliberately do NOT have a fallback that fetches stock OpenCV
+// from upstream: stock 4.x ships WITHOUT `BUILD_opencv_stitching=ON`,
+// so the static lib `libopencv_stitching.a` that CMake links isn't
+// in the upstream archive.  If we silently downloaded the upstream
+// release, the build would explode with a confusing CMake "static
+// archive not found" error.  Better to fail FAST here with a clear
+// message pointing at the actual cause.
+def opencvVendorDir = file("$projectDir/vendor")
+def opencvSdkDir = file("$opencvVendorDir/OpenCV-android-sdk/sdk")
+if (!opencvSdkDir.exists()) {
+    throw new GradleException(
+        "OpenCV custom SDK missing at ${opencvSdkDir.absolutePath}.\n" +
+        "Did `npm install` succeed?  The package's postinstall script\n" +
+        "(scripts/postinstall-fetch-binaries.js) downloads the binaries\n" +
+        "from GitHub Releases on install.  Recovery:\n" +
+        "  - `npm install --force` to re-run postinstall\n" +
+        "  - Or set OPENCV_BINARY_BASE_URL env var to an internal mirror\n" +
+        "  - Or run `SKIP_OPENCV_FETCH=1 npm install` and stage the SDK manually"
+    )
+}
+
+android {
+    namespace 'io.imagestitcher.rn'
+    compileSdkVersion safeExtGet('compileSdkVersion', 34)
+    // Inherit the host's NDK pin (Expo apps expose `ndkVersion` on
+    // rootProject.ext) so AGP doesn't fall back to its built-in default
+    // (which on AGP 8.6+ is 27.0.12077973, a version that's commonly
+    // half-installed on developer machines and trips [CXX1101]
+    // "source.properties missing").  27.1.12297006 is the
+    // last-known-good fallback for raw RN hosts without an Expo pin.
+    ndkVersion safeExtGet('ndkVersion', '27.1.12297006')
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', 24)
+        targetSdkVersion safeExtGet('targetSdkVersion', 34)
+        versionCode 1
+        versionName "0.1.0"
+
+        // ── ABI filter ───────────────────────────────────────────
+        // Only build arm64-v8a.  Our custom OpenCV is built for
+        // arm64-v8a only (matches the production Samsung physical
+        // test device and modern Android phones).  Skipping
+        // armeabi-v7a / x86_64 / x86 saves ~120 MB on the final APK
+        // and avoids "libopencv_java4.so missing for ABI X" link
+        // errors during the native build.
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
+
+        // ── JNI shim (image_stitcher) build args ─────────────
+        // Hands the cpp/CMakeLists.txt the location of the vendored
+        // OpenCV (with stitching symbols) so the shim can link.
+        externalNativeBuild {
+            cmake {
+                arguments "-DOPENCV_ANDROID_SDK=${file("$projectDir/vendor/OpenCV-android-sdk").absolutePath}",
+                          // v0.8.0 Phase 3 — switched from c++_static
+                          // to c++_shared.  Required for linking
+                          // ReactAndroid::jsi (RN's prefab uses
+                          // shared libc++).  STL probe at
+                          // android/src/main/cpp/CMakeLists.txt:99-118
+                          // confirms OpenCV's libopencv_stitching.a is
+                          // already built with __ndk1 (c++_shared), so
+                          // the static archive link continues to
+                          // work cleanly.  Pre-Phase-3 it worked only
+                          // because the JNI shim's .so boundary used
+                          // POD types — fragile.  Now properly aligned.
+                          "-DANDROID_STL=c++_shared"
+                cppFlags "-std=c++17"
+            }
+        }
+    }
+
+    // v0.8.0 Phase 3 — consume React Native's prefab packages
+    // (ReactAndroid::jsi + fbjni::fbjni) for the JSI host object.
+    // RN 0.71+ ships these as prefabs; this lib targets RN 0.84.
+    buildFeatures {
+        prefab true
+    }
+
+    // ── Host OpenCV reuse: why NOT prefab publishing ─────────────────
+    //
+    // Goal: let a HOST app's own native (C++/NDK) code reuse the SAME
+    // custom OpenCV (4.10.0, arm64-v8a) this AAR already bundles — both
+    // libopencv_java4.so (cv::Mat, imgproc, features2d, calib3d, flann,
+    // photo, video …) AND cv::Stitcher (which lives in the static
+    // archive libopencv_stitching.a, NOT in the fat .so).
+    //
+    // We evaluated AGP `prefabPublishing` first (the idiomatic AAR way)
+    // and it CANNOT carry this OpenCV.  Empirically verified: AGP's
+    // prefab modules only export libraries the module's own
+    // externalNativeBuild PRODUCES (here: just `image_stitcher`).  A
+    // prebuilt jniLib (.so) or a prebuilt static archive (.a) is not an
+    // accepted prefab `libraryName` — the configure fails with
+    // `[CXX1404] did not find implicitly required targets`.  So neither
+    // libopencv_java4.so nor libopencv_stitching.a can ride a prefab.
+    //
+    // Instead we expose the bundled OpenCV's OWN first-class CMake
+    // package — which already defines every module (incl. opencv_stitching
+    // as a STATIC IMPORTED target and opencv_java as a SHARED IMPORTED
+    // target) — to consumers via a rootProject ext property.  A host
+    // points its externalNativeBuild at `-DOpenCV_DIR=<that dir>`, does
+    // `find_package(OpenCV REQUIRED)`, then links the SHARED `opencv_java`
+    // (cv::Mat & friends resolved at runtime from the AAR's already-shipped
+    // libopencv_java4.so — NO second copy) plus the whole-archived STATIC
+    // `opencv_stitching` (cv::Stitcher, a small private copy since it isn't
+    // in the fat .so).  This is the idiomatic Android OpenCV-consumption
+    // path.  See example/android/app for the working consumer.
+    //
+    // Set unconditionally at configure time so it's readable from the
+    // host app module regardless of project evaluation order.
+    rootProject.ext.rnisOpenCVAndroidSdkDir = "$opencvSdkDir/native"
+    rootProject.ext.rnisOpenCVDir = "$opencvSdkDir/native/jni"
+
+    // ── JNI shim build path ─────────────────────────────────────────
+    // Gradle compiles cpp/image_stitcher_jni.cpp into
+    // libimage_stitcher.so for the ABIs filtered above.  The shim
+    // is what bridges Kotlin's `external fun nativeStitchFramePaths`
+    // to the cv::Stitcher C++ API inside our custom libopencv_java4.so.
+    externalNativeBuild {
+        cmake {
+            path file("src/main/cpp/CMakeLists.txt")
+            version "3.22.1"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    // The hand-rolled JNI wrapper for cv::Stitcher (planned for
+    // Android stitching parity with iOS) was removed because
+    // OpenCV's prebuilt Android `libopencv_java4.so` does NOT
+    // contain `cv::Stitcher::create` symbols — the stitching
+    // module is dropped from the binary, not just from the Java
+    // bindings.  Re-enabling Android-side stitching requires
+    // building OpenCV Android from source with `BUILD_opencv_stitching=ON`,
+    // which is a hours-long build job out of scope for the SDK
+    // package itself.  See the Kotlin BatchStitcher for the
+    // current "iOS-only" stitch behaviour.
+
+    sourceSets {
+        main {
+            // OpenCV ships its Java side as plain source files (not
+            // a pre-built JAR) under sdk/java/src/, so we compile it
+            // into our own AAR alongside the Kotlin code.  The
+            // pre-built .so libraries live under sdk/native/libs/
+            // and ride along as jniLibs.
+            java.srcDirs += [
+                "$opencvSdkDir/java/src",
+            ]
+            jniLibs.srcDirs = [
+                "$opencvSdkDir/native/libs",
+            ]
+            // OpenCV references some resources (logos, drawables)
+            // from its old wrapper; pointing res at the SDK keeps
+            // them available without copying.
+            res.srcDirs += [
+                "$opencvSdkDir/java/res",
+            ]
+        }
+    }
+
+    // OpenCV's MatAt.kt uses Kotlin inline-class types (UByte etc.)
+    // that the Kotlin 1.9.x compiler bundled with our toolchain
+    // can't lower.  We don't use the typed-Mat-accessor API anyway.
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        exclude '**/MatAt.kt'
+    }
+
+    // OpenCV's `org.opencv.android.*` package is the legacy
+    // OpenCV-Manager-service support layer + the camera UI views.
+    // We don't use ANY of it (we load the .so directly via
+    // System.loadLibrary and use vision-camera for camera UI).
+    // Excluding the whole package side-steps a wave of compile
+    // errors caused by missing AIDL-generated symbols and the
+    // missing `org.opencv.R` resource class.
+    tasks.withType(JavaCompile).configureEach {
+        exclude 'org/opencv/android/**'
+        exclude 'org/opencv/engine/**'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    // OpenCV Android — the QuickBird build is the most up-to-date
+    // Maven artifact with full module set (including stitching).
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    // React Native — provided by the host app via gradle's
+    // "compileOnly" so we don't pull a duplicate copy when the
+    // SDK is consumed from a hosting RN app.
+    compileOnly "com.facebook.react:react-android"
+
+    // OpenCV is wired in via sourceSets above (java/src compiled
+    // alongside Kotlin, native/libs surfaced as jniLibs).  No
+    // Maven coordinate needed.
+
+    // Kotlin stdlib + coroutines for the background-queue dispatch
+    // pattern that matches the iOS DispatchQueue.global(.userInitiated).
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+
+    // ExifInterface for reading rotation metadata from JPEGs taken
+    // by Android cameras (which save in sensor-native landscape
+    // with an EXIF Orientation tag, same pattern as iOS).  The
+    // androidx version supports more file types and stays
+    // up-to-date with platform changes.
+    implementation "androidx.exifinterface:exifinterface:1.3.7"
+
+    // ARCore for Phase 4 of the AR-measurement plan: 6DoF pose
+    // tracking from camera + IMU on supported Android devices.
+    // Falls back to "AR not available" when:
+    //   - Device isn't on Google's ARCore-supported list
+    //   - Google Play Services for AR isn't installed / up-to-date
+    // The sample app doesn't require AR, so the dependency adds
+    // ~2 MB to the AAR; the Play Services for AR app is downloaded
+    // on demand (~30 MB) the first time the user opens an AR
+    // capture screen on a supported device.
+    implementation "com.google.ar:core:1.45.0"
+
+    // F8.4 — vision-camera as a compile-time peer dep.  Same
+    // `compileOnly` pattern as React Native above: host apps that
+    // wire `<Camera>` already include the autolinked
+    // `:react-native-vision-camera` Gradle project; we just need
+    // `com.mrousavy.camera.frameprocessors.*` types on the compile
+    // classpath to build `CvFlowGateFrameProcessor.kt` + the
+    // registration in `RNImageStitcherPackage`.  Runtime
+    // resolution is the host's responsibility —
+    // `RNImageStitcherPackage`'s static initialiser catches
+    // `NoClassDefFoundError` so the SDK still loads if a non-
+    // camera consumer omits the dep.
+    //
+    // `findProject(...)` guard: lets the SDK still compile in
+    // hosts that haven't installed react-native-vision-camera.
+    // The plugin file's import resolution will fail in that case,
+    // which is fine — we conditionally exclude the plugin sources
+    // below.
+    if (findProject(':react-native-vision-camera') != null) {
+        compileOnly project(':react-native-vision-camera')
+        // CameraX `ImageProxy` / `ImageInfo` types — vision-camera
+        // exposes them through `Frame.getImageProxy()` and we need
+        // the compile-time class for `imageInfo.rotationDegrees`.
+        // `compileOnly` because the host app already ships these via
+        // vision-camera's transitive runtime dep.
+        compileOnly "androidx.camera:camera-core:1.5.0-alpha03"
+    } else {
+        // Without vision-camera on the classpath the Frame
+        // Processor plugin source can't compile (imports unresolved).
+        // Exclude it from the source set so the rest of the SDK
+        // still builds for non-camera consumers.
+        android.sourceSets.main.java.exclude '**/CvFlowGateFrameProcessor.kt'
+    }
+
+    // v0.8.0 Phase 4b.ii/iii — react-native-worklets-core, consumed
+    // for its `rnworklets` PREFAB module (RNWorklet::JsiWorkletContext /
+    // WorkletInvoker) by the AR frame-processor JSI fan-out
+    // (src/main/cpp/stitcher_jsi_install_jni.cpp + the shared cpp/
+    // stitcher_*_jsi.cpp).  `find_package(react-native-worklets-core ...)`
+    // in CMakeLists.txt needs this gradle project on the path so AGP
+    // wires the prefab into the native build.  Same consumption pattern
+    // react-native-vision-camera uses for Frame Processors.
+    //
+    // `findProject(...)` guard mirrors the vision-camera block above:
+    // the SDK still compiles in hosts that don't install worklets-core
+    // (those hosts simply don't use the AR frame processor — the JSI
+    // sources still compile, but the prefab link only happens when the
+    // host provides worklets-core).  Autolinking adds the project for
+    // any host that depends on vision-camera (which transitively pulls
+    // in worklets-core).
+    if (findProject(':react-native-worklets-core') != null) {
+        implementation project(':react-native-worklets-core')
+    }
+
+    // v0.10.0 audit #11A — Android JUnit test scaffold.  JVM unit
+    // tests for pure-Kotlin data wrappers + algorithm helpers that
+    // don't need an Android device.  Run via
+    // `gradlew :react-native-image-stitcher:test`.
+    //
+    // Kept minimal — only JUnit 4 (matches AGP's default test
+    // runner).  Hosts that want to add their own android-test
+    // dependencies can do so independently.
+    testImplementation "junit:junit:4.13.2"
+}
+
+// Helper from the React Native gradle convention to read host-app
+// SDK versions when present, with a sane default otherwise.
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}

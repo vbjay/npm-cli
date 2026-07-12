@@ -1,0 +1,36 @@
+{
+  "name": "@skidy89/lang",
+  "version": "0.1.18",
+  "description": "language loader for node.js using rust!",
+  "keywords": [
+    "language",
+    "language-loader",
+    "rust",
+    "nodejs"
+  ],
+  "license": "MIT",
+  "author": "skidy89",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build"
+  },
+  "files": [
+    "lib/*",
+    "types/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "@napi-rs/cli": "^3.4.0",
+    "@skidy89/ssl.js": "^1.1.1"
+  }
+}

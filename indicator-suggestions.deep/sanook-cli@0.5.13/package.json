@@ -1,0 +1,92 @@
+{
+  "name": "sanook-cli",
+  "version": "0.5.13",
+  "description": "A terminal AI coding agent — BYOK, 9 providers, MCP, cron gateway, skills, and git awareness. Built from scratch in TypeScript.",
+  "type": "module",
+  "bin": {
+    "sanook": "dist/bin.js",
+    "sanookai": "dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "second-brain",
+    "scripts/postinstall.mjs",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    ".env.example"
+  ],
+  "scripts": {
+    "dev": "tsx src/bin.ts",
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json && node scripts/copy-dashboard-static.mjs && node -e \"require('node:fs').chmodSync('dist/bin.js',0o755)\"",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "eval": "tsx src/eval/run.ts",
+    "postinstall": "node scripts/postinstall.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "ai",
+    "coding-agent",
+    "ai-agent",
+    "cli",
+    "llm",
+    "terminal",
+    "byok",
+    "mcp",
+    "second-brain",
+    "obsidian",
+    "cross-session-memory",
+    "claude-code-alternative",
+    "ai-coding",
+    "agent",
+    "claude",
+    "gemini"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sir-chawakorn/sanook-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sir-chawakorn/sanook-cli/issues"
+  },
+  "homepage": "https://github.com/Sir-chawakorn/sanook-cli#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.84",
+    "@ai-sdk/google": "^3.0.82",
+    "@ai-sdk/groq": "^3.0.41",
+    "@ai-sdk/mistral": "^3.0.39",
+    "@ai-sdk/openai": "^3.0.71",
+    "@ai-sdk/openai-compatible": "^2.0.50",
+    "@ai-sdk/xai": "^3.0.95",
+    "@inkjs/ui": "^2.0.0",
+    "ai": "~6.0",
+    "headroom-ai": "^0.22.4",
+    "ink": "^7.0.6",
+    "ink-big-text": "^2.0.0",
+    "ink-gradient": "^4.0.1",
+    "react": "^19.2.7",
+    "zod": "~3.25"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "ink-testing-library": "^4.0.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  },
+  "optionalDependencies": {
+    "node-pty": "^1.0.0",
+    "ws": "^8.18.0"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "cd1cfeba1e7d1893",
+    "fetchedFiles": [
+      "package.json",
+      "util/agentInstallRegistry.js",
+      "util/postInstallMessage.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "chalk",
+        "versionSpec": "2.4.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "chalk@2.4.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "util/postInstallMessage.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "65e11f08eee3e2b2fcfd176a90a0361d0eb9c8a1b05b734d88174b393a2a9946",
+        "sizeBytes": 3927,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "util/agentInstallRegistry.js"
+        ],
+        "urls": [
+          {
+            "url": "https://www.mabl.com/tos",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "util/agentInstallRegistry.js",
+        "reason": "required by ./util/postInstallMessage.js",
+        "sha256": "ad594fa0326920ab60af7b095ecca3f1f7f4cfd58eb77fb1ec7e02f1499e2fe9",
+        "sizeBytes": 6774,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:27.117Z"
+  },
+  "hash": "sha256:999bfe36fb6f6dcf79a43d225f7986da6286a7a3fd85b0b62836c243decf8c1b"
+}

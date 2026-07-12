@@ -1,0 +1,238 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "79dca9b5105ebdc1",
+    "fetchedFiles": [
+      "binding.gyp",
+      "lib/extensions.js",
+      "package.json",
+      "scripts/build.js",
+      "scripts/install.js",
+      "scripts/util/downloadoptions.js",
+      "scripts/util/proxy.js",
+      "scripts/util/rejectUnauthorized.js",
+      "scripts/util/useragent.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "true-case-path",
+        "versionSpec": "^2.2.1"
+      },
+      {
+        "name": "make-fetch-happen",
+        "versionSpec": "^10.0.4"
+      },
+      {
+        "name": "cross-spawn",
+        "versionSpec": "^7.0.3"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "cross-spawn@7.0.6",
+      "make-fetch-happen@10.2.1",
+      "true-case-path@2.2.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "89c3cf390b16f24a1b096ca45ff435195db24a92577c2253bdaf2bca94ac7b18",
+        "parseError": "Bad escaped character in JSON at position 1025 (line 38 column 32)",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "83744afe266d7f3d1067fc24e800894ecec1edf2352156e24f6069cda968477d",
+        "sizeBytes": 3197,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "writes-outside-package",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/extensions.js",
+          "scripts/util/downloadoptions.js"
+        ],
+        "urls": [
+          {
+            "url": "http://example.com:1234",
+            "classification": "unknown"
+          },
+          {
+            "url": "http://example.com:8080",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "lib/extensions.js",
+        "reason": "required by ./scripts/install.js; required by ./scripts/build.js",
+        "sha256": "7636c90f30cb5afcd4fbf78e9a549b65cb8eb78476d2353ff0f2fd676d6b2c1b",
+        "sizeBytes": 12488,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/sass/node-sass/releases/download",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./lib/extensions.js; required by ./scripts/util/useragent.js; required by ./scripts/util/rejectUnauthorized.js",
+        "sha256": "683134bc8d00c80fea526703e1926489535123e84f1d99f160d8c339455f42ce",
+        "sizeBytes": 1803,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/util/downloadoptions.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "546be3b97cd8d2636962bfb07b3f089b74d28bc7a1708133b7b8c8c267bf3578",
+        "sizeBytes": 618,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/util/proxy.js",
+          "scripts/util/useragent.js",
+          "scripts/util/rejectUnauthorized.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/util/proxy.js",
+        "reason": "required by ./scripts/util/downloadoptions.js",
+        "sha256": "fe159416aed7bd79e5bee55af2edc643d0451451f4fd122862db3cca09d169ec",
+        "sizeBytes": 690,
+        "signals": [
+          "reads-process-env",
+          "modifies-shell-config"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/util/useragent.js",
+        "reason": "required by ./scripts/util/downloadoptions.js",
+        "sha256": "b7ddc391e98a6f231ab3e43f932a018dffd20745c5db886af14e8048701a27b8",
+        "sizeBytes": 309,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/util/rejectUnauthorized.js",
+        "reason": "required by ./scripts/util/downloadoptions.js",
+        "sha256": "b09c58899bee5fba9b6c61b1537275a65acfa54258ec918d247659393a516dfa",
+        "sizeBytes": 1380,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/build.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ca2e11d1e98902d9a476d43cadbbc6032f49900a6efb8615ef242702423da958",
+        "sizeBytes": 3386,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "native-build",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "lib/extensions.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:17.240Z"
+  },
+  "hash": "sha256:2cfc47ea0208af2b666cbea1497aaf0c68edd33966ed4100d04753c97a6642cc"
+}

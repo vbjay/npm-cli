@@ -1,0 +1,55 @@
+{
+  "name": "@genex-ai/cli-demo",
+  "version": "0.34.0",
+  "description": "Set up your ~/.claude workspace, authorize, create a game project, generate AI assets, and publish (genex CLI).",
+  "type": "module",
+  "bin": {
+    "genex": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepack": "pnpm build",
+    "start": "node src/index.ts",
+    "dev": "node --watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.ts"
+  },
+  "keywords": [
+    "cli",
+    "claude",
+    "genex",
+    "scaffold",
+    "init"
+  ],
+  "author": "me-ai-org",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@dimforge/rapier3d-compat": "^0.19.3",
+    "@pixiv/three-vrm": "^3.5.4",
+    "@types/three": "^0.185.0",
+    "three": "^0.185.1",
+    "tsup": "^8.0.0",
+    "typescript": "^5.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me-ai-org/genex-demo.git",
+    "directory": "apps/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/me-ai-org/genex-demo/issues"
+  },
+  "homepage": "https://github.com/me-ai-org/genex-demo/tree/main/apps/cli#readme"
+}

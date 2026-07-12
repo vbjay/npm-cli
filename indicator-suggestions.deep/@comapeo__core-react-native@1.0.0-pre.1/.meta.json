@@ -1,0 +1,108 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "b04cff467f7a63f4",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "ba4749fb9f4bf389a36f8bccbf0edd61eba7fa8dc39e04d24de4ffb4bf4d4ce7",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7",
+              "androidx.lifecycle:lifecycle-process:2.9.0",
+              "org.jetbrains.kotlinx:kotlinx-serialization-json:${getSerializationVersion(project.ext.kotlinVersion())}",
+              "androidx.core:core-ktx:1.16.0",
+              "com.facebook.fbjni:fbjni:0.3.0",
+              "io.sentry:sentry-android-core:8.44.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\@comapeo__core-react-native@1.0.0-pre.1\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/write-version.mjs",
+        "reason": "referenced by lifecycle script: `prepare`; referenced by lifecycle script: `prepack`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/check-sentry-cocoa-pin.mjs",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/build-backend.ts",
+        "reason": "referenced by lifecycle script: `backend:build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:52.741Z"
+  },
+  "hash": "sha256:8009a6b5801716e9c533eacfca13c5ad3a4c2a63a74a73124410d5ac1a8f1610"
+}

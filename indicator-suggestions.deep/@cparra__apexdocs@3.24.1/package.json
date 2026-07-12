@@ -1,0 +1,104 @@
+{
+  "name": "@cparra/apexdocs",
+  "version": "3.24.1",
+  "description": "Library with CLI capabilities to generate documentation for Salesforce Apex classes.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "keywords": [
+    "apex",
+    "salesforce",
+    "documentation",
+    "cli",
+    "apex-docs",
+    "docs"
+  ],
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "apexdocs": "./dist/cli/generate.js"
+  },
+  "scripts": {
+    "test": "wireit",
+    "test:cov": "npm run build && vitest run --coverage",
+    "build": "wireit",
+    "lint": "wireit",
+    "format": "prettier --write src",
+    "prepare": "npm run build",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "wireit": {
+    "lint": {
+      "command": "eslint \"./src/**/*.{js,ts}\" --quiet --fix",
+      "files": [
+        "src/**/*.ts"
+      ],
+      "output": []
+    },
+    "build": {
+      "command": "tsc --noEmit --pretty && pkgroll --target node22 && tsc --project ./tsconfig.worker.json",
+      "dependencies": [
+        "lint"
+      ],
+      "files": [
+        "src/**/*.ts",
+        "tsconfig.json",
+        "tsconfig.worker.json"
+      ],
+      "output": [
+        "dist"
+      ]
+    },
+    "test": {
+      "command": "vitest run",
+      "dependencies": [
+        "build"
+      ],
+      "files": [
+        "src/**/*.ts",
+        "vitest.config.ts"
+      ],
+      "output": []
+    }
+  },
+  "author": "Cesar Parra",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cesarParra/apexdocs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.3.0",
+    "@types/yargs": "^17.0.32",
+    "@vitest/coverage-v8": "^4.1.8",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^9.1.0",
+    "pkgroll": "^2.4.2",
+    "prettier": "^3.3.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0",
+    "vitest": "^4.1.8",
+    "wireit": "^0.14.12"
+  },
+  "dependencies": {
+    "@cparra/apex-reflection": "4.0.0",
+    "@salesforce/source-deploy-retrieve": "^12.20.1",
+    "cosmiconfig": "^9.0.0",
+    "cosmiconfig-typescript-loader": "^5.0.0",
+    "fast-xml-parser": "^5.5.9",
+    "fp-ts": "^2.16.8",
+    "handlebars": "^4.7.8",
+    "js-yaml": "4.1.1",
+    "minimatch": "^10.0.1",
+    "yargs": "^17.7.2"
+  },
+  "imports": {
+    "#utils/*": "./src/util/*.ts"
+  }
+}

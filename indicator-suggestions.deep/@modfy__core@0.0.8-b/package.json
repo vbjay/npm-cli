@@ -1,0 +1,72 @@
+{
+	"name": "@modfy/core",
+	"version": "0.0.8-b",
+	"description": "Core Package for interfacing with api.modfy.video",
+	"keywords": [
+		"video",
+		"api",
+		"wasm"
+	],
+	"author": "Modfy Inc <hello@modfy.video>",
+	"homepage": "https://api.modfy.video",
+	"main": "lib/index.js",
+	"license": "SEE LICENSE IN Modfy-Core-License.pdf",
+	"browser": "lib/modfy.min.js",
+	"scripts": {
+		"pretest": "wait-on http://localhost:5000/ -t 1000 && NODE_ENV=development node __tests__/preTest.js",
+		"test": "wait-on http-get://localhost/health -t 1000 && jest --runInBand --verbose false --forceExit",
+		"clean": "if [ -d lib/ ];then rm -r lib/; fi",
+		"prebuild": "yarn clean",
+		"build:browser": "rollup -c",
+		"build": "npm-run-all build:node --parallel tsc build:browser",
+		"build:node": "node build/esbuild.js",
+		"esbuild:cli": "esbuild src/index.ts --define:process.env.NODE_ENV=\\\"production\\\" --bundle --platform=node --sourcemap --outfile=lib/index.js",
+		"tsc": "tsc --build tsconfig.build.json",
+		"prettier": "prettier --check src/",
+		"prettier:fix": "prettier --write src/",
+		"lint": "eslint . --ext .ts,.tsx --ignore-pattern lib/",
+		"lint:fix": "yarn lint --fix",
+		"verify": "run-p prettier lint",
+		"verify:fix": "yarn prettier:fix && yarn lint:fix",
+		"bugsnag": "node bugsnag.sourceMaps.js && rm lib/*.map",
+		"prepublishOnly": "yarn bugsnag",
+		"prepare": "yarn build"
+	},
+	"devDependencies": {
+		"@bugsnag/source-maps": "^2.0.0",
+		"@modfy/config": "0.0.7",
+		"@modfy/ffmpeg": "0.1.4",
+		"@rollup/plugin-json": "^4.1.0",
+		"@types/fluent-ffmpeg": "^2.1.17",
+		"@types/mixpanel-browser": "^2.35.6",
+		"@types/temp": "^0.9.0",
+		"bugsnag-build-reporter": "^1.0.3",
+		"ffmpeg-probe": "^1.0.6",
+		"fluent-ffmpeg": "^2.1.2",
+		"rollup": "^2.41.0",
+		"rollup-plugin-babel-minify": "^10.0.0",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"rollup-plugin-node-builtins": "^2.1.2",
+		"rollup-plugin-node-globals": "^1.4.0",
+		"rollup-plugin-node-resolve": "^5.2.0",
+		"wait-on": "^5.2.1"
+	},
+	"publishConfig": {
+		"access": "public",
+		"main": "lib/index.js",
+		"typings": "lib/src/index.d.ts"
+	},
+	"files": [
+		"lib"
+	],
+	"dependencies": {
+		"@bugsnag/js": "^7.8.0",
+		"@modfy/interfaces": "0.0.10-b",
+		"@modfy/utils": "0.0.2",
+		"axios": "^0.21.1",
+		"form-data": "^4.0.0",
+		"mixpanel-browser": "^2.41.0",
+		"temp": "^0.9.4"
+	},
+	"typings": "lib/src/index.d.ts"
+}

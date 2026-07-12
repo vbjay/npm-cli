@@ -1,0 +1,81 @@
+{
+  "name": "chess-trainer-mcp",
+  "version": "1.1.0",
+  "description": "Chess Trainer MCP Server with Stockfish NNUE engine - Interactive chess training with AI coaching capabilities",
+  "main": "server/index.js",
+  "type": "module",
+  "bin": {
+    "chess-trainer-mcp": "bin/chess-trainer-mcp",
+    "chess-trainer-mcp-server": "bin/mcp"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "build": "npm run client:build",
+    "start": "NODE_ENV=production node server/index.js",
+    "server:dev": "NODE_ENV=development nodemon server/index.js",
+    "client:dev": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "client:install": "cd client && npm install",
+    "setup": "npm install && npm run client:install && npm run build",
+    "quick-start": "npm run setup && npm start",
+    "postinstall": "npm run client:install"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.0",
+    "ajv": "^8.12.0",
+    "chess.js": "^1.4.0",
+    "chessops": "^0.12.8",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "http-proxy-middleware": "^3.0.5",
+    "uuid": "^9.0.1",
+    "ws": "^8.17.1",
+    "chessground": "^9.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modenl/stockfishmcp.git"
+  },
+  "homepage": "https://github.com/modenl/stockfishmcp#readme",
+  "bugs": {
+    "url": "https://github.com/modenl/stockfishmcp/issues"
+  },
+  "keywords": [
+    "chess",
+    "mcp",
+    "stockfish",
+    "trainer",
+    "analysis",
+    "ai",
+    "nnue",
+    "wasm",
+    "svelte",
+    "websocket",
+    "coaching",
+    "model-context-protocol"
+  ],
+  "author": {
+    "name": "Chess Trainer MCP Team",
+    "url": "https://github.com/modenl/stockfishmcp"
+  },
+  "license": "MIT",
+  "files": [
+    "server/",
+    "client/dist/",
+    "client/public/",
+    "client/package.json",
+    "client/vite.config.js",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "name": "altimate-receipts",
+  "version": "0.22.1",
+  "description": "Agent-work verification, not code review — a deterministic, cross-agent Report Card of what your coding agent actually did.",
+  "keywords": [
+    "ai",
+    "agent-verification",
+    "agent-work-verification",
+    "coding-agent",
+    "claude-code",
+    "cursor",
+    "copilot",
+    "codex",
+    "deterministic",
+    "audit",
+    "provenance",
+    "ci",
+    "receipts",
+    "cli"
+  ],
+  "homepage": "https://github.com/AltimateAI/altimate-receipts#readme",
+  "bugs": {
+    "url": "https://github.com/AltimateAI/altimate-receipts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AltimateAI/altimate-receipts.git"
+  },
+  "license": "Apache-2.0",
+  "author": "altimate.ai",
+  "type": "module",
+  "bin": {
+    "receipts": "dist/cli.js",
+    "altimate-receipts": "dist/cli.js"
+  },
+  "files": ["dist", "schema/agent-execution-receipt-v1.json", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true && npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.19.19",
+    "ajv": "^8.20.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^3.2.6"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
+  }
+}

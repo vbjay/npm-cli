@@ -1,0 +1,58 @@
+{
+  "name": "bbop-graph-noctua",
+  "version": "0.1.1",
+  "description": "A subclass of bbop-graph that layers on a complete annotation and graph editing model for the Noctua set of tools.",
+  "keywords": [
+    "Berkeley BOP",
+    "GO",
+    "Gene Ontology",
+    "Minerva",
+    "Noctua",
+    "bbop",
+    "client",
+    "graph",
+    "math",
+    "mathematics",
+    "node",
+    "npm",
+    "server"
+  ],
+  "homepage": "https://berkeleybop.org/",
+  "bugs": {
+    "url": "https://github.com/berkeleybop/bbop-js-monorepo/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "SJC <sjcarbon@lbl.gov>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/berkeleybop/bbop-js-monorepo.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/noctua.mjs",
+      "require": "./dist/noctua.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsdown --format esm --format cjs src/noctua.js",
+    "prepack": "npm run build",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bbop-core": "^0.1.0",
+    "bbop-graph": "^0.1.0",
+    "class-expression": "^0.1.0",
+    "underscore": "^1.13.8"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2"
+  },
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "gitHead": "55dd82c3732c65561e24f2de466f8abe62ffec6e"
+}

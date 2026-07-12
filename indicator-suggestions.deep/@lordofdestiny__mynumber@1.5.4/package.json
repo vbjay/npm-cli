@@ -1,0 +1,52 @@
+{
+  "name": "@lordofdestiny/mynumber",
+  "description": "Number combination puzzle solver — Node.js native addon",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "require": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "binding.gyp",
+    "include",
+    "src",
+    "scripts",
+    "lib",
+    "cmake",
+    "packaging",
+    "CMakeLists.txt"
+  ],
+  "scripts": {
+    "install": "node scripts/install.js"
+  },
+  "gypfile": true,
+  "optionalDependencies": {
+    "node-addon-api": "^8.8.0",
+    "node-gyp": "^12.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "native",
+    "addon",
+    "number-puzzle"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "1.5.4",
+  "author": "lordofdestiny",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lordofdestiny/mynumber.git"
+  }
+}

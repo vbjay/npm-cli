@@ -1,0 +1,54 @@
+{
+  "name": "process.argv",
+  "description": "light-weight CLI arguments parser",
+  "version": "1.0.0",
+  "author": "@kawanet",
+  "bugs": {
+    "url": "https://github.com/kawanet/process.argv/issues"
+  },
+  "dependencies": {
+    "obop": "^1.0.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.13.6",
+    "mocha": "^11.0.1"
+  },
+  "exports": {
+    "types": "./types/process.argv.d.ts",
+    "import": "./process.argv.mjs",
+    "require": "./process.argv.js"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "process.argv.mjs",
+    "process.argv.js",
+    "types/process.argv.d.ts"
+  ],
+  "homepage": "https://github.com/kawanet/process.argv#readme",
+  "jshintConfig": {
+    "esversion": 6,
+    "mocha": true,
+    "node": true,
+    "undef": true
+  },
+  "keywords": [
+    "cli",
+    "commander",
+    "options"
+  ],
+  "license": "MIT",
+  "main": "process.argv.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kawanet/process.argv.git"
+  },
+  "scripts": {
+    "build": "make",
+    "fixpack": "fixpack",
+    "prepack": "npm run build && npm run test",
+    "test": "make test"
+  },
+  "type": "commonjs",
+  "typings": "./types/process.argv.d.ts"
+}

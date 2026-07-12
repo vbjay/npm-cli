@@ -1,0 +1,104 @@
+{
+  "name": "npm-gui",
+  "version": "4.0.4",
+  "description": "A graphical tool for managing javascript project dependencies.",
+  "keywords": [
+    "gui",
+    "npm",
+    "yarn",
+    "pnpm",
+    "view",
+    "client",
+    "dependencies",
+    "node_modules",
+    "packages",
+    "installer",
+    "manager"
+  ],
+  "main": "index.js",
+  "module": "dist/module.js",
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "scripts": {
+    "prepack": "npm run build",
+    "dev:server": "ts-node-dev --files server/development.ts",
+    "dev:client": "parcel serve --target=client",
+    "dev": "npm-run-all -p dev:*",
+    "build": "rm -rf dist && parcel build --no-source-maps",
+    "lint:ts": "tsc",
+    "lint:eslint": "eslint . --ignore-path=.gitignore",
+    "lint:prettier": "prettier --check . --ignore-path=.gitignore",
+    "lint": "npm-run-all lint:* -p",
+    "test": "jest",
+    "ci:test": "env NODE_TEST=true npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/q-nick/npm-gui.git"
+  },
+  "author": "Paweł Stefański",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/q-nick/npm-gui/issues"
+  },
+  "bin": {
+    "npm-gui": "index.js"
+  },
+  "homepage": "https://npm-gui.nullapps.dev",
+  "devDependencies": {
+    "@tanstack/query-sync-storage-persister": "^4.22.4",
+    "@tanstack/react-query": "^4.23.0",
+    "@tanstack/react-query-persist-client": "^4.23.0",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/fs-extra": "v9.0.13",
+    "@types/jest": "^27.5.2",
+    "@types/node": "v11.15.54",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.26",
+    "@types/supertest": "^2.0.12",
+    "eslint-config-turbocharge": "^0.1.8",
+    "fs-extra": "v10.1.0",
+    "jest": "^27.5.1",
+    "jest-extended": "^1.2.1",
+    "npm-run-all": "^4.1.5",
+    "open-iconic": "^1.1.1",
+    "parcel": "^2.8.3",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "react-router-dom": "^5.3.4",
+    "styled-components": "^5.3.6",
+    "supertest": "^6.3.3",
+    "ts-jest": "^27.1.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.4",
+    "use-between": "^1.3.5"
+  },
+  "targets": {
+    "main": false,
+    "client": {
+      "source": "client/index.html",
+      "context": "browser",
+      "distDir": "dist"
+    },
+    "server": {
+      "source": "server/index.ts",
+      "context": "node",
+      "outputFormat": "commonjs",
+      "distDir": "dist"
+    }
+  },
+  "dependencies": {
+    "cross-spawn": "^7.0.3",
+    "open": "^8.4.0"
+  },
+  "engines": {
+    "node": ">= 11.0.0",
+    "npm": ">= 6.0.0"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "rebory",
+  "version": "0.2.10",
+  "description": "Make node add-ons easy, than one file, many builds and targets.",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "author": "Matheus Sampaio Queiroga <srherobrine20@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://sirherobrine23.org/utils/rebory.git"
+  },
+  "bin": {
+    "rebory": "src/bin/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
+    },
+    "./config": {
+      "import": "./src/config.js",
+      "types": "./src/config.d.ts"
+    }
+  },
+  "scripts": {
+    "prepack": "tsc --build",
+    "postpack": "tsc --build --clean",
+    "test": "node --no-warnings --loader ts-node/esm src/bin/index.ts -w test build -f"
+  },
+  "keywords": [
+    "addon",
+    "napi",
+    "nan",
+    "zig",
+    "compiler",
+    "cross-compiler"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.11.27",
+    "@types/tar": "^6.1.11",
+    "@types/yargs": "^17.0.32",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "tar": "^6.2.0",
+    "xz-decompress": "^0.2.1",
+    "yaml": "^2.4.1",
+    "yargs": "^17.7.2"
+  }
+}

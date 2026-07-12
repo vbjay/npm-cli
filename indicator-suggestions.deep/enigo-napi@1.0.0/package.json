@@ -1,0 +1,54 @@
+{
+  "name": "enigo-napi",
+  "version": "1.0.0",
+  "description": "Node.js binding for Rust enigo library - keyboard and mouse automation",
+  "main": "index.js",
+  "scripts": {
+    "build": "cargo build --release",
+    "postbuild": "node scripts/copy-binary.js",
+    "test": "node test.js",
+    "prepublishOnly": "npm run build",
+    "install": "node scripts/download-binary.js || npm run build"
+  },
+  "license": "MIT",
+  "keywords": [
+    "enigo",
+    "automation",
+    "keyboard",
+    "mouse",
+    "input",
+    "typing",
+    "rust",
+    "napi"
+  ],
+  "files": [
+    "index.js",
+    "index.node",
+    "node-enigo-linux-x64.node",
+    "node-enigo-linux-arm64.node",
+    "node-enigo-macos-arm64.node",
+    "node-enigo-windows-x64.node",
+    "README.md",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "src/",
+    "scripts/download-binary.js",
+    "scripts/copy-binary.js"
+  ],
+  "engines": {
+    "node": ">= 10.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "download": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devianllert/enigo-napi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devianllert/enigo-napi/issues"
+  },
+  "homepage": "https://github.com/devianllert/enigo-napi#readme"
+}

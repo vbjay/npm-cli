@@ -1,0 +1,87 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "440371a4407712ff",
+    "fetchedFiles": [
+      "fnedge.js",
+      "install.js",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "node-fetch",
+        "versionSpec": "^3.0.0"
+      },
+      {
+        "name": "rimraf",
+        "versionSpec": "^3.0.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "node-fetch@3.3.2",
+      "rimraf@3.0.2"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "bff0ae603c6167a03e7ada3f5e78a6b36da2b9edf066846f0a5f605b917d97ea",
+        "sizeBytes": 209,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "fnedge.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "fnedge.js",
+        "reason": "required by ./install.js",
+        "sha256": "2690d2dd88e493bd3d01c58a65015157ae8a01002cdd8fd48d71fd90dff6f0d7",
+        "sizeBytes": 2957,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://fnedge-api.console.baishan.com/api/v1/cli/download?os=",
+            "classification": "telemetry"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:44.079Z"
+  },
+  "hash": "sha256:a2b9eb07f5cc89dbe82c43be9d2eb8d4e83c9bbc7c110195a219563116780970"
+}

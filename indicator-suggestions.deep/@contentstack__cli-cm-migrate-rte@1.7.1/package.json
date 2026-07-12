@@ -1,0 +1,82 @@
+{
+  "name": "@contentstack/cli-cm-migrate-rte",
+  "description": "Contentstack CLI plugin to migrate HTML RTE to JSON RTE",
+  "version": "1.7.1",
+  "author": "contentstack",
+  "bugs": {
+    "url": "https://github.com/contentstack/cli-plugins/issues"
+  },
+  "dependencies": {
+    "@contentstack/cli-command": "1.8.4",
+    "@contentstack/cli-utilities": "1.18.5",
+    "@contentstack/json-rte-serializer": "~2.1.0",
+    "@oclif/core": "^4.11.4",
+    "@oclif/plugin-help": "^6.2.37",
+    "chalk": "^4.1.2",
+    "collapse-whitespace": "^1.1.7",
+    "jsdom": "^23.2.0",
+    "jsonschema": "^1.5.0",
+    "lodash": "^4.18.1",
+    "omit-deep-lodash": "^1.1.7"
+  },
+  "devDependencies": {
+    "@oclif/test": "^4.1.18",
+    "chai": "^4.5.0",
+    "eslint": "^10.5.0",
+    "eslint-config-oclif": "^6.0.165",
+    "mocha": "^10.8.2",
+    "nock": "^13.5.6",
+    "nyc": "^15.1.0",
+    "oclif": "^4.23.8",
+    "querystring": "^0.2.1",
+    "sinon": "^21.1.2",
+    "husky": "^9.1.7"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "overrides": {
+    "tmp": "0.2.7",
+    "uuid": "14.0.0",
+    "follow-redirects": "1.16.0",
+    "omit-deep-lodash": {
+      "lodash": "4.18.1"
+    }
+  },
+  "files": [
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src"
+  ],
+  "homepage": "https://github.com/contentstack/cli-plugins/tree/main/packages/contentstack-migrate-rte",
+  "keywords": [
+    "contentstack",
+    "cli",
+    "plugin",
+    "JSON RTE"
+  ],
+  "license": "MIT",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "csdx",
+    "repositoryPrefix": "<%- repo %>/blob/main/packages/contentstack-migrate-rte/<%- commandPath %>"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/contentstack/cli-plugins.git",
+    "directory": "packages/contentstack-migrate-rte"
+  },
+  "scripts": {
+    "build": "oclif manifest",
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "nyc --check-coverage=false mocha --require test/setup.js --forbid-only \"test/**/*.test.js\"",
+    "version": "oclif readme && git add README.md",
+    "clean": "rm -rf ./node_modules tsconfig.build.tsbuildinfo"
+  },
+  "csdxConfig": {
+    "shortCommandName": {
+      "cm:entries:migrate-html-rte": "MGRTRTE"
+    }
+  }
+}

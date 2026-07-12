@@ -1,0 +1,30 @@
+{
+  "name": "sdk-javascript-bridge",
+  "version": "2025.7.8",
+  "type": "module",
+  "main": "Scripts/index.js",
+  "scripts": {
+    "build": "node ./Scripts/pack.cjs",
+    "postinstall": "node ./Scripts/copy-sage-framework.cjs"
+  },
+  "description": "Node.js wrapper for SdkJavascriptBridge Blazor WebAssembly",
+  "keywords": [
+    "blazor",
+    "wasm",
+    "sdk",
+    "bridge"
+  ],
+  "files": [
+    "Scripts/index.js",
+    "Scripts/copy-sage-framework.cjs",
+    "_framework/",
+    "README.md",
+    "appsettings.json"
+  ],
+  "author": "Sage",
+  "license": "proprietary",
+  "devDependencies": {
+    "cross-spawn": "^7.0.6",
+    "rimraf": "^6.0.1"
+  }
+}

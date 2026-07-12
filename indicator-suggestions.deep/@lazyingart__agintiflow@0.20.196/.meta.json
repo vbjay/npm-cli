@@ -1,0 +1,50 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3470bb802b5e4335",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall-webapp.js",
+      "src/web-autostart.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall-webapp.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "7748cf1d4aad6ad98294dc41d72f63986b345b28aade0fba0f67a5e97a550888",
+        "sizeBytes": 843,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/web-autostart.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/web-autostart.js",
+        "reason": "required by ./scripts/postinstall-webapp.js",
+        "sha256": "36bdc2d0e0d719f06f6aac2206728c016f65a3a727412e51d0920753bd1ddfb6",
+        "sizeBytes": 11919,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "uses-net-socket",
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:23.752Z"
+  },
+  "hash": "sha256:84d6601a3d31ee1bdc61946581c7bd29033407d64b7e9cc39a0778e29291a410"
+}

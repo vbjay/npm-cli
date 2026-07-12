@@ -1,0 +1,120 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3c8f858f4293a333",
+    "fetchedFiles": [
+      "Cargo.toml",
+      "build.rs",
+      "package.json",
+      "scripts/build-on-demand.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": "4ca11008a482e325957d3e9bb505f55a119b17ec0c67759a64b3adbc51696114",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": [
+          {
+            "label": "Crate name",
+            "items": [
+              "jsondb-high"
+            ]
+          },
+          {
+            "label": "Crate version",
+            "items": [
+              "5.5.0"
+            ]
+          },
+          {
+            "label": "Crate output type",
+            "items": [
+              "\"cdylib\""
+            ]
+          },
+          {
+            "label": "Has build/runtime dependencies",
+            "items": [
+              "yes"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "build.rs",
+        "label": "Rust build script",
+        "sha256": "71b61de74caafb5f27db3d24d197b64282f49f807b969e140ca8ce181e5464fc",
+        "parseError": null,
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/build-on-demand.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "08cf6e9ebb430219dfff5aad14c948c4ad8ad1bb6c251fbb6fcf1f238695c35d",
+        "sizeBytes": 4525,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://rustup.rs/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://sh.rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:03.716Z"
+  },
+  "hash": "sha256:7da7c472ccfaa9ed6b533922d13e9cf466ffccdccbce7d1e8c25d0fdd884c886"
+}

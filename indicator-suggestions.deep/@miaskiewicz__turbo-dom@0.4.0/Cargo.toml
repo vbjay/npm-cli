@@ -1,0 +1,71 @@
+[workspace]
+# The root package (turbo-dom-parser) plus the standalone Rust-native DOM runtime
+# crate published to crates.io as `turbo-dom`. The parser ships to npm.
+members = ["crates/turbo-dom"]
+
+[package]
+name = "turbo-dom-parser"
+version = "0.4.0"
+edition = "2021"
+description = "html5ever-backed native parser for turbo-dom (Layer 1)"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Shared parser core
+html5ever = "0.39"
+markup5ever_rcdom = "0.39"
+rustc-hash = "2"   # fast non-crypto FxHashMap for string interning (parse hot path)
+
+# napi-rs front-end (native addon). Gated so the wasm build doesn't pull it.
+napi = { version = "2", default-features = false, features = ["napi6"], optional = true }
+napi-derive = { version = "2", optional = true }
+
+# wasm-bindgen front-end (fallback build).
+wasm-bindgen = { version = "0.2", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
+serde-wasm-bindgen = { version = "0.6", optional = true }
+
+[build-dependencies]
+napi-build = { version = "2", optional = true }
+
+[features]
+default = ["napi-bind"]
+napi-bind = ["dep:napi", "dep:napi-derive", "dep:napi-build"]
+wasm-bind = ["dep:wasm-bindgen", "dep:serde", "dep:serde-wasm-bindgen"]
+# Phase-1 boundary spike: Rust DOM runtime over the SoA, exported to JS via wasm-bindgen.
+wasm-runtime = ["dep:wasm-bindgen"]
+
+# Same clippy pedantic gate as the turbo-dom crate (crates/turbo-dom/Cargo.toml). The
+# allowed lints are intentional for a parser/marshaling layer that bridges f64 and integer
+# indices and hand-rolls hot loops — documented opt-outs, not silent suppression.
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+cast_possible_truncation = "allow"
+cast_precision_loss = "allow"
+cast_sign_loss = "allow"
+cast_possible_wrap = "allow"
+float_cmp = "allow"
+many_single_char_names = "allow"
+missing_panics_doc = "allow"
+missing_errors_doc = "allow"
+struct_excessive_bools = "allow"
+too_many_lines = "allow"
+implicit_hasher = "allow"
+# The #[napi]/#[wasm_bindgen] parse fns take owned `String` per FFI convention — the
+# marshaled JS string is owned at the boundary and the copy is negligible vs parse cost.
+needless_pass_by_value = "allow"
+
+[profile.release]
+lto = true
+opt-level = 3
+
+# Profiling profile: identical codegen to `release` (lto + opt-level 3) but with
+# debug symbols, so `sample`/Instruments can attribute self-time to source lines.
+# Kept SEPARATE from `[profile.release]` on purpose — the shipped crate stays lean
+# (no debuginfo bloat); this profile is only used by `cargo build --profile profiling`
+# for the CPU profiling harness (examples/churn_profile.rs).
+[profile.profiling]
+inherits = "release"
+debug = true

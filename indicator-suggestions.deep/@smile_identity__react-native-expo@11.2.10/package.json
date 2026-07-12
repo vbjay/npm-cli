@@ -1,0 +1,49 @@
+{
+  "name": "@smile_identity/react-native-expo",
+  "version": "11.2.10",
+  "description": "Official Smile ID SDK for Expo",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "preinstall": "[ \"$npm_config_global\" = \"true\" ] || [ \"$ALLOW_INSTALL\" = \"1\" ] || [ \"$CI\" = \"true\" ] || [ ! -f .git/HEAD ] || case \"$npm_config_user_agent\" in yarn/*) true ;; *) [ \"$npm_command\" = \"ci\" ] ;; esac || (echo 'Use yarn install or npm ci' && exit 1)",
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "eslint --cache --cache-location .eslintcache --ext .ts,.tsx ./src",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios-expo": "xed samples/sample-expo/ios",
+    "open:android-expo": "open -a \"Android Studio\" samples/sample-expo/android",
+    "open:ios-react-native": "xed samples/sample-react-native/ios",
+    "open:android-react-native": "open -a \"Android Studio\" samples/sample-react-native/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "react-native-expo",
+    "SmileIDExpo"
+  ],
+  "repository": "https://github.com/smileidentity/react-native-expo-v11.git",
+  "bugs": {
+    "url": "https://github.com/smileidentity/react-native-expo-v11/issues"
+  },
+  "author": "Harun Wangereka <harun@usesmileid.com> (https://github.com/wangerekaharun)",
+  "license": "MIT",
+  "homepage": "https://github.com/smileidentity/react-native-expo.git#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "~19.1.10",
+    "eslint": "^8.57.0",
+    "expo": "^54.0.0",
+    "expo-module-scripts": "^4.1.6",
+    "react": "19.1.0",
+    "react-native": "0.81.4"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

@@ -1,0 +1,73 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    repositories {
+        google()
+         mavenCentral()
+    }
+
+    dependencies {
+        //noinspection GradleDependency
+        classpath 'com.android.tools.build:gradle:3.2.1'
+    }
+}
+
+plugins {
+    id "com.diffplug.spotless" version "6.13.0"
+}
+
+spotless {
+    enforceCheck false
+
+    java {
+        target '**/*.java'
+        googleJavaFormat().aosp()
+        removeUnusedImports()
+        licenseHeaderFile 'licenseHeader.txt'
+    }
+    format 'xml', {
+        target fileTree('.') {
+            include '**/*.xml', '**/*.xsd'
+            exclude '**/build/**'
+        }
+        // Use for example eclipseWtp('xml', '4.7.3a') to specify a specific version of Eclipse,
+        // available versions are: https://github.com/diffplug/spotless/tree/master/lib-extra/src/main/resources/com/diffplug/spotless/extra/eclipse_wtp_formatters
+        eclipseWtp('xml')
+    }
+}
+
+def getExtOrDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ReactNativeJobQueue_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ReactNativeJobQueue_' + name]).toInteger()
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+    buildToolsVersion getExtOrDefault('buildToolsVersion')
+
+    defaultConfig {
+        minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+    }
+    lintOptions{
+        abortOnError false
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    //noinspection GradleDynamicVersion
+    api 'com.facebook.react:react-native:+'
+    implementation "androidx.room:room-runtime:2.5.2"
+    annotationProcessor "androidx.room:room-compiler:2.5.2"
+    implementation "androidx.room:room-ktx:2.5.2"
+}

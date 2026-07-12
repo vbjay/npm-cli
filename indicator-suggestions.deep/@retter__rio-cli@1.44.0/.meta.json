@@ -1,0 +1,65 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "2bfa937bd4b5bd19",
+    "fetchedFiles": [
+      "dist/bootstrap.js",
+      "dist/config.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/bootstrap.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "0e32de58a6eb3883b45d81a5173b3d5f19074e56d571e17d511e0797ed30f424",
+        "sizeBytes": 1484,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/config.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/config.js",
+        "reason": "required by ./dist/bootstrap.js",
+        "sha256": "e145c64dc0acc7fd044635b2207905b480abebd5c75c10f1fe7122139d959de7",
+        "sizeBytes": 2568,
+        "signals": [
+          "reads-process-env"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:51.230Z"
+  },
+  "hash": "sha256:0ed6b4aabe591ba77fed7ab567773c61a52ca04ec5186dd3043fe9109ffbfdf5"
+}

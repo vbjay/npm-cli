@@ -1,0 +1,180 @@
+{
+	"name": "@box/cli",
+	"description": "Official command line interface for the Box API.",
+	"keywords": [
+		"box",
+		"cli",
+		"platform",
+		"api",
+		"upload",
+		"download"
+	],
+	"version": "4.9.2",
+	"author": "Box <oss@box.com>",
+	"license": "Apache-2.0",
+	"main": "src/index.js",
+	"bin": {
+		"box": "./bin/run"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/box/boxcli.git"
+	},
+	"bugs": "https://github.com/box/boxcli/issues",
+	"dependencies": {
+		"@discoveryjs/json-ext": "^0.5.7",
+		"@github/keytar": "^7.10.6",
+		"@oclif/core": "^4.8.0",
+		"@oclif/plugin-autocomplete": "^3.2.39",
+		"@oclif/plugin-help": "^6.2.36",
+		"@oclif/plugin-not-found": "^3.2.73",
+		"@oclif/plugin-update": "3.2.4",
+		"@oclif/plugin-version": "^2.2.36",
+		"@oclif/table": "^0.5.8",
+		"@octokit/rest": "^22.0.0",
+		"archiver": "^8.0.0",
+		"box-node-sdk": "^4.11.1",
+		"chalk": "^2.4.1",
+		"cli-progress": "^2.1.0",
+		"csv": "^6.3.3",
+		"date-fns": "^1.29.0",
+		"debug": "^4.4.0",
+		"express": "^4.22.1",
+		"fs-extra": "^10.1.0",
+		"inquirer": "^8.2.7",
+		"js-yaml": "^4.1.1",
+		"keychain": "^1.5.0",
+		"lodash": "^4.17.13",
+		"mkdirp": "^3.0.1",
+		"nanoid": "^3.3.8",
+		"open": "^10.1.0",
+		"ora": "^5.4.1",
+		"p-event": "^2.3.1",
+		"semver": "^7.7.3"
+	},
+	"devDependencies": {
+		"@oclif/test": "^3.2.15",
+		"@typescript-eslint/eslint-plugin": "^8.17.0",
+		"babel-eslint": "^10.1.0",
+		"baseline-browser-mapping": "^2.9.11",
+		"chai": "^4.1.2",
+		"chai-as-promised": "^7.1.1",
+		"eslint": "^9.38.0",
+		"eslint-config-prettier": "^9",
+		"eslint-plugin-mocha": "^10.5.0",
+		"eslint-plugin-n": "^17.14.0",
+		"eslint-plugin-promise": "^7.2.1",
+		"eslint-plugin-unicorn": "^56.0.1",
+		"generate-license-file": "^4.1.0",
+		"jsonwebtoken": "^9.0.3",
+		"leche": "^2.3.0",
+		"mocha": "^11.7.6",
+		"nock": "^13.5.6",
+		"nyc": "^17.1.0",
+		"oclif": "^4.22.38",
+		"prettier": "^3.6.2",
+		"signal-exit": "^4.1.0",
+		"sinon": "^22.0.0",
+		"standard-version": "^9.5.0",
+		"typescript": "^5.7.2"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"files": [
+		"/bin",
+		"/LICENSE-THIRD-PARTY.txt",
+		"/npm-shrinkwrap.json",
+		"/oclif.manifest.json",
+		"/src"
+	],
+	"oclif": {
+		"description": "Official command line interface for the Box API. New here? Run 'box login -d' to sign in with your Box account in seconds. Already set up? Run 'box help' to explore all available commands.",
+		"commands": "./src/commands",
+		"bin": "box",
+		"additionalHelpFlags": [
+			"-h"
+		],
+		"additionalVersionFlags": [
+			"-v"
+		],
+		"hooks": {
+			"init": [
+				"./src/hooks/init/verbose"
+			]
+		},
+		"macos": {
+			"identifier": "com.box.cli"
+		},
+		"plugins": [
+			"@oclif/plugin-help",
+			"@oclif/plugin-not-found",
+			"@oclif/plugin-autocomplete",
+			"@oclif/plugin-version"
+		],
+		"topics": {
+			"autocomplete": {
+				"description": "Display autocomplete installation instructions"
+			},
+			"collaborations": {
+				"description": "Manage collaborations"
+			},
+			"comments": {
+				"description": "Manage comments on files"
+			},
+			"configure": {
+				"description": "Configure the Box CLI"
+			},
+			"configure:environments": {
+				"description": "Manage your CLI environments"
+			},
+			"files": {
+				"description": "Manage files"
+			},
+			"folders": {
+				"description": "Manage folders"
+			},
+			"help": {
+				"description": "Display help for the Box CLI"
+			},
+			"shared-links": {
+				"description": "Manage shared links"
+			},
+			"tasks": {
+				"description": "Manage tasks"
+			},
+			"web-links": {
+				"description": "Manage web links"
+			}
+		},
+		"update": {
+			"github": {
+				"owner": "box",
+				"repo": "boxcli"
+			}
+		}
+	},
+	"scripts": {
+		"test": "nyc mocha \"test/**/*.test.js\"",
+		"posttest": "npm run lint",
+		"lint": "eslint --fix ./src ./test",
+		"clean": "find src/ -type d -name 'dist' -exec rm -rf {} +",
+		"updatemd": "oclif readme --multi && find docs -type f -name '*.md' -exec sed -i '' 's/\\.ts/\\.js/g' {} +",
+		"postinstall": "rm -rf ./node_modules/@github/keytar/build",
+		"prepack": "oclif manifest && npm run updatemd",
+		"postpack": "rm -f oclif.manifest.json && npm install",
+		"version": "npm run updatemd && npm run prettier && npm run license && git add .",
+		"build": "oclif pack:macos && rm -rf tmp/ && oclif pack:win && rm -rf tmp/",
+		"build:tarballs": "oclif pack:tarballs --no-xz --parallel",
+		"changelog": "node node_modules/standard-version/bin/cli.js --skip.commit --skip.push --skip.tag --dry-run",
+		"license": "generate-license-file --overwrite",
+		"prettier": "prettier --write \"**/*.{js,json}\""
+	},
+	"overrides": {
+		"leche": {
+			"mocha": ">=1.18"
+		},
+		"serialize-javascript": ">=7.0.5",
+		"diff": ">8.0.2"
+	}
+}

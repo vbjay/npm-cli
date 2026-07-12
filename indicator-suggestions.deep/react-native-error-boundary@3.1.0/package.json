@@ -1,0 +1,123 @@
+{
+  "name": "react-native-error-boundary",
+  "version": "3.1.0",
+  "description": "A simple and reusable React-Native error boundary component",
+  "main": "lib/index.js",
+  "files": [
+    "src",
+    "lib",
+    "README.md"
+  ],
+  "react-native": "src/index.tsx",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ./src && prettier --check ./src",
+    "test": "jest",
+    "prepare": "husky",
+    "version:patch": "pnpm version patch -m \"🔖 %s\"",
+    "version:minor": "pnpm version minor -m \"🔖 %s\"",
+    "version:major": "pnpm version major -m \"🔖 %s\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carloscuesta/react-native-error-boundary.git"
+  },
+  "keywords": [
+    "react-native",
+    "error",
+    "error boundary",
+    "error handler",
+    "componentDidCatch"
+  ],
+  "author": {
+    "name": "carloscuesta",
+    "email": "hi@carloscuesta.me",
+    "url": "https://carloscuesta.me"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carloscuesta/react-native-error-boundary/issues"
+  },
+  "homepage": "https://github.com/carloscuesta/react-native-error-boundary",
+  "peerDependencies": {
+    "react": ">=16.6.0",
+    "react-native": ">=0.74.0",
+    "react-native-safe-area-context": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "@react-native/babel-preset": "0.81.1",
+    "@testing-library/jest-native": "5.4.3",
+    "@testing-library/react-native": "13.3.3",
+    "@types/jest": "^30.0.0",
+    "@types/react": "19.2.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "eslint": "^8.57.1",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jest": "^29.0.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-native": "^5.0.0",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "lint-staged": "^16.2.3",
+    "metro-babel-register": "^0.83.3",
+    "prettier": "^3.6.2",
+    "react": "^19.2.0",
+    "react-native": "^0.81.4",
+    "react-test-renderer": "^19.2.0",
+    "ts-node": "10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "env": {
+      "jest": true,
+      "react-native/react-native": true
+    },
+    "plugins": [
+      "react",
+      "react-native",
+      "import",
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/react-native",
+      "plugin:import/typescript"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module",
+      "requireConfigFile": false
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      },
+      "import/ignore": [
+        "react-native"
+      ]
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "arrowParens": "always"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "packageManager": "pnpm@10.0.0"
+}

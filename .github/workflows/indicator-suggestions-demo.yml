@@ -1,0 +1,175 @@
+name: indicator-suggestions deep scan demo
+
+on:
+  pull_request:
+    paths:
+      - scripts/build-indicator-suggestions.js
+      - lib/utils/indicator-definitions.js
+      - lib/utils/script-risk-scanner.js
+      - indicator-suggestions.json
+  push:
+    branches:
+      - main
+      - copilot/**
+    paths:
+      - scripts/build-indicator-suggestions.js
+      - lib/utils/indicator-definitions.js
+      - lib/utils/script-risk-scanner.js
+      - indicator-suggestions.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  scan:
+    name: Run indicator suggestions deep scan (9router)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Reset workspace deps
+        run: node scripts/resetdeps.js
+
+      - name: Run indicator suggestions scan
+        id: scan
+        run: |
+          set +e
+          node scripts/build-indicator-suggestions.js --add 9router --top 100 --deep \
+            2>&1 | tee scan-output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+        timeout-minutes: 10
+
+      - name: Upload scan artifacts
+        id: artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: indicator-suggestions-scan
+          path: |
+            scan-output.txt
+            indicator-suggestions.json
+            indicator-suggestions.packages.json
+          if-no-files-found: warn
+
+      - name: Post scan output as PR comment
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v9
+        env:
+          EXIT_CODE: ${{ steps.scan.outputs.exit_code }}
+          ARTIFACT_URL: ${{ steps.artifacts.outputs.artifact-url }}
+        with:
+          script: |
+            const fs = require('fs')
+
+            const exitCode = process.env.EXIT_CODE || '0'
+            const success = exitCode === '0'
+            const badge = success ? '✅ SUCCESS' : `❌ FAILED (exit ${exitCode})`
+            const artifactUrl = process.env.ARTIFACT_URL || ''
+
+            // Read scan output (stdout + stderr combined)
+            let scanOutput = ''
+            try {
+              scanOutput = fs.readFileSync('scan-output.txt', 'utf8')
+            } catch (e) {
+              scanOutput = `(could not read scan-output.txt: ${e.message})`
+            }
+
+            // Read generated JSON if present
+            let jsonText = ''
+            try {
+              jsonText = fs.readFileSync('indicator-suggestions.json', 'utf8')
+            } catch (e) {
+              jsonText = ''
+            }
+
+            // Read packages.json if present
+            let pkgText = ''
+            try {
+              pkgText = fs.readFileSync('indicator-suggestions.packages.json', 'utf8')
+            } catch (e) {
+              pkgText = ''
+            }
+
+            const header = [
+              `## ${badge} — indicator-suggestions deep scan`,
+              '',
+              `**Command:** \`node scripts/build-indicator-suggestions.js --add 9router --top 100 --deep\``,
+              '',
+            ].join('\n')
+
+            // GitHub comment body limit is 65,536 characters.
+            const LIMIT = 65000
+
+            const outputSection = [
+              '<details>',
+              '<summary>Full scan output (stdout + stderr)</summary>',
+              '',
+              '```',
+              scanOutput.slice(0, 40000),
+              scanOutput.length > 40000
+                ? `\n…(truncated — ${scanOutput.length} chars total, see artifact for full output)`
+                : '',
+              '```',
+              '',
+              '</details>',
+            ].join('\n')
+
+            const jsonSection = jsonText ? [
+              '<details>',
+              '<summary>Generated indicator-suggestions.json</summary>',
+              '',
+              '```json',
+              jsonText.slice(0, 15000),
+              jsonText.length > 15000
+                ? `\n…(truncated — ${jsonText.length} chars total, see artifact for full file)`
+                : '',
+              '```',
+              '',
+              '</details>',
+            ].join('\n') : ''
+
+            const pkgSection = pkgText ? [
+              '<details>',
+              '<summary>Generated indicator-suggestions.packages.json (manifest store)</summary>',
+              '',
+              '```json',
+              pkgText.slice(0, 10000),
+              pkgText.length > 10000
+                ? `\n…(truncated — ${pkgText.length} chars total, see artifact for full file)`
+                : '',
+              '```',
+              '',
+              '</details>',
+            ].join('\n') : ''
+
+            const artifactLine = artifactUrl
+              ? `\n📦 [Download full scan artifacts (zip)](${artifactUrl})\n`
+              : ''
+
+            let body = [header, outputSection, jsonSection && '\n' + jsonSection, pkgSection && '\n' + pkgSection, artifactLine]
+              .filter(Boolean)
+              .join('\n')
+
+            if (body.length > LIMIT) {
+              body = [
+                header,
+                outputSection.slice(0, LIMIT - header.length - artifactLine.length - 200),
+                '…*(truncated — full output in artifact)*',
+                artifactLine,
+              ].join('\n')
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            })

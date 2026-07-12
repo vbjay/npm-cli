@@ -1,0 +1,205 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "acec5777c4733060",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json",
+      "scripts/deps-constants.js",
+      "scripts/get-addon-name.js",
+      "scripts/install.js",
+      "scripts/resources.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "https-proxy-agent",
+        "versionSpec": "^2.2.1"
+      },
+      {
+        "name": "progress",
+        "versionSpec": "^2.0.0"
+      },
+      {
+        "name": "tar",
+        "versionSpec": "^6.2.1"
+      },
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.2"
+      },
+      {
+        "name": "rimraf",
+        "versionSpec": "^2.6.2"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18",
+      "https-proxy-agent@2.2.4",
+      "progress@2.0.3",
+      "rimraf@2.7.1",
+      "tar@6.2.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "768adc1420a306f702c3fb3e5cd75dd0edceb6d6e9467d1764514ad7d87dde9e",
+        "parseError": "Bad escaped character in JSON at position 614 (line 39 column 26)",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "c3abbacb1a12f7546c580d272cec49b186ec87a2254dae3326519d2de3d58ded",
+        "sizeBytes": 7001,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "native-build",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/deps-constants.js",
+          "scripts/resources.js",
+          "scripts/get-addon-name.js"
+        ],
+        "urls": [
+          {
+            "url": "https://storage.googleapis.com/",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "scripts/deps-constants.js",
+        "reason": "required by ./scripts/install.js; required by ./scripts/get-addon-name.js",
+        "sha256": "ba22622d173be66ece405c697088ab6b7daeb9bc112a34fa476b98442a4dbba0",
+        "sizeBytes": 4375,
+        "signals": [
+          "writes-outside-package",
+          "dynamic-require",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./scripts/deps-constants.js; required by ./scripts/get-addon-name.js",
+        "sha256": "23b6ba65114c510f78933d48f67ef2257074dd30c88642023979e598391fc60f",
+        "sizeBytes": 3345,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/resources.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "a66bba256e55dfc6eacb0904f75e2f1e858c68b8f550837bd687744685a5ef96",
+        "sizeBytes": 3669,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/get-addon-name.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "ad32a6d53ab7229057d79882312ccb860f588e95ed69874675aac58658290591",
+        "sizeBytes": 1341,
+        "signals": [
+          "writes-outside-package",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json",
+          "scripts/deps-constants.js"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:04.203Z"
+  },
+  "hash": "sha256:ef692c3a7f110bff95cf05dc22d44e182045636864b8a617384e15010bffc928"
+}

@@ -1,0 +1,155 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d0fe0e1525363e1c",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "build-native.sh",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "5e32afe4a346a4a050c1e40ddd1cbf1d0fa847b61777aa6b6f7f56218b57a2c7",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Contains C/C++ native code (externalNativeBuild — CMake or ndk-build)",
+            "items": [
+              "yes"
+            ]
+          },
+          {
+            "label": "Target CPU architectures (abiFilters)",
+            "items": [
+              "'arm64-v8a'"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+            ]
+          },
+          {
+            "label": "Native build descriptor path",
+            "items": [
+              "src/main/CMakeLists.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "CMakeLists.txt",
+        "label": "CMake build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\llama-cpp-capacitor@0.2.2\\CMakeLists.txt'",
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "CMakePresets.json",
+        "label": "CMake build presets",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\llama-cpp-capacitor@0.2.2\\CMakePresets.json'",
+        "signals": [],
+        "groups": []
+      },
+      {
+        "indicatorFile": "build.gradle",
+        "label": "Gradle build script (root-level)",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\llama-cpp-capacitor@0.2.2\\build.gradle'",
+        "signals": [
+          "android-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/verify-pack-artifacts.mjs",
+        "reason": "referenced by lifecycle script: `verify:pack:artifacts`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "build-native.sh",
+        "reason": "referenced by lifecycle script: `build:native`",
+        "sha256": "11290d39cf858829a8af3273bd0c21668007882b1b0fd2b5e955cc26d8302e1c",
+        "sizeBytes": 9400,
+        "signals": [
+          "writes-outside-package"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/build-wasm.sh",
+        "reason": "referenced by lifecycle script: `build:wasm`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/build-worker.mjs",
+        "reason": "referenced by lifecycle script: `build:worker`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      },
+      {
+        "path": "scripts/copy-wasm-assets.mjs",
+        "reason": "referenced by lifecycle script: `build:wasm:assets`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:07.042Z"
+  },
+  "hash": "sha256:e785196abaee0f6533b45beda8b6e3943ae5f79ec147eba52d609c320ddbbe87"
+}

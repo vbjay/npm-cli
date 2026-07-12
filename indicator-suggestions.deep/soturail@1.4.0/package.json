@@ -1,0 +1,80 @@
+{
+  "name": "soturail",
+  "version": "1.4.0",
+  "description": "Local-first context rails for AI coding agents: reversible terminal compression, progressive repo reading, SDD workflows, hooks, benchmarks, memory and cache-friendly payloads.",
+  "type": "module",
+  "bin": {
+    "soturail": "dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "docs",
+    "examples"
+  ],
+  "scripts": {
+    "sync:version": "node scripts/sync-version.mjs",
+    "build": "npm run sync:version && tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "docs:check": "node scripts/check-doc-links.mjs",
+    "build:native": "cargo build --manifest-path native/soturail-native/Cargo.toml --release",
+    "test:native": "cargo test --manifest-path native/soturail-native/Cargo.toml",
+    "build:all": "npm run build && npm run build:native",
+    "test:all": "npm test && npm run test:native",
+    "bench:prepare": "node dist/cli.js bench prepare",
+    "bench": "node dist/cli.js bench run --engine ts",
+    "bench:report": "node dist/cli.js bench report",
+    "bench:native": "node dist/cli.js bench run --engine native",
+    "bench:compare": "node dist/cli.js bench compare-engines",
+    "release:check": "npm run build && node dist/cli.js release check",
+    "release:notes": "npm run build && node dist/cli.js release notes",
+    "release:publish": "npm run build && node dist/cli.js release publish",
+    "release:github": "npm run build && node dist/cli.js release github",
+    "release:full": "npm run build && node dist/cli.js release full"
+  },
+  "keywords": [
+    "ai-agents",
+    "coding-agents",
+    "context-engineering",
+    "prompt-caching",
+    "token-optimization",
+    "terminal-compression",
+    "cli",
+    "typescript",
+    "rust",
+    "local-first",
+    "spec-driven-development",
+    "llm-tools",
+    "agent-hooks",
+    "developer-tools",
+    "soturail"
+  ],
+  "author": "Rafael Ryan Ramos de Souza",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Soturine/soturail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Soturine/soturail/issues"
+  },
+  "homepage": "https://github.com/Soturine/soturail#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.8"
+  }
+}

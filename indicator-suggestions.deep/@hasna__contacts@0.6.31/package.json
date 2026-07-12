@@ -1,0 +1,92 @@
+{
+  "name": "@hasna/contacts",
+  "version": "0.6.31",
+  "description": "Contact management for AI coding agents — CLI + MCP + Web",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "contacts": "dist/cli/index.js",
+    "contacts-mcp": "dist/mcp/index.js",
+    "contacts-serve": "dist/server/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "dashboard/dist",
+    "migrations",
+    "hasna.contract.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist dashboard/dist",
+    "clean:core": "rm -rf dist",
+    "build": "bun run clean && cd dashboard && bun run build && cd .. && bun run build:bundles && tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
+    "build:core": "bun run clean:core && bun run build:bundles && tsc -p tsconfig.build.json --emitDeclarationOnly --outDir dist",
+    "build:bundles": "bun build src/cli/index.tsx --outdir dist/cli --target bun --external ink --external react --external chalk --external pg --external @hasna/contracts --external @modelcontextprotocol/sdk && bun build src/mcp/index.ts --outdir dist/mcp --target bun --external pg --external @hasna/contracts --external @modelcontextprotocol/sdk && bun build src/server/index.ts --outdir dist/server --target bun --external pg --external @hasna/contracts && bun build src/sdk/index.ts --outdir dist/sdk --target bun && bun build src/index.ts --outdir dist --target bun --external pg --external @hasna/contracts",
+    "build:server": "rm -rf dist/server dist/sdk && bun build src/server/index.ts --outdir dist/server --target bun --external pg --external @hasna/contracts",
+    "generate:sdk": "bun run scripts/generate-sdk.ts",
+    "migrate": "bun run scripts/migrate.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "dev:cli": "bun run src/cli/index.tsx",
+    "dev:mcp": "bun run src/mcp/index.ts",
+    "dev:serve": "bun run src/server/index.ts",
+    "prepublishOnly": "bun run typecheck && bun test && bun run build",
+    "postinstall": "install -d -m 700 \"$HOME/.hasna/contacts\" \"$HOME/.hasna/contacts/backups\" \"$HOME/.hasna/contacts/images\" \"$HOME/.hasna/contacts/documents\" 2>/dev/null || mkdir -p $HOME/.hasna/contacts/{backups,images,documents} 2>/dev/null || true"
+  },
+  "keywords": [
+    "contacts",
+    "mcp",
+    "ai",
+    "coding-agent",
+    "claude",
+    "cli",
+    "rolodex",
+    "address-book"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasna/contacts.git"
+  },
+  "homepage": "https://github.com/hasna/contacts",
+  "bugs": {
+    "url": "https://github.com/hasna/contacts/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "author": "Andrei Hasna <andrei@hasna.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hasna/contracts": "^0.5.1",
+    "@hasna/events": "^0.1.6",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "ink": "^5.2.0",
+    "pg": "^8.13.3",
+    "react": "^18.3.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/pg": "^8.11.11",
+    "@types/react": "^18.3.18",
+    "typescript": "^5.7.3"
+  }
+}

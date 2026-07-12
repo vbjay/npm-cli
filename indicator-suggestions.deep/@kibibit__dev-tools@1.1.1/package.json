@@ -1,0 +1,155 @@
+{
+  "name": "@kibibit/dev-tools",
+  "version": "1.1.1",
+  "description": "some useful scripts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "/lib",
+    "/src"
+  ],
+  "bin": {
+    "@kibibit/prune-merged": "bin/prune-merged-branches",
+    "kb-prune-merged": "bin/prune-merged-branches",
+    "@kibibit/disallow-master-commits": "bin/disallow-master-commits",
+    "kb-disallow-master-commits": "bin/disallow-master-commits"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "scripts": {
+    "disallow-master-commits": "bin/disallow-master-commits",
+    "prebuild": "rimraf lib",
+    "build": "tsc",
+    "semantic-release:setup": "semantic-release-cli setup",
+    "lint": "eslint -c ./.eslintrc.js \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:fix": "eslint -c ./.eslintrc.js \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "semantic-release": "cross-env HUSKY=0 semantic-release",
+    "test": "jest",
+    "test:watch": "jest --watch --verbose",
+    "test:cov": "jest --coverage --verbose",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "contributors:all": "cross-env HUSKY=0 node ./tools/get-all-contributors.js",
+    "contributors:add": "cross-env HUSKY=0 all-contributors add",
+    "contributors:generate": "cross-env HUSKY=1 all-contributors generate",
+    "prepare": "husky install"
+  },
+  "author": "thatkookooguy <neilkalman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cli-table": "^0.3.11",
+    "inquirer": "^8.2.2",
+    "lodash": "^4.17.21",
+    "simple-git": "^3.5.0",
+    "yargs": "^17.4.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-angular": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.4",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/cli-table": "^0.3.0",
+    "@types/inquirer": "^8.2.1",
+    "@types/lodash": "^4.14.181",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "all-contributors-cli": "^6.20.0",
+    "commitizen": "^4.2.4",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog-emoji": "^0.1.0",
+    "eslint": "^8.12.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "jest-mock-console": "^1.2.3",
+    "jest-mock-process": "^1.4.1",
+    "jest-stare": "^2.3.0",
+    "semantic-release": "^19.0.2",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog-emoji"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "release": {
+    "branches": [
+      {
+        "name": "main"
+      },
+      {
+        "name": "beta",
+        "channel": "beta",
+        "prerelease": "beta"
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "commitsSort": [
+              "subject",
+              "scope"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md",
+          "changelogTitle": "achievibit changelog"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md"
+          ]
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kibibit/dev-tools.git"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "rollup-plugin-pug",
+  "version": "1.1.1",
+  "description": "Transforms Pug (aka Jade) templates to ES6 modules.",
+  "main": "dist/rollup-plugin-pug.js",
+  "scripts": {
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- test/run.js",
+    "pretest": "npm run build && rimraf ./test/~tmp/*",
+    "build": "rimraf ./dist/* && node ./build-rt.js && rollup -c",
+    "prepublish": "npm run lint && npm test",
+    "postinstall": "node ./build-rt.js",
+    "lint": "eslint src/**/*.ts test/run.js"
+  },
+  "keywords": [
+    "rollup",
+    "rollup-plugin",
+    "javascript",
+    "es6",
+    "modules",
+    "jade",
+    "pug"
+  ],
+  "engines": {
+    "node": ">=6.0"
+  },
+  "author": "aMarCruz <amarcruzbox-git@yahoo.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/aMarCruz/rollup-plugin-pug",
+  "bugs": "https://github.com/aMarCruz/rollup-plugin-pug/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aMarCruz/rollup-plugin-pug.git"
+  },
+  "dependencies": {
+    "gen-pug-source-map": "^1.0.0",
+    "pug": "^2.0.3",
+    "pug-runtime": "^2.0.4",
+    "rollup-pluginutils": "^2.3.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^1.5.0",
+    "eslint": "^5.7.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.66.0",
+    "rollup-plugin-alias": "^1.4.0",
+    "rollup-plugin-typescript2": "^0.17.0",
+    "tslib": "^1.9.3",
+    "typescript": "~3.3.0"
+  },
+  "peerDependencies": {
+    "rollup": ">=0.61"
+  }
+}

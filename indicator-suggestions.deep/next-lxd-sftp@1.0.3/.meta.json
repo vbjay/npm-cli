@@ -1,0 +1,104 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "5da96f947a940b68",
+    "fetchedFiles": [
+      "binding.gyp",
+      "build.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "0bb9007ca79e9b8c3df7afcc5b32ee7a11d0fb0adf695a2e9366807f3a2524ba",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `next-lxd`  -  C/C++ sources",
+            "items": [
+              "src/next-lxd.cc"
+            ]
+          },
+          {
+            "label": "Target `next-lxd`  -  libraries",
+            "items": [
+              "<(module_root_dir)/go/compiled/next-lxd.windows-<(goarch).lib",
+              "<(module_root_dir)/go/compiled/next-lxd.darwin-<(goarch).a",
+              "<(module_root_dir)/go/compiled/next-lxd.linux-<(goarch).a"
+            ]
+          },
+          {
+            "label": "Target `next-lxd`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")"
+            ]
+          },
+          {
+            "label": "Target `next-lxd`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "3522c643c92e0be5f591cb68a71bb329cb5e4e60e071cab5b521ed79d69bff04",
+        "sizeBytes": 14453,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "native-build",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:15.231Z"
+  },
+  "hash": "sha256:63cd8522405abdb63ebaba0eb43a5e102e5cf5c79837a9965e698f214e82e125"
+}

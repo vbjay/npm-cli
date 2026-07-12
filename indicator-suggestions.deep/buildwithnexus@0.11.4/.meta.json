@@ -1,0 +1,120 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "33afe09079ab79c9",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.js",
+      "scripts/resolve-binary.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "Cargo.toml",
+        "label": "Rust build descriptor",
+        "sha256": null,
+        "parseError": "file not readable: ENOENT: no such file or directory, open 'C:\\git\\npm-cli\\indicator-suggestions.deep\\buildwithnexus@0.11.4\\Cargo.toml'",
+        "signals": [
+          "native-build",
+          "rust-native"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "e2a49ed90e8874eb76dddd8cb65eda892e9dadc2f2d326f9917bc0cd2ee7d5d6",
+        "sizeBytes": 5728,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "dynamic-require",
+          "binary-download",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/resolve-binary.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/Garretts-Apps/buildwithnexus/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/resolve-binary.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "c28a77947b0e9dd5fdf497dc18e19ab6e5ab7bd93292faea02944c78f05af282",
+        "sizeBytes": 1469,
+        "signals": [
+          "reads-process-env",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:26.064Z"
+  },
+  "hash": "sha256:ebfd945b84c1ed23e91b375dfbc6aeba6c9802be50add1f54045014e63860082"
+}

@@ -1,0 +1,110 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['BackgroundLocation_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+    classpath "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.1.20-1.0.32"
+  }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-parcelize"
+apply plugin: "com.google.devtools.ksp"
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["BackgroundLocation_" + name]).toInteger()
+}
+
+android {
+  namespace "com.backgroundlocation"
+
+  compileSdk = getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdk = getExtOrIntegerDefault("minSdkVersion")
+    targetSdk = getExtOrIntegerDefault("targetSdkVersion")
+
+    // Export Room schemas for migration testing and validation
+    ksp {
+      arg("room.schemaLocation", "$projectDir/schemas")
+      arg("room.incremental", "true")
+    }
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  testOptions {
+    unitTests.returnDefaultValues = true
+  }
+
+  lint {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Google Play Services for Location
+  implementation "com.google.android.gms:play-services-location:21.3.0"
+
+  // WorkManager for safe recovery on Android 12+
+  implementation "androidx.work:work-runtime-ktx:2.9.0"
+
+  // Room
+  def room = "2.6.1"
+  implementation("androidx.room:room-runtime:$room")
+  implementation("androidx.room:room-ktx:$room")
+  ksp("androidx.room:room-compiler:$room")
+
+  // Test
+  testImplementation "junit:junit:4.13.2"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0"
+  testImplementation "app.cash.turbine:turbine:1.2.0"
+  testImplementation "io.mockk:mockk:1.13.13"
+}

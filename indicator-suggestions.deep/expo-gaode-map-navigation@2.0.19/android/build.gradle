@@ -1,0 +1,63 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.gaodemap.navigation'
+version = '2.0.13'
+
+logger.warn("[expo-gaode-map-navigation] Thank you for using expo-gaode-map-navigation ❤️")
+logger.warn("[expo-gaode-map-navigation] If you enjoy using expo-gaode-map-navigation, please consider sponsoring this project: https://github.com/TomWq")
+
+android {
+  namespace "expo.modules.gaodemap.navigation"
+  defaultConfig {
+    versionCode 1
+    versionName "2.0.13"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += ["-Xskip-metadata-version-check"]
+    }
+}
+
+dependencies {
+    def customSdkPath = null
+    println "ExpoGaodeMapNavigation: Checking for custom SDK property in rootProject: ${rootProject.name}"
+    if (rootProject.hasProperty("EXPO_GAODE_MAP_CUSTOM_SDK_PATH")) {
+        customSdkPath = rootProject.property("EXPO_GAODE_MAP_CUSTOM_SDK_PATH")
+        println "ExpoGaodeMapNavigation: Found custom SDK path property: ${customSdkPath}"
+    }
+
+    if (customSdkPath) {
+        def sdkFile = rootProject.file(customSdkPath)
+        if (!sdkFile.exists()) {
+             sdkFile = new File(rootProject.projectDir.parentFile, customSdkPath)
+        }
+        
+        if (sdkFile.exists()) {
+            println "ExpoGaodeMapNavigation: Using custom Map SDK from ${sdkFile.absolutePath}"
+            implementation files(sdkFile)
+        } else {
+            println "ExpoGaodeMapNavigation: Custom SDK path configured but file not found, falling back to Maven dependency."
+            implementation 'com.amap.api:navi-3dmap-location-search:10.1.600_3dmap10.1.600_loc6.5.1_sea9.7.4'
+
+        }
+    } else {
+        // 10.1.600 is the last Android 3D map SDK line that supports offline
+        // map downloads without the separate 11.x offline-download permission.
+        implementation 'com.amap.api:navi-3dmap-location-search:10.1.600_3dmap10.1.600_loc6.5.1_sea9.7.4'
+
+    }
+
+    // Live Update APIs on NotificationCompat.Builder
+    // setRequestPromotedOngoing / setShortCriticalText were added in androidx.core 1.17.0.
+    implementation 'androidx.core:core-ktx:1.17.0'
+}

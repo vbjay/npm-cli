@@ -1,0 +1,53 @@
+{
+  "name": "mendeley-cli",
+  "version": "0.4.1",
+  "description": "Unofficial AI-agent-friendly CLI & JavaScript SDK for the Mendeley API (not affiliated with Mendeley Ltd./Elsevier)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./cli": "./bin/mendeley.js"
+  },
+  "bin": {
+    "mendeley": "bin/mendeley.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/unit/*.test.js test/integration/*.test.js",
+    "test:unit": "node --test test/unit/*.test.js",
+    "test:integration": "node --test test/integration/*.test.js",
+    "cli": "node bin/mendeley.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "postinstall": "node lib/postinstall.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "mendeley",
+    "sdk",
+    "api",
+    "cli",
+    "ai-agent",
+    "reference-manager",
+    "academic",
+    "citation",
+    "scholar",
+    "oauth2"
+  ],
+  "license": "Apache-2.0",
+  "author": "Victor Tomaili <victor@tomaili.com>",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  }
+}

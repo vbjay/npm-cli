@@ -1,0 +1,37 @@
+{
+  "name": "ricerco-utils",
+  "version": "1.0.0-alpha.3",
+  "description": "C++ fileSystem OS specific bindings for the Ricerco application.",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "gypfile": true,
+  "author": "Nicolas C. Lettiere (https://github.com/nclettiere/)",
+  "repository": "https://github.com/nclettiere/ricerco-utils",
+  "dependencies": {
+    "node-addon-api": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-match": "^1.1.1",
+    "cmake-js": "^6.3.0",
+    "mocha": "^9.0.2"
+  },
+  "keywords": [
+    "addon"
+  ],
+  "engines": {
+    "node": ">=0.8.x"
+  },
+  "cmake-js": {
+    "runtime": "nw",
+    "runtimeVersion": "0.59.1",
+    "arch": "x64",
+    "debug": false
+  },
+  "scripts": {
+    "dev": "node ./node_modules/mocha/bin/mocha",
+    "devi": "node-gyp build && node ./node_modules/mocha/bin/mocha",
+    "install": "cmake-js --debug=false compile"
+  }
+}

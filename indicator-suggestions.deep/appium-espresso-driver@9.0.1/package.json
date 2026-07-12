@@ -1,0 +1,152 @@
+{
+  "name": "appium-espresso-driver",
+  "description": "Espresso integration for Appium",
+  "keywords": [
+    "appium",
+    "espresso",
+    "automated testing",
+    "android"
+  ],
+  "version": "9.0.1",
+  "author": "Appium Contributors",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appium/appium-espresso-driver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/appium/appium-espresso-driver/issues"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0",
+    "npm": ">=10"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "printWidth": 100,
+    "singleQuote": true
+  },
+  "type": "module",
+  "appium": {
+    "driverName": "espresso",
+    "automationName": "Espresso",
+    "platformNames": [
+      "Android"
+    ],
+    "mainClass": "EspressoDriver",
+    "scripts": {
+      "print-espresso-path": "./scripts/print-espresso-path.mjs",
+      "build-espresso": "./scripts/build-espresso.mjs",
+      "diagnose-app": "./scripts/diagnose-app.mjs"
+    },
+    "doctor": {
+      "checks": [
+        "./build/lib/doctor/required-checks.js",
+        "./build/lib/doctor/optional-checks.js"
+      ]
+    }
+  },
+  "main": "./build/lib/index.js",
+  "types": "./build/lib/index.d.ts",
+  "bin": {},
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib",
+    "build/lib",
+    "espresso-server/app/src",
+    "espresso-server/app/build/outputs/apk",
+    "espresso-server/app/build.gradle.kts",
+    "espresso-server/app/proguard-rules.pro",
+    "espresso-server/library/src",
+    "espresso-server/library/build.gradle.kts",
+    "espresso-server/gradle",
+    "espresso-server/gradlew",
+    "espresso-server/gradlew.bat",
+    "espresso-server/gradle.properties",
+    "espresso-server/build.gradle.kts",
+    "espresso-server/buildSrc",
+    "espresso-server/settings.gradle.kts",
+    "espresso-server/lint.xml",
+    "!.DS_Store",
+    "CHANGELOG.md",
+    "scripts",
+    "LICENSE",
+    "npm-shrinkwrap.json"
+  ],
+  "dependencies": {
+    "appium-adb": "^15.0.0",
+    "appium-android-driver": "^13.2.3",
+    "asyncbox": "^6.1.0",
+    "axios": "^1.16.1",
+    "commander": "^14.0.1",
+    "io.appium.settings": "^7.1.3",
+    "portscanner": "^2.2.0",
+    "semver": "^7.6.2",
+    "teen_process": "^4.0.6"
+  },
+  "scripts": {
+    "build": "npm run build:node && npm run build:server",
+    "rebuild": "npm run rebuild:node && npm run rebuild:server",
+    "build:node": "tsc -b",
+    "build:server": "cd espresso-server && ./gradlew :app:assembleAndroidTest || cd ..",
+    "rebuild:node": "npm run clean:node && npm run build:node",
+    "rebuild:server": "cd espresso-server && ./gradlew clean :app:assembleAndroidTest || cd ..",
+    "clean:node": "npm run build -- --clean",
+    "clean:server": "cd espresso-server && ./gradlew clean || cd ..",
+    "dev": "npm run build -- --watch",
+    "lint": "eslint .",
+    "lint:server": "cd espresso-server && ./gradlew lint || cd ..",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier -w ./lib ./test",
+    "format:check": "prettier --check ./lib ./test",
+    "prepare": "npm run rebuild",
+    "sync-version": "node ./scripts/sync-version.mjs --package-version=${npm_package_version}",
+    "pretest": "npm run build:node",
+    "test": "node --test --test-timeout=60000 \"build/test/unit/**/*-specs.js\"",
+    "test:node": "npm test",
+    "test:server": "cd espresso-server && ./gradlew test --stacktrace || cd ..",
+    "assemble:server:compose-off": "cd espresso-server && ./gradlew :app:assembleAndroidTest -PappiumComposeSupport=false --no-daemon",
+    "version": "npm run sync-version && npm run build:server",
+    "pree2e-test": "npm run build:node",
+    "e2e-test": "node --test --test-concurrency=1 --test-timeout=300000 \"build/test/functional/**/*-specs.js\""
+  },
+  "peerDependencies": {
+    "appium": "^3.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@appium/eslint-config-appium-ts": "^3.0.0",
+    "@appium/tsconfig": "^1.0.0-rc.1",
+    "@appium/types": "^1.0.0-rc.1",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@types/async-lock": "^1.4.2",
+    "@types/chai": "^5.2.3",
+    "@types/chai-as-promised": "^8.0.2",
+    "@types/node": "^26.0.0",
+    "@types/portscanner": "^2.1.4",
+    "@types/semver": "^7.7.1",
+    "@types/sinon": "^21.0.0",
+    "@xmldom/xmldom": "^0.x",
+    "appium-chromedriver": "^8.0.0",
+    "async-lock": "^1.0.0",
+    "chai": "^6.0.0",
+    "chai-as-promised": "^8.0.0",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "prettier": "^3.0.0",
+    "semantic-release": "^25.0.2",
+    "semver": "^7.3.7",
+    "sinon": "^22.0.0",
+    "typescript": "^6.0.3",
+    "webdriverio": "^9.26.0",
+    "xpath": "^0.x"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/lib/index.d.ts",
+      "import": "./build/lib/index.js"
+    },
+    "./package.json": "./package.json"
+  }
+}

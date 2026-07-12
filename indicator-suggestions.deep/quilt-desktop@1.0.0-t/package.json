@@ -1,0 +1,48 @@
+{
+  "name": "quilt-desktop",
+  "version": "1.0.0-t",
+  "description": "A Node-API Win32 window management library",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild && tsc && npm run copy-addon",
+    "prepare": "npm run build",
+    "copy-addon": "copyfiles -f build/Release/quilt.node dist/"
+  },
+  "keywords": [
+    "napi",
+    "node-api",
+    "addon",
+    "win32",
+    "window",
+    "native",
+    "gui"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/quilt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/quilt/issues"
+  },
+  "homepage": "https://github.com/yourusername/quilt#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": ["win32"],
+  "cpu": ["x64"],
+  "dependencies": {
+    "node-addon-api": "^6.1.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^9.4.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "copyfiles": "^2.4.1"
+  },
+  "gypfile": true
+}

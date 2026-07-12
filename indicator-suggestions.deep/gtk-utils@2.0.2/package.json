@@ -1,0 +1,31 @@
+{
+  "name": "gtk-utils",
+  "version": "2.0.2",
+  "description": "Utility functions for nodejs for accessing some GTK specific things.",
+  "main": "./build/Release/gtk-utils",
+  "gypfile": true,
+  "scripts": {
+    "debug": "node --nolazy --inspect-brk=9229 dev/index.js",
+    "build:dev": "node-gyp build --debug",
+    "rebuild:dev": "node-gyp rebuild --debug",
+    "build": "node-gyp build",
+    "rebuild": "node-gyp rebuild",
+    "clean": "node-gyp clean"
+  },
+  "types": "gtk-utils.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:uriegel/gtk-utils.git"
+  },
+  "author": "Uwe Riegel",
+  "license": "MIT",
+  "keywords": [
+    "cpp",
+    "node-js",
+    "addon"
+  ],
+  "homepage": "https://github.com/uriegel/gtk-utils#readme",
+  "dependencies": {
+    "node-addon-api": "^2.0.0"
+  }
+}

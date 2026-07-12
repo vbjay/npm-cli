@@ -1,0 +1,89 @@
+{
+  "_from": "@e7/zeromq",
+  "_id": "@e7/zeromq@4.11.0",
+  "_inBundle": false,
+  "_integrity": "sha512-mew8wLJFz4YTBwVt1evHod8Q5sf1Fh//6Iy6SuZ2fT6duDE4tJ4dZXeNsTwmnxIPZCxzOJmeZebAMqaClEwj3Q==",
+  "_location": "/@e7/zeromq",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@e7/zeromq",
+    "name": "@e7/zeromq",
+    "escapedName": "@e7%2fzeromq",
+    "scope": "@e7",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@e7/zeromq/-/zeromq-4.11.0.tgz",
+  "_shasum": "3376a023ffd29c3ee5ff15a9f712205bc5062ff4",
+  "_spec": "@e7/zeromq",
+  "_where": "C:\\TFS\\Mobsec.MessagingServer",
+  "author": {
+    "name": "Justin Tulloss",
+    "email": "justin.tulloss@gmail.com",
+    "url": "http://justin.harmonize.fm"
+  },
+  "bugs": {
+    "url": "https://github.com/zeromq/zeromq.js/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "nan": "^2.6.2",
+    "prebuild-install": "^2.2.2"
+  },
+  "deprecated": false,
+  "description": "Prebuilt bindings for node.js to ZeroMQ",
+  "devDependencies": {
+    "electron-mocha": "^4.0.0",
+    "jsdoc": "^3.5.4",
+    "mocha": "^3.5.0",
+    "nyc": "^11.1.0",
+    "prebuild": "^6.2.1",
+    "semver": "^5.4.1",
+    "should": "^12.0.0"
+  },
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "gypfile": true,
+  "homepage": "https://github.com/zeromq/zeromq.js#readme",
+  "keywords": [
+    "zeromq",
+    "zmq",
+    "0mq",
+    "ømq",
+    "libzmq",
+    "native",
+    "binding",
+    "addon"
+  ],
+  "license": "MIT",
+  "main": "index",
+  "name": "@e7/zeromq",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeromq/zeromq.js.git"
+  },
+  "scripts": {
+    "build:docs": "jsdoc -R README.md -d docs lib/*.js",
+    "build:libzmq": "node scripts/preinstall.js",
+    "coverage": "nyc report --reporter=text-lcov > coverage/lcov.info",
+    "install": "node-gyp rebuild",
+    "postpublish": "./scripts/trigger_travis_build.sh",
+    "prebuild": "prebuild --all --strip",
+    "precoverage": "nyc npm run test",
+    "test": "mocha --expose-gc --slow 300",
+    "test:electron": "electron-mocha --slow 300"
+  },
+  "version": "4.12.0"
+}

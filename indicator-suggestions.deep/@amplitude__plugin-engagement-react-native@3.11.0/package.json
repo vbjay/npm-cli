@@ -1,0 +1,152 @@
+{
+  "name": "@amplitude/plugin-engagement-react-native",
+  "version": "3.11.0",
+  "description": "Amplitude Engagement plugin for React Native",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @amplitude/plugin-engagement-react-native-example",
+    "test": "jest",
+    "e2e:ios": "scripts/prepare-e2e-tests.sh && cd testproject && yarn e2e:ios",
+    "e2e:android": "scripts/prepare-e2e-tests.sh && cd testproject && yarn e2e:android",
+    "e2e:android:headless": "scripts/prepare-e2e-tests.sh && cd testproject && yarn e2e:android:headless",
+    "typecheck": "tsc",
+    "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
+    "lint:fix": "eslint --fix \"src/**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build && tsx scripts/inject-package-version.ts",
+    "release": "npm publish --tag latest --ddd"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "author": "Amplitude, Inc. <dev@amplitude.com> (https://github.com/amplitude)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://amplitude.com/issues"
+  },
+  "homepage": "https://amplitude.com#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/compat": "^1.2.7",
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native/babel-preset": "0.79.2",
+    "@react-native/eslint-config": "^0.78.0",
+    "@types/jest": "^29.5.5",
+    "@types/react": "19.0.1",
+    "commitlint": "^19.6.1",
+    "del-cli": "^5.1.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "19.0.1",
+    "react-native": "0.79.2",
+    "react-native-builder-bob": "^0.40.11",
+    "tsx": "^4.20.3",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.12.0",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/testproject/node_modules",
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/testproject/.*\\.test\\.[jt]sx?$",
+      "<rootDir>/testproject/.*\\.spec\\.[jt]sx?$"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "PluginEngagementReactNativeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.amplitude.pluginengagementreactnative"
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "turbo-module",
+    "version": "0.50.3"
+  },
+  "dependencies": {
+    "@amplitude/analytics-core": "^2.19.0"
+  }
+}

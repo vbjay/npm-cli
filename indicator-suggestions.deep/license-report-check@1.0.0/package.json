@@ -1,0 +1,81 @@
+{
+  "name": "license-report-check",
+  "version": "1.0.0",
+  "description": "Validate the types of the licenses of the dependencies of a project",
+  "main": "index.js",
+  "bin": {
+    "license-report-check": "./index.js"
+  },
+  "type": "module",
+  "files": [
+    "index.js",
+    "lib/",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BePo65/license-report-check.git"
+  },
+  "bugs": "https://github.com/BePo65/license-report-check/issues",
+  "scripts": {
+    "lint": "npm exec biome check .",
+    "lint:fix": "npm exec biome check --write .",
+    "test": "node --test --test-reporter=spec",
+    "lint-commits": "commitlint --from e86b01e0b9f467 --to HEAD --verbose",
+    "init-changelog": "commit-and-tag-version -i CHANGELOG.md --same-file --prerelease pre --first-release",
+    "release": "commit-and-tag-version -i CHANGELOG.md --same-file",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "license",
+    "cli",
+    "check"
+  ],
+  "author": "BePo65",
+  "license": "MIT",
+  "dependencies": {
+    "easy-table": "^1.2.0",
+    "rc": "^1.2.8",
+    "stream-json": "^2.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-angular": "^20.5.0",
+    "commit-and-tag-version": "^12.7.1",
+    "eslint-plugin-security": "^4.0.0",
+    "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "sinon": "^21.0.3",
+    "streamtest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "lint-staged": {
+    "**/*": "npx @biomejs/biome check --write ."
+  },
+  "commit-and-tag-version": {
+    "packageFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      }
+    ],
+    "bumpFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      },
+      {
+        "filename": "package-lock.json",
+        "type": "json"
+      },
+      {
+        "filename": "README.md",
+        "updater": "tools/npm-scripts/readme-updater.cjs"
+      }
+    ]
+  }
+}

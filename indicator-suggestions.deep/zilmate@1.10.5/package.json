@@ -1,0 +1,127 @@
+{
+  "name": "zilmate",
+  "version": "1.10.5",
+  "description": "Production-grade CLI multi-agent AI assistant, real-time voice controller, and automated background job scheduler for local and cloud environments.",
+  "type": "module",
+  "main": "dist/server.js",
+  "types": "dist/server.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./cli": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc && node scripts/copy-resources.mjs",
+    "cli": "tsx src/index.ts",
+    "web": "tsx src/index.ts web",
+    "zilmate": "tsx src/index.ts",
+    "zilmate chat": "tsx src/index.ts chat",
+    "talk": "tsx src/index.ts talk",
+    "chat": "tsx src/index.ts chat",
+    "start": "node dist/index.js",
+    "models": "tsx src/index.ts models",
+    "doctor": "tsx src/index.ts doctor",
+    "config": "tsx src/index.ts config",
+    "memory": "tsx src/index.ts memory",
+    "triggers": "tsx src/index.ts triggers",
+    "daemon": "tsx src/index.ts daemon",
+    "test": "npm run build",
+    "prepare": "npm run build",
+    "postinstall": "node scripts/postinstall.mjs",
+    "pack:dry": "npm pack --dry-run",
+    "prepublishOnly": "npm run build",
+    "release:github": "node scripts/release-github.mjs",
+    "release:github:dry": "node scripts/release-github.mjs --dry-run"
+  },
+  "keywords": [
+    "ziloshift",
+    "zilmate",
+    "agents",
+    "ai-sdk",
+    "vercel-ai-gateway",
+    "cli"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ai-sdk/mcp": "^2.0.0",
+    "@aws-sdk/client-s3": "^3.1075.0",
+    "@aws-sdk/lib-storage": "^3.1075.0",
+    "@aws-sdk/s3-request-presigner": "^3.1075.0",
+    "@chat-adapter/slack": "^4.31.0",
+    "@chat-adapter/state-memory": "^4.31.0",
+    "@chat-adapter/telegram": "^4.31.0",
+    "@composio/core": "^0.13.1",
+    "@composio/vercel": "^0.11.0",
+    "@daytona/sdk": "^0.190.1",
+    "@deepgram/sdk": "^4.11.2",
+    "@google-cloud/storage": "^7.21.0",
+    "@mendable/firecrawl-js": "^4.28.2",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@tavily/core": "^0.7.5",
+    "@upstash/redis": "^1.38.0",
+    "@upstash/vector": "^1.2.3",
+    "@vercel/blob": "^2.5.0",
+    "ai": "^6.0.198",
+    "chalk": "^5.6.2",
+    "chat": "^4.31.0",
+    "chat-adapter-imessage": "^0.1.1",
+    "commander": "^15.0.0",
+    "cross-fetch": "^4.1.0",
+    "dotenv": "^17.4.2",
+    "log-update": "^8.0.0",
+    "marked": "^15.0.12",
+    "marked-terminal": "^7.3.0",
+    "pdfkit": "^0.19.1",
+    "playwright": "^1.61.0",
+    "pptxgenjs": "^4.0.1",
+    "supermemory": "^4.24.12",
+    "tsx": "^4.22.4",
+    "undici": "^8.5.0",
+    "ws": "^8.21.0",
+    "yahoo-finance2": "^3.15.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.4",
+    "@types/pdfkit": "^0.17.6",
+    "typescript": "^6.0.3"
+  },
+  "bin": {
+    "zilmate": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "src/doc",
+    "scripts/",
+    ".agents",
+    "agent-docs.md",
+    "README.md",
+    "SDK.md",
+    ".env.example",
+    "install.ps1"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zester4/zilmate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zester4/zilmate/issues"
+  },
+  "homepage": "https://github.com/zester4/zilmate#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
+  }
+}

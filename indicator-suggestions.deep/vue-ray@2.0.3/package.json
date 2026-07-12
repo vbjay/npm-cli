@@ -1,0 +1,86 @@
+{
+    "name": "vue-ray",
+    "version": "2.0.3",
+    "description": "Debug Vue code with Ray to fix problems faster",
+    "license": "MIT",
+    "author": "Patrick Organ <patrick@permafrost.dev>",
+    "homepage": "https://github.com/permafrost-dev/vue-ray",
+    "keywords": [
+        "vue",
+        "ray",
+        "debug",
+        "javascript",
+        "typescript",
+        "permafrost",
+        "spatie"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/permafrost-dev/vue-ray.git"
+    },
+    "bugs": {
+        "url": "https://github.com/permafrost-dev/vue-ray/issues"
+    },
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "typings": "./dist/index.d.ts",
+    "exports": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.js"
+    },
+    "scripts": {
+        "test": "vitest tests",
+        "test:coverage": "vitest tests --coverage",
+        "lint:staged": "./node_modules/.bin/lint-staged",
+        "build:lib": "vite build",
+        "build:types": "node scripts/build-types.js",
+        "build:dist": "BUILD_ENV=production concurrently npm:build:lib npm:build:types",
+        "build:dev": "BUILD_ENV=development concurrently npm:build:lib npm:build:types",
+        "preversion": "npm run test",
+        "postversion": "npm run build:dist",
+        "version": "auto-changelog -p -o CHANGELOG.md --hide-credit --release-summary --hide-empty-releases --sort-commits date-desc && git add CHANGELOG.md",
+        "prepare": "husky install"
+    },
+    "lint-staged": {
+        "*.{js,ts}": [
+            "./node_modules/.bin/prettier --config prettier.config.cjs --write",
+            "./node_modules/.bin/eslint --fix"
+        ],
+        "*.{json,css,scss,gql}": [
+            "./node_modules/.bin/prettier --config prettier.config.cjs --write"
+        ],
+        "*.{yaml,yml}": [
+            "./node_modules/.bin/prettier --config prettier.config.cjs --tab-width 2 --write"
+        ]
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^1.6.3",
+        "@types/node": "^20.12.2",
+        "@typescript-eslint/eslint-plugin": "^7.4.0",
+        "@typescript-eslint/parser": "^7.4.0",
+        "@vitest/coverage-v8": "^1.4.0",
+        "auto-changelog": "^2.4.0",
+        "concurrently": "^8.2.2",
+        "dts-bundle-generator": "^9.3.1",
+        "eslint": "^8.57.0",
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.2",
+        "prettier": "^3.2.5",
+        "ts-mixer": "^6.0.4",
+        "typescript": "^5.4.3",
+        "vite": "^5.2.7",
+        "vite-plugin-externalize-deps": "^0.8.0",
+        "vitest": "^1.4.0"
+    },
+    "dependencies": {
+        "@permafrost-dev/pretty-format": "^1.1.5",
+        "node-ray": "^2.1.0",
+        "vue": "^3.2.0"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "xdhwebq",
+  "version": "2018.2.28",
+  "author": "Claude SIMON (http://q37.info/contact/)",
+  "description": "Node.js addon to use 'XDHTML' module with web browsers.",
+  "main": "XDHWebQ.js",
+  "binary": {
+    "module_name": "xdhwebqnjs",
+    "module_path": "./",
+    "remote_path": "./epeios-q37/xdhwebq-node/releases/download/v20180228/",
+    "package_name": "{module_name}-v20180228-{platform}-{arch}.tar.gz",
+    "host": "https://github.com"
+  },
+  "dependencies": {
+    "njsq": "2018.1.27"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "preinstall": "npm install node-pre-gyp@0.6.x",
+    "install": "node-pre-gyp install --fallback-to-build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epeios-q37/xdhwebq-node.git"
+  },
+  "keywords": [
+    "addon",
+    "XDHTML",
+    "web",
+    "q37",
+    "epeios"
+  ],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/epeios-q37/xdhwebq-node/issues"
+  },
+  "homepage": "https://github.com/epeios-q37/xdhwebq-node#readme",
+  "runkitExampleFilename": "runkit.js"
+}

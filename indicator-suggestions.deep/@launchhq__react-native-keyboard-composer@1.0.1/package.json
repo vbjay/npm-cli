@@ -1,0 +1,74 @@
+{
+  "name": "@launchhq/react-native-keyboard-composer",
+  "version": "1.0.1",
+  "packageManager": "pnpm@10.26.0",
+  "description": "A native keyboard-aware composer component for React Native with smooth keyboard animations",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "files": [
+    "build",
+    "android/build.gradle",
+    "android/src",
+    "ios/*.podspec",
+    "ios/*.swift",
+    "expo-module.config.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "CI=1 expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepack": "pnpm run build",
+    "release:dry-run": "CI=1 pnpm run build && npm publish --dry-run --access public --ignore-scripts",
+    "release:publish": "CI=1 pnpm run build && npm publish --access public --ignore-scripts",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "keyboard",
+    "composer",
+    "keyboard-aware",
+    "text-input",
+    "chat",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/launchtodayhq/react-native-keyboard-composer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/launchtodayhq/react-native-keyboard-composer/issues"
+  },
+  "author": "paulmbw <paul@launchtoday.dev> (https://github.com/paulmbw)",
+  "license": "MIT",
+  "homepage": "https://github.com/launchtodayhq/react-native-keyboard-composer#readme",
+  "devDependencies": {
+    "@types/react": "~19.2.14",
+    "expo": "^55.0.5",
+    "expo-modules-core": "^55.0.14",
+    "expo-module-scripts": "^55.0.2",
+    "react": "19.2.4",
+    "react-native": "0.84.1",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

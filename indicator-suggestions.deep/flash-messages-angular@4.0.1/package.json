@@ -1,0 +1,62 @@
+{
+  "name": "flash-messages-angular",
+  "version": "4.0.1",
+  "description": "Angular 2 flash messages module",
+  "files": [
+    "module/*.d.ts",
+    "module/*.js",
+    "module/*.js.map",
+    "module/*.json"
+  ],
+  "main": "module/index.js",
+  "types": "module/index.d.ts",
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "test": "echo \"No test specified\"",
+    "prepare": "ngc -p ./tsconfig.publish.json"
+  },
+  "keywords": [
+    "angular2",
+    "angular",
+    "npm",
+    "package",
+    "module",
+    "flash",
+    "messages"
+  ],
+  "author": "Mythology Labs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mythlabsuy/angular2-flash-messages.git"
+  },
+  "license": "MIT",
+  "peerDependencies": {},
+  "devDependencies": {
+    "@angular/common": "^7.2.11",
+    "@angular/compiler": "^7.2.11",
+    "@angular/compiler-cli": "^7.2.11",
+    "@angular/core": "^7.2.11",
+    "@angular/forms": "^7.2.11",
+    "@angular/http": "^7.2.11",
+    "@angular/platform-browser": "^7.2.11",
+    "@angular/platform-browser-dynamic": "^7.2.11",
+    "@angular/router": "^7.2.11",
+    "bootstrap": "^4.0.0",
+    "concurrently": "^3.1.0",
+    "core-js": "^2.5.6",
+    "lite-server": "^2.2.2",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^6.1.0",
+    "systemjs": "0.19.47",
+    "typescript": "^3.1.6",
+    "zone.js": "^0.8.26"
+  },
+  "bugs": {
+    "url": "https://github.com/mythlabsuy/angular2-flash-messages/issues"
+  },
+  "homepage": "https://github.com/mythlabsuy/angular2-flash-messages#readme",
+  "dependencies": {}
+}

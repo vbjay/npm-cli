@@ -1,0 +1,69 @@
+{
+  "name": "@kratex/cli",
+  "version": "1.0.0",
+  "description": "Node.js supply-chain enforcement at install and at runtime. Policy-gated lifecycle scripts, caller-chain-attributed runtime hook.",
+  "keywords": [
+    "supply-chain",
+    "security",
+    "npm",
+    "nodejs",
+    "runtime",
+    "policy",
+    "lifecycle-scripts",
+    "package-security"
+  ],
+  "homepage": "https://github.com/kratex-security/kratex#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kratex-security/kratex.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/kratex-security/kratex/issues"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "kratex": "./dist/kratex"
+  },
+  "exports": {},
+  "files": [
+    "dist",
+    "assets",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "scripts": {
+    "check:native-access": "node scripts/check-internal-native-access.mjs",
+    "build": "node scripts/build-release.mjs",
+    "test": "npm run check:native-access && npm run build && node --test test/*.test.js && node --test test-e2e/e2e.test.js",
+    "test:unit": "npm run check:native-access && npm run build && node --test test/*.test.js",
+    "test:e2e": "npm run build && node --test test-e2e/e2e.test.js",
+    "test:e2e:full": "npm run build && node test-e2e/full/run.mjs",
+    "realworld": "node realworld/run.mjs",
+    "install:global": "node scripts/install-global.mjs",
+    "release:patch": "node scripts/release.mjs patch",
+    "release:minor": "node scripts/release.mjs minor",
+    "release:major": "node scripts/release.mjs major",
+    "release:tag": "node scripts/release.mjs tag",
+    "audit:deps": "npm audit --audit-level=high",
+    "audit:signatures": "npm audit signatures",
+    "pack:check": "npm pack --dry-run",
+    "prepack": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@kratex/runtime": "*",
+    "@kratex/shared": "*",
+    "@types/node": "^22.20.0",
+    "esbuild": "^0.28.1",
+    "typescript": "^5.8.3",
+    "verdaccio": "^6.7.4"
+  }
+}

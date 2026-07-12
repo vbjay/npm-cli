@@ -1,0 +1,64 @@
+{
+  "name": "dat-tool",
+  "description": "Developer automation tool command cli",
+  "version": "0.5.92",
+  "author": "madkne",
+  "keywords": [
+    "automation",
+    "tool",
+    "developer",
+    "cli",
+    "devkit",
+    "typescript",
+    "template",
+    "docker"
+  ],
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DAT-tool/developer-automation-tool.git"
+  },
+  "main": "dist/index.js",
+  "license": "GPL-3.0+",
+  "preferGlobal": true,
+  "bin": {
+    "dat": "./bin/dat.js"
+  },
+  "scripts": {
+    "build": "rm -rdf dist && tsc -b tsconfig.json && cp -r core/raw dist ",
+    "prepare": "npm run build",
+    "start": "npm run build && node dist/index.js",
+    "dev": "concurrently \"tsc -b -w tsconfig.json\" \"cp -r core/raw dist && nodemon dist/index.js\"",
+    "pkg": "npm run build && pkg . --compress GZip --options max_old_space_size=4096"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.3",
+    "ssh2": "^1.5.0",
+    "tslib": "^2.2.0",
+    "typescript": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^14.10.2",
+    "@types/nunjucks": "^3.2.0",
+    "@types/ssh2": "^0.5.48",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  },
+  "pkg": {
+    "scripts": [
+      "dist/**/*.js"
+    ],
+    "assets": [
+      "dist/lib/**/*",
+      "dist/common/**/*"
+    ],
+    "targets": [
+      "node14-linux",
+      "node14-win"
+    ],
+    "outputPath": "dist"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "0ebec999be85b3b1",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "8b8e5c5a9eb8163c2bb58cd331e0cc624d6e27f8e2d2472a414f4b7ff2341fb1",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `phstr_sqlite`  -  C/C++ sources",
+            "items": [
+              "src/binding.cpp",
+              "src/sqlite_impl.cpp",
+              "src/user_function.cpp",
+              "src/aggregate_function.cpp",
+              "src/upstream/sqlite3.c"
+            ]
+          },
+          {
+            "label": "Target `phstr_sqlite`  -  include directories",
+            "items": [
+              "src",
+              "src/upstream",
+              "src/shims"
+            ]
+          },
+          {
+            "label": "Target `phstr_sqlite`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:41.686Z"
+  },
+  "hash": "sha256:20630dc913b32fc10a888a7e0de0823e0b3542f8fc86c107d972460a5e498ae3"
+}

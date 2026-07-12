@@ -1,0 +1,97 @@
+{
+  "name": "syntaur",
+  "version": "0.77.0",
+  "description": "Project workflow CLI with dashboard, Claude Code plugin, and Codex plugin",
+  "homepage": "https://github.com/prong-horn/syntaur#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prong-horn/syntaur.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prong-horn/syntaur/issues"
+  },
+  "keywords": [
+    "agents",
+    "cli",
+    "codex",
+    "claude",
+    "workflow",
+    "missions"
+  ],
+  "type": "module",
+  "bin": {
+    "syntaur": "./bin/syntaur.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./launch": {
+      "types": "./dist/launch/index.d.ts",
+      "import": "./dist/launch/index.js"
+    },
+    "./dist/dashboard/server.js": "./dist/dashboard/server.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    ".agents",
+    "platforms",
+    "skills",
+    ".claude-plugin",
+    "examples",
+    "dashboard/dist",
+    "statusline",
+    "scripts/install-macos-url-handler.mjs"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:dashboard": "npm run build && npm run build --prefix dashboard",
+    "dev": "tsup --watch",
+    "dev:dashboard": "cd dashboard && npm run dev",
+    "dashboard:install": "cd dashboard && npm install",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "mirror-skills": "node scripts/mirror-skills-to-platforms.mjs",
+    "sync-plugin-version": "node scripts/sync-plugin-version.mjs",
+    "build:skills-index": "node scripts/build-skills-index.mjs",
+    "postinstall": "node scripts/install-macos-url-handler.mjs",
+    "version": "node scripts/sync-plugin-version.mjs && git add .claude-plugin/plugin.json platforms/claude-code/.claude-plugin/plugin.json platforms/codex/.codex-plugin/plugin.json",
+    "prepack": "node scripts/mirror-skills-to-platforms.mjs && node scripts/sync-plugin-version.mjs",
+    "prepublishOnly": "npm run build && npm ci --prefix dashboard && npm run build --prefix dashboard",
+    "try": "node scripts/try.mjs",
+    "untry": "npm unlink -g syntaur && npm install -g syntaur@latest && echo '\\n✓ global syntaur restored to latest published version'"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.4.2",
+    "better-sqlite3": "^11.0.0",
+    "chokidar": "^4.0.0",
+    "commander": "^13.0.0",
+    "croner": "^10.0.1",
+    "express": "^5.0.1",
+    "fuse.js": "^7.1.0",
+    "ink": "^6.8.0",
+    "ink-text-input": "^6.0.0",
+    "open": "^10.0.0",
+    "react": "^19.2.4",
+    "ws": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.2.14",
+    "@types/ws": "^8.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^8.0.1",
+    "vitest": "^3.0.0"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "name": "@youdie006/prodex",
+  "version": "0.16.6",
+  "description": "Local receipt bus for coordinating Codex execution with ChatGPT Pro/Projects consultation.",
+  "author": "youdie006",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youdie006/prodex.git"
+  },
+  "homepage": "https://github.com/youdie006/prodex#readme",
+  "bugs": {
+    "url": "https://github.com/youdie006/prodex/issues"
+  },
+  "keywords": [
+    "chatgpt",
+    "chatgpt-pro",
+    "codex",
+    "claude",
+    "mcp",
+    "cli",
+    "bridge"
+  ],
+  "type": "module",
+  "bin": {
+    "prodex": "dist/cli.js"
+  },
+  "exports": {},
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "docs/claude.md",
+    "docs/clients.md",
+    "docs/http-mcp.md",
+    "scripts/release-check.mjs",
+    "scripts/release-pack.mjs"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "node scripts/postbuild.mjs",
+    "dev": "tsx src/cli.ts",
+    "release:check": "node scripts/release-check.mjs",
+    "release:pack": "node scripts/release-pack.mjs",
+    "release:verify": "node scripts/release-check.mjs --verification-only",
+    "smoke:package": "node scripts/package-smoke.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepack": "npm run build",
+    "prepublishOnly": "node scripts/release-check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.3",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.32",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.9"
+  }
+}

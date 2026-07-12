@@ -1,0 +1,163 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ReactNativeAppUpdate_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.2"
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}"
+  }
+}
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply from: '../nitrogen/generated/android/reactnativeappupdate+autolinking.gradle'
+
+apply plugin: "com.facebook.react"
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["ReactNativeAppUpdate_" + name]).toInteger()
+}
+
+android {
+  namespace "com.margelo.nitro.reactnativeappupdate"
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+
+    // When ONEKEY_ALLOW_SKIP_GPG_VERIFICATION env var is set to a non-empty, non-'false' value,
+    // enable the skip-GPG code paths. Without this flag, BuildConfig.ALLOW_SKIP_GPG_VERIFICATION
+    // is false and all skip-GPG logic is gated behind an immutable compile-time constant.
+    def allowSkipGPG = System.getenv('ONEKEY_ALLOW_SKIP_GPG_VERIFICATION') != null &&
+                       System.getenv('ONEKEY_ALLOW_SKIP_GPG_VERIFICATION') != '' &&
+                       System.getenv('ONEKEY_ALLOW_SKIP_GPG_VERIFICATION') != 'false'
+    buildConfigField("boolean", "ALLOW_SKIP_GPG_VERIFICATION", allowSkipGPG.toString())
+
+    externalNativeBuild {
+      cmake {
+        cppFlags "-frtti -fexceptions -Wall -fstack-protector-all"
+        arguments "-DANDROID_STL=c++_shared", "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+        abiFilters (*reactNativeArchitectures())
+
+        buildTypes {
+          debug {
+            cppFlags "-O1 -g"
+          }
+          release {
+            cppFlags "-O2"
+          }
+        }
+      }
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  packagingOptions {
+    excludes = [
+            "META-INF",
+            "META-INF/**",
+            "**/libc++_shared.so",
+            "**/libfbjni.so",
+            "**/libjsi.so",
+            "**/libfolly_json.so",
+            "**/libfolly_runtime.so",
+            "**/libglog.so",
+            "**/libhermes.so",
+            "**/libhermes-executor-debug.so",
+            "**/libhermes_executor.so",
+            "**/libreactnative.so",
+            "**/libreactnativejni.so",
+            "**/libturbomodulejsijni.so",
+            "**/libreact_nativemodule_core.so",
+            "**/libjscexecutor.so"
+    ]
+  }
+
+  buildFeatures {
+    buildConfig true
+    prefab true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      java.srcDirs += [
+        "generated/java",
+        "generated/jni"
+      ]
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+def kotlin_version = getExtOrDefault("kotlinVersion")
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation project(":react-native-nitro-modules")
+
+  implementation project(":onekeyfe_react-native-native-logger")
+
+  // Shared crypto core: detached-ASC GPG verify, streaming SHA-256, and
+  // constant-time hex compare now live in react-native-bundle-crypto
+  // (BundleCryptoCore). This module delegates to it instead of carrying its
+  // own GPG public key + BouncyCastle verify implementation.
+  implementation project(":onekeyfe_react-native-bundle-crypto")
+
+  // Shared 8-range concurrent downloader (segment-file model). app-update no
+  // longer carries its own copy of ConcurrentRangeDownloader — it consumes the
+  // single shared implementation here, same as react-native-bundle-update.
+  implementation project(":onekeyfe_react-native-range-downloader")
+
+  implementation "com.squareup.okhttp3:okhttp:4.12.0"
+  implementation "com.squareup.okio:okio:3.9.0"
+  implementation "androidx.core:core-ktx:1.15.0"
+
+  // MMKV for reading DevSettings (compileOnly: provided by the host app via react-native-mmkv)
+  compileOnly "io.github.zhongwuzw:mmkv:2.2.4"
+
+  // Pure-logic unit tests (AppUpdateLogic) run on the local JVM via
+  // :onekeyfe_react-native-app-update:testDebugUnitTest. No Robolectric: the
+  // extracted logic is dependency-free (no Context / Nitro / OkHttp).
+  testImplementation "junit:junit:4.13.2"
+}

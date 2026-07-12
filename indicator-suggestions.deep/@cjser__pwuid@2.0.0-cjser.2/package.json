@@ -1,0 +1,83 @@
+{
+  "name": "@cjser/pwuid",
+  "version": "2.0.0-cjser.2",
+  "description": "getpwuid() binding - returns username, name, home directory, shell, gid from uid",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://code.moenext.com/3rdeye/cjser.git"
+  },
+  "funding": "https://github.com/sponsors/sindresorhus",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "https://sindresorhus.com"
+  },
+  "type": "module",
+  "exports": {
+    "require": "./dist-cjser/index.cjs",
+    "default": "./index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "!win32"
+  ],
+  "gypfile": true,
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js",
+    "binding.gyp",
+    "binding.cc",
+    "dist-cjser"
+  ],
+  "keywords": [
+    "binding",
+    "native",
+    "addon",
+    "uid",
+    "gid",
+    "pw",
+    "getpwuid",
+    "posix",
+    "unix",
+    "shell",
+    "home",
+    "dir",
+    "username"
+  ],
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "nan": "^2.19.0"
+  },
+  "devDependencies": {
+    "ava": "^6.1.2",
+    "xo": "^0.58.0"
+  },
+  "main": "./dist-cjser/index.cjs",
+  "cjser": {
+    "sourceVersion": "2.0.0",
+    "cjserVersion": 2,
+    "original": {
+      "name": "pwuid",
+      "version": "2.0.0",
+      "exports": "./index.js",
+      "repository": "sindresorhus/pwuid",
+      "dependencies": {
+        "bindings": "^1.5.0",
+        "nan": "^2.19.0"
+      },
+      "files": [
+        "index.js",
+        "binding.gyp",
+        "binding.cc"
+      ],
+      "scripts": {
+        "test": "xo && ava"
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "name": "@codler/native-base",
+  "description": "Essential cross-platform UI components for React Native",
+  "keywords": [
+    "android",
+    "ios",
+    "react",
+    "native",
+    "react-native",
+    "native-modules",
+    "react-component",
+    "navbar",
+    "packager"
+  ],
+  "scripts": {
+    "compile": "rm -rf dist/* && babel . --out-dir dist --ignore node_modules,dist --source-maps ",
+    "lint": "eslint \"src/**/*.{js, json}\"",
+    "transpile": "npm run compile && cp src/basic/Icon/NBIcons.json dist/src/basic/Icon",
+    "prepublish": "npm run transpile",
+    "postinstall": "node addEjectScript.js",
+    "flow": "flow"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|@shoutem|react-clone-referenced-element|native-base-shoutem-theme)"
+    ]
+  },
+  "version": "2.14.2",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/codler"
+  },
+  "author": "Han Lin Yap (https://yap.nu)",
+  "license": "ISC",
+  "private": false,
+  "dependencies": {
+    "@codler/react-native-keyboard-aware-scroll-view": "^1.0.1",
+    "blueimp-md5": "^2.5.0",
+    "clamp": "^1.0.1",
+    "color": "~3.1.2",
+    "create-react-class": "^15.6.3",
+    "eslint-config-prettier": "^6.0.0",
+    "fs-extra": "^2.0.0",
+    "jest-react-native": "^18.0.0",
+    "lodash": "^4.17.14",
+    "native-base-shoutem-theme": "0.3.1",
+    "print-message": "^2.1.0",
+    "prop-types": "^15.5.10",
+    "react-native-drawer": "2.5.1",
+    "react-native-easy-grid": "0.2.2",
+    "react-native-vector-icons": "^7.0.0",
+    "react-tween-state": "^0.1.5",
+    "tween-functions": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^24.8.0",
+    "babel-preset-react-native": "4.0.0",
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.2.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-native": "^2.0.0",
+    "eslint-watch": "^5.1.2",
+    "flow-bin": "0.47.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "react": "16.4.1",
+    "react-native": "^0.63.0",
+    "react-test-renderer": "16.4.1"
+  },
+  "main": "dist/src/index.js",
+  "typings": "./index.d.ts",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react": ">=16.4.1",
+    "react-native": ">=0.63.0"
+  },
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codler/NativeBase.git"
+  }
+}

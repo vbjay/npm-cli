@@ -1,0 +1,83 @@
+{
+  "name": "llm-runner-router",
+  "version": "1.0.0",
+  "description": "Universal LLM model loader and inference router - agnostic, fast, and intelligent",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "node scripts/build.js",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
+    "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage",
+    "benchmark": "node examples/benchmarks/performance.js",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write src/**/*.js",
+    "docs": "jsdoc -c jsdoc.json",
+    "prepublishOnly": "npm run lint && npm run test && npm run build",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "llm",
+    "ai",
+    "machine-learning",
+    "inference",
+    "gguf",
+    "onnx",
+    "model-loader",
+    "router",
+    "webgpu",
+    "wasm"
+  ],
+  "author": "Echo AI Systems",
+  "license": "MIT",
+  "dependencies": {
+    "@xenova/transformers": "^2.17.0",
+    "@huggingface/hub": "^0.15.0",
+    "sharp": "^0.33.0",
+    "tiktoken": "^1.0.0",
+    "pino": "^8.19.0",
+    "fastify": "^4.26.0",
+    "graphql": "^16.8.0",
+    "@apollo/server": "^4.10.0",
+    "ws": "^8.16.0",
+    "msgpackr": "^1.10.0",
+    "lru-cache": "^10.2.0",
+    "p-queue": "^8.0.0",
+    "ml-distance": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "nodemon": "^3.0.0",
+    "jest": "^29.7.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
+    "jsdoc": "^4.0.0",
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "webpack": "^5.90.0",
+    "webpack-cli": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MCERQUA/LLM-Runner-Router"
+  },
+  "bugs": {
+    "url": "https://github.com/MCERQUA/LLM-Runner-Router/issues"
+  },
+  "homepage": "https://github.com/MCERQUA/LLM-Runner-Router#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ]
+}

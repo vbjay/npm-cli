@@ -1,0 +1,93 @@
+{
+  "name": "@tom2012/cc-web",
+  "version": "2026.6.17-b",
+  "description": "Self-hosted web UI for Claude Code CLI — run Claude in your browser",
+  "private": false,
+  "main": "electron/dist/main.js",
+  "bin": {
+    "ccweb": "./bin/ccweb.js",
+    "ccweb-plugin": "./bin/ccweb-plugin.js"
+  },
+  "files": [
+    "bin/",
+    "CHANGELOG.json",
+    "backend/dist/",
+    "backend/package.json",
+    "backend/package-lock.json",
+    "backend/vendor/",
+    "frontend/dist/",
+    "plugins/",
+    "plugin-sdk/"
+  ],
+  "keywords": ["claude", "claude-code", "ai", "cli", "web-ui"],
+  "homepage": "https://github.com/zbc0315/cc-web",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zbc0315/cc-web.git"
+  },
+  "scripts": {
+    "setup": "node setup.js",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build && cd ../backend && npm run build",
+    "build:electron": "cd electron && npx tsc",
+    "build:all": "npm run build && npm run build:electron",
+    "prepublishOnly": "npm run build",
+    "electron:dev": "npm run build:all && npx electron .",
+    "dist": "npm run build:all && npx electron-builder --mac",
+    "dist:dmg": "npm run build:all && npx electron-builder --mac dmg",
+    "dist:zip": "npm run build:all && npx electron-builder --mac zip",
+    "postinstall": "npx electron-builder install-app-deps || true"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {},
+  "build": {
+    "appId": "com.ccweb.app",
+    "productName": "CCWeb",
+    "publish": {
+      "provider": "github",
+      "owner": "zbc0315",
+      "repo": "cc-web"
+    },
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/dist/**/*",
+      "backend/dist/**/*",
+      "backend/package.json",
+      "frontend/dist/**/*",
+      "package.json"
+    ],
+    "asar": false,
+    "extraResources": [
+      {
+        "from": "backend/node_modules",
+        "to": "app/backend/node_modules",
+        "filter": ["**/*"]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        { "target": "dmg", "arch": ["arm64"] },
+        { "target": "zip", "arch": ["arm64"] }
+      ],
+      "icon": null,
+      "darkModeSupport": true,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "contents": [
+        { "x": 130, "y": 220 },
+        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "qmem-cli",
+  "version": "0.1.1",
+  "description": "qmem — fast local semantic + lexical search/retrieval CLI (Rust)",
+  "license": "MIT OR Apache-2.0",
+  "type": "commonjs",
+  "bin": {
+    "qmem": "bin/smart-query.js"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "README.md"
+  ],
+  "keywords": [
+    "search",
+    "retrieval",
+    "cli",
+    "rust",
+    "memory"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IAmMarcellus/smart-query.git",
+    "directory": "npm"
+  },
+  "homepage": "https://github.com/IAmMarcellus/smart-query",
+  "bugs": {
+    "url": "https://github.com/IAmMarcellus/smart-query/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "postinstall": "node ./scripts/install.js",
+    "test": "node ./bin/smart-query.js --help"
+  }
+}

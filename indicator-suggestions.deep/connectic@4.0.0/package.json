@@ -1,0 +1,74 @@
+{
+  "name": "connectic",
+  "version": "4.0.0",
+  "description": "Connectic is a javascript library for pub sub messaging, event handling, and data synchronization in real-time applications.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsup",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts",
+    "type-check": "tsc --noEmit",
+    "docs": "typedoc",
+    "prepare": "husky",
+    "prepublishOnly": "npm run build && npm run test"
+  },
+  "keywords": [
+    "event-bus",
+    "microfrontend",
+    "communication",
+    "state-management",
+    "pub-sub",
+    "request-response",
+    "real-time",
+    "data-synchronization",
+    "javascript",
+    "typescript",
+    "framework-agnostic",
+    "mfe",
+    "event-driven"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spiderocious/connectic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/spiderocious/connectic/issues"
+  },
+  "homepage": "https://github.com/spiderocious/connectic#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.31.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.3",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.0",
+    "tsup": "^8.5.0",
+    "typedoc": "^0.28.7",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.6"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "phash-image",
+  "version": "3.5.0",
+  "description": "phash for images",
+  "repository": "mgmtio/phash-image",
+  "devDependencies": {
+    "bluebird": "^3.1.5",
+    "hamming-distance": "^1.0.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.0.0",
+    "node-gyp": "^3.3.0"
+  },
+  "script": {
+    "preinstall": "node-gyp configure build",
+    "preuninstall": "rm -rf build/*"
+  },
+  "scripts": {
+    "build": "node-gyp configure build",
+    "test": "npm run build && mocha",
+    "test-cov": "npm run build && istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
+    "test-travis": "npm run build && istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
+  },
+  "keywords": [
+    "pHash",
+    "phash",
+    "libpHash",
+    "native",
+    "binding",
+    "addon"
+  ],
+  "author": "Aaron Marasco <agm257@mail.missouri.edu>",
+  "contributors": [
+    "Aaron Marasco <agm257@mail.missouri.edu>",
+    "Taeho Kim <xissysnd@gmail.com>",
+    "Jeremy Dowell <jeremy@codevinsky.com>",
+    "Rod Vagg <r@va.gg> (https://github.com/rvagg)",
+    "Jonathan Ong <me@jongleberry.com> (https://github.com/jonathanong)"
+  ],
+  "dependencies": {
+    "any-promise": "^1.1.0",
+    "nan": "^2.0.5"
+  },
+  "license": "MIT"
+}

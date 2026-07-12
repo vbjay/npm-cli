@@ -1,0 +1,82 @@
+{
+	"name": "dom-chef",
+	"version": "5.1.1",
+	"description": "Build regular DOM elements using JSX",
+	"keywords": [
+		"jsx",
+		"dom",
+		"native",
+		"innerHTML",
+		"document",
+		"createElement",
+		"create",
+		"element",
+		"documentFragment",
+		"typescript"
+	],
+	"repository": "vadimdemedes/dom-chef",
+	"funding": "https://github.com/sponsors/fregante",
+	"license": "MIT",
+	"author": {
+		"name": "Vadim Demedes",
+		"email": "vdemedes@gmail.com",
+		"url": "https://github.com/vadimdemedes"
+	},
+	"maintainers": [
+		{
+			"name": "Federico Brigante",
+			"email": "me@fregante.com",
+			"url": "https://fregante.com"
+		}
+	],
+	"type": "module",
+	"main": "index.js",
+	"module": "index.js",
+	"types": "index.d.ts",
+	"files": [
+		"index.js",
+		"index.d.ts"
+	],
+	"scripts": {
+		"build": "tsc",
+		"prepack": "tsc --sourceMap false",
+		"pretest": "npm run build",
+		"test": "xo && ava",
+		"watch": "npm run build -- --watch"
+	},
+	"xo": {
+		"env": "browser",
+		"plugins": [
+			"react"
+		],
+		"rules": {
+			"ava/no-ignored-test-files": "off",
+			"unicorn/prefer-dom-node-append": "off",
+			"import/no-extraneous-dependencies": "off",
+			"import/no-unassigned-import": "off",
+			"@typescript-eslint/prefer-readonly-parameter-types": "off",
+			"@typescript-eslint/naming-convention": "off",
+			"@typescript-eslint/no-namespace": "off",
+			"@typescript-eslint/no-empty-function": "off",
+			"@typescript-eslint/no-unsafe-member-access": "off",
+			"@typescript-eslint/no-unsafe-assignment": "off",
+			"@typescript-eslint/no-unsafe-return": "off",
+			"react/jsx-uses-vars": "error",
+			"react/jsx-uses-react": "error"
+		}
+	},
+	"dependencies": {
+		"@types/react": "^17.0.42",
+		"svg-tag-names": "^3.0.1"
+	},
+	"devDependencies": {
+		"@sindresorhus/tsconfig": "^2.0.0",
+		"@types/sinon": "^10.0.11",
+		"ava": "^4.1.0",
+		"eslint-plugin-react": "^7.29.4",
+		"jsdom": "^19.0.0",
+		"sinon": "^13.0.1",
+		"typescript": "^4.6.2",
+		"xo": "^0.48.0"
+	}
+}

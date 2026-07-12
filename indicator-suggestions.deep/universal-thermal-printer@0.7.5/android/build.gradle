@@ -1,0 +1,27 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    namespace "com.universalthermalprinter"
+
+    compileSdk safeExtGet("compileSdkVersion", 34)
+
+    defaultConfig {
+        minSdk safeExtGet("minSdkVersion", 24)
+        targetSdk safeExtGet("targetSdkVersion", 34)
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation "com.facebook.react:react-android"
+}

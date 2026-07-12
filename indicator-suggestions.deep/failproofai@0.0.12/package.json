@@ -1,0 +1,110 @@
+{
+  "name": "failproofai",
+  "version": "0.0.12",
+  "description": "The easiest way to manage policies that keep your AI agents reliable, on-task, and running autonomously — for Claude Code & the Agents SDK",
+  "bin": {
+    "failproofai": "./dist/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "scripts/",
+    "lib/",
+    "pi-extension/",
+    ".next/standalone/",
+    "dist/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.9.0",
+    "bun": ">=1.3.0"
+  },
+  "scripts": {
+    "predev": "bun run build:cli && bun link",
+    "dev": "FAILPROOFAI_TELEMETRY_DISABLED=1 bun scripts/dev.ts --port 8020",
+    "build:cli": "bun build --target=node --format=esm --outfile=dist/cli.mjs bin/failproofai.mjs --external posthog-node && node -e \"const fs=require('fs');const c=fs.readFileSync('dist/cli.mjs','utf8');fs.writeFileSync('dist/cli.mjs',c.replace('#!/usr/bin/env bun','#!/usr/bin/env node').replace('// @bun\\n',''))\"",
+    "build": "bun build --target=node --format=cjs --outfile=dist/index.js src/index.ts && bun run build:cli && bun --bun next build && node -e \"const {cpSync}=require('fs');cpSync('.next/static','.next/standalone/.next/static',{recursive:true});\" && node scripts/prune-standalone.mjs",
+    "prestart": "bun run build:cli && bun link",
+    "start": "FAILPROOFAI_TELEMETRY_DISABLED=1 bun scripts/start.ts",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "lint": "eslint . --config eslint.config.mjs",
+    "postinstall": "node scripts/postinstall.mjs",
+    "preuninstall": "node scripts/preuninstall.mjs",
+    "prepare": "bun run build",
+    "test:e2e": "vitest run --config vitest.config.e2e.mts",
+    "test:e2e:watch": "vitest --config vitest.config.e2e.mts",
+    "translate": "bun scripts/translate-docs/cli.ts",
+    "translate:readme": "bun scripts/translate-docs/cli.ts --readme-only",
+    "translate:docs": "bun scripts/translate-docs/cli.ts --docs-only",
+    "translate:dry-run": "bun scripts/translate-docs/cli.ts --dry-run",
+    "translate:validate": "bun scripts/translate-docs/cli.ts --validate",
+    "validate:mdx": "bun scripts/validate-mdx.ts"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "claude-agents-sdk",
+    "anthropic",
+    "ai-agent",
+    "agent-reliability",
+    "agent-monitoring",
+    "autonomous-agent",
+    "failure-prevention",
+    "developer-tools",
+    "devtools",
+    "cli",
+    "local-first",
+    "hooks",
+    "policies"
+  ],
+  "author": "ExosphereHost Inc. <failproofai@exosphere.host>",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/FailproofAI/failproofai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FailproofAI/failproofai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FailproofAI/failproofai/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
+    "@mdx-js/mdx": "^3.1.1",
+    "@tailwindcss/postcss": "^4.3.1",
+    "@tanstack/react-virtual": "^3.14.3",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "26.1.0",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "clsx": "^2.1.1",
+    "eslint": "^10.5.0",
+    "eslint-config-next": "^16.2.9",
+    "jsdom": "^29.1.1",
+    "lucide-react": "^1.18.0",
+    "next": "^16.2.9",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.3.1",
+    "typescript": "6.0.3",
+    "vitest": "^4.1.9"
+  },
+  "dependencies": {
+    "html-to-image": "^1.11.13",
+    "html2canvas": "^1.4.1",
+    "posthog-node": "^5.37.1"
+  },
+  "overrides": {
+    "postcss": "8.5.14",
+    "eslint-plugin-react-hooks": "7.0.1",
+    "vite": "8.0.16",
+    "undici": "7.28.0"
+  }
+}

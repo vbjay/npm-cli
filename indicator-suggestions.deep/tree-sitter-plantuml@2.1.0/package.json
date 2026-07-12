@@ -1,0 +1,107 @@
+{
+  "name": "tree-sitter-plantuml",
+  "version": "2.1.0",
+  "description": "PlantUML grammar for tree-sitter - Two-Pass Architecture with Browser Support",
+  "main": "bindings/node",
+  "types": "bindings/node/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./bindings/node/index.d.ts"
+    },
+    "./wasm": {
+      "import": "./bindings/web/index.mjs",
+      "require": "./bindings/web/index.js",
+      "types": "./bindings/web/index.d.ts"
+    },
+    "./normalizer": {
+      "import": "./src/normalizer/index.mjs",
+      "require": "./src/normalizer/index.js"
+    },
+    "./tree-sitter-plantuml.wasm": "./tree-sitter-plantuml.wasm",
+    "./package.json": "./package.json"
+  },
+  "keywords": [
+    "tree-sitter",
+    "plantuml",
+    "parser",
+    "uml",
+    "diagram",
+    "normalizer",
+    "activity-diagram",
+    "wasm",
+    "browser",
+    "webassembly"
+  ],
+  "author": "PlantUML Parser Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SaeedNMosleh/PlantUML-Parser"
+  },
+  "scripts": {
+    "test": "npm run test:normalizer && npm run test:parser",
+    "test:normalizer": "jest test/normalizer --coverage",
+    "test:parser": "tree-sitter test",
+    "test:integration": "jest test/integration",
+    "test:all": "npm run validate && npm test && npm run test:integration",
+    "test:ci": "npm test && npm run test:integration",
+    "test:100": "npm run test:all && echo '✅ 100% Success Rate Achieved!'",
+    "generate": "tree-sitter generate",
+    "parse": "tree-sitter parse",
+    "build": "npm run generate && node-gyp rebuild",
+    "build:wasm": "node -e \"const fs=require('fs'); if(!fs.existsSync('tree-sitter-plantuml.wasm')){process.exit(1)}\" || tree-sitter build-wasm",
+    "build:all": "npm run build && npm run build:wasm",
+    "clean": "rm -rf build coverage *.obj *.backup *.wasm",
+    "rebuild": "npm run clean && npm run build:all",
+    "install": "node-gyp-build || echo 'Skipping build - run npm run build first'",
+    "validate": "node scripts/validate-plantuml.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:validate": "npm run docker:up && npm run validate",
+    "prepublishOnly": "npm run build:all && npm run test:ci"
+  },
+  "dependencies": {
+    "node-addon-api": "^7.0.0",
+    "node-gyp-build": "^4.6.0",
+    "tree-sitter": "^0.20.6",
+    "tree-sitter-cli": "^0.20.8"
+  },
+  "peerDependencies": {
+    "web-tree-sitter": "^0.20.0 || ^0.21.0 || ^0.22.0"
+  },
+  "peerDependenciesMeta": {
+    "web-tree-sitter": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "c8": "^9.0.0",
+    "jest": "^29.7.0",
+    "node-gyp": "^10.0.0",
+    "web-tree-sitter": "^0.22.6"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.plantuml",
+      "file-types": [
+        "puml",
+        "plantuml",
+        "pu",
+        "uml"
+      ],
+      "injection-regex": "plantuml"
+    }
+  ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "src",
+    "queries",
+    "bindings",
+    "index.js",
+    "*.wasm"
+  ]
+}

@@ -1,0 +1,217 @@
+{
+    "name": "ncore-ui-kit",
+    "version": "1.0.0-alpha.1",
+    "description": "NİBGAT® | NCore - UI Kit for React-Native Mobile Apps.",
+    "main": "./lib/module/index.js",
+    "types": "./lib/typescript/src/index.d.ts",
+    "exports": {
+        ".": {
+            "source": "./src/index.tsx",
+            "types": "./lib/typescript/src/index.d.ts",
+            "default": "./lib/module/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "src",
+        "lib",
+        "android",
+        "ios",
+        "cpp",
+        "*.podspec",
+        "react-native.config.js",
+        "!ios/build",
+        "!android/build",
+        "!android/gradle",
+        "!android/gradlew",
+        "!android/gradlew.bat",
+        "!android/local.properties",
+        "!**/__tests__",
+        "!**/__fixtures__",
+        "!**/__mocks__",
+        "!**/.*"
+    ],
+    "scripts": {
+        "example-mobile": "yarn workspace ncore-ui-kit-example-mobile",
+        "example-web": "yarn workspace ncore-ui-kit-example-web",
+        "clean": "del-cli lib",
+        "lint": "eslint . --ext .ts,.tsx --fix",
+        "prepare": "bob build && copyfiles -u 1 \"src/variants/**/*.json\" lib/typescript/src/ && node version.mjs",
+        "type-check-build": "tsc -p tsconfig.build.json",
+        "type-check": "tsc --project tsconfig.json --noEmit",
+        "release": "release-it --only-version",
+        "build": "yarn clean && yarn lint && yarn type-check-build && yarn prepare && npm publish"
+    },
+    "keywords": [
+        "ncore",
+        "nibgat",
+        "ui",
+        "kit",
+        "design",
+        "system",
+        "design-system",
+        "component",
+        "library",
+        "component-library",
+        "mobile",
+        "web",
+        "react-native",
+        "android",
+        "ios"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://git.nibgat.space/nibgat-community/ncore-ui-kit.git.git"
+    },
+    "author": "nibgat <development@nibgat.com> (https://git.nibgat.space/nibgat-community)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://git.nibgat.space/nibgat-community/ncore-ui-kit.git/issues"
+    },
+    "homepage": "https://git.nibgat.space/nibgat-community/ncore-ui-kit.git#readme",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "devDependencies": {
+        "@babel/core": "7.25.2",
+        "@babel/plugin-proposal-class-properties": "7.18.6",
+        "@babel/plugin-transform-modules-commonjs": "7.28.6",
+        "@babel/plugin-transform-private-methods": "7.28.6",
+        "@babel/plugin-transform-private-property-in-object": "7.28.6",
+        "@babel/preset-env": "7.25.3",
+        "@babel/preset-typescript": "7.28.5",
+        "@babel/runtime": "7.25.0",
+        "@expo/metro-runtime": "56.0.15",
+        "@react-native-community/cli": "20.1.0",
+        "@react-native-community/cli-platform-android": "20.1.0",
+        "@react-native-community/cli-platform-ios": "20.1.0",
+        "@react-native/babel-preset": "0.85.3",
+        "@react-native/eslint-config": "0.85.3",
+        "@react-native/jest-preset": "0.85.3",
+        "@react-native/metro-config": "0.85.3",
+        "@react-native/new-app-screen": "0.85.3",
+        "@react-native/typescript-config": "0.85.3",
+        "@react-navigation/elements": "2.9.18",
+        "@react-navigation/native": "7.2.4",
+        "@react-navigation/native-stack": "7.15.1",
+        "@release-it/conventional-changelog": "10.0.1",
+        "@types/copyfiles": "2",
+        "@types/eslint-plugin-jsx-a11y": "6",
+        "@types/jest": "29.5.13",
+        "@types/node": "25.9.3",
+        "@types/react": "19.2.0",
+        "@types/react-dom": "19.2.3",
+        "@types/react-native": "0.73.0",
+        "@types/react-test-renderer": "19.1.0",
+        "babel-loader": "10.1.1",
+        "babel-plugin-module-resolver": "5.0.3",
+        "babel-plugin-react-native-web": "0.21.2",
+        "babel-preset-expo": "56.0.15",
+        "copy-webpack-plugin": "11.0.0",
+        "copyfiles": "2.4.1",
+        "cross-env": "10.1.0",
+        "del-cli": "6.0.0",
+        "eslint": "9.37.0",
+        "eslint-import-resolver-typescript": "4.4.4",
+        "eslint-plugin-import": "2.32.0",
+        "eslint-plugin-jsonc": "2.21.0",
+        "eslint-plugin-jsx-a11y": "6.10.2",
+        "eslint-plugin-local-rules": "3.0.2",
+        "eslint-plugin-react": "7.37.5",
+        "eslint-plugin-react-hooks": "7.0.0",
+        "eslint-plugin-react-native": "5.0.0",
+        "eslint-webpack-plugin": "5.0.1",
+        "expo": "56.0.11",
+        "expo-font": "56.0.6",
+        "expo-status-bar": "56.0.4",
+        "globals": "17.4.0",
+        "html-webpack-plugin": "5.6.7",
+        "jest": "29.6.3",
+        "jsonc-eslint-parser": "2.4.1",
+        "react": "19.2.3",
+        "react-dom": "19.2.3",
+        "react-native": "0.85.3",
+        "react-native-builder-bob": "0.40.13",
+        "react-native-monorepo-config": "0.3.3",
+        "react-native-screens": "4.24.0",
+        "react-native-web": "0.21.2",
+        "react-test-renderer": "19.2.3",
+        "release-it": "19.0.4",
+        "turbo": "2.5.6",
+        "typescript": "5.9.3",
+        "typescript-eslint": "8.46.1",
+        "url-loader": "4.1.1",
+        "webpack": "5.107.1",
+        "webpack-cli": "7.0.2",
+        "webpack-dev-server": "5.2.4"
+    },
+    "peerDependencies": {
+        "lucide-react-native": ">= 1.16.0",
+        "moment": "*",
+        "ncore-context": ">= 1.0.7",
+        "react": "*",
+        "react-native": "*",
+        "react-native-safe-area-context": ">= 5.7.0",
+        "react-native-svg": ">= 15.15.3",
+        "rrule": "*"
+    },
+    "workspaces": [
+        "example/mobile",
+        "example/web",
+        "example/src"
+    ],
+    "packageManager": "yarn@4.11.0",
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            [
+                "module",
+                {
+                    "esm": true
+                }
+            ],
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.build.json"
+                }
+            ]
+        ]
+    },
+    "release-it": {
+        "git": {
+            "commitMessage": "chore: release ${version}",
+            "tagName": "v${version}"
+        },
+        "npm": {
+            "publish": true
+        },
+        "github": {
+            "release": true
+        },
+        "plugins": {
+            "@release-it/conventional-changelog": {
+                "preset": {
+                    "name": "angular"
+                }
+            }
+        }
+    },
+    "create-react-native-library": {
+        "type": "library",
+        "languages": "js",
+        "tools": [
+            "release-it"
+        ],
+        "version": "0.57.2"
+    },
+    "dependencies": {
+        "lucide-react-native": "1.16.0",
+        "moment": "https://git.nibgat.space/nibgat-community/moment.git",
+        "ncore-context": "1.0.8",
+        "react-native-safe-area-context": "5.5.2",
+        "react-native-svg": "15.15.5",
+        "rrule": "https://git.nibgat.space/nibgat-community/rrule.git"
+    }
+}

@@ -1,0 +1,152 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+
+    ext.getKotlinVersion = {
+        if (ext.has("kotlinVersion")) {
+            ext.kotlinVersion()
+        } else {
+            ext.safeExtGet("kotlinVersion", "1.8.10")
+        }
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:${safeExtGet('agpVersion', '7.2.1')}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getKotlinVersion()}")
+    }
+}
+
+// For backwards compatibility with older React Native versions
+def REACT_NATIVE_VERSION = safeExtGet('reactNativeVersion', '+')
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.facebook.react'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+
+android {
+    namespace "net.siteed.sherpaonnx"
+    compileSdkVersion safeExtGet('compileSdkVersion', 34)
+    buildToolsVersion safeExtGet('buildToolsVersion', '34.0.0')
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', 21)
+        targetSdkVersion safeExtGet('targetSdkVersion', 34)
+        versionCode 1
+        versionName "1.0"
+
+        // Test instrumentation runner for integration tests
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
+        }
+    }
+
+    sourceSets {
+        main {
+            // Include prebuilt libraries in the correct location
+            jniLibs.srcDirs = ['src/main/jniLibs']
+
+            // Add Java source directory for compatibility
+            java.srcDirs = ['src/main/java']
+        }
+    }
+
+    // Configure Kotlin source directories
+    kotlin {
+        sourceSets {
+            main {
+                kotlin.srcDirs = ['src/main/kotlin']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // consumerProguardFiles ensures these rules are applied to the consuming app's R8 pass
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    // IMPORTANT: These Java compatibility settings must match the React Native app
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    // This ensures the library is compiled as an AAR with the JNI libraries included
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
+    
+    // Add local project sources for Sherpa ONNX Kotlin classes
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+}
+
+
+repositories {
+    google()
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    // Kotlin standard library must come first - this is critical
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${getKotlinVersion()}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${getKotlinVersion()}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-common:${getKotlinVersion()}"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:${getKotlinVersion()}"
+    
+    // React Native dependencies
+    implementation "com.facebook.react:react-native:${REACT_NATIVE_VERSION}"
+    
+    // Android support libraries
+    implementation "androidx.annotation:annotation:1.5.0"
+    implementation "androidx.core:core-ktx:1.9.0"
+    implementation "androidx.media:media:1.6.0"  // For AudioTrack and related classes
+
+    // Apache Commons Compress for tar.bz2 extraction
+    implementation "org.apache.commons:commons-compress:1.23.0"
+    
+    // OkHttp for model downloads
+    implementation "com.squareup.okhttp3:okhttp:4.11.0"
+    
+    // Kotlin coroutines for async operations
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    
+    // Make sure we have the actual sherpa-onnx library dependencies
+    // First check if there are prebuilt libraries in the jniLibs folder
+    if (file("src/main/jniLibs").exists()) {
+        println("Using prebuilt sherpa-onnx libraries from jniLibs directory")
+    } else {
+        println("WARNING: No prebuilt libraries found in jniLibs directory!")
+    }
+
+    // Test dependencies
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    androidTestImplementation "androidx.test:runner:1.5.2"
+    androidTestImplementation "androidx.test:rules:1.5.0"
+
+} 

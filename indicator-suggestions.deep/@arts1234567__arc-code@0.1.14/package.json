@@ -1,0 +1,66 @@
+{
+  "name": "@arts1234567/arc-code",
+  "version": "0.1.14",
+  "description": "Arc-code - AI-powered coding CLI with Arc 3.4 Ultra",
+  "type": "module",
+  "bin": {
+    "arc": "./bin/arc.js"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node bin/arc.js",
+    "typecheck": "tsc --noEmit",
+    "test:smoke": "tsx test/smoke.ts",
+    "test:tui": "tsx test/tui-smoke.ts",
+    "test": "npm run test:smoke && npm run test:tui",
+    "postinstall": "node scripts/postinstall.js",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "cli",
+    "ai",
+    "coding",
+    "agent",
+    "assistant",
+    "arc"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsblr-bot/arc-code.git"
+  },
+  "bugs": {
+    "url": "https://github.com/artsblr-bot/arc-code/issues"
+  },
+  "homepage": "https://github.com/artsblr-bot/arc-code#readme",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cli-spinners": "^2.9.2",
+    "commander": "^12.1.0",
+    "glob": "^10.4.5",
+    "ink": "^5.0.1",
+    "ink-spinner": "^5.0.0",
+    "openai": "^4.79.0",
+    "react": "^18.3.1",
+    "tiktoken": "^1.0.21"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "ink-testing-library": "^4.0.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.7.2"
+  }
+}

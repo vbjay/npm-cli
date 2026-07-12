@@ -1,0 +1,54 @@
+{
+  "name": "@mmmbuto/ollama-termux",
+  "version": "0.30.8-termux.4",
+  "description": "Upstream Ollama published as a Termux-first Android ARM64 fork with prebuilt release assets and mobile-oriented runtime tuning.",
+  "keywords": [
+    "ollama",
+    "termux",
+    "android",
+    "arm64",
+    "cli",
+    "ai",
+    "inference",
+    "llm"
+  ],
+  "homepage": "https://github.com/DioNanos/ollama-termux#readme",
+  "bugs": {
+    "url": "https://github.com/DioNanos/ollama-termux/issues"
+  },
+  "license": "MIT",
+  "author": "DioNanos <noreply@github.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DioNanos/ollama-termux.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "android"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "main": "install.js",
+  "files": [
+    "install.js",
+    "README.md",
+    "docs/BUILDING.md",
+    "docs/BENCHMARKS.md",
+    "docs/VULKAN_ANDROID_LOADER.md"
+  ],
+  "bin": {
+    "ollama-termux": "./install.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

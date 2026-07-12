@@ -1,0 +1,47 @@
+{
+  "name": "@dhruv2mars/mdv",
+  "version": "0.0.21",
+  "description": "Terminal-first markdown visualizer/editor",
+  "type": "module",
+  "bin": {
+    "mdv": "bin/mdv.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "scripts": {
+    "mdv": "node bin/mdv.js",
+    "postinstall": "node bin/install.js",
+    "selftest": "node bin/selftest.js",
+    "lint": "node --check bin/mdv.js && node --check bin/mdv-lib.js && node --check bin/install.js && node --check bin/install-lib.js && node --check bin/selftest.js",
+    "test": "node scripts/test.js",
+    "coverage": "c8 --all --include bin/install-lib.js --reporter text-summary --check-coverage --lines 95 --functions 95 --branches 80 --statements 95 node scripts/test.js"
+  },
+  "keywords": [
+    "markdown",
+    "terminal",
+    "tui",
+    "rust",
+    "cli"
+  ],
+  "homepage": "https://github.com/Dhruv2mars/mdv#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dhruv2mars/mdv.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/Dhruv2mars/mdv/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "preferGlobal": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@mdv/rust": "workspace:*"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "ecc373914d022da4",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/generate-version.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "49a8fb6c1136c03add80f4fa92fdb8a9dd3541ffe65d2f45ca958d5973d342b5",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "org.jetbrains.kotlin:kotlin-stdlib:${safeExtGet(",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3",
+              "androidx.core:core-ktx:1.12.0"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/generate-version.js",
+        "reason": "referenced by lifecycle script: `prepare`",
+        "sha256": "48e9edaecf786a585110d88b944331e5eb138b84b49cd08aa249b975dacac3b4",
+        "sizeBytes": 900,
+        "signals": [
+          "writes-file"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:26.448Z"
+  },
+  "hash": "sha256:8ca37860e7a62579e75aaa54140dc8b67a7c10d4114d89bd6e6e0d34d99898e4"
+}

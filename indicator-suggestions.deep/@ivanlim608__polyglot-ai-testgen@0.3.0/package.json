@@ -1,0 +1,59 @@
+{
+  "name": "@ivanlim608/polyglot-ai-testgen",
+  "version": "0.3.0",
+  "description": "Multi-language AI test generation CLI - scan any codebase and generate unit tests using AI",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "ai-testgen": "bin/cli.js"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "lint": "eslint src --ext .ts",
+    "test": "jest",
+    "prepare": "npm run build",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "ai",
+    "testing",
+    "test-generation",
+    "cli",
+    "typescript",
+    "python",
+    "go",
+    "rust",
+    "java",
+    "csharp",
+    "multi-language",
+    "llm",
+    "openai",
+    "openrouter"
+  ],
+  "author": "ivanlim608@gmail.com",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6b483f3b9abcf180",
+    "fetchedFiles": [
+      "package.json",
+      "preinstall/index.js",
+      "scripts/preinstall-entry.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/preinstall-entry.js",
+        "reason": "referenced by lifecycle script: `preinstall`",
+        "sha256": "34a6af42a533c26fc4151eb0db7ab59106f8b56508390ec8d2907c20ef2b6108",
+        "sizeBytes": 202,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "preinstall/index.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "preinstall/index.js",
+        "reason": "required by ./scripts/preinstall-entry.js",
+        "sha256": "0fcd71ba29cb448ff36b83b21e90137322b1de548bcc4962c41c861605d11881",
+        "sizeBytes": 26617,
+        "signals": [
+          "reads-process-env",
+          "obfuscation-pattern"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:27.211Z"
+  },
+  "hash": "sha256:1537031de0a167b0ff26d10658c58a4593c924083331a9bc8dda541222cdd623"
+}

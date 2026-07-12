@@ -1,0 +1,48 @@
+{
+  "name": "dxfl",
+  "version": "0.7.0",
+  "description": "",
+  "license": "EUPL-1.2",
+  "author": "Deuxfleurs Team <coucou@deuxfleurs.fr>",
+  "keywords": [
+    "cli",
+    "deuxfleurs"
+  ],
+  "type": "module",
+  "main": "dist/main.js",
+  "bin": {
+    "dxfl": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "npx tsc && npm link",
+    "dev": "npm link && npx onchange \"**/*.ts\" -- npx tsc",
+    "prepare": "npx tsc",
+    "prettier": "npx prettier . --write",
+    "prettier-watch": "npx onchange \"**/*\" -- npx prettier --write --ignore-unknown {{changed}}",
+    "prettier-check": "npx prettier . --check"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1014.0",
+    "@commander-js/extra-typings": "^14.0.0",
+    "@supercharge/promise-pool": "^3.2.0",
+    "@types/node": "^25.2.1",
+    "@types/picomatch": "^4.0.2",
+    "commander": "^14.0.3",
+    "fast-uri": "^3.1.0",
+    "guichet-sdk-ts": "^0.1.0",
+    "mime": "^4.1.0",
+    "picomatch": "^4.0.4",
+    "read": "^5.0.1",
+    "smol-toml": "^1.6.1",
+    "typescript": "^5.9.3",
+    "zod": "^3.24.4",
+    "zod-validation-error": "^3.4.1"
+  },
+  "devDependencies": {
+    "onchange": "^7.1.0",
+    "prettier": "3.5.3"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "name": "synergyspec-selfevolving",
+  "version": "3.0.2",
+  "description": "AI-native system for spec-driven development",
+  "keywords": [
+    "synergyspec-selfevolving",
+    "openspec",
+    "spec-driven",
+    "specs",
+    "cli",
+    "ai",
+    "development"
+  ],
+  "homepage": "https://github.com/ZhifeiDou/SynergySpec-SelfEvolving",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZhifeiDou/SynergySpec-SelfEvolving.git"
+  },
+  "license": "MIT",
+  "author": "Zhifei Dou",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "synergyspec-selfevolving": "bin/synergyspec-selfevolving.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "schemas",
+    "scripts/postinstall.js",
+    "scripts/nl2repo_synergyspec-selfevolving_wrapper.py",
+    "scripts/code-health.py",
+    "scripts/slop_rules.yaml",
+    "!dist/**/*.test.js",
+    "!dist/**/__tests__",
+    "!dist/**/*.map"
+  ],
+  "scripts": {
+    "lint": "eslint src/",
+    "build": "node build.js",
+    "build:clean": "node --input-type=module -e \"process.env.CLEAN_DIST='1'; await import('./build.js')\"",
+    "dev": "tsc --watch",
+    "dev:cli": "pnpm build && node bin/synergyspec-selfevolving.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:postinstall": "node scripts/postinstall.js",
+    "test:e2e:real-agent": "node smoking-test/run-real-agent-self-evolution-e2e.mjs --local-pack",
+    "prepare": "pnpm run build:clean",
+    "prepublishOnly": "pnpm run build:clean && pnpm run check:pack-version && pnpm run check:pack-contents",
+    "postinstall": "node scripts/postinstall.js",
+    "check:docs": "node scripts/docs-check.mjs",
+    "check:pack-version": "node scripts/pack-version-check.mjs",
+    "check:pack-contents": "node scripts/pack-contents-check.mjs",
+    "release": "pnpm run release:ci",
+    "release:ci": "pnpm run check:pack-version && pnpm run check:pack-contents && pnpm exec changeset publish",
+    "changeset": "changeset"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.27.7",
+    "@types/node": "^24.2.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.39.2",
+    "fast-check": "^4.8.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.1",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@ast-grep/cli": "0.43.0",
+    "@inquirer/core": "^10.2.2",
+    "@inquirer/prompts": "^7.8.0",
+    "ansi-regex": "^5.0.1",
+    "chalk": "^5.5.0",
+    "commander": "^14.0.0",
+    "fast-glob": "^3.3.3",
+    "ora": "^8.2.0",
+    "posthog-node": "^5.20.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsx": "^4.20.6",
+    "yaml": "^2.8.2",
+    "zod": "^4.0.17"
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "name": "watr",
+  "version": "5.3.3",
+  "description": "Light & fast WAT compiler – WebAssembly Text to binary, parse, print, transform",
+  "main": "watr.js",
+  "bin": {
+    "watr": "./bin/watr.js"
+  },
+  "types": "types/watr.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/watr.d.ts",
+      "default": "./watr.js"
+    },
+    "./dist": "./dist/watr.js",
+    "./dist/watr.min.js": "./dist/watr.min.js",
+    "./dist/watr.wasm": "./dist/watr.wasm",
+    "./parse": {
+      "types": "./types/src/parse.d.ts",
+      "default": "./src/parse.js"
+    },
+    "./print": {
+      "types": "./types/src/print.d.ts",
+      "default": "./src/print.js"
+    },
+    "./compile": {
+      "types": "./types/src/compile.d.ts",
+      "default": "./src/compile.js"
+    },
+    "./polyfill": {
+      "types": "./types/src/polyfill.d.ts",
+      "default": "./src/polyfill.js"
+    },
+    "./optimize": {
+      "types": "./types/src/optimize.d.ts",
+      "default": "./src/optimize.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "parse": [
+        "./types/src/parse.d.ts"
+      ],
+      "print": [
+        "./types/src/print.d.ts"
+      ],
+      "compile": [
+        "./types/src/compile.d.ts"
+      ],
+      "polyfill": [
+        "./types/src/polyfill.d.ts"
+      ],
+      "optimize": [
+        "./types/src/optimize.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:js && npm run build:wasm",
+    "build:js": "esbuild watr.js --bundle --format=esm --outfile=dist/watr.js && esbuild watr.js --bundle --format=esm --minify --outfile=dist/watr.min.js",
+    "build:wasm": "npx jz watr.js -O3 --memory 4096 -o dist/watr.wasm",
+    "test": "node test",
+    "test:wasm": "WATR_WASM=1 node test",
+    "test:repl": "npx playwright test",
+    "types": "npx tsc src/*.js watr.js --allowJs --declaration --emitDeclarationOnly --declarationMap --outDir types",
+    "prepublishOnly": "npm run build && npm run types && npm test && npm run test:wasm",
+    "prepare": "git submodule update --init --recursive 2>/dev/null || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dy/watr.git"
+  },
+  "files": [
+    "src",
+    "types",
+    "watr.js",
+    "dist",
+    "bin"
+  ],
+  "keywords": [
+    "wat",
+    "wasm",
+    "webassembly",
+    "compiler",
+    "wat2wasm",
+    "wabt",
+    "wast",
+    "parser",
+    "printer",
+    "formatter",
+    "bytecode",
+    "binary",
+    "text-format",
+    "s-expression",
+    "assembly",
+    "jit",
+    "codegen",
+    "zero-dependency"
+  ],
+  "author": "Dmitry Iv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dy/watr/issues"
+  },
+  "homepage": "https://github.com/dy/watr#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "esbuild": "^0.24.2",
+    "jz": "^0.8.1",
+    "tst": "^9.0.0"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "name": "shorol",
+  "version": "2.1.5",
+  "description": "Fluent, human-readable regex builder for JavaScript/TypeScript.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Chetan Basuray",
+  "homepage": "https://github.com/chetanbasuray/shorol",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chetanbasuray/shorol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chetanbasuray/shorol/issues"
+  },
+  "keywords": [
+    "regex",
+    "regexp",
+    "regex-builder",
+    "fluent",
+    "builder",
+    "typescript",
+    "javascript",
+    "validation",
+    "pattern-matching",
+    "ai",
+    "readability"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./presets": {
+      "types": "./dist/presets.d.ts",
+      "import": "./dist/presets.js",
+      "require": "./dist/presets.cjs"
+    },
+    "./llms.txt": "./docs/llms.txt",
+    "./SKILL.md": "./docs/SKILL.md"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "docs",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "docs:sync": "doc-sync-check src --include docs/api-signatures.md --strict",
+    "format": "prettier --write .",
+    "commitlint": "commitlint --from=origin/main --to=HEAD",
+    "prepare": "node ./scripts/prepare-husky.mjs",
+    "prepack": "npm run build",
+    "release": "semantic-release"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.1.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@eslint/js": "^10.0.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "doc-sync-check": "^1.5.0",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "fast-check": "^4.8.0",
+    "husky": "^9.0.11",
+    "prettier": "^3.8.4",
+    "semantic-release": "^24.2.9",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3",
+    "vitest": "^4.1.9"
+  }
+}

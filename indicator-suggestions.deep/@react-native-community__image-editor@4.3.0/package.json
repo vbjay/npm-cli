@@ -1,0 +1,108 @@
+{
+  "name": "@react-native-community/image-editor",
+  "version": "4.3.0",
+  "description": "React Native Image Editing native modules for iOS & Android",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "author": "Dawid Urbaniak <dawidu@onet.pl>",
+  "contributors": [],
+  "homepage": "https://github.com/callstack/react-native-image-editor#readme",
+  "bugs": {
+    "url": "https://github.com/callstack/react-native-image-editor/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "react native",
+    "image editor",
+    "imageeditor",
+    "image"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/callstack/react-native-image-editor.git"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!android/spotless.gradle",
+    "!**/__typetests__",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "ts": "yarn tsc --noEmit",
+    "lint": "eslint '**/*.{js,ts,tsx}'",
+    "lint:android": "./android/gradlew -p android spotlessCheck --quiet",
+    "format:android": "./android/gradlew -p android spotlessapply",
+    "release": "release-it",
+    "build": "bob build",
+    "prepack": "yarn run build"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.57.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@callstack/eslint-config": "^15.0.0",
+    "@react-native/babel-preset": "^0.77.0",
+    "@react-native/typescript-config": "^0.77.0",
+    "@types/react": "^18.3.18",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "react": "^18.3.1",
+    "react-native": "^0.77.0",
+    "react-native-builder-bob": "^0.35.2",
+    "react-native-test-app": "^4.0.9",
+    "release-it": "^10.3.1",
+    "typescript": "^5.7.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "codegenConfig": {
+    "name": "RNCImageEditorSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.reactnativecommunity.imageeditor"
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

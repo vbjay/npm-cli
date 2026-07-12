@@ -1,0 +1,64 @@
+{
+  "name": "discord-game-sdk",
+  "version": "1.0.0",
+  "author": "arthuro555",
+  "description": "A native wrapper for the Discord Game SDK.",
+  "keywords": [
+    "discord",
+    "sdk",
+    "games",
+    "rich",
+    "presence",
+    "native",
+    "node",
+    "addon"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arthuro555/discord-game-sdk"
+  },
+  "homepage": "https://github.com/arthuro555/discord-game-sdk",
+  "license": "MIT",
+  "type": "module",
+  "source": "./js/index.ts",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    "require": "./dist/discord-game-sdk.cjs",
+    "import": "./dist/discord-game-sdk.mjs"
+  },
+  "main": "./dist/discord-game-sdk.cjs",
+  "module": "./dist/discord-game-sdk.mjs",
+  "unpkg": "./dist/discord-game-sdk.umd.js",
+  "umd:main": "./dist/discord-game-sdk.umd.js",
+  "scripts": {
+    "prepublish": "npm run clean && npm run build",
+    "clean": "rm -r dist && rm -r build",
+    "build": "npm run build:cpp && npm run build:js",
+    "build:cpp": "node-gyp rebuild",
+    "build:js": "microbundle --target node --compress",
+    "watch": "concurrently \"npm:watch:cpp\" \"npm:watch:js\"",
+    "watch:cpp": "nodemon --watch ./src -e cc,cpp,h --exec npm run build:cpp",
+    "watch:js": "npm run build:js -- --watch",
+    "test": "jest",
+    "ts": "tsc --noEmit"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/bindings": "^1.5.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.4",
+    "concurrently": "^6.2.1",
+    "jest": "^27.1.0",
+    "microbundle": "^0.13.3",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.2"
+  },
+  "mangle": {
+    "regex": "^_"
+  }
+}

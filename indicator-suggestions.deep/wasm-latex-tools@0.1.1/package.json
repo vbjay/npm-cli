@@ -1,0 +1,53 @@
+{
+    "name": "wasm-latex-tools",
+    "version": "0.1.1",
+    "description": "Run LaTeX tools (texcount, latexdiff, latexpand, tex-fmt) in the browser using WebAssembly",
+    "author": "Fares Abawi <fares@abawi.me> (https://abawi.me)",
+    "license": "AGPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TeXlyre/wasm-latex-tools.git"
+    },
+    "homepage": "https://texlyre.github.io/wasm-latex-tools/",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "type": "module",
+    "bin": {
+        "wasm-latex-tools": "./scripts/cli.cjs"
+    },
+    "scripts": {
+        "build": "tsc && rollup -c",
+        "dev": "tsc --watch",
+        "copy-webperl": "node scripts/copy-webperl.cjs",
+        "prepare": "node scripts/copy-webperl.cjs && npm run build",
+        "build:example": "cd example/github-pages-example && npm install",
+        "build:pages-example": "npm run build && cd example/github-pages-example && npm install",
+        "example": "cd example/github-pages-example && npm start",
+        "pages-example": "cd example/github-pages-example && npm start"
+    },
+    "keywords": [
+        "latex",
+        "webperl",
+        "texcount",
+        "latexdiff",
+        "latexpand",
+        "tex-fmt",
+        "browser",
+        "wasm",
+        "webassembly"
+    ],
+    "files": [
+        "dist/",
+        "assets/core/",
+        "scripts/",
+        "README.md",
+        "LICENSE"
+    ],
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "rollup": "^3.29.0",
+        "rollup-plugin-dts": "^6.0.0",
+        "rollup-plugin-typescript2": "^0.36.0",
+        "typescript": "^5.2.0"
+    }
+}

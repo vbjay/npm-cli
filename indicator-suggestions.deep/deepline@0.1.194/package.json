@@ -1,0 +1,67 @@
+{
+  "name": "deepline",
+  "version": "0.1.194",
+  "description": "Deepline SDK + CLI — B2B data enrichment powered by durable cloud execution",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeplineai/deepline.git"
+  },
+  "homepage": "https://code.deepline.com",
+  "keywords": [
+    "deepline",
+    "enrichment",
+    "b2b",
+    "data",
+    "leads",
+    "cli",
+    "sdk"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "deepline": "dist/cli/index.mjs",
+    "deepline-sdk": "dist/cli/index.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "sync-version": "bun ../scripts/sync-sdk-package-version.ts",
+    "build": "bun ../scripts/sync-sdk-package-version.ts && tsup",
+    "dev": "bun ../scripts/sync-sdk-package-version.ts && tsup --watch",
+    "typecheck": "tsc --noEmit --declaration false --declarationMap false",
+    "prepack": "bun ../scripts/sync-sdk-package-version.ts && tsup",
+    "prepublishOnly": "bun ../scripts/sync-sdk-package-version.ts && tsup"
+  },
+  "dependencies": {
+    "acorn": "^8.17.0",
+    "acorn-typescript": "^1.4.13",
+    "commander": "^14.0.3",
+    "csv-parse": "^5.6.0",
+    "csv-stringify": "^6.5.0",
+    "undici": "^6.22.0"
+  },
+  "optionalDependencies": {
+    "esbuild": "^0.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.9.3"
+  },
+  "deepline": {
+    "apiContract": "2026-06-dataset-handle-results-hard-cutover"
+  }
+}

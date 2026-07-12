@@ -1,0 +1,45 @@
+{
+  "name": "watchmen-cli",
+  "version": "1.11.0",
+  "description": "Capture, compare, and transfer your complete development environment",
+  "main": "shim.js",
+  "keywords": [
+    "cli",
+    "environment",
+    "scanner",
+    "security",
+    "mcp",
+    "devtools",
+    "watchmen"
+  ],
+  "homepage": "https://trywatchmen.cloud",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/watchmencli/watchmen-cli-public.git"
+  },
+  "bugs": {
+    "url": "https://github.com/watchmencli/watchmen-cli-public/issues"
+  },
+  "license": "MIT",
+  "author": "Cristiano Pereira da Silva Muniz, LLC",
+  "bin": {
+    "wm": "bin/wm.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/wm-install-shim.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "watchmen-cli-darwin-arm64": "1.11.0",
+    "watchmen-cli-linux-x64": "1.11.0",
+    "watchmen-cli-win32-x64": "1.11.0"
+  },
+  "files": [
+    "shim.js",
+    "bin/wm.js",
+    "bin/wm-install-shim.js",
+    "README.md"
+  ]
+}

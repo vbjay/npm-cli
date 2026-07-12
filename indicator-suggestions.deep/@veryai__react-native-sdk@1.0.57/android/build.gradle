@@ -1,0 +1,114 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+    ext.kotlin_version = '1.7.22'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+def isNewArchitectureEnabled() {
+    return rootProject.hasProperty("newArchEnabled") && rootProject.newArchEnabled == "true"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.verysdk.rn'
+    }
+
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 34
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        // RN wrapper consumes the FULL flavor of the native SDK module
+        // (`org.very:sdk`, not `org.very:liveness`) — `authenticate()`
+        // is the public API surface this wrapper exposes. Required only
+        // when an RN app pulls the SDK via `include ':very-sdk'` (dev
+        // path); the Maven Central path resolves to the full AAR
+        // unambiguously by artifactId.
+        missingDimensionStrategy 'sdk-product', 'full'
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    // JVM 17 to match the default of modern RN/Expo templates. AGP 7.4+
+    // refuses to mix Java/Kotlin JVM targets within one module, so a
+    // wrapper at 1.8 fails the consumer's `compileDebugKotlin` task as
+    // soon as their app's `compileDebugJavaWithJavac` runs at 17.
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/newarch/kotlin']
+            } else {
+                java.srcDirs += ['src/oldarch/kotlin']
+            }
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+// SDK dependency version — never hardcoded, so it can't drift behind the SDK
+// source. Resolution order:
+//   1. -PverySDKVersion=… (CI override against a locally-published build)
+//   2. the repo-root VERSION file (single source of truth when building from
+//      source in this repo — same value CI publishes for iOS/Android)
+//   3. this wrapper's own package.json version (when consumed from npm, where
+//      CI has set it equal to the released SDK version)
+def resolveVerySDKVersion = {
+    def explicit = project.findProperty('verySDKVersion')
+    if (explicit) return explicit
+    def versionFile = file("$projectDir/../../VERSION")
+    if (versionFile.exists()) return versionFile.text.trim()
+    return new groovy.json.JsonSlurper().parseText(file("$projectDir/../package.json").text).version
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // Very SDK - local project dependency during development (if the host
+    // build includes :very-sdk), else the published Maven artifact at the
+    // version resolved above.
+    if (findProject(':very-sdk') != null) {
+        implementation project(':very-sdk')
+    } else {
+        implementation "org.very:sdk:${resolveVerySDKVersion()}"
+    }
+}
+
+if (isNewArchitectureEnabled()) {
+    react {
+        jsRootDir = file("../src/")
+        libraryName = "RNVerySDKSpec"
+        codegenJavaPackageName = "com.verysdk.rn"
+    }
+}

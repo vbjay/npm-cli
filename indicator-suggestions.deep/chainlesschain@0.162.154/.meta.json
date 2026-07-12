@@ -1,0 +1,198 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c42f7d6cf76be176",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/postinstall.mjs",
+      "src/constants.js",
+      "src/lib/paths.js",
+      "src/lib/platform.js",
+      "src/lib/skill-packs/generator.js",
+      "src/lib/skill-packs/schema.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "4104be2a3c60297f6eb066c47dd9d40bc6678def4c3fa8dd457df20c79c0880b",
+        "sizeBytes": 1738,
+        "signals": [
+          "writes-outside-package",
+          "dynamic-require",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/skill-packs/generator.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/skill-packs/generator.js",
+        "reason": "required by ./scripts/postinstall.mjs; required by ./src/lib/skill-packs/generator.js",
+        "sha256": "2ca47245e27187e965f6f960529ea76b148098eada902e1ae6881f850c559b90",
+        "sizeBytes": 19965,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/lib/skill-packs/generator.js",
+          "src/lib/skill-packs/schema.js",
+          "src/lib/paths.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/lib/skill-packs/schema.js",
+        "reason": "required by ./src/lib/skill-packs/generator.js",
+        "sha256": "94a363603de0a861d10b7ad1a237eb8b748e7b9100b49a675a99d2e06feca1cb",
+        "sizeBytes": 15163,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://example.com",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "src/lib/paths.js",
+        "reason": "required by ./src/lib/skill-packs/generator.js",
+        "sha256": "032d014eaf23262b401602e538ffd4652ab45a3dd8148fd7a1fd36d67b206741",
+        "sizeBytes": 1808,
+        "signals": [
+          "reads-process-env",
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "src/constants.js",
+          "src/lib/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "src/constants.js",
+        "reason": "required by ./src/lib/paths.js",
+        "sha256": "814d398f2e2cf3a2923d30ec2f1e287f8db41af0661a1eee208e85a81c66fff6",
+        "sizeBytes": 4669,
+        "signals": [
+          "dynamic-require",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://api.github.com/repos/",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://ark.cn-beijing.volces.com/api/v3",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://api.openai.com/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://api.anthropic.com/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://api.deepseek.com/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://generativelanguage.googleapis.com/v1beta",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://api.moonshot.cn/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://api.minimax.chat/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "https://api.mistral.ai/v1",
+            "classification": "telemetry"
+          },
+          {
+            "url": "http://localhost:11434",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "src/lib/platform.js",
+        "reason": "required by ./src/lib/paths.js",
+        "sha256": "42f630d21d1515cee439e807604f492328d68d06f4777204bc64e8a382e07749",
+        "sizeBytes": 884,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:28.846Z"
+  },
+  "hash": "sha256:97754996dd0b27bf0422232fe4dd62feb3e65eb1a2c1faaf6059a209326f93a3"
+}

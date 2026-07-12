@@ -1,0 +1,75 @@
+{
+  "name": "as-borsh",
+  "version": "1.0.0",
+  "description": "Borsh serializer code generator for AssemblyScript",
+  "author": "Grigorii Zhitnii",
+  "license": "MIT",
+  "private": false,
+  "homepage": "https://github.com/Zarve8/as-borsh",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zarve8/as-borsh.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Zarve8/as-borsh/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "bin": {
+    "as-borsh": "./dist/cli.js"
+  },
+  "exports": {
+    "./schema": {
+      "import": "./dist/schema/index.js",
+      "types": "./dist/schema/index.d.ts"
+    },
+    "./templates": {
+      "default": "./templates.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "serde",
+    "templates.ts",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.serde.json && tsc-alias -p tsconfig.serde.json --resolve-full-paths",
+    "prepack": "npm run build",
+    "dev:init": "tsx serde/cli.ts init",
+    "dev:generate": "tsx serde/cli.ts generate",
+    "test:generate": "tsx serde/cli.ts generate --config tests/as-borsh.test.config.jsonc",
+    "test:asc": "asc tests/assembly/index.ts --target debug --outFile tests/build/debug.wasm --bindings esm",
+    "test:node": "node --test tests/index.js",
+    "test": "npm run test:generate && npm run test:asc && npm run test:node",
+    "pack:dry": "npm pack --dry-run"
+  },
+  "keywords": [
+    "assemblyscript",
+    "borsh",
+    "serde",
+    "wasm",
+    "serialization",
+    "deserialization",
+    "codegen",
+    "schema",
+    "cli"
+  ],
+  "dependencies": {
+    "jsonc-parser": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "assemblyscript": "^0.28.18",
+    "tsc-alias": "^1.8.17",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

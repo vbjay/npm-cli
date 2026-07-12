@@ -1,0 +1,119 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "d828bf5f96152129",
+    "fetchedFiles": [
+      "install.sh",
+      "package.json",
+      "postinstall.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "ebee9e4dc1585cd968adaba381f7cb0a215252c696cdff506c11ab57eddb65df",
+        "sizeBytes": 30470,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "makes-executable",
+          "runtime-installer",
+          "shell-network-fetch",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://astral.sh/uv/install.sh",
+            "classification": "unknown"
+          }
+        ]
+      },
+      {
+        "path": "install.sh",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "26d5bc141cd93579ad499ee363dd1382e25981c97d7dd8a07b3e9c77a4b1f749",
+        "sizeBytes": 9524,
+        "signals": [
+          "makes-executable",
+          "runtime-installer",
+          "shell-network-fetch",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://claude.ai/install.sh",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://claude.ai/install.ps1",
+            "classification": "unknown"
+          },
+          {
+            "url": "https://github.com/zesbe/ClaudeAll.git",
+            "classification": "reference"
+          },
+          {
+            "url": "https://github.com/zesbe/ClaudeAll",
+            "classification": "reference"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/zesbe/ClaudeAll/main/install.sh",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:30.032Z"
+  },
+  "hash": "sha256:119b8961f67d7e89b3f0f0c017a50885087919ec0815a8400be9301b357e213d"
+}

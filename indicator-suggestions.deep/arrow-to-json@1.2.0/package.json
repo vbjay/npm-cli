@@ -1,0 +1,136 @@
+{
+  "name": "arrow-to-json",
+  "version": "1.2.0",
+  "description": "Convert Arrow IPC bytes to JSON using Rust (napi-rs)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tilyupo/arrow-to-json.git"
+  },
+  "license": "MIT",
+  "browser": "browser.js",
+  "keywords": [
+    "arrow",
+    "apache-arrow",
+    "ipc",
+    "json",
+    "rust",
+    "napi-rs",
+    "native",
+    "performance"
+  ],
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "browser.js"
+  ],
+  "napi": {
+    "binaryName": "arrow-to-json",
+    "targets": [
+      "x86_64-pc-windows-msvc",
+      "x86_64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "aarch64-unknown-linux-gnu",
+      "i686-pc-windows-msvc",
+      "armv7-unknown-linux-gnueabihf",
+      "aarch64-apple-darwin",
+      "aarch64-linux-android",
+      "x86_64-unknown-freebsd",
+      "aarch64-unknown-linux-musl",
+      "aarch64-pc-windows-msvc",
+      "armv7-linux-androideabi",
+      "wasm32-wasip1-threads"
+    ]
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "bench": "node --import @oxc-node/core/register benchmark/bench.ts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "format": "run-p format:prettier format:rs format:toml",
+    "format:prettier": "prettier . -w",
+    "format:toml": "taplo format",
+    "format:rs": "cargo fmt",
+    "lint": "oxlint .",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "ava",
+    "preversion": "napi build --platform && git add .",
+    "version": "napi version",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@emnapi/core": "^1.5.0",
+    "@emnapi/runtime": "^1.5.0",
+    "@napi-rs/cli": "^3.2.0",
+    "@oxc-node/core": "^0.0.35",
+    "@taplo/cli": "^0.7.0",
+    "@tybys/wasm-util": "^0.10.0",
+    "apache-arrow": "^21.1.0",
+    "ava": "^7.0.0",
+    "chalk": "^5.6.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "npm-run-all2": "^8.0.4",
+    "oxlint": "^1.14.0",
+    "prettier": "^3.6.2",
+    "tinybench": "^6.0.0",
+    "typescript": "^6.0.0"
+  },
+  "lint-staged": {
+    "*.@(js|ts|tsx)": [
+      "oxlint --fix"
+    ],
+    "*.@(js|ts|tsx|yml|yaml|md|json)": [
+      "prettier --write"
+    ],
+    "*.toml": [
+      "taplo format"
+    ]
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "timeout": "2m",
+    "workerThreads": false,
+    "environmentVariables": {
+      "OXC_TSCONFIG_PATH": "./__test__/tsconfig.json"
+    },
+    "nodeArguments": [
+      "--import",
+      "@oxc-node/core/register"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "arrowParens": "always"
+  },
+  "packageManager": "yarn@4.13.0",
+  "optionalDependencies": {
+    "arrow-to-json-win32-x64-msvc": "1.2.0",
+    "arrow-to-json-darwin-x64": "1.2.0",
+    "arrow-to-json-linux-x64-gnu": "1.2.0",
+    "arrow-to-json-linux-x64-musl": "1.2.0",
+    "arrow-to-json-linux-arm64-gnu": "1.2.0",
+    "arrow-to-json-win32-ia32-msvc": "1.2.0",
+    "arrow-to-json-linux-arm-gnueabihf": "1.2.0",
+    "arrow-to-json-darwin-arm64": "1.2.0",
+    "arrow-to-json-android-arm64": "1.2.0",
+    "arrow-to-json-freebsd-x64": "1.2.0",
+    "arrow-to-json-linux-arm64-musl": "1.2.0",
+    "arrow-to-json-win32-arm64-msvc": "1.2.0",
+    "arrow-to-json-android-arm-eabi": "1.2.0",
+    "arrow-to-json-wasm32-wasi": "1.2.0"
+  }
+}

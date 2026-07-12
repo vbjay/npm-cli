@@ -1,0 +1,111 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "c3c9074b76d9f8ed",
+    "fetchedFiles": [
+      "install.js",
+      "package.json",
+      "platform.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "9d46789da2a0654cccffbb761fcc3f6251e1f01fab43bd26fbd1b4f5ab8e73f3",
+        "sizeBytes": 5557,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "platform.js",
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/googleworkspace/cli/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "platform.js",
+        "reason": "required by ./install.js",
+        "sha256": "9f0416a2417cdb156dbc1bd9935da5555a2b41995449ed19695d32e2077b3f3d",
+        "sizeBytes": 2118,
+        "signals": [
+          "uses-child-process",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": []
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./platform.js; required by ./install.js",
+        "sha256": "2b14e8400ff43eeeab45ba19db2ee6aa6d2a64124c3dc2defb3b7aac5f6231ed",
+        "sizeBytes": 2028,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:10.141Z"
+  },
+  "hash": "sha256:5215a7a0f3ab8d681c6968ea1f06f171e0aaadd57231f97b084684307b19f1ed"
+}

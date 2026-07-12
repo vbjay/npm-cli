@@ -1,0 +1,60 @@
+{
+  "name": "@merittdev/horus",
+  "version": "0.21.8",
+  "description": "Local-first, source-aware production-incident investigation engine",
+  "type": "module",
+  "bin": {
+    "horus": "./dist/index.cjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "tsup && vitest run --passWithNoTests",
+    "prepublishOnly": "tsup",
+    "prepack": "cp ../../README.md README.md"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.3",
+    "@horus/ai": "workspace:*",
+    "@horus/cli": "workspace:*",
+    "@horus/connectors": "workspace:*",
+    "@horus/core": "workspace:*",
+    "@horus/db": "workspace:*",
+    "@horus/engine": "workspace:*",
+    "@horus/eval": "workspace:*",
+    "@horus/stitcher": "workspace:*",
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "keywords": [
+    "incident-investigation",
+    "observability",
+    "sre",
+    "debugging",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Meritt Dev",
+    "url": "https://horus.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meritt-dev/horus"
+  },
+  "bugs": {
+    "url": "https://github.com/meritt-dev/horus/issues"
+  },
+  "homepage": "https://horus.sh",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "name": "@doist/todoist-cli",
+  "version": "1.76.1",
+  "description": "TypeScript CLI for Todoist",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "td": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit",
+    "check": "oxlint src && oxfmt --check",
+    "fix": "oxlint src --fix && oxfmt",
+    "postinstall": "node scripts/postinstall.js",
+    "check:skill-sync": "node scripts/check-skill-sync.js",
+    "sync:skill": "npm run build && node scripts/sync-skill.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "todoist",
+    "cli",
+    "todo",
+    "tasks"
+  ],
+  "author": "Ernesto García <ernesto@ernesto.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Doist/todoist-cli.git"
+  },
+  "homepage": "https://github.com/Doist/todoist-cli#readme",
+  "bugs": {
+    "url": "https://github.com/Doist/todoist-cli/issues"
+  },
+  "preferGlobal": true,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "@doist/cli-core": "0.26.0",
+    "@doist/todoist-sdk": "10.5.1",
+    "@napi-rs/keyring": "1.3.0",
+    "@pnpm/tabtab": "0.5.4",
+    "chalk": "5.6.2",
+    "commander": "14.0.3",
+    "date-fns": "4.4.0",
+    "marked": "18.0.5",
+    "marked-terminal-renderer": "2.2.0",
+    "oauth4webapi": "3.8.6",
+    "open": "11.0.0"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/exec": "7.1.0",
+    "@semantic-release/git": "10.0.1",
+    "@types/node": "25.9.4",
+    "conventional-changelog-conventionalcommits": "9.3.1",
+    "lefthook": "2.1.9",
+    "oxfmt": "0.57.0",
+    "oxlint": "1.72.0",
+    "semantic-release": "25.0.5",
+    "typescript": "6.0.3",
+    "vitest": "4.1.9"
+  }
+}

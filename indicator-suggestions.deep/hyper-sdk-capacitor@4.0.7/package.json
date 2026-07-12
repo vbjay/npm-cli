@@ -1,0 +1,102 @@
+{
+  "name": "hyper-sdk-capacitor",
+  "version": "4.0.7",
+  "description": "Capacitor Wrapper over HyperSDK",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "ios/Plugin/",
+    "Package.swift",
+    "HyperSdkCapacitor.podspec"
+  ],
+  "author": "Juspay Technologies Pvt. Ltd.",
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juspay/hyper-sdk-capacitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juspay/hyper-sdk-capacitor/issues"
+  },
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native"
+  ],
+  "scripts": {
+    "bootstrap": "npm install && npm install --prefix example && npm run pods --prefix example",
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS && cd ..",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "npm run build",
+    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint Package.swift ios/Plugin ios/PluginTests example/ios/App/App",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- lint --fix --format Package.swift ios/Plugin ios/PluginTests example/ios/App/App",
+    "eslint": "eslint . --ext ts",
+    "prettier": "prettier \"**/*.{css,html,ts,js}\"",
+    "swiftlint": "node-swiftlint",
+    "build": "npm run clean && tsc && rollup -c rollup.config.js",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^4.7.0",
+    "@capacitor/core": "^4.7.0",
+    "@capacitor/ios": "^4.7.0",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@evilmartians/lefthook": "^1.3.12",
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^1.0.1",
+    "@ionic/swiftlint-config": "^1.1.2",
+    "commitlint": "^17.0.3",
+    "eslint": "^7.11.0",
+    "husky": "^8.0.1",
+    "prettier": "~2.3.0",
+    "prettier-plugin-java": "~1.0.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.32.0",
+    "swiftlint": "^1.0.1",
+    "typescript": "^4.5.2"
+  },
+  "peerDependencies": {
+    "@capacitor/core": "^4.7.0"
+  },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "scope-case": [
+        2,
+        "always",
+        [
+          "lower-case",
+          "upper-case"
+        ]
+      ]
+    }
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
+  "overrides": {
+    "lodash": "4.18.1"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "name": "@iternio/react-native-auto-play",
+  "version": "0.5.6",
+  "description": "Android Auto and Apple CarPlay for react-native",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib",
+    "nitrogen",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "ios/**/*.ttf",
+    "app.plugin.js",
+    "nitro.json",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "lint": "biome check src",
+    "lint-ci": "biome ci src --reporter=summary",
+    "typescript": "tsc",
+    "specs": "nitrogen --logLevel=\"debug\"",
+    "prepare": "yarn circular && tsc && nitrogen",
+    "swift:format": "swift-format format ./ios --in-place --recursive",
+    "circular": "dpdm ./src/* --circular --exit-code circular:1 --no-tree --warning=false --transform"
+  },
+  "keywords": [
+    "react-native",
+    "nitro"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iternio-Planning-AB/react-native-auto-play.git"
+  },
+  "author": "Manuel Auer <g4rb4g3@gmail.com> (https://github.com/g4rb4g3)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Iternio-Planning-AB/react-native-auto-play/issues"
+  },
+  "homepage": "https://github.com/Iternio-Planning-AB/react-native-auto-play#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/react": "~19.2.0",
+    "dpdm": "^4.0.1",
+    "nitrogen": "^0.35.9",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  },
+  "dependencies": {
+    "react-native-uuid": "^2.0.3"
+  },
+  "directories": {
+    "lib": "lib"
+  }
+}

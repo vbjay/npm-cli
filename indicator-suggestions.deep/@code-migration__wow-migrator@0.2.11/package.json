@@ -1,0 +1,56 @@
+{
+  "name": "@code-migration/wow-migrator",
+  "version": "0.2.11",
+  "description": "Install KMP migration skills into Claude Code, Codex, Cursor, Gemini, OpenCode, OpenClaw, and JiuwenSwarm via npm install.",
+  "keywords": [
+    "android",
+    "kmp",
+    "kotlin-multiplatform",
+    "skills",
+    "claude-code",
+    "codex",
+    "cursor",
+    "gemini",
+    "opencode"
+  ],
+  "license": "MIT",
+  "author": "winson-AI",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winson-AI/cli-plugins.git"
+  },
+  "bin": {
+    "wow-migrator": "bin/wow-migrator.js"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "skills",
+    "README.md"
+  ],
+  "scripts": {
+    "install:skills": "node ./bin/wow-migrator.js install",
+    "install:all": "node ./bin/wow-migrator.js install --target all --yes",
+    "install:openclaw": "node ./bin/wow-migrator.js install --platform openclaw --yes",
+    "install:claude": "node ./bin/wow-migrator.js install --platform claude --yes",
+    "install:opencode": "node ./bin/wow-migrator.js install --platform opencode --yes",
+    "install:codex": "node ./bin/wow-migrator.js install --platform codex --yes",
+    "install:cursor": "node ./bin/wow-migrator.js install --platform cursor --yes",
+    "install:gemini": "node ./bin/wow-migrator.js install --platform gemini --yes",
+    "install:jiuwen": "node ./bin/wow-migrator.js install --platform jiuwen --yes",
+    "uninstall:skills": "node ./bin/wow-migrator.js uninstall",
+    "config": "node ./bin/wow-migrator.js config",
+    "list": "node ./bin/wow-migrator.js list",
+    "sync:skills": "node ./scripts/sync-skills.js",
+    "prepare": "node ./scripts/sync-skills.js --if-present",
+    "prepack": "node ./scripts/sync-skills.js",
+    "postinstall": "node ./bin/wow-migrator.js install --yes --postinstall"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "name": "process-audio-capture",
+  "version": "1.0.14",
+  "description": "Native process-level audio capture for Node.js and Electron applications",
+  "keywords": [
+    "electron",
+    "audio",
+    "capture",
+    "process",
+    "native",
+    "addon",
+    "macos",
+    "windows",
+    "audio-capture",
+    "process-audio"
+  ],
+  "author": "lvxiaohai",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "js",
+    "src",
+    "include",
+    "binding.gyp"
+  ],
+  "scripts": {
+    "clean": "npm run clean:native && npm run clean:ts",
+    "clean:native": "rimraf build",
+    "clean:ts": "rimraf dist",
+    "build": "npm run clean && npm run build:native && npm run build:ts",
+    "build:native": "node-gyp rebuild",
+    "build:ts": "vite build",
+    "watch": "vite build --watch",
+    "install": "node-gyp rebuild",
+    "prepublishOnly": "npm run clean:ts && npm run build:ts"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lvxiaohai/process-audio-capture.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lvxiaohai/process-audio-capture/issues"
+  },
+  "homepage": "https://github.com/lvxiaohai/process-audio-capture#readme",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/bindings": "^1.5.5",
+    "@types/node": "^20.19.15",
+    "electron": "^28.0.0",
+    "node-gyp": "^9.x",
+    "rimraf": "^5.0.0",
+    "rollup": "^4.50.2",
+    "typescript": "^5.0.0",
+    "vite": "^7.1.5",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

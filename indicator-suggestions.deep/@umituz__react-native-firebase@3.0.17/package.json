@@ -1,0 +1,154 @@
+{
+  "name": "@umituz/react-native-firebase",
+  "version": "3.0.17",
+  "description": "Firebase package for React Native mobile apps - Auth and Firestore services.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build:scripts": "tsc -p tsconfig.scripts.json",
+    "prepack": "npm install --ignore-scripts && npm run build:scripts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
+    "version:patch": "npm version patch -m 'chore: release v%s'",
+    "version:minor": "npm version minor -m 'chore: release v%s'",
+    "version:major": "npm version major -m 'chore: release v%s'",
+    "setup:skill": "node -e \"const fs = require('fs'); const path = require('path'); const skillDir = path.join(process.env.HOME, '.claude', 'skills', 'setup-react-native-firebase'); fs.mkdirSync(skillDir, {recursive: true}); fs.copyFileSync(path.join(__dirname, 'skills/SKILL.md'), path.join(skillDir, 'SKILL.md')); console.log('✅ Firebase setup skill installed to Claude Code!');\""
+  },
+  "keywords": [
+    "react-native",
+    "firebase",
+    "firebase-js-sdk",
+    "auth",
+    "authentication",
+    "firestore",
+    "database",
+    "repository",
+    "ddd",
+    "domain-driven-design"
+  ],
+  "author": "Ümit UZ <umit@umituz.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umituz/react-native-firebase.git"
+  },
+  "peerDependencies": {
+    "@gorhom/portal": "*",
+    "@tanstack/react-query": ">=5.0.0",
+    "@umituz/react-native-design-system": "*",
+    "expo": ">=54.0.0",
+    "expo-apple-authentication": ">=6.0.0",
+    "expo-auth-session": ">=5.0.0",
+    "expo-crypto": ">=13.0.0",
+    "expo-web-browser": ">=12.0.0",
+    "firebase": ">=10.0.0",
+    "react": ">=19.0.0",
+    "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo-apple-authentication": {
+      "optional": true
+    },
+    "expo-auth-session": {
+      "optional": true
+    },
+    "expo-web-browser": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-community/datetimepicker": "^8.6.0",
+    "@react-native-community/slider": "^5.1.1",
+    "@react-navigation/bottom-tabs": "^7.9.0",
+    "@react-navigation/native": "^7.1.26",
+    "@react-navigation/stack": "^7.6.13",
+    "@tanstack/query-async-storage-persister": "^5.66.7",
+    "@tanstack/react-query": "^5.66.7",
+    "@tanstack/react-query-persist-client": "^5.66.7",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.19.33",
+    "@types/react": "~19.1.10",
+    "@typescript-eslint/eslint-plugin": "^8.52.0",
+    "@typescript-eslint/parser": "^8.52.0",
+    "@umituz/react-native-design-system": "*",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-native": "^5.0.0",
+    "expo-apple-authentication": "^8.0.8",
+    "expo-application": "^7.0.8",
+    "expo-clipboard": "^8.0.8",
+    "expo-constants": "^18.0.13",
+    "expo-crypto": "^15.0.8",
+    "expo-device": "^8.0.10",
+    "expo-file-system": "^19.0.21",
+    "expo-font": "^14.0.10",
+    "expo-haptics": "^15.0.8",
+    "expo-image": "^3.0.11",
+    "expo-image-manipulator": "^14.0.8",
+    "expo-image-picker": "^17.0.10",
+    "expo-localization": "^17.0.8",
+    "expo-media-library": "^18.2.1",
+    "expo-modules-core": "^3.0.29",
+    "expo-network": "^8.0.8",
+    "expo-secure-store": "^15.0.8",
+    "expo-sharing": "^14.0.8",
+    "expo-video": "^3.0.15",
+    "firebase": "^12.6.0",
+    "firebase-admin": "^13.6.0",
+    "react": "19.1.0",
+    "react-native": "0.81.4",
+    "react-native-gesture-handler": "^2.30.0",
+    "react-native-safe-area-context": "^5.6.2",
+    "react-native-svg": "^15.15.1",
+    "rn-emoji-keyboard": "^1.7.0",
+    "typescript": "~5.9.2",
+    "zustand": "^5.0.3"
+  },
+  "optionalDependencies": {
+    "firebase-admin": "^13.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "firebase-admin": "dist/scripts/cli.js"
+  },
+  "files": [
+    "src",
+    "scripts",
+    "dist/scripts",
+    ".agents",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "react-native": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./auth": {
+      "react-native": "./src/domains/auth/index.ts",
+      "types": "./src/domains/auth/index.ts",
+      "default": "./src/domains/auth/index.ts"
+    },
+    "./firestore": {
+      "react-native": "./src/domains/firestore/index.ts",
+      "types": "./src/domains/firestore/index.ts",
+      "default": "./src/domains/firestore/index.ts"
+    },
+    "./init": {
+      "react-native": "./src/init/index.ts",
+      "types": "./src/init/index.ts",
+      "default": "./src/init/index.ts"
+    },
+    "./scripts": {
+      "require": "./dist/scripts/index.js",
+      "import": "./dist/scripts/index.js",
+      "types": "./dist/scripts/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  }
+}

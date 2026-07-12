@@ -1,0 +1,134 @@
+{
+  "name": "dumi-theme-antd-style",
+  "version": "0.31.1",
+  "description": "dumi-theme-antd-style 是为 dumi2 打造的一款文档站主题包，提供了更加美观、易用的研发与阅读体验",
+  "keywords": [
+    "npm",
+    "template"
+  ],
+  "homepage": "https://github.com/arvinxx/dumi-theme-antd-style",
+  "bugs": {
+    "url": "https://github.com/arvinxx/dumi-theme-antd-style/issues/new"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arvinxx/dumi-theme-antd-style.git"
+  },
+  "license": "MIT",
+  "author": "arvinxx(arvinx@foxmail.com)",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev",
+    "changelog": "conventional-changelog -n node_modules/conventional-changelog-gitmoji-config -i CHANGELOG.md -s -r 0",
+    "ci": "npm run lint && npm run type-check",
+    "clean": "rm -rf es lib dist coverage .dumi/tmp .eslintcache",
+    "dev": "npm run start --prefix=example",
+    "docs:build": "npm run build && npm run build --prefix=example",
+    "doctor": "father doctor",
+    "i18n-md": "lobe-i18n md",
+    "lint": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
+    "prepare": "husky install && father link-dev-theme && dumi setup",
+    "prepublishOnly": "father doctor && npm run build",
+    "prettier": "prettier -c --write \"**/**\"",
+    "release": "semantic-release",
+    "start": "npm run dev",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:update": "vitest -u",
+    "type-check": "tsc -p tsconfig-check.json"
+  },
+  "lint-staged": {
+    "*.{md,json}": [
+      "prettier --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5",
+    "@babel/runtime": "^7",
+    "@floating-ui/react": "^0.24",
+    "ahooks": "^3",
+    "antd": "^5",
+    "antd-style": "^3",
+    "chalk": "^4",
+    "chroma-js": "^2",
+    "copy-to-clipboard": "^3",
+    "fast-deep-equal": "^3",
+    "lodash": "^4",
+    "polished": "^4",
+    "rc-footer": "^0.6",
+    "react-layout-kit": "^1",
+    "react-syntax-highlighter": "^15",
+    "shiki-es": "^0.2",
+    "swr": "^2.2.5",
+    "use-merge-value": "^1",
+    "zustand": "^4.4.1",
+    "zustand-utils": "^1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17",
+    "@emotion/react": "^11",
+    "@lobehub/i18n-cli": "^1",
+    "@testing-library/react": "^13",
+    "@types/chroma-js": "^2",
+    "@types/lodash": "^4",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-syntax-highlighter": "^15",
+    "@umijs/lint": "^4",
+    "@vitest/coverage-v8": "latest",
+    "ahooks": "^3",
+    "antd": "^5",
+    "babel-plugin-antd-style": "^1.0.4",
+    "commitlint": "^17",
+    "commitlint-config-gitmoji": "^2",
+    "concurrently": "^7",
+    "conventional-changelog-gitmoji-config": "^1",
+    "cross-env": "^7",
+    "dumi": "^2",
+    "dumi-assets-types": "^1",
+    "eslint": "^8",
+    "eslint-import-resolver-alias": "^1",
+    "eslint-import-resolver-typescript": "^2",
+    "father": "^4",
+    "father-plugin-dumi-theme": "^1.0.0-rc.1",
+    "history": "^5",
+    "husky": "^8",
+    "jsdom": "^22",
+    "lint-staged": "^13",
+    "prettier": "^2",
+    "prettier-plugin-organize-imports": "^3",
+    "prettier-plugin-packagejson": "^2",
+    "react": "^18",
+    "react-dom": "^18",
+    "semantic-release": "^20",
+    "semantic-release-config-gitmoji": "^1",
+    "stylelint": "^14",
+    "tilg": "^0.1",
+    "typescript": "^5",
+    "vitest": "latest"
+  },
+  "peerDependencies": {
+    "dumi": "^2.4.7",
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "81ef8cd44cda0c0b",
+    "fetchedFiles": [
+      "binary.mjs",
+      "install.mjs",
+      "package.json"
+    ],
+    "bareFollows": [
+      {
+        "name": "zx",
+        "versionSpec": "^7.2.3"
+      },
+      {
+        "name": "command-exists",
+        "versionSpec": "^1.2.9"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "command-exists@1.2.9",
+      "zx@7.2.4"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "install.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "091f84a41d92223d3f10328907ef3983d18224913a7cac80fb188b2ae367bb25",
+        "sizeBytes": 840,
+        "signals": [
+          "reads-process-env",
+          "requires-local-file"
+        ],
+        "references": [
+          "binary.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "binary.mjs",
+        "reason": "required by ./install.mjs",
+        "sha256": "ee2f873a8047825c5610f084b57a2dca618d4a91f7854cdfc529ecfd098a8c0c",
+        "sizeBytes": 4294,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://sh.rustup.rs",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:07.203Z"
+  },
+  "hash": "sha256:f4e39719d7d9fb0d119a2c7be36e7eb01bdba8ff364c542771e31ba66206deb9"
+}

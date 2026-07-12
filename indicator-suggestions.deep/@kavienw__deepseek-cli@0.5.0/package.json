@@ -1,0 +1,54 @@
+{
+  "name": "@kavienw/deepseek-cli",
+  "version": "0.5.0",
+  "description": "An agentic coding CLI for DeepSeek models, in the spirit of Claude Code",
+  "type": "module",
+  "bin": {
+    "deepseek": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "deepseek",
+    "cli",
+    "agent",
+    "ai",
+    "coding-assistant"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.2.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "diff": "^7.0.0",
+    "fflate": "^0.8.3",
+    "glob": "^11.0.0",
+    "openai": "^4.77.0",
+    "unpdf": "^1.6.2"
+  },
+  "optionalDependencies": {
+    "@napi-rs/canvas": "^0.1.65",
+    "tesseract.js": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/diff": "^7.0.2",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

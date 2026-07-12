@@ -1,0 +1,70 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1099c716ee95662c",
+    "fetchedFiles": [
+      "npm/lib/runtime.mjs",
+      "npm/scripts/postinstall.mjs",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "3e4fe332cabe6ecb075929bb925c3a4aa5b6d63599f3a5fdcdc822f8cf19d525",
+        "sizeBytes": 484,
+        "signals": [
+          "writes-outside-package",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/lib/runtime.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/lib/runtime.mjs",
+        "reason": "required by ./npm/scripts/postinstall.mjs",
+        "sha256": "d9e4b3fed3db5bf422eb1a66c3d2103cf0761bd10ab89baeb2c4a50143c14a19",
+        "sizeBytes": 20202,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "writes-file",
+          "runtime-installer",
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:19.707Z"
+  },
+  "hash": "sha256:fda09c140502886a9db60944de0bb05205cbba5ced4fed70eb9ab575cac2133e"
+}

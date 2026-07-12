@@ -1,0 +1,45 @@
+{
+  "name": "github-release-from-changelog",
+  "version": "3.0.0",
+  "description": "Create GitHub releases from CHANGELOG.md",
+  "keywords": [
+    "changelog",
+    "cli",
+    "cli-app",
+    "git",
+    "github",
+    "history",
+    "npm",
+    "publish",
+    "push",
+    "release",
+    "release notes"
+  ],
+  "license": "MIT",
+  "author": "Maxime Thirouin",
+  "repository": "https://github.com/MoOx/github-release-from-changelog.git",
+  "bin": {
+    "github-release-from-changelog": "github-release-from-changelog.js"
+  },
+  "type": "module",
+  "scripts": {
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "prepare": "husky",
+    "test": "node github-release-from-changelog.js --dryRun",
+    "release": "npx -y npmpub --no-release --skip-test",
+    "postrelease": "node github-release-from-changelog.js"
+  },
+  "dependencies": {
+    "grizzly": "^6.1.0",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "oxfmt": "^0.53.0",
+    "oxlint": "^1.68.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

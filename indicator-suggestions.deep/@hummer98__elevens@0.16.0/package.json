@@ -1,0 +1,60 @@
+{
+  "name": "@hummer98/elevens",
+  "version": "0.16.0",
+  "description": "c11-native multi-agent orchestration package (successor to cmux-team). Spawn, monitor, and coordinate parallel Claude Code sub-agents on Stage 11 Agentics' c11 terminal multiplexer.",
+  "type": "module",
+  "bin": {
+    "elevens": "bin/elevens"
+  },
+  "scripts": {
+    "dev": "bash bin/elevens start",
+    "postinstall": "node bin/postinstall.js",
+    "test:clean": "bash scripts/verify-test-no-pollution.sh"
+  },
+  "files": [
+    "bin/",
+    "skills/cmux-team/SKILL.md",
+    "skills/cmux-team/templates/",
+    "skills/cmux-team/manager/**/*.ts",
+    "skills/cmux-team/manager/**/*.tsx",
+    "!skills/cmux-team/manager/**/*.test.ts",
+    "skills/cmux-team/manager/dashboard-web/**",
+    "skills/cmux-team/manager/package.json",
+    "skills/cmux-team/manager/bun.lock",
+    "skills/cmux-agent-role/",
+    "commands/",
+    ".claude-plugin/",
+    "README.md",
+    "README.ja.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hummer98/elevens.git"
+  },
+  "homepage": "https://github.com/hummer98/elevens",
+  "author": {
+    "name": "hummer98",
+    "url": "https://github.com/hummer98"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "c11",
+    "stage-11-agentics",
+    "multi-agent",
+    "orchestration",
+    "parallel",
+    "claude-code",
+    "cli"
+  ],
+  "dependencies": {
+    "@opencode-ai/sdk": "^1.14.24"
+  }
+}

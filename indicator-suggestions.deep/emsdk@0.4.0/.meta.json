@@ -1,0 +1,84 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "f5961039dd2c4009",
+    "fetchedFiles": [
+      "dist/postinstall.js",
+      "dist/sdk-manager.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "dist/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "fa161859fcd8eb497495e0382c5896877da7622405d3ea17c6142a12968f5760",
+        "sizeBytes": 319,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "dist/sdk-manager.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "dist/sdk-manager.js",
+        "reason": "required by ./dist/postinstall.js",
+        "sha256": "19a8eb9de0e4e177e79d9546e0e6c2ec53c880b5f7bd7105b8a46b4e89bccc1b",
+        "sizeBytes": 9989,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:41.866Z"
+  },
+  "hash": "sha256:02f936ecd0be363600b60ed32b3aa3823738ac429e5ed2a06ce4f8442dff8d0f"
+}

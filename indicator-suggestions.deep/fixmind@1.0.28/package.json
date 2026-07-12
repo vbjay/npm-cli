@@ -1,0 +1,50 @@
+{
+  "name": "fixmind",
+  "version": "1.0.28",
+  "description": "Local-first learning lessons for developers working with AI coding agents.",
+  "type": "module",
+  "homepage": "https://www.fixmind.dev",
+  "keywords": [
+    "fixmind",
+    "mcp",
+    "cli",
+    "learning",
+    "ai",
+    "productivity"
+  ],
+  "bin": {
+    "fixmind": "dist/src/launcher.js"
+  },
+  "files": [
+    "dist/src",
+    "dist/dashboard",
+    "README.md",
+    "docs"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run sync:docs && npm run clean && npm run build:server && npm run build:dashboard && npm run copy:dashboard && npm run chmod:bin",
+    "build:server": "tsc -p tsconfig.json",
+    "build:dashboard": "npm run build -w @fixmind/dashboard",
+    "chmod:bin": "node -e \"require('fs').chmodSync('dist/src/cli.js', 0o755); require('fs').chmodSync('dist/src/launcher.js', 0o755)\"",
+    "copy:dashboard": "node -e \"require('fs').cpSync('../dashboard/dist','dist/dashboard',{recursive:true})\"",
+    "sync:docs": "node scripts/sync-docs.mjs",
+    "test": "npm run build && node --no-warnings --test dist/test/*.test.js",
+    "prepack": "npm run build",
+    "fixmind": "node dist/src/launcher.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.5.1",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "zod": "^4.4.3"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.3"
+  },
+  "license": "MIT"
+}

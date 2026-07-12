@@ -1,0 +1,119 @@
+{
+  "name": "vitest-mobile",
+  "version": "0.4.3",
+  "description": "Run Vitest component tests inside a real React Native app with native touch synthesis",
+  "license": "MIT",
+  "type": "module",
+  "repository": "https://github.com/pzuraq/vitest-mobile",
+  "exports": {
+    ".": {
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js",
+      "require": "./dist/node/index.cjs"
+    },
+    "./runtime": {
+      "types": "./src/runtime/index.ts",
+      "react-native": "./src/runtime/index.ts",
+      "require": "./dist/runtime/index.cjs",
+      "default": "./dist/runtime/index.cjs"
+    },
+    "./vitest-shim": {
+      "types": "./src/runtime/vitest-shim.ts",
+      "react-native": "./src/runtime/vitest-shim.ts",
+      "require": "./dist/runtime/vitest-shim.cjs",
+      "default": "./dist/runtime/vitest-shim.cjs"
+    },
+    "./babel-plugin": {
+      "require": "./dist/babel/test-wrapper-plugin.cjs",
+      "default": "./dist/babel/test-wrapper-plugin.cjs"
+    },
+    "./vitest-compat-plugin": {
+      "require": "./dist/babel/vitest-compat-plugin.cjs",
+      "default": "./dist/babel/vitest-compat-plugin.cjs"
+    },
+    "./inline-app-root-plugin": {
+      "require": "./dist/babel/inline-app-root-plugin.cjs",
+      "default": "./dist/babel/inline-app-root-plugin.cjs"
+    },
+    "./test-context": {
+      "types": "./src/runtime/test-context.ts",
+      "react-native": "./src/runtime/test-context.ts",
+      "require": "./dist/runtime/test-context.cjs",
+      "default": "./dist/runtime/test-context.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "matchers.d.ts",
+  "main": "dist/node/index.cjs",
+  "bin": {
+    "vitest-mobile": "./bin/vitest-mobile.mjs"
+  },
+  "files": [
+    "assets/",
+    "bin/",
+    "dist/",
+    "src/",
+    "ios/",
+    "android/",
+    "matchers.d.ts",
+    "VitestMobileHarness.podspec",
+    "react-native.config.cjs"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run tests/unit tests/integration",
+    "test:unit": "vitest run tests/unit",
+    "test:e2e": "vitest run --config vitest.config.e2e.ts",
+    "prepublishOnly": "npm run build",
+    "prepack": "cp ../../README.md ."
+  },
+  "keywords": [
+    "vitest",
+    "react-native",
+    "testing",
+    "native",
+    "component-testing"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.2.0",
+    "@shopify/restyle": "^2.4.4",
+    "birpc": "^2.3.0",
+    "cac": "^6.7.14",
+    "flatted": "^3.4.2",
+    "glob": "^10.0.0",
+    "picocolors": "^1.1.1",
+    "picomatch": "^4.0.0",
+    "react-native-safe-area-context": ">=4.0.0",
+    "signalium": "^2.4.0",
+    "tinyhighlight": "^0.3.2",
+    "ws": "^8.18.0"
+  },
+  "peerDependencies": {
+    "@vitest/expect": "^4.0.0",
+    "@vitest/runner": "^4.0.0",
+    "@vitest/utils": "^4.0.0",
+    "react": ">=18",
+    "react-native": ">=0.81.5",
+    "vitest": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "@types/picomatch": "^4.0.0",
+    "@types/react": "^19.2.14",
+    "@types/ws": "^8.5.13",
+    "tsup": "^8.5.1",
+    "vitest": "^4.0.0"
+  },
+  "codegenConfig": {
+    "name": "VitestMobileHarnessSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/native",
+    "android": {
+      "javaPackageName": "com.vitestmobileharness"
+    }
+  }
+}

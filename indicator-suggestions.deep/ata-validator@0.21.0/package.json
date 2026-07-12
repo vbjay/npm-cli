@@ -1,0 +1,155 @@
+{
+  "name": "ata-validator",
+  "version": "0.21.0",
+  "description": "JSON Schema validation with first-class TypeScript and zero runtime cost. AOT compile to per-schema ESM modules with zero validator dependency. Generic Validator<T> for TypeBox/Zod/Valibot composition. Optional runtime API. Standard Schema V1 compatible.",
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "browser": {
+        "import": "./index.browser.mjs",
+        "require": "./index.js"
+      },
+      "import": "./index.mjs",
+      "require": "./index.js"
+    },
+    "./compat": {
+      "types": "./compat.d.ts",
+      "import": "./compat.mjs",
+      "require": "./compat.js"
+    },
+    "./build": {
+      "types": "./build.d.ts",
+      "import": "./build.mjs",
+      "require": "./build.js"
+    },
+    "./t": {
+      "types": "./t.d.ts",
+      "import": "./t.mjs",
+      "require": "./t.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "bin": {
+    "ata": "bin/ata.js"
+  },
+  "browser": {
+    "pkg-prebuilds": false,
+    "./lib/native-load.js": "./lib/native-load.browser.js"
+  },
+  "scripts": {
+    "install": "node scripts/install.js",
+    "prepublishOnly": "node scripts/regen-safe-regex-source.js && node scripts/check-prebuilds.js && ATA_ALLOW_DOC_PLACEHOLDERS=1 node scripts/check-doc-coverage.js && node tests/test_error_codes_lock.js && node tests/test_safe_regex_source_sync.js && node tests/test_version_sync.js",
+    "release:check": "node scripts/regen-safe-regex-source.js && node scripts/check-prebuilds.js && node scripts/check-doc-coverage.js && node tests/test_error_codes_lock.js && node tests/test_safe_regex_source_sync.js && node tests/test_version_sync.js",
+    "build": "cmake-js build --target ata",
+    "rebuild": "cmake-js rebuild --target ata",
+    "prebuild": "pkg-prebuilds-copy --baseDir build/Release --source ata.node --name=ata --strip --napi_version=10",
+    "prebuild-all": "npm run prebuild -- --arch x64 && npm run prebuild -- --arch arm64",
+    "test": "node test.js && node tests/test_no_native.js && node tests/test_browser_nofs.js && node tests/test_browser_imports_guard.js && node tests/test_version_sync.js && node tests/test_safe_regex_source_sync.js && node tests/test_t_builder.js && node tests/test_async_refine.js && node tests/test_safe_regex.js && node tests/test_safe_regex_integration.js && node tests/test_aot_build.js && node tests/test_aot_differential.js && node tests/test_aot_cli_build.js && node tests/test_aot_cli_smoke.js && node tests/test_bundle_standalone.js && node tests/test_standalone_anyof.js && node tests/test_standalone_formats.js && node tests/test_aot_additional_props_errors.js && node tests/test_id_anchor_refs.js && node tests/test_typed_validator_runner.js && node tests/test_define_schema.js && node tests/test_error_codes_lock.js && node tests/test_nullable.js && node tests/test_validate_and_parse.js && node tests/test_validate_data.js && node tests/test_enrich_error.js && node tests/test_rich_errors_optout.js && node tests/test_error_messages.js && node tests/test_source_positions.js && node tests/fuzz_positions.js && node tests/test_data_positions.js && node tests/test_render_shared.js && node tests/test_renderers.js && node tests/test_runtime_error_dx.js && node tests/test_aot_error_dx.js && node tests/test_abort_early.js && node tests/test_branch_collapse.js && node tests/test_suggestions.js && node tests/test_cli_validate.js && node tests/test_cli_version.js && node benchmark/bench_aot_size.mjs",
+    "bench:size": "node benchmark/bench_aot_size.mjs",
+    "test:suite": "node tests/run_suite.js",
+    "test:compat": "node tests/test_compat.js",
+    "test:standard-schema": "node tests/test_standard_schema.js",
+    "test:browser": "node tests/test_browser.js",
+    "test:ts": "node tests/test_ts_gen.js",
+    "test:ts-corpus": "node tests/test_ts_corpus.js",
+    "test:ts-differential": "node tests/test_ts_differential.js",
+    "test:typed": "node tests/test_typed_validator_runner.js",
+    "bench": "node benchmark/bench_large.js",
+    "fuzz": "node tests/fuzz_differential.js",
+    "fuzz:long": "FUZZ_ITERATIONS=100000 node tests/fuzz_differential.js",
+    "test:aot": "node tests/test_aot_build.js",
+    "test:aot-differential": "node tests/test_aot_differential.js",
+    "test:aot-cli": "node tests/test_aot_cli_build.js",
+    "test:json-suite": "node tests/run_json_test_suite.js",
+    "bench:aot-vs-ajv": "node benchmark/bench_aot_vs_ajv.mjs"
+  },
+  "keywords": [
+    "json",
+    "json-schema",
+    "schema",
+    "validator",
+    "validation",
+    "fast",
+    "native",
+    "simdjson",
+    "napi",
+    "ajv",
+    "ajv-alternative",
+    "standard-schema",
+    "fastify"
+  ],
+  "author": "Mert Can Altin <mertgold60@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mertcanaltin/ata-validator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mertcanaltin/ata-validator/issues"
+  },
+  "homepage": "https://ata-validator.com",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.browser.mjs",
+    "index.d.ts",
+    "lib/",
+    "compat.js",
+    "compat.mjs",
+    "compat.d.ts",
+    "build.js",
+    "build.mjs",
+    "build.d.ts",
+    "t.js",
+    "t.mjs",
+    "t.d.ts",
+    "binding-options.js",
+    "binding/",
+    "include/",
+    "src/",
+    "deps/",
+    "prebuilds/",
+    "scripts/",
+    "CMakeLists.txt",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.7.0",
+    "node-api-headers": "^1.8.0",
+    "pkg-prebuilds": "^1.0.0"
+  },
+  "peerDependencies": {
+    "yaml": "^2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "yaml": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@sinclair/typebox": "^0.34.49",
+    "@types/node": "^25.8.0",
+    "cmake-js": "^8.0.0",
+    "esbuild": "^0.28.0",
+    "jsonc-parser": "^3.3.1",
+    "mitata": "^1.0.34",
+    "typebox": "^1.1.7",
+    "typescript": "^6.0.3",
+    "valibot": "^1.3.1",
+    "zod": "^4.3.6"
+  },
+  "binary": {
+    "napi_versions": [
+      10
+    ]
+  }
+}

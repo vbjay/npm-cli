@@ -1,0 +1,90 @@
+{
+  "name": "@openforge/capacitor-bloomreach-engagement",
+  "version": "1.0.5",
+  "description": "Capacitor plugin for Bloomreach Engagement (Exponea) SDK integration.",
+  "main": "dist/esm/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/esm/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf ./dist",
+    "find-circular": "madge --circular --extensions ts --ts-config tsconfig.json src",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write \"src/**/*.ts\" \"*.md\"",
+    "validate": "bash ./scripts/validate.sh",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
+  },
+  "author": "OpenForge",
+  "license": "MIT",
+  "peerDependencies": {
+    "@capacitor/core": ">=5.0.0 <9.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@capacitor/android": "^8.0.1",
+    "@capacitor/cli": "^8.0.1",
+    "@capacitor/core": "^8.0.1",
+    "@capacitor/ios": "^8.0.1",
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.0.9",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
+    "@typescript-eslint/parser": "^8.53.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.8.0",
+    "rimraf": "^6.1.2",
+    "typescript": "^5.9.3",
+    "madge": "^6.1.0"
+  },
+  "files": [
+    "dist/",
+    "ios/Plugin/",
+    "android/src/main/",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/proguard-rules.pro",
+    "android/settings.gradle",
+    "OpenforgeCapacitorBloomreachEngagement.podspec"
+  ],
+  "keywords": [
+    "capacitor",
+    "capacitor-plugin",
+    "plugin",
+    "native",
+    "bloomreach",
+    "engagement",
+    "exponea"
+  ],
+  "capacitor": {
+    "ios": {
+      "src": "ios",
+      "name": "OpenforgeCapacitorBloomreachEngagement"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openforge/Capacitor-Bloomreach-Engagement"
+  },
+  "bugs": {
+    "url": "https://github.com/openforge/Capacitor-Bloomreach-Engagement/issues"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{md,json,yml,yaml}": "prettier --write"
+  }
+}

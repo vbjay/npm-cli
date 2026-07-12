@@ -1,0 +1,246 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+import com.android.Version
+import in.juspay.payments.core.ClientConfig
+import groovy.json.JsonSlurper
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://maven.juspay.in/hyper-sdk/" }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'in.juspay:hypersdk.plugin:2.2.10'
+    }
+}
+
+def getRNVersion() {
+    def rootPackageFile = new File(rootDir, "../package.json")
+    if (rootPackageFile.exists()) {
+        try {
+            def json = new JsonSlurper().parse(rootPackageFile)
+            def version = json.dependencies["react-native"] ?: json.devDependencies["react-native"]
+            if (version) {
+                return version.replaceAll(/[\^~]/, "")
+            }
+        } catch (Exception e) {
+            // Ignore parsing errors and continue
+        }
+    }
+
+    def searchPaths = [
+        '../react-native/package.json',
+        '../../react-native/package.json',
+        '../../../react-native/package.json',
+        'node_modules/react-native/package.json',
+        '../node_modules/react-native/package.json',
+        '../../node_modules/react-native/package.json'
+    ]
+
+    for (path in searchPaths) {
+        def packageFile = new File(project.projectDir, path).getCanonicalFile()
+        if (packageFile.exists()) {
+            try {
+                def json = new JsonSlurper().parse(packageFile)
+                def version = json.version
+                if (version) {
+                    if (version == '*' || version.contains('*')) {
+                        return "0.80.0" // Default for wildcard versions
+                    }
+                    return version.replaceAll(/[\^~]/, "")
+                }
+            } catch (Exception e) {
+                // Ignore parsing errors and continue
+            }
+        }
+    }
+    return "0.77.0"
+}
+
+
+def rnVersion = getRNVersion()
+println "Found react native version as ${rnVersion}"
+
+def isNewArchitectureEnabled() {
+    if (rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true") {
+        return true
+    }
+
+    def version = rnVersion.replaceAll(/[^0-9.]/, "")
+    def parts = version.tokenize('.')
+    if (parts.size() < 2) {
+        return false
+    }
+    def major = parts[0] as int
+    def minor = parts[1] as int
+    return (major > 0) || (major == 0 && minor >= 82)
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'hypersdk.plugin'
+
+
+def appProject = rootProject.allprojects.find { it.plugins.hasPlugin('com.android.application') }
+
+if (isNewArchitectureEnabled()) {
+    apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['HyperSdkReact_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['HyperSdkReact_' + name]).toInteger()
+}
+
+android {
+    def agpVersion = Version.ANDROID_GRADLE_PLUGIN_VERSION
+    // Check AGP version for backward compatibility w/react-native versions still on gradle plugin 6
+    if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
+        namespace = "in.juspay.hypersdkreact"
+    }
+
+    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+
+    defaultConfig {
+        minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        buildConfigField "String", "REACT_NATIVE_VERSION", "\"${rnVersion}\""
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+
+if (isNewArchitectureEnabled()) {
+    react {
+        jsRootDir = file("../src/")
+        libraryName = "HyperSdkReact"
+        codegenJavaPackageName = "com.hypersdkreact"
+    }
+}
+
+static def mostRecentVersion(List<String> versions) {
+    return versions.sort(false) { a, b ->
+        [a, b]*.tokenize('-rc')*.join('')*.tokenize('.')*.collect {
+            it as int
+        }.with { u, v ->
+            [u, v].transpose().findResult { x, y -> x <=> y ?: null } ?: v.size() <=> u.size()
+        }
+    }[-1]
+}
+
+static def getHyperSDKVersion(rootProject) {
+    def hyperSdkVersion = '2.2.4-rc.01'
+    if (!rootProject.hasProperty('hyperSDKVersion')) {
+        return hyperSdkVersion
+    }
+    def rootVersion = rootProject.hyperSDKVersion
+    hyperSdkVersion = mostRecentVersion([rootVersion, hyperSdkVersion])
+    if (hyperSdkVersion != rootVersion) {
+        System.out.println("Ignoring the overriden SDK version present in root build.gradle ($rootVersion), as there is a newer version present in the SDK ($hyperSdkVersion).")
+    }
+    return hyperSdkVersion
+}
+
+static def getExcludedMicroSdks(rootProject) {
+    if (!rootProject.hasProperty('excludedMicroSDKs')) {
+        return []
+    }
+    return rootProject.excludedMicroSDKs
+}
+
+static def getClientId(rootProject) {
+    return rootProject.clientId
+}
+
+static def getClientConfigs(rootProject, Project project) {
+    def clientConfigs = rootProject.clientConfigs
+
+    def namedDomainObjectContainer = project.container(ClientConfig) { name ->
+        def clientConfig = new ClientConfig(name)
+
+        // Find the configuration closure for the given name
+        def configClosure = clientConfigs.get(name)
+
+        if (configClosure instanceof Closure) {
+            def configMap = configClosure.call() // Execute the closure
+
+            if (configMap instanceof Map) {
+                if (configMap.containsKey("tenantName")) {
+                    clientConfig.tenantName = configMap.tenantName
+                }
+                if (configMap.containsKey("assetVersion")) {
+                    clientConfig.assetVersion = configMap.assetVersion
+                }
+            }
+        }
+
+        return clientConfig
+    }
+
+    // Iterate and create configs
+    clientConfigs.each { key, configClosure ->
+        if (configClosure instanceof Closure) {
+            def configMap = configClosure.call() // Execute closure
+            if (configMap instanceof Map) {
+                namedDomainObjectContainer.create(key)
+            }
+        }
+    }
+
+    return namedDomainObjectContainer
+}
+
+
+
+dependencies {
+    // For < 0.71, this will be from the local maven repo
+    // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+    //noinspection GradleDynamicVersion
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    compileOnly "in.juspay:hypercheckoutlite:${getHyperSDKVersion(rootProject)}"
+}
+
+hyperSdkPlugin {
+    sdkVersion = getHyperSDKVersion(rootProject)
+    excludedMicroSDKs = getExcludedMicroSdks(rootProject)
+}
+if (rootProject.hasProperty("clientId")) {
+    hyperSdkPlugin.clientId = getClientId(rootProject)
+}
+if (!rootProject.hasProperty("clientId") && rootProject.hasProperty("clientConfigs")) {
+    hyperSdkPlugin.clientConfigs = getClientConfigs(rootProject, project)
+}
+
+if(rootProject.hasProperty('hyperAssetVersion')) {
+    hyperSdkPlugin.assetVersion = rootProject.hyperAssetVersion
+}
+
+if(rootProject.hasProperty('microSDKs')) {
+    hyperSdkPlugin.microSDKs = rootProject.microSDKs
+}

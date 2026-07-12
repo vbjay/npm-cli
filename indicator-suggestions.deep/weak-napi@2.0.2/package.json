@@ -1,0 +1,43 @@
+{
+  "author": "Anna Henningsen <anna@addaleax.net>",
+  "contributors": [
+    "Ben Noordhuis <info@bnoordhuis.nl>",
+    "Nathan Rajlich <nathan@tootallnate.net>"
+  ],
+  "name": "weak-napi",
+  "license": "MIT",
+  "description": "Make weak references to JavaScript Objects.",
+  "keywords": [
+    "weak",
+    "reference",
+    "js",
+    "javascript",
+    "object",
+    "function",
+    "callback",
+    "napi"
+  ],
+  "version": "2.0.2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/node-ffi-napi/weak-napi.git"
+  },
+  "main": "lib/weak.js",
+  "scripts": {
+    "test": "nyc mocha --expose-gc",
+    "install": "node-gyp-build",
+    "prebuild": "prebuildify --napi --tag-armv --tag-uv",
+    "prepack": "prebuildify-ci download && ([ $(ls prebuilds | wc -l) = '5' ] || (echo 'Some prebuilds are missing'; exit 1))"
+  },
+  "dependencies": {
+    "node-addon-api": "^3.0.0",
+    "node-gyp-build": "^4.2.1",
+    "setimmediate-napi": "^1.0.3"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.0",
+    "prebuildify": "^3.0.4",
+    "prebuildify-ci": "^1.0.5"
+  }
+}

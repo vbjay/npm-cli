@@ -1,0 +1,105 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "516c4c647255f23c",
+    "fetchedFiles": [
+      "binding.gyp",
+      "build.sh",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "ad19d74bbef18f1cfeba6e8e495ef1b593c3953e869804687e46d0b109526b19",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `xgboost`  -  C/C++ sources",
+            "items": [
+              "src/index.cc",
+              "src/xgmodel.cc",
+              "src/xgmatrix.cc"
+            ]
+          },
+          {
+            "label": "Target `xgboost`  -  libraries",
+            "items": [
+              "../xgboost/lib/libxgboost.a",
+              "../xgboost/rabit/lib/librabit_empty.a",
+              "../xgboost/dmlc-core/libdmlc.a",
+              "<(OMP)"
+            ]
+          },
+          {
+            "label": "Target `xgboost`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "./xgboost/include/xgboost",
+              "./xgboost/dmlc-core/include",
+              "./xgboost/rabit/include"
+            ]
+          },
+          {
+            "label": "Target `xgboost`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "build.sh",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "fa69086ad54b1e2b981bdc5b8b52a263b3fa123020b3281f3edccc0332dedfaf",
+        "sizeBytes": 332,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:31.841Z"
+  },
+  "hash": "sha256:090c2c1a9372e56a8bc98f459393cddf9d959a5ac10275e6150eb16508521353"
+}

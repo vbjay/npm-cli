@@ -1,0 +1,42 @@
+{
+  "name": "wechat-codex",
+  "version": "0.1.5",
+  "description": "WeChat front-end for your local Codex CLI, powered by a Rust runtime",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monkeyin92/wechat-codex.git"
+  },
+  "homepage": "https://github.com/monkeyin92/wechat-codex#readme",
+  "bugs": {
+    "url": "https://github.com/monkeyin92/wechat-codex/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "wechat-codex": "bin/wechat-codex.cjs"
+  },
+  "files": [
+    "bin/",
+    "scripts/npm/",
+    "README.md",
+    "README_zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/npm/postinstall.cjs",
+    "doctor": "node scripts/npm/doctor.cjs",
+    "release:pack": "node scripts/npm/pack-release.cjs",
+    "release:version-check": "node scripts/npm/verify-version.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "codex",
+    "wechat",
+    "cli",
+    "rust"
+  ]
+}

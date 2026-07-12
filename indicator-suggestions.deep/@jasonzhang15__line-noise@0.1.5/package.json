@@ -1,0 +1,63 @@
+{
+  "name": "@jasonzhang15/line-noise",
+  "version": "0.1.5",
+  "description": "js addon based on c library linenoise used in redis",
+  "author": "JasonZhang",
+  "license": "MIT",
+  "keywords": [
+    "linenoise",
+    "nodejs addon",
+    "c library",
+    "readline",
+    "terminal",
+    "command line",
+    "rust",
+    "neon",
+    "redis"
+  ],
+  "repository": {
+    "url": "https://github.com/zhangzhuang15/JasonPackages/tree/dev/packages/line-noise",
+    "type": "github"
+  },
+  "bugs": {
+    "url": "https://github.com/zhangzhuang15/JasonPackages/issues"
+  },
+  "main": "./lib/index.cjs",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "node": "./lib/index.mjs"
+      },
+      "require": {
+        "node": "./lib/index.cjs"
+      }
+    }
+  },
+  "engines": {
+    "node": ">= v16.15.0"
+  },
+  "packageManager": "npm@8.5.5",
+  "dependencies": {
+    "neon-cli": "^0.10.1"
+  },
+  "peerDependencies": {
+    "@types/node": "^18.16.3"
+  },
+  "scripts": {
+    "install": "neon build --release && cd native && cargo clean",
+    "publish-preview": "npm publish --dry-run",
+    "publish": "npm publish --access public"
+  },
+  "files": [
+    "lib/*",
+    "native/linenoise",
+    "native/Cargo.toml",
+    "native/build.rs",
+    "native/src/*",
+    "native/linenoise",
+    "types/*",
+    "example/*.{config.json,cjs,mjs}",
+    "example/package.json"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "a1d1acde3ec31492",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "8eff0e0f8d9bcf7a325e1236912ceef3fde43790f9620b25f9a7c2c96a4c327a",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `addon`  -  C/C++ sources",
+            "items": [
+              "src/index.cpp",
+              "src/getDeviceList.cpp",
+              "src/escposPrint.cpp"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  libraries",
+            "items": [
+              "setupapi.lib"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  include directories",
+            "items": [
+              "<!(node -e \"require('nan')\")",
+              "src/include"
+            ]
+          },
+          {
+            "label": "Target `addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:16.397Z"
+  },
+  "hash": "sha256:44a28c15df5c5dabd885f0e5fd1c633ffb11875fdc05cb10f2ed7d6eb3e841ac"
+}

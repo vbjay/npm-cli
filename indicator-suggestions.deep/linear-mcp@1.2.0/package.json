@@ -1,0 +1,73 @@
+{
+  "name": "linear-mcp",
+  "version": "1.2.0",
+  "description": "An MCP server for interacting with Linear's API, providing tools for managing issues, projects, and teams",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvcrn/linear-mcp.git"
+  },
+  "main": "build/index.js",
+  "type": "module",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest --testMatch '**/*.integration.test.ts'",
+    "get-test-tokens": "node --loader ts-node/esm scripts/get-test-tokens.ts",
+    "test:oauth": "node --loader ts-node/esm scripts/test-oauth.ts",
+    "prepare": "npm run build",
+    "build": "tsc && chmod +x build/index.js",
+    "start": "node build/index.js",
+    "dev": "nodemon --watch src --ext ts --exec \"npm run build && npm start\""
+  },
+  "keywords": [
+    "linear",
+    "mcp",
+    "model-context-protocol",
+    "cline",
+    "issue-tracking",
+    "project-management"
+  ],
+  "author": "ModelContextProtocol",
+  "license": "MIT",
+  "files": [
+    "build/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.10",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "open": "^10.1.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@linear/sdk": "^38.0.0",
+    "@modelcontextprotocol/sdk": "^1.4.0",
+    "graphql": "^16.10.0",
+    "graphql-tag": "^2.12.6"
+  }
+}

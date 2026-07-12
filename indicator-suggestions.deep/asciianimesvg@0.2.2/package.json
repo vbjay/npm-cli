@@ -1,0 +1,58 @@
+{
+  "name": "asciianimesvg",
+  "version": "0.2.2",
+  "description": "ASCII art to animated SVG converter",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "Yein Sung",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syi0808/asciianimesvg.git"
+  },
+  "homepage": "https://github.com/syi0808/asciianimesvg#readme",
+  "keywords": [
+    "ascii",
+    "svg",
+    "animation",
+    "wasm",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "asciianimesvg": "./bin/cli.cjs"
+  },
+  "main": "./pkg/asciianimesvg_wasm.js",
+  "types": "./pkg/asciianimesvg_wasm.d.ts",
+  "exports": {
+    ".": {
+      "types": "./pkg/asciianimesvg_wasm.d.ts",
+      "default": "./pkg/asciianimesvg_wasm.js"
+    },
+    "./wasm": {
+      "types": "./pkg/asciianimesvg_wasm.d.ts",
+      "default": "./pkg/asciianimesvg_wasm.js"
+    }
+  },
+  "files": [
+    "bin/",
+    "pkg/asciianimesvg_wasm_bg.wasm",
+    "pkg/asciianimesvg_wasm.js",
+    "pkg/asciianimesvg_wasm.d.ts",
+    "pkg/asciianimesvg_wasm_bg.wasm.d.ts",
+    "postinstall.cjs"
+  ],
+  "scripts": {
+    "postinstall": "node ./postinstall.cjs",
+    "release": "pubm"
+  },
+  "optionalDependencies": {
+    "asciianimesvg-darwin-arm64": "0.1.0",
+    "asciianimesvg-darwin-x64": "0.1.0",
+    "asciianimesvg-linux-arm64": "0.1.0",
+    "asciianimesvg-linux-x64": "0.1.0",
+    "asciianimesvg-windows-x64": "0.1.0"
+  },
+  "devDependencies": {}
+}

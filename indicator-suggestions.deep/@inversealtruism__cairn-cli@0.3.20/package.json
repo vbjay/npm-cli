@@ -1,0 +1,48 @@
+{
+  "name": "@inversealtruism/cairn-cli",
+  "version": "0.3.20",
+  "description": "CLI for Compute Substrate / Cairn — browse the board/wall/network, and send CSD, propose, attest, and place stones non-custodially by driving your own installed `csd` wallet (cairn never holds your key; works node-less via the Cairn proxy).",
+  "type": "module",
+  "bin": {
+    "cairn": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InverseAltruism/cairn-cli.git"
+  },
+  "homepage": "https://cairn-substrate.com",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "npm run build && node test/security.mjs && node test/cairnx.mjs && node test/e2e.mjs",
+    "prepare": "npm run clean && tsc",
+    "prepublishOnly": "npm run clean && tsc"
+  },
+  "keywords": [
+    "cairn",
+    "compute-substrate",
+    "cli"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@inversealtruism/cairnx-core": "0.1.36",
+    "@inversealtruism/csd-codec": "0.1.15",
+    "@inversealtruism/csd-registry": "0.1.16"
+  }
+}

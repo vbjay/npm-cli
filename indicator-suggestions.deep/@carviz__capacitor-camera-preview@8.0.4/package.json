@@ -1,0 +1,86 @@
+{
+  "name": "@carviz/capacitor-camera-preview",
+  "version": "8.0.4",
+  "description": "Fork of the capacitor-community/camera-preview plugin focusing on high resolution photos without bloating up the code.",
+  "type": "module",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "scripts": {
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS && cd ..",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "npm run build",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
+    "clean": "rimraf './dist'",
+    "watch": "tsc --watch",
+    "lint": "concurrently -g \"npm:eslint\" \"npm:prettier -- --check\" \"npm run swiftlint -- lint ios\"",
+    "fmt": "concurrently -g \"npm:eslint -- --fix\" \"npm:prettier -- --write\" \"npm:swiftlint -- lint --fix --format ios\"",
+    "eslint": "eslint . --ext ts",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\" --plugin=prettier-plugin-java",
+    "swiftlint": "node-swiftlint",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky && npm run build"
+  },
+  "author": "Evan Barberousse",
+  "license": "MIT",
+  "devDependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0",
+    "@ionic/eslint-config": "^0.4.0",
+    "@ionic/prettier-config": "^4.0.0",
+    "@ionic/swiftlint-config": "^2.0.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.2",
+    "prettier-plugin-java": "^2.7.7",
+    "pretty-quick": "^4.2.2",
+    "rimraf": "^6.1.0",
+    "rollup": "^4.53.2",
+    "swiftlint": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=8.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "files": [
+    "dist/",
+    "ios/",
+    "android/",
+    "CarvizCapacitorCameraPreview.podspec"
+  ],
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native"
+  ],
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GetCarviz/capacitor-camera-preview"
+  },
+  "bugs": {
+    "url": "https://github.com/GetCarviz/capacitor-camera-preview/issues"
+  }
+}

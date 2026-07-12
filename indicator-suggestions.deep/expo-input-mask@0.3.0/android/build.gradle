@@ -1,0 +1,53 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+group = 'expo.modules.inputmask'
+version = '0.3.0'
+
+buildscript {
+  def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+  if (expoModulesCorePlugin.exists()) {
+    apply from: expoModulesCorePlugin
+    applyKotlinExpoModulesCorePlugin()
+  }
+}
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+if (expoModulesCorePlugin.exists()) {
+  apply from: expoModulesCorePlugin
+  applyKotlinExpoModulesCorePlugin()
+}
+
+android {
+  namespace "expo.modules.inputmask"
+  compileSdkVersion safeExtGet("compileSdkVersion", 34)
+
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 23)
+    targetSdkVersion safeExtGet("targetSdkVersion", 34)
+  }
+
+  // Pin the JVM locale for unit tests so CI output doesn't drift with the
+  // developer shell's locale. All test cases pass locale explicitly, but
+  // Locale.getDefault() fallbacks elsewhere stay deterministic.
+  testOptions {
+    unitTests.all {
+      systemProperty 'user.language', 'en'
+      systemProperty 'user.country', 'US'
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation 'com.redmadrobot:input-mask-android:7.2.4'
+
+  testImplementation 'junit:junit:4.13.2'
+}

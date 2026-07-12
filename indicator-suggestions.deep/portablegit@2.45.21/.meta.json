@@ -1,0 +1,108 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4636a47694cf3d25",
+    "fetchedFiles": [
+      "out/post-install.bat",
+      "package.json",
+      "scripts.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "execa",
+        "versionSpec": "^9.1.0"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "execa@9.6.1"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "66d79ecf2ecb919e2cfcc146f94f77595105394637f6ad6aca4c17530fa03625",
+        "sizeBytes": 2436,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "binary-download",
+          "runtime-installer",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "out/post-install.bat"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/git-for-windows/git/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "out/post-install.bat",
+        "reason": "required by ./scripts.js",
+        "sha256": "d2c5fabe6476352f00b78f4a2b6d28a0f7aeb2cd49703a75cb9cf2eab2570035",
+        "sizeBytes": 2215,
+        "signals": [
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://technet.microsoft.com/en-us/library/bb490909.aspx",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:52.550Z"
+  },
+  "hash": "sha256:7e9eb1679d94551a13d645acf2ffd996dc22db71d4e6ce9c382544728e73bf26"
+}

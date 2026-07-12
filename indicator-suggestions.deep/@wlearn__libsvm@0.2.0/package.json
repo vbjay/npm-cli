@@ -1,0 +1,59 @@
+{
+  "name": "@wlearn/libsvm",
+  "version": "0.2.0",
+  "description": "LIBSVM v3.37 compiled to WebAssembly -- SVM classification, regression, and novelty detection in browsers and Node.js",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "exports": {
+    ".": {
+      "require": "./src/index.js",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "src/",
+    "wasm/",
+    "dist/",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node test/test.js",
+    "build": "bash scripts/build-wasm.sh",
+    "verify": "bash scripts/verify-exports.sh",
+    "build:browser": "bash scripts/build-browser.sh",
+    "prepack": "node scripts/prepack.js",
+    "prepublishOnly": "node scripts/prepublish.js"
+  },
+  "keywords": [
+    "libsvm",
+    "svm",
+    "kernel",
+    "machine-learning",
+    "wasm",
+    "webassembly",
+    "wlearn"
+  ],
+  "author": "Anton Zemlyansky",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wlearn-org/libsvm-wasm.git"
+  },
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@wlearn/core": "0.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.3",
+    "playwright": "^1.58.2"
+  },
+  "bugs": {
+    "url": "https://github.com/wlearn-org/libsvm-wasm/issues"
+  },
+  "homepage": "https://wlearn.org"
+}

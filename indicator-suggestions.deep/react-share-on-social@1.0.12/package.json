@@ -1,0 +1,92 @@
+{
+  "name": "react-share-on-social",
+  "description": "Native sharing using the Web Share API if supported, a beautiful fallback if not.",
+  "author": "Karl Sellergren",
+  "version": "1.0.12",
+  "license": "MIT",
+  "repository": "sakerhetspolisen/react-share-on-social",
+  "module": "dist/react-share-on-social.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build && filesize",
+    "lint": "tsdx lint ./src",
+    "prepare": "tsdx build && filesize",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepublishOnly": "tsdx build"
+  },
+  "dependencies": {
+    "copy-to-clipboard": "^3.3.1"
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "devDependencies": {
+    "@ampproject/filesize": "^4.3.0",
+    "@babel/core": "^7.13.16",
+    "@size-limit/preset-small-lib": "^8.2.4",
+    "@storybook/addon-essentials": "^7.0.7",
+    "@storybook/addon-knobs": "^7.0.2",
+    "@storybook/addon-links": "^7.0.7",
+    "@storybook/addon-storysource": "^7.0.7",
+    "@storybook/addons": "^7.0.7",
+    "@storybook/react": "^7.0.7",
+    "@storybook/react-webpack5": "^7.0.7",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "babel-loader": "^9.1.2",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "size-limit": "^8.2.4",
+    "storybook": "^7.0.7",
+    "ts-loader": "^9.1.0",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.2.0",
+    "typescript": "^5.0.4"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "endOfLine": "auto"
+  },
+  "filesize": {
+    "track": [
+      "./dist/*.production.min.js"
+    ]
+  },
+  "size-limit": [
+    {
+      "path": "dist/react-multi-select-component.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/react-multi-select-component.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "keywords": [
+    "react",
+    "share",
+    "social-share",
+    "web-share",
+    "native",
+    "fallback",
+    "polyfill",
+    "component",
+    "tiny",
+    "lightweight",
+    "copy-to-clipboard"
+  ]
+}

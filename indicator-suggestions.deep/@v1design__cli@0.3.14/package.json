@@ -1,0 +1,61 @@
+{
+  "name": "@v1design/cli",
+  "version": "0.3.14",
+  "type": "module",
+  "description": "v-1.design CLI, local agent connector, and bundled Codex/Claude skill.",
+  "license": "MIT",
+  "homepage": "https://v-1.design/integrate",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umeranjum17/v1design-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/umeranjum17/v1design-cli/issues"
+  },
+  "keywords": [
+    "v-1.design",
+    "v1design",
+    "cli",
+    "agent",
+    "mcp",
+    "codex",
+    "claude",
+    "cursor",
+    "design-to-code"
+  ],
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "README.md",
+    "RECIPE.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "v1design": "bin/cli.mjs",
+    "v1design-agent": "bin/agent.mjs"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check:bin": "node bin/cli.mjs help && node bin/agent.mjs help",
+    "check:pack-install": "node scripts/check-packed-install.mjs",
+    "prepack": "npm run typecheck && npm run check:bin"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "dotenv": "^17.4.2",
+    "picocolors": "^1.1.1",
+    "tsx": "^4.22.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

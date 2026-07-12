@@ -1,0 +1,70 @@
+{
+  "name": "@react-native-firebase/database",
+  "version": "25.1.0",
+  "author": "Invertase <oss@invertase.io> (http://invertase.io)",
+  "description": "React Native Firebase - The Firebase Realtime Database is a cloud-hosted database. Data is stored as JSON and synchronized in realtime to every connected client. React Native Firebase provides native integration with the Android & iOS Firebase SDKs, supporting both realtime data sync and offline capabilities.",
+  "main": "./dist/module/index.js",
+  "types": "./dist/typescript/lib/index.d.ts",
+  "scripts": {
+    "build": "genversion --esm --semi lib/version.ts",
+    "build:clean": "rimraf android/build && rimraf ios/build",
+    "compile": "bob build",
+    "prepare": "yarn run build && yarn compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/invertase/react-native-firebase/tree/main/packages/database"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "react",
+    "react-native",
+    "firebase",
+    "realtime",
+    "database",
+    "synchronized",
+    "realtome database"
+  ],
+  "peerDependencies": {
+    "@react-native-firebase/app": "25.1.0"
+  },
+  "devDependencies": {
+    "react-native-builder-bob": "^0.41.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "exports": {
+    ".": {
+      "source": "./lib/index.ts",
+      "types": "./dist/typescript/lib/index.d.ts",
+      "default": "./dist/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "react-native-builder-bob": {
+    "source": "lib",
+    "output": "dist",
+    "exclude": "**/*.d.ts",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "tsc": "../../node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ],
+  "gitHead": "e0a565d8a73a9b103d140ffacfb8876b30d8bdc5"
+}

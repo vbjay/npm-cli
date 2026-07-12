@@ -1,0 +1,71 @@
+{
+	"author": "Vlad Bokov <vladimir.bokov@fresha.com>",
+	"name": "@vlad-fresha/segfault-raub",
+	"version": "2.10.0",
+	"description": "Catches SIGSEGV and prints diagnostic information",
+	"main": "index.js",
+	"exports": {
+		".": {
+			"import": "./index.mjs",
+			"require": "./index.js",
+			"types": "./index.d.ts"
+		}
+	},
+	"types": "index.d.ts",
+	"license": "MIT, BSD-3-Clause, BSD-2-Clause",
+	"keywords": [
+		"headers",
+		"include",
+		"events",
+		"utils",
+		"c++",
+		"addon",
+		"bindings",
+		"native",
+		"napi",
+		"gyp"
+	],
+	"files": [
+		"index.js",
+		"index.d.ts",
+		"index.mjs",
+		"LICENSE",
+		"LICENSE_node-segfault-handler",
+		"package.json",
+		"README.md",
+		"binding-options.js",
+		"prebuilds",
+		"binding.gyp",
+		"src"
+	],
+	"scripts": {
+		"install": "pkg-prebuilds-verify ./binding-options.js || node-gyp rebuild",
+		"build": "node-gyp build",
+		"rebuild": "node-gyp clean configure build",
+		"eslint": "eslint .",
+		"eslint:fix": "eslint --fix .",
+		"test": "node --test --watch .",
+		"test-ci": "node --test",
+		"typecheck": "tsc --noEmit --strict index.d.ts"
+	},
+	"engines": {
+		"node": ">=20.3.0",
+		"npm": ">=10.8.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/vlad-fresha/segfault-raub.git"
+	},
+	"dependencies": {
+		"node-addon-api": "^8.5.0",
+		"node-gyp": "^11.4.2",
+		"pkg-prebuilds": "^1.0.0"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.3.0",
+		"@types/node": "^20.12.13",
+		"eslint": "^9.3.0",
+		"typescript": "^5.4.5"
+	},
+	"packageManager": "npm@10.8.2"
+}

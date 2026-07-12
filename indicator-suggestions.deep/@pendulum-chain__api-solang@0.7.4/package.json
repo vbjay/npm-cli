@@ -1,0 +1,76 @@
+{
+  "name": "@pendulum-chain/api-solang",
+  "version": "0.7.4",
+  "description": "Interface to interact with smart contracts compiled via Solang",
+  "main": "build/esm/index.js",
+  "packageManager": "yarn@4.5.0+sha512.837566d24eec14ec0f5f1411adb544e892b3454255e61fdef8fd05f3429480102806bac7446bc9daff3896b01ae4b62d00096c7e989f1596f2af10b927532f39",
+  "devDependencies": {
+    "@polkadot/api": "^13.2.1",
+    "@polkadot/api-contract": "^13.2.1",
+    "@polkadot/keyring": "^13.1.1",
+    "@polkadot/types": "^13.2.1",
+    "@polkadot/types-codec": "^13.2.1",
+    "@polkadot/util": "^13.1.1",
+    "@polkadot/util-crypto": "^13.1.1",
+    "@types/node": "^20.6.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "prettier": "^3.3.3",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "@polkadot/api": "^13.2",
+    "@polkadot/api-contract": "^13.2",
+    "@polkadot/keyring": "*",
+    "@polkadot/types": "^13.2",
+    "@polkadot/types-codec": "^13.2",
+    "@polkadot/util": "*",
+    "@polkadot/util-crypto": "*"
+  },
+  "type": "module",
+  "types": "./build/types/index.d.ts",
+  "scripts": {
+    "clean": "rimraf build",
+    "prepublishOnly": "npm run build",
+    "simplyPublish": "npm publish --workspace @pendulum-chain/api-solang --access public",
+    "compile": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json ./tsconfig.types.json",
+    "build": "npm run clean && npm run compile",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pendulum-chain/api-solang.git"
+  },
+  "keywords": [
+    "Solang",
+    "wasm",
+    "smart",
+    "contracts",
+    "Polkadot",
+    "Substrate"
+  ],
+  "author": "Pendulum",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/pendulum-chain/api-solang/issues"
+  },
+  "homepage": "https://github.com/pendulum-chain/api-solang#readme",
+  "exports": {
+    ".": {
+      "types": "./build/types/index.d.ts",
+      "require": "./build/cjs/index.js",
+      "import": "./build/esm/index.js",
+      "default": "./build/esm/index.js"
+    },
+    "./*": {
+      "types": "./build/types/*.d.ts",
+      "require": "./build/cjs/*.js",
+      "import": "./build/esm/*.js",
+      "default": "./build/esm/*.js"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,css,md}": "prettier --write"
+  }
+}

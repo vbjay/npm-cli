@@ -1,0 +1,47 @@
+{
+  "name": "braincode",
+  "version": "0.2.1",
+  "private": false,
+  "description": "A local-first code knowledge brain with CLI and MCP interfaces for AI coding agents.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/src",
+    "README.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "braincode": "./dist/src/main.js"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "tsx src/main.ts",
+    "cli": "tsx src/main.ts",
+    "serve": "tsx src/main.ts serve",
+    "prepack": "npm run build",
+    "smoke:mcp": "node scripts/smoke-mcp.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "commander": "^13.1.0",
+    "gray-matter": "^4.0.3",
+    "yaml": "^2.8.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

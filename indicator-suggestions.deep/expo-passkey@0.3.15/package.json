@@ -1,0 +1,191 @@
+{
+  "name": "expo-passkey",
+  "version": "0.3.15",
+  "description": "Passkey authentication for Expo apps with Better Auth integration",
+  "type": "module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "android",
+    "ios",
+    "ExpoPasskeyModule.podspec",
+    "LICENSE",
+    "README.md",
+    "expo-module.config.json"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
+    "type-check": "tsc --noEmit",
+    "test": "expo-module test",
+    "test:client": "jest --selectProjects client",
+    "test:server": "jest --selectProjects server",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "require": "./build/index.js"
+    },
+    "./native": {
+      "types": "./build/index.native.d.ts",
+      "import": "./build/index.native.js",
+      "require": "./build/index.native.js"
+    },
+    "./web": {
+      "types": "./build/index.web.d.ts",
+      "import": "./build/index.web.js",
+      "require": "./build/index.web.js"
+    },
+    "./server": {
+      "types": "./build/server/index.d.ts",
+      "import": "./build/server/index.js",
+      "require": "./build/server/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "server": [
+        "./build/server/index.d.ts"
+      ],
+      "native": [
+        "./build/index.native.d.ts"
+      ],
+      "web": [
+        "./build/index.web.d.ts"
+      ]
+    }
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-passkey",
+    "ExpoPasskeyModule",
+    "passkey",
+    "biometric",
+    "authentication",
+    "better-auth",
+    "face-id",
+    "touch-id",
+    "fingerprint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iosazee/expo-passkey.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iosazee/expo-passkey/issues"
+  },
+  "author": "Zee Mudia <zee@zeemudia.com> (https://github.com/iosazee)",
+  "license": "MIT",
+  "homepage": "https://github.com/iosazee/expo-passkey#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@jest/globals": "^30.0.0",
+    "@simplewebauthn/browser": "^13.1.0",
+    "@simplewebauthn/server": "^13.1.1",
+    "@simplewebauthn/types": ">=12.0.0",
+    "@testing-library/react-native": "^13.2.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.3",
+    "@types/react": "~18.3.12",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
+    "better-auth": "^1.6.11",
+    "better-call": "^1.0.9",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-config-universe": "^15.0.3",
+    "eslint-plugin-jest": "^29.0.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "expo": "~53.0.11",
+    "expo-application": "^6.1.4",
+    "expo-crypto": "^14.1.5",
+    "expo-device": "^7.1.4",
+    "expo-local-authentication": "^16.0.4",
+    "expo-module-scripts": "^4.1.7",
+    "expo-modules-core": "2.4.0",
+    "expo-secure-store": "^14.2.3",
+    "globals": "^16.3.0",
+    "jest": "^30.0.0",
+    "jest-expo": "^53.0.7",
+    "react-native": "0.76.0",
+    "react-test-renderer": "^18.3.1",
+    "ts-jest": "^29.3.2",
+    "typescript": "^5.0.0",
+    "zod": "^3.25.0"
+  },
+  "peerDependencies": {
+    "@better-auth/expo": ">=1.0.0",
+    "@better-fetch/fetch": ">=1.0.0",
+    "@simplewebauthn/server": ">=13.0.0",
+    "better-auth": ">=1.0.0",
+    "better-call": ">=1.0.0",
+    "expo": ">=50.0.0",
+    "expo-application": ">=5.0.0",
+    "expo-crypto": ">=12.0.0",
+    "expo-device": ">=5.0.0",
+    "expo-local-authentication": ">=13.0.0",
+    "expo-secure-store": ">=12.0.0",
+    "react": ">=18.3.1",
+    "react-native": "*",
+    "zod": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "expo": {
+      "optional": true
+    },
+    "expo-application": {
+      "optional": true
+    },
+    "expo-crypto": {
+      "optional": true
+    },
+    "expo-device": {
+      "optional": true
+    },
+    "expo-local-authentication": {
+      "optional": true
+    },
+    "expo-secure-store": {
+      "optional": true
+    },
+    "@better-auth/expo": {
+      "optional": true
+    },
+    "@better-fetch/fetch": {
+      "optional": true
+    },
+    "better-auth": {
+      "optional": true
+    },
+    "better-call": {
+      "optional": true
+    },
+    "@simplewebauthn/server": {
+      "optional": true
+    },
+    "@simplewebauthn/browser": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  }
+}

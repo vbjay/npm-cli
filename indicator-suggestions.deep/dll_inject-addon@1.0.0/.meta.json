@@ -1,0 +1,90 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "293fd4cd8e473d2c",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "999470660c094391db78681e5880cfc9dfd8e73ef66616ff10448747da799673",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `chrome_inject_addon`  -  C/C++ sources",
+            "items": [
+              "addon/chrome_inject_addon.cpp",
+              "src/syscalls.cpp",
+              "src/reflective_loader.c",
+              "src/syscall_trampoline_x64.asm"
+            ]
+          },
+          {
+            "label": "Target `chrome_inject_addon`  -  libraries",
+            "items": [
+              "Rpcrt4.lib",
+              "shell32.lib",
+              "version.lib",
+              "bcrypt.lib",
+              "ole32.lib",
+              "oleaut32.lib",
+              "comsuppw.lib",
+              "Crypt32.lib"
+            ]
+          },
+          {
+            "label": "Target `chrome_inject_addon`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "src",
+              "libs/chacha",
+              "libs/sqlite"
+            ]
+          },
+          {
+            "label": "Target `chrome_inject_addon`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:03:38.677Z"
+  },
+  "hash": "sha256:cfc71460efab2cae2d27b2f7c01c62b1a98771a017ff21dc886aaaff273ae2c9"
+}

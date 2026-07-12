@@ -1,0 +1,92 @@
+{
+	"name": "@vnaidin/react-native-cryptocurrency-icons",
+	"version": "0.0.31",
+	"description": "React Native cryptocurrency icons as PNG components",
+	"license": "CC0-1.0",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/vnaidin/react-native-cryptocurrency-icons.git"
+	},
+	"homepage": "https://vnaidin.github.io/react-native-cryptocurrency-icons",
+	"author": "Vladyslav Naidin <vladyslav.naidin.dev@gmail.com>",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./web": {
+			"require": "./dist/web.js",
+			"import": "./dist/web.js",
+			"types": "./dist/web.d.ts"
+		}
+	},
+	"files": [
+		"icons/128",
+		"dist"
+	],
+	"keywords": [
+		"cryptocurrency",
+		"crypto",
+		"icons",
+		"icon",
+		"currency",
+		"currencies",
+		"cryptocurrencies",
+		"symbols",
+		"png",
+		"color",
+		"coin",
+		"coins",
+		"bitcoin",
+		"btc",
+		"ethereum",
+		"eth",
+		"flat-icons",
+		"altcoin",
+		"altcoins",
+		"icon-pack",
+		"icon-set",
+		"token",
+		"tokens",
+		"erc20-tokens",
+		"erc20",
+		"erc721",
+		"react-native",
+		"react",
+		"mobile",
+		"wallet",
+		"blockchain",
+		"defi"
+	],
+	"scripts": {
+		"build": "tsc && tsc -p tsconfig.web.json",
+		"build:rn": "tsc",
+		"build:web": "tsc -p tsconfig.web.json",
+		"prepare": "husky",
+		"publish:npm": "npm publish --access public",
+		"generate": "node scripts/generate.js && node scripts/check-icons.js",
+		"check": "node scripts/check-icons.js",
+		"generateDoc": "node scripts/generate-html-gallery.js",
+		"deploy:docs": "npm run generateDoc && npx gh-pages -d docs"
+	},
+	"devDependencies": {
+		"@types/react": "^19.1.10",
+		"@types/react-native": "^0.72.8",
+		"alpha-sort": "^2.0.1",
+		"coinlist": "^3.1.2",
+		"get-svg-colors": "^1.5.1",
+		"husky": "^9.1.7",
+		"sharp": "^0.34.5",
+		"typescript": "^5.9.2"
+	},
+	"peerDependencies": {
+		"react": "*",
+		"react-native": "*"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	}
+}

@@ -1,0 +1,62 @@
+{
+  "name": "tonelisten-react-native",
+  "version": "1.0.65",
+  "description": "ToneListen React Native Framework - Audio tone detection for React Native apps",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "lib/index.js",
+  "scripts": {
+    "build": "tsc && cp src/frequency_tables.json lib/frequency_tables.json",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "audio",
+    "tone-detection",
+    "dtmf",
+    "goertzel",
+    "tone-recognition",
+    "frequency-detection"
+  ],
+  "author": "ToneTelegenics",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonetelegenics/tonelisten-react-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tonetelegenics/tonelisten-react-native/issues"
+  },
+  "homepage": "https://github.com/tonetelegenics/tonelisten-react-native#readme",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.60.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-native": "^0.72.8",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint": "^8.54.0",
+    "jest": "^29.7.0",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@react-native-community/geolocation": "^3.4.0",
+    "react-native-audio-recorder-player": "^3.5.3",
+    "react-native-permissions": "^4.1.0"
+  },
+  "files": [
+    "lib/**/*",
+    "src/**/*",
+    "ios/**/*",
+    "android/**/*",
+    "ToneListenReactNative.podspec",
+    "react-native.config.js",
+    "README.md",
+    "LICENSE"
+  ]
+}

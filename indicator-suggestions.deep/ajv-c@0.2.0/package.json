@@ -1,0 +1,67 @@
+{
+  "name": "ajv-c",
+  "version": "0.2.0",
+  "description": "A high-performance, spec-correct JSON Schema validator written in C++",
+  "main": "npm/index.js",
+  "gypfile": "npm/binding.gyp",
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "scripts": {
+    "install": "prebuild-install || (test -d third_party/simdjson || ./npm/scripts/build-simdjson.sh) && node-gyp rebuild",
+    "prebuild": "node npm/scripts/create-binding-symlink.js && prebuildify --napi --strip",
+    "prebuild:all": "prebuildify --napi --all",
+    "test": "node npm/test.js",
+    "test:cpp": "make test",
+    "benchmark": "make test_benchmark"
+  },
+  "keywords": [
+    "json-schema",
+    "validator",
+    "json",
+    "schema",
+    "validation",
+    "c++",
+    "high-performance",
+    "draft-07",
+    "draft-2019-09",
+    "draft-2020-12",
+    "native",
+    "addon"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergTogul/ajvc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SergTogul/ajvc/issues"
+  },
+  "homepage": "https://github.com/SergTogul/ajvc#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0",
+    "prebuildify": "^5.0.0",
+    "prebuild-install": "^7.0.0"
+  },
+  "files": [
+    "npm/",
+    "src/",
+    "include/",
+    "prebuilds/",
+    "README.md",
+    "LICENSE"
+  ]
+}

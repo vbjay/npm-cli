@@ -1,0 +1,85 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "4e212d83e558a998",
+    "fetchedFiles": [
+      "android/build.gradle",
+      "package.json",
+      "scripts/setup.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "android/build.gradle",
+        "label": "Android native module",
+        "sha256": "8cc9ea81180a71429a9f00b5f91b4ab032ed2951f74034f9dc3aefc27e7d824a",
+        "parseError": null,
+        "signals": [
+          "android-native"
+        ],
+        "groups": [
+          {
+            "label": "Android SDK configuration",
+            "items": [
+              "compileSdkVersion 33",
+              "minSdkVersion 24",
+              "targetSdkVersion 33"
+            ]
+          },
+          {
+            "label": "Android dependencies",
+            "items": [
+              "com.facebook.react:react-native:+",
+              "com.arthenica:smart-exception-java:0.2.1"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/setup.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "f4ee303a97543790ea1cb64d3ac06dcc45e03d399b4a3f9f0ad4f10ee775aeea",
+        "sizeBytes": 2928,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://raw.githubusercontent.com/Nikhil-Cephei/ffmpeg-kit-rn-full-gpl/main/android/ffmpeg-kit-full-gpl.aar",
+            "classification": "unknown"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:34.243Z"
+  },
+  "hash": "sha256:0742fc7e6401e36bdc20bbf3eed3c83b4a0b684f8afcda4bca3421569098d861"
+}

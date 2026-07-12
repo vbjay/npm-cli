@@ -1,0 +1,79 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+buildscript {
+    def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+    if (expoModulesCorePlugin.exists()) {
+        apply from: expoModulesCorePlugin
+        applyKotlinExpoModulesCorePlugin()
+    }
+}
+
+group = 'expo.modules.osmsdk'
+version = '0.1.0'
+
+// Simple helper that allows the root project to override versions
+ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+// It is best practice to declare repositories in the root project's settings.gradle file.
+// However, adding it here will resolve the dependencies for this specific module.
+repositories {
+    mavenCentral()
+    // Required to fetch expo-modules-core
+    maven {
+        url 'https://www.jitpack.io'
+    }
+}
+
+android {
+    namespace "expo.modules.osmsdk"
+    compileSdkVersion safeExtGet("compileSdkVersion", 35)
+
+    defaultConfig {
+        minSdkVersion safeExtGet("minSdkVersion", 21)
+        targetSdkVersion safeExtGet("targetSdkVersion", 35)
+        versionCode 1
+        versionName "1.0"
+    }
+
+    // Flexible Java version with fallback support
+    def javaVersion = JavaVersion.VERSION_11
+    if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
+        javaVersion = JavaVersion.VERSION_17
+    }
+
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
+    kotlinOptions {
+        jvmTarget = javaVersion.toString()
+    }
+
+    // Creating sources with comments for publishing
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+}
+
+dependencies {
+    implementation project(':expo-modules-core')
+    
+    // Use Kotlin version from root project or fallback to compatible version
+    def kotlinVersion = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : "1.9.22"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    
+    // MapLibre GL Native for Android - Fetched from mavenCentral
+    implementation 'org.maplibre.gl:android-sdk:11.8.8'  // Valid version from Maven Central
+    
+    // Android support libraries (minimum versions for React Native 0.81 / Expo SDK 54)
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.core:core-ktx:1.13.1'
+}

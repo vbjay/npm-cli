@@ -1,0 +1,68 @@
+{
+  "name": "letmecode",
+  "version": "0.1.26",
+  "description": "Terminal AI usage dashboard for Codex, Claude, Copilot, and Antigravity.",
+  "author": "Devforth (https://devforth.io)",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.2",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "bin": {
+    "letmecode": "./bin/letmecode.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devforth/letmecode.git"
+  },
+  "homepage": "https://github.com/devforth/letmecode#readme",
+  "bugs": {
+    "url": "https://github.com/devforth/letmecode/issues"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "ink-app/dist",
+    "ink-app/package.json"
+  ],
+  "engines": {
+    "node": ">=14.16"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true }); require('node:fs').rmSync('ink-app/dist', { recursive: true, force: true });\"",
+    "build": "npm run clean && tsc -p tsconfig.json && tsc -p ink-app/tsconfig.json",
+    "prepack": "npm run build",
+    "prestart": "npm run build",
+    "start": "node ./bin/letmecode.js",
+    "pretest": "npm run build",
+    "smoke": "node ./bin/letmecode.js",
+    "test": "node --test ink-app/test/*.test.mjs"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "cli",
+    "dashboard",
+    "usage",
+    "terminal",
+    "codex",
+    "claude",
+    "copilot",
+    "antigravity",
+    "npx",
+    "ink",
+    "typescript"
+  ],
+  "dependencies": {
+    "ink": "4.4.1",
+    "jsonc-parser": "^3.3.1",
+    "react": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.7",
+    "@types/react": "^18.3.24",
+    "typescript": "^5.8.3"
+  }
+}

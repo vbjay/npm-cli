@@ -1,0 +1,91 @@
+{
+  "name": "@react-native-ohos/react-native-localize",
+  "version": "3.6.2",
+  "license": "MIT",
+  "description": "A toolbox for your React Native app localization.",
+  "author": "Mathieu Acthernoene <zoontek@gmail.com>",
+  "homepage": "https://gitcode.com/openharmony-sig/rntpc_react-native-localize/tree/br_rnoh0.82#readme",
+  "types": "dist/typescript/index.d.ts",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/module/index.js",
+  "files": [
+    "/dist",
+    "/harmony",
+    "/src",
+    "RNLocalize.podspec",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://gitcode.com/openharmony-sig/rntpc_react-native-localize.git"
+  },
+  "keywords": [
+    "react-native-localize",
+    "react-native",
+    "react-native-macos",
+    "localize",
+    "localization",
+    "l20n"
+  ],
+  "scripts": {
+    "format": "prettier \"**/*\" -u -w",
+    "typecheck": "tsc --noEmit",
+    "build": "bob build && tsc mock/index -d -m commonjs -t es2015 --skipLibCheck",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prepare": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example && yarn install && yarn example pods",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ]
+  },
+  "peerDependencies": {
+    "@expo/config-plugins": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-macos": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native-macos": {
+      "optional": true
+    },
+    "@expo/config-plugins": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "react-native-localize": "3.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.1.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "react": "19.1.1",
+    "react-native": "0.82.1",
+    "react-native-builder-bob": "^0.23.2",
+    "typescript": "^5.9.3",
+    "@expo/config-plugins": "^54.0.2"
+  },
+  "overrides": {
+    "@react-native/codegen": "0.74.0"
+  },
+  "harmony": {
+    "alias": "react-native-localize"
+  }
+}

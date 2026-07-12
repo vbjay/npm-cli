@@ -1,0 +1,84 @@
+{
+  "name": "@midasr/novashadowcookie",
+  "version": "1.6.0",
+  "description": "Module NPM natif pour le décryptage des données Chrome App-Bound Encryption, compatible avec Node.js et Bun",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "npm run build:native",
+    "build:native": "node-gyp rebuild",
+    "build:ts": "tsc --noEmit",
+    "rebuild": "node-gyp rebuild",
+    "clean": "npm run clean:native && npm run clean:ts",
+    "clean:native": "node-gyp clean",
+    "clean:ts": "rimraf dist",
+    "test": "node test/test.js",
+    "test:ts": "ts-node test/test.ts",
+    "lint": "npm run build:ts",
+    "prepare-publish": "node scripts/prepare-publish.js",
+    "prepublishOnly": "npm run test",
+    "prepack": "echo 'Skipping build for pack'",
+    "dev": "npm run build && npm run test",
+    "publish:dry": "npm pack --dry-run",
+    "publish:real": "npm publish --access public"
+  },
+  "keywords": [
+    "chrome",
+    "encryption",
+    "decryption",
+    "native",
+    "addon",
+    "bun",
+    "node",
+    "c++",
+    "browser-data",
+    "security",
+    "chacha20",
+    "aes-gcm",
+    "app-bound-encryption",
+    "windows"
+  ],
+  "author": {
+    "name": "MidasR",
+    "email": "midacorpro@gmail.com"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "rimraf": "^5.0.0"
+  },
+  "gypfile": true,
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "binding.gyp",
+    "src/**/*.cpp",
+    "src/**/*.h",
+    "libs/**/*",
+    "scripts/build.js",
+    "examples/*.js",
+    "README.md",
+    "INSTALLATION.md"
+  ],
+  "os": ["win32"],
+  "cpu": ["x64", "arm64"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/midasr/novashadowcookie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/midasr/novashadowcookie/issues"
+  },
+  "homepage": "https://github.com/midasr/novashadowcookie#readme"
+}
+

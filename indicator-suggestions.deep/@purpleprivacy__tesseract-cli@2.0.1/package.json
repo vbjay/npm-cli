@@ -1,0 +1,53 @@
+{
+  "name": "@purpleprivacy/tesseract-cli",
+  "version": "2.0.1",
+  "description": "Tesseract – The Refactoring Compass: Analyze code complexity, cognitive load, and architectural health.",
+  "type": "module",
+  "main": "./dist/cli.js",
+  "types": "./dist/cli.d.ts",
+  "bin": {
+    "tesseract-analysis": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "src",
+    "visualizer",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc --noEmit false && node scripts/fix-imports.js",
+    "start": "npx tsx src/cli.ts",
+    "prepare": "npm run build",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": [
+    "cli",
+    "code-analysis",
+    "complexity",
+    "refactoring",
+    "ddd",
+    "clean-architecture",
+    "cognitive-load",
+    "typescript"
+  ],
+  "author": "PurplePrivacy",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "ts-morph": "^27.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

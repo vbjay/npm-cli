@@ -1,0 +1,52 @@
+{
+  "name": "botrun-mcp-rust-pdf",
+  "version": "5.1124.1715",
+  "description": "High-performance PDF processing MCP Server built with Rust",
+  "keywords": [
+    "pdf",
+    "rust",
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "pdf-extract",
+    "cli",
+    "botrun"
+  ],
+  "author": "bohachu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bohachu/botrun-mcp-8.git",
+    "directory": "rust-pdf"
+  },
+  "homepage": "https://github.com/bohachu/botrun-mcp-8#readme",
+  "bin": {
+    "botrun-mcp-rust-pdf": "./bin/server.js",
+    "botrun-mcp-rust-pdf-cli": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "test": "node scripts/test.js"
+  },
+  "optionalDependencies": {
+    "botrun-mcp-rust-pdf-darwin-arm64": "5.1124.1715",
+    "botrun-mcp-rust-pdf-darwin-x64": "5.1124.1715",
+    "botrun-mcp-rust-pdf-linux-x64": "5.1124.1715"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
+}

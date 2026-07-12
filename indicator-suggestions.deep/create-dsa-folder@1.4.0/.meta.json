@@ -1,0 +1,119 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "3bd7e4277a6f0ddb",
+    "fetchedFiles": [
+      "npm/install.js",
+      "npm/node-platform.js",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "npm/install.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6c4e5183476a6aec3c05b81c45e5ffe7d8913ec95a9be7ab770708bdd79914de",
+        "sizeBytes": 2396,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "obfuscation-pattern",
+          "requires-local-file"
+        ],
+        "references": [
+          "npm/node-platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "npm/node-platform.js",
+        "reason": "required by ./npm/install.js",
+        "sha256": "2f61637aa9187c9158eb988e66a595ee6f3f8c38be312bb3d21655a2be75a633",
+        "sizeBytes": 1377,
+        "signals": [
+          "writes-outside-package",
+          "binary-download",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "package.json"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/vladdoroniuk/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "package.json",
+        "reason": "required by ./npm/node-platform.js",
+        "sha256": "bd885b7165b53ed44ab274c7c5b19c4db377744a731b6d6d6927702c374d443e",
+        "sizeBytes": 706,
+        "signals": [],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-11T22:44:00.044Z"
+  },
+  "hash": "sha256:c29865c2e0e8c9f46914ba3d12943f27dbe3c2efc0e76af9ac44e47973b496ab"
+}

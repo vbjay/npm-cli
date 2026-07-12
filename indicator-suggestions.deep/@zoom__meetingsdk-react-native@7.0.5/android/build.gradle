@@ -1,0 +1,192 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+buildscript {
+  // Buildscript is evaluated before everything else so we can't use getExtOrDefault
+  def kotlin_version = rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : project.properties['ZoomMeetingSDK_kotlinVersion']
+
+  repositories {
+    google()
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.10.0'
+    // noinspection DifferentKotlinGradleVersion
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: 'versions.gradle'
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ZoomMeetingSDK_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ZoomMeetingSDK_' + name]).toInteger()
+}
+
+android {
+  compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+  buildToolsVersion getExtOrDefault('buildToolsVersion')
+  defaultConfig {
+    minSdkVersion 28
+    targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+    versionCode 1
+    versionName "1.0"
+    ndkVersion = "24.0.8215888"
+
+  }
+
+  viewBinding {
+    enabled = true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  jcenter()
+
+  def found = false
+  def defaultDir = null
+  def androidSourcesName = 'React Native sources'
+
+  if (rootProject.ext.has('reactNativeAndroidRoot')) {
+    defaultDir = rootProject.ext.get('reactNativeAndroidRoot')
+  } else {
+    defaultDir = new File(
+            projectDir,
+            '/../../../node_modules/react-native/android'
+    )
+  }
+
+  if (defaultDir.exists()) {
+    maven {
+      url defaultDir.toString()
+      name androidSourcesName
+    }
+
+    logger.info(":${project.name}:reactNativeAndroidRoot ${defaultDir.canonicalPath}")
+    found = true
+  } else {
+    def parentDir = rootProject.projectDir
+
+    1.upto(5, {
+      if (found) return true
+      parentDir = parentDir.parentFile
+
+      def androidSourcesDir = new File(
+              parentDir,
+              'node_modules/react-native'
+      )
+
+      def androidPrebuiltBinaryDir = new File(
+              parentDir,
+              'node_modules/react-native/android'
+      )
+
+      if (androidPrebuiltBinaryDir.exists()) {
+        maven {
+          url androidPrebuiltBinaryDir.toString()
+          name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidPrebuiltBinaryDir.canonicalPath}")
+        found = true
+      } else if (androidSourcesDir.exists()) {
+        maven {
+          url androidSourcesDir.toString()
+          name androidSourcesName
+        }
+
+        logger.info(":${project.name}:reactNativeAndroidRoot ${androidSourcesDir.canonicalPath}")
+        found = true
+      }
+    })
+  }
+
+  if (!found) {
+    throw new GradleException(
+            "${project.name}: unable to locate React Native android sources. " +
+                    "Ensure you have you installed React Native as a dependency in your project and try again."
+    )
+  }
+}
+
+def kotlin_version = getExtOrDefault('kotlinVersion')
+
+dependencies {
+  // noinspection GradleDynamicVersion
+  api 'com.facebook.react:react-android:+'
+  implementation libraries.securityCrypto
+  implementation libraries.cryptoTink
+  implementation libraries.exoplayerCore
+  implementation libraries.exoplayerUI
+  implementation libraries.swiperefreshlayout
+  implementation libraries.supportAppcompat
+  implementation libraries.constraintlayout
+  implementation libraries.supportDesign
+  implementation libraries.multidex
+  implementation libraries.gson
+  implementation libraries.glideAnnotations
+  implementation libraries.glideGlide
+  implementation libraries.recyclerview
+  implementation libraries.lottie
+  implementation libraries.supportWindow
+  implementation libraries.windowJava
+  implementation libraries.jetbrainskotlin
+  implementation libraries.kotlinStdlibJdk
+  implementation libraries.kotlinxCoroutinesAndroid
+  implementation libraries.kotlinxCoroutinesCore
+  implementation libraries.androidxCoreKtx
+  implementation libraries.androidxCore
+  implementation libraries.viewmodelKtx
+  implementation libraries.lifecycleKtx
+  implementation libraries.lifecycleService
+  implementation libraries.workerManager
+  implementation libraries.fragmentKtx
+  implementation libraries.scaleImageView
+  implementation libraries.splashScreenLib
+  implementation libraries.livedataKtx
+  implementation libraries.rxAndroid
+  implementation libraries.composeMaterial3
+  implementation libraries.composeMaterial3WindowSize
+  implementation libraries.composeUIToolingPreview
+  implementation libraries.composeConstraintlayout
+  implementation libraries.composeActivity
+  implementation libraries.composeLifecycle
+  implementation libraries.composeNavigation
+  implementation libraries.coil
+  implementation libraries.androidxWebkitKtx
+  implementation libraries.jetbrainsAnnotations
+  implementation libraries.kotlinxCoroutinesCoreJvm
+  implementation libraries.kotlinxCoroutinesSwing
+  implementation libraries.cameraXCore
+  implementation libraries.cameraXCamera2
+  implementation libraries.cameraXLifecycle
+  implementation libraries.cameraXView
+  implementation libraries.mlkitTextRecognition
+  implementation libraries.blueparrottsdk
+  implementation libraries.composeLifecycleViewmodel
+  implementation libraries.profileinstaller
+  implementation libraries.coilGif
+
+  implementation 'us.zoom.meetingsdk:zoomsdk:7.0.5'
+}

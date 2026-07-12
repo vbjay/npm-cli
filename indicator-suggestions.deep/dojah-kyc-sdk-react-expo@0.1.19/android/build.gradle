@@ -1,0 +1,66 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+apply plugin: 'com.android.library'
+
+group = 'com.dojah.dojah_Kyc_rn_expo'
+version = '0.1.0'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useExpoPublishing()
+
+// The Dojah Kotlin SDK (`com.github.dojah-inc:sdk-kotlin`) and its transitive
+// dependencies (androidx.core 1.18.0, se.warting.signature:*) compile against
+// Android API 36. We therefore manage the Android SDK versions ourselves
+// instead of inheriting expo-modules-core's managed values (which track the
+// host Expo SDK, e.g. compileSdk 35 on Expo SDK 54). The host app must also use
+// compileSdk 36 / AGP 8.9.1+ — the bundled config plugin (`plugin/withDojahKyc.js`)
+// configures this automatically during prebuild.
+//
+// `safeExtGet` still lets the consuming root project raise these values further.
+buildscript {
+  ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+}
+project.android {
+  compileSdkVersion safeExtGet("compileSdkVersion", 36)
+  defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 24)
+    targetSdkVersion safeExtGet("targetSdkVersion", 36)
+  }
+}
+
+android {
+  namespace "com.dojah.dojah_Kyc_rn_expo"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  // The Dojah Kotlin SDK uses Java 8+ APIs (java.time, etc.) that are not
+  // available on older Android API levels. Core library desugaring backports
+  // them at build time.
+  compileOptions {
+    coreLibraryDesugaringEnabled true
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  maven { url "https://jitpack.io" }
+}
+
+
+dependencies {
+  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+
+  implementation 'com.github.dojah-inc:sdk-kotlin:v0.3.5'
+}

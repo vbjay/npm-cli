@@ -1,0 +1,103 @@
+{
+  "name": "@valpro-labs/ui",
+  "version": "1.17.8",
+  "description": "Cross-platform UI component library for Valpro Labs",
+  "homepage": "https://github.com/valpro-labs/ui#readme",
+  "bugs": {
+    "url": "https://github.com/valpro-labs/ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valpro-labs/ui.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "ui",
+    "components"
+  ],
+  "author": "Ren-Hao Yeh",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles/global.css": "./dist/styles/global.css"
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json && node -e \"require('fs').mkdirSync('dist/styles',{recursive:true});require('fs').copyFileSync('src/styles/global.css','dist/styles/global.css')\"",
+    "prepare": "npm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "overrides": {
+    "lightningcss": "1.30.1"
+  },
+  "peerDependencies": {
+    "@rn-primitives/progress": ">=1.2.0",
+    "class-variance-authority": ">=0.7.0",
+    "clsx": ">=2.0.0",
+    "expo-image": ">=3.0.0",
+    "react": ">=18",
+    "react-native": ">=0.81",
+    "react-native-reanimated": ">=4.0.0",
+    "react-native-svg": ">=15.0.0",
+    "react-native-web": ">=0.21",
+    "tailwind-merge": ">=3.0.0",
+    "tailwindcss": ">=4.0.0",
+    "uniwind": ">=1.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@rn-primitives/progress": {
+      "optional": true
+    },
+    "expo-image": {
+      "optional": true
+    },
+    "react-native-reanimated": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@rn-primitives/progress": "^1.4.0",
+    "@storybook/addon-essentials": "^8.6.0",
+    "@storybook/react": "^8.6.0",
+    "@storybook/react-vite": "^8.6.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/react": "^19.2.14",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "expo-image": "~3.0.11",
+    "html-to-image": "^1.11.13",
+    "lightningcss": "1.30.1",
+    "phosphor-react": "^1.4.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "^0.81.5",
+    "react-native-reanimated": "~4.1.1",
+    "react-native-svg": "^15.12.1",
+    "react-native-web": "^0.21.0",
+    "react-native-worklets": "^0.8.1",
+    "storybook": "^8.6.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.17",
+    "tsc-alias": "^1.8.16",
+    "typescript": "~5.9.2",
+    "uniwind": "^1.2.2",
+    "vite": "^6.0.0"
+  }
+}

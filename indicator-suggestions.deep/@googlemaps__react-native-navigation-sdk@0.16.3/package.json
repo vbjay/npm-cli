@@ -1,0 +1,134 @@
+{
+  "name": "@googlemaps/react-native-navigation-sdk",
+  "version": "0.16.3",
+  "author": "Google",
+  "description": "A React Native library for Navigation SDK on Google Maps Platform",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/googlemaps/react-native-navigation-sdk.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/googlemaps/react-native-navigation-sdk/issues"
+  },
+  "homepage": "https://github.com/googlemaps/react-native-navigation-sdk#readme",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "library",
+    "google-navigation",
+    "navigation-sdk",
+    "navsdk"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://wombat-dressing-room.appspot.com/"
+  },
+  "scripts": {
+    "example": "yarn workspace react-native-navigation-sdk-sample",
+    "test:types": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint-fix": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "prepare": "bob build",
+    "prepare:example": "yarn workspace react-native-navigation-sdk-sample prepare",
+    "build": "bob build"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.2.2",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native/babel-preset": "^0.83.1",
+    "@react-native/typescript-config": "^0.83.1",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/react": "19.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.43.0",
+    "@typescript-eslint/parser": "^8.43.0",
+    "commitlint": "^19.3.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.57.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "prettier": "^3.6.2",
+    "react": "19.2.0",
+    "react-native": "0.83.1",
+    "react-native-builder-bob": "^0.40.13",
+    "react-test-renderer": "19.2.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.4",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNNavigationSdkSpec",
+    "type": "all",
+    "jsSrcsDir": "src/native",
+    "android": {
+      "javaPackageName": "com.google.maps.android.rn.navsdk"
+    },
+    "ios": {
+      "componentProvider": {
+        "NavView": "NavView"
+      },
+      "modulesProvider": {
+        "NavModule": "NavModule",
+        "NavViewModule": "NavViewModule",
+        "NavAutoModule": "NavAutoModule"
+      }
+    }
+  }
+}

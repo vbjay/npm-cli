@@ -1,0 +1,80 @@
+{
+  "name": "vscroll-native",
+  "version": "1.0.0-rc.3",
+  "description": "Virtual scroll module for native javascript applications",
+  "main": "dist/bundles/vscroll-native.umd.js",
+  "module": "dist/bundles/vscroll-native.esm5.js",
+  "esm5": "dist/esm5/index.js",
+  "esm2015": "dist/esm2015/index.js",
+  "fesm5": "dist/bundles/vscroll-native.esm5.js",
+  "fesm2015": "dist/bundles/vscroll-native.esm6.js",
+  "types": "dist/typings/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "author": "Denis Hilt <dhilt.public@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhilt/vscroll-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dhilt/vscroll-native/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack serve --mode=development",
+    "lint": "eslint . --ext .ts",
+    "build": "node build",
+    "build-app": "webpack --mode=production",
+    "jest": "jest --watch",
+    "jest:singlerun": "jest",
+    "test": "npm run lint && npm run jest:singlerun",
+    "prepublishOnly": "npm run test",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "vscroll": "^1.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
+    "@babel/preset-typescript": "^7.14.5",
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@types/jest": "^26.0.24",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "babel-jest": "^26.6.3",
+    "chalk": "^4.1.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "eslint": "^7.31.0",
+    "html-webpack-plugin": "^5.3.2",
+    "jest": "^26.6.3",
+    "rollup": "^2.55.0",
+    "rollup-plugin-license": "^2.5.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "shelljs": "^0.8.4",
+    "source-map-loader": "^2.0.2",
+    "terser-webpack-plugin": "^5.1.4",
+    "ts-loader": "^8.3.0",
+    "typescript": "^4.3.5",
+    "webpack": "^5.47.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^4.0.0-rc.0"
+  },
+  "keywords": [
+    "vscroll",
+    "virtual",
+    "virtualized",
+    "infinite",
+    "scroll",
+    "scrolling",
+    "scroller",
+    "list",
+    "ui",
+    "javascript",
+    "typescript",
+    "native"
+  ]
+}

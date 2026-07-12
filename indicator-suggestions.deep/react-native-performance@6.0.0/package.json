@@ -1,0 +1,76 @@
+{
+  "name": "react-native-performance",
+  "version": "6.0.0",
+  "description": "Measure React Native performance",
+  "homepage": "https://github.com/oblador/react-native-performance",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oblador/react-native-performance.git",
+    "directory": "packages/react-native-performance"
+  },
+  "main": "lib/commonjs/index.js",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "android",
+    "ios",
+    "react-native-performance.*",
+    "!.DS_Store",
+    "!android/build",
+    "!ios/build"
+  ],
+  "scripts": {
+    "test": "jest",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "performance",
+    "perf",
+    "benchmark"
+  ],
+  "author": "Joel Arvidsson",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native/babel-preset": "0.78.2",
+    "@types/jest": "^29.5.13",
+    "babel-jest": "^29.6.3",
+    "jest": "^29.6.3",
+    "react-native-builder-bob": "^0.21.2",
+    "typescript": "5.0.4"
+  },
+  "codegenConfig": {
+    "name": "RNPerformanceSpec",
+    "type": "modules",
+    "jsSrcsDir": "./src",
+    "android": {
+      "javaPackageName": "com.oblador.performance"
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "gitHead": "66d91c03d1a6dc9d2b0c4f697440c9c21340064c"
+}

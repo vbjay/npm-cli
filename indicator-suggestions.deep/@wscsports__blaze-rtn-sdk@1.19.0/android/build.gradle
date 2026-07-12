@@ -1,0 +1,97 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+// android/build.gradle
+
+buildscript {
+    ext {
+        blaze_default_targetSdkVersion = 35
+        blaze_default_compileSdkVersion = 35
+        blaze_default_minSdkVersion = 24
+        blaze_default_kotlin_version = '2.0.21'
+        blazesdk_version = '1.19.5'
+        blaze_gson_version = '2.10.1'
+    }
+
+    ext.safeExtGet = { prop, fallback ->
+        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+    }
+
+    ext.blaze_kotlin_version = safeExtGet('kotlinVersion', blaze_default_kotlin_version)
+
+    repositories {
+        google()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.1.4")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$blaze_kotlin_version"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', blaze_default_compileSdkVersion)
+    namespace "com.blaze.rtnblazesdk"
+
+    def versionJsonFile = file('../package.json')
+    def versionJson = new groovy.json.JsonSlurper().parseText(versionJsonFile.text)
+    def packageVersion = versionJson.version
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', blaze_default_minSdkVersion)
+        targetSdkVersion safeExtGet('targetSdkVersion', blaze_default_targetSdkVersion)
+        versionCode 1
+        versionName packageVersion
+
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField("String", "rtn_sdk_verion", "\"$packageVersion\"")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+
+    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+    if (agpVersion.tokenize('.')[0].toInteger() < 8) {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_11
+            targetCompatibility JavaVersion.VERSION_11
+        }
+
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11.majorVersion
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$blaze_kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$blaze_kotlin_version"
+      
+    // noinspection GradleDynamicVersion
+    api 'com.facebook.react:react-native:+'
+
+    implementation group: "com.blaze", name: "blazesdk", version: "$blazesdk_version"
+
+    // Gson.
+    implementation "com.google.code.gson:gson:$blaze_gson_version"
+}

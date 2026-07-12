@@ -1,0 +1,74 @@
+{
+  "name": "@niuzhiwen/loop-engineering-agent",
+  "version": "0.2.14",
+  "description": "Autonomous coding agent based on Loop Engineering principles — convergent feedback loop from requirements to delivery",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "lea": "dist/cli/index.js"
+  },
+  "files": [
+    "dist/",
+    "skills/",
+    "CLAUDE.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli/index.ts",
+    "dev:watch": "nodemon",
+    "debug": "node --inspect-brk node_modules/tsx/dist/cli.mjs src/cli/index.ts",
+    "link": "npm run build && npm link",
+    "unlink": "npm unlink -g @niuzhiwen/loop-engineering-agent",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test"
+  },
+  "keywords": [
+    "ai-agent",
+    "coding-agent",
+    "loop-engineering",
+    "cli",
+    "autonomous",
+    "llm",
+    "litellm",
+    "dev-workflow"
+  ],
+  "author": "BBJI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BBJI/loop-engineering-agent.git"
+  },
+  "homepage": "https://github.com/BBJI/loop-engineering-agent",
+  "bugs": {
+    "url": "https://github.com/BBJI/loop-engineering-agent/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@niuzhiwen/loop-engineering-agent": "^0.2.4",
+    "ansi-escapes": "^7.3.0",
+    "chalk": "^5.6.2",
+    "commander": "^15.0.0",
+    "inquirer": "^12.11.1",
+    "js-yaml": "^4.2.0",
+    "openai": "^6.42.0",
+    "ora": "^9.4.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.9.3",
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.14",
+    "ts-jest": "^29.4.11",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

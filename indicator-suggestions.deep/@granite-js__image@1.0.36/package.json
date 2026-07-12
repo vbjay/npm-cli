@@ -1,0 +1,92 @@
+{
+  "name": "@granite-js/image",
+  "version": "1.0.36",
+  "description": "A pluggable React Native image component that lets you use your existing native image loading infrastructure",
+  "type": "module",
+  "main": "./dist/module/index.js",
+  "types": "./dist/typescript/index.d.ts",
+  "react-native": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/typescript/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "dist",
+    "android",
+    "ios",
+    "*.podspec",
+    "react-native.config.js"
+  ],
+  "scripts": {
+    "prepack": "yarn build",
+    "example": "yarn workspace @granite-js/image-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "build": "bob build && tsc --project tsconfig.build.json"
+  },
+  "keywords": [
+    "react-native",
+    "image",
+    "fast-image",
+    "ios",
+    "android",
+    "brownfield",
+    "kingfisher",
+    "glide",
+    "coil",
+    "sdwebimage"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toss/granite.git",
+    "directory": "packages/image"
+  },
+  "author": "Toss <platform@toss.im>",
+  "homepage": "https://github.com/toss/granite/tree/main/packages/image#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "19.2.0",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.7.0",
+    "react": "19.2.3",
+    "react-native": "0.84.0",
+    "react-native-builder-bob": "0.40.17",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "GraniteImageSpec",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.facebook.react.viewmanagers"
+    },
+    "ios": {
+      "componentProvider": {
+        "GraniteImage": "GraniteImageComponentView"
+      }
+    }
+  },
+  "sideEffects": false,
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ]
+    ]
+  }
+}

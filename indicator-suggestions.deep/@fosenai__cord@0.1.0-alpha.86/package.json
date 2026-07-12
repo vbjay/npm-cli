@@ -1,0 +1,37 @@
+{
+  "name": "@fosenai/cord",
+  "version": "0.1.0-alpha.86",
+  "description": "Cord Rust CLI \u2014 install via npm, runs as native binary",
+  "license": "BUSL-1.1",
+  "bin": {
+    "cord": "bin/cord.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/install.js"
+  },
+  "optionalDependencies": {
+    "@fosenai/cord-darwin-arm64": "0.1.0-alpha.86",
+    "@fosenai/cord-darwin-x64": "0.1.0-alpha.86",
+    "@fosenai/cord-win32-x64": "0.1.0-alpha.86",
+    "@fosenai/cord-linux-x64": "0.1.0-alpha.86",
+    "@fosenai/cord-linux-arm64": "0.1.0-alpha.86"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/cord.git"
+  },
+  "keywords": [
+    "p2p",
+    "agent",
+    "libp2p",
+    "rust"
+  ]
+}

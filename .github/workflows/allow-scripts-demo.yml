@@ -1,0 +1,195 @@
+name: allow-scripts demo report
+
+on:
+  pull_request:
+    paths:
+      - smoke-tests/test/fixtures/approve-scripts-report/**
+      - smoke-tests/test/approve-scripts-report.js
+      - scripts/generate-allow-scripts-report.js
+      - lib/utils/script-risk-scanner.js
+      - lib/utils/review-report-formatter.js
+      - lib/utils/dep-path-walker.js
+      - workspaces/arborist/lib/unreviewed-scripts.js
+      - workspaces/arborist/lib/install-scripts.js
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  report:
+    name: Generate allow-scripts pending report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Reset workspace deps
+        run: node scripts/resetdeps.js
+
+      - name: Install demo dependencies (no lifecycle scripts)
+        run: npm ci --ignore-scripts --prefix smoke-tests/test/fixtures/approve-scripts-report
+
+      - name: Generate report
+        id: report
+        run: node scripts/generate-allow-scripts-report.js > report.md
+
+      - name: Check if reports fit in a GitHub comment
+        id: check
+        run: |
+          MD_SIZE=$(wc -c < report.md)
+          JSON_SIZE=$(wc -c < smoke-tests/test/fixtures/approve-scripts-report/report.json)
+          TOTAL=$((MD_SIZE + JSON_SIZE + 2000))
+          echo "md_size=$MD_SIZE json_size=$JSON_SIZE total=$TOTAL"
+          if [ $TOTAL -gt 65000 ]; then
+            echo "needs_zip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_zip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Collect artifact files (flat reports/ directory)
+        if: steps.check.outputs.needs_zip == 'true'
+        run: |
+          mkdir -p reports
+          cp report.md reports/report.md
+          cp smoke-tests/test/fixtures/approve-scripts-report/report.json reports/report.json
+
+      - name: Upload report artifacts (only when too large for inline comment)
+        id: artifacts
+        if: steps.check.outputs.needs_zip == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: approve-scripts-reports
+          path: reports/
+
+      - name: Post report as PR comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v9
+        env:
+          ARTIFACT_URL: ${{ steps.artifacts.outputs.artifact-url }}
+        with:
+          script: |
+            const fs = require('fs')
+            const md = fs.readFileSync('report.md', 'utf8')
+            const jsonText = fs.readFileSync(
+              'smoke-tests/test/fixtures/approve-scripts-report/report.json',
+              'utf8'
+            )
+
+            // Parse the JSON report and derive a pass/fail result.
+            let pass = false
+            let reason = ''
+            let packageRows = ''
+            let report = null
+            try {
+              report = JSON.parse(jsonText)
+              const pkgs = report.packages || []
+
+              if (report.status === 'all-approved') {
+                pass = true
+                reason = ''
+              } else if (pkgs.length === 0) {
+                reason = 'No packages with lifecycle scripts were found. Make sure `npm ci --ignore-scripts` ran successfully.'
+              } else {
+                const notPending = pkgs.filter(p => p.approvalStatus !== 'pending')
+                if (notPending.length > 0) {
+                  reason = `${notPending.length} package(s) did not have \`pending\` approval status: ` +
+                    notPending.map(p => `\`${p.name}@${p.version}\``).join(', ')
+                } else {
+                  pass = true
+                }
+              }
+
+              packageRows = pkgs.map(p => {
+                const status = p.approvalStatus === 'pending' ? '⏳ pending' : `❌ ${p.approvalStatus}`
+                const risks = (p.riskSummary || []).slice(0, 3).join(', ') || '—'
+                return `| \`${p.name}@${p.version}\` | ${p.dependencyType} | ${status} | ${risks} |`
+              }).join('\n')
+            } catch (e) {
+              reason = `Failed to parse JSON report: ${e.message}`
+            }
+
+            const badge = pass ? '✅ PASS' : '❌ FAIL'
+            const summary = pass
+              ? (report.status === 'all-approved'
+                  ? '✅ All packages with lifecycle scripts have been approved — nothing pending.'
+                  : 'All packages with lifecycle scripts are correctly identified as **pending** approval.')
+              : `**Reason:** ${reason}`
+
+            const table = packageRows
+              ? [
+                  '| Package | Type | Status | Top risks |',
+                  '|---------|------|--------|-----------|',
+                  packageRows,
+                ].join('\n')
+              : ''
+
+            // GitHub comment body limit is 65,536 characters.
+            // Priority:
+            //   1. Both <details> sections inline (markdown + JSON)
+            //   2. JSON too big → markdown <details> inline + zipped JSON link
+            //   3. Both too big → scrap inline sections, everything in zip
+            const LIMIT = 65000
+            const artifactUrl = process.env.ARTIFACT_URL || ''
+
+            const header = [
+              `## ${badge} — approve-scripts smoke report`,
+              '',
+              summary,
+              '',
+              table,
+              '',
+            ].join('\n')
+
+            const mdSection = [
+              '<details>',
+              '<summary>Full Markdown report</summary>',
+              '',
+              md,
+              '',
+              '</details>',
+            ].join('\n')
+
+            const jsonSection = [
+              '<details>',
+              '<summary>JSON report</summary>',
+              '',
+              '```json',
+              jsonText,
+              '```',
+              '',
+              '</details>',
+            ].join('\n')
+
+            const withBoth = [header, mdSection, '', jsonSection].join('\n')
+            const withMdAndLink = [
+              header,
+              mdSection,
+              '',
+              artifactUrl ? `📦 [JSON report (zip)](${artifactUrl})` : '',
+            ].join('\n')
+
+            let body
+            if (withBoth.length <= LIMIT) {
+              body = withBoth
+            } else if (withMdAndLink.length <= LIMIT) {
+              body = withMdAndLink
+            } else {
+              body = header + (artifactUrl
+                ? `📦 [Download full reports (zip)](${artifactUrl})\n`
+                : '*(report too large to display inline — check CI logs)*\n')
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            })
+

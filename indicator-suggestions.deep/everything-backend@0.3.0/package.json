@@ -1,0 +1,37 @@
+{
+  "name": "everything-backend",
+  "version": "0.3.0",
+  "description": "Reusable Opencode backend skills with an installable CLI.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeworksID/everything-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codeworksID/everything-backend/issues"
+  },
+  "homepage": "https://github.com/codeworksID/everything-backend#readme",
+  "keywords": [
+    "opencode",
+    "skills",
+    "backend",
+    "cli",
+    "npx"
+  ],
+  "bin": {
+    "everything-backend": "scripts/install.js"
+  },
+  "files": [
+    ".agents/skills",
+    "scripts/install.js",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "node ./scripts/install.js",
+    "install:skills": "node ./scripts/install.js",
+    "install:skills:dry": "node ./scripts/install.js --dry-run"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

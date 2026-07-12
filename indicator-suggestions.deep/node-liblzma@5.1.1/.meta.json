@@ -1,0 +1,138 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1214edc2362f5d66",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "69f3e65640307ab60bb5bb58f021c17ffeae1d5212e1d74c9b5c7fbc4a3032cc",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `node_lzma`  -  C/C++ sources",
+            "items": [
+              "<!@(\"<(python)\" \"<(module_root_dir)/scripts/walk_sources.py\" src)"
+            ]
+          },
+          {
+            "label": "Target `node_lzma`  -  libraries",
+            "items": [
+              "<(liblzma_install_dir)/lib/liblzma.lib",
+              "<(liblzma_install_dir)/lib/liblzma.lib",
+              "<!@(pkg-config --libs --static liblzma)",
+              "<!@(pkg-config --libs liblzma)",
+              "<(liblzma_install_dir)/lib/liblzma.a",
+              "-L<(liblzma_install_dir)/lib",
+              "-llzma",
+              "<(liblzma_install_dir)/lib/liblzma.so"
+            ]
+          },
+          {
+            "label": "Target `node_lzma`  -  include directories",
+            "items": [
+              "<!(\"<(python)\" \"<(module_root_dir)/scripts/binding_config.py\" node_addon_api_include)",
+              "<(liblzma_install_dir)/include",
+              "<!@(pkg-config --cflags-only-I liblzma | sed s/-I//g)",
+              "<(liblzma_install_dir)/include"
+            ]
+          },
+          {
+            "label": "Target `node_lzma`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "typescript-compiler",
+        "label": "TypeScript compiler",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "typescript-build"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "lint-runner",
+        "label": "Linter / formatter",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "lint-check"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "git-hook-runner",
+        "label": "Git hook manager",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `prepare`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "git-hook-setup"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/copy-wasm-artifacts.js",
+        "reason": "referenced by lifecycle script: `build`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "file-unreadable"
+        ],
+        "references": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:16.643Z"
+  },
+  "hash": "sha256:a6cf10f0671673150db52f281e52b7e71f6a84cf183344caa65fd89e776788bd"
+}

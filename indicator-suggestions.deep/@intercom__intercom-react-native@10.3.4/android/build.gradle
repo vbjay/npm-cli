@@ -1,0 +1,91 @@
+// DEFANGED: static-analysis cache — do not execute
+throw new Exception('DEFANGED: static-analysis cache — do not execute')
+def packageJsonFile = file('../package.json')
+def packageJson = new groovy.json.JsonSlurper().parseText(packageJsonFile.text)
+def packageVersion = '"' + packageJson.version + '"'
+
+
+buildscript {
+  ext {
+    buildToolsVersion = "36.0.0"
+    minSdkVersion = 23
+    compileSdkVersion = 36
+    targetSdkVersion = 36
+    ndkVersion = "26.1.10909125"
+    kotlinVersion = "1.9.22"
+  }
+  if (project == rootProject) {
+    repositories {
+      google()
+      mavenCentral()
+    }
+
+    dependencies {
+      classpath("com.android.tools.build:gradle:8.9.0")
+      classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+  }
+}
+
+apply plugin: 'com.android.library'
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+android {
+  namespace 'com.intercom.reactnative'
+  compileSdk rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode 1
+    versionName "1.0"
+    buildConfigField 'String', 'INTERCOM_VERSION_NAME', packageVersion
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  lint {
+    disable 'GradleCompatible'
+  }
+  buildFeatures {
+    buildConfig true
+  }
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ["src/newarch"]
+      } else {
+        java.srcDirs += ["src/oldarch"]
+      }
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url("$rootDir/../node_modules/react-native/android")
+  }
+  google()
+}
+
+dependencies {
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"  // From node_modules
+  implementation "com.google.firebase:firebase-messaging:24.1.2"
+  implementation 'io.intercom.android:intercom-sdk:18.3.2'
+  implementation 'io.intercom.android:intercom-sdk-ui:18.3.2'
+}

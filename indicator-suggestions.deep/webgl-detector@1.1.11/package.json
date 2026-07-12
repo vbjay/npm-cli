@@ -1,0 +1,54 @@
+{
+  "name": "webgl-detector",
+  "version": "1.1.11",
+  "description": "Test & mock friendly WebGL detection utility.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "test": "jest --config jestconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cengizcan/webgl-detector.git"
+  },
+  "keywords": [
+    "WebGL",
+    "detector",
+    "npm",
+    "es6",
+    "browser",
+    "testing",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Cengiz Can <cengiz@linux.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cengizcan/webgl-detector/issues"
+  },
+  "homepage": "https://github.com/cengizcan/webgl-detector#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/jsdom": "^12.2.4",
+    "@types/webgl2": "0.0.5",
+    "jest": "^24.9.0",
+    "jsdom": "15.1.1",
+    "jsdom-global": "3.0.2",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.8.2"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "react-godot-4",
+  "version": "1.0.2",
+  "description": "Load a webassembly build of the Godot engine and Bootstrap packed games from within the react component tree",
+  "contributors": [
+    {
+      "name": "d3dc",
+      "url": "https://github.com/d3dc"
+    },
+    {
+      "name": "Eric Wang",
+      "email": "ezwang1@gmail.com",
+      "url": "https://github.com/ezwang"
+    },
+    {
+      "name": "Meir Arani",
+      "email": "myrrh@laughingstock.me",
+      "url": "https://myrrh.me"
+    }
+  ],
+  "license": "MIT",
+  "repository": "github:MeirArani/react-godot-4",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "jsnext:main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production tsc",
+    "build:css": "cp src/styles.css dist/",
+    "start": "NODE_ENV=development tsc -w",
+    "prepare": "npm run build && npm run build:css"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0 || ^17 || ^18",
+    "react-dom": "^16.12.0 || ^17 || ^18"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^8.0.3",
+    "@types/jest": "^24.0.25",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "typescript": "^3.7.4"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "godot",
+    "react",
+    "wasm",
+    "gamedev",
+    "games"
+  ]
+}

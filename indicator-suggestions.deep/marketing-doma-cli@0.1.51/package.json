@@ -1,0 +1,50 @@
+{
+  "name": "marketing-doma-cli",
+  "version": "0.1.51",
+  "description": "CLI local do projeto marketing-doma — npm install marketing-doma-cli (sem -g). Download tarball + setup .claude/.cursor/remotion-doma.",
+  "bin": {
+    "marketing-doma": "bin/marketing-doma.js"
+  },
+  "main": "bin/marketing-doma.js",
+  "scripts": {
+    "postinstall": "node postinstall.js",
+    "doma:install": "marketing-doma install",
+    "doma:update": "marketing-doma update",
+    "doma:status": "marketing-doma status",
+    "doma:setup": "node .claude/skills/marketing-doma/scripts/lib/install-deps.mjs",
+    "doma:export": "marketing-doma export"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "tar": "^7.4.3"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "postinstall.js",
+    "README.md"
+  ],
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "marketing-doma",
+    "doma",
+    "remotion",
+    "instagram",
+    "cli"
+  ],
+  "author": "Doma — rafael@domagestao.com.br",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafael-senter/marketing-doma.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/rafael-senter/marketing-doma/-/issues"
+  },
+  "homepage": "https://github.com/rafael-senter/marketing-doma#readme"
+}

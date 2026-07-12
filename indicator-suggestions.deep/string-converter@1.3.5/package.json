@@ -1,0 +1,91 @@
+{
+  "name": "string-converter",
+  "version": "1.3.5",
+  "description": "Converts strings to other javascript types",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaspenlind/string-converter.git"
+  },
+  "keywords": [
+    "javascript",
+    "type",
+    "convert",
+    "parse"
+  ],
+  "author": "jaspenlind",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jaspenlind/string-converter/issues"
+  },
+  "homepage": "https://github.com/jaspenlind/string-converter#readme",
+  "files": [
+    "dist/src/*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf coverage dist docs",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "debug": "node --nolazy --inspect-brk=9229 node_modules/jest/bin/jest.js -i",
+    "docs": "npx typedoc && shx cp .nojekyll docs/.nojekyll",
+    "format": "prettier --ignore-path .eslintignore --write \"**/*.{js,ts,jsx,tsx}\" -c",
+    "lint": "eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
+    "postversion": "git push && git push --tags && npm run clean",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
+    "release:alpha": "npm version prerelease --preid alpha -m \" build: :bookmark:%s\"",
+    "release:beta": "npm version prerelease --preid beta -m \"build: :bookmark: %s\"",
+    "release:patch": "npm version patch -m \"build: :bookmark: %s\"",
+    "release:minor": "npm version minor -m \"build: :bookmark: %s\"",
+    "release:major": "npm version major -m \"build: :bookmark: %s\"",
+    "start": "node dist/src/index.js",
+    "test": "jest --coverage -t",
+    "test:watch": "jest --watch-all -t",
+    "version": "git add -A src"
+  },
+  "dependencies": {
+    "tslib": "^2.5.3"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.6.5",
+    "@types/jest": "^29.5.2",
+    "@types/lodash-es": "^4.17.7",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
+    "commitlint": "^17.6.5",
+    "coveralls": "^3.1.1",
+    "eslint": "^8.43.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jest": "^27.2.2",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "jest-extended": "^4.0.0",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.1",
+    "shx": "^0.3.4",
+    "ts-jest": "^29.1.0",
+    "typedoc": "^0.24.8",
+    "typescript": "^5.1.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "jest --bail --findRelatedTests"
+    ]
+  }
+}

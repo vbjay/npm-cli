@@ -1,0 +1,101 @@
+{
+  "name": "@settlemint/sdk-cli",
+  "description": "Command-line interface for SettleMint SDK, providing development tools and project management capabilities",
+  "version": "2.6.12",
+  "type": "module",
+  "private": false,
+  "license": "FSL-1.1-MIT",
+  "author": {
+    "name": "SettleMint",
+    "email": "support@settlemint.com",
+    "url": "https://settlemint.com"
+  },
+  "homepage": "https://github.com/settlemint/sdk/blob/main/sdk/cli/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/settlemint/sdk.git",
+    "directory": "sdk/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/settlemint/sdk/issues",
+    "email": "support@settlemint.com"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "bin": {
+    "settlemint": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "bun run build.ts",
+    "dev": "tsdown --watch ./src",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "typecheck": "tsc --noEmit",
+    "publish-npm": "npm publish --provenance  --tag ${TAG} --access public",
+    "docs": "bun scripts/create-docs.ts",
+    "prepack": "cp ../../LICENSE ."
+  },
+  "dependencies": {
+    "@gql.tada/cli-utils": "1.7.2",
+    "@inquirer/core": "11.1.0",
+    "node-fetch-native": "1.6.7",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "@commander-js/extra-typings": "14.0.0",
+    "commander": "14.0.2",
+    "@inquirer/confirm": "6.0.3",
+    "@inquirer/input": "5.0.3",
+    "@inquirer/password": "5.0.3",
+    "@inquirer/select": "5.0.3",
+    "@settlemint/sdk-hasura": "2.6.12",
+    "@settlemint/sdk-js": "2.6.12",
+    "@settlemint/sdk-utils": "2.6.12",
+    "@settlemint/sdk-viem": "2.6.12",
+    "@types/node": "25",
+    "@types/semver": "7.7.1",
+    "@types/which": "3.0.4",
+    "get-tsconfig": "4.13.0",
+    "giget": "2.0.0",
+    "is-in-ci": "2.0.0",
+    "semver": "7.7.3",
+    "slugify": "1.6.6",
+    "viem": "2.43.5",
+    "which": "6.0.0",
+    "yaml": "2.8.2",
+    "yoctocolors": "2.1.2",
+    "yocto-spinner": "^1.0.0"
+  },
+  "peerDependencies": {
+    "hardhat": "<= 4",
+    "@settlemint/sdk-js": "2.6.12"
+  },
+  "peerDependenciesMeta": {
+    "hardhat": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "settlemint",
+    "blockchain",
+    "blockchain-development",
+    "enterprise-blockchain",
+    "web3",
+    "web3-development",
+    "web3-tools",
+    "sdk",
+    "typescript",
+    "cli",
+    "command-line"
+  ]
+}

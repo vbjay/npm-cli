@@ -1,0 +1,135 @@
+{
+  "name": "cad-mcp-server",
+  "version": "0.6.1",
+  "mcpName": "io.github.mattmohandiss/cad-mcp-server",
+  "description": "Give your AI assistant the ability to inspect, measure, and compare 3D CAD models. Works locally with any STEP file — no CAD license, no cloud, no setup.",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "!dist/eval",
+    "!dist/src/tests",
+    "!dist/vitest.config.*",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "docs/EXAMPLE_PROMPTS.md",
+    "server.json"
+  ],
+  "bin": {
+    "cad-mcp-server": "dist/src/index.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "preferUnplugged": true,
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/src/index.js",
+    "watch": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "fmt": "prettier --write src/",
+    "lint": "eslint \"src/**/*.ts\"",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "{src,eval}/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yaml,yml}": [
+      "prettier --write"
+    ],
+    "*.sh": [
+      "bash -n"
+    ]
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "cad",
+    "step",
+    "stp",
+    "3d",
+    "mechanical-engineering",
+    "manufacturing",
+    "dfm",
+    "gdandt",
+    "pmi",
+    "geometry",
+    "inspection",
+    "quality",
+    "b-rep",
+    "opencascade",
+    "occt",
+    "wasm",
+    "claude",
+    "ai-tools"
+  ],
+  "author": "Matt Mohandiss <mattmohandiss@gmail.com>",
+  "license": "MIT",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/mattmohandiss"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "homepage": "https://github.com/mattmohandiss/cad-mcp-server#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattmohandiss/cad-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mattmohandiss/cad-mcp-server/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0-beta.2",
+    "occt-wasm": "file:./occt/ts",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@ai-sdk/gateway": "^4.0.14",
+    "@ai-sdk/mcp": "^2.0.9",
+    "@modelcontextprotocol/client": "2.0.0-beta.2",
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
+    "ai": "^7.0.18",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "prettier": "^3.9.4",
+    "tsx": "^4.23.0",
+    "typescript": "^6.0.3",
+    "typescript-language-server": "^5.3.0",
+    "vitest": "^4.1.10"
+  },
+  "bundleDependencies": [
+    "occt-wasm"
+  ]
+}

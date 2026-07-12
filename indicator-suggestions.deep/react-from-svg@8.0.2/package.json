@@ -1,0 +1,57 @@
+{
+  "name": "react-from-svg",
+  "description": "Transform SVG files into React components, Native and/or Web, JavaScript and TypeScript. Without shitload of dependencies.",
+  "version": "8.0.2",
+  "license": "MIT",
+  "repository": "https://github.com/MoOx/react-from-svg",
+  "author": {
+    "name": "Maxime Thirouin",
+    "url": "https://github.com/MoOx"
+  },
+  "type": "module",
+  "exports": "./dist/bin.js",
+  "keywords": [
+    "react-native-svg",
+    "react-native-web",
+    "react-native",
+    "react",
+    "svg-to-react",
+    "svg",
+    "svgr-cli",
+    "svgr"
+  ],
+  "bin": {
+    "react-from-svg": "./dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "!dist/**.test.js"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "build": "tsc",
+    "format:generated": "prettier --write tests/components",
+    "test:build:all": "node dist/all-combinations.test.js",
+    "test": "npm run build && npm run test:build:all",
+    "prepublishOnly": "npm run build",
+    "release": "npmpub"
+  },
+  "dependencies": {
+    "camelcase": "^8.0.0",
+    "glob": "^11.0.1",
+    "meow": "^13.2.0",
+    "mkdirp": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "husky": "^9.1.7",
+    "npmpub": "^5.0.0",
+    "prettier": "^3.5.3",
+    "react": "^19.1.0",
+    "react-native-svg": "^15.11.2",
+    "typescript": "^5.8.0"
+  },
+  "prettier": {
+    "trailingComma": "all"
+  }
+}

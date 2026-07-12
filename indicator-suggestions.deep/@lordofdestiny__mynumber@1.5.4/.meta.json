@@ -1,0 +1,196 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "6d6505ff07984571",
+    "fetchedFiles": [
+      "CMakeLists.txt",
+      "binding.gyp",
+      "package.json",
+      "scripts/common.js",
+      "scripts/install-binding.js",
+      "scripts/install-release-binary.js",
+      "scripts/install.js",
+      "scripts/native-platform.js"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "edb0e11fe3dbbdb54218ded16aba88480ea36b6920be8f7268e4ca619a893158",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `mynumber`  -  C/C++ sources",
+            "items": [
+              "src/wrapper/addon.cpp",
+              "src/wrapper/Combination.cpp",
+              "src/wrapper/Solution.cpp"
+            ]
+          },
+          {
+            "label": "Target `mynumber`  -  libraries",
+            "items": [
+              "<(module_root_dir)/native-lib/libmynumber.a"
+            ]
+          },
+          {
+            "label": "Target `mynumber`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "include"
+            ]
+          },
+          {
+            "label": "Target `mynumber`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "CMakeLists.txt",
+        "label": "CMake build descriptor",
+        "sha256": "3fd1eaca4c7c9925c82759f281af3562a0667abf6d7a32f1d38a699ab913bce6",
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": [
+          {
+            "label": "Native libraries",
+            "items": [
+              "mynumber_static",
+              "mynumber_shared",
+              "mynumber::mynumber_static",
+              "mynumber::mynumber_shared"
+            ]
+          },
+          {
+            "label": "Executables",
+            "items": [
+              "mynumber_cli"
+            ]
+          },
+          {
+            "label": "Linked libraries",
+            "items": [
+              "mynumber_static"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/install.js",
+        "reason": "referenced by lifecycle script: `install`",
+        "sha256": "8d136bafd05769e9d2c614597ec937e32c14b7e2aeefc91f2d890358e59b3d27",
+        "sizeBytes": 774,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/common.js",
+          "scripts/install-binding.js",
+          "scripts/native-platform.js",
+          "scripts/install-release-binary.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/common.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "fc56c68b35fae0e8a5aa08c032ba82a9c9c42fa7f5330902abdd7372a1114dc1",
+        "sizeBytes": 428,
+        "signals": [
+          "uses-child-process"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/install-binding.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "5fad49af6439d9dda85d21639e0c4946b5e6c30cdcc91f35d36b1de313507165",
+        "sizeBytes": 1301,
+        "signals": [],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/native-platform.js",
+        "reason": "required by ./scripts/install.js; required by ./scripts/install-release-binary.js",
+        "sha256": "ae243382782779adc344076e59977c61c5a7c41a92c882be0b9f33a3816a000b",
+        "sizeBytes": 2266,
+        "signals": [
+          "platform-specific-script"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/install-release-binary.js",
+        "reason": "required by ./scripts/install.js",
+        "sha256": "fc0ecd2bce2da05b81c1ab9f75dee339d2a6d62d1a252fe64bb89acd381a2d83",
+        "sizeBytes": 3453,
+        "signals": [
+          "uses-child-process",
+          "network-access",
+          "binary-download",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/native-platform.js"
+        ],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:02:26.327Z"
+  },
+  "hash": "sha256:e32ab4de9e302b544209bc76bb3e6c020f6f3a500efc7e15a2cd38ff01e79998"
+}

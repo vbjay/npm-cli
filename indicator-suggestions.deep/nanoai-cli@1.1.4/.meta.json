@@ -1,0 +1,179 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "1896035905cd5ba2",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/download.js",
+      "scripts/platform.js",
+      "scripts/postinstall.js",
+      "scripts/telemetry.js"
+    ],
+    "bareFollows": [
+      {
+        "name": "adm-zip",
+        "versionSpec": "^0.5.16"
+      }
+    ],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "resolvedFollows": [
+      "adm-zip@0.5.18"
+    ],
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "obfuscated-install-script",
+        "label": "Obfuscated install script",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "obfuscation-pattern"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "dynamic-require-loader",
+        "label": "Dynamic-require loader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "dynamic-require"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.js",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "6b843482d87e52249b9a0ce7b5a93e4e7340fa6311286ac17f5faf808c756c6a",
+        "sizeBytes": 1133,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/download.js",
+          "scripts/telemetry.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/download.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "2359ec08cd27a466ab13e3ef47459c7ffec50da1052b74d86925783328f267f7",
+        "sizeBytes": 4787,
+        "signals": [
+          "network-access",
+          "writes-file",
+          "makes-executable",
+          "obfuscation-pattern",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/platform.js"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/platform.js",
+        "reason": "required by ./scripts/download.js; required by ./scripts/telemetry.js",
+        "sha256": "70049fabd2892e637869b062f50aaa06d61f1d7dbd7c78c6ffea10d7b1ddcadb",
+        "sizeBytes": 2870,
+        "signals": [
+          "reads-process-env",
+          "dynamic-require",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/",
+            "classification": "reference"
+          }
+        ]
+      },
+      {
+        "path": "scripts/telemetry.js",
+        "reason": "required by ./scripts/postinstall.js",
+        "sha256": "e2a4141e77259bc783994edf48f34549679f142112b4e07cc10c0e70f359857f",
+        "sizeBytes": 3549,
+        "signals": [
+          "reads-process-env",
+          "network-access",
+          "runtime-installer",
+          "platform-specific-script",
+          "external-url",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/platform.js"
+        ],
+        "urls": [
+          {
+            "url": "https://us.i.posthog.com",
+            "classification": "telemetry"
+          }
+        ]
+      }
+    ],
+    "scannedAt": "2026-07-12T00:04:13.228Z"
+  },
+  "hash": "sha256:6ee6bb0b2b80733ea20cf11ca9bfb3a92f7337dc6907295b47076e2225b4e340"
+}

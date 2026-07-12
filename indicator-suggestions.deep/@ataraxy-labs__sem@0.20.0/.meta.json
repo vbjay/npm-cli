@@ -1,0 +1,139 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "e9120e61cf27f051",
+    "fetchedFiles": [
+      "package.json",
+      "scripts/package-meta.mjs",
+      "scripts/postinstall.mjs",
+      "scripts/sync-package-version.mjs",
+      "scripts/verify-checksum.mjs"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binary-downloader",
+        "label": "Prebuilt binary downloader",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "binary-download"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "bundled-binary-installer",
+        "label": "Bundled binary activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "activates-bundled-binary"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "runtime-installer",
+        "label": "Runtime package installer",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "runtime-installer"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "source-downloader",
+        "label": "Lifecycle script URL fetch",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "external-url"
+        ],
+        "groups": []
+      },
+      {
+        "indicatorFile": "platform-binary-selector",
+        "label": "Platform-specific binary selector or activator",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "platform-specific-install"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": "scripts/postinstall.mjs",
+        "reason": "referenced by lifecycle script: `postinstall`",
+        "sha256": "633af867c788899760383f2ecad61f29f8e6844d81e5cdccfbb99c8b2730539a",
+        "sizeBytes": 3966,
+        "signals": [
+          "uses-child-process",
+          "reads-process-env",
+          "network-access",
+          "makes-executable",
+          "binary-download",
+          "runtime-installer",
+          "platform-specific-script",
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/package-meta.mjs",
+          "scripts/verify-checksum.mjs"
+        ],
+        "urls": []
+      },
+      {
+        "path": "scripts/package-meta.mjs",
+        "reason": "required by ./scripts/postinstall.mjs; required by ./scripts/sync-package-version.mjs",
+        "sha256": "89507e6d1a28154f0055b91dc8f73e86a2436cf9e650dff73b95122570096542",
+        "sizeBytes": 3093,
+        "signals": [
+          "reads-process-env",
+          "writes-file",
+          "binary-download",
+          "platform-specific-script",
+          "external-url"
+        ],
+        "references": [],
+        "urls": [
+          {
+            "url": "https://github.com/Ataraxy-Labs/sem/releases/download/v",
+            "classification": "download"
+          }
+        ]
+      },
+      {
+        "path": "scripts/verify-checksum.mjs",
+        "reason": "required by ./scripts/postinstall.mjs",
+        "sha256": "8436c5fe64c08beab1e71f1d7de76e39f7b34ca9436b1236130fefba226e7326",
+        "sizeBytes": 1939,
+        "signals": [
+          "reads-process-env",
+          "runtime-installer"
+        ],
+        "references": [],
+        "urls": []
+      },
+      {
+        "path": "scripts/sync-package-version.mjs",
+        "reason": "referenced by lifecycle script: `prepack`",
+        "sha256": "017608c5539130f538e21eb638af8ec164d0da679a81065002c38c93fa8e9791",
+        "sizeBytes": 431,
+        "signals": [
+          "requires-local-file"
+        ],
+        "references": [
+          "scripts/package-meta.mjs"
+        ],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:01:41.510Z"
+  },
+  "hash": "sha256:660ad7be6d025f8fd08c056673325eca1cf05dcb5b181e9fc8473416bbb481f6"
+}

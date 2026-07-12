@@ -1,0 +1,49 @@
+{
+  "name": "dynamic-marquee",
+  "version": "2.6.5",
+  "description": "A small library for creating marquees.",
+  "main": "./dist/dynamic-marquee.js",
+  "module": "./dist/dynamic-marquee.mjs",
+  "types": "./dist/dynamic-marquee.d.ts",
+  "scripts": {
+    "build": "rollup --config rollup.config.mjs",
+    "watch": "rollup --config rollup.config.mjs --watch",
+    "prettier": "prettier --write .",
+    "lint": "eslint --ext js src && prettier --check .",
+    "preversion": "npm run build",
+    "prepare": "husky install"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjenkinson/dynamic-marquee.git"
+  },
+  "keywords": [
+    "marquee",
+    "js",
+    "javascript",
+    "graphics",
+    "casparcg"
+  ],
+  "author": "Tom Jenkinson <tjcode@outlook.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/tjenkinson/dynamic-marquee/issues"
+  },
+  "homepage": "https://github.com/tjenkinson/dynamic-marquee#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^25.0.3",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@tjenkinson/boundary": "^2.0.0",
+    "eslint": "^8.36.0",
+    "husky": "^8.0.3",
+    "longest-common-substring": "0.0.1",
+    "prettier": "^3.0.0",
+    "rollup": "^3.18.0"
+  }
+}

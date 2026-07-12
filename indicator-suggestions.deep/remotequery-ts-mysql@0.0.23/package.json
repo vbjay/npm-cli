@@ -1,0 +1,59 @@
+{
+  "name": "remotequery-ts-mysql",
+  "version": "0.0.23",
+  "description": "Remotequery MySql Driver for TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "mocha -r ts-node/register 'test/**/*.ts'  --exit",
+    "test-transactions": "mocha -r ts-node/register 'test/test-transactions.ts'  --timeout 100000 --exit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonibuenter/remotequery-ts-mysql.git"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "sql",
+    "addon",
+    "remotequery"
+  ],
+  "author": "Toni A. Buenter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonibuenter/remote-query-js-mysql/issues"
+  },
+  "homepage": "https://github.com/tonibuenter/remote-query-ts-mysql#readme",
+  "dependencies": {
+    "camelcase": "^5.3.1",
+    "mysql": "^2.18.1"
+  },
+  "peerDependencies": {
+    "remotequery-ts-common": "0.0.8"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.0.0",
+    "@types/mysql": "^2.15.19",
+    "@types/node": "^16.7.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "chai": "^4.3.4",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "mocha": "10.4.0",
+    "prettier": "^2.3.2",
+    "ts-node": "^10.2.1",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.3.5"
+  }
+}

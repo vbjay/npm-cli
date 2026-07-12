@@ -1,0 +1,82 @@
+{
+  "data": {
+    "fetchVersion": "1a5bd9w",
+    "filesHash": "fa1b50eb19030291",
+    "fetchedFiles": [
+      "binding.gyp",
+      "package.json"
+    ],
+    "bareFollows": [],
+    "fetchedPkgs": [],
+    "state": "scanned",
+    "scanVersion": "1366rll",
+    "results": [
+      {
+        "indicatorFile": "binding.gyp",
+        "label": "GYP build descriptor",
+        "sha256": "71eac0d99217a936a94afeeec096e5e59dbd93b64dda042664341957acbe2817",
+        "parseError": null,
+        "signals": [
+          "native-build",
+          "gyp-conditions"
+        ],
+        "groups": [
+          {
+            "label": "Target `node_sqlite3`  -  C/C++ sources",
+            "items": [
+              "src/backup.cc",
+              "src/database.cc",
+              "src/node_sqlite3.cc",
+              "src/statement.cc"
+            ]
+          },
+          {
+            "label": "Target `node_sqlite3`  -  libraries",
+            "items": [
+              "-l<(sqlite_libname)"
+            ]
+          },
+          {
+            "label": "Target `node_sqlite3`  -  include directories",
+            "items": [
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<!@(node -p \"require('node-addon-api').include\")",
+              "<(sqlite)/include"
+            ]
+          },
+          {
+            "label": "Target `node_sqlite3`  -  platform-specific conditions",
+            "items": [
+              "yes  -  inspect for platform-specific build behaviour"
+            ]
+          }
+        ]
+      },
+      {
+        "indicatorFile": "native-build-command",
+        "label": "Native build command in lifecycle script (no descriptor file)",
+        "sha256": null,
+        "parseError": null,
+        "signals": [
+          "native-build"
+        ],
+        "groups": []
+      }
+    ],
+    "referencedFiles": [
+      {
+        "path": null,
+        "reason": "inline lifecycle script: `install`",
+        "sha256": null,
+        "sizeBytes": null,
+        "signals": [
+          "native-build"
+        ],
+        "references": [],
+        "urls": []
+      }
+    ],
+    "scannedAt": "2026-07-12T00:05:13.714Z"
+  },
+  "hash": "sha256:58271e5e96701c10d7b621002d0e6b9cf10c2e3b71ee72bbfec1d0dd04ea77fe"
+}

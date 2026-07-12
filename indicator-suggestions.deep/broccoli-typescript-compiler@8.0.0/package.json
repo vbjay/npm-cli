@@ -1,0 +1,85 @@
+{
+  "name": "broccoli-typescript-compiler",
+  "version": "8.0.0",
+  "description": "A Broccoli plugin which compiles TypeScript files.",
+  "keywords": [
+    "TypeScript",
+    "broccoli-plugin",
+    "compiler",
+    "javascript",
+    "js"
+  ],
+  "homepage": "https://github.com/tildeio/broccoli-typescript-compiler",
+  "bugs": {
+    "url": "https://github.com/tildeio/broccoli-typescript-compiler/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tildeio/broccoli-typescript-compiler.git"
+  },
+  "license": "MIT",
+  "author": "Kris Selden <kris.selden@gmail.com>",
+  "files": [
+    "dist",
+    "!dist/tests",
+    "src/**/*.ts"
+  ],
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn build:index && yarn link-self && yarn build:tests",
+    "build:index": "tsc && rollup -c rollup.config.js",
+    "build:scripts": "tsc -p scripts/tsconfig.json",
+    "build:tests": "tsc -p tests/tsconfig.json",
+    "generate-tsconfig-interface": "yarn build:scripts && node scripts/build-tsconfig-interface.js",
+    "link-self": "yarn link && yarn link broccoli-typescript-compiler",
+    "lint": "npm-run-all --continue-on-error --aggregate-output --parallel \"lint:!(fix)\"",
+    "lint:fix": "npm-run-all lint:*:fix",
+    "lint:eslint": "eslint . --cache",
+    "lint:eslint:fix": "eslint . --fix",
+    "lint:prettier": "prettier . --check",
+    "lint:prettier:fix": "prettier . --write",
+    "prepare": "npm run build",
+    "test": "git submodule update --init && yarn test:no-update",
+    "test:no-update": "qunit dist/tests/*-test.js"
+  },
+  "dependencies": {
+    "broccoli-funnel": "^3.0.3",
+    "broccoli-merge-trees": "^4.2.0",
+    "broccoli-plugin": "^4.0.1",
+    "fs-tree-diff": "^2.0.1",
+    "heimdalljs": "0.3.3",
+    "md5-hex": "^3.0.1",
+    "walk-sync": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/mkdirp": "^1.0.0",
+    "@types/node": "^14.0.4",
+    "@types/qunit": "^2.9.0",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "broccoli": "^3.4.2",
+    "broccoli-test-helper": "2.0.0",
+    "eslint": "^8.8.0",
+    "fixturify": "^2.1.0",
+    "json-schema": "^0.4.0",
+    "json-schema-to-typescript": "^9.1.0",
+    "mkdirp": "^1.0.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "qunit": "^2.9.3",
+    "rimraf": "^3.0.2",
+    "rollup": "^1.31.1",
+    "rollup-plugin-sourcemaps": "^0.5.0",
+    "typescript": "^4.5.5"
+  },
+  "peerDependencies": {
+    "typescript": "^4.0.3"
+  },
+  "engine": "node >= 12.0.0",
+  "volta": {
+    "node": "16.13.2",
+    "yarn": "1.22.4"
+  }
+}

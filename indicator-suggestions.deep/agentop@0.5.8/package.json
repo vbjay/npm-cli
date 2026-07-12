@@ -1,0 +1,72 @@
+{
+  "name": "agentop",
+  "version": "0.5.8",
+  "description": "top, but for your running coding agents — a live terminal dashboard of every Claude Code, OpenAI Codex, xAI Grok, Google Gemini, and Antigravity CLI session on your machine.",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "codex",
+    "openai-codex",
+    "grok",
+    "grok-cli",
+    "xai",
+    "gemini",
+    "gemini-cli",
+    "antigravity",
+    "google",
+    "top",
+    "htop",
+    "monitor",
+    "cli",
+    "tui",
+    "agents",
+    "dashboard",
+    "anthropic",
+    "openai"
+  ],
+  "homepage": "https://github.com/ktamas77/agentop#readme",
+  "bugs": {
+    "url": "https://github.com/ktamas77/agentop/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ktamas77/agentop.git"
+  },
+  "license": "MIT",
+  "author": "Tamas Kalman",
+  "type": "module",
+  "bin": {
+    "agentop": "bin/agentop.js"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "deno run -A main.ts",
+    "demo": "deno run -A main.ts --demo",
+    "compile": "deno task compile",
+    "fmt": "deno fmt",
+    "lint": "deno lint",
+    "typecheck": "deno check main.ts",
+    "test": "deno test -A",
+    "check": "deno fmt --check && deno lint && deno check main.ts && deno test -A && npm run build",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.8.0",
+    "husky": "^9.1.6",
+    "typescript": "^5.7.2"
+  }
+}

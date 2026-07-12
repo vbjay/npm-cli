@@ -1,0 +1,178 @@
+{
+  "name": "@prismatic-io/prism",
+  "version": "10.0.0",
+  "description": "Build, deploy, and support integrations in Prismatic from the comfort of your command line",
+  "keywords": [
+    "prismatic",
+    "cli"
+  ],
+  "homepage": "https://prismatic.io",
+  "bugs": {
+    "url": "https://github.com/prismatic-io/prism"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prismatic-io/prism.git"
+  },
+  "license": "MIT",
+  "bin": {
+    "prism": "lib/run.js"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "clean": "rm -rf lib && bun run clean-test-temp",
+    "clean-test-temp": "rm -rf src/commands/components/temp src/commands/components/init/temp src/commands/integrations/convert/temp",
+    "build": "bun run clean && bun run format && bun run lint && tsc && bun run bundle",
+    "bundle": "bun run build.ts && oclif manifest",
+    "bundle:debug": "bun run build.ts --debug",
+    "prepack": "bun run build",
+    "lint": "biome lint .",
+    "lint-fix": "biome lint --write --unsafe .",
+    "format": "bun run lint-fix && biome format --write .",
+    "check-format": "biome format .",
+    "test": "bun run clean-test-temp && vitest run",
+    "test:snapshots": "bun run clean-test-temp && vitest run --update",
+    "codegen:clean": "find src -name '*.generated.ts' -delete",
+    "codegen": "bun run codegen:clean && export GRAPHQL_AUTH_KEY=$(prism me:token) && export PRISMATIC_URL=$(echo $PRISMATIC_URL) && graphql-codegen --config codegen.ts && bun run format"
+  },
+  "files": [
+    "oclif.manifest.json",
+    "bin",
+    "lib"
+  ],
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
+    "@msgpack/msgpack": "^3.1.3",
+    "@oclif/core": "^4.11.2",
+    "@oclif/plugin-autocomplete": "^3.2.49",
+    "@oclif/plugin-help": "^6.2.48",
+    "@oclif/plugin-warn-if-update-available": "^3.1.64",
+    "chardet": "^2.1.1",
+    "dayjs": "^1.11.20",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "fs-extra": "^11.3.5",
+    "graphql": "^16.14.0",
+    "http-status-codes": "^2.3.0",
+    "inquirer": "^13.4.3",
+    "inquirer-autocomplete-standalone": "^0.8.1",
+    "js-yaml": "^4.1.1",
+    "jwt-decode": "^4.0.0",
+    "lodash-es": "^4.18.1",
+    "mime-types": "^3.0.2",
+    "natural-orderby": "^5.0.0",
+    "number-to-words": "^1.2.4",
+    "open": "^11.0.0",
+    "prettier": "^3.8.3",
+    "striptags": "^3.2.0",
+    "tempy": "^3.2.0",
+    "terminal-link": "^5.0.0",
+    "tinyglobby": "^0.2.16",
+    "ts-morph": "^28.0.0",
+    "undici": "^7.25.0",
+    "uuid": "^14.0.0",
+    "wsdl-tsclient": "^1.7.1",
+    "yazl": "^3.3.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "@graphql-codegen/cli": "^6.3.1",
+    "@graphql-codegen/near-operation-file-preset": "^5.1.0",
+    "@graphql-codegen/typescript": "^5.0.10",
+    "@graphql-codegen/typescript-operations": "^5.1.0",
+    "@oclif/test": "^4.1.18",
+    "@prismatic-io/spectral": "^10.18.6",
+    "@types/ejs": "^3.1.5",
+    "@types/fs-extra": "^11.0.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/lodash-es": "^4.17.12",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^25.7.0",
+    "@types/number-to-words": "^1.2.3",
+    "@types/yauzl": "^2.10.3",
+    "@types/yazl": "^3.3.1",
+    "bun-types": "^1.3.14",
+    "chalk": "^5.6.2",
+    "msw": "^2.14.6",
+    "oclif": "^4.23.0",
+    "openapi-types": "^12.1.3",
+    "yauzl": "^3.3.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
+  },
+  "oclif": {
+    "commands": {
+      "strategy": "explicit",
+      "target": "./lib/index.js",
+      "identifier": "Commands"
+    },
+    "bin": "prism",
+    "dirname": "prism",
+    "plugins": [
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-help",
+      "@oclif/plugin-warn-if-update-available"
+    ],
+    "warn-if-update-available": {
+      "timeoutInDays": 7
+    },
+    "topicSeparator": ":",
+    "topics": {
+      "alerts": {
+        "description": "Manage Alerting resources"
+      },
+      "alerts:groups": {
+        "description": "Manage Alert Groups"
+      },
+      "alerts:monitors": {
+        "description": "Manage Alert Monitors"
+      },
+      "alerts:webhooks": {
+        "description": "Manage Alert Webhooks"
+      },
+      "components": {
+        "description": "Manage, create, and publish Components"
+      },
+      "components:init": {
+        "description": "Create Components"
+      },
+      "components:dev": {
+        "description": "Component development utilities"
+      },
+      "customers": {
+        "description": "Manage Customers"
+      },
+      "customers:users": {
+        "description": "Manage Customer Users"
+      },
+      "executions": {
+        "description": "Fetch results of Instance executions or Integration test runs"
+      },
+      "help": {
+        "description": "Display this help or command specific help"
+      },
+      "instances": {
+        "description": "Manage Instances"
+      },
+      "integrations": {
+        "description": "Manage and import Integrations"
+      },
+      "organization": {
+        "description": "Manage your Organization"
+      },
+      "organization:users": {
+        "description": "Manage Organization Users"
+      },
+      "translations:list": {
+        "description": "Generates phrases for all marketplace integrations"
+      },
+      "workflows": {
+        "description": "Manage embedded workflow builder workflows and templates"
+      }
+    }
+  }
+}

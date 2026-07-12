@@ -42,12 +42,26 @@ const collectUnreviewedScripts = async ({
       // Linked workspace dependencies are managed by the workspace owner.
       continue
     }
-    if (node.inBundle) {
-      // Bundled dependencies never run their install scripts and cannot be
-      // allowlisted, so they are never "pending". Skipping them keeps them
-      // out of the advisory warning and out of strict-allow-scripts. A
-      // package that needs a bundled dep's script must forward it as one of
-      // its own lifecycle scripts.
+    if (node.inDepBundle) {
+      // Dependencies bundled inside a *published* package's tarball never run
+      // their install scripts (they were pre-built by the publisher) and cannot
+      // be allowlisted. Skipping them keeps them out of the advisory warning
+      // and out of strict-allow-scripts. A package that needs a bundled dep's
+      // script must forward it as one of its own lifecycle scripts.
+      //
+      // NOTE: we intentionally check `inDepBundle` (bundler !== root) rather
+      // than the broader `inBundle`. A root project may list a dependency in
+      // `bundleDependencies` for publishing purposes, but that dep is still
+      // fetched from the registry and installed normally — its install scripts
+      // WILL run. Using `inBundle` here would allow those scripts to silently
+      // bypass the unreviewed-scripts check.
+      continue
+    }
+    if (node.inert) {
+      // Inert = an optional dep that can't be installed here (failed the
+      // os/cpu/libc or engine check, or failed to load). reify drops it
+      // before any script runs, so its install scripts never execute and it
+      // must not be flagged (npm/cli#9562).
       continue
     }
 

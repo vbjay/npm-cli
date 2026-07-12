@@ -1,0 +1,106 @@
+{
+  "name": "polygrad",
+  "version": "0.4.2",
+  "description": "Tensor computation library with native and WASM backends",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "browser": "./dist/polygrad.sync.mjs",
+  "exports": {
+    ".": {
+      "browser": {
+        "import": "./dist/polygrad.sync.mjs",
+        "require": "./src/browser.sync.js",
+        "default": "./dist/polygrad.sync.mjs"
+      },
+      "node": {
+        "require": "./src/index.js",
+        "import": "./src/index.mjs"
+      },
+      "require": "./src/index.js",
+      "import": "./dist/polygrad.sync.mjs",
+      "default": "./dist/polygrad.sync.mjs"
+    },
+    "./browser": {
+      "browser": {
+        "import": "./dist/polygrad.sync.mjs",
+        "require": "./src/browser.sync.js",
+        "default": "./dist/polygrad.sync.mjs"
+      },
+      "import": "./dist/polygrad.sync.mjs",
+      "require": "./src/browser.sync.js",
+      "default": "./dist/polygrad.sync.mjs"
+    },
+    "./async": {
+      "browser": {
+        "import": "./dist/polygrad.async.mjs",
+        "require": "./src/browser.async.js",
+        "default": "./dist/polygrad.async.mjs"
+      },
+      "node": {
+        "require": "./src/index.async.js",
+        "import": "./src/index.async.mjs"
+      },
+      "require": "./src/index.async.js",
+      "import": "./src/index.async.mjs",
+      "default": "./src/index.async.mjs"
+    },
+    "./browser/async": {
+      "browser": {
+        "import": "./dist/polygrad.async.mjs",
+        "require": "./src/browser.async.js",
+        "default": "./dist/polygrad.async.mjs"
+      },
+      "import": "./dist/polygrad.async.mjs",
+      "require": "./src/browser.async.js",
+      "default": "./dist/polygrad.async.mjs"
+    },
+    "./package.json": "./package.json",
+    "./dist/polygrad.sync.js": "./dist/polygrad.sync.js",
+    "./dist/polygrad.sync.mjs": "./dist/polygrad.sync.mjs",
+    "./dist/polygrad.async.js": "./dist/polygrad.async.js",
+    "./dist/polygrad.async.mjs": "./dist/polygrad.async.mjs"
+  },
+  "files": [
+    "src/",
+    "dist/",
+    "wasm/",
+    "csrc/",
+    "napi_api.c",
+    "binding.gyp",
+    "scripts/",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prepack": "node scripts/prepack.js",
+    "install": "node scripts/install-native.js",
+    "build:native": "node scripts/sync-csrc.js && node-gyp rebuild",
+    "build:browser": "bash scripts/build-browser.sh",
+    "test": "node test/test_wasm.js"
+  },
+  "gypfile": true,
+  "sideEffects": false,
+  "devDependencies": {
+    "esbuild": "^0.27.3",
+    "playwright": "^1.58.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polygrad/polygrad.git",
+    "directory": "js"
+  },
+  "keywords": [
+    "polygrad",
+    "tensor",
+    "autograd",
+    "wasm",
+    "node-api",
+    "machine-learning"
+  ],
+  "author": "Anton Troynikov",
+  "license": "MIT"
+}

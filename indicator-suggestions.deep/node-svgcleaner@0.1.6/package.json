@@ -1,0 +1,55 @@
+{
+  "name": "node-svgcleaner",
+  "version": "0.1.6",
+  "description": "Ported fast-based rust svgcleaner library",
+  "main": "lib/index.js",
+  "author": "Dmitriy Pleshevskiy <dmitriy@ideascup.me>",
+  "keywords": [
+    "svg",
+    "rust",
+    "cleaner",
+    "optimize",
+    "optimizer",
+    "clean",
+    "minimize",
+    "svgcleaner",
+    "neon"
+  ],
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pleshevskiy/node-svgcleaner.git"
+  },
+  "homepage": "https://github.com/pleshevskiy/node-svgcleaner#readme",
+  "license": "MIT",
+  "dependencies": {
+    "neon-cli": "^0.3.3",
+    "node-pre-gyp": "github:amilajack/node-pre-gyp#neon-compat"
+  },
+  "devDependencies": {
+    "node-pre-gyp-github": "^1.4.3"
+  },
+  "scripts": {
+    "build": "neon build --release",
+    "install": "npx node-pre-gyp install --update-binary --fallback-to-build=false || neon build --release",
+    "package": "npx node-pre-gyp package",
+    "upload-binary": "npx node-pre-gyp package && npx node-pre-gyp-github publish"
+  },
+  "files": [
+    "native",
+    "!native/target",
+    "!native/artifacts.json",
+    "!native/*.js",
+    "lib"
+  ],
+  "binary": {
+    "module_name": "index",
+    "host": "https://github.com/pleshevskiy/node-svgcleaner/releases/download/",
+    "remote_path": "{version}",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
+    "module_path": "./native",
+    "pkg_path": "."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "electron-screencapturer",
+  "version": "0.0.2",
+  "description": "",
+  "main": "lib/index.js",
+  "author": "guozhi <guozhi5658@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/scofield5658/electron-screencapturer.git",
+  "keywords": [
+    "rust", "electron", "screen", "addon"
+  ],
+  "devDependencies": {
+    "electron": "^1.8.4",
+    "neon-cli": "^0.1.22"
+  },
+  "scripts": {
+    "postinstall" : "npm run build",
+    "start": "electron ./example/index.js",
+    "build": "neon build"
+  }
+}

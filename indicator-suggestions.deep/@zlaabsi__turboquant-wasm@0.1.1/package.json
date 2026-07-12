@@ -1,0 +1,78 @@
+{
+  "name": "@zlaabsi/turboquant-wasm",
+  "version": "0.1.1",
+  "description": "TurboQuant vector quantization for the browser — compress embeddings 8x, search client-side",
+  "homepage": "https://github.com/zlaabsi/turboquant-wasm#readme",
+  "bugs": {
+    "url": "https://github.com/zlaabsi/turboquant-wasm/issues"
+  },
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "node": {
+        "import": "./index.node.mjs",
+        "require": "./index.cjs"
+      },
+      "default": "./index.mjs"
+    }
+  },
+  "files": [
+    "index.cjs",
+    "index.d.ts",
+    "index.mjs",
+    "index.node.mjs",
+    "pkg-bundler/turboquant_wasm.d.ts",
+    "pkg-bundler/turboquant_wasm.js",
+    "pkg-bundler/turboquant_wasm_bg.js",
+    "pkg-bundler/turboquant_wasm_bg.wasm",
+    "pkg-bundler/turboquant_wasm_bg.wasm.d.ts",
+    "pkg-node/package.json",
+    "pkg-node/turboquant_wasm.d.ts",
+    "pkg-node/turboquant_wasm.js",
+    "pkg-node/turboquant_wasm_bg.wasm",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:web",
+    "build:web": "wasm-pack build --target web --out-dir pkg",
+    "build:browser-package": "wasm-pack build --target bundler --out-dir pkg-bundler",
+    "build:node": "wasm-pack build --target nodejs --out-dir pkg-node",
+    "build:all": "npm run build:web && npm run build:browser-package && npm run build:node",
+    "check": "cargo check",
+    "prepack": "npm run build:all",
+    "test": "wasm-pack test --node",
+    "verify": "npm run check && npm run test && npm pack --dry-run",
+    "bench": "node benchmarks/node_bench.js",
+    "bench:realworld": "node benchmarks/realworld_test.js",
+    "bench:charts": "node benchmarks/render_charts.js"
+  },
+  "keywords": [
+    "turboquant",
+    "wasm",
+    "vector-search",
+    "embeddings",
+    "quantization",
+    "compression",
+    "rag",
+    "semantic-search"
+  ],
+  "author": "Zakaria Laabsi",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zlaabsi/turboquant-wasm.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "typescript": "^5.4"
+  }
+}

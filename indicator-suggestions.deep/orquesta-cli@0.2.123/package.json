@@ -1,0 +1,138 @@
+{
+  "name": "orquesta-cli",
+  "version": "0.2.123",
+  "description": "Orquesta CLI - AI-powered coding assistant with team collaboration",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "orquesta": "dist/cli.js",
+    "orquesta-cli": "dist/cli.js"
+  },
+  "scripts": {
+    "preinstall": "node scripts/check-node.cjs",
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "postbuild": "chmod +x dist/cli.js",
+    "dev": "tsx watch src/cli.ts",
+    "start": "node dist/cli.js",
+    "watch": "tsc --watch",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "test:eval": "cd tests && python -m pytest test_eval.py -v",
+    "test:quick": "cd tests && python -m pytest test_eval.py -v -m 'not slow'",
+    "prepr": "npm run lint && npm run build",
+    "bun:build": "node scripts/inject-version.js && npm run build && bun build dist/cli.js --compile --outfile bin/lcli && cp node_modules/yoga-wasm-web/dist/yoga.wasm bin/",
+    "electron:dev": "electron-vite dev",
+    "electron:build": "electron-vite build",
+    "electron:preview": "electron-vite preview",
+    "electron:package": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.orquesta.cli",
+    "productName": "Orquesta CLI",
+    "directories": {
+      "output": "release"
+    },
+    "extraMetadata": {
+      "main": "dist-electron/main/index.cjs"
+    },
+    "files": [
+      "dist",
+      "README.md",
+      "LICENSE"
+    ],
+    "extraResources": [
+      {
+        "from": "build/icon.ico",
+        "to": "icon.ico"
+      },
+      {
+        "from": "build/icon.png",
+        "to": "icon.png"
+      }
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.ico"
+    },
+    "portable": {
+      "artifactName": "${productName} ${version}.${ext}"
+    }
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "scripts/check-node.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "orquesta",
+    "cli",
+    "ai",
+    "llm",
+    "claude",
+    "anthropic",
+    "openai",
+    "coding-assistant",
+    "coding-agent",
+    "collaboration",
+    "team",
+    "local-llm",
+    "vllm",
+    "ollama"
+  ],
+  "author": "Orquesta",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "axios": "^1.6.2",
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "ink": "^4.4.1",
+    "ink-select-input": "^5.0.0",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^5.0.1",
+    "inquirer": "^8.2.6",
+    "minimatch": "^10.2.5",
+    "ora": "^5.4.1",
+    "pdf-parse": "^1.1.1",
+    "semver": "^7.7.3",
+    "socket.io-client": "^4.8.3",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.10.5",
+    "@types/pdf-parse": "^1.1.5",
+    "@types/react": "^19.2.2",
+    "@types/semver": "^7.7.1",
+    "@types/ws": "^8.18.1",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitejs/plugin-react": "^4.5.2",
+    "electron": "^40.0.0",
+    "electron-builder": "^26.4.0",
+    "electron-updater": "^6.7.3",
+    "electron-vite": "^5.0.0",
+    "esbuild": "^0.25.12",
+    "eslint": "^8.56.0",
+    "lucide-react": "^0.562.0",
+    "prettier": "^3.1.1",
+    "react": "^18.3.1",
+    "react-devtools-core": "^4.28.5",
+    "react-dom": "^18.3.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.0",
+    "typescript": "^5.3.3",
+    "vite": "^7.3.1",
+    "vitest": "^3.2.1"
+  }
+}

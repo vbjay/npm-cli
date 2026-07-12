@@ -1,0 +1,81 @@
+{
+  "name": "@digitaldefiance/node-accelerate",
+  "version": "2.0.3",
+  "description": "High-performance Apple Accelerate framework bindings for Node.js - 80+ optimized functions including BLAS, vDSP, and vForce",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "preinstall": "node scripts/check-platform.js",
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild",
+    "test": "node test.js",
+    "benchmark": "node benchmark-comprehensive.js",
+    "benchmark:simple": "node benchmark.js",
+    "compare": "node compare.js",
+    "prepublishOnly": "npm test",
+    "publish:public": "npm publish --access public"
+  },
+  "keywords": [
+    "accelerate",
+    "apple",
+    "silicon",
+    "m1",
+    "m2",
+    "m3",
+    "m4",
+    "blas",
+    "vdsp",
+    "matrix",
+    "vector",
+    "fft",
+    "ifft",
+    "convolution",
+    "correlation",
+    "trigonometry",
+    "statistics",
+    "signal-processing",
+    "window-functions",
+    "interpolation",
+    "performance",
+    "native",
+    "addon",
+    "simd",
+    "amx"
+  ],
+  "author": "Digital Defiance, Jessica Mulein <jessica@digitaldefiance.org>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Digital-Defiance/node-accelerate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Digital-Defiance/node-accelerate/issues"
+  },
+  "homepage": "https://github.com/Digital-Defiance/node-accelerate#readme",
+  "dependencies": {
+    "node-addon-api": "^8.0.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^10.0.0"
+  },
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64",
+    "x64"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "accelerate.cc",
+    "binding.gyp",
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "examples/",
+    "LICENSE",
+    "scripts/"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "_phantomChildren": {},
+  "author": {
+    "name": "Daniel J. Hofmann"
+  },
+  "binary": {
+    "module_name": "not-albertsgrc",
+    "module_path": "./lib/binding/",
+    "host": "https://mapbox-node-binary.s3.amazonaws.com",
+    "remote_path": "./{name}/v{version}/{configuration}/",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
+  },
+  "bugs": {
+    "url": "https://github.com/mapbox/node-or-tools/issues"
+  },
+  "bundleDependencies": [
+    "node-pre-gyp"
+  ],
+  "dependencies": {
+    "nan": "^2.6",
+    "node-pre-gyp": "^0.6.34"
+  },
+  "deprecated": false,
+  "description": "Native module for the or-tools TSP / VRP solvers",
+  "devDependencies": {
+    "aws-sdk": "^2.42.0",
+    "tap": "^10.3"
+  },
+  "homepage": "https://github.com/mapbox/node-or-tools#readme",
+  "keywords": [
+    "addon",
+    "native",
+    "module"
+  ],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "name": "not-albertsgrc",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/albertsgrc/node-or-tools.git"
+  },
+  "scripts": {
+    "clean": "node-pre-gyp clean",
+    "install": "node-pre-gyp install --build-from-source",
+    "test": "tap -Rspec test/*.js"
+  },
+  "url": "https://github.com/albertsgrc/node-or-tools.git",
+  "version": "1.5.0"
+}
